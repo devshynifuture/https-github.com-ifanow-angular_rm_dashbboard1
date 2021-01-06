@@ -50,15 +50,15 @@ export class CompanyMoreInfoComponent implements OnInit {
   companyIndividualData: any;
   maxDate = new Date();
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-    private peopleService: PeopleService, private eventService: EventService,
-    private datePipe: DatePipe, private utilService: UtilService) {
+              private peopleService: PeopleService, private eventService: EventService,
+              private datePipe: DatePipe, private utilService: UtilService) {
   }
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.createMoreInfoForm(null);
     this.getCompanyDetails(data);
-    this.companyIndividualData = data
+    this.companyIndividualData = data;
   }
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
@@ -80,7 +80,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       gender: [(data.genderId) ? String(data.genderId) : '1'],
       anniversaryDate: [data.anniversaryDate ? new Date(data.anniversaryDate) : '']
     });
-    console.log(this.moreInfoForm)
+    console.log(this.moreInfoForm);
   }
   capitalise(event) {
     if (event.target.value != '') {
@@ -110,8 +110,7 @@ export class CompanyMoreInfoComponent implements OnInit {
           }
           this.moreInfoData = singleData;
           this.createMoreInfoForm(this.moreInfoData);
-        }
-        else {
+        } else {
           this.moreInfoForm.get('name').setValue(this.companyIndividualData.name);
         }
         console.log(responseData);
@@ -178,9 +177,8 @@ export class CompanyMoreInfoComponent implements OnInit {
             if (flag == 'Next') {
               this.tabDisableFlag.emit(false);
               this.saveNextData.emit(true);
-              this.tabChange.emit(1)
-            }
-            else {
+              this.tabChange.emit(1);
+            } else {
               this.close(data);
             }
           } else {
@@ -201,8 +199,7 @@ export class CompanyMoreInfoComponent implements OnInit {
           if (flag == 'Next') {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
-          }
-          else {
+          } else {
             this.close(data);
           }
         },

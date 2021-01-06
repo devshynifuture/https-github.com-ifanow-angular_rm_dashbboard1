@@ -56,7 +56,7 @@ export class NotesActivityComponent implements OnInit {
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
     });
 
-
+    this.notes.get('subject').disable();
   }
 
   getFormControl(): any {
@@ -133,6 +133,8 @@ export class NotesActivityComponent implements OnInit {
   onSearchChange(value) {
     this.searchQuery = value
     if (this.searchQuery.length > 3) {
+      this.getNotes()
+    } else if (this.searchQuery.length == "") {
       this.getNotes()
     }
   }

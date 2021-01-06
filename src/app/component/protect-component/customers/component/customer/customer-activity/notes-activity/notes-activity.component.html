@@ -2,16 +2,16 @@
     <div class="w-100 fixedClass" [formGroup]="notes">
         <div class="row pt-16">
             <div class="col-md-3 pr-0">
-                <div class="row b-b pb-10 d-flex align-items-center">
-                    <div [ngClass]="showCheckBox == true ? 'col-md-8': 'col-md-10' " class=" p-0">
+                <div class="row b-b pb-10 d-flex align-items-center" *ngIf="listOfNotes.length > 0">
+                    <!-- <div [ngClass]="showCheckBox == true ? 'col-md-8': 'col-md-10' " class=" p-0">
                         <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="clearNote()">
                             <img alt="" src="/assets/images/svg/plus.svg" class="pr-12">Add a note</button>
-                    </div>
-                    <div class="col-md-2" *ngIf="showCheckBox == true && listOfNotes.length > 0">
+                    </div> -->
+                    <!-- <div class="col-md-2" *ngIf="showCheckBox == true && listOfNotes.length > 0">
                         <i (click)="deleteNotes('')" title="Remove" class="material-icons deleteIconNote   ml-10 c-p">
                             delete </i>
-                    </div>
-                    <div [matMenuTriggerFor]="menu" *ngIf="listOfNotes.length > 0"
+                    </div> -->
+                    <!-- <div [matMenuTriggerFor]="menu" *ngIf="listOfNotes.length > 0"
                         class="col-md-2 c-p d-flex justify-content-end align-items-center pl-0">
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg">
 
@@ -23,8 +23,17 @@
 
 
                         </mat-menu>
+                    </div> -->
+
+
+                    <div class="col-md-12 p-0 remove-top">
+                        <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
+                            <input (keyup)="onSearchChange($event.target.value)" autocomplete="off"
+                                class="form-control br-0" matInput placeholder="Type to search data">
+                        </mat-form-field>
                     </div>
                 </div>
+
             </div>
             <div class="col-md-9  ">
                 <div class="row">
@@ -55,14 +64,14 @@
 
     <div class="row pt-80">
         <div class="col-md-3 pr-0">
-            <div class="row pt-10 pb-10" *ngIf="listOfNotes.length > 0">
+            <!-- <div class="row pt-10 pb-10" *ngIf="listOfNotes.length > 0">
                 <div class="col-md-12 p-0 remove-top">
                     <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
                         <input (keyup)="onSearchChange($event.target.value)" autocomplete="off"
                             class="form-control br-0" matInput placeholder="Type to search data">
                     </mat-form-field>
                 </div>
-            </div>
+            </div> -->
 
             <div *ngIf="isLoading" class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
                 <div class="b-b overflow-hidden pt-10 pb-10">
@@ -163,10 +172,10 @@
 
             <div class="row pb-20">
                 <div class="col-md-12 p-0 text-right">
-                    <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
+                    <!-- <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
                         (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
                         Save
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>

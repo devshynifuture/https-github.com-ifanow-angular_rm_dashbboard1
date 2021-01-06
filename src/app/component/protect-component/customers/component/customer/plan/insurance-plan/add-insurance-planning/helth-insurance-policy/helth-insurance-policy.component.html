@@ -109,8 +109,8 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <p class="m-0 text-black pb-4">Implementation date</p>
-                        <div class="form-group">
+                        <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue'">Implementation date</p>
+                        <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue'">
                             <mat-form-field class="ba-date">
                                 <input [min]="todayDate" #implementationDate
                                     (ngModelChange)="dateChange('implementationDate')" matInput (focus)="picker1.open()"

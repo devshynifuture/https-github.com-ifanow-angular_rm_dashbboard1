@@ -9,19 +9,19 @@ import {
   ViewChildren,
   ViewContainerRef
 } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {MatInput} from '@angular/material';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import {AuthService} from 'src/app/auth-service/authService';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { MatInput } from '@angular/material';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -37,10 +37,10 @@ export class ContactDetailsInnComponent implements OnInit {
   filterCountryName: Observable<any[]>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              public authService: AuthService, private postalService: PostalService,
-              private customerService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              public eventService: EventService, public processTransaction: ProcessTransactionService,
-              private peopleService: PeopleService, private ngZone: NgZone) {
+    public authService: AuthService, private postalService: PostalService,
+    private customerService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    public eventService: EventService, public processTransaction: ProcessTransactionService,
+    private peopleService: PeopleService, private ngZone: NgZone) {
   }
 
   addressTypeLabel = 'Permanent Address Details';
@@ -225,12 +225,11 @@ export class ContactDetailsInnComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-        this.contactDetails.get('address2').setValue(place.formatted_address.substring(0, 39));
-        this.contactDetails.get('address3').setValue(place.formatted_address.substring(39, 79));
+        const { firstLine, secondLine } = UtilService.formatGoogleGeneratedAddress(place.formatted_address);
+        this.contactDetails.get('address2').setValue(firstLine);
+        this.contactDetails.get('address3').setValue(secondLine);
         this.getPincode(place.formatted_address);
-        // console.log(place);
       });
-      // })
     });
 
     this.contactDetails.controls.country.valueChanges.subscribe(newValue => {
@@ -306,6 +305,13 @@ export class ContactDetailsInnComponent implements OnInit {
       this.getFormControl().city.setValue(data[0].PostOffice[0].Region);
       this.getFormControl().country.setValue(data[0].PostOffice[0].Country);
       this.getFormControl().state.setValue(data[0].PostOffice[0].State);
+      let addressLine3 = this.contactDetails.get('address3').value;
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].District, '')
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].State, '')
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].Circle, '');
+      addressLine3 = addressLine3.replace(data[0].PostOffice[0].Country, '');
+      addressLine3 = addressLine3.replace(/,/g, '')
+      this.contactDetails.get('address3').setValue(addressLine3)
       this.pinInvalid = false;
     }
   }

@@ -346,7 +346,7 @@ export class AddGoalsComponent implements OnInit {
   setGoalTypeData(data) {
     if (this.validateIfUserAllowedToCreateGoal(data)) {
       this.goalTypeData = data;
-      this.showGoalType = [AppConstants.VACATION_GOAL, AppConstants.EDUCATION_GOAL].includes(data.id) ? 'multiYear' : 'singleYear'
+      this.showGoalType = [AppConstants.VACATION_GOAL, AppConstants.EDUCATION_GOAL].includes(data.goalTypeId) ? 'multiYear' : 'singleYear'
     }
   }
 

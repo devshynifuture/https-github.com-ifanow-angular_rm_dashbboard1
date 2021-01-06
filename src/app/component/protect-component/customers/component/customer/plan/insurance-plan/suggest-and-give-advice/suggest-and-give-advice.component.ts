@@ -122,11 +122,12 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
     });
   }
   changeAdviceName(data) {
+    this.adviceNameObj.adviceName = data.value;
+    this.adviceName = this.adviceNameObj.adviceName;
     if (this.adviceName == 'Continue') {
       this.adviceForm.get('implementDate').setErrors(null);
     }
-    this.adviceNameObj.adviceName = data.value;
-    this.adviceName = this.adviceNameObj.adviceName;
+    this.adviceForm.get('implementDate').setValue(null);
     this.componentRef._component.adviceName = this.adviceNameObj
     this.componentRef._component.changeAdviceName(this.componentRef._component.adviceName);
   }
@@ -1339,6 +1340,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
   }
   mergeAndhitApi(obj) {
     const stringObjHealth = {
+      adviceDescription: this.adviceForm.get('rationale').value, 
       insuranceCategoryTypeId: this.adviceToCategoryId,
       suggestedFrom: 1,
       id: this.dataForEdit ? this.dataForEdit.id : null,

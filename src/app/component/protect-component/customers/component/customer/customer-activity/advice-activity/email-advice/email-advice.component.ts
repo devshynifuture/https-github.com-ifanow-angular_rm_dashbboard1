@@ -78,12 +78,12 @@ export class EmailAdviceComponent implements OnInit {
     this.getData = data.selectedAssetData;
     console.log('clientData......................',this.clientData);
     if(this.clientData.emailList){
-      this._inputData.toEmail = this.clientData.emailList[0].email
+      this._inputData.toEmail = (this.clientData.emailList ? this.clientData.emailList[0].email : '')
     }
     this.getIds(data);
     this.emailIdList = [{ emailAddress: this._inputData.toEmail }];
     this.flag = data.flagData;
-    this._inputData.fromEmail = this.getOrgData.email;
+    this._inputData.fromEmail = (this.getOrgData ? this.getOrgData.email :'');
     this._inputData.subjectEditable = false;
     this._inputData.subject = 'Email advice request for consent ';
     // this._inputData.toEmail = 'gayatri@futurewise.co.in';
@@ -149,7 +149,7 @@ export class EmailAdviceComponent implements OnInit {
       );
     } else {
       const consentObj = {
-        "fromEmail":this.getOrgData.email,
+        "fromEmail":(this.getOrgData ? this.getOrgData.email :''),
         "toEmail":this.emailIdList,
         "adviceIdList":obj
         }
@@ -176,7 +176,7 @@ export class EmailAdviceComponent implements OnInit {
         // "adviceUuid": 'abe26153-d112-410e-8ee1-5268a8911b4a',
         "sent": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
       },
-      "fromEmail": this.getOrgData.email,
+      "fromEmail": (this.getOrgData ? this.getOrgData.email :''),
       "emailSubject": this.emailBody,
       "placeholder": [
         {

@@ -1,5 +1,5 @@
-<div class="dialogclose">
-    <div class="row popup-header-fix-100">
+<div class="popup-header-fix-100">
+    <div class="row">
         <div class="col-md-2 border-right-1 p-0">
             <img class="pt-8" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
@@ -13,29 +13,41 @@
         </div>
     </div>
 </div>
-<div class="wrapper-20 bg-grey lter heading-fix b-a">
-    <h3 class="m-0 text-center head-common">Rahul Jain</h3>
-</div>
-<div class="overflow-hidden mt-8 real-estate">
-    <!-- appSkeletonLoading [appSkeletonLoading]="isLoading" -->
-    <table mat-table *ngIf="id != 4 && dataSource.data.length > 0" appSkeletonLoading [appSkeletonLoading]="isLoading"
-            [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br"> No </th>
-                <td mat-cell *matCellDef="let element;index as i" class="br">
-                    <div class="bar"><span *ngIf="!isLoading">{{ i + 1 }}</span></div>
-                </td>
-                <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="investorName">
-                <th mat-header-cell *matHeaderCellDef class="br"> Owner </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{!isLoading ? (element?.stringObject['REAL']?.lifeAssuredName) : ''}} </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
 
-            </ng-container>
-            <ng-container matColumnDef="policyName">
+
+<div class="pt-60">
+    <div class="wrapper-12 bg-grey lter b-a">
+        <h3 class="m-0 text-center head-common">{{clientData ? clientData.name : ''}}</h3>
+    </div>
+
+    <div class="wrapper-40">
+        <p class="mb-10">Dear {{clientData ? clientData.name : ''}}</p>
+        <p class="mb-10">The information provided below requires your consent so that we can proceed further and do the
+            needful from
+            our end. </p>
+        <p class="mb-10">Please review it carefully and click on the OK button below to give your consent.</p>
+
+
+        <div class="overflow-hidden mt-8 real-estate">
+            <!-- appSkeletonLoading [appSkeletonLoading]="isLoading" -->
+            <table mat-table *ngIf="id != 4 && dataSource.data.length > 0" appSkeletonLoading
+                [appSkeletonLoading]="isLoading" [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> No </th>
+                    <td mat-cell *matCellDef="let element;index as i" class="br">
+                        <div class="bar"><span *ngIf="!isLoading">{{ i + 1 }}</span></div>
+                    </td>
+                    <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="investorName">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Owner </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{!isLoading ? (element?.stringObject['REAL']?.lifeAssuredName) : ''}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+
+                </ng-container>
+                <ng-container matColumnDef="policyName">
                     <th mat-header-cell *matHeaderCellDef class="br"> Policy name </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{!isLoading ? (element?.stringObject['REAL']?.policyName) : ''}} </div>
@@ -43,54 +55,60 @@
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
 
                 </ng-container>
-            <ng-container matColumnDef="currentValue">
-                <th mat-header-cell *matHeaderCellDef class="br t-10 textRight text-right"> Current value </th>
-                <td mat-cell *matCellDef="let element" class="br t-10 amt text-right">
-                    <div class="bar">
-                        <!-- <span *ngIf="!isLoading">
+                <ng-container matColumnDef="currentValue">
+                    <th mat-header-cell *matHeaderCellDef class="br textRight text-right"> Current value </th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
+                        <div class="bar">
+                            <!-- <span *ngIf="!isLoading">
                             {{!isLoading ? (element?.stringObject['REAL']?.currentValue ? element?.stringObject['REAL']?.currentValue : '') : ''}}
                         </span> -->
-                        <div class="bar">
-                                {{!isLoading &&  element?.stringObject['REAL']?.currentValue ? "₹" : ""}}<span *ngIf="!isLoading" appFormatNumber>{{(element?.stringObject['REAL']?.currentValue ? element?.stringObject['REAL']?.currentValue : '-')}}</span>
+                            <div class="bar">
+                                {{!isLoading &&  element?.stringObject['REAL']?.currentValue ? "₹" : ""}}<span
+                                    *ngIf="!isLoading"
+                                    appFormatNumber>{{(element?.stringObject['REAL']?.currentValue ? element?.stringObject['REAL']?.currentValue : '-')}}</span>
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
 
-            <ng-container matColumnDef="sumAssured">
-                <th mat-header-cell *matHeaderCellDef class="br textRight text-right"
-                    aria-label="Button that displays a tooltip when focused or hovered over"> Sum assured </th>
-                <td mat-cell *matCellDef="let element" class="br amt text-right">
-                    <div class="bar">
-                            {{!isLoading &&  element?.stringObject['REAL']?.sumAssured ? "₹" : ""}}<span *ngIf="!isLoading" appFormatNumber>
-                                    {{element?.stringObject['REAL']?.sumAssured ? element?.stringObject['REAL']?.sumAssured : '-'}}
+                <ng-container matColumnDef="sumAssured">
+                    <th mat-header-cell *matHeaderCellDef class="br textRight text-right"
+                        aria-label="Button that displays a tooltip when focused or hovered over"> Sum assured </th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
+                        <div class="bar">
+                            {{!isLoading &&  element?.stringObject['REAL']?.sumAssured ? "₹" : ""}}<span
+                                *ngIf="!isLoading" appFormatNumber>
+                                {{element?.stringObject['REAL']?.sumAssured ? element?.stringObject['REAL']?.sumAssured : '-'}}
                             </span> </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="premium">
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="premium">
                     <th mat-header-cell *matHeaderCellDef class="br textRight text-right"
                         aria-label="Button that displays a tooltip when focused or hovered over"> Premium amount </th>
                     <td mat-cell *matCellDef="let element" class="br amt text-right">
                         <div class="bar">
-                                {{!isLoading &&  element?.stringObject['REAL']?.premiumAmount ? "₹" : ""}}<span *ngIf="!isLoading" appFormatNumber>
-                                        {{element?.stringObject['REAL']?.premiumAmount ? element?.stringObject['REAL']?.premiumAmount :'-'}}
-                                </span>
-                             </div>
+                            {{!isLoading &&  element?.stringObject['REAL']?.premiumAmount ? "₹" : ""}}<span
+                                *ngIf="!isLoading" appFormatNumber>
+                                {{element?.stringObject['REAL']?.premiumAmount ? element?.stringObject['REAL']?.premiumAmount :'-'}}
+                            </span>
+                        </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
                 <ng-container matColumnDef="advice">
-                    <th mat-header-cell *matHeaderCellDef  class="br text-left"> Advice </th>
+                    <th mat-header-cell *matHeaderCellDef class="br text-left"> Advice </th>
                     <td mat-cell *matCellDef="let element" class="br text-left">
                         <div class="bar">
                             <span *ngIf="element">
                                 <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==1">Continue</span>
                                 <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==2">Surrender</span>
-                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==3">Stop paying premium</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==3">Stop paying
+                                    premium</span>
                                 <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
-                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==5">Partial withdrawl</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==5">Partial
+                                    withdrawl</span>
                                 <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==0">{{'Proposed policy'}}
                                 </span>
                             </span>
@@ -98,7 +116,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="astatus">
-                    <th mat-header-cell *matHeaderCellDef  class="br"> Advice status </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Advice status </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
                             <span *ngIf="element">
@@ -117,7 +135,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="adate">
-                    <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+                    <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
                     <td mat-cell *matCellDef="let element" class="br text-left">
                         <div class="bar">
                             <span *ngIf="element?.advice">
@@ -126,202 +144,211 @@
                         </div>
                     </td>
                 </ng-container>
-                <!-- <ng-container matColumnDef="rate">
-                        <th mat-header-cell *matHeaderCellDef class="br text-right textRight"> Rate </th>
-                        <td mat-cell *matCellDef="let element" class="br amt text-right">
-                            <div class="bar">
-                                <span *ngIf="!isLoading">{{!isLoading ? (element?.stringObject['REAL']?.assumedRate) : ''}}{{element?.stringObject['REAL']?.assumedRate ? '%' : ''}}</span>
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                    </ng-container>
-            <ng-container matColumnDef="maturityDate">
-                <th mat-header-cell *matHeaderCellDef class="br t-12 text-left"> Maturity date </th>
-                <td mat-cell *matCellDef="let element" class="br t-12 text-left">
-                    <div class="bar">
-                            <span *ngIf="!isLoading">{{!isLoading ? (element?.stringObject['REAL']?.maturityDate ? (element?.stringObject['REAL']?.maturityDate |date:'dd/MM/yyyy') : '-') : '-'}}</span> </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
 
-            <ng-container matColumnDef="applicableDate">
-                <th mat-header-cell *matHeaderCellDef class="br t-10"> Description </th>
-                <td mat-cell *matCellDef="let element" class="br t-10">
-                    <div class="bar">
-                        {{!isLoading ? (element?.stringObject['REAL']?.description ? element?.stringObject['REAL']?.description : '-') : ''}}
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container> -->
-            <ng-container matColumnDef="view">
-                <th mat-header-cell *matHeaderCellDef class="br t-10"> View </th>
-                <td mat-cell *matCellDef="let element" class="br t-10">
-                    <div class="bar">
-                        <span *ngIf="!isLoading" (click)="openDialog(element)"><i
-                            class="material-icons c-p">reorder</i></span>
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-                <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
-                    <div>
-                        <div *ngIf="!isLoading">
-                            <button *ngIf="!isLoading"
-                                [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1,'active':element.acceptedOrDeclined==1}"
-                                (click)="acceptOrDeclineConsent(element,i, 1)">ACCEPTED</button>
-                            <button *ngIf="!isLoading"
-                                [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2,'active':element.acceptedOrDeclined==2}"
+                <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef class="br  "> View </th>
+                    <td mat-cell *matCellDef="let element" class="br  ">
+                        <div class="bar">
+                            <span *ngIf="!isLoading" (click)="openDialog(element)"><i
+                                    class="material-icons c-p">reorder</i></span>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                    <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
+                        <div>
+                            <div *ngIf="!isLoading">
+                                <button *ngIf="!isLoading"
+                                    [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1,'active':element.acceptedOrDeclined==1}"
+                                    (click)="acceptOrDeclineConsent(element,i, 1)">ACCEPTED</button>
+                                <button *ngIf="!isLoading"
+                                    [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2,'active':element.acceptedOrDeclined==2}"
+                                    (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
+                            </div>
+
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container> -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                    <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
+
+                        <div class="d-flex align-items-center" *ngIf="!isLoading">
+
+                            <button *ngIf="!isLoading" class="mat-button mr-12"
+                                [ngClass]="{'mat-stroked-accepted': element.acceptedOrDeclined==1,'mat-accepted-bg':(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2)}"
+                                (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
+
+                            <button *ngIf="!isLoading" class="mat-button"
+                                [ngClass]="{'mat-stroked-danger': (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1),'mat-danger-bg':element.acceptedOrDeclined==2}"
                                 (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
                         </div>
 
-                    </div>
-                </td>
-                <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-        </table>
-    <table mat-table *ngIf="id==4 && dataSource.data.length > 0" appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
-        <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef class="br"> No </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br">
-                <div class="bar"><span *ngIf="!isLoading">{{ i + 1 }}</span></div>
-            </td>
-            <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="investorName">
-            <th mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
-            <td mat-cell *matCellDef="let element" class="br t-20">
-                <div class="bar">{{element?.stringObject[name]?.displayHolderName}}
-                </div>
-            </td>
-            <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
 
-        </ng-container>
-        <ng-container matColumnDef="schemeDetails">
-            <th mat-header-cell *matHeaderCellDef class="br t-10 textRight text-right"> Name of insurer & Plan </th>
-            <td mat-cell *matCellDef="let element" class="br t-10 amt text-right">
-                <div class="bar">
-                    <!-- <span *ngIf="!isLoading">
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            </table>
+            <table mat-table *ngIf="id==4 && dataSource.data.length > 0" appSkeletonLoading
+                [appSkeletonLoading]="isLoading" [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> No </th>
+                    <td mat-cell *matCellDef="let element;index as i" class="br">
+                        <div class="bar"><span *ngIf="!isLoading">{{ i + 1 }}</span></div>
+                    </td>
+                    <td *matFooterCellDef class="br  text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="investorName">
+                    <th mat-header-cell *matHeaderCellDef class="br t-20"> Owner </th>
+                    <td mat-cell *matCellDef="let element" class="br t-20">
+                        <div class="bar">{{element?.stringObject[name]?.displayHolderName}}
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br t-20 text-right" mat-footer-cell></td>
+
+                </ng-container>
+                <ng-container matColumnDef="schemeDetails">
+                    <th mat-header-cell *matHeaderCellDef class="br textRight text-left"> Name of insurer & Plan
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br  amt text-left">
+                        <div class="bar">
+                            <!-- <span *ngIf="!isLoading">
                     {{!isLoading ? (element?.stringObject['REAL']?.currentValue ? element?.stringObject['REAL']?.currentValue : '') : ''}}
                 </span> -->
-                    <div class="bar">
-                        {{element?.stringObject[name]?.insurerName}}{{element?.stringObject[name]?.planName ? '-'+ element?.stringObject[name]?.planName : ''}}
-                    </div>
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="currentValue">
-            <th mat-header-cell *matHeaderCellDef class="br text-right textRight"> Sum insured </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar">
-                        {{!isLoading &&  element?.stringObject[name]?.sumAssured ? "₹" : ""}}<span appFormatNumber *ngIf="!isLoading">{{element?.stringObject[name]?.sumAssured ? element?.stringObject[name]?.sumAssured :'-'}}</span>
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="notionalGain">
-            <th mat-header-cell *matHeaderCellDef class="br textRight text-right" matTooltip="Total amount invested"
-                aria-label="Button that displays a tooltip when focused or hovered over"> Premium</th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right">
-                <div class="bar">{{!isLoading &&  element?.stringObject[name]?.sumAssured ? "₹" : ""}}<span appFormatNumber *ngIf="!isLoading">
-                        {{element?.stringObject[name]?.premiumAmount ? element?.stringObject[name]?.premiumAmount : '-'}}</span> </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="expDate">
-            <th mat-header-cell *matHeaderCellDef class="br textRight text-right t-12"> Policy expiry date </th>
-            <td mat-cell *matCellDef="let element" class="br amt text-right t-12">
-                <div class="bar">{{element?.stringObject[name]?.policyExpiryDate | date:'dd/MM/yyyy'}} </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Advice </th>
-            <td mat-cell *matCellDef="let element" class="br text-left">
-                <div class="bar">
-                    <span *ngIf="element">
+                            <div class="bar">
+                                {{element?.stringObject[name]?.insurerName}}{{element?.stringObject[name]?.planName ? '-'+ element?.stringObject[name]?.planName : ''}}
+                            </div>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="currentValue">
+                    <th mat-header-cell *matHeaderCellDef class="br text-right textRight"> Sum insured </th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
+                        <div class="bar">
+                            {{!isLoading &&  element?.stringObject[name]?.sumAssured ? "₹" : ""}}<span appFormatNumber
+                                *ngIf="!isLoading">{{element?.stringObject[name]?.sumAssured ? element?.stringObject[name]?.sumAssured :'-'}}</span>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="notionalGain">
+                    <th mat-header-cell *matHeaderCellDef class="br textRight text-right"
+                        matTooltip="Total amount invested"
+                        aria-label="Button that displays a tooltip when focused or hovered over"> Premium</th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right">
+                        <div class="bar">{{!isLoading &&  element?.stringObject[name]?.sumAssured ? "₹" : ""}}<span
+                                appFormatNumber *ngIf="!isLoading">
+                                {{element?.stringObject[name]?.premiumAmount ? element?.stringObject[name]?.premiumAmount : '-'}}</span>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="expDate">
+                    <th mat-header-cell *matHeaderCellDef class="br textRight text-right t-12"> Policy expiry date </th>
+                    <td mat-cell *matCellDef="let element" class="br amt text-right t-12">
+                        <div class="bar">{{element?.stringObject[name]?.policyExpiryDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="advice">
+                    <th mat-header-cell *matHeaderCellDef class="br text-left"> Advice </th>
+                    <td mat-cell *matCellDef="let element" class="br text-left">
+                        <div class="bar">
+                            <span *ngIf="element">
                                 <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==1">Continue</span>
                                 <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==2">Discontinue</span>
                                 <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==3">Port policy</span>
-                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==4">Increase sum assured</span>
-                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==5">Decrease sum assured</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==4">Increase sum
+                                    assured</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==5">Decrease sum
+                                    assured</span>
                                 <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==6">Add members</span>
-                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==7">Remove members</span>
-                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==0">{{'Proposed policy'}}</span>
-                        </span>
-                </div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status </th>
-            <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar">
-                    <span *ngIf="element">
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==1">GIVEN</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==2">AWAITING CONSENT</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==3">ACCEPTED</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==4">IN PROGRESS</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==5">IMPLEMENTED</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==6">DECLINED</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==7">PENDING</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==8">SYSTEM GENERATED</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==9">REVISED</span>
-                        <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==0">{{'-'}}</span>
-                    </span>
-                </div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
-            <td mat-cell *matCellDef="let element" class="br text-left">
-                <div class="bar">
-                    <span *ngIf="element?.advice">
-                        {{element?.advice?.applicableDate ? (element?.advice?.applicableDate | date:'dd/MM/yyyy') : '-'}}
-                    </span>
-                </div>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="view">
-            <th mat-header-cell *matHeaderCellDef class="br t-10"> View </th>
-            <td mat-cell *matCellDef="let element" class="br t-10">
-                <div class="bar">
-                        <span *ngIf="!isLoading" (click)="openDialog(element)"><i
-                            class="material-icons c-p">reorder</i></span>
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
-            <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
-                <div>
-                    <div *ngIf="!isLoading">
-                        <button *ngIf="!isLoading"
-                            [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==1}"
-                            (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
-                        <button *ngIf="!isLoading"
-                            [ngClass]="{'mat-button': element.acceptedOrDeclined==0,'mat-stroked-button':element.acceptedOrDeclined==2}"
-                            (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
-                    </div>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==7">Remove
+                                    members</span>
+                                <span
+                                    *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==0">{{'Proposed policy'}}</span>
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="astatus">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Advice status </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="element">
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==1">GIVEN</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==2">AWAITING CONSENT</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==3">ACCEPTED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==4">IN PROGRESS</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==5">IMPLEMENTED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==6">DECLINED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==7">PENDING</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==8">SYSTEM GENERATED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==9">REVISED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==0">{{'-'}}</span>
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="adate">
+                    <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
+                    <td mat-cell *matCellDef="let element" class="br text-left">
+                        <div class="bar">
+                            <span *ngIf="element?.advice">
+                                {{element?.advice?.applicableDate ? (element?.advice?.applicableDate | date:'dd/MM/yyyy') : '-'}}
+                            </span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="view">
+                    <th mat-header-cell *matHeaderCellDef class="br  "> View </th>
+                    <td mat-cell *matCellDef="let element" class="br  ">
+                        <div class="bar">
+                            <span *ngIf="!isLoading" (click)="openDialog(element)"><i
+                                    class="material-icons c-p">reorder</i></span>
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                    <td mat-cell *matCellDef="let element;index as i" class="br text-primary">
 
-                </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <div *ngIf="dataSource.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
-        <img src="assets/images/svg/documents-empty-states.svg">
-        <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+                        <div class="d-flex align-items-center" *ngIf="!isLoading">
+
+                            <button *ngIf="!isLoading" class="mat-button mr-12"
+                                [ngClass]="{'mat-stroked-accepted': element.acceptedOrDeclined==1,'mat-accepted-bg':(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2)}"
+                                (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
+
+                            <button *ngIf="!isLoading" class="mat-button"
+                                [ngClass]="{'mat-stroked-danger': (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1),'mat-danger-bg':element.acceptedOrDeclined==2}"
+                                (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
+                        </div>
+
+
+                    </td>
+                    <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div *ngIf="dataSource.data.length == 0" class="w-100 mt-70 d-flex flex-column align-items-center">
+                <img src="assets/images/svg/documents-empty-states.svg">
+                <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+            </div>
+        </div>
+
+        <div class="mt-20">
+            <button class="btn-primary btn-height text-uppercase mr-16" *ngIf="!isLoading && dataSource.data.length > 0"
+                (click)="save()">Ok</button>
+            <button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0"
+                class="txt btn-height text-uppercase">Cancel</button>
+        </div>
     </div>
-</div>
-<div class="pt-20">
-        <button class="btn-primary" *ngIf="!isLoading && dataSource.data.length > 0" (click)="save()">Ok</button>
-        <button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0" class="txt pr-16">Cancel</button>
 </div>

@@ -1,4 +1,4 @@
-<!-- <div class="popup-header-fix-60">
+<!-- <div class="p`up-header-fix-60">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">{{showInsurance?.heading}} - Detailed view</h4>
@@ -581,23 +581,7 @@
                     </div>
 
                 </div>
-                <div class="row bb-1 pt-6 pb-6 br bl-1"
-                    *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
-                    <div class="col-md-4 f-400 f-14"
-                        *ngIf="_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'">
-                        {{(_data?.parentAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
-                    </div>
-                    <div class="col-md-4 f-500 f-14 roboto text-center"
-                        *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
-                        sum insured </div>
-                    <div *ngIf="_data?.childAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'"
-                        class="col-md-4 f-400 f-14 text-right">
-                        {{(_data?.childAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv : '-'}}</span>
-                    </div>
-                </div>
-                <div class="row bb-1 pt-6 pb-6 br bl-1">
+                <!-- <div class="row bb-1 pt-6 pb-6 br bl-1">
                     <div class="col-md-4 f-400 f-14">
                         <div *ngIf="_data?.parentAsset?.copayRupeesOrPercent == 1"
                             class="col-md-4 text-left f-14 roboto p-0">
@@ -669,7 +653,7 @@
                     </div>
 
 
-                </div>
+                </div> -->
                 <!-- <p class="roboto f-400 text-custom f-12 text-right">Implemented on: 04/09/2019</p> -->
             </div>
         </div>
@@ -874,7 +858,22 @@
 
                         </div>
                     </div>
-
+                    <div class="row bb-1 pt-6 pb-6 br bl-1"
+                    *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
+                    <div class="col-md-4 f-400 f-14"
+                        *ngIf="_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'">
+                        {{(_data?.parentAsset?.sumInsuredIdv) ? '₹' : ''}}<span
+                            appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
+                    </div>
+                    <div class="col-md-4 f-500 f-14 roboto text-center"
+                        *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
+                        sum insured </div>
+                    <div *ngIf="_data?.childAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'"
+                        class="col-md-4 f-400 f-14 text-right">
+                        {{(_data?.childAsset?.sumInsuredIdv) ? '₹' : ''}}<span
+                            appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv : '-'}}</span>
+                    </div>
+                </div>
                 </div>
                 <!-- <p class="roboto f-400 text-custom f-12 text-right">Implemented on: 04/09/2019</p> -->
             </div>

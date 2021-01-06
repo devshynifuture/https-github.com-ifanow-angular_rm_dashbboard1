@@ -9,6 +9,7 @@ import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscri
 import { UtilService } from 'src/app/services/util.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DialogDetailedViewInsPlanningComponent } from '../../customers/component/customer/plan/insurance-plan/dialog-detailed-view-ins-planning/dialog-detailed-view-ins-planning.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-email-consent',
@@ -33,7 +34,10 @@ export class EmailConsentComponent implements OnInit {
   name: string;
   adviceName: any;
   heading: any;
-  constructor(private dialog: MatDialog,private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { }
+  clientData: any;
+  constructor(private dialog: MatDialog,private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { 
+    this.clientData = AuthService.getClientData();
+  }
   displayedColumns2: string[] = ['position', 'investorName', 'policyName', 'currentValue', 'sumAssured', 'premium','advice','astatus','adate', 'view', 'actions'];
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'expDate','advice','astatus','adate', 'view', 'actions'];
   dataSource = new MatTableDataSource([{}, {}, {}]);

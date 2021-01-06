@@ -52,11 +52,11 @@ export class SendNowReportsComponent implements OnInit {
     this.overview = true;
     this.selectedReportType = 'overview'
     this.fromDate = new Date();
-    this.default = {'from':2019,'to':2020,'selected':true,'disabled':true}
+    this.default = { 'from': 2019, 'to': 2020, 'selected': true, 'disabled': true }
     this.fromDate.setFullYear(this.fromDate.getFullYear() - 1);
     this.toDate = new Date();
-    this.financialYears=[{'from':2010,'to':2011,'selected':true,'disabled':true},{'from':2011,'to':2012,'selected':true,'disabled':true},{'from':2012,'to':2013,'selected':true,'disabled':true},{'from':2013,'to':2014,'selected':true,'disabled':true},{'from':2014,'to':2015,'selected':true,'disabled':true},
-    {'from':2015,'to':2016,'selected':true,'disabled':true},{'from':2016,'to':2017,'selected':true,'disabled':true},{'from':2017,'to':2018,'selected':true,'disabled':true},{'from':2018,'to':2019,'selected':true,'disabled':true},{'from':2019,'to':2020,'selected':true,'disabled':true},{'from':2020,'to':2021,'selected':true,'disabled':true}]
+    this.financialYears = [{ 'from': 2010, 'to': 2011, 'selected': true, 'disabled': true }, { 'from': 2011, 'to': 2012, 'selected': true, 'disabled': true }, { 'from': 2012, 'to': 2013, 'selected': true, 'disabled': true }, { 'from': 2013, 'to': 2014, 'selected': true, 'disabled': true }, { 'from': 2014, 'to': 2015, 'selected': true, 'disabled': true },
+    { 'from': 2015, 'to': 2016, 'selected': true, 'disabled': true }, { 'from': 2016, 'to': 2017, 'selected': true, 'disabled': true }, { 'from': 2017, 'to': 2018, 'selected': true, 'disabled': true }, { 'from': 2018, 'to': 2019, 'selected': true, 'disabled': true }, { 'from': 2019, 'to': 2020, 'selected': true, 'disabled': true }, { 'from': 2020, 'to': 2021, 'selected': true, 'disabled': true }]
     this.financialYears.filter(function (element) {
       if (element.from == 2019 && element.to == 2020) {
         element.selected = true;
@@ -74,20 +74,20 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   proceed() {
-    if(this.selectedReportType == "capitalGainSummary" || this.selectedReportType == "capitalGainDetailed"){
-      if(this.date.to){
+    if (this.selectedReportType == "capitalGainSummary" || this.selectedReportType == "capitalGainDetailed") {
+      if (this.date.to) {
         this.date = this.default
       }
     }
-    if(this.date.toDate ){
-     
-    }else{
+    if (this.date.toDate) {
+
+    } else {
       this.date.fromDate = new Date();
       this.date.fromDate.setFullYear(this.date.fromDate.getFullYear() - 1);
       this.date.toDate = new Date();
     }
-    this.date.fromDate=this.datePipe.transform(this.date.fromDate, 'yyyy-MM-dd')
-    this.date.toDate=this.datePipe.transform(this.date.toDate, 'yyyy-MM-dd')
+    this.date.fromDate = this.datePipe.transform(this.date.fromDate, 'yyyy-MM-dd')
+    this.date.toDate = this.datePipe.transform(this.date.toDate, 'yyyy-MM-dd')
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
       width: '400px',
       height: '500px',
@@ -186,14 +186,14 @@ export class SendNowReportsComponent implements OnInit {
       }
     }
   }
-  changeFinancialYear(year){
+  changeFinancialYear(year) {
     this.date = year
   }
-  changeFromDate(date,flag){
-    if(flag == 'fromDate'){
+  changeFromDate(date, flag) {
+    if (flag == 'fromDate') {
       this.fromDate = date.value
       this.date.fromDate = this.fromDate
-    }else if(flag=='reportASOn'){
+    } else if (flag == 'reportASOn') {
       this.toDate = date.value
       this.date.toDate = this.toDate
     } else {

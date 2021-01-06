@@ -26,6 +26,7 @@ import { AddMilestoneComponent } from './add-milestone/add-milestone.component';
 import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
+import { map } from 'rxjs-compat/operator/map';
 
 
 
@@ -131,7 +132,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   highlight: boolean = false;
   singleGoalData = {
     goalName: '', goal: '', goalType: 0,
-    details: '', value: '', month: '', lumpsum: '', img: '', year: '', remainingData: { notes: '' }, dashboardData: { arr_lump_equity: [], arr_lump_debt: [], arr_debt_monthly: [], arr_equity_monthly: [], arr_goalYrAndFutValues: [], key_arr_equity_monthly: [], presentValue: 0, goalProgress: 0, achievedValue: 0, futureValue: 0, debt_monthly: 0, lump_equity: 0, equity_monthly: 0, lump_debt: 0 },
+    details: '', value: '', month: '', lumpsum: '', img: '', year: '', remainingData: { notes: '' }, dashboardData: { arr_lump_equity: [], arr_lump_debt: [], arr_debt_monthly: [], arr_equity_monthly: [], arr_goalYrAndFutValues: [], key_arr_equity_monthly: [], presentValue: 0, goalProgress: 0, achievedValue: 0, futureValue: 0, debt_monthly: {}, lump_equity: {}, equity_monthly: {}, lump_debt: {} },
     goalFV: '', achievedValue: '', equity_monthly: '', debt_monthly: '', lump_equity: '', lump_debt: '',
     goalAssetAllocation: '', retirementTableValue: '', percentCompleted: ''
   };
@@ -371,6 +372,16 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
       }
+      console.log('sip equity', mapData.dashboardData.equity_monthly)
+      console.log('sip debt', mapData.dashboardData.debt_monthly)
+      console.log('lum equity', mapData.dashboardData.lump_equity)
+      console.log('lum debt', mapData.dashboardData.lump_debt)
+      if (mapData.dashboardData.equity_monthly == 0 && mapData.dashboardData.lump_equity != 0) {
+        mapData.dashboardData.equity_monthly = 'N/A'
+      }
+      if (mapData.dashboardData.debt_monthly == 0 && mapData.dashboardData.lump_debt != 0) {
+        mapData.dashboardData.debt_monthly = 'N/A'
+      }
       console.log('mapData.dashboardData.key_arr_equity_monthly', mapData.dashboardData.key_arr_equity_monthly)
       mapData.remainingData = goalSubData;
       mapData.remainingData.differentGoalYears = [goalSubData.goalStartDate];
@@ -402,6 +413,16 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         key_goalYrAndFutValues: this.getSumOfJsonMapArrKey(goalSubData.goalYrAndFutValues),
         goalProgress: goalSubData.goalAchievedPercentage,
         achievedValue: goalSubData.achievedValue
+      }
+      console.log('sip equity', mapData.dashboardData.equity_monthly)
+      console.log('sip debt', mapData.dashboardData.debt_monthly)
+      console.log('lum equity', mapData.dashboardData.lump_equity)
+      console.log('lum debt', mapData.dashboardData.lump_debt)
+      if (mapData.dashboardData.equity_monthly == 0 && mapData.dashboardData.lump_equity != 0) {
+        mapData.dashboardData.equity_monthly = 'N/A'
+      }
+      if (mapData.dashboardData.debt_monthly == 0 && mapData.dashboardData.lump_debt != 0) {
+        mapData.dashboardData.debt_monthly = 'N/A'
       }
       console.log('mapData.dashboardData.key_arr_equity_monthly', mapData.dashboardData.key_arr_equity_monthly)
       mapData.remainingData = goalSubData;
@@ -540,7 +561,16 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
     this.singleGoalData = this.selectedGoal
-
+    console.log('sip equity', this.singleGoalData.dashboardData.equity_monthly)
+    console.log('sip debt', this.singleGoalData.dashboardData.debt_monthly)
+    console.log('lum equity', this.singleGoalData.dashboardData.lump_equity)
+    console.log('lum debt', this.singleGoalData.dashboardData.lump_debt)
+    if (this.singleGoalData.dashboardData.equity_monthly == 0 && this.singleGoalData.dashboardData.lump_equity != 0) {
+      this.singleGoalData.dashboardData.equity_monthly = 'N/A'
+    }
+    if (this.singleGoalData.dashboardData.debt_monthly == 0 && this.singleGoalData.dashboardData.lump_debt != 0) {
+      this.singleGoalData.dashboardData.debt_monthly = 'N/A'
+    }
     if (this.selectedGoal && this.finPlanObj && this.finPlanObj.obj) {
       this.finPlanObj.obj.dashboardData = {}
       this.selectedGoal = this.finPlanObj.obj

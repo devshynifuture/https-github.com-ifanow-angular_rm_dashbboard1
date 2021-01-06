@@ -6,7 +6,7 @@
         </h2>
     </div>
 
-    <div [formGroup]="singleYearGoalForm" class="row pt-20">
+    <div [formGroup]="singleYearGoalForm" class="row  ">
         <div class="col-md-12 p-0">
             <h5 class="pb-6 m-0 text-black">Milestones you'd also like to plan for?</h5>
             <div formArrayName="getMilestoneName">
@@ -38,8 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0 br-none"
-                                        formControlName="milestoneTypeId">
+                                    <mat-select class="form-control br-0 br-none" formControlName="milestoneTypeId">
                                         <mat-option class="" [value]="0" disabled>Select option
                                         </mat-option>
                                         <mat-option class="" [value]="1">Philanthrophy</mat-option>
@@ -60,13 +59,14 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="iconRupess">
-                                    <input type="number" autocomplete="off" matInput
-                                        formControlName="amount" class="form-control br-0 rupess">
+                                    <input type="number" autocomplete="off" matInput formControlName="amount"
+                                        class="form-control br-0 rupess">
                                     <mat-error class="f-12">This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-1 col-1 pr-0 pt-40" *ngIf="dialogData.flag != 'Edit'">
+                        <div class="col-md-1 d-flex align-items-center col-1 pr-0 pt-20"
+                            *ngIf="dialogData.flag != 'Edit'">
                             <i *ngIf=" pointIndex+1==singleYearGoalForm.value.getMilestoneName.length && pointIndex<2"
                                 class=" material-icons
                             f-20 c-p" (click)="addMilestone(undefined)">add</i>
@@ -91,7 +91,8 @@
                 </app-progress-button> -->
                 <button class="text-primitive mr-12 f-500" mat-button mat-dialog-close>Cancel</button>
                 <!-- <button mat-button class="text-primary f-500" (click)="()">Save</button> -->
-                <app-progress-button (btnClick)="saveMilestone()" class="br-0 text-inherit  " [options]="barButtonOptions">
+                <app-progress-button (btnClick)="saveMilestone()" class="br-0 text-inherit  "
+                    [options]="barButtonOptions">
                 </app-progress-button>
             </div>
         </div>

@@ -1,18 +1,18 @@
-import { Subscription } from 'rxjs';
-import { EmailDataStorageService } from '../../email-data-storage.service';
-import { ComposeEmailComponent } from "../compose-email/compose-email.component";
-import { ActivatedRoute, Router } from "@angular/router";
-import { EmailServiceService } from "../../email-service.service";
-import { Component, OnInit } from "@angular/core";
-import { EventService } from "../../../../../../Data-service/event.service";
-import { AuthService } from "../../../../../../auth-service/authService";
-import { Title } from '@angular/platform-browser';
-import { RoleService } from 'src/app/auth-service/role.service';
+import {Subscription} from 'rxjs';
+import {EmailDataStorageService} from '../../email-data-storage.service';
+import {ComposeEmailComponent} from '../compose-email/compose-email.component';
+import {Router} from '@angular/router';
+import {EmailServiceService} from '../../email-service.service';
+import {Component, OnInit} from '@angular/core';
+import {EventService} from '../../../../../../Data-service/event.service';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {Title} from '@angular/platform-browser';
+import {RoleService} from 'src/app/auth-service/role.service';
 
 @Component({
-  selector: "app-email-left-sidebar",
-  templateUrl: "./email-left-sidebar.component.html",
-  styleUrls: ["./email-left-sidebar.component.scss"],
+  selector: 'app-email-left-sidebar',
+  templateUrl: './email-left-sidebar.component.html',
+  styleUrls: ['./email-left-sidebar.component.scss'],
 })
 export class EmailLeftSidebarComponent implements OnInit {
   paginatorSubscription: any;
@@ -37,24 +37,25 @@ export class EmailLeftSidebarComponent implements OnInit {
     private emailDataStorageService: EmailDataStorageService,
     private titleService: Title,
     public roleService: RoleService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.isUserAuthenticated();
   }
 
   isUserAuthenticated() {
-    if (localStorage.getItem("associatedGoogleEmailId")) {
+    if (localStorage.getItem('associatedGoogleEmailId')) {
       const userInfo = AuthService.getUserInfo();
-      userInfo["email"] = localStorage.getItem("associatedGoogleEmailId");
+      userInfo.email = localStorage.getItem('associatedGoogleEmailId');
       this.authService.setUserInfo(userInfo);
     }
     let location;
-    location = this.router.url.split("/")[
-      this.router.url.split("/").length - 1
-    ];
+    location = this.router.url.split('/')[
+    this.router.url.split('/').length - 1
+      ];
     this.location = location;
-    if (this.router.url.split("/").includes("customer")) {
+    if (this.router.url.split('/').includes('customer')) {
       this.isCustomerEmail = true;
     } else {
       this.isCustomerEmail = false;
@@ -63,11 +64,11 @@ export class EmailLeftSidebarComponent implements OnInit {
       (response) => {
         if (!response) {
           this.eventService.openSnackBar(
-            "You must connect your gmail account",
-            "Dismiss"
+            'You must connect your gmail account',
+            'Dismiss'
           );
-          if (localStorage.getItem("successStoringToken")) {
-            localStorage.removeItem("successStoringToken");
+          if (localStorage.getItem('successStoringToken')) {
+            localStorage.removeItem('successStoringToken');
           }
           this.isAllowedToCompose = false;
         } else {
@@ -77,23 +78,24 @@ export class EmailLeftSidebarComponent implements OnInit {
       },
       (err) => {
         this.eventService.openSnackBar(
-          "You must connect your gmail account",
-          "Dismiss"
+          'You must connect your gmail account',
+          'Dismiss'
         );
-        if (localStorage.getItem("successStoringToken")) {
-          localStorage.removeItem("successStoringToken");
+        if (localStorage.getItem('successStoringToken')) {
+          localStorage.removeItem('successStoringToken');
         }
         this.isAllowedToCompose = false;
       }
     );
   }
+
   openCompose() {
     if (this.isAllowedToCompose) {
-      this.emailService.openComposeEmail(null, ComposeEmailComponent, "email");
+      this.emailService.openComposeEmail(null, ComposeEmailComponent, 'email');
     } else {
       this.eventService.openSnackBar(
-        "You must connect your gmail account",
-        "Dismiss"
+        'You must connect your gmail account',
+        'Dismiss'
       );
     }
   }

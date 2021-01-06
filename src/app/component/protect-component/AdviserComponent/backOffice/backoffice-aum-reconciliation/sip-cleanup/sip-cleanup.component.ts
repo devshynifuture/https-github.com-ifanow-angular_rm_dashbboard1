@@ -12,6 +12,9 @@ import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { element } from 'protractor';
 import { DatePipe } from '@angular/common';
+import { RunSipMappingMasterComponent } from './run-sip-mapping-master/run-sip-mapping-master.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDeploymentsComponent } from './add-deployments/add-deployments.component';
 
 @Component({
   selector: "app-sip-cleanup",
@@ -45,6 +48,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   currentPageIndex: any = 1;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
+
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -52,7 +56,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private reconService: ReconciliationService,
     private datePipe: DatePipe,
-    private util: UtilService
+    private util: UtilService, public dialog: MatDialog
   ) { }
 
   advisorId = AuthService.getAdvisorId();
@@ -239,7 +243,19 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     this.getSipCleanUpList(true, this.currentPageIndex);
     return event;
   }
+  openrunSipMapping() {
+    const dialogRef = this.dialog.open(RunSipMappingMasterComponent, {
+      width: '900px',
 
+      // data: {selectedFolios: data, type: 'backoffice'}
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+    });
+  }
 
   putSipCleanUpFolioKeepOrRemove(value, singleOrMultiple) {
     this.backOfficeService.putSipCleanUpUpdateStatus(value)
@@ -369,6 +385,25 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
           rightSideDataSub.unsubscribe();
         }
       });
+  }
+  openAddDeployments() {
+    const fragmentData = {
+      // flag: 'openselectAdvice',
+      // data,
+      componentName: AddDeploymentsComponent,
+
+      state: 'open65'
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
 }
 export interface PeriodicElement {

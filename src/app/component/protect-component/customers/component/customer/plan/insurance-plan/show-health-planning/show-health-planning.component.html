@@ -19,7 +19,7 @@
 
         <div class="row b-a">
             <div class="col-md-6 p-0">
-                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Step 1 - Select existing policy</h5>
+                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Select existing policy</h5>
                 <div class="pl-12 pr-12">
                     <div class="scroll-table-health">
                         <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource"
@@ -27,8 +27,8 @@
                             [appSkeletonLoading]="isLoading">
 
                             <ng-container matColumnDef="position">
-                                <th mat-header-cell *matHeaderCellDef class="br w-24"> Policy name </th>
-                                <td mat-cell *matCellDef="let element" class="br w-24">
+                                <th mat-header-cell *matHeaderCellDef class="br w-30"> Policy name </th>
+                                <td mat-cell *matCellDef="let element" class="br w-30">
                                     <div class="bar">
                                         {{element.insuranceDetails?.insurerName}}
                                     </div>
@@ -36,8 +36,8 @@
                             </ng-container>
 
                             <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Premium </th>
-                                <td mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Premium </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         {{element.insuranceDetails?.premiumAmount  ? '₹' :''}}<span appFormatNumber>
                                             {{element.insuranceDetails?.premiumAmount}}
@@ -56,8 +56,8 @@
                             </ng-container>
 
                             <ng-container matColumnDef="symbol">
-                                <th mat-header-cell *matHeaderCellDef class="br"> Sum insured </th>
-                                <td mat-cell *matCellDef="let element" class="br">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Sum insured </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
                                         {{element.displayHolderSumInsured ? '₹' :''}}<span appFormatNumber
                                             *ngIf="!isLoading">{{element.displayHolderSumInsured  ? element.displayHolderSumInsured :'-'}}</span>
@@ -81,19 +81,22 @@
                                     </div>
                                 </td>
                             </ng-container>
+
                             <ng-container matColumnDef="icons">
                                 <th mat-header-cell *matHeaderCellDef> </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="!isLoading">
-                                        <mat-icon>more_vert</mat-icon>
-                                    </button>
+                                <td class="c-p" mat-cell [matMenuTriggerFor]="menu" *matCellDef="let element">
+                                    <img *ngIf="!isLoading" class="c-p ng-star-inserted"
+                                        src="/assets/images/svg/dot-menu.svg">
                                     <mat-menu #menu="matMenu">
+                                        <!-- <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
+                                            <button mat-menu-item [disabled]="!element.advice"
+                                                (click)="openAddEditAdvice(showInsurance,element.childAsset ? element.childAsset : element.insuranceDetails,'existingAdvice')">Edit</button>
+                                        </div> -->
                                         <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
                                             <button mat-menu-item [disabled]="!element.advice"
-                                                (click)="openAddEditAdvice(showInsurance,element.insuranceDetails,'existingAdvice')">Edit</button>
+                                            (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete Advice</button>
                                         </div>
-                                        <button mat-menu-item
-                                            (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete</button>
+                                       
                                     </mat-menu>
                                 </td>
                             </ng-container>
@@ -114,12 +117,12 @@
                         (click)="openHelthInsurance(showInsurance)">SELECT ONE
                     </button>
                 </div>
-                <p class="m-0 text-black roboto pt-20 pb-20 c-p pl-12 pr-12" *ngIf="!isLoading && dataSource.length > 0"
-                    (click)="openHelthInsurance(showInsurance)">+ Add more
+                <p class="m-0 text-black roboto pt-20 pb-20 c-p pl-12 pr-12" *ngIf="!isLoading && dataSource.length > 0">
+                    <span  (click)="openHelthInsurance(showInsurance)">+ Add more</span>
                 </p>
             </div>
             <div class="col-md-6 bl-1 p-0">
-                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Step 2 - Suggest new policy</h5>
+                <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Suggest new policy</h5>
                 <!-- <div class="row center-items">
                     <div class="col-md-12 p-0">
                         <p class="m-0 roboto text-black">Suggest new policy from here.</p>

@@ -349,10 +349,29 @@ export class ShowHealthPlanningComponent implements OnInit {
         element.insurance = element.insuranceDetails ?  element.insuranceDetails :  element.insurance
         });
         singleData[0][2] = [...new Map(singleData[0][2].map(item => [item['insurance'].id, item])).values()];
+
     }
+    // this.putChildAssetInNeedAnalysis(singleData[0][1][value],singleData[0][2],value);
     console.log('recommendation', singleData[0][2])
     this.storedData = singleData;
     this.ipService.setIpData(this.storedData);
+  }
+  putChildAssetInNeedAnalysis(needData,adviceData,value){
+    if(value == 'current'){
+      if(needData.length > 0 && adviceData.length > 0){
+        needData.forEach(element => {
+          adviceData.forEach(ele => {
+            if(ele.adviceDetails){
+              if(ele.insurance.id == element.insuranceDetails.id){
+                ele.childAsset.id = ele.insurance.id;
+                ele.childAsset.adviceDetails = ele.adviceDetails
+                element.childAsset = ele.childAsset;
+              }
+            }
+          });
+        });
+      }
+    }
   }
   getPolicyHolderName(data) {
     let finalData = this.familyMemberList.filter(item => item.familyMemberId === (data.policyHolderId == this.clientId ? 0 : data.policyHolderId));
@@ -367,7 +386,7 @@ export class ShowHealthPlanningComponent implements OnInit {
         this.adviceName = singleInsuranceData.advice;
         singleInsuranceData.insuranceDetails['adviceDetails'] = singleInsuranceData.adviceDetails ? singleInsuranceData.adviceDetails : null
         this.adviceDetails = singleInsuranceData.insuranceDetails['adviceDetails'];
-        if (singleInsuranceData['insurance'] ? singleInsuranceData['insurance'].isRecommend == 1 : singleInsuranceData['insuranceDetails'] == 1) {
+        if (singleInsuranceData['insurance'] ? singleInsuranceData['insurance'].isRecommend == 1 : singleInsuranceData['insuranceDetails'].isRecommend == 1) {
           countSuggest++
           this.recommendOrNot = true;
         }
@@ -485,25 +504,28 @@ export class ShowHealthPlanningComponent implements OnInit {
           this.object.showInsurance = 'Motor';
           this.object.adviceToCategoryId = 37;
           component = MotorInsuranceComponent;
+          this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }]
           break;
         case 8:
           this.object.insuranceSubTypeId = 8;
           this.object.showInsurance = 'Travel';
           this.object.adviceToCategoryId = 38;
           component = TravelInsuranceComponent;
+          this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }]
           break;
         case 9:
           this.object.insuranceSubTypeId = 9;
           this.object.showInsurance = 'Home';
           this.object.adviceToCategoryId = 39;
           component = HouseholdersInsuranceComponent;
+          this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }]
           break;
         case 10:
           this.object.insuranceSubTypeId = 10;
           this.object.adviceToCategoryId = 40;
           this.object.showInsurance = 'Fire & special perils';
           component = FireInsuranceComponent;
-
+          this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }]
           break;
       }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;

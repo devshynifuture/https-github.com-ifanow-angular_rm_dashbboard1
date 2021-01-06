@@ -5,6 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { RoutingState } from 'src/app/services/routing-state.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MfServiceService } from '../accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-customer-overview',
@@ -19,7 +20,7 @@ export class CustomerOverviewComponent implements OnInit {
   loading: boolean;
   name: string;
 
-  constructor(public authService: AuthService, private router: Router,
+  constructor(private MfServiceService:MfServiceService,public authService: AuthService, private router: Router,
     private eventService: EventService, public routingStateService: RoutingState,
     private peopleService: PeopleService, public subInjectService: SubscriptionInject) {
     this.subInjectService.singleProfileData.subscribe(
@@ -109,6 +110,7 @@ export class CustomerOverviewComponent implements OnInit {
     setTimeout(() => {
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
+    this.MfServiceService.clearStorage();
   }
 
   logout() {

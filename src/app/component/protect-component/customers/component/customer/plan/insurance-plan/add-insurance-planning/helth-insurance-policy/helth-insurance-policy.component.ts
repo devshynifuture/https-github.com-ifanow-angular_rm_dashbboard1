@@ -16,10 +16,10 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
   selector: 'app-helth-insurance-policy',
   templateUrl: './helth-insurance-policy.component.html',
   styleUrls: ['./helth-insurance-policy.component.scss'],
-  providers: [
-    [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
-  ],
+  // providers: [
+  //   [DatePipe],
+  //   { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  // ],
 })
 export class HelthInsurancePolicyComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
@@ -186,6 +186,10 @@ export class HelthInsurancePolicyComponent implements OnInit {
     if (this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Port policy'|| this.healthInsurance.get('selectAdvice').value == 'Increase sum assured' || this.healthInsurance.get('selectAdvice').value == 'Decrease sum assured') {
       this.healthInsurance.get('famMember').setErrors(null);
     }
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue'){
+      this.healthInsurance.get('implementationDate').setErrors(null);
+      this.healthInsurance.get('implementationDate').setErrors(null);   
+     }
   }
   getFormControl(): any {
     return this.healthInsurance.controls;
@@ -200,7 +204,12 @@ export class HelthInsurancePolicyComponent implements OnInit {
     if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Surrender' || this.healthInsurance.get('selectAdvice').value == 'Discontinue') {
       this.healthInsurance.get('amount').setErrors(null);
     }
-
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue'){
+      this.healthInsurance.get('implementationDate').setErrors(null);
+      this.healthInsurance.get('implementationDate').setErrors(null);   
+     }
+     this.healthInsurance.get('implementationDate').setValue(null);   
+     this.healthInsurance.get('amount').setValue(null);   
   }
   dateChange(value) {
     let adviceHeaderDate = this.datePipe.transform(this.healthInsurance.controls.adviceHeaderDate.value, 'yyyy/MM/dd')
@@ -228,6 +237,10 @@ export class HelthInsurancePolicyComponent implements OnInit {
 
   }
   saveAdviceOnHealth() {
+    if(this.healthInsurance.get('selectAdvice').value == 'Continue'){
+      this.healthInsurance.get('implementationDate').setErrors(null);
+      this.healthInsurance.get('implementationDate').setErrors(null);   
+     }
     if (this.healthInsurance.get('selectAdvice').value == 'Continue' || this.healthInsurance.get('selectAdvice').value == 'Port policy' || this.healthInsurance.get('selectAdvice').value == 'Stop paying premium'
       || this.healthInsurance.get('selectAdvice').value == 'Discontinue' ) {
       this.healthInsurance.get('amount').setErrors(null);

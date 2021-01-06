@@ -93,7 +93,7 @@
                                     </p>
                                     <div class="form-group">
                                         <mat-form-field class="ba-date">
-                                            <input [disabled]=dataForEdit (ngModelChange)="dateChange('givenOnDate')"
+                                            <input  [disabled]=dataForEdit (ngModelChange)="dateChange('givenOnDate')"
                                                 matInput (focus)="picker.open()" formControlName="givenOnDate"
                                                 [matDatepicker]="picker" class="form-control b-0">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

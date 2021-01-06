@@ -6,41 +6,10 @@
             <button mat-stroked-button class="text-primary br-0 b-priamry" (click)="allAdvice = true">All General
                 Insurance</button>
         </div>
-        <!-- <div class="col-md-6 p-0 text-right">
-            <button mat-button [matMenuTriggerFor]="menu" class="right b-a br-0 pr-8">Scenario 2<i
-                    class="material-icons pl-8 text-light">
-                    keyboard_arrow_down
-                </i></button>
-            <mat-menu #menu="matMenu">
-                <div class="row pt-16">
-                    <div class="col-md-6 ">
-                        <p class="m-0 text-black">Scenario 1</p>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                    </div>
-                </div>
-                <div class="row pt-16">
-                    <div class="col-md-6 ">
-                        <p class="m-0 text-black">Scenario 2</p>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <button mat-stroked-button class="primary-sm">APPROVED</button>
-                    </div>
-                </div>
-                <div class="row pt-16">
-                    <div class="col-md-6 ">
-                        <p class="m-0 text-black">Scenario 3</p>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                    </div>
-                </div>
-            </mat-menu>
-        </div> -->
+
     </div>
     <div class="row">
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 mt-16 p-0">
             <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
             </app-advice-action>
         </div>
@@ -105,13 +74,14 @@
             </mat-menu>
         </div>
     </div>
-    <table  mat-table appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]="healthInsuranceDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="healthInsuranceDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
                     [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading == false && healthInsuranceDataSource.tableFlag" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && healthInsuranceDataSource.tableFlag"
+                    (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -121,7 +91,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -131,7 +101,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -142,7 +112,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br text-right right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br text-right right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -154,7 +124,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -164,7 +134,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -174,7 +144,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -191,7 +161,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -210,7 +180,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -218,14 +188,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Health Insurance',element)">Edit</button>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Health Insurance',element)">Edit</button>
                         <button mat-menu-item
                         (click)="openDetailedView('Health Insurance',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Health Insurance',element)">Delete</button>
@@ -299,13 +269,14 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
-        [dataSource]="personalAccidentDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="personalAccidentDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="personalCount==personalAccidentDataSource.data.length"
                     [indeterminate]="personalCount>0 && personalCount<personalAccidentDataSource.data.length"
-                    *ngIf="isLoading == false && personalAccidentDataSource.tableFlag"  (change)="checkAll($event,personalAccidentDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && personalAccidentDataSource.tableFlag"
+                    (change)="checkAll($event,personalAccidentDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -315,7 +286,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -325,7 +296,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -336,7 +307,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -348,7 +319,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -358,7 +329,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -368,7 +339,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -385,7 +356,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -404,7 +375,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -412,14 +383,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Personal accident',element)">Edit</button>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Personal accident',element)">Edit</button>
                         <button mat-menu-item
                         (click)="openDetailedView('Personal accident',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Personal accident',element)">Delete</button>
@@ -493,13 +464,14 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="criticalInsDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="criticalInsDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="criticalCount==criticalInsDataSource.data.length"
                     [indeterminate]="criticalCount>0 && criticalCount<criticalInsDataSource.data.length"
-                    *ngIf="isLoading == false && criticalInsDataSource.tableFlag"  (change)="checkAll($event,criticalInsDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && criticalInsDataSource.tableFlag"
+                    (change)="checkAll($event,criticalInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -509,7 +481,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -519,7 +491,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -530,7 +502,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -542,7 +514,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -552,7 +524,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -562,7 +534,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -579,7 +551,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -598,7 +570,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -606,14 +578,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Critical illness',element)">Edit</button>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Critical illness',element)">Edit</button>
                         <button mat-menu-item
                         (click)="openDetailedView('Critical illness',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Critical illness',element)">Delete</button>
@@ -677,13 +649,14 @@
             </mat-menu>
         </div>
     </div>
-    <table  mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="motorDataSource"
+    <table mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="motorDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="motorCount==motorDataSource.data.length"
                     [indeterminate]="motorCount>0 && motorCount<motorDataSource.data.length"
-                    *ngIf="isLoading == false && motorDataSource.tableFlag"  (change)="checkAll($event,motorDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && motorDataSource.tableFlag"
+                    (change)="checkAll($event,motorDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -693,7 +666,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -703,7 +676,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -714,7 +687,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -726,7 +699,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -736,7 +709,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -746,7 +719,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -763,7 +736,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -782,7 +755,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -790,14 +763,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',element)">Edit</button>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Motor insurance',element)">Edit</button>
                         <button mat-menu-item
                         (click)="openDetailedView('Motor insurance',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Motor insurance',element)">Delete</button>
@@ -861,13 +834,14 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="travelDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="travelDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="travelCount==travelDataSource.data.length"
                     [indeterminate]="travelCount>0 && travelCount<travelDataSource.data.length"
-                    *ngIf="isLoading == false && travelDataSource.tableFlag"  (change)="checkAll($event,travelDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && travelDataSource.tableFlag"
+                    (change)="checkAll($event,travelDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -877,7 +851,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -887,7 +861,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -898,7 +872,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -910,7 +884,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -920,7 +894,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -930,7 +904,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -947,7 +921,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -966,7 +940,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -974,14 +948,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',element)">Edit</button>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Travel insurance',element)">Edit</button>
                         <button mat-menu-item
                         (click)="openDetailedView('Travel insurance',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Travel insurance',element)">Delete</button>
@@ -1045,13 +1019,14 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="homeInsDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="homeInsDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="homeCount==homeInsDataSource.data.length"
                     [indeterminate]="homeCount>0 && homeCount<homeInsDataSource.data.length"
-                    *ngIf="isLoading == false && homeInsDataSource.tableFlag"  (change)="checkAll($event,homeInsDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && homeInsDataSource.tableFlag"
+                    (change)="checkAll($event,homeInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -1061,7 +1036,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -1071,7 +1046,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -1082,7 +1057,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -1094,7 +1069,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -1104,7 +1079,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -1114,7 +1089,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1131,7 +1106,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1150,7 +1125,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -1158,14 +1133,14 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="openAddEditAdvice('Home insurance',element)">Edit</button>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Home insurance',element)">Edit</button>
                         <button mat-menu-item
                         (click)="openDetailedView('Home insurance',element)">Detailed View</button>
                         <button mat-menu-item (click)="deleteModal('Home insurance',element)">Delete</button>
@@ -1239,13 +1214,14 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="FireDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="FireDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="fireCount==FireDataSource.data.length"
                     [indeterminate]="fireCount>0 && fireCount<FireDataSource.data.length"
-                    *ngIf="isLoading == false && FireDataSource.tableFlag"  (change)="checkAll($event,FireDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && FireDataSource.tableFlag"
+                    (change)="checkAll($event,FireDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
@@ -1255,7 +1231,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -1265,7 +1241,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -1276,7 +1252,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -1288,7 +1264,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -1298,7 +1274,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -1308,7 +1284,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1325,7 +1301,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1344,7 +1320,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -1352,7 +1328,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
@@ -1360,7 +1336,7 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item
-                            (click)="openAddEditAdvice('Fire & special perils insurance',element)">Edit</button>
+                            (click)="openAddEditAdvice('Fire & special perils insurance',element)" *ngIf="element?.adviceDetails?.adviceId == 0">Edit</button>
                             <button mat-menu-item
                             (click)="openDetailedView('Fire & special perils insurance',element)">Detailed View</button>
                         <button mat-menu-item

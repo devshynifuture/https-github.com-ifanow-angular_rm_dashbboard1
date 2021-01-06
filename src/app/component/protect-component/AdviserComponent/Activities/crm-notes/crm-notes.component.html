@@ -1,4 +1,4 @@
-<div id="ui-activies">
+<div id="ui-activies" [ngStyle]="{'display': finPlanObj?.hideForFinPlan ? 'none' : '' }">
     <div class="row main-header">
         <div class="col-md-12 p-0">
             <h3 class="m-0 p-20">Notes</h3>
@@ -91,22 +91,11 @@
                                     admin
                                 </mat-checkbox>
 
-
-                                <!-- <p class="m-0 text-primitive"> Last edited </p>
-                                <p class="m-0 text-primitive">
-                                    {{ (selectedNote) ? (selectedNote.updatedTime | date:'dd/LL/yyyy hh:mm aaa') : date
-                                    |
-                                    date:'dd/LL/yyyy hh:mm aaa' }}
-                                </p> -->
+                                <button mat-flat-button class="downloadPdfIcon ml-10" *ngIf="selectedNote"
+                                    (click)="download('template1','Notes')">
+                                    <img src="assets/images/svg/mf-donwload.svg">
+                                </button>
                             </div>
-
-
-                            <!-- <i *ngIf="selectedNote" (click)="deleteNotes(selectedNote,'')"
-                                class="material-icons ml-10 c-p"> delete </i> -->
-
-                            <!-- <img class="ml-10 c-p" *ngIf="selectedNote" (click)="deleteNotes(selectedNoteF)"
-                                src="/assets/images/svg/insurance-delect-icon.svg"> -->
-
 
                         </div>
 
@@ -195,7 +184,7 @@
                                     <p class="m-0  ">{{note.clientName}}</p>
                                     <p class="m-0   text-primitive">
                                         {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} </p>
-                                    <p class="m-0 text-truncate text-primitive"> {{note.showContent}}</p>
+                                    <p id="pdf" class="m-0 text-truncate text-primitive"> {{note.showContent}}</p>
                                 </div>
                                 <div *ngIf="showCheckBox == false">
                                     <i (click)="deleteNotes(note)" title="Remove"
@@ -204,22 +193,8 @@
                                 </div>
                             </div>
 
-
-
-
                         </li>
                     </ul>
-
-
-
-                    <!-- <div class="row  b-b pt-10 pb-10" (click)="selectNote(note)">
-                            <div class="col-md-12 p-0">
-                                <h5 class="m-0 f-500"> {{note.subject}} </h5>
-                                <p class="m-0">{{note.clientName}}</p>
-                                <p class="m-0 text-primitive">
-                                    {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} {{note.content}}</p>
-                            </div>
-                        </div> -->
 
                 </div>
 
@@ -250,10 +225,104 @@
                     </div>
                 </div>
 
-
-
             </div>
 
         </div>
     </div>
 </div>
+
+
+<!-- ------------------------------------------------ pdf design ---------------------------------------- -->
+
+<table #tableEl id="template1" style="width: 95%; display: none;  font-family: 'Roboto', sans-serif; margin: 0px auto;">
+    <!-- <tr>
+        <td>
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;">
+
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                        </td>
+
+                        <td style=" text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                                <strong> Number: </strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                                <strong> Email: </strong>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}
+                            </p>
+
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on: {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr> -->
+
+
+    <tr>
+        <td>
+            <table align="center"
+                style=" width: 95%; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                <tr>
+                    <td style="text-align: left; vertical-align: top; width: 50%;">
+
+                    </td>
+
+                    <td style="text-align: right; vertical-align: top; width: 50%;">
+                        <p style="margin: 0px 0px 5px 0px; font-size: 16px;">
+                            Prepared by
+                        </p>
+                        <h3 style="margin: 0px; font-size: 18px;">
+                            {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
+                        </h3>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table style="width: 95%; margin: 20px auto 0px;">
+                <tr>
+                    <td>
+                        <p style="font-size: 14px;"> <span style="font-weight: 600;"> Client name: </span>
+                            {{clientName}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h1 style="font-size: 20px; margin-top: 10px; font-weight: 600; text-align: center;">
+                            {{subjectPDF}} </h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">
+                        <p style="font-size: 16px; line-height: 20px;">
+                            {{showContentPDf}}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

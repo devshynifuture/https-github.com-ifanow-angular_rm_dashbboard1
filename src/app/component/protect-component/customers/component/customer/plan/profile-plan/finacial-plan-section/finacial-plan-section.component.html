@@ -1,12 +1,3 @@
-<!-- <div class="row pt-150">
-                    <div class="col-md-12 text-center">
-                        <h3 class="m-0 f-22">No financial plans generated yet!</h3>
-                        <h6 class="m-0 pt-28">Once you’re done with the planning exercise, you can generate<br>
-                            a fully customized financial plan from here and do much more.</h6>
-                        <button mat-stroked-button class="btn-primary btn-lg br-0 mt-44 f-16 h-40">Generate financial
-                            plan</button>
-                    </div>
-                </div> -->
 <div class="row pt-48 p-8">
     <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'" class="p-0">
         <div class="row pb-8 align-items-center">
@@ -19,9 +10,9 @@
                     NEW</button>
             </div>
         </div>
-        <div>
+        <div class="finacial_plan_height">
             <div cdkDropList (cdkDropListDropped)="drop($event)" *ngIf="!isLoading">
-                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
+                <div class="mt-8 relClass" *ngFor="let module of moduleAdded;let i = index" cdkDrag>
                     <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
                     <div class="row p-4 b-a pt-8 pb-8 c-p">
                         <div class="col-md-1 pl-8">
@@ -43,15 +34,14 @@
                 </div>
             </div>
 
-            <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                <div class="mt-8 h-auto-500 relClass" *ngFor="let module of moduleAddedLoader;let i = index">
-                    <div class="mt-8 h-auto-500 relClass">
-                        <div class="col-md-12 pl-0">
-                            <div class="bar">
-                                <p class="m-0 pt-4">{{(isLoading) ? '' : ''}}</p>
-                            </div>
+            <div class="skeletonAnimation overflow-hidden" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="mt-8" *ngFor="let module of moduleAddedLoader;let i = index">
+                    <div class="col-md-12 relClass pl-0">
+                        <div class="bar" [ngClass]="{height24: isLoading}">
+                            <p class="m-0 pt-4">{{(isLoading) ? '' : ''}}</p>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div *ngIf="moduleAdded.length  == 0 && hideTable == true && !isLoading">
@@ -132,31 +122,33 @@
                     </table>
                 </div>
             </div>
-            <div class="mt-12">
-                <div class="row pt-12">
-                    <!-- <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
-                        <button mat-stroked-button class="text-primary b-a-custom"
-                            (click)="getPreview()">Preview</button>
-                    </div> -->
-                    <div class="col-md-3 p-0" *ngIf="moduleAdded.length > 0">
-                        <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
 
-                    </div>
-                    <div class="col-md-2">
-                        <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
-                    </div>
-                    <div class="col-md-7 p-0 text-right"
-                        *ngIf="moduleAdded.length > 0 && hideTable == true && downloadPdf == true">
-                        <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
-                    </div>
-                    <!-- <div class="col-md-2 text-right"
-                        *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false">
-                        <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
-                    </div> -->
+        </div>
+        <div class="mt-12">
+            <div class="row ">
+                <!-- <div class="col-md-2 pl-0" *ngIf="moduleAdded.length > 0">
+                    <button mat-stroked-button class="text-primary b-a-custom"
+                        (click)="getPreview()">Preview</button>
+                </div> -->
+                <div class="col-md-3 p-0" *ngIf="moduleAdded.length > 0">
+                    <button mat-stroked-button class="btn-primary" (click)="download()">Generate plan</button>
+
                 </div>
+                <div class="col-md-2">
+                    <mat-spinner [diameter]="30" *ngIf="isSpinner == false"></mat-spinner>
+                </div>
+                <div class="col-md-7 p-0 text-right"
+                    *ngIf="moduleAdded.length > 0 && hideTable == true && downloadPdf == true">
+                    <button mat-stroked-button class="btn-success" (click)="savePlanSection()">Save plan</button>
+                </div>
+                <!-- <div class="col-md-2 text-right"
+                    *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false">
+                    <button mat-stroked-button class="btn-success" (click)="addNew()">Add new</button>
+                </div> -->
             </div>
         </div>
     </div>
+
     <div [ngClass]="hideTable == true ? 'col-md-6': 'col-md-12'" *ngIf="hideTable == true">
         <div class="row bb-1">
             <div class="col-md-6 p-0">
@@ -168,1262 +160,1015 @@
                 </i>
             </div>
         </div>
-        <mat-tab-group animationDuration="0ms" id="ui-dashboard-guide" [(selectedIndex)]="selected" class="mt-20">
-            <!-- id="ui-dashboard-guide" -->
-            <mat-tab label="Plan">
-                <div class="row pl-20 pb-12">
-                    <!-- <div class="col-md-12 p-0 row">
-                        <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Scenario 2<i
-                                class="material-icons text-right">
-                                arrow_drop_down
-                            </i></button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="m-0 pt-16">Scenario 1</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="m-0 pt-16">Scenario 2</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button mat-stroked-button class="primary-sm">APPROVED</button>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="m-0 pt-16">Scenario 3</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                                    </div>
-                                </div>
-                            </button>
-                        </mat-menu>
-                        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                    </div> -->
-                </div>
-                <div class="pt-12 pb-20">
-                    <mat-accordion id="fp-modules">
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Insurance planning</h5>
-                                </mat-panel-title>
+        <div class="finacial_plan_height">
+            <mat-tab-group animationDuration="0ms" id="ui-dashboard-guide" [(selectedIndex)]="selected" class="mt-20">
+                <!-- id="ui-dashboard-guide" -->
+                <mat-tab label="Plan">
 
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngFor="let insurance of insurancePlanningList">
-                                    <div class="col-md-1">
-                                        <mat-checkbox [(ngModel)]="insurance.isSelectedCheckbox"
-                                            (change)="checkAndLoadPdf($event.checked,'Life insurance',insurance,'Plan / Insurance / '+insurance.heading,false,insurance)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Insurance /
-                                            {{insurance.heading}} / {{insurance.displayHolderName}}</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="pt-12 pb-20">
+                        <mat-accordion id="fp-modules">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Insurance planning</h5>
+                                    </mat-panel-title>
 
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Profile</h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="incomeCount != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #checkIncome
-                                            (change)="checkAndLoadPdf($event.checked,'income','','Profile / Income',false,checkIncome)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Income</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.thisMonth != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expenseThisMonth
-                                            (change)="checkAndLoadPdf($event.checked,'Expense This month','','Profile / Expense / This month',false,expenseThisMonth)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / This month</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.lastMonth != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expenseLastMonth
-                                            (change)="checkAndLoadPdf($event.checked,'Expense Last month','','Profile / Expense / Last month',false,expenseLastMonth)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / Last month</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.thisQuarter != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expenseThisQuarter
-                                            (change)="checkAndLoadPdf($event.checked,'Expense This quarter','','Profile / Expense / This quarter',false,expenseThisQuarter)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / This quarter</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.lastQuarter != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expenseLastQuarter
-                                            (change)="checkAndLoadPdf($event.checked,'Expense Last quarter','','Profile / Expense / Last quarter',false,expenseLastQuarter)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / Last quarter</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="expenseCount && expenseCount.thisCalendarYear != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expensethisCalYear
-                                            (change)="checkAndLoadPdf($event.checked,'Expense This calender year','','Profile / Expense / This calender year',false,expensethisCalYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / This calender year</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="expenseCount && expenseCount.lastCalendarYear != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expenseLastCalYear
-                                            (change)="checkAndLoadPdf($event.checked,'Expense Last calender year','','Profile / Expense / Last calender year',false,expenseLastCalYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / Last calender year</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="expenseCount && expenseCount.thisFinancialYear != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expenseThisFinYear
-                                            (change)="checkAndLoadPdf($event.checked,'Expense This financial year','','Profile / Expense / This financial year',false,expenseThisFinYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / This financial year</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.thisMonth != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #expenseLastFinYear
-                                            (change)="checkAndLoadPdf($event.checked,'Expense Last financial year','','Profile / Expense / Last financial year',false,expenseLastFinYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Expense / Last financial year</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.thisMonth !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetThisMonth
-                                            (change)="checkAndLoadPdf($event.checked,'Budget This month','','Profile / Budget / This month',false,budgetThisMonth)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / This month</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.lastMonth !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetLastMonth
-                                            (change)="checkAndLoadPdf($event.checked,'Budget Last month','','Profile / Budget / Last month',false,budgetLastMonth)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / Last month</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.thisQuarter !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetThisQuarter
-                                            (change)="checkAndLoadPdf($event.checked,'Budget This quarter','','Profile / Budget / This quarter',false,budgetThisQuarter)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / This quarter</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.lastQuarter !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetLastQuarter
-                                            (change)="checkAndLoadPdf($event.checked,'Budget Last quarter','','Profile / Budget / Last quarter',false,budgetLastQuarter)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / Last quarter</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.thisCalendarYear !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetThisCalYear
-                                            (change)="checkAndLoadPdf($event.checked,'Budget This calender year','','Profile / Budget / This calender year',false,budgetThisCalYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / This calender year</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.lastCalendarYear !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetLastCalYear
-                                            (change)="checkAndLoadPdf($event.checked,'Budget Last calender year','','Profile / Budget / Last calender year',false,budgetLastCalYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / Last calender year</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.thisFinancialYear !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetThisFinYear
-                                            (change)="checkAndLoadPdf($event.checked,'Budget This financial year','','Profile / Budget / This financial year',false,budgetThisFinYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / This financial year</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.lastFinancialYear !=0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #budgetLastFinYear
-                                            (change)="checkAndLoadPdf($event.checked,'Budget Last financial year','','Profile / Budget / Last financial year',false,budgetLastFinYear)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Profile / Budget / Last financial year</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-expansion-panel>
-                        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                            class="mt-12">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Goals</h5>
-                                </mat-panel-title>
-
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngFor="let goal of dataSource.data">
-                                    <div class="col-md-1">
-                                        <mat-checkbox [checked]="goal.isSelected" [(ngModel)]="goal.isSelectedCheckbox"
-                                            (change)="checkAndLoadPdf($event.checked,'Goal',goal,'Plan / Goal / '+goal.details,false,goal)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Goal /
-                                            {{goal.details}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </mat-expansion-panel>
-                        <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-                            class="mt-12">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <h5 class="m-0">Taxes</h5>
-                                </mat-panel-title>
-
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                                <div class="row pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox></mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">Plan / Scenario 2 /
-                                            Life
-                                            insurance / Rahul
-                                            Jain</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </mat-expansion-panel> -->
-                    </mat-accordion>
-                </div>
-            </mat-tab>
-            <mat-tab label="Portfolio">
-                <div class="row pt-12 pl-20 pb-12">
-                    <!-- <div class="col-md-12 p-0 row">
-                        <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Scenario 2<i
-                                class="material-icons text-right">
-                                arrow_drop_down
-                            </i></button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="m-0 pt-16">Scenario 1</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="m-0 pt-16">Scenario 2</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button mat-stroked-button class="primary-sm">APPROVED</button>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="m-0 pt-16">Scenario 3</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <button mat-stroked-button class="warning-sm">UNAPPROVED</button>
-                                    </div>
-                                </div>
-                            </button>
-                        </mat-menu>
-                        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                    </div> -->
-                </div>
-                <div class="pb-20">
-                    <mat-accordion id="fp-modules">
-                        <mat-expansion-panel *ngIf="mfCount && mfCount.mutualFund != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title (click)="getAssetCountGlobalData()">
-                                    <h5 class="m-0">Mutual Fund</h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #mfOverView
-                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund overview','','Portfolio / Overview',false,mfOverView)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Overview</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #mfSummary
-                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund summary','','Portfolio / Summary',true,mfSummary)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Summary</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #unrealised
-                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund unrealised transaction','','Portfolio / Mutual fund unrealised transaction',true,unrealised)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Unrealised transaction </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #AllTran
-                                            (change)="checkAndLoadPdf($event.checked,'Mutual fund all transaction','','Portfolio / Mutual fund all transaction',true,AllTran)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / All Transaction </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #CapGainSummary
-                                            (change)="checkAndLoadPdf($event.checked,'Capital Gain Summary','','Portfolio / MF Capital Gain Summary',true,CapGainSummary)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / MF Capital Gain Summary </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #CapGainDetailed
-                                            (change)="checkAndLoadPdf($event.checked,'MF Capital Gain Detailed','','Portfolio / MF Capital Gain Detailed',true,CapGainDetailed)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / MF Capital Gain Detailed </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Life insurance</h5>
-                                </mat-panel-title>
-
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.LifeInsurance != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #allLifeIns
-                                            (change)="checkAndLoadPdf($event.checked,'All life insurances','','Portfolio / Life Insurance / All life insurances',false,allLifeIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Life Insurance / All life insurances</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Term != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #termIns
-                                            (change)="checkAndLoadPdf($event.checked,'Term insurance','','Portfolio / Life Insurance / Term insurance',false,termIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Life Insurance / Term insurance</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Traditional != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #trasIns
-                                            (change)="checkAndLoadPdf($event.checked,'Traditional insurance','','Portfolio / Life Insurance / Traditional insurance',false,trasIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Life Insurance / Traditional insurance </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.ULIP != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #ulipIns
-                                            (change)="checkAndLoadPdf($event.checked,'Ulip insurance','','Portfolio / Life Insurance / Ulip insurance',false,ulipIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Life Insurance / Ulip insurance </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            (closed)="panelOpenState = false">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">General insurance</h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.GeneralInsurance != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #AllGenIns
-                                            (change)="checkAndLoadPdf($event.checked,'All General insurance','','Portfolio / General Insurance / All general insurances',false,AllGenIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / All general insurances</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HealthInsurance != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #healthIns
-                                            (change)="checkAndLoadPdf($event.checked,'Health insurance','','Portfolio / General Insurance / Health insurance',false,healthIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / Health insurance</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.PersonalAccident != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #personalAccIns
-                                            (change)="checkAndLoadPdf($event.checked,'Personal accident','','Portfolio / General Insurance / Personal accident',false,personalAccIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / Personal accident </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.CriticalIllness != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #critIllIns
-                                            (change)="checkAndLoadPdf($event.checked,'Critical illness','','Portfolio / General Insurance / Critical illness',false,critIllIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / Critical illness </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.MotorInsurance != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #motorIns
-                                            (change)="checkAndLoadPdf($event.checked,'Motor insurance','','Portfolio / General Insurance / Motor insurance',false,motorIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / Motor insurance</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.TravelInsurance != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #travelIns
-                                            (change)="checkAndLoadPdf($event.checked,'Travel insurance','','Portfolio / General Insurance / Travel insurance',false,travelIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / Travel insurance</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HomeInsurance != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #HomeIns
-                                            (change)="checkAndLoadPdf($event.checked,'Home insurance','','Portfolio / General Insurance / Home insurance',false,HomeIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / Home insurance</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="portfolioInsurance.FireAndSpecialPerilsInsurance != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #FireIns
-                                            (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils',false,FireIns)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / General Insurance / Fire & special perils</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Liabilities</h5>
-                                </mat-panel-title>
-
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="liabilitiesList && liabilitiesList.liabilites != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #allLiability
-                                            (change)="checkAndLoadPdf($event.checked,'All Liabltities','','Portfolio / All Liabltities',false,allLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / All Liabltities</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="liabilitiesList && liabilitiesList.homeLoan != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #homeLiability
-                                            (change)="checkAndLoadPdf($event.checked,'Home','','Portfolio / Liabltities / Home',false,homeLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Liabltities / Home</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="liabilitiesList && liabilitiesList.vehicle != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #vehicleLiability
-                                            (change)="checkAndLoadPdf($event.checked,'Vehicle','','Portfolio / Liabltities / Vehicle',false,vehicleLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Liabltities / Vehicle</p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="liabilitiesList && liabilitiesList.education != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #educationLiability
-                                            (change)="checkAndLoadPdf($event.checked,'Education','','Portfolio / Liabltities / Education',false,educationLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Liabltities / Education </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="liabilitiesList && liabilitiesList.personal != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #personalLiability
-                                            (change)="checkAndLoadPdf($event.checked,'Personal','','Portfolio / Liabltities / Personal',false,personalLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Liabltities / Personal </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="liabilitiesList && liabilitiesList.creditCard != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #cardLiability
-                                            (change)="checkAndLoadPdf($event.checked,'Credit card','','Portfolio / Liabltities / Credit card',false,cardLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Liabltities / Credit card </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="liabilitiesList && liabilitiesList.mortgage != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #mortgageLiability
-                                            (change)="checkAndLoadPdf($event.checked,'Mortgage','','Portfolio / Liabltities / Mortgage',false,mortgageLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Liabltities / Mortgage </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="liabilitiesList && liabilitiesList.other != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #othersLiability
-                                            (change)="checkAndLoadPdf($event.checked,'Others','','Portfolio / Liabltities / Others',false,othersLiability)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Liabltities / Others </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true" *ngIf="STOCK != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Stocks</h5>
-                                </mat-panel-title>
-
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #stocksAsset
-                                            (change)="checkAndLoadPdf($event.checked,'Stocks','','Portfolio / Stocks',false,stocksAsset)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Stocks </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            *ngIf="mfCount && mfCount.fixedIncome != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Fixed income
-                                    </h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.fixed_deposit != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #fixedIncome
-                                            (change)="checkAndLoadPdf($event.checked,'Fixed deposit','','Portfolio / Fixed deposit',false,fixedIncome)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Fixed deposit </p>
-                                    </div>
-                                </div>
-                                <div class=" ">
-                                    <div *ngIf="mfCount && mfCount.recurring_deposit!= 0" class="row bb-1 pt-8 pb-8">
-                                        <div class="col-md-1">
-                                            <mat-checkbox #recurringDeposit
-                                                (change)="checkAndLoadPdf($event.checked,'Recurring deposits','','Portfolio / Recurring deposits',false,recurringDeposit)">
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngFor="let insurance of insurancePlanningList">
+                                        <div class="col-md-12">
+                                            <mat-checkbox [(ngModel)]="insurance.isSelectedCheckbox"
+                                                (change)="checkAndLoadPdf($event.checked,'Life insurance',insurance,'Plan / Insurance / '+insurance.heading,false,insurance)">
+                                                Plan / Insurance / {{insurance.heading}} /
+                                                {{insurance.displayHolderName}}
                                             </mat-checkbox>
                                         </div>
-                                        <div class="col-md-11 pl-8">
-                                            <p class="m-0 roboto text-black roboto pt-2">
-                                                Portfolio / Recurring deposits </p>
-                                        </div>
+
                                     </div>
                                 </div>
-                                <div class=" ">
-                                    <div *ngIf="mfCount && mfCount.bond != 0" class="row pt-8 pb-8">
-                                        <div class="col-md-1">
-                                            <mat-checkbox #bondAsset
-                                                (change)="checkAndLoadPdf($event.checked,'Bonds','','Portfolio / Bonds',false,bondAsset)">
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Profile</h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="incomeCount != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #checkIncome
+                                                (change)="checkAndLoadPdf($event.checked,'income','','Profile / Income',false,checkIncome)">
+                                                Profile / Income
                                             </mat-checkbox>
                                         </div>
-                                        <div class="col-md-11 pl-8">
-                                            <p class="m-0 roboto text-black roboto pt-2">
-                                                Portfolio / Bonds </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            *ngIf="mfCount && mfCount.real_estate != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class=" m-0">Real estate
-                                    </h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #realEstate
-                                            (change)="checkAndLoadPdf($event.checked,'Real estate','','Portfolio / Real estate',false,realEstate)">
-                                        </mat-checkbox>
                                     </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Real estate
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            *ngIf="mfCount && mfCount.retirementAccounts != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Retirement accounts
-                                    </h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.epf != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #epf
-                                            (change)="checkAndLoadPdf($event.checked,'EPF','','Portfolio / Employees Provident Fund (EPF)',false,epf)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Employees Provident Fund (EPF)
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="">
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.nps != 0">
-                                        <div class="col-md-1">
-                                            <mat-checkbox #nps
-                                                (change)="checkAndLoadPdf($event.checked,'NPS','','Portfolio / National pension system (NPS)',false,nps)">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.thisMonth != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expenseThisMonth
+                                                (change)="checkAndLoadPdf($event.checked,'Expense This month','','Profile / Expense / This month',false,expenseThisMonth)">
+                                                Profile / Expense / This month
                                             </mat-checkbox>
                                         </div>
-                                        <div class="col-md-11 pl-8">
-                                            <p class="m-0 roboto text-black roboto pt-2">
-                                                Portfolio / National pension system (NPS) </p>
-                                        </div>
+
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="row pt-8 pb-8" *ngIf="mfCount && mfCount.gratuity != 0">
-                                        <div class="col-md-1">
-                                            <mat-checkbox #gratuity
-                                                (change)="checkAndLoadPdf($event.checked,'Gratuity','','Portfolio / Gratuity',false,gratuity)">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.lastMonth != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expenseLastMonth
+                                                (change)="checkAndLoadPdf($event.checked,'Expense Last month','','Profile / Expense / Last month',false,expenseLastMonth)">
+                                                Profile / Expense / Last month
                                             </mat-checkbox>
                                         </div>
-                                        <div class=" col-md-11 pl-8">
-                                            <p class="m-0 roboto text-black roboto pt-2">
-                                                Portfolio / Gratuity </p>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="expenseCount && expenseCount.thisQuarter != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expenseThisQuarter
+                                                (change)="checkAndLoadPdf($event.checked,'Expense This quarter','','Profile / Expense / This quarter',false,expenseThisQuarter)">
+                                                Profile / Expense / This quarter
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="expenseCount && expenseCount.lastQuarter != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expenseLastQuarter
+                                                (change)="checkAndLoadPdf($event.checked,'Expense Last quarter','','Profile / Expense / Last quarter',false,expenseLastQuarter)">
+                                                Profile / Expense / Last quarter
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="expenseCount && expenseCount.thisCalendarYear != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expensethisCalYear
+                                                (change)="checkAndLoadPdf($event.checked,'Expense This calender year','','Profile / Expense / This calender year',false,expensethisCalYear)">
+                                                Profile / Expense / This calender year
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="expenseCount && expenseCount.lastCalendarYear != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expenseLastCalYear
+                                                (change)="checkAndLoadPdf($event.checked,'Expense Last calender year','','Profile / Expense / Last calender year',false,expenseLastCalYear)">
+                                                Profile / Expense / Last calender year
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="expenseCount && expenseCount.thisFinancialYear != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expenseThisFinYear
+                                                (change)="checkAndLoadPdf($event.checked,'Expense This financial year','','Profile / Expense / This financial year',false,expenseThisFinYear)">
+                                                Profile / Expense / This financial year
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="expenseCount && expenseCount.thisMonth != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #expenseLastFinYear
+                                                (change)="checkAndLoadPdf($event.checked,'Expense Last financial year','','Profile / Expense / Last financial year',false,expenseLastFinYear)">
+                                                Profile / Expense / Last financial year
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.thisMonth !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetThisMonth
+                                                (change)="checkAndLoadPdf($event.checked,'Budget This month','','Profile / Budget / This month',false,budgetThisMonth)">
+                                                Profile / Budget / This month
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.lastMonth !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetLastMonth
+                                                (change)="checkAndLoadPdf($event.checked,'Budget Last month','','Profile / Budget / Last month',false,budgetLastMonth)">
+                                                Profile / Budget / Last month
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.thisQuarter !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetThisQuarter
+                                                (change)="checkAndLoadPdf($event.checked,'Budget This quarter','','Profile / Budget / This quarter',false,budgetThisQuarter)">
+                                                Profile / Budget / This quarter
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="bugetCount && bugetCount.lastQuarter !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetLastQuarter
+                                                (change)="checkAndLoadPdf($event.checked,'Budget Last quarter','','Profile / Budget / Last quarter',false,budgetLastQuarter)">
+                                                Profile / Budget / Last quarter
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="bugetCount && bugetCount.thisCalendarYear !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetThisCalYear
+                                                (change)="checkAndLoadPdf($event.checked,'Budget This calender year','','Profile / Budget / This calender year',false,budgetThisCalYear)">
+                                                Profile / Budget / This calender year
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="bugetCount && bugetCount.lastCalendarYear !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetLastCalYear
+                                                (change)="checkAndLoadPdf($event.checked,'Budget Last calender year','','Profile / Budget / Last calender year',false,budgetLastCalYear)">
+                                                Profile / Budget / Last calender year
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="bugetCount && bugetCount.thisFinancialYear !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetThisFinYear
+                                                (change)="checkAndLoadPdf($event.checked,'Budget This financial year','','Profile / Budget / This financial year',false,budgetThisFinYear)">
+                                                Profile / Budget / This financial year
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="bugetCount && bugetCount.lastFinancialYear !=0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #budgetLastFinYear
+                                                (change)="checkAndLoadPdf($event.checked,'Budget Last financial year','','Profile / Budget / Last financial year',false,budgetLastFinYear)">
+                                                Profile / Budget / Last financial year
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                                class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Goals</h5>
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngFor="let goal of dataSource.data">
+                                        <div class="col-md-12">
+                                            <mat-checkbox [checked]="goal.isSelected"
+                                                [(ngModel)]="goal.isSelectedCheckbox"
+                                                (change)="checkAndLoadPdf($event.checked,'Goal',goal,'Plan / Goal / '+goal.details,false,goal)">
+                                                Plan / Goal / {{goal.details}}
+                                            </mat-checkbox>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </mat-expansion-panel>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                                class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Risk profile</h5>
+                                    </mat-panel-title>
 
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            *ngIf="mfCount && mfCount.smallSavingSchemes != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Small saving scheme
-                                    </h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.public_provident_fund != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #ppf
-                                            (change)="checkAndLoadPdf($event.checked,'PPF','','Portfolio / Public provident fund (PPF)',false,ppf)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Public provident fund (PPF)
-                                        </p>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngFor="let data of dataSourceHistory">
+                                        <div class="col-md-12">
+                                            <mat-checkbox [checked]="data.isSelected"
+                                                [(ngModel)]="data.isSelectedCheckbox"
+                                                (change)="viewRiskResult($event.checked,'RiskProfile',data,'Plan / Risk profile / '+data.riskProfileStatus,false,data)">
+                                                Plan / Risk profile / {{data.riskProfileStatus}}
+                                            </mat-checkbox>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="mfCount && mfCount.national_saving_certificate != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #nsc
-                                            (change)="checkAndLoadPdf($event.checked,'NSC','','Portfolio / National pension system (NPS)',false,nsc)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / National savings certificate (NSC)
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="mfCount && mfCount.sukanya_samriddhi_yojana != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #ssy
-                                            (change)="checkAndLoadPdf($event.checked,'SSY','','Portfolio / Sukanya samriddhi yojana (SSY)',false,ssy)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Sukanya samriddhi yojana (SSY)
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.kisan_vikas_patra != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #kvp
-                                            (change)="checkAndLoadPdf($event.checked,'KVP','',' Portfolio / Kisan vikas patra (KVP)',false,kvp)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Kisan vikas patra (KVP)
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8"
-                                    *ngIf="mfCount && mfCount.senior_citizen_saving_scheme != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #scss
-                                            (change)="checkAndLoadPdf($event.checked,'SCSS','','Portfolio / Senior citizen savings scheme (SCSS)',false,scss)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Senior citizen savings scheme (SCSS)
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.post_office_saving != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #poSaving
-                                            (change)="checkAndLoadPdf($event.checked,'PoSaving','','Portfolio / Post office savings a/c',false,poSaving)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Post office savings a/c
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.post_office_rd != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #poRd
-                                            (change)="checkAndLoadPdf($event.checked,'PO RD','','Portfolio / Post office recurring deposit (PO RD)',false,poRd)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Post office recurring deposit (PO RD)
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.post_office_td != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #poTd
-                                            (change)="checkAndLoadPdf($event.checked,'PO TD','','Portfolio / Post office time deposit (PO TD)',false,poTd)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Post office time deposit (PO TD)
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.po_mis != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #poMis
-                                            (change)="checkAndLoadPdf($event.checked,'PO MIS','','Portfolio / Post office monthly income scheme (PO MIS)',false,poMis)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Post office monthly income scheme (PO MIS)
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            </mat-expansion-panel>
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                                class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Notes</h5>
+                                    </mat-panel-title>
 
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            *ngIf="mfCount && mfCount.cashAndBank != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Cash & Bank
-                                    </h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.cash_in_bank_account != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #bankAccount
-                                            (change)="checkAndLoadPdf($event.checked,'Bank accounts','','Portfolio / Bank accounts',false,bankAccount)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Bank accounts
-                                        </p>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngFor="let data of listOfNotes">
+                                        <div class="col-md-12">
+                                            <mat-checkbox [checked]="data.isSelected"
+                                                [(ngModel)]="data.isSelectedCheckbox"
+                                                (change)="checkAndLoadPdf($event.checked,'Notes',data,'Plan / Notes / '+data.clientName,false,data)">
+                                                Plan / Notes / {{data.clientName}}
+                                            </mat-checkbox>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.cash_in_hand != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #cashInHand
-                                            (change)="checkAndLoadPdf($event.checked,'Cash in hand','','Portfolio / Gold',false,cashInHand)">
-                                        </mat-checkbox>
-                                    </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Cash in hand </p>
-                                    </div>
-                                </div>
-                            </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Portfolio">
 
-                        </mat-expansion-panel>
-                        <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
-                            *ngIf="mfCount && mfCount.commodities != 0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    <h5 class="m-0">Commodities
-                                    </h5>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bl br bb">
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.gold != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #gold
-                                            (change)="checkAndLoadPdf($event.checked,'Gold','','Portfolio / Gold',false,gold)">
-                                        </mat-checkbox>
+                    <div class="pb-20">
+                        <mat-accordion id="fp-modules">
+                            <mat-expansion-panel *ngIf="mfCount && mfCount.mutualFund != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title (click)="getAssetCountGlobalData()">
+                                        <h5 class="m-0">Mutual Fund</h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #mfOverView
+                                                (change)="checkAndLoadPdf($event.checked,'Mutual fund overview','','Portfolio / Overview',false,mfOverView)">
+                                                Portfolio / Overview
+                                            </mat-checkbox>
+                                        </div>
+
                                     </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Gold
-                                        </p>
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #mfSummary
+                                                (change)="checkAndLoadPdf($event.checked,'Mutual fund summary','','Portfolio / Summary',true,mfSummary)">
+                                                Portfolio / Summary
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #unrealised
+                                                (change)="checkAndLoadPdf($event.checked,'Mutual fund unrealised transaction','','Portfolio / Mutual fund unrealised transaction',true,unrealised)">
+                                                Portfolio / Unrealised transaction
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #AllTran
+                                                (change)="checkAndLoadPdf($event.checked,'Mutual fund all transaction','','Portfolio / Mutual fund all transaction',true,AllTran)">
+                                                Portfolio / All Transaction
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #CapGainSummary
+                                                (change)="checkAndLoadPdf($event.checked,'Capital Gain Summary','','Portfolio / MF Capital Gain Summary',true,CapGainSummary)">
+                                                Portfolio / MF Capital Gain Summary
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #CapGainDetailed
+                                                (change)="checkAndLoadPdf($event.checked,'MF Capital Gain Detailed','','Portfolio / MF Capital Gain Detailed',true,CapGainDetailed)">
+                                                Portfolio / MF Capital Gain Detailed
+                                            </mat-checkbox>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.other_commodity != 0">
-                                    <div class="col-md-1">
-                                        <mat-checkbox #otherComm
-                                            (change)="checkAndLoadPdf($event.checked,'OthersComm','','Portfolio / Others',false,otherComm)">
-                                        </mat-checkbox>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Life insurance</h5>
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.LifeInsurance != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #allLifeIns
+                                                (change)="checkAndLoadPdf($event.checked,'All life insurances','','Portfolio / Life Insurance / All life insurances',false,allLifeIns)">
+                                                Portfolio / Life Insurance / All life insurances
+                                            </mat-checkbox>
+                                        </div>
+
                                     </div>
-                                    <div class="col-md-11 pl-8">
-                                        <p class="m-0 roboto text-black roboto pt-2">
-                                            Portfolio / Others </p>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Term != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #termIns
+                                                (change)="checkAndLoadPdf($event.checked,'Term insurance','','Portfolio / Life Insurance / Term insurance',false,termIns)">
+                                                Portfolio / Life Insurance / Term insurance
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Traditional != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #trasIns
+                                                (change)="checkAndLoadPdf($event.checked,'Traditional insurance','','Portfolio / Life Insurance / Traditional insurance',false,trasIns)">
+                                                Portfolio / Life Insurance / Traditional insurance
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.ULIP != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #ulipIns
+                                                (change)="checkAndLoadPdf($event.checked,'Ulip insurance','','Portfolio / Life Insurance / Ulip insurance',false,ulipIns)">
+                                                Portfolio / Life Insurance / Ulip insurance
+                                            </mat-checkbox>
+                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
 
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
-            </mat-tab>
-            <mat-tab label="Templates" (click)="getTemplateSection()">
-                <div class="pt-12 pb-12" id="ui-profileplan-card">
-                    <!-- <div class="row">
-                        <div class="col-md-12 p-0">
-                            <button mat-button [matMenuTriggerFor]="menu" class="pr-8 b-a">Menu<i
-                                    class="material-icons text-right icon-light">
-                                    arrow_drop_down
-                                </i></button>
-                            <mat-menu #menu="matMenu">
-                                <button mat-menu-item>Item 1</button>
-                                <button mat-menu-item>Item 2</button>
-                            </mat-menu>
-                        </div>
-                    </div> -->
-                    <mat-accordion>
-                        <mat-expansion-panel class="mt-12 br-0">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    Quotes
-                                </mat-panel-title>
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">General insurance</h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.GeneralInsurance != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #AllGenIns
+                                                (change)="checkAndLoadPdf($event.checked,'All General insurance','','Portfolio / General Insurance / All general insurances',false,AllGenIns)">
+                                                Portfolio / General Insurance / All general insurances
+                                            </mat-checkbox>
+                                        </div>
 
-                            </mat-expansion-panel-header>
-                            <div class="row">
-                                <div class="col-md-6 pl-0 pr-8"
-                                    *ngFor="let q of quotes?.templates | slice:0:10; let i=index">
-                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="{{q.imageUrl}}" class="w-100">
-                                        <mat-card-content>
-                                            <h5 class="m-0 text-center">{{q.name}}</h5>
-                                        </mat-card-content>
-                                        <mat-card-actions class="text-center">
-                                            <button mat-stroked-button class="text-primary b-a-custom"
-                                                (click)="getPreview(q,quotes)">Preview</button>
-                                            <button mat-stroked-button class="btn-primary" *ngIf="q.add == false"
-                                                (click)="pdfFromImage(q,quotes,i);q.add=true">Add</button>
-                                            <button mat-stroked-button class="btn-success" *ngIf="q.add == true"
-                                                (click)="pdfFromImage(q,quotes,i);q.add=false">Remove</button>
-                                        </mat-card-actions>
-                                    </mat-card>
-                                </div>
-                                <div class="col-md-6 pr-0 pl-8"
-                                    *ngFor="let q of quotes?.templates | slice:11:31; let i=index">
-                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="{{q.imageUrl}}" class="w-100">
-                                        <mat-card-content>
-                                            <h5 class="m-0 text-center">{{q.name}}</h5>
-                                        </mat-card-content>
-                                        <mat-card-actions class="text-center">
-                                            <button mat-stroked-button class="text-primary b-a-custom"
-                                                (click)="getPreview(q,quotes)">Preview</button>
-                                            <button mat-stroked-button class="btn-primary" *ngIf="q.add == false"
-                                                (click)="pdfFromImage(q,quotes,i);q.add=true">Add</button>
-                                            <button mat-stroked-button class="btn-success" *ngIf="q.add == true"
-                                                (click)="pdfFromImage(q,quotes,i);q.add=false">Remove</button>
-                                        </mat-card-actions>
-                                    </mat-card>
-                                </div>
-                            </div>
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HealthInsurance != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #healthIns
+                                                (change)="checkAndLoadPdf($event.checked,'Health insurance','','Portfolio / General Insurance / Health insurance',false,healthIns)">
+                                                Portfolio / General Insurance / Health insurance
+                                            </mat-checkbox>
+                                        </div>
 
-                        </mat-expansion-panel>
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.PersonalAccident != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #personalAccIns
+                                                (change)="checkAndLoadPdf($event.checked,'Personal accident','','Portfolio / General Insurance / Personal accident',false,personalAccIns)">
+                                                Portfolio / General Insurance / Personal accident
+                                            </mat-checkbox>
+                                        </div>
 
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel class="mt-12">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    Financial planning
-                                </mat-panel-title>
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.CriticalIllness != 0">
+                                        <div class="col-md-1">
+                                            <mat-checkbox #critIllIns
+                                                (change)="checkAndLoadPdf($event.checked,'Critical illness','','Portfolio / General Insurance / Critical illness',false,critIllIns)">
+                                                Portfolio / General Insurance / Critical illness
+                                            </mat-checkbox>
+                                        </div>
 
-                            </mat-expansion-panel-header>
-                            <div class="row">
-                                <div class="col-md-6 pl-0 pr-8"
-                                    *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
-                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="{{f.imageUrl}}" class="w-100">
-                                        <mat-card-content>
-                                            <h5 class="m-0 text-center">{{f.name}}</h5>
-                                        </mat-card-content>
-                                        <mat-card-actions class="text-center">
-                                            <button mat-stroked-button class="text-primary b-a-custom"
-                                                (click)="getPreview(f,fincialPlan)">Preview</button>
-                                            <button mat-stroked-button class="btn-primary" *ngIf="f.add == false"
-                                                (click)="pdfFromImage(f,fincialPlan,i);f.add=true">Add</button>
-                                            <button mat-stroked-button class="btn-success" *ngIf="f.add == true"
-                                                (click)="pdfFromImage(f,fincialPlan,i);f.add=false">Remove</button>
-                                        </mat-card-actions>
-                                    </mat-card>
-                                </div>
-                                <div class="col-md-6 pr-0 pl-8"
-                                    *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
-                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="{{f}}" class="w-100">
-                                        <mat-card-content>
-                                            <h5 class="m-0 text-center">{{f.name}}</h5>
-                                        </mat-card-content>
-                                        <mat-card-actions class="text-center">
-                                            <button mat-stroked-button class="text-primary b-a-custom"
-                                                (click)="getPreview(f,fincialPlan)">Preview</button>
-                                            <button mat-stroked-button class="btn-primary" *ngIf="f.add == false"
-                                                (click)="pdfFromImage(f,fincialPlan,i);f.add=true">Add</button>
-                                            <button mat-stroked-button class="btn-success" *ngIf="f.add == true"
-                                                (click)="pdfFromImage(f,fincialPlan,i);f.add=false">Remove</button>
-                                        </mat-card-actions>
-                                    </mat-card>
-                                </div>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    <mat-accordion>
-                        <mat-expansion-panel class="mt-12">
-                            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                                [expandedHeight]="customExpandedHeight">
-                                <mat-panel-title>
-                                    Miscellaenous
-                                </mat-panel-title>
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.MotorInsurance != 0">
+                                        <div class="col-md-1">
+                                            <mat-checkbox #motorIns
+                                                (change)="checkAndLoadPdf($event.checked,'Motor insurance','','Portfolio / General Insurance / Motor insurance',false,motorIns)">
+                                                Portfolio / General Insurance / Motor insurance
+                                            </mat-checkbox>
+                                        </div>
 
-                            </mat-expansion-panel-header>
-                            <div class="row">
-                                <div class="col-md-6 pl-0 pr-8"
-                                    *ngFor="let m of miscellaneous.templates | slice:0:2; let i=index">
-                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="{{m.imageUrl}}" class="w-100">
-                                        <mat-card-content>
-                                            <h5 class="m-0 text-center">{{m.name}}</h5>
-                                        </mat-card-content>
-                                        <mat-card-actions class="text-center">
-                                            <button mat-stroked-button class="text-primary b-a-custom"
-                                                (click)="getPreview(m,miscellaneous)">Preview</button>
-                                            <button mat-stroked-button class="btn-primary" *ngIf="m.add == false"
-                                                (click)="pdfFromImage(m,miscellaneous,i);m.add=true">Add</button>
-                                            <button mat-stroked-button class="btn-success" *ngIf="m.add == true"
-                                                (click)="pdfFromImage(m,miscellaneous,i);m.add=false">Remove</button>
-                                        </mat-card-actions>
-                                    </mat-card>
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.TravelInsurance != 0">
+                                        <div class="col-md-1">
+                                            <mat-checkbox #travelIns
+                                                (change)="checkAndLoadPdf($event.checked,'Travel insurance','','Portfolio / General Insurance / Travel insurance',false,travelIns)">
+                                                Portfolio / General Insurance / Travel insurance
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HomeInsurance != 0">
+                                        <div class="col-md-1">
+                                            <mat-checkbox #HomeIns
+                                                (change)="checkAndLoadPdf($event.checked,'Home insurance','','Portfolio / General Insurance / Home insurance',false,HomeIns)">
+                                                Portfolio / General Insurance / Home insurance
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="portfolioInsurance.FireAndSpecialPerilsInsurance != 0">
+                                        <div class="col-md-1">
+                                            <mat-checkbox #FireIns
+                                                (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils',false,FireIns)">
+                                                Portfolio / General Insurance / Fire & special perils
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="col-md-6 pr-0 pl-0"
-                                    *ngFor="let m of miscellaneous.templates | slice:2:3; let i=index">
-                                    <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                        <img mat-card-image src="{{m.imageUrl}}" class="w-100">
-                                        <mat-card-content>
-                                            <h5 class="m-0 text-center">{{m.name}}</h5>
-                                        </mat-card-content>
-                                        <mat-card-actions class="text-center">
-                                            <button mat-stroked-button class="text-primary b-a-custom"
-                                                (click)="getPreview(m,miscellaneous)">Preview</button>
-                                            <button mat-stroked-button class="btn-primary" *ngIf="m.add == false"
-                                                (click)="pdfFromImage(m,miscellaneous,i);m.add=true">Add</button>
-                                            <button mat-stroked-button class="btn-success" *ngIf="m.add == true"
-                                                (click)="pdfFromImage(m,miscellaneous,i);m.add=false">Remove</button>
-                                        </mat-card-actions>
-                                    </mat-card>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Liabilities</h5>
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.liabilites != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #allLiability
+                                                (change)="checkAndLoadPdf($event.checked,'All Liabltities','','Portfolio / All Liabltities',false,allLiability)">
+                                                Portfolio / All Liabltities
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.homeLoan != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #homeLiability
+                                                (change)="checkAndLoadPdf($event.checked,'Home','','Portfolio / Liabltities / Home',false,homeLiability)">
+                                                Portfolio / Liabltities / Home
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.vehicle != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #vehicleLiability
+                                                (change)="checkAndLoadPdf($event.checked,'Vehicle','','Portfolio / Liabltities / Vehicle',false,vehicleLiability)">
+                                                Portfolio / Liabltities / Vehicle
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.education != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #educationLiability
+                                                (change)="checkAndLoadPdf($event.checked,'Education','','Portfolio / Liabltities / Education',false,educationLiability)">
+                                                Portfolio / Liabltities / Education
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.personal != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #personalLiability
+                                                (change)="checkAndLoadPdf($event.checked,'Personal','','Portfolio / Liabltities / Personal',false,personalLiability)">
+                                                Portfolio / Liabltities / Personal
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.creditCard != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #cardLiability
+                                                (change)="checkAndLoadPdf($event.checked,'Credit card','','Portfolio / Liabltities / Credit card',false,cardLiability)">
+                                                Portfolio / Liabltities / Credit card
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.mortgage != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #mortgageLiability
+                                                (change)="checkAndLoadPdf($event.checked,'Mortgage','','Portfolio / Liabltities / Mortgage',false,mortgageLiability)">
+                                                Portfolio / Liabltities / Mortgage
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="liabilitiesList && liabilitiesList.other != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #othersLiability
+                                                (change)="checkAndLoadPdf($event.checked,'Others','','Portfolio / Liabltities / Others',false,othersLiability)">
+                                                Portfolio / Liabltities / Others
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
-            </mat-tab>
-        </mat-tab-group>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true" *ngIf="STOCK != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Stocks</h5>
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #stocksAsset
+                                                (change)="checkAndLoadPdf($event.checked,'Stocks','','Portfolio / Stocks',false,stocksAsset)">
+                                                Portfolio / Stocks
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                *ngIf="mfCount && mfCount.fixedIncome != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Fixed income
+                                        </h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.fixed_deposit != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #fixedIncome
+                                                (change)="checkAndLoadPdf($event.checked,'Fixed deposit','','Portfolio / Fixed deposit',false,fixedIncome)">
+                                                Portfolio / Fixed deposit
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class=" ">
+                                        <div *ngIf="mfCount && mfCount.recurring_deposit!= 0"
+                                            class="row bb-1 pt-8 pb-8">
+                                            <div class="col-md-12">
+                                                <mat-checkbox #recurringDeposit
+                                                    (change)="checkAndLoadPdf($event.checked,'Recurring deposits','','Portfolio / Recurring deposits',false,recurringDeposit)">
+                                                    Portfolio / Recurring deposits
+                                                </mat-checkbox>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class=" ">
+                                        <div *ngIf="mfCount && mfCount.bond != 0" class="row pt-8 pb-8">
+                                            <div class="col-md-12">
+                                                <mat-checkbox #bondAsset
+                                                    (change)="checkAndLoadPdf($event.checked,'Bonds','','Portfolio / Bonds',false,bondAsset)">
+                                                    Portfolio / Bonds
+                                                </mat-checkbox>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                *ngIf="mfCount && mfCount.real_estate != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class=" m-0">Real estate
+                                        </h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #realEstate
+                                                (change)="checkAndLoadPdf($event.checked,'Real estate','','Portfolio / Real estate',false,realEstate)">
+                                                Portfolio / Real estate
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                *ngIf="mfCount && mfCount.retirementAccounts != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Retirement accounts
+                                        </h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.epf != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #epf
+                                                (change)="checkAndLoadPdf($event.checked,'EPF','','Portfolio / Employees Provident Fund (EPF)',false,epf)">
+                                                Portfolio / Employees Provident Fund (EPF)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="">
+                                        <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.nps != 0">
+                                            <div class="col-md-12">
+                                                <mat-checkbox #nps
+                                                    (change)="checkAndLoadPdf($event.checked,'NPS','','Portfolio / National pension system (NPS)',false,nps)">
+                                                    Portfolio / National pension system (NPS)
+                                                </mat-checkbox>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="row pt-8 pb-8" *ngIf="mfCount && mfCount.gratuity != 0">
+                                            <div class="col-md-12">
+                                                <mat-checkbox #gratuity
+                                                    (change)="checkAndLoadPdf($event.checked,'Gratuity','','Portfolio / Gratuity',false,gratuity)">
+                                                    Portfolio / Gratuity
+                                                </mat-checkbox>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                *ngIf="mfCount && mfCount.smallSavingSchemes != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Small saving scheme
+                                        </h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="mfCount && mfCount.public_provident_fund != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #ppf
+                                                (change)="checkAndLoadPdf($event.checked,'PPF','','Portfolio / Public provident fund (PPF)',false,ppf)">
+                                                Portfolio / Public provident fund (PPF)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="mfCount && mfCount.national_saving_certificate != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #nsc
+                                                (change)="checkAndLoadPdf($event.checked,'NSC','','Portfolio / National pension system (NPS)',false,nsc)">
+                                                Portfolio / National savings certificate (NSC)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="mfCount && mfCount.sukanya_samriddhi_yojana != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #ssy
+                                                (change)="checkAndLoadPdf($event.checked,'SSY','','Portfolio / Sukanya samriddhi yojana (SSY)',false,ssy)">
+                                                Portfolio / Sukanya samriddhi yojana (SSY)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.kisan_vikas_patra != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #kvp
+                                                (change)="checkAndLoadPdf($event.checked,'KVP','',' Portfolio / Kisan vikas patra (KVP)',false,kvp)">
+                                                Portfolio / Kisan vikas patra (KVP)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="mfCount && mfCount.senior_citizen_saving_scheme != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #scss
+                                                (change)="checkAndLoadPdf($event.checked,'SCSS','','Portfolio / Senior citizen savings scheme (SCSS)',false,scss)">
+                                                Portfolio / Senior citizen savings scheme (SCSS)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.post_office_saving != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #poSaving
+                                                (change)="checkAndLoadPdf($event.checked,'PoSaving','','Portfolio / Post office savings a/c',false,poSaving)">
+                                                Portfolio / Post office savings a/c
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.post_office_rd != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #poRd
+                                                (change)="checkAndLoadPdf($event.checked,'PO RD','','Portfolio / Post office recurring deposit (PO RD)',false,poRd)">
+                                                Portfolio / Post office recurring deposit (PO RD)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.post_office_td != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #poTd
+                                                (change)="checkAndLoadPdf($event.checked,'PO TD','','Portfolio / Post office time deposit (PO TD)',false,poTd)">
+                                                Portfolio / Post office time deposit (PO TD)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.po_mis != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #poMis
+                                                (change)="checkAndLoadPdf($event.checked,'PO MIS','','Portfolio / Post office monthly income scheme (PO MIS)',false,poMis)">
+                                                Portfolio / Post office monthly income scheme (PO MIS)
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                *ngIf="mfCount && mfCount.cashAndBank != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Cash & Bank
+                                        </h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8"
+                                        *ngIf="mfCount && mfCount.cash_in_bank_account != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #bankAccount
+                                                (change)="checkAndLoadPdf($event.checked,'Bank accounts','','Portfolio / Bank accounts',false,bankAccount)">
+                                                Portfolio / Bank accounts
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.cash_in_hand != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #cashInHand
+                                                (change)="checkAndLoadPdf($event.checked,'Cash in hand','','Portfolio / Gold',false,cashInHand)">
+                                                Portfolio / Cash in hand
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                *ngIf="mfCount && mfCount.commodities != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class="m-0">Commodities
+                                        </h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.gold != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #gold
+                                                (change)="checkAndLoadPdf($event.checked,'Gold','','Portfolio / Gold',false,gold)">
+                                                Portfolio / Gold
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.other_commodity != 0">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #otherComm
+                                                (change)="checkAndLoadPdf($event.checked,'OthersComm','','Portfolio / Others',false,otherComm)">
+                                                Portfolio / Others
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Templates" (click)="getTemplateSection()">
+                    <div class="pt-12 pb-12" id="ui-profileplan-card">
+
+                        <mat-accordion>
+                            <mat-expansion-panel class="mt-12 br-0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        Quotes
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-md-6 pl-0 pr-8"
+                                        *ngFor="let q of quotes?.templates | slice:0:10; let i=index">
+                                        <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                            <img mat-card-image src="{{q.imageUrl}}" class="w-100">
+                                            <mat-card-content>
+                                                <h5 class="m-0 text-center">{{q.name}}</h5>
+                                            </mat-card-content>
+                                            <mat-card-actions class="text-center">
+                                                <button mat-stroked-button class="text-primary b-a-custom"
+                                                    (click)="getPreview(q,quotes)">Preview</button>
+                                                <button mat-stroked-button class="btn-primary" *ngIf="q.add == false"
+                                                    (click)="pdfFromImage(q,quotes,i);q.add=true">Add</button>
+                                                <button mat-stroked-button class="btn-success" *ngIf="q.add == true"
+                                                    (click)="pdfFromImage(q,quotes,i);q.add=false">Remove</button>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-md-6 pr-0 pl-8"
+                                        *ngFor="let q of quotes?.templates | slice:11:31; let i=index">
+                                        <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                            <img mat-card-image src="{{q.imageUrl}}" class="w-100">
+                                            <mat-card-content>
+                                                <h5 class="m-0 text-center">{{q.name}}</h5>
+                                            </mat-card-content>
+                                            <mat-card-actions class="text-center">
+                                                <button mat-stroked-button class="text-primary b-a-custom"
+                                                    (click)="getPreview(q,quotes)">Preview</button>
+                                                <button mat-stroked-button class="btn-primary" *ngIf="q.add == false"
+                                                    (click)="pdfFromImage(q,quotes,i);q.add=true">Add</button>
+                                                <button mat-stroked-button class="btn-success" *ngIf="q.add == true"
+                                                    (click)="pdfFromImage(q,quotes,i);q.add=false">Remove</button>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+                        <mat-accordion>
+                            <mat-expansion-panel class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        Financial planning
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-md-6 pl-0 pr-8"
+                                        *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
+                                        <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                            <img mat-card-image src="{{f.imageUrl}}" class="w-100">
+                                            <mat-card-content>
+                                                <h5 class="m-0 text-center">{{f.name}}</h5>
+                                            </mat-card-content>
+                                            <mat-card-actions class="text-center">
+                                                <button mat-stroked-button class="text-primary b-a-custom"
+                                                    (click)="getPreview(f,fincialPlan)">Preview</button>
+                                                <button mat-stroked-button class="btn-primary" *ngIf="f.add == false"
+                                                    (click)="pdfFromImage(f,fincialPlan,i);f.add=true">Add</button>
+                                                <button mat-stroked-button class="btn-success" *ngIf="f.add == true"
+                                                    (click)="pdfFromImage(f,fincialPlan,i);f.add=false">Remove</button>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-md-6 pr-0 pl-8"
+                                        *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
+                                        <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                            <img mat-card-image src="{{f}}" class="w-100">
+                                            <mat-card-content>
+                                                <h5 class="m-0 text-center">{{f.name}}</h5>
+                                            </mat-card-content>
+                                            <mat-card-actions class="text-center">
+                                                <button mat-stroked-button class="text-primary b-a-custom"
+                                                    (click)="getPreview(f,fincialPlan)">Preview</button>
+                                                <button mat-stroked-button class="btn-primary" *ngIf="f.add == false"
+                                                    (click)="pdfFromImage(f,fincialPlan,i);f.add=true">Add</button>
+                                                <button mat-stroked-button class="btn-success" *ngIf="f.add == true"
+                                                    (click)="pdfFromImage(f,fincialPlan,i);f.add=false">Remove</button>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <mat-accordion>
+                            <mat-expansion-panel class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        Miscellaenous
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="row">
+                                    <div class="col-md-6 pl-0 pr-8"
+                                        *ngFor="let m of miscellaneous.templates | slice:0:2; let i=index">
+                                        <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                            <img mat-card-image src="{{m.imageUrl}}" class="w-100">
+                                            <mat-card-content>
+                                                <h5 class="m-0 text-center">{{m.name}}</h5>
+                                            </mat-card-content>
+                                            <mat-card-actions class="text-center">
+                                                <button mat-stroked-button class="text-primary b-a-custom"
+                                                    (click)="getPreview(m,miscellaneous)">Preview</button>
+                                                <button mat-stroked-button class="btn-primary" *ngIf="m.add == false"
+                                                    (click)="pdfFromImage(m,miscellaneous,i);m.add=true">Add</button>
+                                                <button mat-stroked-button class="btn-success" *ngIf="m.add == true"
+                                                    (click)="pdfFromImage(m,miscellaneous,i);m.add=false">Remove</button>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div>
+                                    <div class="col-md-6 pr-0 pl-0"
+                                        *ngFor="let m of miscellaneous.templates | slice:2:3; let i=index">
+                                        <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
+                                            <img mat-card-image src="{{m.imageUrl}}" class="w-100">
+                                            <mat-card-content>
+                                                <h5 class="m-0 text-center">{{m.name}}</h5>
+                                            </mat-card-content>
+                                            <mat-card-actions class="text-center">
+                                                <button mat-stroked-button class="text-primary b-a-custom"
+                                                    (click)="getPreview(m,miscellaneous)">Preview</button>
+                                                <button mat-stroked-button class="btn-primary" *ngIf="m.add == false"
+                                                    (click)="pdfFromImage(m,miscellaneous,i);m.add=true">Add</button>
+                                                <button mat-stroked-button class="btn-success" *ngIf="m.add == true"
+                                                    (click)="pdfFromImage(m,miscellaneous,i);m.add=false">Remove</button>
+                                            </mat-card-actions>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
     </div>
+
 </div>
 <ng-container #pdfContainer>
 </ng-container>

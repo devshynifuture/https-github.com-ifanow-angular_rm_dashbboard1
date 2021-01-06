@@ -193,7 +193,7 @@ input.mat-input-element {
   display: none;
 }
 
-.ds-none {
+.ds-none-login {
   display: none;
 }
 
@@ -202,8 +202,15 @@ input.mat-input-element {
     display: none;
   }
 
-  .ds-none {
+  .submitBtnMobile{
+    width: 100%;
+  }
+
+  .ds-none-login {
     display: block;
+    width: 100%;
+    text-align: right;
+    margin-top: 8px;
   }
 
   .mobileLoginUi {
@@ -215,7 +222,7 @@ input.mat-input-element {
       margin-top: 0px;
 
       .form_container_new_wrapper {
-        width: 100%;
+        width: 100% !important;
         clear: both;
 
         .form-group {
@@ -274,7 +281,7 @@ input.mat-input-element {
     .mobileScreen {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      flex-direction: column-reverse;
     }
 
     .mobilerightText {

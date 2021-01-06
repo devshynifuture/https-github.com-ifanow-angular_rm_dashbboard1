@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Subscription, Observable } from 'rxjs';
 import { PeopleService } from '../../../PeopleComponent/people.service';
@@ -8,6 +8,7 @@ import { ProcessTransactionService } from '../../transactions/overview-transacti
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-crm-notes',
@@ -38,15 +39,43 @@ export class CrmNotesComponent implements OnInit {
   hideOwner: boolean = false;
   showCheckBox: boolean = false;
   checkAdmin: boolean = false;
+  clientInfo: any;
+  getOrgData: any;
+  userInfo: any;
+  reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: Subscription;
+  subject: any;
+  showContent: "";
+  clientName: any;
+  showContentPDf: any;
+  @ViewChild('tableEl', { static: false }) tableEl: ElementRef;
+  @Input() finPlanObj: any;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  subjectPDF: any;
 
 
   constructor(private peopleService: PeopleService,
     public dialog: MatDialog,
     public eventService: EventService,
+    private utilService: UtilService,
+    private ref: ChangeDetectorRef,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService, ) { }
+    public processTransaction: ProcessTransactionService, ) {
+    this.clientInfo = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    this.reportDate = new Date()
+  }
 
   ngOnInit() {
+    if (this.finPlanObj && this.finPlanObj.data) {
+      //this.getNotes();
+      this.listOfNotes = []
+      this.getdataForm("")
+      this.selectNote(this.finPlanObj.data)
+
+    }
     this.objForDelete = []
     this.listOfNotes = []
     this.date = new Date()
@@ -54,10 +83,25 @@ export class CrmNotesComponent implements OnInit {
     this.getdataForm("")
     this.isLoading = true;
   }
+  download(template, tableTitle) {
+    //let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: 'showPieChart',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+  }
   getdataForm(data) {
     this.notes = this.fb.group({
       subject: [(!data.ownershipType) ? '' : (data.subject) + '', [Validators.required]],
-      check: [(!data.clientName) ? '' : (data.clientName) + ''],
     });
 
 
@@ -124,6 +168,7 @@ export class CrmNotesComponent implements OnInit {
   }
 
   getNotes() {
+    this.listOfNotes = []
     this.isLoading = true
     let obj = {
       advisorId: AuthService.getAdvisorId(),
@@ -154,6 +199,10 @@ export class CrmNotesComponent implements OnInit {
         this.isLoading = false
         this.listOfNotes = []
       })
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.tableEl.nativeElement);
+    }
   }
   selectAll(event) {
     if (event.checked == true) {
@@ -174,6 +223,9 @@ export class CrmNotesComponent implements OnInit {
     console.log('selectedNote', note)
     this.stateCtrl.setValue('');
     this.selectedNote = note
+    this.subjectPDF = (note.subject) ? note.subject : '-'
+    this.showContentPDf = note.showContent ? note.showContent : '-'
+    this.clientName = note.clientName ? note.clientName : '-'
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
     this.checkAdmin = note.forAdmin
@@ -271,6 +323,8 @@ export class CrmNotesComponent implements OnInit {
   onSearchChange(value) {
     this.searchQuery = value
     if (this.searchQuery.length > 3) {
+      this.getNotes()
+    } else if (this.searchQuery.length == "") {
       this.getNotes()
     }
   }

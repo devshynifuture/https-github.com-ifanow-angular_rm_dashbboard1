@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
@@ -36,34 +36,65 @@ export class OverviewRiskProfileComponent implements OnInit {
   showButton;
   scoreStatus;
   hasError: boolean = false;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('riskTemp', { static: false }) riskTemp: ElementRef;
 
   clientRiskAssessmentResults;
 
-  globalRiskProfile:any[] = [];
-  feedsRiskProfile:any = {};
+  globalRiskProfile: any[] = [];
+  feedsRiskProfile: any = {};
   clientId;
-  clientInfo:any;
-  count:number = 0;
+  clientInfo: any;
+  count: number = 0;
   showRetakeTestsButton: boolean = false;
 
-  isEmpty:boolean = true;
-  showQuestionnaire:boolean = false;
+  isEmpty: boolean = true;
+  showQuestionnaire: boolean = false;
+  getOrgData: any;
+  userInfo: any;
+  reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: any;
+  svg: any;
+  chart: Highcharts.Chart;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
 
-  
+  @Input() finPlanObj: any;
+  dateOfTest: any;
+
   constructor(
     private fb: FormBuilder,
     public planService: PlanService,
     private customerService: CustomerService,
     public loaderFn: LoaderFunction,
     private subInjectService: SubscriptionInject,
-    private eventService: EventService
+    private eventService: EventService,
+    private utilService: UtilService,
+    private ref: ChangeDetectorRef
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientInfo = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    this.reportDate = new Date()
   }
 
   ngOnInit() {
+    console.log(this.finPlanObj)
+    if (this.finPlanObj && this.finPlanObj.data) {
+      this.loadGlobalRiskProfile();
+      this.riskAssessmentQuestionList = this.finPlanObj.data.assessmentResult
+      this.dateOfTest = this.finPlanObj.data.assessmentScore.riskAssessmentDate
+      this.mergeRiskProfile(this.finPlanObj.data.assessmentScore);
+      this.showQuestionnaire = true;
+      this.showResults = true;
+      this.showErrorMsg = false;
+      this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+      this.showButton = false
+      this.showRetakeTestsButton = true;
+
+    }
     this.loadGlobalRiskProfile();
     this.getdataForm('');
     this.sendRiskList = [];
@@ -74,7 +105,23 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.showButton = false
     this.count = 0
   }
-
+  download(template, tableTitle) {
+    this.svg = this.chart.getSVG();
+    //let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: 'showPieChart',
+      svg: this.svg
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', this.svg, true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+  }
   percentage(data) {
     Highcharts.setOptions({
       chart: {
@@ -136,14 +183,14 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.callFun(data)
   }
   callFun(data) {
-    var chart1 = new Highcharts.Chart({
+    this.chart = new Highcharts.Chart({
 
       chart: { renderTo: 'container1' },
       xAxis: { categories: ['<span class="hc-cat-title"></span>'] },
       yAxis: {
         min: 0,
         max: 100,
-        offset:18,
+        offset: 18,
         lineWidth: 2,
         lineColor: 'black',
         tickLength: 4,
@@ -260,7 +307,7 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   mergeRiskProfile(data) {
     const globalProfile = this.globalRiskProfile.find(risk => risk.id == data.id);
-    if(globalProfile) {
+    if (globalProfile) {
       this.feedsRiskProfile = {
         "riskAssessmentScore": data.score,
         "riskProfileId": data.id,
@@ -308,6 +355,7 @@ export class OverviewRiskProfileComponent implements OnInit {
         this.showQuestionnaire = true;
         this.showResults = true;
         this.riskAssessmentQuestionList = data.data.assessmentResult;
+        this.dateOfTest = data.data.assessmentScore.riskAssessmentDate
         this.mergeRiskProfile(data.data.assessmentScore);
         this.showErrorMsg = false;
         this.statusArray = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
@@ -332,6 +380,10 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+    if (this.finPlanObj) {
+      this.ref.detectChanges();//to refresh the dom when response come
+      this.loaded.emit(this.riskTemp.nativeElement);
+    }
   }
 
   loadRiskProfile() {
@@ -348,7 +400,7 @@ export class OverviewRiskProfileComponent implements OnInit {
         this.isEmpty = false;
 
         const globalProfile = this.globalRiskProfile.find(risk => risk.id == this.feedsRiskProfile.riskProfileId);
-        if(globalProfile) {
+        if (globalProfile) {
           this.feedsRiskProfile = {
             equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
             equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
@@ -377,7 +429,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     })
   }
 
-  cancelTest(){
+  cancelTest() {
     this.showQuestionnaire = false;
     this.loadRiskProfile();
   }
@@ -392,10 +444,13 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   riskProfileDesc(id) {
-    if (this.globalRiskProfile.length > 0) {
-      return this.globalRiskProfile.find(data => data.id == id).description;
-    } else {
-      return '';
+    if (id) {
+      if (this.globalRiskProfile.length > 0) {
+        return this.globalRiskProfile.find(data => data.id == id).description;
+      } else {
+        return '';
+      }
     }
+
   }
 }

@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="col-md-4 pl-0">
-            <h5 class="m-0">Insurance amount</h5>
+            <h5 class="m-0">Sum assured</h5>
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput class="form-control br-0 rupess" appInputValueValidation
@@ -94,7 +94,7 @@
             <h5 class="m-0">Implementation Date</h5>
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input (focus)="implementationDate.open()" [matDatepicker]="implementationDate"
+                    <input [min]="todayDate" (focus)="implementationDate.open()" [matDatepicker]="implementationDate"
                         class="form-control br-0 b-0" #implementationDate formControlName="implementationDate" matInput>
                     <mat-datepicker-toggle [for]="implementationDate" matSuffix></mat-datepicker-toggle>
                     <mat-datepicker #implementationDate></mat-datepicker>

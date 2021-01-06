@@ -190,11 +190,12 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
     if (data.value != 'Surrender') {
       this.adviceForm.get('withdrawalAmt').setErrors(null);
     }
+    this.adviceNameObj.adviceName = data.value;
+    this.adviceName = this.adviceNameObj.adviceName;
     if (this.adviceName == 'Continue') {
       this.adviceForm.get('implementDate').setErrors(null);
     }
-    this.adviceNameObj.adviceName = data.value;
-    this.adviceName = this.adviceNameObj.adviceName;
+    this.adviceForm.get('implementDate').setValue(null);
     this.componentRef._component.adviceName = this.adviceNameObj
     if (this.childComponentFlag == 'Advice General Insurance') {
       this.componentRef._component.changeAdviceName(this.componentRef._component.adviceName);
@@ -934,7 +935,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 advisorName: componentRefComponentValues.Miscellaneous.get('advisorName').value,
                 serviceBranch: componentRefComponentValues.Miscellaneous.get('serviceBranch').value,
                 linkedBankAccountId: componentRefComponentValues.Miscellaneous.get('bankAccount').value,
-                policyId: componentRefComponentValues.policyData.id ? componentRefComponentValues.policyData.id : null,
+                policyId: componentRefComponentValues.policyData ? componentRefComponentValues.policyData.id : null,
                 policyTypeId: componentRefComponentValues.policyData.policyTypeId ? componentRefComponentValues.policyData.policyTypeId : null,
                 insuranceTypeId: componentRefComponentValues.insuranceTypeId,
                 insuranceSubTypeId: componentRefComponentValues.insuranceSubTypeId,
@@ -964,13 +965,13 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 id: this.dataForEdit ? this.dataForEdit.id : null,
                 insuranceCategoryTypeId: this.adviceToCategoryId,
                 suggestedFrom: 1,
-
+                adviceDescription: this.adviceForm.get('rationale').value,
                 adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId ? this.adviceToCategoryTypeMasterId : 3,
                 adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null, adviceDescription: this.adviceForm.get('rationale').value },
                 adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
                 // adviceId: this.adviceForm.get('header').value,
                 adviceId: this.adviceForm.get('headerEdit').value ? this.adviceForm.get('headerEdit').value : 0,
-                adviceAllotment: this.adviceForm.get('withdrawalAmt').value ? this.adviceForm.get('withdrawalAmt').value : null,
+                adviceAllotment: this.adviceForm.get('withdrawalAmt').value ? parseInt(this.adviceForm.get('withdrawalAmt').value) : null,
                 clientId: AuthService.getClientId(),
                 advisorId: AuthService.getAdvisorId(),
                 // adviseCategoryTypeMasterId: 2,

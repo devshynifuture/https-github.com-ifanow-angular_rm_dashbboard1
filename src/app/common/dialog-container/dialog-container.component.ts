@@ -140,8 +140,11 @@ export class DialogContainerComponent implements OnInit, OnDestroy {
     } else {
       this.currentState = value;
       setTimeout(() => {
+        // console.log('dialogcontainer this.currentstate', value);
         this.dialogState = 'open';
         this.isOverlayVisible = (this.fragmentData.isOverlayVisible == undefined ? true : this.fragmentData.isOverlayVisible);
+        // console.log('dialogcontainer this.dialogState', this.dialogState);
+        // console.log('dialogcontainer this.isOverlayVisible', this.isOverlayVisible);
       }, 100);
     }
   }
