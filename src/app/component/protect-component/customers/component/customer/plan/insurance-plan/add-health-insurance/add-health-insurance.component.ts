@@ -331,10 +331,10 @@ export class AddHealthInsuranceComponent implements OnInit {
   getHolderNameAndSumAssured(data) {
     this.getSumAssured(data);
     data.forEach(singleInsuranceData => {
+      this.unselectedData.push(singleInsuranceData);
       if (singleInsuranceData.insurance && singleInsuranceData.insurance.insuredMembers.length > 0) {
         this.addPolicy(singleInsuranceData.isSelected ? singleInsuranceData.isSelected : false, singleInsuranceData)
         singleInsuranceData.displayHolderName = singleInsuranceData.insurance.insuredMembers[0].name;
-        this.unselectedData.push(singleInsuranceData);
         singleInsuranceData.displayHolderSumInsured = this.formatNumber(singleInsuranceData.insurance.insuredMembers[0].sumInsured ? singleInsuranceData.insurance.insuredMembers[0].sumInsured : singleInsuranceData.insurance.sumInsuredIdv);
         if (singleInsuranceData.insurance.insuredMembers.length > 1) {
           for (let i = 1; i < singleInsuranceData.insurance.insuredMembers.length; i++) {
@@ -764,6 +764,7 @@ export class AddHealthInsuranceComponent implements OnInit {
             );
           } else {
             this.barButtonOptions.active = false;
+            this.eventService.openSnackBar("Existing policy updated", 'Ok');
             this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
           }
         },
