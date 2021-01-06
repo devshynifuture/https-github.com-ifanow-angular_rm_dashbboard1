@@ -6,6 +6,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { HttpHeaders } from '@angular/common/http';
 import { MatBottomSheet } from '@angular/material';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import { DashboardService } from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,7 @@ export class FileUploadServiceService {
           if (responseData == null) {
             // this.addDocumentUsers(fileName, this.imageType, fileuploadurl);
             this.addDocumentUsers(fileuploadurl);
+            DashboardService.dashDocumentTotalSize = null;
             this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
             this.fileUploadSuccsess = true
             this.responseData = true

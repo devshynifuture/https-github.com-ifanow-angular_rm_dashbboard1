@@ -489,7 +489,6 @@ export class DashboardComponent implements OnInit {
     this.advisorName = AuthService.getUserInfo().name;
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
-<<<<<<< HEAD
     if (!this.update) { }
     if (DashboardService.dashAnswerData) {
       this.answerObj = DashboardService.dashAnswerData;
@@ -607,31 +606,11 @@ export class DashboardComponent implements OnInit {
     // this.sipCountGet();//for getting total sip book
     // this.getKeyMetrics(); 
     // for getting total AUM
-=======
-    this.getMisData();
-    this.getKeyMetrics(); // for getting total AUM
-    this.getAnswerData();
-    this.clientWithSubscription();
-    this.getDocumentTotalSize();
-    this.getChartData()
-    this.getBirthdayOrAnniversary();
-    this.initPointForTask();
-    this.getLast7DaysTransactionStatus();
-    this.getLastSevenDaysInvestmentAccounts();
-    this.getLastSevenDaysTransactions();
-    this.getSummaryDataDashboard(); // summry dashbord
-    this.getLatesAumReconciliationData();
-
-    // this.getAssetAllocationData();
-    this.getTotalRecivedByDash();
-    // this.sipCountGet();//for getting total sip book
->>>>>>> 70d96fb82d2d4a4334302b9c36eaa0b62ff8085f
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     // AuthService.getToDo() ? this.todoListData = AuthService.getToDo() : this.getTodoListData();
     // this.getRecentTransactionData();
     // this.connectAccountWithGoogle();
-<<<<<<< HEAD
     // this.getBirthdayOrAnniversary();
     // this.getLast7DaysTransactionStatus();
     // this.getDocumentTotalSize();
@@ -667,9 +646,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnDestroy() {
     DashboardService.dashAnswerData = this.answerObj ? this.answerObj : null;
-=======
-    this.getGoalSummaryData();
->>>>>>> 70d96fb82d2d4a4334302b9c36eaa0b62ff8085f
 
   }
 

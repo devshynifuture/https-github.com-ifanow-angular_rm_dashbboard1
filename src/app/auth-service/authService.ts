@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 // import {Router} from '@angular/router';
 import { Router } from '@angular/router';
+import { DashboardService } from '../component/protect-component/AdviserComponent/dashboard/dashboard.service';
 
 @Injectable()
 export class AuthService {
@@ -217,6 +218,7 @@ export class AuthService {
     sessionStorage.clear();
     sessionStorage.removeItem('taskMatrix');
     sessionStorage.removeItem('todaysTaskList')
+    DashboardService.clearDashData()
     // this.myRoute.navigate(['login']);
   }
 

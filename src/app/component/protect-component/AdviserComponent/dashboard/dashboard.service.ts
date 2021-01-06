@@ -35,6 +35,33 @@ export class DashboardService {
   constructor(private http: HttpService) {
   }
 
+  static clearDashData() {
+    DashboardService.dashChartData = null;
+    DashboardService.dashMisData = null;
+    DashboardService.dashPointForTask = null;
+    DashboardService.dashGoalSummaryData = null;
+    DashboardService.dashLastSevenDaysInvestmentAccounts = null;
+    DashboardService.dashLatesAumReconciliationData = null;
+    DashboardService.dashSevenDaysTransactions = null;
+    DashboardService.dashLastSevenDaysTransactions = null;
+    DashboardService.dashLastSevenDaysTransactionsNew = null;
+    DashboardService.dashLatesAumReconciliationDataRes = null;
+    DashboardService.staticdashInitPointForTask = null;
+    DashboardService.dashDocumentTotalSize = null;
+    DashboardService.dashLast7DaysTransactionStatus = null;
+    DashboardService.dashBirthdayOrAnniversary = null;
+    DashboardService.dashInitializePieChart = null;
+    DashboardService.dashRecentTransactionData = null;
+    DashboardService.dashKeyMetrics = null;
+    DashboardService.dashSummaryDataDashboard = null;
+    DashboardService.dashClientWithSubscription = null;
+    DashboardService.dashTotalRecivedByDash = null;
+    DashboardService.dashAnswerData = null;
+    DashboardService.dashTaskDashboardCount = null;
+    DashboardService.dashTodaysTaskList = null;
+    DashboardService.dashTodoListData = null;
+  }
+
   addNotes(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_NOTES, data);
   }
