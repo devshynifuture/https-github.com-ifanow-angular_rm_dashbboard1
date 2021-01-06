@@ -98,7 +98,9 @@ export class TransactionSummaryComponent implements OnInit {
       this.defaultClient = result;
       this.allData.defaultClient = this.selectedInvestor;
       this.defaultDetails.emit(this.allData);
-      this.getBankDetails()
+      if (this.selectedPlatform == 1) {
+        this.getBankDetails();
+      }
     });
   }
 
