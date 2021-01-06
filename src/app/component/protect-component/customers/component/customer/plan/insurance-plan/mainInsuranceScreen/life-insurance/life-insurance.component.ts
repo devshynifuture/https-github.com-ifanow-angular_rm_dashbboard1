@@ -943,15 +943,13 @@ export class LifeInsuranceComponent implements OnInit {
     if (this.inputData.insuranceType != 1) {
       if(data)
       data.forEach(element => {
-        if(!element.insurance.sumInsuredIdv){
-          element.insurance.insuredMembers = this.getSumAssuredInAll(element.insurance);
+          this.getSumAssuredInAll(element.insurance);
           if(element.parentAsset){
-            element.parentAsset.insuredMembers = this.getSumAssuredInAll(element.parentAsset);
+            this.getSumAssuredInAll(element.parentAsset);
           }
           if(element.childAsset){
-            element.childAsset.insuredMembers = this.getSumAssuredInAll(element.childAsset);
+            this.getSumAssuredInAll(element.childAsset);
           }
-        }
       });
     }
     return data;
@@ -960,7 +958,7 @@ export class LifeInsuranceComponent implements OnInit {
       element.sumAssured = 0;
       if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
         element.insuredMembers.forEach(ele => {
-          ele.sumAssured += ele.sumInsured;
+          element.sumAssured += ele.sumInsured;
         });
       } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
         element.policyFeatures.forEach(ele => {
