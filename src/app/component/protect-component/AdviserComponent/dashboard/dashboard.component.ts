@@ -32,6 +32,7 @@ import { EnumDataService } from "../../../../services/enum-data.service";
 import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { MfServiceService } from '../../customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { AssetValidationService } from '../../customers/component/customer/accounts/assets/asset-validation.service';
 
 export interface PeriodicElement {
   name: string;
@@ -245,6 +246,7 @@ export class DashboardComponent implements OnInit {
     private cancelFlagService: CancelFlagService,
     public roleService: RoleService,
     public MfServiceService:MfServiceService,
+    public assetValidation:AssetValidationService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -256,6 +258,7 @@ export class DashboardComponent implements OnInit {
       this.greeting = 'Good evening';
     }
     this.MfServiceService.clearStorage(); // clearing storedata of Mf
+    // this.assetValidation.clearAssetData(); //clear stocks data
   }
 
   documentSizeData: any = {};
