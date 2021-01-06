@@ -31,6 +31,7 @@ import * as Highcharts from 'highcharts';
 import { EnumDataService } from "../../../../services/enum-data.service";
 import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { interval, Subscription } from 'rxjs';
 
 export interface PeriodicElement {
   name: string;
@@ -161,6 +162,9 @@ export class DashboardComponent implements OnInit {
   mfSubCategoryPieConfig: Chart;
   mfAllocationPieConfig: Chart;
   chart: Highcharts.Chart;
+  subscription: Subscription;
+  source = interval(7200000);
+
   chartData: any[] = [
     {
       name: "EQUITY",
@@ -477,6 +481,8 @@ export class DashboardComponent implements OnInit {
   };
   update: boolean = true
   ngOnInit() {
+    this.subscription = this.source.subscribe(val => this.getKeyMetrics());
+
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
     this.clientData = AuthService.getClientData();
@@ -619,7 +625,24 @@ export class DashboardComponent implements OnInit {
 
   }
 
-
+  intervalCall() {
+    this.getKeyMetrics()
+    this.getAssetAllocationData();
+    this.sipCountGet();//for getting total sip book
+    this.getTodoListData();
+    this.getRecentTransactionData();
+    this.connectAccountWithGoogle();
+    this.getBirthdayOrAnniversary();
+    this.getLast7DaysTransactionStatus();
+    this.getDocumentTotalSize();
+    this.getLastSevenDaysTransactions();
+    this.getLatesAumReconciliationData();
+    this.getLastSevenDaysInvestmentAccounts();
+    this.getGoalSummaryData();
+    this.initPointForTask();
+    this.getMisData();
+    this.getChartData()
+  }
 
   ngOnDestroy() {
     DashboardService.dashAnswerData = this.answerObj ? this.answerObj : null;
