@@ -144,7 +144,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     premiumDetailsFrequency: [, [Validators.required]],
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],
-    policyStatus: [, [Validators.required]],
+    policyStatus: ['', [Validators.required]],
     policyStatusLastUnpaid: ['',[Validators.required]],
     getCoOwnerName: this.fb.array([this.fb.group({
       name: ['', [Validators.required]],
@@ -484,8 +484,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(this.editInsuranceData.policyTenure);
       this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm);
       this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId));
-      // this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastPaidPremium);
-      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastPaidPremium ? new Date(this.editInsuranceData.lastPaidPremium) : null);
+      // this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium);
+      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium ? new Date(this.editInsuranceData.lastUnpaidPremium) : null);
       this.insuranceTypeId = this.editInsuranceData.insuranceTypeId;
       this.insuranceSubTypeId = this.editInsuranceData.insuranceSubTypeId;
       this.policyData = {};
@@ -496,7 +496,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.keyDetailsForm.controls.riskCover.setValue(this.editInsuranceData.riskCover);
       this.keyDetailsForm.controls.surrenderName.setValue(this.editInsuranceData.surrenderValue);
       this.keyDetailsForm.controls.nomineeName.setValue(this.editInsuranceData.nominee);
-      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.vestedBonus);
+      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.currentValue);
       this.keyDetailsForm.controls.assumedRate.setValue(this.editInsuranceData.assumedRate);
       if (this.editInsuranceData) {
         this.getCoOwner.removeAt(0);
@@ -708,6 +708,11 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   }
   saveAddInsurance() {
     this.getClientId();
+    if(this.lifeInsuranceForm.get('policyStatus').value == '2'){
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
+    }else{
+      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors(null)
+    }
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
     let ulipFundDetails = [];
     const ulipFundVal = this.keyDetailsForm.get('fundValueForm') as FormArray;
@@ -762,8 +767,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         policyName: this.lifeInsuranceForm.get('policyName').value,
         sumAssured: this.lifeInsuranceForm.get('sumAssured').value,
         policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,
-        // lastPaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
-        lastPaidPremium: this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
+        // lastUnpaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
+        lastUnpaidPremium: this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
         premiumAmount: this.lifeInsuranceForm.get('premiumDetailsAmount').value,
         frequency: this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
         policyTenure: this.lifeInsuranceForm.get('tenureDetailsPolicy').value,

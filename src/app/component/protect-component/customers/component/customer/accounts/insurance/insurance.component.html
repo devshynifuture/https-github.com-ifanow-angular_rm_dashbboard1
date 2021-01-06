@@ -121,13 +121,24 @@
                                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
                             </button>
                             <mat-menu #insuranceMenu>
-                                <button (click)="filterInsurance('statusId', 'LIVE')" mat-menu-item>
+                                <button (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'LIVE')"
+                                    mat-menu-item>
                                     STATUS - LIVE
                                 </button>
                                 <button
-                                    (click)="(insuranceTypeId == 1) ? filterInsurance('statusId', 'MATURED') : filterInsurance('statusId', 'EXPIRED')"
+                                    (click)="(insuranceTypeId == 1) ? filterInsurance('status', 'MATURED') : filterInsurance('statusId', 'EXPIRED')"
                                     mat-menu-item>
                                     {{(insuranceTypeId == 1) ? 'STATUS - MATURED' : 'STATUS - EXPIRED'}}
+                                </button>
+                                <button *ngIf="insuranceTypeId == 1"
+                                    (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'Lapsed')"
+                                    mat-menu-item>
+                                    STATUS - LAPSED
+                                </button>
+                                <button *ngIf="insuranceTypeId == 1"
+                                    (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'Reduced paid up')"
+                                    mat-menu-item>
+                                    STATUS - REDUCED PAID UP
                                 </button>
                             </mat-menu>
                             <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle"
@@ -255,7 +266,7 @@
                                 <td *matCellDef="let element" class="br text-left" mat-cell>
                                     <div class="bar">
                                         <span
-                                            *ngIf="!isLoading">{{element.statusId == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}</span>
+                                            *ngIf="!isLoading">{{element.status == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}</span>
                                     </div>
                                 </td>
                                 <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -290,10 +301,14 @@
                                 </th>
                                 <td *matCellDef="let element" class="br text-primary" mat-cell>
                                     <div class="bar">
-                                        <span class="text-primary" *ngIf="element.statusId == 'LIVE'">
+                                        <span class="text-primary" *ngIf="element.status == 'LIVE'">
                                             {{'LIVE'}} </span>
-                                        <span *ngIf="element.statusId == 'MATURED'" class="text-success">
+                                        <span *ngIf="element.status == 'MATURED'" class="text-success">
                                             {{'MATURED'}} </span>
+                                        <span *ngIf="element.status == 'Lapsed'" class="text-danger">
+                                            {{'LAPSED'}} </span>
+                                        <span *ngIf="element.status == 'Reduced paid up'" class="text-warning">
+                                            {{'REDUCE PAID UP'}} </span>
                                     </div>
                                 </td>
                                 <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>

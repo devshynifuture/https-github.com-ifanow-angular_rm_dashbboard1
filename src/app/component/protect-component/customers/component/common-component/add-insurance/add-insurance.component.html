@@ -249,16 +249,16 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40" *ngIf="lifeInsuranceForm.get('policyStatus').value == '2'">
+        <div class="row pt-40" *ngIf="(lifeInsuranceForm.get('policyStatus').value == '2' || lifeInsuranceForm.get('policyStatus').value == '4')">
             <div class="col-md-5 pr-0"></div>
             <div class="col-md-3">
 
             </div>
             <div class="col-md-4">
-                <label class="f-14 roboto">Last paid premium</label>
+                <label class="f-14 roboto">Last unpaid premium</label>
             </div>
         </div>
-        <div class="row " [ngClass]="{'pt-0':policyStatus.value == '2','pt-40':policyStatus.value != '2'}">
+        <div class="row " [ngClass]="{'pt-0':(lifeInsuranceForm.get('policyStatus').value == '4' || lifeInsuranceForm.get('policyStatus').value == '2'),'pt-40':(lifeInsuranceForm.get('policyStatus').value == '' || lifeInsuranceForm.get('policyStatus').value == '1' || lifeInsuranceForm.get('policyStatus').value == '3')}">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Policy status</h5>
             </div>
@@ -290,7 +290,7 @@
                     </mat-form-field>
                 </div>
             </div> -->
-            <div class="col-md-3" *ngIf="lifeInsuranceForm.get('policyStatus').value == '2'">
+            <div class="col-md-3" *ngIf="(lifeInsuranceForm.get('policyStatus').value == '2' || lifeInsuranceForm.get('policyStatus').value == '4')">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input matInput formControlName="policyStatusLastUnpaid" [max]="maxDate"
