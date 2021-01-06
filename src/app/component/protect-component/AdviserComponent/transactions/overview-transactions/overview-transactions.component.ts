@@ -1,20 +1,21 @@
-import {UtilService} from '../../../../../services/util.service';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {Component, OnInit} from '@angular/core';
-import {OnlineTransactionComponent} from './doTransaction/online-transaction/online-transaction.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {KnowYourCustomerComponent} from './know-your-customer/know-your-customer.component';
-import {IinUccCreationComponent} from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import {AddMandateComponent} from './MandateCreation/add-mandate/add-mandate.component';
-import {HttpService} from 'src/app/http-service/http-service';
-import {TransactionMobileViewComponent} from '../transaction-mobile-view/transaction-mobile-view.component';
-import {MatDialog} from '@angular/material';
-import {OnlineTransactionService} from '../online-transaction.service';
-import {TransactionDetailComponent} from '../transactions-list/transaction-detail/transaction-detail.component';
-import {TransactionEnumService} from '../transaction-enum.service';
-import {EnumDataService} from 'src/app/services/enum-data.service';
-import {TransactionRoleService} from "../transaction-role.service";
+import { UtilService } from '../../../../../services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { OnlineTransactionComponent } from './doTransaction/online-transaction/online-transaction.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { KnowYourCustomerComponent } from './know-your-customer/know-your-customer.component';
+import { IinUccCreationComponent } from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { AddMandateComponent } from './MandateCreation/add-mandate/add-mandate.component';
+import { HttpService } from 'src/app/http-service/http-service';
+import { TransactionMobileViewComponent } from '../transaction-mobile-view/transaction-mobile-view.component';
+import { MatDialog } from '@angular/material';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { TransactionDetailComponent } from '../transactions-list/transaction-detail/transaction-detail.component';
+import { TransactionEnumService } from '../transaction-enum.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { TransactionRoleService } from "../transaction-role.service";
+import { CredentialsErrorPopupComponent } from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -49,9 +50,9 @@ export class OverviewTransactionsComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
-              public eventService: EventService, private http: HttpService,
-              private tranService: OnlineTransactionService, private enumDataService: EnumDataService,
-              public transactionRoleServcie: TransactionRoleService) {
+    public eventService: EventService, private http: HttpService,
+    private tranService: OnlineTransactionService, private enumDataService: EnumDataService,
+    public transactionRoleServcie: TransactionRoleService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -67,7 +68,7 @@ export class OverviewTransactionsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   openMobileErrorCopyTransactionPopup() {
@@ -186,10 +187,25 @@ export class OverviewTransactionsComponent implements OnInit {
 
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        if (err === "Something went wrong !") {
+          this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        } else {
+          this.openCredentialsErrorPopup();
+        }
+        // this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
         //  this.errMessage = err.error.message;
       }
     );
+  }
+
+  openCredentialsErrorPopup() {
+    const dialogRef = this.dialog.open(CredentialsErrorPopupComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
   }
 
   getMandate() {
