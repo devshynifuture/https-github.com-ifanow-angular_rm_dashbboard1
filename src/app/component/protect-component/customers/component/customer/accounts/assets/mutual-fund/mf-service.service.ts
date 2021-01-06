@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { BehaviorSubject } from 'rxjs';
-import { DatePipe } from '@angular/common';
-import { ReturnStatement } from '@angular/compiler';
+import {Injectable} from '@angular/core';
+import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {BehaviorSubject} from 'rxjs';
+import {DatePipe} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -81,7 +80,7 @@ export class MfServiceService {
       if(element.rtMasterId == 6 && !element.folioNumber.includes("CAS")){
         element.folioNumber = 'CAS-'+element.folioNumber;
       }
-      
+
     });
     return data;
   }
@@ -361,7 +360,7 @@ export class MfServiceService {
       arry = [...new Map(arry.map(item => [item.id, item])).values()];
       mutualFundList = arry
     }
-   
+
 
     // if (dataForFilter.reportAsOn && dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT') {
     //   let array = [];

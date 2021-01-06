@@ -223,14 +223,14 @@
                         </ng-container>
 
                         <!-- Symbol Column -->
-                        <ng-container matColumnDef="returns">
+                        <!-- <ng-container matColumnDef="returns">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Returns </th>
                             <td mat-cell class="text-right amt" *matCellDef="let element">
                                 <div class="bar">
                                     {{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
                                 </div>
                             </td>
-                        </ng-container>
+                        </ng-container> -->
 
                         <ng-container matColumnDef="advice">
                             <th mat-header-cell *matHeaderCellDef> Advice </th>
@@ -273,8 +273,8 @@
                                 <mat-menu #menu4="matMenu">
                                     <button mat-menu-item (click)="openDetailedView(element)"
                                         *ngIf="inputData?.insuranceType != 1">Detailed view</button>
-                                    <button mat-menu-item
-                                        (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button>
+                                    <!-- <button mat-menu-item
+                                        (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button> -->
                                     <button mat-menu-item
                                         (click)="deleteModalRecommendations('INSURANCE',element)">Delete</button>
                                 </mat-menu>
@@ -366,8 +366,7 @@
                                 </td>
                             </ng-container>
 
-                            <!-- Symbol Column -->
-                            <ng-container matColumnDef="returns">
+                            <!-- <ng-container matColumnDef="returns">
                                 <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Returns </th>
                                 <td mat-cell class="text-right amt" (click)="isClick = false;expandedElement2=null"
                                     *matCellDef="let element">
@@ -375,7 +374,7 @@
                                         {{isLoadingPlan ? '' : (element.returnRate ? element.returnRate : 0)}}{{!isLoadingPlan ? '%' : ''}}
                                     </div>
                                 </td>
-                            </ng-container>
+                            </ng-container> -->
 
                             <ng-container matColumnDef="advice">
                                 <th mat-header-cell *matHeaderCellDef> Advice </th>
@@ -421,8 +420,8 @@
                                         <button mat-menu-item (click)="openDetailedView(element)"
                                             *ngIf="inputData?.insuranceType != 1 && (element.advice!=null && element.advice != 'Continue' && element.advice != 'Discontinue')">Detailed
                                             view</button>
-                                        <button mat-menu-item
-                                            (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button>
+                                        <!-- <button mat-menu-item
+                                            (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button> -->
                                         <button mat-menu-item *ngIf="element.advice"
                                             (click)="deleteModalRecommendations('INSURANCE',element)">Delete advice</button>
                                     </mat-menu>

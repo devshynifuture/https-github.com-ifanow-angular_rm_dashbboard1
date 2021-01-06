@@ -120,7 +120,7 @@ export class EditSuggestedAdviceComponent implements OnInit {
         suggestedFrom: 1,
         adviceAllotment: parseInt(this.adviceForm.get('withdrawalAmt').value),
         adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
-        adviceToLifeInsurance: { "insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
+        adviceToLifeInsurance: { adviceDescription: this.adviceForm.get('rationale').value,"insuranceAdviceId": this.dataForEdit ? parseInt(this.adviceForm.get('headerEdit').value) : null },
         adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
         adviceId: this.adviceForm.get('headerEdit').value,
         clientId: AuthService.getClientId(),

@@ -7,7 +7,7 @@ import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.compo
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
 import { MfServiceService } from '../../mf-service.service';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
+// import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 // import {WebworkerService} from '../../../../../../../../../../services/web-worker.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
@@ -155,7 +155,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     public mfService: MfServiceService,
-    private excel: ExcelGenService,
+    // private excel: ExcelGenService,
     private backOfficeService: BackOfficeService,
     // private workerService: WebworkerService,
     public dialog: MatDialog,

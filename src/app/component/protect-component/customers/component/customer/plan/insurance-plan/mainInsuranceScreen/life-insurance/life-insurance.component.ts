@@ -48,7 +48,7 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumnsNeedAnalysis: string[] = ['details', 'outstanding', 'consider', 'edit'];
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
   dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice', 'icons'];
+  displayedColumns1 = ['name', 'sum', 'premium', 'advice', 'icons'];
   displayedColumns3 = ['name', 'sum', 'premium', 'status', 'icons'];
   // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
   // dataSouce3=ELEMENT_DATA4;
@@ -357,11 +357,6 @@ export class LifeInsuranceComponent implements OnInit {
     );
   }
   setDetails(data) {
-    if (this.inputData && this.inputData.insuranceType != 1) {
-      this.displayedColumns1 = ['name', 'sum', 'premium', 'advice', 'icons'];
-    } else {
-      this.displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice', 'icons'];
-    }
     this.type = this.summaryPlanService.getTypeIds(this.inputData);
     if (data) {
       this.getData = data
@@ -946,19 +941,41 @@ export class LifeInsuranceComponent implements OnInit {
   }
   getFilterSumAssured(data){
     if (this.inputData.insuranceType != 1) {
+      if(data)
       data.forEach(element => {
         if(!element.insurance.sumInsuredIdv){
-          element.insurance.insuredMembers = this.getSumAssuredByArray(element.insurance,(element.insurance.insuredMembers ? element.insurance.insuredMembers : null));
+          element.insurance.insuredMembers = this.getSumAssuredInAll(element.insurance);
           if(element.parentAsset){
-            element.parentAsset.insuredMembers = this.getSumAssuredByArray(element.parentAsset,(element.parentAsset ? element.parentAsset.insuredMembers : null));
+            element.parentAsset.insuredMembers = this.getSumAssuredInAll(element.parentAsset);
           }
           if(element.childAsset){
-            element.childAsset.insuredMembers = this.getSumAssuredByArray(element.childAsset,(element.childAsset ? element.childAsset.insuredMembers :null));
+            element.childAsset.insuredMembers = this.getSumAssuredInAll(element.childAsset);
           }
         }
       });
     }
     return data;
+  }
+  getSumAssuredInAll(element) {
+      element.sumAssured = 0;
+      if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
+        element.insuredMembers.forEach(ele => {
+          ele.sumAssured += ele.sumInsured;
+        });
+      } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
+        element.policyFeatures.forEach(ele => {
+          element.sumInsuredIdv += ele.featureSumInsured;
+        });
+      } else {
+        element.sumInsuredIdv = element.sumInsuredIdv;
+      }
+
+      if (!element.sumInsuredIdv && element && element.hasOwnProperty('addOns') && element.addOns.length > 0) {
+        element.addOns.forEach(ele => {
+          element.sumInsuredIdv += ele.addOnSumInsured;
+        });
+      }
+    return element;
   }
   getSumAssuredByArray(storeVal,data){
     if(data){
@@ -1384,15 +1401,14 @@ export interface PeriodicElement1 {
   name: string;
   sum: string;
   premium: string;
-  returns: string;
   advice: string;
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", returns: '4.78%', advice: 'Stop paying premiums' },
+  { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", advice: 'Stop paying premiums' },
 ];
 const ELEMENT_DATA2: PeriodicElement1[] = [
-  { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", returns: '4.78%', advice: 'Stop paying premiums' },
+  { name: "LIC Jeevan Saral", sum: '20,00,000', premium: "27,000", advice: 'Stop paying premiums' },
 ];
 export interface PeriodicElement2 {
 

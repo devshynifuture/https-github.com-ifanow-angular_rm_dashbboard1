@@ -30,7 +30,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
     fullWidth: false,
 
   };
-  displayedColumns: string[] = ['policyName', 'sum', 'premium', 'returns', 'advice'];
+  displayedColumns: string[] = ['policyName', 'sum', 'premium', 'advice'];
   dataSource: any;
   inputData: any;
   isLoading: any;
@@ -222,13 +222,12 @@ export interface PeriodicElement {
   policyName: string;
   sum: string;
   premium: string;
-  returns: string;
   advice: string;
   empty: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { policyName: 'LIC Jeevan Saral', sum: '20,00,000', premium: '27,000', returns: '4.78%', advice: 'Stop paying premiums', empty: '' },
+  { policyName: 'LIC Jeevan Saral', sum: '20,00,000', premium: '27,000',advice: 'Stop paying premiums', empty: '' },
 
 ];
 
