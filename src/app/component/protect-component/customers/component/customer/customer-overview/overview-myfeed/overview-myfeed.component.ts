@@ -171,6 +171,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   parentId: any;
   adminAdvisorIds = [];
   clientIdToClearStorage: string;
+  mutualFundObj: { assetType: number; investedAmount: any; gainAmount: any; currentValue: any; assetTypeString: string; path: string; };
 
   constructor(
     private customerService: CustomerService,
@@ -359,7 +360,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.currentViewId = 2;
     } else if (window.pageYOffset < this.riskProfileSectionOffset) {
       this.currentViewId = 3;
-    } else {
+    } else if (window.pageYOffset >= this.riskProfileSectionOffset) {
       this.currentViewId = 4;
     }
     //window.pageYOffset >= this.riskProfileSectionOffset
@@ -609,7 +610,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             element['gainAmount'] = ''
           }
         })
-        this.portFolioData.unshift(mfValue[0]);
+        this.portFolioData.unshift(this.mutualFundObj ? this.mutualFundObj : mfValue[0]);
         // this.portFolioData.splice(mfIndex, 1)
 
       }
@@ -1177,7 +1178,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           assetTypeString: 'Mutual funds',
           path: '/customer/detail/account/assets/mutual'
         }
-
+        this.mutualFundObj = obj;
         // this.portFolioData[0].investedAmount = this.mfServiceService.mutualFundRoundAndFormat(this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0, 0);
         // this.portFolioData[0].gainAmount = this.mfServiceService.mutualFundRoundAndFormat(this.mutualFund.total_unrealized_gain ? this.mutualFund.total_unrealized_gain : 0,0)
         // this.portFolioData[0].currentValue = this.mfServiceService.mutualFundRoundAndFormat(this.mutualFund.total_current_value ? this.mutualFund.total_current_value : 0,0),

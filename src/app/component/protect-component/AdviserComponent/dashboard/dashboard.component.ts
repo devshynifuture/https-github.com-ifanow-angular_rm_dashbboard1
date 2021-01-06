@@ -28,11 +28,12 @@ import { AppConstants } from 'src/app/services/app-constants';
 import { CustomerService } from '../../customers/component/customer/customer.service';
 import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
-import { EnumDataService } from "../../../../services/enum-data.service";
+import { EnumDataService } from '../../../../services/enum-data.service';
 import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { MfServiceService } from '../../customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { AssetValidationService } from '../../customers/component/customer/accounts/assets/asset-validation.service';
+import { CredentialsErrorPopupComponent } from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
 
 export interface PeriodicElement {
   name: string;
@@ -156,8 +157,41 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
+  constructor(
+    public dialog: MatDialog, private subService: SubscriptionService,
+    private eventService: EventService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private subInjectService: SubscriptionInject,
+    private backoffice: BackOfficeService,
+    private transactionService: OnlineTransactionService,
+    private dashboardService: DashboardService,
+    private calenderService: calendarService,
+    private emailService: EmailServiceService,
+    private utils: UtilService,
+    private datePipe: DatePipe,
+    private crmTaskService: CrmTaskService,
+    private customerService: CustomerService,
+    public enumDataService: EnumDataService,
+    private cancelFlagService: CancelFlagService,
+    public roleService: RoleService,
+    public MfServiceService: MfServiceService,
+    public assetValidation: AssetValidationService
+  ) {
+    const date = new Date();
+    const hourOfDay = date.getHours();
+    if (hourOfDay < 12) {
+      this.greeting = 'Good morning';
+    } else if (hourOfDay < 16) {
+      this.greeting = 'Good afternoon';
+    } else {
+      this.greeting = 'Good evening';
+    }
+    this.MfServiceService.clearStorage(); // clearing storedata of Mf
+    // this.assetValidation.clearAssetData(); //clear stocks data
+  }
   clientData: any;
-  chartTotal: number = 0;
+  chartTotal = 0;
   hasError: boolean;
   assetAllocationPieConfig: Chart;
   mfSubCategoryPieConfig: Chart;
@@ -165,21 +199,21 @@ export class DashboardComponent implements OnInit {
   chart: Highcharts.Chart;
   chartData: any[] = [
     {
-      name: "EQUITY",
+      name: 'EQUITY',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[0],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: "DEBT",
+      name: 'DEBT',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[1],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: "HYBRID",
+      name: 'HYBRID',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[2],
       dataLabels: {
@@ -201,7 +235,7 @@ export class DashboardComponent implements OnInit {
         enabled: false
       }
     }, {
-      name: "OTHERS",
+      name: 'OTHERS',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[3],
       dataLabels: {
@@ -221,45 +255,12 @@ export class DashboardComponent implements OnInit {
   userData: any;
   taskSummaryDashboardCount: any = null;
   mfDataflag: boolean;
-  keyMatrixFlag: boolean = true;
+  keyMatrixFlag = true;
   newchartData: any[];
   mfAumValue: any;
   answerObj: any = {};
   answerFlag: boolean;
   taskSummaryCount: any;
-  constructor(
-    public dialog: MatDialog, private subService: SubscriptionService,
-    private eventService: EventService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private subInjectService: SubscriptionInject,
-    private backoffice: BackOfficeService,
-    private transactionService: OnlineTransactionService,
-    private dashboardService: DashboardService,
-    private calenderService: calendarService,
-    private emailService: EmailServiceService,
-    private utils: UtilService,
-    private datePipe: DatePipe,
-    private crmTaskService: CrmTaskService,
-    private customerService: CustomerService,
-    public enumDataService: EnumDataService,
-    private cancelFlagService: CancelFlagService,
-    public roleService: RoleService,
-    public MfServiceService:MfServiceService,
-    public assetValidation:AssetValidationService
-  ) {
-    const date = new Date();
-    const hourOfDay = date.getHours();
-    if (hourOfDay < 12) {
-      this.greeting = 'Good morning';
-    } else if (hourOfDay < 16) {
-      this.greeting = 'Good afternoon';
-    } else {
-      this.greeting = 'Good evening';
-    }
-    this.MfServiceService.clearStorage(); // clearing storedata of Mf
-    // this.assetValidation.clearAssetData(); //clear stocks data
-  }
 
   documentSizeData: any = {};
   aumReconList: any;
@@ -478,6 +479,8 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  todoDescription = '';
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
@@ -490,7 +493,7 @@ export class DashboardComponent implements OnInit {
     this.getAnswerData();
     this.clientWithSubscription();
     this.getDocumentTotalSize();
-    this.getChartData()
+    this.getChartData();
     this.getBirthdayOrAnniversary();
     this.initPointForTask();
     this.getLast7DaysTransactionStatus();
@@ -522,7 +525,7 @@ export class DashboardComponent implements OnInit {
     this.answerFlag = true;
     const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.dashboardService.getOnBoardingQuestionAnswer(obj).subscribe(
       data => {
         if (data) {
@@ -531,27 +534,26 @@ export class DashboardComponent implements OnInit {
         }
       }), err => {
         this.answerFlag = false;
-        this.answerObj.nextStep = 'start'
-      }
+        this.answerObj.nextStep = 'start';
+      };
   }
 
   getChartData() {
-    this.tabsLoaded.portfolioData.isLoading = true
-    const obj =
-    {
+    this.tabsLoaded.portfolioData.isLoading = true;
+    const obj = {
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
-    }
+    };
     this.dashboardService.getChartData(obj).subscribe(
       data => {
-        this.tabsLoaded.portfolioData.isLoading = false
-        console.log(data)
+        this.tabsLoaded.portfolioData.isLoading = false;
+        console.log(data);
         if (data) {
           this.tabsLoaded.portfolioData.hasData = true;
-          let chartData = [];
-          this.chartTotal
+          const chartData = [];
+          this.chartTotal;
           data.forEach((element, index) => {
-            this.chartTotal += Math.round(element.totalAum)
+            this.chartTotal += Math.round(element.totalAum);
             if (element.name) {
               chartData.push({
                 y: Math.round(element.totalAum),
@@ -560,14 +562,13 @@ export class DashboardComponent implements OnInit {
                 dataLabels: {
                   enabled: false
                 }
-              })
+              });
             }
           });
-          this.newchartData = chartData
+          this.newchartData = chartData;
           this.assetAllocationPieChartDataMgnt(this.newchartData);
-          this.tabsLoaded.portfolioData.dataLoaded = true
-        }
-        else {
+          this.tabsLoaded.portfolioData.dataLoaded = true;
+        } else {
           this.tabsLoaded.portfolioData.hasData = false;
         }
       },
@@ -584,10 +585,10 @@ export class DashboardComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.taskSummaryDashboardCount = res;
-          this.taskSummaryCount = this.taskSummaryDashboardCount.weekTaskCount + this.taskSummaryDashboardCount.monthTaskCount + this.taskSummaryDashboardCount.overDueTaskCount
+          this.taskSummaryCount = this.taskSummaryDashboardCount.weekTaskCount + this.taskSummaryDashboardCount.monthTaskCount + this.taskSummaryDashboardCount.overDueTaskCount;
           DashboardService.setTaskMatrix(res);
         }
-      })
+      });
   }
 
   getAssetAllocationData() {
@@ -872,7 +873,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getLastSevenDaysTransactions() {
-    this.last7DaysLoading = true
+    this.last7DaysLoading = true;
 
     const obj = {
       advisorId: this.advisorId,
@@ -890,22 +891,22 @@ export class DashboardComponent implements OnInit {
     const obj2 = {
       advisorId: this.advisorId,
       parentId: this.parentId,
-      days: 7
+      days: 15
     };
     this.dashboardService.getLastSevenDaysTransactionsNew(obj2).subscribe(
       (data) => {
         if (data) {
-          this.last7DaysLoading = false
+          this.last7DaysLoading = false;
           this.dataSource5 = data;
           console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
         } else {
-          this.last7DaysLoading = false
+          this.last7DaysLoading = false;
           this.dataSource5 = [];
           console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
         }
 
       }, err => {
-        this.last7DaysLoading = false
+        this.last7DaysLoading = false;
         this.dataSource5 = [];
       });
 
@@ -924,6 +925,10 @@ export class DashboardComponent implements OnInit {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = [];
         }
+      }, err => {
+        // this.eventService.openSnackBar(err, "Dismiss")
+        this.transactionFlag = false;
+        this.LastSevenDaysTransactions = [];
       });
   }
 
@@ -982,8 +987,6 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  todoDescription = ''
-
   addTodoList(value) {
     const obj = {
       id: 0,
@@ -992,7 +995,7 @@ export class DashboardComponent implements OnInit {
     };
     this.dashboardService.addNotes(obj).subscribe(
       data => {
-        this.todoDescription = ''
+        this.todoDescription = '';
         if (data) {
           this.eventService.openSnackBar('To-Do note is added', 'Dismiss');
           this.showInput = false;
@@ -1075,7 +1078,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          console.log("birthday or aniversary", data);
+          console.log('birthday or aniversary', data);
           this.isBirhtdayLoader = false;
           // data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
           // data.forEach(element => {
@@ -1086,7 +1089,7 @@ export class DashboardComponent implements OnInit {
           //     element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
           //   }
           // });
-          let arr = [];
+          const arr = [];
           if (data && data.length > 0) {
             data.forEach(element => {
               if (!!element.birthDayOrAnniversary && element.birthDayOrAnniversary) {
@@ -1299,7 +1302,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLatestAumReconciliation(obj).subscribe(
       data => {
         if (data) {
-          console.log("this is aum recon list::", data);
+          console.log('this is aum recon list::', data);
           this.aumFlag = false;
           this.aumReconList = data;
         } else {
@@ -1431,9 +1434,23 @@ export class DashboardComponent implements OnInit {
         }
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        if (err === 'Something went wrong !') {
+          this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        } else {
+          this.openCredentialsErrorPopup();
+        }
       }
     );
+  }
+
+  openCredentialsErrorPopup() {
+    const dialogRef = this.dialog.open(CredentialsErrorPopupComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
   }
 
   changeParentsTab(selectedTab) {
@@ -1607,7 +1624,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getKeyMetrics(obj).subscribe(
       data => {
         this.isKeyMatrix = false;
-        data.sipBook = UtilService.getNumberToWord(data.sipBook)
+        data.sipBook = UtilService.getNumberToWord(data.sipBook);
         this.keyMetricJson = data;
         // this.keyMetricJson.mfAum = '';
         this.loaderFun();
@@ -1621,7 +1638,7 @@ export class DashboardComponent implements OnInit {
   openGuideDialog(): void {
     const obj = {
 
-    }
+    };
     this.dashboardService.onBoardingQuestionMaster(obj).subscribe(
       data => {
         if (data) {
@@ -1634,19 +1651,19 @@ export class DashboardComponent implements OnInit {
           dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed');
             if (this.cancelFlagService.getCancelFlag()) {
-              this.cancelFlagService.setCancelFlag(undefined)
+              this.cancelFlagService.setCancelFlag(undefined);
               this.getAnswerData();
             }
           });
         }
       }
-    )
+    );
 
 
   }
 
   getMisData() {
-    this.mfDataflag = true
+    this.mfDataflag = true;
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: -1,
@@ -1657,12 +1674,11 @@ export class DashboardComponent implements OnInit {
         this.mfDataflag = false;
         if (data) {
           this.keyMetricJson.mfAum = data.totalAumRupees;
-          this.mfAumValue = data.totalAumRupees
+          this.mfAumValue = data.totalAumRupees;
+        } else {
+          this.mfAumValue = UtilService.getNumberToWord(this.keyMetricJson.mfAum);
         }
-        else {
-          this.mfAumValue = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
-        }
-        this.loaderFun()
+        this.loaderFun();
         // UtilService.getNumberToWord(this.keyMetricJson.mfAum)
         // this.getFileResponseDataForMis(data)
       },
@@ -1674,7 +1690,7 @@ export class DashboardComponent implements OnInit {
 
   loaderFun() {
     if (!this.isKeyMatrix && !this.mfDataflag) {
-      this.keyMatrixFlag = false
+      this.keyMatrixFlag = false;
     } else {
       this.keyMatrixFlag = true;
     }

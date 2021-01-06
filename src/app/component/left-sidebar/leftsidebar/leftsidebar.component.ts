@@ -96,25 +96,47 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   //     this.showDefaultDropDownOnSearch = true;
   //   }
   // }
+
   openNew() {
-    const obj = {
-      advisorId: AuthService.getAdvisorId()
-    };
-    this.peopleService.getUniqueLoginNew(obj).subscribe(
-      data => this.stringRes(data)
-    );
+    if (AuthService.getUserInfo()) {
+      const obj = {
+        // advisorId: AuthService.getAdvisorId()
+        userId: AuthService.getUserId(),
+        userType: AuthService.getUserInfo().userType
+      };
+
+      this.peopleService.generateUUIDForLogin(obj).subscribe(
+        data => this.stringRes(data),
+      );
+    }
   }
+
 
   stringRes(data) {
     // const url = 'http://localhost:4100/admin/advisor-marketplace/engage-grow';
     const url = 'https://experts.ifanow.com/admin/advisor-marketplace/engage-grow';
-    data.appName = 'marketplace';
+    const outputData = {
+      uniqueString: data,
+      appName: 'marketplace'
+    };
     // const dataString = data.toString();
-    const dataString = JSON.stringify(data);
-
+    const dataString = JSON.stringify(outputData);
     // console.log('dataString : ', dataString);
+    // this.getuuid(data);
     window.open(url, dataString);
   }
+
+  /* getuuid(uuid) {
+     const obj = {
+       uuid: uuid
+     }
+     this.peopleService.getUUIDLogin(obj).subscribe(
+       data => this.uuidRes(data),
+     );
+   }*/
+
+
+
 
   getActiveLink(value) {
     const link = this.router.url.split('/')[2];
