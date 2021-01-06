@@ -7,6 +7,7 @@ import { EventService } from '../../../../../../../../Data-service/event.service
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
 import { ELEMENT_DATA } from '../../../../backoffice-aum-reconciliation/duplicate-data/duplicate-data.component';
+import { offset } from 'highcharts';
 
 @Component({
   selector: 'app-all-sip',
@@ -122,7 +123,8 @@ export class AllSipComponent implements OnInit {
       pageNumber,
       advisorId: (this.parentId > 0) ? this.advisorId : 0,
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
-      parentId: (this.data) ? this.data.parentId : -1
+      parentId: (this.data) ? this.data.parentId : -1,
+      offset: 0
     };
     if (this.mode == 'all') {
       this.backoffice.allSipGet(obj).subscribe(
