@@ -33,6 +33,7 @@ import { CancelFlagService } from '../../PeopleComponent/people/Component/people
 import { RoleService } from 'src/app/auth-service/role.service';
 import { MfServiceService } from '../../customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { AssetValidationService } from '../../customers/component/customer/accounts/assets/asset-validation.service';
+import { CredentialsErrorPopupComponent } from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
 
 export interface PeriodicElement {
   name: string;
@@ -245,8 +246,8 @@ export class DashboardComponent implements OnInit {
     public enumDataService: EnumDataService,
     private cancelFlagService: CancelFlagService,
     public roleService: RoleService,
-    public MfServiceService:MfServiceService,
-    public assetValidation:AssetValidationService
+    public MfServiceService: MfServiceService,
+    public assetValidation: AssetValidationService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -924,6 +925,10 @@ export class DashboardComponent implements OnInit {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = [];
         }
+      }, err => {
+        // this.eventService.openSnackBar(err, "Dismiss")
+        this.transactionFlag = false;
+        this.LastSevenDaysTransactions = [];
       });
   }
 
@@ -1431,9 +1436,23 @@ export class DashboardComponent implements OnInit {
         }
       },
       err => {
-        this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        if (err === "Something went wrong !") {
+          this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+        } else {
+          this.openCredentialsErrorPopup();
+        }
       }
     );
+  }
+
+  openCredentialsErrorPopup() {
+    const dialogRef = this.dialog.open(CredentialsErrorPopupComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+    });
   }
 
   changeParentsTab(selectedTab) {
