@@ -339,7 +339,7 @@
                                         *ngIf="element.stockType == 2 && !isLoading">{{element.transactionOrHoldingSummaryList[0].quantity}}</span>
                                 </div>
                             </td>
-                            <td *matFooterCellDef class="br t-8 text-right" mat-footer-cell [attr.colspan]="3"><span
+                            <td *matFooterCellDef class="br t-8 text-right" mat-footer-cell [attr.colspan]="4"><span
                                     style="visibility: hidden;">abc</span></td>
 
                         </ng-container>
@@ -377,9 +377,9 @@
                                     <span>{{isLoading?'':element.absoluteReturn}}{{element.absoluteReturn && !isLoading?'%':''}}</span>
                                 </div>
                             </td>
-                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                            <!-- <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
                                 <span>{{isLoading?'':singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn && !isLoading?'%':''}}
-                            </td>
+                            </td> -->
                         </ng-container>
                         <!-- <ng-container matColumnDef="xirr">
        <th *matHeaderCellDef class="br text-right" mat-header-cell> XIRR %</th>
