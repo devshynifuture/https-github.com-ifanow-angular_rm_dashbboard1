@@ -67,7 +67,7 @@ export class AuthGuard implements CanActivate {
           const obj = {
             uuid: winNameObj.uniqueString
           };
-          return this.peopleService.getUUIDLogin(obj)
+          return this.peopleService.getLoginDataFromUUID(obj)
 
             ./*pipe(*/map((response) => {
               console.log('AppComponent getRandomStringFromPlanner response: ', response);
