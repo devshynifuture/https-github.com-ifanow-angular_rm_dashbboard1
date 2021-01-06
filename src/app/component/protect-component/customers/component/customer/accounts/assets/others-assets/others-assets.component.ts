@@ -241,7 +241,7 @@ export class OthersAssetsComponent implements OnInit {
   }
 
   open(value, data) {
-    let popupHeaderText = !!data ? 'Edit Others' : 'Add Others';
+    let popupHeaderText = !!data ? 'Edit other assets' : 'Add other assets';
     const fragmentData = {
       flag: value,
       data,
