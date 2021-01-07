@@ -1022,7 +1022,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   calculationOninit() {
-    this.mutualFund = this.mfData;
+    // this.mutualFund = this.mfData; // commenting this beacuse filterData is storeIn this.mfData we cant store in this.mutualFund beacuase it is original mf list(without filtered) so it creates issue in filetrs
     if (this.mfData.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
