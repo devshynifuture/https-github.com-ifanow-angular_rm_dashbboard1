@@ -61,6 +61,10 @@ export class AuthService {
     sessionStorage.setItem('clientList', JSON.stringify(data));
   }
 
+  static setInvalidCredsTimeZone(data) {
+    sessionStorage.setItem('invalidPopup', JSON.stringify(data));
+  }
+
   static setToDoList(data) {
     sessionStorage.setItem('ToDo', JSON.stringify(data));
   }
@@ -83,6 +87,10 @@ export class AuthService {
 
   static getClientList() {
     return JSON.parse(sessionStorage.getItem('clientList'));
+  }
+
+  static getInvalidCredsTimeZone() {
+    return JSON.parse(sessionStorage.getItem('invalidPopup'));
   }
 
   static getToDo() {
@@ -218,6 +226,7 @@ export class AuthService {
     sessionStorage.clear();
     sessionStorage.removeItem('taskMatrix');
     sessionStorage.removeItem('todaysTaskList')
+    sessionStorage.removeItem('invalidPopup')
     DashboardService.clearDashData()
     // this.myRoute.navigate(['login']);
   }
