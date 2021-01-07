@@ -1,21 +1,21 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {OnlineTransactionService} from '../online-transaction.service';
-import {TransactionEnumService} from '../transaction-enum.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatSort, MatTableDataSource, MatDialog} from '@angular/material';
-import {EnumServiceService} from '../../../../../services/enum-service.service';
-import {IinUccCreationComponent} from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {InvestorDetailComponent} from './investor-detail/investor-detail.component';
-import {FileUploadService} from '../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../config/main-config';
-import {appConfig} from '../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {Router} from '@angular/router';
-import {OpenPdfViewComponent} from '../open-pdf-view/open-pdf-view.component';
-import {TransactionRoleService} from "../transaction-role.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { TransactionEnumService } from '../transaction-enum.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { EnumServiceService } from '../../../../../services/enum-service.service';
+import { IinUccCreationComponent } from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { InvestorDetailComponent } from './investor-detail/investor-detail.component';
+import { FileUploadService } from '../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../config/main-config';
+import { appConfig } from '../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { Router } from '@angular/router';
+import { OpenPdfViewComponent } from '../open-pdf-view/open-pdf-view.component';
+import { TransactionRoleService } from "../transaction-role.service";
 
 @Component({
   selector: 'app-investors-transactions',
@@ -31,7 +31,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   advisorId: any;
   clientId;
   filterData: any;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   noData: string;
   innUccPendindList: any;
   credentialData: any;
@@ -39,18 +39,24 @@ export class InvestorsTransactionsComponent implements OnInit {
   isPendingData = false;
   isLoading = false;
   isAdvisorSection = true;
-
+  backupData: any[];
+  backupData2: any[];
+  tempFilter: any[];
+  selectedString: any;
+  status: any
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService,
-              private eventService: EventService,
-              public dialog: MatDialog,
-              private enumServiceService: EnumServiceService,
-              private subInjectService: SubscriptionInject,
-              public transactionRoleService: TransactionRoleService,
-              private router: Router) {
+    private eventService: EventService,
+    public dialog: MatDialog,
+    private enumServiceService: EnumServiceService,
+    private subInjectService: SubscriptionInject,
+    public transactionRoleService: TransactionRoleService,
+    private router: Router) {
   }
 
   ngOnInit() {
+    this.backupData = []
+    this.tempFilter = []
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
       this.isAdvisorSection = false;
@@ -60,6 +66,18 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.isLoading = true;
     // this.getMappedData();
     this.getFilterOptionData();
+  }
+  filter(flag) {
+    this.selectedString = flag
+    if (flag == 2) {
+      var filter = this.tempFilter.filter((x) => x.statusStringTemp == 'Investment ready');
+      this.dataSource.data = filter
+    } else if (flag == 1) {
+      var filter = this.backupData.filter((x) => x.statusStringTemp == 'Pending');
+      this.dataSource.data = filter
+    } else {
+      this.getIINUCC()
+    }
   }
 
   applyFilter(event: Event) {
@@ -200,6 +218,8 @@ export class InvestorsTransactionsComponent implements OnInit {
       });
       this.dataSource.data = TransactionEnumService.setHoldingTypeEnum(data);
       this.dataSource.data = TransactionEnumService.setTaxStatusDesc(this.dataSource.data, this.enumServiceService);
+      this.tempFilter = this.dataSource.data
+      this.backupData = this.dataSource.data
       this.dataSource.sort = this.sort;
     } else if (data == undefined) {
       this.noData = 'No investors found';
