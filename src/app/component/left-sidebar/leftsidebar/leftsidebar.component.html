@@ -60,8 +60,8 @@
   keyboard_arrow_right
   </mat-icon>
   </a> -->
-          <mat-accordion class="menuAccordion"
-            *ngIf="!enumDataService.PRODUCTION&&roleService.subscriptionPermission.enabled">
+          <!-- *ngIf="!enumDataService.PRODUCTION&&roleService.subscriptionPermission.enabled" -->
+          <mat-accordion class="menuAccordion">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -88,7 +88,7 @@
                 <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
               </a>
 
-              <a *ngIf="roleService.activityPermission.subModule.emails.enabled" class="sidenav-link"
+              <a *ngIf="!enumDataService.PRODUCTION&&roleService.subscriptionPermission.enabled" class="sidenav-link"
                 [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
                 routerLink="./emails/inbox/google-connect">
                 <!-- <img src="assets/images/svg/mail.svg"> -->
@@ -98,7 +98,7 @@
   routerLink="/admin/activies/opportunities">
   <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
   </a> -->
-              <a *ngIf="roleService.activityPermission.subModule.calendar.enabled" class="sidenav-link"
+              <a *ngIf="!enumDataService.PRODUCTION&&roleService.subscriptionPermission.enabled" class="sidenav-link"
                 routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/calendar/month">
                 <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
               </a>
