@@ -721,6 +721,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     let ulipFundDetails = [];
     const ulipFundVal = this.keyDetailsForm.get('fundValueForm') as FormArray;
     ulipFundVal.controls.forEach(element => {
+      if (element.get('fundName').value || element.get('equityPer').value || element.get('debtPer').value || element.get('nav').value || element.get('units').value) {
         const obj = {
           id: (element.get('id').value) ? element.get('id').value : null,
           insuranceId: (this.editInsuranceData) ? this.editInsuranceData.id : null,
@@ -733,6 +734,10 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
           fundName: (element.get('fundName').value) ? element.get('fundName').value : null
         };
         ulipFundDetails.push(obj);
+      } else {
+        ulipFundDetails = [];
+      }
+
 
     });
     const finalCashFlowList = [];

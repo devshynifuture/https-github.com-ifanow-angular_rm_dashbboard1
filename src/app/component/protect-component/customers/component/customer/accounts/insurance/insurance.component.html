@@ -145,7 +145,7 @@
                                     STATUS - REDUCED PAID UP
                                 </button>
                                 <button *ngIf="insuranceTypeId == 1"
-                                    (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'Fullly paid up')"
+                                    (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'Fully paid up')"
                                     mat-menu-item>
                                     STATUS - FULLY PAID UP
                                 </button>
@@ -318,7 +318,7 @@
                                             {{'LAPSED'}} </span>
                                         <span *ngIf="element.status == 'Reduced paid up'" class="text-warning">
                                             {{'REDUCE PAID UP'}} </span>
-                                        <span *ngIf="element.status == 'Fullly paid up'" class="text-info">
+                                        <span *ngIf="element.status == 'Fully paid up'" class="text-info">
                                             {{'FULLY PAID UP'}} </span>
                                     </div>
                                 </td>
@@ -714,10 +714,16 @@
                             {{(item.policyNumber) ? item.policyNumber : '-'}}</td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
+                            <span class="text-primary" *ngIf="item.status == 'LIVE'">
                                 {{'LIVE'}} </span>
-                            <span *ngIf="item.statusId == 'MATURED'" class="text-success">
+                            <span *ngIf="item.status == 'MATURED'" class="text-success">
                                 {{'MATURED'}} </span>
+                            <span *ngIf="item.status == 'Lapsed'" class="text-danger">
+                                {{'LAPSED'}} </span>
+                            <span *ngIf="item.status == 'Reduced paid up'" class="text-warning">
+                                {{'REDUCE PAID UP'}} </span>
+                            <span *ngIf="item.status == 'Fully paid up'" class="text-info">
+                                {{'FULLY PAID UP'}} </span>
                         </td>
 
                     </tr>
