@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { RoleService } from 'src/app/auth-service/role.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-customer-activity',
@@ -10,7 +12,10 @@ import {AuthService} from 'src/app/auth-service/authService';
 export class CustomerActivityComponent implements OnInit {
   clientData: any;
 
-  constructor(private routingStateService: RoutingState, public authService: AuthService) {
+  constructor(private routingStateService: RoutingState,
+    private roleService: RoleService,
+    private enumDataService: EnumDataService,
+    public authService: AuthService) {
   }
 
   ngOnInit() {

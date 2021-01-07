@@ -8,15 +8,20 @@
     <div class="col-md-8 col-lg-8 p-0-992">
         <nav mat-tab-nav-bar mat-align-tabs="center">
 
-            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']">SUMMARY</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']"
+                *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY">SUMMARY</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/advice']"
+                *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY"
                 class="min-width-90">ADVICE</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/deployments']"
+                *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY"
                 class="min-width-140">DEPLOYMENTS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']"
+                *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY"
                 class="min-width-140">ACTION
                 PLANS</a>
-            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/task']">TASKS</a>
+            <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/task']"
+                *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY">TASKS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/notes']">NOTES</a>
 
         </nav>
