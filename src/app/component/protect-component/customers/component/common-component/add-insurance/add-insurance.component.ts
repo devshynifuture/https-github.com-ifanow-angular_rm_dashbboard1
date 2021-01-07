@@ -145,7 +145,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     tenureDetailsPolicy: [, [Validators.required]],
     premiumPayingTerm: [, [Validators.required]],
     policyStatus: ['', [Validators.required]],
-    policyStatusLastUnpaid: ['',[Validators.required]],
+    policyStatusLastUnpaid: ['', [Validators.required]],
     getCoOwnerName: this.fb.array([this.fb.group({
       name: ['', [Validators.required]],
       share: [0,],
@@ -699,18 +699,22 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
 
   }
-  changePolicyStatus(){
-    if(this.lifeInsuranceForm.get('policyStatus').value == '2'){
-      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
-    }else{
+  changePolicyStatus() {
+    if (this.lifeInsuranceForm.get('policyStatus').value == '2' || this.lifeInsuranceForm.get('policyStatus').value == '4') {
+      if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
+        this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
+      }
+    } else {
       this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors(null)
     }
   }
   saveAddInsurance() {
     this.getClientId();
-    if(this.lifeInsuranceForm.get('policyStatus').value == '2'){
-      this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
-    }else{
+    if (this.lifeInsuranceForm.get('policyStatus').value == '2' || this.lifeInsuranceForm.get('policyStatus').value == '4') {
+      if (this.lifeInsuranceForm.get('policyStatusLastUnpaid').invalid) {
+        this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors({ required: true })
+      }
+    } else {
       this.lifeInsuranceForm.get('policyStatusLastUnpaid').setErrors(null)
     }
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
