@@ -121,6 +121,10 @@
                                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
                             </button>
                             <mat-menu #insuranceMenu>
+                                <button (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'ALL')"
+                                    mat-menu-item>
+                                    STATUS - ALL
+                                </button>
                                 <button (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'LIVE')"
                                     mat-menu-item>
                                     STATUS - LIVE
