@@ -496,7 +496,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         this.keyDetailsForm.controls.riskCover.setValue(this.editInsuranceData.riskCover);
       this.keyDetailsForm.controls.surrenderName.setValue(this.editInsuranceData.surrenderValue);
       this.keyDetailsForm.controls.nomineeName.setValue(this.editInsuranceData.nominee);
-      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.currentValue);
+      this.keyDetailsForm.controls.vestedBonus.setValue(this.editInsuranceData.currentValueManual);
       this.keyDetailsForm.controls.assumedRate.setValue(this.editInsuranceData.assumedRate);
       if (this.editInsuranceData) {
         this.getCoOwner.removeAt(0);
@@ -781,7 +781,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         riskCover: this.keyDetailsForm.get('riskCover').value,
         surrenderValue: this.keyDetailsForm.get('surrenderName').value,
         nominee: this.keyDetailsForm.get('nomineeName').value,
-        currentValue: this.keyDetailsForm.get('vestedBonus').value,
+        currentValueManual: this.keyDetailsForm.get('vestedBonus').value,
         assumedRate: this.keyDetailsForm.get('assumedRate').value,
         loanAvailable: this.loanDetailsForm.get('loanAvailable').value,
         loanTaken: this.loanDetailsForm.get('loanTaken').value,
