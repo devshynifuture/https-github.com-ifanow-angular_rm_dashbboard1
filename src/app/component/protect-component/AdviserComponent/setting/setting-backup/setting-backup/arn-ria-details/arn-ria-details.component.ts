@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { AddArnRiaDetailsComponent } from '../../../setting-entry/add-arn-ria-details/add-arn-ria-details.component';
-import { SettingsService } from '../../../settings.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {AddArnRiaDetailsComponent} from '../../../setting-entry/add-arn-ria-details/add-arn-ria-details.component';
+import {SettingsService} from '../../../settings.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-arn-ria-details',
@@ -14,7 +14,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class ArnRiaDetailsComponent implements OnInit {
 
   advisorId: any;
-  arnobjs = []
+  arnobjs = [];
   globalData: any;
   hasError = false;
 
@@ -40,30 +40,30 @@ export class ArnRiaDetailsComponent implements OnInit {
     }, err => {
       this.utilService.loader(-1);
       this.hasError = true;
-      this.eventService.openSnackBar(err, "Dismiss");
+      this.eventService.openSnackBar(err, 'Dismiss');
     });
     this.getArnDetails();
   }
 
   getArnDetails() {
     this.utilService.loader(1);
-    this.settingsService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
+    this.settingsService.getArnlist({advisorId: this.advisorId}).subscribe((data) => {
       this.utilService.loader(-1);
       this.arnobjs = data || [];
     }, err => {
       this.utilService.loader(-1);
-      this.eventService.openSnackBar(err, "Dismiss");
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.hasError = true;
     });
   }
 
   openArnDetails(value, data, isAddFlag) {
-    let popupHeaderText = !!data ? 'Edit Fixed deposit' : 'Add Fixed deposit';
-    let fullData = {
+    const popupHeaderText = !!data ? 'Edit Fixed deposit' : 'Add Fixed deposit';
+    const fullData = {
       globalData: this.globalData,
       mainData: data || {},
-      is_add_call: isAddFlag,
-    }
+      isAddFlag,
+    };
 
     const fragmentData = {
       flag: value,
@@ -71,14 +71,14 @@ export class ArnRiaDetailsComponent implements OnInit {
       id: 1,
       state: 'open50',
       componentName: AddArnRiaDetailsComponent,
-      popupHeaderText: popupHeaderText,
+      popupHeaderText,
     };
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getArnDetails()
+            this.getArnDetails();
           }
           rightSideDataSub.unsubscribe();
         }
@@ -88,21 +88,24 @@ export class ArnRiaDetailsComponent implements OnInit {
 
   getGstApplicale(id) {
     if (id == 0) {
-      return
+      return;
     }
-    if (this.globalData.gst_applicable_list)
-      return this.globalData.gst_applicable_list.find((data) => data.id == id).type
+    if (this.globalData.gst_applicable_list) {
+      return this.globalData.gst_applicable_list.find((data) => data.id == id).type;
+    }
   }
 
   getArnType(id) {
-    if (this.globalData.arn_type_list)
-      return this.globalData.arn_type_list.find((data) => data.id == id).type
+    if (this.globalData.arn_type_list) {
+      return this.globalData.arn_type_list.find((data) => data.id == id).type;
+    }
   }
 
   getArnMasterType(id) {
     if (id !== 0) {
-      if (this.globalData.arn_type_master_list)
-        return this.globalData.arn_type_master_list.find((data) => data.id == id).type
+      if (this.globalData.arn_type_master_list) {
+        return this.globalData.arn_type_master_list.find((data) => data.id == id).type;
+      }
     } else {
       return '';
     }
