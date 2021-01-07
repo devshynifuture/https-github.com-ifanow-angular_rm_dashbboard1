@@ -13,37 +13,53 @@
     <div *ngIf="credentialData" class="col-md-12 text-right pt-4 pb-10">
       <mat-form-field appearance="standard" class=" searchInputWidth" floatLabel="never">
         <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
-               placeholder="Type to filter data">
+          placeholder="Type to filter data">
       </mat-form-field>
       <!-- <input  [hidden]="true" class="uploadInput" id="file-4" type="file"> -->
       <img (click)="openPdfPopup()" *ngIf="isAdvisorSection" class="b-a p-5 c-p "
-           src="/assets/images/svg/download-black.svg">
+        src="/assets/images/svg/download-black.svg">
       <!-- <img (click)="openDialog()" class="b-a p-5 c-p" src="/assets/images/svg/download-black.svg"> -->
       <img (click)="refresh(true)" class="b-a p-8 c-p" src="/assets/images/svg/reload.svg">
-      <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle"
-              mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
+      <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i
+          class="material-icons">filter_list</i>{{(status)?status:'FILTERS'}}
       </button>
       <mat-menu #IINUCCMenu>
-        <button (click)="getIINUCC()" mat-menu-item>
+        <button (click)="getIINUCC();status='CREATED VIA IFANOW'" mat-menu-item>
+          CREATED VIA IFANOW
+        </button>
+        <button (click)="getMappedData();status='OTHERS'" mat-menu-item>
+          OTHERS
+        </button>
+        <button (click)="getIINUCC();status='FILTER2'" mat-menu-item>
+          CLEAR FILTER
+        </button>
+      </mat-menu>
+      <button [matMenuTriggerFor]="Menu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i
+          class="material-icons">filter_list</i>{{(selectedString == 1)?'PENDING':(selectedString == 2)?'INVESTMENT READY':'FILTER2'}}
+      </button>
+      <mat-menu #Menu>
+        <button mat-menu-item (click)="filter(1)">
           PENDING
         </button>
-        <button (click)="getMappedData()" mat-menu-item>
+        <button mat-menu-item (click)="filter(2)">
           INVESTMENT READY
+        </button>
+        <button mat-menu-item (click)="filter(3)">
+          CLEAR FILTER
         </button>
       </mat-menu>
       <button (click)="openNewCustomerIIN()"
-              *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection"
-              class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+        *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection"
+        class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
       </button>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12 investors-transactions">
       <div [ngClass]="{'table-scroll':isLoading==false }"
-           class="ox-hide investors-transactions-scroll responsive-table-port "
-           *ngIf="dataSource.filteredData.length > 0">
-        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-               class="skeletonAnimation " id="tbs" mat-table matSort>
+        class="ox-hide investors-transactions-scroll responsive-table-port " *ngIf="dataSource.filteredData.length > 0">
+        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation "
+          id="tbs" mat-table matSort>
           <ng-container matColumnDef="aggregatorType" sticky>
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
             <td *matCellDef="let element" class="br" mat-cell>
@@ -61,8 +77,7 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="name">
-            <th *matHeaderCellDef class="br w-9" mat-header-cell mat-sort-header="firstApplicantName"
-                sticky>
+            <th *matHeaderCellDef class="br w-9" mat-header-cell mat-sort-header="firstApplicantName" sticky>
               Investor
               name
             </th>
@@ -126,8 +141,8 @@
                 {{''}}
               </div>
               <div *ngIf="isLoading==false"><i class="material-icons c-p">
-                more_vert
-              </i>
+                  more_vert
+                </i>
               </div>
             </td>
           </ng-container>
@@ -136,18 +151,16 @@
         </table>
       </div>
       <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-           class="d-flex flex-column align-items-center pt-44">
+        class="d-flex flex-column align-items-center pt-44">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="pt-12">{{noData}}</h4>
         <button
           *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&noData=='No investors found'&&isAdvisorSection"
-          class="btn-primary addon v-middle  "
-          (click)="openNewCustomerIIN()" mat-stroked-button>
+          class="btn-primary addon v-middle  " (click)="openNewCustomerIIN()" mat-stroked-button>
           <!-- (click)="openTransaction()"for prod build -->
           ADD NEW
         </button>
-        <button
-          *ngIf="transactionRoleService.addArnRiaCredentials.capabilityMap.add&&noData=='No credentials found'"
+        <button *ngIf="transactionRoleService.addArnRiaCredentials.capabilityMap.add&&noData=='No credentials found'"
           [routerLink]="['/admin/transactions/settings/manage-credentials/arn-ria-creds']"
           class="btn-primary addon v-middle" mat-stroked-button>
           ADD NEW
