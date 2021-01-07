@@ -140,6 +140,11 @@
                                     mat-menu-item>
                                     STATUS - REDUCED PAID UP
                                 </button>
+                                <button *ngIf="insuranceTypeId == 1"
+                                    (click)="filterInsurance(insuranceTypeId == 1 ? 'status' : 'statusId', 'Fullly paid up')"
+                                    mat-menu-item>
+                                    STATUS - FULLY PAID UP
+                                </button>
                             </mat-menu>
                             <button (click)="openAddInsurance(null)" *ngIf="showAdd" class="btn-primary addon v-middle"
                                 mat-stroked-button> ADD NEW
@@ -309,6 +314,8 @@
                                             {{'LAPSED'}} </span>
                                         <span *ngIf="element.status == 'Reduced paid up'" class="text-warning">
                                             {{'REDUCE PAID UP'}} </span>
+                                        <span *ngIf="element.status == 'Fullly paid up'" class="text-info">
+                                            {{'FULLY PAID UP'}} </span>
                                     </div>
                                 </td>
                                 <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
