@@ -599,9 +599,13 @@ export class InsuranceComponent implements OnInit {
     let dataFiltered;
 
     if (this.insuranceTypeId == 1) {
-      dataFiltered = this.lifeInsuranceFilter.filter(function (item) {
-        return item[key] === value;
-      });
+      if(value == 'ALL'){
+        dataFiltered = this.lifeInsuranceFilter;
+      }else{
+        dataFiltered = this.lifeInsuranceFilter.filter(function (item) {
+          return item[key] === value;
+        });
+      }
       if (dataFiltered.length > 0) {
         this.dataSource.data = dataFiltered;
         this.dataSource = new MatTableDataSource(this.dataSource.data);
@@ -624,9 +628,13 @@ export class InsuranceComponent implements OnInit {
         this.eventService.openSnackBar('No data found', 'Dismiss');
       }
     } else {
-      dataFiltered = this.generalInsuranceDataFilter.filter(function (item) {
-        return item[key] === value;
-      });
+      if(value == 'ALL'){
+        dataFiltered = this.generalInsuranceDataFilter;
+      }else{
+        dataFiltered = this.generalInsuranceDataFilter.filter(function (item) {
+          return item[key] === value;
+        });
+      }
       if (dataFiltered.length > 0) {
         this.dataSourceGeneralInsurance.data = dataFiltered;
         this.dataSourceGeneralInsurance = new MatTableDataSource(this.dataSourceGeneralInsurance.data);
