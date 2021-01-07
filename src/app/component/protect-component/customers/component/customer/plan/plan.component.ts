@@ -1,7 +1,7 @@
-import {Router} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { AuthService } from 'src/app/auth-service/authService';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 
@@ -19,10 +19,10 @@ export class PlanComponent implements OnInit {
   }
 
   constructor(private router: Router, private routingStateService: RoutingState,
-              public authService: AuthService,    public roleService: RoleService,
-              public enumDataService: EnumDataService,
+    public authService: AuthService, public roleService: RoleService,
+    public enumDataService: EnumDataService,
 
-              ) {
+  ) {
   }
 
   selected;
@@ -50,6 +50,8 @@ export class PlanComponent implements OnInit {
   }
 
   goToAdvisorHome() {
+    localStorage.removeItem('clientData');
+    sessionStorage.removeItem('clientData');
     this.routingStateService.goToSpecificRoute('/admin/dashboard');
 
   }

@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {EventService} from '../../../../../../Data-service/event.service';
-import {EnumDataService} from '../../../../../../services/enum-data.service';
-import {Router} from '@angular/router';
-import {NgZone} from '@angular/core/src/metadata/*';
+import { Component, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { EventService } from '../../../../../../Data-service/event.service';
+import { EnumDataService } from '../../../../../../services/enum-data.service';
+import { Router } from '@angular/router';
+import { NgZone } from '@angular/core/src/metadata/*';
 
 @Component({
   selector: 'app-customer-transact',
@@ -18,7 +18,7 @@ export class CustomerTransactComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private ngZone: NgZone,
-              public routingStateService: RoutingState, public authService: AuthService) {
+    public routingStateService: RoutingState, public authService: AuthService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
@@ -51,6 +51,8 @@ export class CustomerTransactComponent implements OnInit {
   goToAdvisorHome() {
     this.showRouter = false;
     setTimeout(() => {
+      localStorage.removeItem('clientData');
+      sessionStorage.removeItem('clientData');
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
   }

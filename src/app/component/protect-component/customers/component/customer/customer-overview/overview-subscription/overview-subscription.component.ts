@@ -5,6 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth-service/authService';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-overview-subscription',
@@ -14,17 +15,18 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class OverviewSubscriptionComponent implements OnInit {
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
-    private subService: SubscriptionService, private router: Router) {
-      this.clientData = AuthService.getClientData();
-      this.clientId = AuthService.getClientId();
-}
+    private subService: SubscriptionService, private router: Router,
+    public roleService: RoleService) {
+    this.clientData = AuthService.getClientData();
+    this.clientId = AuthService.getClientId();
+  }
 
   advisorId;
   isLoading = false;
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
-  clientData:any;
+  clientData: any;
   clientId
 
   ngOnInit() {

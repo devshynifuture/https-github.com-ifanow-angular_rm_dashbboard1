@@ -155,6 +155,43 @@ export class RoleService {
   };
   overviewPermission = {
     enabled: true,
+    subModules: {
+      myFeed: {
+        enabled: true
+      },
+      profile: {
+        enabled: true,
+        subModule: {
+          keyInfo: { enabled: true },
+          riskProfile: { enabled: true }
+        },
+        profileCapabilityObj: { add: true, edit: true, delete: true }
+      },
+      documents: {
+        enabled: true,
+        documentCapabilityObj: {}
+      },
+      subscriptions: {
+        enabled: true,
+        subModule: {
+          settings: {
+            enabled: true
+          },
+          documents: {
+            enabled: true
+          },
+          invoices: {
+            enabled: true
+          },
+          quotations: {
+            enabled: true
+          },
+          subscriptions: {
+            enabled: true
+          }
+        }
+      }
+    }
   };
   planPermission = {
     enabled: true,
@@ -216,6 +253,10 @@ export class RoleService {
       adminDatasource.activity ? this.setActivityPermissions(adminDatasource.activity.subModule) : '';
       adminDatasource.backoffice ? this.setBackofficePermissions(adminDatasource.backoffice.subModule) : this.backofficePermission.enabled = false
       adminDatasource.dashboard ? this.setDashboardPermission(adminDatasource.dashboard.subModule) : ''
+      adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : ''
+    }
+    else {
+      adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : ''
     }
   }
 
@@ -311,6 +352,30 @@ export class RoleService {
     for (const obj of dashboardPermission.advisorDashboard.subModule.advisorDashboard.capabilityList) {
       obj.capabilityName = obj.capabilityName.replace(' ', '_')
       this.dashboardPermission.dashboardCapability[obj.capabilityName] = obj.enabledOrDisabled == 1 ? true : false
+    }
+  }
+
+  setOverviewPermissions(overviewPermission) {
+    this.overviewPermission.subModules.myFeed.enabled = overviewPermission.myFeedVisibility ? overviewPermission.myFeedVisibility.showModule : false;
+    this.overviewPermission.subModules.documents.enabled = overviewPermission.documents ? overviewPermission.documents.showModule : false;
+    overviewPermission.documents ? this.overviewPermission.subModules.documents.documentCapabilityObj = UtilService.convertArrayListToObject(overviewPermission.documents.subModule.documents.capabilityList) : '';
+    if (overviewPermission.profile) {
+      this.overviewPermission.subModules.profile.enabled = overviewPermission.profile.showModule;
+      this.overviewPermission.subModules.profile.profileCapabilityObj = UtilService.getDetailedCapabilityMap(overviewPermission.profile.subModule.keyInfo.subModule.keyInfo.capabilityList);
+      this.overviewPermission.subModules.profile.subModule.keyInfo.enabled = overviewPermission.profile.subModule.keyInfo.showModule
+      this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile.showModule
+    } else {
+      this.overviewPermission.subModules.profile.enabled = false;
+    }
+    if (overviewPermission.subscriptions) {
+      this.overviewPermission.subModules.subscriptions.enabled = overviewPermission.subscriptions.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.settings.enabled = overviewPermission.subscriptions.subModule.settings.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.subscriptions.enabled = overviewPermission.subscriptions.subModule.subscriptions.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.documents.enabled = overviewPermission.subscriptions.subModule.documents.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.invoices.enabled = overviewPermission.subscriptions.subModule.invoices.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.quotations.enabled = overviewPermission.subscriptions.subModule.quotations.showModule;
+    } else {
+      this.overviewPermission.subModules.subscriptions.enabled = false;
     }
   }
 }

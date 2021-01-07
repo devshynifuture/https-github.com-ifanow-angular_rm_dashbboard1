@@ -94,8 +94,10 @@
                         </div>
                         <!-- <img src="assets/images/svg/grid.svg" class="c-p gridIcon mr-12"> -->
                         <!-- <button class="text-custom br-0 mr-12" mat-stroked-button> HELP</button> -->
-                        <button *ngIf="valueTab == 1" [matMenuTriggerFor]="menu1" class="btn-primary br-0 "
-                            (click)="urlData = ''" mat-stroked-button> ADD
+                        <button
+                            *ngIf="valueTab == 1 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Add"
+                            [matMenuTriggerFor]="menu1" class="btn-primary br-0 " (click)="urlData = ''"
+                            mat-stroked-button> ADD
                             NEW
                         </button>
                         <mat-menu #menu1="matMenu">
@@ -194,32 +196,37 @@
                                                     <img class="mr-20" src="assets/images/svg/preview.svg">
                                                     Preview
                                                 </button>
-                                                <button *ngIf="element.folderName == undefined && valueTab != 4"
+                                                <button
+                                                    *ngIf="element.folderName == undefined && valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Share"
                                                     (click)="getSharebleLink(element,'share')" class="f-14"
                                                     mat-menu-item>
                                                     <img class="mr-20" src="assets/images/svg/share-24px.svg">
                                                     Share
                                                 </button>
-                                                <button *ngIf="element.folderName == undefined && valueTab != 4"
+                                                <button
+                                                    *ngIf="element.folderName == undefined && valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Share"
                                                     class="f-14" mat-menu-item
                                                     (click)="getSharebleLink(element,'shareLink')">
                                                     <img class="mr-20" src="assets/images/svg/shareable.svg">
                                                     Get shareable link
                                                 </button>
-                                                <button *ngIf="element.isStarred == 0 && valueTab != 4"
+                                                <button
+                                                    *ngIf="element.isStarred == 0 && valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Starred"
                                                     (click)="starFiles(element,1)" class="f-14" mat-menu-item><img
                                                         class="mr-20" src="assets/images/svg/star-border-icon.svg">Add
                                                     to
                                                     starred
                                                 </button>
-                                                <button *ngIf="element.isStarred == 1 && valueTab != 4"
+                                                <button
+                                                    *ngIf="element.isStarred == 1 && valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Starred"
                                                     (click)="starFiles(element,0)" class="f-14" mat-menu-item><img
                                                         class="mr-20"
                                                         src="assets/images/svg/star-border-icon.svg">Remove
                                                     to
                                                     starred
                                                 </button>
-                                                <button (click)="openDialog('RENAME',element)" *ngIf="valueTab != 4"
+                                                <button (click)="openDialog('RENAME',element)"
+                                                    *ngIf="valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Rename"
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/edit-name.svg">Rename
                                                 </button>
@@ -239,22 +246,23 @@
                                                         src="assets/images/svg/file-copy.svg">Copy to
                                                 </button>
                                                 <button (click)="downlodFiles(element, 'download')"
-                                                    *ngIf="element.folderName == undefined && valueTab != 4"
+                                                    *ngIf="element.folderName == undefined && valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Download"
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/download-icon.svg">Download
                                                 </button>
                                                 <button (click)="deleteModal('FILE',element)"
-                                                    *ngIf="element.folderName == undefined && valueTab != 4"
+                                                    *ngIf="element.folderName == undefined && valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Delete"
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/delete-icon.svg">Delete
                                                 </button>
                                                 <button (click)="deleteModal('FOLDER',element)"
-                                                    *ngIf="element.fileName == undefined && valueTab != 4" class="f-14"
-                                                    mat-menu-item><img class="mr-20"
+                                                    *ngIf="element.fileName == undefined && valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Delete"
+                                                    class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/delete-icon.svg">Delete
                                                 </button>
                                                 <button (click)="deleteModal('permanently',element)"
-                                                    *ngIf="valueTab == 4" class="f-14" mat-menu-item><img class="mr-20"
+                                                    *ngIf="valueTab == 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Delete"
+                                                    class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/delete-icon.svg">Delete
                                                     permanently
                                                 </button>
