@@ -25,7 +25,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   advisorId: any;
   @ViewChild('arnForm', {static: true}) arnForm: ElementRef;
   validatorType = ValidatorType;
-  formPlaceHolders:any;
+  formPlaceHolders: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE',
@@ -59,12 +59,12 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
 
   createForm() {
     let arnNumber = this.data.mainData.number;
-    if(arnNumber) {
+    if (arnNumber) {
       arnNumber = arnNumber.replace('ARN', '').replace('INA', '').replace('-', '');
     }
     let euinNumber = this.data.mainData.euin;
-    if(euinNumber) {
-      euinNumber = euinNumber.slice(1)
+    if (euinNumber) {
+      euinNumber = euinNumber.slice(1);
     }
     this.arnRiaFG = this.fb.group({
       advisorId: [this.advisorId, []],
@@ -94,8 +94,8 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     }
     if (this.data.mainData.arnOrRia == 1) {
       this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
-      this.maxArnLength = 6
-      this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)])
+      this.maxArnLength = 6;
+      this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)]);
     }
     this.arnRiaFG.updateValueAndValidity();
   }
@@ -111,24 +111,24 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         }
         this.arnRiaFG.updateValueAndValidity();
       })
-    )
+    );
     this.subscriber.add(
       this.arnRiaFG.controls.arnOrRia.valueChanges.subscribe((value) => {
         if (value == 2) {
           this.arnRiaFG.controls.euin.clearValidators();
           this.arnRiaFG.controls.euin.setValue('');
           this.maxArnLength = 9;
-          this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)])
+          this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)]);
         } else {
           this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
           this.maxArnLength = 6;
-          this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)])
+          this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)]);
         }
         this.arnRiaFG.controls.number.setValue('');
         this.arnRiaFG.controls.number.markAsUntouched();
         this.arnRiaFG.updateValueAndValidity();
       })
-    )
+    );
   }
 
   save() {
@@ -141,7 +141,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         ...this.data.mainData,
         ...this.arnRiaFG.getRawValue()
       };
-      if(this.arnRiaFG.get('arnOrRia').value == 1) {
+      if (this.arnRiaFG.get('arnOrRia').value == 1) {
         jsonObj.number = 'ARN-' + jsonObj.number;
         jsonObj.euin = 'E' + jsonObj.euin;
       } else {
@@ -165,27 +165,27 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       }
 
       // edit action
-      if (this.data.mainData.typeId) {
+      if (!this.data.isAddFlag) {
         const editJson = {
           ...this.data.mainData,
           ...jsonObj
-        }
+        };
         this.settingService.editArn(editJson).subscribe((res) => {
-          this.eventService.openSnackBar("ARN-RIA Modified successfully");
+          this.eventService.openSnackBar('ARN-RIA Modified successfully');
           this.Close(true);
-        }, err=> {
-          this.eventService.openSnackBar(err, "Dismiss");
+        }, err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
-        })
+        });
       } else {
         // save action
         this.settingService.addArn(jsonObj).subscribe((res) => {
-          this.eventService.openSnackBar("ARN-RIA Added successfully");
+          this.eventService.openSnackBar('ARN-RIA Added successfully');
           this.Close(true);
-        }, err=> {
-          this.eventService.openSnackBar(err, "Dismiss");
+        }, err => {
+          this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
-        })
+        });
       }
     }
   }
