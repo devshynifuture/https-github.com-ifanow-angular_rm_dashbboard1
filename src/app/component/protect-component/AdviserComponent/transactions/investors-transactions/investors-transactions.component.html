@@ -27,8 +27,8 @@
         <button (click)="getIINUCC();status='CREATED VIA IFANOW'" mat-menu-item>
           CREATED VIA IFANOW
         </button>
-        <button (click)="getMappedData();status='OTHERS'"
-          [ngClass]="note.activeOnSelect == true ? 'activeSlectNotes': '' " mat-menu-item>
+        <button (click)="getMappedData();status='OTHERS'" [ngClass]="activeOnSelect == true ? 'activeSlectNotes': '' "
+          mat-menu-item>
           OTHERS
         </button>
       </mat-menu>
