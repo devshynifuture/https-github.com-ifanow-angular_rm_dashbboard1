@@ -210,10 +210,13 @@ export class PeopleClientsComponent implements OnInit {
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
+      const url = this.roleService.goToValidClientSideUrl();
       this.authService.setClientData(singleClientData);
-      this.router.navigate(['/customer/detail/overview/myfeed'], { state: { ...singleClientData } });
+      this.router.navigate([url], { state: { ...singleClientData } });
     });
   }
+
+
 
   deleteModal(value, data) {
     const obj = {

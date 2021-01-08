@@ -27,11 +27,9 @@
         <button (click)="getIINUCC();status='CREATED VIA IFANOW'" mat-menu-item>
           CREATED VIA IFANOW
         </button>
-        <button (click)="getMappedData();status='OTHERS'" mat-menu-item>
+        <button (click)="getMappedData();status='OTHERS'" [ngClass]="activeOnSelect == true ? 'activeSlectNotes': '' "
+          mat-menu-item>
           OTHERS
-        </button>
-        <button (click)="getIINUCC();status='FILTER2'" mat-menu-item>
-          CLEAR FILTER
         </button>
       </mat-menu>
       <button [matMenuTriggerFor]="Menu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i
@@ -48,10 +46,24 @@
           CLEAR FILTER
         </button>
       </mat-menu>
-      <button (click)="openNewCustomerIIN()"
-        *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection"
-        class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+      <button
+        *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection && dataSource2.length ==0"
+        class="btn-primary addon v-middle" (click)="openNewCustomerIIN()" mat-stroked-button> ADD NEW
       </button>
+      <button
+        *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection && dataSource2.length > 0"
+        [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+      </button>
+      <mat-menu #menu1="matMenu">
+        <button mat-menu-item (click)="openNewCustomerIIN()">
+          <img class="mr-8">
+          <span>Add investor</span>
+        </button>
+        <button mat-menu-item class="text-black d-flex align-items-center" (click)="mappedUser()">
+          <img class="mr-8">
+          Mapp existing user
+        </button>
+      </mat-menu>
     </div>
   </div>
   <div class="row">
