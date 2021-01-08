@@ -180,9 +180,9 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     forkJoin(displayList, allAsset, portfoliGi).subscribe(result => {
       this.globalObj['AllAdviceGeneralInsurance'] = result[1];
       this.globalObj['displayList'] = result[0];
-      if(result[2]){
+      if (result[2]) {
         this.globalObj['GIData'] = result[2].generalInsuranceList;
-      }else{
+      } else {
         this.globalObj['GIData'] = [];
       }
       this.displayList = result[0];
@@ -293,7 +293,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     if (GIArry.length > 0 && data.length > 0) {
       GIArry.forEach(element => {
         data.forEach(ele => {
-          if (ele.InsuranceDetails.id == element.InsuranceDetails.id) {
+          if (ele.InsuranceDetails && element.InsuranceDetails && (ele.InsuranceDetails.id == element.InsuranceDetails.id)) {
             element.hideGiveAdvice = true;
           }
         });
@@ -312,50 +312,53 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
           countSuggest++
           this.recommendOrNot = true;
         }
-        if (element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
-          element.InsuranceDetails.insuredMembers.length > 0) {
-          element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
-          if (element.InsuranceDetails.insuredMembers.length > 1) {
-            for (let i = 1; i < element.InsuranceDetails.insuredMembers.length; i++) {
-              if (element.InsuranceDetails.insuredMembers[i].name) {
-                const firstName = (element.InsuranceDetails.insuredMembers[i].name as string).split(' ')[0];
-                element.InsuranceDetails.displayHolderName += ', ' + firstName;
+        if (element.InsuranceDetails) {
+          if (element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+            element.InsuranceDetails.insuredMembers.length > 0) {
+            element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
+            if (element.InsuranceDetails.insuredMembers.length > 1) {
+              for (let i = 1; i < element.InsuranceDetails.insuredMembers.length; i++) {
+                if (element.InsuranceDetails.insuredMembers[i].name) {
+                  const firstName = (element.InsuranceDetails.insuredMembers[i].name as string).split(' ')[0];
+                  element.InsuranceDetails.displayHolderName += ', ' + firstName;
+                }
               }
             }
+          } else {
+            element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
           }
-        } else {
-          element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
-        }
-        if (!element.InsuranceDetails.sumAssured && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
-          element.InsuranceDetails.insuredMembers.length > 0) {
-          element.InsuranceDetails.sumAssured = 0;
-          element.InsuranceDetails.insuredMembers.forEach(ele => {
-            element.InsuranceDetails.sumAssured += ele.sumInsured;
-          });
-          if (element.InsuranceDetails.sumAssured == 0) {
+          if (!element.InsuranceDetails.sumAssured && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+            element.InsuranceDetails.insuredMembers.length > 0) {
+            element.InsuranceDetails.sumAssured = 0;
+            element.InsuranceDetails.insuredMembers.forEach(ele => {
+              element.InsuranceDetails.sumAssured += ele.sumInsured;
+            });
+            if (element.InsuranceDetails.sumAssured == 0) {
+              element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+            }
+          } else {
             element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
           }
-        } else {
-          element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+          if (element.InsuranceDetails.hasOwnProperty("addOns") &&
+            element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
+            element.InsuranceDetails.addOns.forEach(ele => {
+              element.InsuranceDetails.sumAssured += ele.addOnSumInsured;
+            });
+          }
         }
-        if (element.InsuranceDetails.hasOwnProperty("addOns") &&
-          element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
-          element.InsuranceDetails.addOns.forEach(ele => {
-            element.InsuranceDetails.sumAssured += ele.addOnSumInsured;
-          });
-        }
+
       });
     }
 
     return data;
   }
-  openDetailedView(heading,data) {
-    if(data){
-      data.parentAsset =  data.childParentRel.REAL
+  openDetailedView(heading, data) {
+    if (data) {
+      data.parentAsset = data.childParentRel.REAL
       data.childAsset = data.childParentRel.FICT
-     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
-    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+    }
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : 'Proposed policy'
     const sendData = {
       flag: 'detailedView',
       data: {},
@@ -368,8 +371,8 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       allInsurance: this.allInsurance,
       insuranceTypeId: data ? 1 : null,
       insuranceSubTypeId: data ? data.InsuranceDetails.insuranceSubTypeId : null,
-      adviceName : this.adviceName,
-      showInsurance: {heading : heading},
+      adviceName: this.adviceName,
+      showInsurance: { heading: heading },
 
 
     };
@@ -411,8 +414,8 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
       data['insurance'] = data.InsuranceDetails;
     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
-    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : 'Proposed policy'
     this.adviceNameObj = { adviceName: this.adviceName };
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
     switch (value) {
@@ -479,8 +482,8 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
     data ? data['displayList'] = this.displayList : null;
-    data ? data['showInsurance'] = this.object.showInsurance: null;
-    data ? data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId: null;
+    data ? data['showInsurance'] = this.object.showInsurance : null;
+    data ? data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId : null;
     data ? data['insuranceTypeId'] = 1 : null;
     data ? data['adviceToCategoryId'] = this.object.adviceToCategoryId : null;
     const fragmentData = {
@@ -496,7 +499,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
       recommendOrNot: data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
       adviceHeaderList: this.adviceHeaderList,
       // showHeaderEdit:(data ? (data.adviceDetails ? (data.adviceDetails.adviceId == null ? true : false) : false) : false),
-      showHeaderEdit: (data ? (data.adviceDetails ? (data.adviceDetails.adviceId == null ? true : !data.adviceDetails.adviceId  ? false : true) : false) : false),
+      showHeaderEdit: (data ? (data.adviceDetails ? (data.adviceDetails.adviceId == null ? true : !data.adviceDetails.adviceId ? false : true) : false) : false),
       childData: {
         recommendOrNot: data ? (data.insurance.isRecommend == 1 ? false : (this.recommendOrNot ? true : false)) : (this.recommendOrNot ? true : false),
         inputData: { insuranceType: this.object.insuranceType, value: this.object.value }, adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 2, adviceToCategoryId: this.object.adviceToCategoryId, flag: 'Advice General Insurance'
