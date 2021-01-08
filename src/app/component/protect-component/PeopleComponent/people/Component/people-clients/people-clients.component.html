@@ -87,8 +87,15 @@
                 <ng-container matColumnDef="login">
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br" sticky> Last login </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.lastLoginString}} <span
-                                *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
+                        <div class="bar">
+                            <span *ngIf="element.loginEnable">
+                                {{element.lastLoginString}} <span
+                                    *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span>
+                            </span>
+                            <span *ngIf="!element.loginEnable">
+                                {{'DISABLED'}}
+                            </span>
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
