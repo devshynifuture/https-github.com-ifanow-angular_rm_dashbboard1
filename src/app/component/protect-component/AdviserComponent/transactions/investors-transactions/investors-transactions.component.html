@@ -24,11 +24,11 @@
           class="material-icons">filter_list</i>{{(status)?status:'FILTERS'}}
       </button>
       <mat-menu #IINUCCMenu>
-        <button (click)="getIINUCC();status='CREATED VIA IFANOW';activeOnSelect=true" mat-menu-item>
+        <button (click)="getMappedData();status='OTHERS'" mat-menu-item>
           CREATED VIA IFANOW
         </button>
-        <button (click)="getMappedData();status='OTHERS'" [ngClass]="activeOnSelect == true ? 'activeSlectNotes': '' "
-          mat-menu-item>
+        <button (click)="getIINUCC();status='CREATED VIA IFANOW';activeOnSelect=true"
+          [ngClass]="activeOnSelect == true ? 'activeSlectNotes': '' " mat-menu-item>
           OTHERS
         </button>
       </mat-menu>
