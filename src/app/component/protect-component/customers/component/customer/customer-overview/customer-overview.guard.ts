@@ -22,19 +22,19 @@ export class CustomerOverviewGuard implements CanActivate {
     if (this.roleService.overviewPermission.subModules.documents.enabled && state.url.includes('/customer/detail/overview/documents')) {
       return true;
     }
-    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.documents && state.url.includes('/customer/detail/overview/subscription/documents')) {
+    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.documents.enabled && state.url.includes('/customer/detail/overview/subscription/documents')) {
       return true;
     }
-    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.invoices && state.url.includes('/customer/detail/overview/subscription/invoices')) {
+    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.invoices.enabled && state.url.includes('/customer/detail/overview/subscription/invoices')) {
       return true;
     }
-    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.subscriptions && state.url.includes('/customer/detail/overview/subscription/subscriptions')) {
+    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.subscriptions.enabled && state.url.includes('/customer/detail/overview/subscription/subscriptions')) {
       return true;
     }
-    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.settings && state.url.includes('/customer/detail/overview/subscription/settings')) {
+    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.settings.enabled && state.url.includes('/customer/detail/overview/subscription/settings')) {
       return true;
     }
-    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.quotations && state.url.includes('/customer/detail/overview/subscription/quotations')) {
+    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.quotations.enabled && state.url.includes('/customer/detail/overview/subscription/quotations')) {
       return true;
     }
     else {

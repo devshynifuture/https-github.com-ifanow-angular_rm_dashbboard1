@@ -96,31 +96,11 @@ export class LoginService {
         userData.id = userData.clientId;
         authService.setClientData(userData);
         this.roleService.constructAdminDataSource(rolesData);
-        const url = this.goToValidClientSideUrl();
+        const url = this.roleService.goToValidClientSideUrl();
         router.navigate([url]);
       });
     }
     // when changing routers, make changes to authservice gohome() method
-  }
-
-  goToValidClientSideUrl() {
-    let url;
-    if (this.roleService.overviewPermission.enabled) {
-      url = "/customer/detail/overview";
-    }
-    else if (this.roleService.portfolioPermission.enabled) {
-      url = "/customer/detail/account";
-    }
-    else if (this.roleService.planPermission.enabled) {
-      url = "/customer/detail/plan";
-    }
-    else if (this.roleService.activityPermission.enabled) {
-      url = "/customer/detail/activity";
-    }
-    else {
-      url = "/customer/detail/transact";
-    }
-    return url;
   }
 
   getCLientDetails(data) {

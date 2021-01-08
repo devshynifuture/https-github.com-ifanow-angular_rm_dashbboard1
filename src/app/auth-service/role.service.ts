@@ -386,21 +386,47 @@ export class RoleService {
   goToValidClientSideUrl() {
     let url;
     if (this.overviewPermission.enabled) {
-      url = "/customer/detail/overview";
+      if (this.overviewPermission.subModules.myFeed.enabled) {
+        return url = '/customer/detail/overview/myfeed'
+      }
+      if (this.overviewPermission.subModules.profile.enabled) {
+        return url = '/customer/detail/overview/profile'
+      }
+      if (this.overviewPermission.subModules.myFeed.enabled) {
+        return url = '/customer/detail/overview/documents'
+      }
+      if (this.overviewPermission.subModules.documents.enabled) {
+        return url = '/customer/detail/overview/documents'
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.subscriptions.enabled) {
+        return url = '/customer/detail/overview/subscription/subscriptions';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.quotations.enabled) {
+        return url = '/customer/detail/overview/subscription/quotations';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.invoices.enabled) {
+        return url = '/customer/detail/overview/subscription/invoices';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.documents.enabled) {
+        return url = '/customer/detail/overview/subscription/documents';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.settings.enabled) {
+        return url = '/customer/detail/overview/subscription/settings';
+      }
+
     }
     else if (this.portfolioPermission.enabled) {
-      url = "/customer/detail/account";
+      return url = "/customer/detail/account";
     }
     else if (this.planPermission.enabled) {
-      url = "/customer/detail/plan";
+      return url = "/customer/detail/plan";
     }
     else if (this.activityPermission.enabled) {
-      url = "/customer/detail/activity";
+      return url = "/customer/detail/activity";
     }
     else {
-      url = "/customer/detail/transact";
+      return url = "/customer/detail/transact";
     }
-    return url;
   }
 
 }
