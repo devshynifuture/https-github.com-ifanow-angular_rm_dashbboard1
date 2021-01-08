@@ -204,6 +204,15 @@
                             <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
                                 Client name : <span> {{clientInfo.name}} </span>
                             </p>
+                            <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
+                                Mobile Number : <span> {{(clientInfo.mobileNo)?clientInfo.mobileNo:'-'}} </span>
+                            </p>
+                            <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
+                                Email id : <span> {{(clientInfo.email)?clientInfo.email:'-'}} </span>
+                            </p>
+                            <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
+                                PAN : <span> {{clientInfo.pan}} </span>
+                            </p>
                         </td>
 
                         <td style="text-align: right; vertical-align: top; width: 50%;">

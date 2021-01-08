@@ -79,6 +79,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
     this.reportDate = new Date()
+    console.log('clientInfo', this.clientInfo)
   }
 
   ngOnInit() {
