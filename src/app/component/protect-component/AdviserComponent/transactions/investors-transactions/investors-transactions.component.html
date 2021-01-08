@@ -47,7 +47,11 @@
         </button>
       </mat-menu>
       <button
-        *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection"
+        *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection && dataSource2.length ==0"
+        class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+      </button>
+      <button
+        *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection dataSource2.length > 0"
         [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
       </button>
       <mat-menu #menu1="matMenu">
