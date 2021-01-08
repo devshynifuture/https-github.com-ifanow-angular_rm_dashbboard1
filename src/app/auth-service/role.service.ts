@@ -170,9 +170,9 @@ export class RoleService {
       documents: {
         enabled: true,
         documentCapabilityObj: {
-          Share: true, Starred: false, Rename: true,
-          Download: true, Delete: true, Add: true
-        }
+          // Share: true, Starred: false, Rename: true,
+          // Download: true, Delete: true, Add: true
+        } as any
       },
       subscriptions: {
         enabled: true,
@@ -360,7 +360,9 @@ export class RoleService {
   setOverviewPermissions(overviewPermission) {
     this.overviewPermission.subModules.myFeed.enabled = overviewPermission.myFeedVisibility ? overviewPermission.myFeedVisibility.showModule : false;
     this.overviewPermission.subModules.documents.enabled = overviewPermission.documents ? overviewPermission.documents.showModule : false;
-    overviewPermission.documents ? this.overviewPermission.subModules.documents.documentCapabilityObj = UtilService.convertArrayListToObject(overviewPermission.documents.subModule.documents.capabilityList) : '';
+    if (overviewPermission.documents) {
+      this.overviewPermission.subModules.documents.documentCapabilityObj = UtilService.convertArrayListToObject(overviewPermission.documents.subModule.documents.capabilityList);
+    }
     if (overviewPermission.profile) {
       this.overviewPermission.subModules.profile.enabled = overviewPermission.profile.showModule;
       this.overviewPermission.subModules.profile.profileCapabilityObj = UtilService.getDetailedCapabilityMap(overviewPermission.profile.subModule.keyInfo.subModule.keyInfo.capabilityList);
