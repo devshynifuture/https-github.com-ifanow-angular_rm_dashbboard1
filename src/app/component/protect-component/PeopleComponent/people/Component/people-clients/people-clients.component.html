@@ -88,11 +88,11 @@
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br" sticky> Last login </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar">
-                            <span *ngIf="element.loginEnable">
+                            <span *ngIf="element.loginEnable && !isLoading">
                                 {{element.lastLoginString}} <span
                                     *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span>
                             </span>
-                            <span *ngIf="!element.loginEnable">
+                            <span *ngIf="!element.loginEnable && !isLoading">
                                 {{'DISABLED'}}
                             </span>
                         </div>
@@ -135,7 +135,7 @@
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                 <tr mat-row *matRowDef=" let row; columns: displayedColumns;"
-                    [ngClass]="{'opacity-60': row.loginEnable == false,'c-p' : row.loginEnable == true}"></tr>
+                    [ngClass]="{'c-p' : row.loginEnable == true}"></tr>
                 <!-- [ngClass]="(row.name=='Gayatri Pawar')?'opacity-60':''" -->
                 <!-- [ngStyle]="{'background-color': (row.name=='Gayatri Pawar')?'lightgrey':''}" -->
             </table>
