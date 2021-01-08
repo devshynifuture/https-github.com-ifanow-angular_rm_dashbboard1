@@ -311,7 +311,47 @@ export class PeopleClientsComponent implements OnInit {
 
     });
   }
+  DisableClientLogin(value, data) {
+    const dialogData = {
+      data: value,
+      header: !data.loginEnable ? 'ENABLE LOGIN' : 'DISABLE LOGIN',
+      body: !data.loginEnable ? 'Are you sure you want to enable this login?' : 'Are you sure you want to disable this login?',
+      body2: !data.loginEnable ? 'If enable client will successfully login' : 'If disable client will not able to login',
+      btnYes: 'CANCEL',
+      btnNo: !data.loginEnable ? 'ENABLE' : 'DISABLE',
+      positiveMethod: () => {
+        const obj = {
+          clientId: data.clientId,
+          loginEnable: !data.loginEnable ? true : false
+        };
+        this.peopleService.DisableLogin(obj).subscribe(
+          responseData => {
+            let status = data.loginEnable ? 'Enable' : 'Disable';
+            this.eventService.openSnackBar(status + 'client successfully!', 'Dismiss');
+            dialogRef.close();
+            this.finalClientList = [];
+            this.getClientList(0);
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
+    const dialogRef = this.dialog.open(ResetClientPasswordComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   searchClientFamilyMember(value) {
     if (value.length == 0) {
       this.hasEndReached = true;

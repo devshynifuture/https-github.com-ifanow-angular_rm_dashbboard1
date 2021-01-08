@@ -43,7 +43,7 @@
                     <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br sticky w-20"> Group head
                         name
                     </th>
-                    <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br c-p">
+                    <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{element.name}}</div>
                     </td>
                 </ng-container>
@@ -52,7 +52,7 @@
                     <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br" sticky> Registered
                         mobile
                     </th>
-                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar"> {{(element.mobileNo!=0)?element.mobileNo:'N/A'}}</div>
                     </td>
                 </ng-container>
@@ -60,40 +60,40 @@
                 <ng-container matColumnDef="weight">
                     <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br" sticky> Registered email
                     </th>
-                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar"> {{element.email}}</div>
                     </td>
                 </ng-container>
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="symbol">
                     <th mat-sort-header="pan" mat-header-cell *matHeaderCellDef class="br" sticky> PAN </th>
-                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar"> {{element.pan}}</div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="member">
                     <th mat-sort-header="count" mat-header-cell *matHeaderCellDef class="br" sticky> Members </th>
-                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar"> {{element.count}}</div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="owner">
                     <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br" sticky> Client owner
                     </th>
-                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar"> {{element.ownerName}}</div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="login">
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br" sticky> Last login </th>
-                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar"> {{element.lastLoginString}} <span
                                 *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th mat-sort-header="status" mat-header-cell *matHeaderCellDef class="br" sticky> Status </th>
-                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar"> {{element.status}}</div>
                     </td>
                 </ng-container>
@@ -115,6 +115,9 @@
                             <button (click)="resetPassword('',element)" mat-menu-item>
                                 <span>Reset password</span>
                             </button>
+                            <button (click)="DisableClientLogin('',element)" mat-menu-item>
+                                <span>{{!element.loginEnable ? 'Enable login' : 'Disable login'}}</span>
+                            </button>
                             <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.delete"
                                 (click)="deleteModal('CLIENT',element)" mat-menu-item>
                                 <span>Delete</span>
@@ -124,7 +127,10 @@
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
-                <tr mat-row *matRowDef=" let row; columns: displayedColumns;"></tr>
+                <tr mat-row *matRowDef=" let row; columns: displayedColumns;"
+                    [ngClass]="{'opacity-60': row.loginEnable == false,'c-p' : row.loginEnable == true}"></tr>
+                <!-- [ngClass]="(row.name=='Gayatri Pawar')?'opacity-60':''" -->
+                <!-- [ngStyle]="{'background-color': (row.name=='Gayatri Pawar')?'lightgrey':''}" -->
             </table>
             <div class="col-md-12 d-flex justify-content-center align-items-center">
                 <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
