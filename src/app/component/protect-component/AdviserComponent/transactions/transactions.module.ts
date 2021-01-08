@@ -21,6 +21,7 @@ import { TransactionMobileViewComponent } from './transaction-mobile-view/transa
 import { TransactionBottomButtonComponent } from './transaction-mobile-view/transaction-bottom-button/transaction-bottom-button.component';
 import { OpenPdfViewComponent } from './open-pdf-view/open-pdf-view.component';
 import { ConfirmUploadComponent } from './investors-transactions/investor-detail/confirm-upload/confirm-upload.component';
+import { MappedUserComponent } from './investors-transactions/investor-detail/mapped-user/mapped-user.component';
 
 
 @NgModule({
@@ -36,7 +37,7 @@ import { ConfirmUploadComponent } from './investors-transactions/investor-detail
     TransactionMobileViewComponent,
     TransactionBottomButtonComponent,
     OpenPdfViewComponent,
-    ConfirmUploadComponent
+    ConfirmUploadComponent,
   ],
   imports: [
     CommonModule,
