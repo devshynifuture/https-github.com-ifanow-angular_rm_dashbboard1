@@ -781,7 +781,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         riskCover: this.keyDetailsForm.get('riskCover').value,
         surrenderValue: this.keyDetailsForm.get('surrenderName').value,
         nominee: this.keyDetailsForm.get('nomineeName').value,
-        currentValueManual: this.keyDetailsForm.get('vestedBonus').value,
+        currentValueManual: this.keyDetailsForm.get('vestedBonus').value ? this.keyDetailsForm.get('vestedBonus').value :0,
         assumedRate: this.keyDetailsForm.get('assumedRate').value,
         loanAvailable: this.loanDetailsForm.get('loanAvailable').value,
         loanTaken: this.loanDetailsForm.get('loanTaken').value,

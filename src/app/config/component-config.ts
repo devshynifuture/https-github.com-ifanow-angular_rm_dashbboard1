@@ -901,6 +901,7 @@ export const appConfig = {
   GET_BANK_ACCOUNT_TYPE: 'user/bank/account-type/global/get',
   GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   RESET_CLIENT_PASSWORD: 'user/client/forced/reset/password',
+  DISABLE_CLIENT_LOGIN: 'user/client/enable/disable/login',
   GET_RANDOM_STRING: 'user/advisor/marketplace-login/detail/add',
   GET_UNIQUE_STRING_FOR_LOGIN: 'user/advisor/marketplace-login/detail/add',
   GENERATE_UUID_FOR_LOGIN: 'user/generate/uuid',
