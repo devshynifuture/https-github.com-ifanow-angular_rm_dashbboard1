@@ -61,6 +61,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   ngOnInit() {
     this.backupData = []
     this.tempFilter = []
+    this.dataSource2 = [];
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
       this.isAdvisorSection = false;
