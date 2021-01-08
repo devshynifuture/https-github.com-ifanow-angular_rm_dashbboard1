@@ -47,6 +47,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   status: any
   brokerCredentials: any;
   dataSource2: any[];
+  activeOnSelect: boolean = false;
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService,
     private eventService: EventService,
