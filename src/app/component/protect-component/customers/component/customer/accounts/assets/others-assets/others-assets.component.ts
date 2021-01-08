@@ -179,8 +179,8 @@ export class OthersAssetsComponent implements OnInit {
       this.totalCurrentValue = 0;
       this.sumOfpurchasedValue = 0;
       data.forEach(o => {
-        o.currentValueAsOnToday = (o.currentValueAsOnToday) ? o.currentValueAsOnToday : 0
-        this.totalCurrentValue += o.currentValueAsOnToday;
+        o.currentValueAsonDate = (o.currentValueAsonDate) ? o.currentValueAsonDate : 0
+        this.totalCurrentValue += o.currentValueAsonDate;
         this.sumOfpurchasedValue += o.purchaseAmt;
       });
       this.datasource3.sort = this.sort;
