@@ -847,14 +847,14 @@ export class ExpensesComponent implements OnInit {
     // const budgetList = this.planService.getBudget(obj1);
     // const BudgetRecurring = this.planService.otherCommitmentsGet(obj2);
     // const BudgetGraph = this.planService.getBudgetGraph(obj3);
-    const budgetList =this.planService.getBudget(obj1).pipe(
+    const budgetList = this.planService.getBudget(obj1).pipe(
       catchError(error => of(null))
     );
     const BudgetRecurring = this.planService.otherCommitmentsGet(obj2).pipe(
       catchError(error => of(null))
-    );  
-    
-    const BudgetGraph =this.planService.getBudgetGraph(obj3).pipe(
+    );
+
+    const BudgetGraph = this.planService.getBudgetGraph(obj3).pipe(
       catchError(error => of(null))
     );
     forkJoin(budgetList, BudgetRecurring, BudgetGraph).subscribe(result => {
@@ -945,10 +945,12 @@ export class ExpensesComponent implements OnInit {
           let array = [];
           data.forEach(element => {
             if (element.familyMemberId == 0) {
-              this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
+              if (element.dateOfBirth) {
+                this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
+              }
             } else {
               const obj = {
-                'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+                'dob': element.dateOfBirth ? this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd') : null,
                 'id': element.familyMemberId
               }
               array.push(obj);
