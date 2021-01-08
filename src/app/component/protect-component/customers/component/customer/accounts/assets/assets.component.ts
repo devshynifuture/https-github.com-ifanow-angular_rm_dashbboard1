@@ -34,7 +34,7 @@ export class AssetsComponent implements OnInit {
     { name: 'Small saving scheme', viewmode: 'tab6', count: 0, link: './small' },
     { name: 'Cash & Bank', viewmode: 'tab7', count: 0, link: './cash_bank' },
     { name: 'Commodities', viewmode: 'tab8', count: 0, link: './commodities' },
-    { name: 'Others', viewmode: 'tab9', count: 0, link: './others' }
+    { name: 'Other assets', viewmode: 'tab9', count: 0, link: './others' }
   ];
   tab: any;
   Settab: any;
