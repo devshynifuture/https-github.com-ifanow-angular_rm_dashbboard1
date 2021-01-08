@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {appConfig} from 'src/app/config/component-config';
-import {apiConfig} from 'src/app/config/main-config';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { appConfig } from 'src/app/config/component-config';
+import { apiConfig } from 'src/app/config/main-config';
 
 @Injectable({
   providedIn: 'root'
@@ -220,8 +220,10 @@ export class OnlineTransactionService {
   getCountryCodeList(data) {
     return this.http.get(apiConfig.TRANSACT + appConfig.COUNTRY_MASTER, data);
   }
-
-//
+  mappedExistingUser(data) {
+    return this.http.post(apiConfig.TRANSACT + appConfig.MAPPED_EXSTING_USER, data);
+  }
+  //
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
   // }

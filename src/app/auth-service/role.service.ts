@@ -1,9 +1,9 @@
-import {Router} from '@angular/router';
-import {Injectable} from '@angular/core/src/metadata/*';
-import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
-import {UtilService} from '../services/util.service';
-import {AuthService} from './authService';
-import {BehaviorSubject} from 'rxjs';
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core/src/metadata/*';
+import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from '../services/util.service';
+import { AuthService } from './authService';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -97,8 +97,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: {add: true, edit: true, delete: true, download: true},
-      leadsCapability: {add: true, edit: true, delete: true, download: true, convertToclient: true}
+      clientsCapability: { add: true, edit: true, delete: true, download: true },
+      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
     }
   };
   backofficePermission = {
@@ -122,8 +122,8 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: {add: true, download: true, edit: true, delete: true},
-      fileuploadsCapability: {download: true, add: true, edit: true, delete: true}
+      misCapability: { add: true, download: true, edit: true, delete: true },
+      fileuploadsCapability: { download: true, add: true, edit: true, delete: true }
     }
   };
   dashboardPermission = {
@@ -150,7 +150,7 @@ export class RoleService {
       taskCapabilityList: [],
       calendarCapabilityList: [],
       emailCapabilityList: [],
-      taskCapabilityObj: {add: true, edit: true, delete: true}
+      taskCapabilityObj: { add: true, edit: true, delete: true }
     }
   };
   overviewPermission = {
@@ -162,10 +162,10 @@ export class RoleService {
       profile: {
         enabled: true,
         subModule: {
-          keyInfo: {enabled: true},
-          riskProfile: {enabled: true}
+          keyInfo: { enabled: true },
+          riskProfile: { enabled: true }
         },
-        profileCapabilityObj: {add: true, edit: true, delete: true}
+        profileCapabilityObj: { add: true, edit: true, delete: true }
       },
       documents: {
         enabled: true,
@@ -212,7 +212,7 @@ export class RoleService {
 
   getRoleDetails(roleId, callbackMethod: (args: any) => void) {
     // const observable = new Observable();
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
       if (callbackMethod) {
         callbackMethod(res);
@@ -382,4 +382,51 @@ export class RoleService {
       this.overviewPermission.subModules.subscriptions.enabled = false;
     }
   }
+
+  goToValidClientSideUrl() {
+    let url;
+    if (this.overviewPermission.enabled) {
+      if (this.overviewPermission.subModules.myFeed.enabled) {
+        return url = '/customer/detail/overview/myfeed'
+      }
+      if (this.overviewPermission.subModules.profile.enabled) {
+        return url = '/customer/detail/overview/profile'
+      }
+      if (this.overviewPermission.subModules.myFeed.enabled) {
+        return url = '/customer/detail/overview/documents'
+      }
+      if (this.overviewPermission.subModules.documents.enabled) {
+        return url = '/customer/detail/overview/documents'
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.subscriptions.enabled) {
+        return url = '/customer/detail/overview/subscription/subscriptions';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.quotations.enabled) {
+        return url = '/customer/detail/overview/subscription/quotations';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.invoices.enabled) {
+        return url = '/customer/detail/overview/subscription/invoices';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.documents.enabled) {
+        return url = '/customer/detail/overview/subscription/documents';
+      }
+      if (this.overviewPermission.subModules.subscriptions.subModule.settings.enabled) {
+        return url = '/customer/detail/overview/subscription/settings';
+      }
+
+    }
+    else if (this.portfolioPermission.enabled) {
+      return url = "/customer/detail/account";
+    }
+    else if (this.planPermission.enabled) {
+      return url = "/customer/detail/plan";
+    }
+    else if (this.activityPermission.enabled) {
+      return url = "/customer/detail/activity";
+    }
+    else {
+      return url = "/customer/detail/transact";
+    }
+  }
+
 }

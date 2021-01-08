@@ -1,19 +1,23 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {CustomerComponent} from './component/customer/customer.component';
-import {AdvisorAndOrganizationInfoService} from './resolvers/advisor-and-organization-info.service';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CustomerComponent } from './component/customer/customer.component';
+import { AdvisorAndOrganizationInfoService } from './resolvers/advisor-and-organization-info.service';
+import { CustomerOverviewGuard } from './component/customer/customer-overview/customer-overview.guard';
+import { CustomerGuard } from './component/customer/customer.guard';
 
 
 const routes: Routes = [
   {
     path: 'detail',
     component: CustomerComponent,
-    resolve: {advisorInfo: AdvisorAndOrganizationInfoService},
+    resolve: { advisorInfo: AdvisorAndOrganizationInfoService },
+    canActivateChild: [CustomerGuard],
     children: [
       {
         path: 'overview',
-        data: {animation: 'Tab1', preload: true},
-        loadChildren: () => import('./component/customer/customer-overview/customer-overview.module').then(m => m.CustomerOverviewModule)
+        data: { animation: 'Tab1', preload: true },
+        loadChildren: () => import('./component/customer/customer-overview/customer-overview.module').then(m => m.CustomerOverviewModule),
+        canActivate: [CustomerOverviewGuard]
       },
       {
         path: 'account',

@@ -204,7 +204,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
             this.auth.setClientData(data);
             this.myControl.setValue(singleClientData.displayName);
             this.ngZone.run(() => {
-              this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...data } });
+              const url = this.roleService.goToValidClientSideUrl();
+              this.router.navigate([url], { state: { ...data } });
             });
           }
         },
@@ -216,10 +217,12 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.auth.setClientData(singleClientData);
       this.myControl.setValue(singleClientData.displayName);
       this.ngZone.run(() => {
-        this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...singleClientData } });
+        const url = this.roleService.goToValidClientSideUrl();
+        this.router.navigate([url], { state: { ...singleClientData } });
       });
     }
   }
+
 
   ngOnInit() {
     this.subinject.singleProfileData.subscribe(data => {

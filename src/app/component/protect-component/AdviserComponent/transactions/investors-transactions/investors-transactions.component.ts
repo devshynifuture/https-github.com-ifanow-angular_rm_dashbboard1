@@ -16,6 +16,7 @@ import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Router } from '@angular/router';
 import { OpenPdfViewComponent } from '../open-pdf-view/open-pdf-view.component';
 import { TransactionRoleService } from "../transaction-role.service";
+import { MappedUserComponent } from './investor-detail/mapped-user/mapped-user.component';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -44,6 +45,9 @@ export class InvestorsTransactionsComponent implements OnInit {
   tempFilter: any[];
   selectedString: any;
   status: any
+  brokerCredentials: any;
+  dataSource2: any[];
+  activeOnSelect: boolean = false;
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService,
     private eventService: EventService,
@@ -57,6 +61,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   ngOnInit() {
     this.backupData = []
     this.tempFilter = []
+    this.dataSource2 = [];
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
       this.isAdvisorSection = false;
@@ -66,6 +71,23 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.isLoading = true;
     // this.getMappedData();
     this.getFilterOptionData();
+    this.getBSECredentials()
+  }
+  mappedUser() {
+    const fragmentData = {
+      flag: 'mandate',
+      data: this.dataSource2,
+      id: 1,
+      state: 'open',
+      componentName: MappedUserComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+
+        }
+      }
+    );
   }
   filter(flag) {
     this.selectedString = flag
@@ -79,7 +101,60 @@ export class InvestorsTransactionsComponent implements OnInit {
       this.getIINUCC()
     }
   }
+  getBSECredentials() {
+    this.isLoading = true;
+    const obj = {
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
+    };
+    this.onlineTransact.getBSECredentials(obj).subscribe(
+      data => this.getBSECredentialsRes(data), error => {
+        this.isLoading = false;
+        this.dataSource.data = [];
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
 
+  getBSECredentialsRes(data) {
+    this.getBSESubBrokerCredentials();
+    this.brokerCredentials = data;
+  }
+  getBSESubBrokerCredentials() {
+    const obj = {
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
+    };
+    this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
+      data => this.getBSESubBrokerCredentialsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.dataSource2 = [];
+        this.isLoading = false;
+      }
+    );
+  }
+
+  getBSESubBrokerCredentialsRes(data) {
+    this.isLoading = false;
+    if (data == undefined || data.length == 0) {
+      this.noData = 'No scheme found';
+      this.dataSource2 = [];
+    } else {
+      this.brokerCredentials.forEach(function (ad) {
+        const subBrokerMatch = data.find(function (tm) {
+          return ad.id == tm.tpUserCredentialId;
+        });
+        if (subBrokerMatch && subBrokerMatch.euin) {
+          ad.euin = subBrokerMatch.euin;
+          ad.tp_nse_subbroker_mapping_id = subBrokerMatch.tpUserCredentialId;
+          ad.subBrokerCode = subBrokerMatch.subBrokerCode;
+        }
+      });
+      this.dataSource2 = this.brokerCredentials;
+      this.dataSource2 = this.dataSource2.filter((x) => x.aggregatorType == 1);
+      console.log('cred', this.dataSource2)
+    }
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

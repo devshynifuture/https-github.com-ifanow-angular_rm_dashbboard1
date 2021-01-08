@@ -1,16 +1,19 @@
-import {Injectable} from '@angular/core/src/metadata/*';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthService} from '../auth-service/authService';
-import {of} from "rxjs";
-import {PeopleService} from "../component/protect-component/PeopleComponent/people.service";
-import {LoginService} from "../component/no-protected/login/login.service";
-import {catchError} from "rxjs/operators";
+import { Injectable } from '@angular/core/src/metadata/*';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from '../auth-service/authService';
+import { of } from "rxjs";
+import { PeopleService } from "../component/protect-component/PeopleComponent/people.service";
+import { LoginService } from "../component/no-protected/login/login.service";
+import { catchError } from "rxjs/operators";
+import { RoleService } from '../auth-service/role.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdvisorGuard implements CanActivate {
-  constructor(private myRoute: Router, private authService: AuthService) {
+  constructor(private myRoute: Router,
+    private authService: AuthService,
+    private roleService: RoleService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -32,8 +35,8 @@ export class AdvisorGuard implements CanActivate {
     } else {
       if (state && state.url.match('login')) {
         console.log('advisorGuard failed login regex: ', next, state);
-
-        this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
+        const url = this.roleService.goToValidClientSideUrl();
+        this.myRoute.navigate([url]);
       } else {
         console.log('advisorGuard failed general: ', next, state);
         this.myRoute.navigate(['unauthorized']);
