@@ -161,6 +161,7 @@ export class PeopleClientsComponent implements OnInit {
           let tableData = [];
           data.forEach(element => {
             element.mobileNo = element.mobileNo == 0 ? 'N/A' : element.mobileNo;
+            element.lastLoginString = element.loginEnable ? element.lastLoginString : 'DISABLED';
             tableData.push([element.name, String(element.mobileNo), element.email, element.pan, String(element.count), element.ownerName, element.lastLoginString, String(element.status)]);
           });
           const header = ["Group head name", "Registered mobile", "Registered email", "PAN", "Members", "Client owner", "Last login", "Status"];
