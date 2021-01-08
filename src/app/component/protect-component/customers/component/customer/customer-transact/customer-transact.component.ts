@@ -5,6 +5,7 @@ import { EventService } from '../../../../../../Data-service/event.service';
 import { EnumDataService } from '../../../../../../services/enum-data.service';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core/src/metadata/*';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-customer-transact',
@@ -18,7 +19,8 @@ export class CustomerTransactComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private ngZone: NgZone,
-    public routingStateService: RoutingState, public authService: AuthService) {
+    public routingStateService: RoutingState, public authService: AuthService,
+    public roleService: RoleService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );

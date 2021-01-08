@@ -20,8 +20,7 @@ export class PlanComponent implements OnInit {
 
   constructor(private router: Router, private routingStateService: RoutingState,
     public authService: AuthService, public roleService: RoleService,
-    public enumDataService: EnumDataService,
-
+    public enumDataService: EnumDataService
   ) {
   }
 
