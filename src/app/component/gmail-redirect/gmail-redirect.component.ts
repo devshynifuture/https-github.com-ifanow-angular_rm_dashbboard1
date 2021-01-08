@@ -83,8 +83,15 @@ export class GmailRedirectComponent implements OnInit {
   }
 
   sendDataToServer(data) {
-
-    this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
+    let obj = {
+      "access_token": data.access_token,
+      "emailId": data.emailId,
+      "expires_in": data.expires_in,
+      "scope": data.scope,
+      "token_type": data.token_type,
+      "userId": data.userId
+    }
+    this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, obj).subscribe(
       response => {
         console.log("successStoringToken");
 
