@@ -48,10 +48,20 @@
           CLEAR FILTER
         </button>
       </mat-menu>
-      <button (click)="openNewCustomerIIN()"
+      <button
         *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection"
-        class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+        [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
       </button>
+      <mat-menu #menu1="matMenu">
+        <button mat-menu-item (click)="openNewCustomerIIN()">
+          <img class="mr-8">
+          <span>Add investor</span>
+        </button>
+        <button mat-menu-item class="text-black d-flex align-items-center" (click)="mappedUser()">
+          <img class="mr-8">
+          Mapp existing user
+        </button>
+      </mat-menu>
     </div>
   </div>
   <div class="row">
