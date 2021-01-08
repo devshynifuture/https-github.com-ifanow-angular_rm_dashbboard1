@@ -27,7 +27,7 @@ export class ResetClientPasswordComponent implements OnInit {
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'RESET',
+    text: this.dialogData.btnNo,
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
