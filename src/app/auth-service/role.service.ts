@@ -1,9 +1,9 @@
-import { Router } from '@angular/router';
-import { Injectable } from '@angular/core/src/metadata/*';
-import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
-import { UtilService } from '../services/util.service';
-import { AuthService } from "./authService";
-import { BehaviorSubject, Observable } from "rxjs";
+import {Router} from '@angular/router';
+import {Injectable} from '@angular/core/src/metadata/*';
+import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
+import {UtilService} from '../services/util.service';
+import {AuthService} from './authService';
+import {BehaviorSubject} from 'rxjs';
 
 
 @Injectable({
@@ -97,8 +97,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: { add: true, edit: true, delete: true, download: true },
-      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
+      clientsCapability: {add: true, edit: true, delete: true, download: true},
+      leadsCapability: {add: true, edit: true, delete: true, download: true, convertToclient: true}
     }
   };
   backofficePermission = {
@@ -122,17 +122,17 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: { add: true, download: true, edit: true, delete: true },
-      fileuploadsCapability: { download: true, add: true, edit: true, delete: true }
+      misCapability: {add: true, download: true, edit: true, delete: true},
+      fileuploadsCapability: {download: true, add: true, edit: true, delete: true}
     }
   };
   dashboardPermission = {
     enabled: true,
     dashboardCapability: {
-      "Key_metrics": true,
-      "Activity_overview": true,
-      "Subscription_overview": true,
-      "To_do": true
+      Key_metrics: true,
+      Activity_overview: true,
+      Subscription_overview: true,
+      To_do: true
     }
   };
   activityPermission = {
@@ -150,11 +150,51 @@ export class RoleService {
       taskCapabilityList: [],
       calendarCapabilityList: [],
       emailCapabilityList: [],
-      taskCapabilityObj: { add: true, edit: true, delete: true }
+      taskCapabilityObj: {add: true, edit: true, delete: true}
     }
   };
   overviewPermission = {
     enabled: true,
+    subModules: {
+      myFeed: {
+        enabled: true
+      },
+      profile: {
+        enabled: true,
+        subModule: {
+          keyInfo: {enabled: true},
+          riskProfile: {enabled: true}
+        },
+        profileCapabilityObj: {add: true, edit: true, delete: true}
+      },
+      documents: {
+        enabled: true,
+        documentCapabilityObj: {
+          // Share: true, Starred: false, Rename: true,
+          // Download: true, Delete: true, Add: true
+        } as any
+      },
+      subscriptions: {
+        enabled: true,
+        subModule: {
+          settings: {
+            enabled: true
+          },
+          documents: {
+            enabled: true
+          },
+          invoices: {
+            enabled: true
+          },
+          quotations: {
+            enabled: true
+          },
+          subscriptions: {
+            enabled: true
+          }
+        }
+      }
+    }
   };
   planPermission = {
     enabled: true,
@@ -172,7 +212,7 @@ export class RoleService {
 
   getRoleDetails(roleId, callbackMethod: (args: any) => void) {
     // const observable = new Observable();
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
       if (callbackMethod) {
         callbackMethod(res);
@@ -212,10 +252,13 @@ export class RoleService {
     }
     if (AuthService.getUserInfo().userType == 1) {
       adminDatasource.subscriptions ? this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule) : '';
-      adminDatasource.people ? this.setPeoplePermissions(adminDatasource.people.subModule) : ''
+      adminDatasource.people ? this.setPeoplePermissions(adminDatasource.people.subModule) : '';
       adminDatasource.activity ? this.setActivityPermissions(adminDatasource.activity.subModule) : '';
-      adminDatasource.backoffice ? this.setBackofficePermissions(adminDatasource.backoffice.subModule) : this.backofficePermission.enabled = false
-      adminDatasource.dashboard ? this.setDashboardPermission(adminDatasource.dashboard.subModule) : ''
+      adminDatasource.backoffice ? this.setBackofficePermissions(adminDatasource.backoffice.subModule) : this.backofficePermission.enabled = false;
+      adminDatasource.dashboard ? this.setDashboardPermission(adminDatasource.dashboard.subModule) : '';
+      adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
+    } else {
+      adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
     }
   }
 
@@ -266,15 +309,15 @@ export class RoleService {
     this.subscriptionPermission.subModule.clients.subModule.invoices.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.invoices.showModule : false;
     this.subscriptionPermission.subModule.clients.subModule.documents.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.documents.showModule : false;
     this.subscriptionPermission.subModule.clients.subModule.settings.enabled = subscriptionPermissions.clients ? subscriptionPermissions.clients.subModule.settings.showModule : false;
-    this.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList = subscriptionPermissions.clients.subModule.documents.subModule.documents.capabilityList
-    this.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList = subscriptionPermissions.clients.subModule.invoices.subModule.invoices.capabilityList
-    this.subscriptionPermission.subModule.clients.subModule.subscriptionsCapabilityList = subscriptionPermissions.clients.subModule.subscriptions.subModule.subscriptions.capabilityList
-    this.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList = subscriptionPermissions.clients.subModule.quotations.subModule.quotations.capabilityList
-    this.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList = subscriptionPermissions.clients.subModule.settings.subModule.settings.capabilityList
+    this.subscriptionPermission.subModule.clients.subModule.documentsCapabilityList = subscriptionPermissions.clients.subModule.documents.subModule.documents.capabilityList;
+    this.subscriptionPermission.subModule.clients.subModule.invoicesCapabilityList = subscriptionPermissions.clients.subModule.invoices.subModule.invoices.capabilityList;
+    this.subscriptionPermission.subModule.clients.subModule.subscriptionsCapabilityList = subscriptionPermissions.clients.subModule.subscriptions.subModule.subscriptions.capabilityList;
+    this.subscriptionPermission.subModule.clients.subModule.quotationsCapabilityList = subscriptionPermissions.clients.subModule.quotations.subModule.quotations.capabilityList;
+    this.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList = subscriptionPermissions.clients.subModule.settings.subModule.settings.capabilityList;
     this.subscriptionPermission.subModule.subscriptions.subscriptionsCapabilityList = subscriptionPermissions.subscriptions.subModule.subscriptions.capabilityList;
-    this.subscriptionPermission.subModule.quotations.quotationsCapabilityList = subscriptionPermissions.quotations.subModule.quotations.capabilityList
-    this.subscriptionPermission.subModule.invoices.invoicesCapabilityList = subscriptionPermissions.invoices.subModule.invoices.capabilityList
-    this.subscriptionPermission.subModule.documents.documentsCapabilityList = subscriptionPermissions.documents.subModule.documents.capabilityList
+    this.subscriptionPermission.subModule.quotations.quotationsCapabilityList = subscriptionPermissions.quotations.subModule.quotations.capabilityList;
+    this.subscriptionPermission.subModule.invoices.invoicesCapabilityList = subscriptionPermissions.invoices.subModule.invoices.capabilityList;
+    this.subscriptionPermission.subModule.documents.documentsCapabilityList = subscriptionPermissions.documents.subModule.documents.capabilityList;
   }
 
   setActivityPermissions(activityPermissions) {
@@ -292,16 +335,16 @@ export class RoleService {
     this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
     this.peoplePermission.subModule.clientsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.clients.subModule.clients.capabilityList);
     this.peoplePermission.subModule.leadsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.leads.subModule.leads.capabilityList);
-    this.peoplePermission.subModule.leadsCapability.convertToclient = peoplePermission.leads.subModule.leads.capabilityList[7].enabledOrDisabled == 1 ? true : false
+    this.peoplePermission.subModule.leadsCapability.convertToclient = peoplePermission.leads.subModule.leads.capabilityList[7].enabledOrDisabled == 1 ? true : false;
   }
 
   setBackofficePermissions(backOfficePermission) {
-    this.backofficePermission.subModule.mis.enabled = backOfficePermission.mis.showModule
-    this.backofficePermission.subModule.fileuploads.enabled = backOfficePermission.fileuploads.showModule
-    this.backofficePermission.subModule.duplicateData.enabled = backOfficePermission.duplicateData.showModule
-    this.backofficePermission.subModule.foliomapping.enabled = backOfficePermission.foliomapping.showModule
-    this.backofficePermission.subModule.folioquery.enabled = backOfficePermission.folioquery.showModule
-    this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule
+    this.backofficePermission.subModule.mis.enabled = backOfficePermission.mis.showModule;
+    this.backofficePermission.subModule.fileuploads.enabled = backOfficePermission.fileuploads.showModule;
+    this.backofficePermission.subModule.duplicateData.enabled = backOfficePermission.duplicateData.showModule;
+    this.backofficePermission.subModule.foliomapping.enabled = backOfficePermission.foliomapping.showModule;
+    this.backofficePermission.subModule.folioquery.enabled = backOfficePermission.folioquery.showModule;
+    this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule;
     this.backofficePermission.subModule.misCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.mis.subModule.mis.capabilityList);
     this.backofficePermission.subModule.fileuploadsCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.fileuploads.subModule.fileuploads.capabilityList);
   }
@@ -309,8 +352,34 @@ export class RoleService {
   setDashboardPermission(dashboardPermission) {
     this.dashboardPermission.enabled = dashboardPermission.advisorDashboard.showModule;
     for (const obj of dashboardPermission.advisorDashboard.subModule.advisorDashboard.capabilityList) {
-      obj.capabilityName = obj.capabilityName.replace(' ', '_')
-      this.dashboardPermission.dashboardCapability[obj.capabilityName] = obj.enabledOrDisabled == 1 ? true : false
+      obj.capabilityName = obj.capabilityName.replace(' ', '_');
+      this.dashboardPermission.dashboardCapability[obj.capabilityName] = obj.enabledOrDisabled == 1 ? true : false;
+    }
+  }
+
+  setOverviewPermissions(overviewPermission) {
+    this.overviewPermission.subModules.myFeed.enabled = overviewPermission.myFeedVisibility ? overviewPermission.myFeedVisibility.showModule : false;
+    this.overviewPermission.subModules.documents.enabled = overviewPermission.documents ? overviewPermission.documents.showModule : false;
+    if (overviewPermission.documents) {
+      this.overviewPermission.subModules.documents.documentCapabilityObj = UtilService.convertArrayListToObject(overviewPermission.documents.subModule.documents.capabilityList);
+    }
+    if (overviewPermission.profile) {
+      this.overviewPermission.subModules.profile.enabled = overviewPermission.profile.showModule;
+      this.overviewPermission.subModules.profile.profileCapabilityObj = UtilService.getDetailedCapabilityMap(overviewPermission.profile.subModule.keyInfo.subModule.keyInfo.capabilityList);
+      this.overviewPermission.subModules.profile.subModule.keyInfo.enabled = overviewPermission.profile.subModule.keyInfo.showModule;
+      this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile.showModule;
+    } else {
+      this.overviewPermission.subModules.profile.enabled = false;
+    }
+    if (overviewPermission.subscriptions) {
+      this.overviewPermission.subModules.subscriptions.enabled = overviewPermission.subscriptions.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.settings.enabled = overviewPermission.subscriptions.subModule.settings.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.subscriptions.enabled = overviewPermission.subscriptions.subModule.subscriptions.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.documents.enabled = overviewPermission.subscriptions.subModule.documents.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.invoices.enabled = overviewPermission.subscriptions.subModule.invoices.showModule;
+      this.overviewPermission.subModules.subscriptions.subModule.quotations.enabled = overviewPermission.subscriptions.subModule.quotations.showModule;
+    } else {
+      this.overviewPermission.subModules.subscriptions.enabled = false;
     }
   }
 }

@@ -2,10 +2,14 @@
     <div class="row no-wrap">
         <div class="col-md-2  pt-8 pb-20 pl-0 pr-0  responsive-left-side-top responsive-flex-auto flex-auto-954">
             <ul class="vertical-menu responsive-left-side bg-grey lter">
-                <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}" class="c-p">
+                <li (click)="Tab='Tab1'"
+                    *ngIf="roleService.overviewPermission.subModules.profile.subModule.keyInfo.enabled"
+                    [ngClass]="{'activeColor lt':Tab=='Tab1'}" class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
-                <li (click)="Tab='Tab2'" [ngClass]="{'activeColor lt':Tab=='Tab2'}" class="c-p">
+                <li (click)="Tab='Tab2'"
+                    *ngIf="roleService.overviewPermission.subModules.profile.subModule.riskProfile.enabled"
+                    [ngClass]="{'activeColor lt':Tab=='Tab2'}" class="c-p">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
                 <!-- <li class="c-p">

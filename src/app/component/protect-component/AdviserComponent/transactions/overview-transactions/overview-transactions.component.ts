@@ -48,6 +48,7 @@ export class OverviewTransactionsComponent implements OnInit {
   totalPendingClient: any;
   isLoadingIIN: boolean = false;
   isLoadingMandate: boolean = false;
+  hours: number;
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -65,6 +66,13 @@ export class OverviewTransactionsComponent implements OnInit {
     this.getMandate();
     this.getIInData();
     this.autoRemapClient();
+    if (AuthService.getInvalidCredsTimeZone()) {
+      this.hours = new Date().getHours() - new Date(AuthService.getInvalidCredsTimeZone()).getHours();
+      if (this.hours > 4) {
+        sessionStorage.removeItem('invalidPopup');
+        this.hours = undefined
+      }
+    }
     // this.updateAllNseClients();
   }
 
@@ -193,11 +201,16 @@ export class OverviewTransactionsComponent implements OnInit {
         if (err === "Something went wrong !") {
           this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
         } else {
-          this.openCredentialsErrorPopup();
+          if (AuthService.getInvalidCredsTimeZone() && this.hours > 4) {
+            this.openCredentialsErrorPopup();
+          }
+          if (!AuthService.getInvalidCredsTimeZone() && !this.hours) {
+            this.openCredentialsErrorPopup();
+          }
         }
-        // this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
-        //  this.errMessage = err.error.message;
       }
+      // this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+      //  this.errMessage = err.error.message;
     );
   }
 

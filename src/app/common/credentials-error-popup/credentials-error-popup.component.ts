@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-credentials-error-popup',
@@ -17,10 +18,11 @@ export class CredentialsErrorPopupComponent implements OnInit {
 
   updateSetting() {
     this.router.navigate(['/admin/transactions/settings/manage-credentials/arn-ria-creds'])
-    this.close();
+    this.close(false);
   }
 
-  close() {
+  close(flag) {
+    flag ? AuthService.setInvalidCredsTimeZone(new Date().getTime()) : ''
     this.dialogRef.close()
   }
 

@@ -16,6 +16,7 @@ import { ViewActivityComponent } from './view-activity/view-activity.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { GetSharebleLinkComponent } from './get-shareble-link/get-shareble-link.component';
 import { PreviewComponent } from './preview/preview.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-document-explorer',
@@ -80,7 +81,8 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
-    public utils: UtilService, public dialog: MatDialog, private authService: AuthService) {
+    public utils: UtilService, public dialog: MatDialog, private authService: AuthService,
+    public roleService: RoleService) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getUserInfo = AuthService.getUserInfo()

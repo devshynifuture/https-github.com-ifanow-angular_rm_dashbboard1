@@ -691,6 +691,14 @@ export class UtilService {
       });
   }
 
+  static convertArrayListToObject(list) {
+    let obj = {}
+    for (let i of list) {
+      obj[i.capabilityName] = i.enabledOrDisabled == 1 ? true : false
+    }
+    return obj
+  }
+
   bulkHtmlToPdf(data) {
     this.client = AuthService.getClientData();
     const obj = {

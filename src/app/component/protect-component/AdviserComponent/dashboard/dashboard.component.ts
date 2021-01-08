@@ -158,6 +158,7 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
+  hours: number;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -491,7 +492,13 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.source.subscribe(val => this.getKeyMetrics());
-
+    if (AuthService.getInvalidCredsTimeZone()) {
+      this.hours = new Date().getHours() - new Date(AuthService.getInvalidCredsTimeZone()).getHours();
+      if (this.hours > 4) {
+        sessionStorage.removeItem('invalidPopup');
+        this.hours = undefined
+      }
+    }
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
     this.clientData = AuthService.getClientData();
@@ -1650,7 +1657,12 @@ export class DashboardComponent implements OnInit {
         if (err === 'Something went wrong !') {
           this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
         } else {
-          this.openCredentialsErrorPopup();
+          if (AuthService.getInvalidCredsTimeZone() && this.hours > 4) {
+            this.openCredentialsErrorPopup();
+          }
+          if (!AuthService.getInvalidCredsTimeZone() && !this.hours) {
+            this.openCredentialsErrorPopup();
+          }
         }
       }
     );

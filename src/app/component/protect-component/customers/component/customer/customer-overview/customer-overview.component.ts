@@ -6,6 +6,7 @@ import { RoutingState } from 'src/app/services/routing-state.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MfServiceService } from '../accounts/assets/mutual-fund/mf-service.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-customer-overview',
@@ -20,9 +21,10 @@ export class CustomerOverviewComponent implements OnInit {
   loading: boolean;
   name: string;
 
-  constructor(private MfServiceService:MfServiceService,public authService: AuthService, private router: Router,
+  constructor(private MfServiceService: MfServiceService, public authService: AuthService, private router: Router,
     private eventService: EventService, public routingStateService: RoutingState,
-    private peopleService: PeopleService, public subInjectService: SubscriptionInject) {
+    private peopleService: PeopleService, public subInjectService: SubscriptionInject,
+    public roleService: RoleService) {
     this.subInjectService.singleProfileData.subscribe(
       data => {
         if (typeof data === 'string') {
@@ -108,6 +110,8 @@ export class CustomerOverviewComponent implements OnInit {
   goToAdvisorHome() {
     this.showRouter = false;
     setTimeout(() => {
+      localStorage.removeItem('clientData');
+      sessionStorage.removeItem('clientData');
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
     this.MfServiceService.clearStorage();
