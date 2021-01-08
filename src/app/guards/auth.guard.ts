@@ -1,18 +1,18 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthService} from '../auth-service/authService';
-import {RoleService} from '../auth-service/role.service';
-import {catchError} from 'rxjs/operators';
-import {of} from 'rxjs';
-import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
-import {LoginService} from '../component/no-protected/login/login.service';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from '../auth-service/authService';
+import { RoleService } from '../auth-service/role.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
+import { LoginService } from '../component/no-protected/login/login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(private myRoute: Router, private authService: AuthService,
-              private roleService: RoleService, private peopleService: PeopleService, private loginService: LoginService) {
+    private roleService: RoleService, private peopleService: PeopleService, private loginService: LoginService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -32,7 +32,8 @@ export class AuthGuard implements CanActivate {
         } else if (AuthService.getUserInfo().isRmLogin) {
           this.myRoute.navigate(['support', 'dashboard']);
         } else {
-          this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
+          const url = this.roleService.goToValidClientSideUrl();
+          this.myRoute.navigate([url]);
         }
         return false;
       } else if (state && state.url.split('/').includes('support') && state.url.split('/').includes('dashboard')) {
@@ -93,7 +94,7 @@ export class AuthGuard implements CanActivate {
       }
       if (state && state.url.split('/').includes('invite')) {
         console.log(next, this.myRoute);
-        this.myRoute.navigate(['/login/signup'], {queryParams: {code: next.params ? next.params.param : ''}});
+        this.myRoute.navigate(['/login/signup'], { queryParams: { code: next.params ? next.params.param : '' } });
         return true;
       }
       this.myRoute.navigate(['/login']);

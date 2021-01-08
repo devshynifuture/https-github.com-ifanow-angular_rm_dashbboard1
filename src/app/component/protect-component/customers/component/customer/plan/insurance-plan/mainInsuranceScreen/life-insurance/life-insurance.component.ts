@@ -468,17 +468,17 @@ export class LifeInsuranceComponent implements OnInit {
     });
   }
   openDetailedView(data) {
-    if(data && data.adviceDetails){
-      if(data.adviceDetails.gen_insurance_advice_id){
-        let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) :this.adviceName ) :this.adviceName;
-        this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+    if (data && data.adviceDetails) {
+      if (data.adviceDetails.gen_insurance_advice_id) {
+        let id = data ? (data.adviceDetails ? (data.adviceDetails.gen_insurance_advice_id) : this.adviceName) : this.adviceName;
+        this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : 'Proposed policy'
         data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date
         data.adviceDetails.applicableDate = data.adviceDetails.applicable_date
         data.adviceDetails.adviceDescription = data.adviceDetails.advice_description
         data.adviceDetails.advice_allotment = data.adviceDetails.advice_allotment
-      }else{
-        let id = data ? (data.adviceDetails ? (data.adviceDetails.insurance_advice_id) :this.adviceName ) :this.adviceName;
-      this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+      } else {
+        let id = data ? (data.adviceDetails ? (data.adviceDetails.insurance_advice_id) : this.adviceName) : this.adviceName;
+        this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
         data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date
         data.adviceDetails.applicableDate = data.adviceDetails.applicable_date
         data.adviceDetails.adviceDescription = data.adviceDetails.advice_description
@@ -500,7 +500,7 @@ export class LifeInsuranceComponent implements OnInit {
       insuranceTypeId: this.type.insuranceTypeId,
       insuranceSubTypeId: this.type.insuranceSubTypeId,
       showInsurance: this.inputData,
-      adviceName :this.adviceName
+      adviceName: this.adviceName
 
     };
 
@@ -840,7 +840,7 @@ export class LifeInsuranceComponent implements OnInit {
     // const suggestPolicyGetGi = this.planService.getGeneralInsuranceSuggestPolicy(this.inputData.id);
     const suggestPolicyGetGi = this.planService.getGeneralInsuranceNeedAnalysis(obj3);
     const suggestPolicyGet = this.planService.getSuggestPolicy(obj2);
-    const recommndationGetGi =this.planService.getGeneralInsuranceAdvice(this.inputData.id).pipe(
+    const recommndationGetGi = this.planService.getGeneralInsuranceAdvice(this.inputData.id).pipe(
       catchError(error => of(null))
     );
     const recommndationGet = this.planService.getInsuranceAdvice(obj2).pipe(
@@ -875,6 +875,7 @@ export class LifeInsuranceComponent implements OnInit {
     return obj;
   }
   getForkJoinResponse(result) {
+    this.recommendOrNot = false;
     this.needAnalysisSavedData = result[3] ? result[3] : null;
     this.panelOpenState = false;
     let suggestedData = result[1];
@@ -921,7 +922,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.getNeedAnalysisData(result[3]);
     this.getDetailsInsuranceRes(result[0])
     if (result[2]) {
-      result[2] = result[2].filter(d => d.insurance.realOrFictitious == 1 || d.insurance.realOrFictitious == 0 );
+      result[2] = result[2].filter(d => d.insurance.realOrFictitious == 1 || d.insurance.realOrFictitious == 0);
       result[2].forEach(element => {
         element.expanded = false;
       });
@@ -939,48 +940,48 @@ export class LifeInsuranceComponent implements OnInit {
       this.loaded.emit(this.insuranceTemp.nativeElement);
     }
   }
-  getFilterSumAssured(data){
+  getFilterSumAssured(data) {
     if (this.inputData.insuranceType != 1) {
-      if(data)
-      data.forEach(element => {
+      if (data)
+        data.forEach(element => {
           this.getSumAssuredInAll(element.insurance);
-          if(element.parentAsset){
+          if (element.parentAsset) {
             this.getSumAssuredInAll(element.parentAsset);
           }
-          if(element.childAsset){
+          if (element.childAsset) {
             this.getSumAssuredInAll(element.childAsset);
           }
-      });
+        });
     }
     return data;
   }
   getSumAssuredInAll(element) {
-      element.sumAssured = 0;
-      if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
-        element.insuredMembers.forEach(ele => {
-          element.sumAssured += ele.sumInsured;
-        });
-      } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
-        element.policyFeatures.forEach(ele => {
-          element.sumInsuredIdv += ele.featureSumInsured;
-        });
-      } else {
-        element.sumInsuredIdv = element.sumInsuredIdv;
-      }
+    element.sumAssured = 0;
+    if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
+      element.insuredMembers.forEach(ele => {
+        element.sumAssured += ele.sumInsured;
+      });
+    } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
+      element.policyFeatures.forEach(ele => {
+        element.sumInsuredIdv += ele.featureSumInsured;
+      });
+    } else {
+      element.sumInsuredIdv = element.sumInsuredIdv;
+    }
 
-      if (!element.sumInsuredIdv && element && element.hasOwnProperty('addOns') && element.addOns.length > 0) {
-        element.addOns.forEach(ele => {
-          element.sumInsuredIdv += ele.addOnSumInsured;
-        });
-      }
+    if (!element.sumInsuredIdv && element && element.hasOwnProperty('addOns') && element.addOns.length > 0) {
+      element.addOns.forEach(ele => {
+        element.sumInsuredIdv += ele.addOnSumInsured;
+      });
+    }
     return element;
   }
-  getSumAssuredByArray(storeVal,data){
-    if(data){
+  getSumAssuredByArray(storeVal, data) {
+    if (data) {
       data.forEach(ele => {
         storeVal.sumInsuredIdv += ele.sumInsured;
       });
-    }else{
+    } else {
       data = []
     }
     return data
@@ -1162,7 +1163,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   changeValue2(array, ele) {
     // ele.expanded = true;
-    if(ele.advice != 'Continue' && ele.advice != 'Discontinue' && ele.advice != null){
+    if (ele.advice != 'Continue' && ele.advice != 'Discontinue' && ele.advice != null) {
       this.clickedRecommend = true;
       array.filter(element => {
         if (element.insurance.id == ele.insurance.id && ele.expanded == true) {
@@ -1171,10 +1172,10 @@ export class LifeInsuranceComponent implements OnInit {
           element.expanded = false;
         } else {
           element.expanded = this.isClick ? false : true;
-  
+
         }
       });
-    }else{
+    } else {
       this.clickedRecommend = false;
     }
   }
@@ -1220,7 +1221,7 @@ export class LifeInsuranceComponent implements OnInit {
       const fragmentData = {
         flag: 'app-customer',
         id: 1,
-        data: this.inputData ? this.inputData: this.needAnalysisData,
+        data: this.inputData ? this.inputData : this.needAnalysisData,
         direction: 'top',
         componentName: ShowHealthPlanningComponent,
         state: 'open'

@@ -183,8 +183,8 @@ export class AuthService {
 
   }
 
-  static getDomainDetails(data) {
-    return localStorage.getItem('domainDetails');
+  static getDomainDetails() {
+    return JSON.parse(localStorage.getItem('domainDetails'));
   }
 
   setToken(token: string) {

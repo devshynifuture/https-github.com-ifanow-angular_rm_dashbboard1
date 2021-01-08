@@ -181,6 +181,10 @@ export class PeopleService {
     return this.http.putEncoded(apiConfig.USER + appConfig.RESET_CLIENT_PASSWORD, data);
   }
 
+  DisableLogin(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.DISABLE_CLIENT_LOGIN, data);
+  }
+
   deleteEmail(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_EMAIL, data);
   }

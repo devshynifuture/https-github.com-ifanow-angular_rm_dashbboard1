@@ -51,6 +51,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   isLoding: boolean;
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
+  domainData: any;
 
   constructor(public authService: AuthService, private _eref: ElementRef,
     protected eventService: EventService, protected subinject: SubscriptionInject,
@@ -204,7 +205,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
             this.auth.setClientData(data);
             this.myControl.setValue(singleClientData.displayName);
             this.ngZone.run(() => {
-              this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...data } });
+              const url = this.roleService.goToValidClientSideUrl();
+              this.router.navigate([url], { state: { ...data } });
             });
           }
         },
@@ -216,10 +218,12 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.auth.setClientData(singleClientData);
       this.myControl.setValue(singleClientData.displayName);
       this.ngZone.run(() => {
-        this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...singleClientData } });
+        const url = this.roleService.goToValidClientSideUrl();
+        this.router.navigate([url], { state: { ...singleClientData } });
       });
     }
   }
+
 
   ngOnInit() {
     this.subinject.singleProfileData.subscribe(data => {
@@ -387,11 +391,18 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   logout() {
     this.clientList = [];
+    this.domainData = AuthService.getDomainDetails();
     this.enumDataService.setSearchData(this.clientList);
     this.authService.logout();
-    this.router.navigate(['/login']);
+    if (this.domainData) {
+      let mainDomain;
+      let clientSubDomain = this.domainData.hostName;
+      mainDomain = `https://www${clientSubDomain.substring(clientSubDomain.indexOf('.'), clientSubDomain.length)}`
+      window.open(mainDomain, "_self")
+    } else {
+      this.router.navigate(['/login'])
+    }
     this.MfServiceService.clearStorage();
-
   }
 
   // prepareRoute(outlet: RouterOutlet) {

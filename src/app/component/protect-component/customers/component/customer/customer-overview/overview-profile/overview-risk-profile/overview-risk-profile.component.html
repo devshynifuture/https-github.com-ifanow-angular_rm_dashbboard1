@@ -200,8 +200,19 @@
                 <table align="center"
                     style=" width: 95%; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
                     <tr>
-                        <td style="text-align: left; vertical-align: top; width: 50%;">
-
+                        <td style="text-align: left; vertical-align: bottom; width: 50%;">
+                            <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
+                                Client name : <span> {{clientInfo.name}} </span>
+                            </p>
+                            <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
+                                Mobile Number : <span> {{(clientInfo.mobileNo)?clientInfo.mobileNo:'-'}} </span>
+                            </p>
+                            <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
+                                Email id : <span> {{(clientInfo.email)?clientInfo.email:'-'}} </span>
+                            </p>
+                            <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
+                                PAN : <span> {{clientInfo.pan}} </span>
+                            </p>
                         </td>
 
                         <td style="text-align: right; vertical-align: top; width: 50%;">

@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from '../../../../../auth-service/authService';
-import {DialogContainerComponent} from '../../../../../common/dialog-container/dialog-container.component';
-import {EventService} from '../../../../../Data-service/event.service';
-import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {DynamicComponentService} from '../../../../../services/dynamic-component.service';
-import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../../../animation/animation';
-import {PeopleService} from '../../../PeopleComponent/people.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {EnumDataService} from '../../../../../services/enum-data.service';
-import {ChangeClientPasswordComponent} from './customer-overview/overview-profile/change-client-password/change-client-password.component';
-import {UtilService} from 'src/app/services/util.service';
-import {RoleService} from '../../../../../auth-service/role.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../../../auth-service/authService';
+import { DialogContainerComponent } from '../../../../../common/dialog-container/dialog-container.component';
+import { EventService } from '../../../../../Data-service/event.service';
+import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
+import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
+import { PeopleService } from '../../../PeopleComponent/people.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EnumDataService } from '../../../../../services/enum-data.service';
+import { ChangeClientPasswordComponent } from './customer-overview/overview-profile/change-client-password/change-client-password.component';
+import { UtilService } from 'src/app/services/util.service';
+import { RoleService } from '../../../../../auth-service/role.service';
 import * as $ from 'jquery';
-import {CustomerService} from "./customer.service";
-import {MfServiceService} from './accounts/assets/mutual-fund/mf-service.service';
+import { CustomerService } from "./customer.service";
+import { MfServiceService } from './accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-customer',
@@ -45,6 +45,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   role: any;
   clientName: any;
   userInfo: any;
+  domainData: any;
 
   constructor(
     private router: Router,
@@ -118,6 +119,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.role = AuthService.getUserRoleType().roleName;
     this.clientName = AuthService.getClientData().userName;
     this.clientData = AuthService.getClientData();
+    AuthService.setClientProfilePic(this.clientData.profilePicUrl)
     this.showRouter = true;
     this.selected = 1;
     this._value = 1;
@@ -203,8 +205,16 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   logout() {
     this.enumDataService.setSearchData([]);
     // if (!this.authService.isAdvisor()) {
+    this.domainData = AuthService.getDomainDetails();
     this.authService.logout();
-    this.router.navigate(['/login']);
+    if (this.domainData) {
+      let mainDomain;
+      let clientSubDomain = this.domainData.hostName;
+      mainDomain = `https://www${clientSubDomain.substring(clientSubDomain.indexOf('.'), clientSubDomain.length)}`
+      window.open(mainDomain, "_self")
+    } else {
+      this.router.navigate(['/login'])
+    }
     this.MfServiceService.clearStorage();
     // }
   }

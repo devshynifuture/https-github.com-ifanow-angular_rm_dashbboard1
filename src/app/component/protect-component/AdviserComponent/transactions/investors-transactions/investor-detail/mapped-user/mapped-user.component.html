@@ -12,7 +12,38 @@
 </div>
 
 <div class="row ">
-    <div class="col-md-12 mt-64">
+    <div class="col-md-10 mt-64">
+        <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
+            <input #searchClient (input)="checkOwnerList(searchClient.value)" [formControl]="stateCtrl"
+                [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput
+                placeholder="Start typing to see investor names">
+            <mat-autocomplete #auto1="matAutocomplete" autoFocus>
+                <mat-option (onSelectionChange)="selectClient(f)" *ngFor="let f of filteredStates " [value]="f.name">
+                    <div class="row">
+                        <div class="col-md-1 p-0 d-flex align-items-center">
+                            <i class="material-icons"> person </i>
+                        </div>
+                        <div class="col-md-6 pl-0 d-flex align-items-center">
+                            <p class="t-left m-0">{{f.name}}</p>
+                        </div>
+                        <div class="col-md-5 p-0 text-right">
+                            <button *ngIf="f.userType==3" class="small-primitive memberBtnNotes " mat-stroked-button>
+                                FAMILY MEMBER
+                            </button>
+                            <button *ngIf="f.userType==2" class="small-primitive memberBtnNotes"
+                                mat-stroked-button>CLIENT
+                            </button>
+                        </div>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
+                This family member does not exist
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-md-12 mt-24">
         <table mat-table [dataSource]="storeData" matSort class="mt-8 skeletonAnimation" id="table-low"
             appSkeletonLoading *ngIf="storeData.length > 0" [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">

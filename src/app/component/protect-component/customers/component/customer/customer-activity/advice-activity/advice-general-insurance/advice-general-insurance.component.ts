@@ -169,13 +169,13 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
     });
 
   }
-  openDetailedView(heading,data) {
-    if(data){
-     data.parentAsset =  data.childParentRel.REAL
-     data.childAsset = data.childParentRel.FICT
+  openDetailedView(heading, data) {
+    if (data) {
+      data.parentAsset = data.childParentRel.REAL
+      data.childAsset = data.childParentRel.FICT
     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
-    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : 'Proposed policy'
     const sendData = {
       flag: 'detailedView',
       data: {},
@@ -188,8 +188,8 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       allInsurance: this.allInsurance,
       insuranceTypeId: data ? 1 : null,
       insuranceSubTypeId: data ? data.InsuranceDetails.insuranceSubTypeId : null,
-      adviceName : this.adviceName,
-      showInsurance: {heading : heading},
+      adviceName: this.adviceName,
+      showInsurance: { heading: heading },
 
 
     };
@@ -265,49 +265,51 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
         countSuggest++
         this.recommendOrNot = true;
       }
-      if (element.InsuranceDetails && element.InsuranceDetails.insuredMembers && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
-        element.InsuranceDetails.insuredMembers.length > 0) {
-        element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
-        if (element.InsuranceDetails.insuredMembers.length > 1) {
-          for (let i = 1; i < element.InsuranceDetails.insuredMembers.length; i++) {
-            if (element.InsuranceDetails.insuredMembers[i].name) {
-              const firstName = (element.InsuranceDetails.insuredMembers[i].name as string).split(' ')[0];
-              element.InsuranceDetails.displayHolderName += ', ' + firstName;
+      if (element.InsuranceDetails) {
+        if (element.InsuranceDetails && element.InsuranceDetails.insuredMembers && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+          element.InsuranceDetails.insuredMembers.length > 0) {
+          element.InsuranceDetails.displayHolderName = element.InsuranceDetails.insuredMembers[0].name;
+          if (element.InsuranceDetails.insuredMembers.length > 1) {
+            for (let i = 1; i < element.InsuranceDetails.insuredMembers.length; i++) {
+              if (element.InsuranceDetails.insuredMembers[i].name) {
+                const firstName = (element.InsuranceDetails.insuredMembers[i].name as string).split(' ')[0];
+                element.InsuranceDetails.displayHolderName += ', ' + firstName;
+              }
             }
           }
+        } else {
+          element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
         }
-      } else {
-        element.InsuranceDetails.displayHolderName = element.InsuranceDetails.policyHolderName;
-      }
-      if (element.InsuranceDetails.hasOwnProperty("policyFeatures") &&
-        element.InsuranceDetails.policyFeatures.length > 0) {
-        element.InsuranceDetails.policyFeatures.forEach(ele => {
-          this.sumAssured += ele.featureSumInsured;
-        });
-        element.InsuranceDetails.sumAssured = this.sumAssured;
-        if (element.InsuranceDetails.sumAssured == 0) {
+        if (element.InsuranceDetails.hasOwnProperty("policyFeatures") &&
+          element.InsuranceDetails.policyFeatures.length > 0) {
+          element.InsuranceDetails.policyFeatures.forEach(ele => {
+            this.sumAssured += ele.featureSumInsured;
+          });
+          element.InsuranceDetails.sumAssured = this.sumAssured;
+          if (element.InsuranceDetails.sumAssured == 0) {
+            element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+          }
+        } else {
           element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
         }
-      } else {
-        element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
-      }
-      if (!element.InsuranceDetails.sumAssured && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
-        element.InsuranceDetails.insuredMembers.length > 0) {
-        element.InsuranceDetails.sumAssured = 0;
-        element.InsuranceDetails.insuredMembers.forEach(ele => {
-          element.InsuranceDetails.sumAssured += ele.sumInsured;
-        });
-        if (element.InsuranceDetails.sumAssured == 0) {
+        if (!element.InsuranceDetails.sumAssured && element.InsuranceDetails.hasOwnProperty("insuredMembers") &&
+          element.InsuranceDetails.insuredMembers.length > 0) {
+          element.InsuranceDetails.sumAssured = 0;
+          element.InsuranceDetails.insuredMembers.forEach(ele => {
+            element.InsuranceDetails.sumAssured += ele.sumInsured;
+          });
+          if (element.InsuranceDetails.sumAssured == 0) {
+            element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
+          }
+        } else {
           element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
         }
-      } else {
-        element.InsuranceDetails.sumAssured = element.InsuranceDetails.sumInsuredIdv;
-      }
-      if (element.InsuranceDetails.hasOwnProperty("addOns") &&
-        element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
-        element.InsuranceDetails.addOns.forEach(ele => {
-          element.InsuranceDetails.sumAssured += ele.addOnSumInsured;
-        });
+        if (element.InsuranceDetails.hasOwnProperty("addOns") &&
+          element.InsuranceDetails.addOns.length > 0 && !element.InsuranceDetails.sumAssured) {
+          element.InsuranceDetails.addOns.forEach(ele => {
+            element.InsuranceDetails.sumAssured += ele.addOnSumInsured;
+          });
+        }
       }
     });
     return data;
@@ -325,8 +327,8 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       data.InsuranceDetails['adviceDetails'] = data.adviceDetails;
       data['insurance'] = data.InsuranceDetails;
     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
-    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
+    this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : 'Proposed policy'
     this.adviceNameObj = { adviceName: this.adviceName };
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 2 }
     switch (value) {

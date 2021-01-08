@@ -58,6 +58,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   svg: any;
   chart: Highcharts.Chart;
   @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Output() loadsvg = new EventEmitter();
 
   @Input() finPlanObj: any;
   dateOfTest: any;
@@ -78,6 +79,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
     this.reportDate = new Date()
+    console.log('clientInfo', this.clientInfo)
   }
 
   ngOnInit() {
@@ -380,10 +382,6 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
-    if (this.finPlanObj) {
-      this.ref.detectChanges();//to refresh the dom when response come
-      this.loaded.emit(this.riskTemp.nativeElement);
-    }
   }
 
   loadRiskProfile() {
@@ -416,6 +414,15 @@ export class OverviewRiskProfileComponent implements OnInit {
         setTimeout(() => {
           this.percentage(this.feedsRiskProfile)
         });
+        if (this.chart) {
+          this.svg = this.chart.getSVG();
+        }
+        if (this.finPlanObj) {
+          this.ref.detectChanges();//to refresh the dom when response come
+          this.loaded.emit(this.riskTemp.nativeElement);
+          this.loadsvg.emit(this.svg)
+
+        }
       } else {
 
         this.showResults = false;

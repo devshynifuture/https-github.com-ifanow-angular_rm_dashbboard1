@@ -3,6 +3,11 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { OnlineTransactionService } from '../../../online-transaction.service';
+import { Subscription, Observable } from 'rxjs';
+import { FormControl, Validators } from '@angular/forms';
+import { debounceTime, startWith } from 'rxjs/operators';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-mapped-user',
@@ -23,14 +28,23 @@ export class MappedUserComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+  isAdvisorSection = true;
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
+  filteredStates: any;
+  stateCtrl = new FormControl('', [Validators.required]);
+  familyMemberData: any;
   displayedColumns: string[] = ['position', 'name', 'weight', 'aid', 'euin', 'set',];
   fragmentData: any;
   storeData: any;
   iin: any;
+  clientId: any;
+  familyMemberId: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
-    private onlineTransaction: OnlineTransactionService
+    private onlineTransaction: OnlineTransactionService,
+    private peopleService: PeopleService
   ) { }
 
   get data() {
@@ -59,11 +73,63 @@ export class MappedUserComponent implements OnInit {
       }
     });
   }
+  selectClient(value) {
+    console.log(value)
+    this.clientId = value.clientId
+    this.familyMemberId = value.familyMemberId
+  }
+
+  checkOwnerList(value) {
+    if (!this.isAdvisorSection) {
+      return;
+    }
+    if (value.length <= 2) {
+      this.filteredStates = undefined
+      return;
+    }
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+      displayName: value
+    };
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(1000)).subscribe(
+        data => {
+          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+            if (responseArray) {
+              this.clientId = responseArray[0].clientId
+              if (value.length >= 0) {
+                this.filteredStates = responseArray;
+              } else {
+                this.filteredStates = undefined
+              }
+            } else {
+              this.filteredStates = undefined
+              this.stateCtrl.setErrors({ invalid: true })
+            }
+          }, error => {
+            this.filteredStates = undefined
+            console.log('getFamilyMemberListRes error : ', error);
+          });
+        }
+      );
+  }
   closeRightSlider(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
   mappedUser() {
-    this.onlineTransaction.mappedExistingUser({})
+    let obj1 = this.storeData.filter((x) => x.selected == true);
+    let obj = {
+      tpUserCredentialId: obj1[0].tpUserCredentialId,
+      clientCode: obj1[0].iin,
+      familyMemberId: (this.familyMemberId) ? this.familyMemberId : 0,
+      clientId: this.clientId
+
+    }
+    console.log(obj)
+    this.onlineTransaction.mappedExistingUser(obj)
       .subscribe(res => {
         if (res) {
           console.log('mappedUser', res)
