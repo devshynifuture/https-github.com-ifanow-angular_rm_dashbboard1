@@ -92,8 +92,8 @@
                                 {{element.lastLoginString}} <span
                                     *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span>
                             </span>
-                            <span *ngIf="!element.loginEnable && !isLoading">
-                                {{'DISABLED'}}
+                            <span class="text-danger " *ngIf="!element.loginEnable && !isLoading">
+                                {{'Disable'}}
                             </span>
                         </div>
                     </td>

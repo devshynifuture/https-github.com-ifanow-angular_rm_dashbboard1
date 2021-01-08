@@ -157,7 +157,7 @@
                         <th class="br text-right" mat-header-cell *matHeaderCellDef>
                             Amount</th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
-                            <div class="bar c-p">
+                            <div class="bar d-flex justify-content-end c-p">
                                 {{isLoading ? ' ' : '₹'}} <span
                                     appFormatNumber>{{(isLoading) ? '': (element.amount ? element.amount : '-')}}</span>
                             </div>
@@ -183,6 +183,7 @@
                                 {{(isLoading) ? '':element.transactionDate | date: 'dd/MM/yyyy' }}
                             </div>
                         </td>
+
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
