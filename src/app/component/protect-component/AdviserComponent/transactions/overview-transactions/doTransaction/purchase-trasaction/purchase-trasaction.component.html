@@ -28,7 +28,7 @@
 
         <div class="row pt-20 pb-20">
             <div class="col-md-8 pl-0 pr-20">
-                <div class="row"  *ngIf="!mutualFundData">
+                <div class="row" *ngIf="!mutualFundData">
                     <div class="col-md-12 p-0 text-left">
                         <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
                         <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option"
@@ -55,7 +55,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-11 p-0">
-                        <div class="form-group">
+                        <div class="form-group paddTopNone">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <!--                (keyup)="getSchemeList($event.target.value)"-->
                                 <input (changedValue)="getSchemeList($event)" formControlName="schemePurchase"
@@ -78,13 +78,15 @@
                                     class="f-12">
                                     Selected scheme does not exist
                                 </mat-error>
-                                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}} as on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
+                                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
+                                    {{navOfSelectedScheme}} as
+                                    on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
                     <div *ngIf="showSpinner == true" class="col-md-1">
-                        <mat-spinner class="mt-20"></mat-spinner>
+                        <mat-spinner class="mt-10"></mat-spinner>
                     </div>
                 </div>
 

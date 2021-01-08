@@ -100,6 +100,8 @@ export class AccountsComponent implements OnInit {
     this.showRouter = false;
     this.MfServiceService.clearStorage();//to clear the stored data of mutual fund
     setTimeout(() => {
+      localStorage.removeItem('clientData');
+      sessionStorage.removeItem('clientData');
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
   }

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {RoutingState} from '../../../../../../services/routing-state.service';
 import {AuthService} from 'src/app/auth-service/authService';
+import {RoleService} from 'src/app/auth-service/role.service';
+import {EnumDataService} from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-customer-activity',
@@ -10,7 +12,10 @@ import {AuthService} from 'src/app/auth-service/authService';
 export class CustomerActivityComponent implements OnInit {
   clientData: any;
 
-  constructor(private routingStateService: RoutingState, public authService: AuthService) {
+  constructor(private routingStateService: RoutingState,
+              public roleService: RoleService,
+              public enumDataService: EnumDataService,
+              public authService: AuthService) {
   }
 
   ngOnInit() {
@@ -19,6 +24,8 @@ export class CustomerActivityComponent implements OnInit {
   }
 
   goToAdvisorHome() {
+    localStorage.removeItem('clientData');
+    sessionStorage.removeItem('clientData');
     this.routingStateService.goToSpecificRoute('/admin/dashboard');
   }
 }

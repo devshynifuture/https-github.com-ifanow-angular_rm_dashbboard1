@@ -2,7 +2,9 @@
     <div class="row no-wrap">
         <div class="col-md-2 pt-8 pb-20 pl-0 pr-0  responsive-left-side-top responsive-flex-auto flex-auto-954">
             <ul class="vertical-menu bg-grey lter responsive-left-side">
-                <li class="c-p" [routerLink]="['subscriptions']" routerLinkActive="activeColor">
+                <li class="c-p" [routerLink]="['subscriptions']"
+                    *ngIf="roleService.overviewPermission.subModules.subscriptions.subModule.subscriptions.enabled"
+                    routerLinkActive="activeColor">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img class="mr-8" src="/assets/images/svg/key-info-icon.svg">
@@ -11,7 +13,9 @@
                     </div>
 
                 </li>
-                <li class="c-p" [routerLink]="['quotations']" routerLinkActive="activeColor">
+                <li class="c-p"
+                    *ngIf="roleService.overviewPermission.subModules.subscriptions.subModule.quotations.enabled"
+                    [routerLink]="['quotations']" routerLinkActive="activeColor">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img class="mr-8" src="/assets/images/svg/people.svg">
@@ -20,7 +24,9 @@
                     </div>
 
                 </li>
-                <li class="c-p" [routerLink]="['invoices']" routerLinkActive="activeColor">
+                <li class="c-p"
+                    *ngIf="roleService.overviewPermission.subModules.subscriptions.subModule.invoices.enabled"
+                    [routerLink]="['invoices']" routerLinkActive="activeColor">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg">
@@ -30,7 +36,9 @@
 
                 </li>
 
-                <li class="c-p" [routerLink]="['documents']" routerLinkActive="activeColor">
+                <li class="c-p"
+                    *ngIf="roleService.overviewPermission.subModules.subscriptions.subModule.documents.enabled"
+                    [routerLink]="['documents']" routerLinkActive="activeColor">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg">
@@ -40,7 +48,9 @@
 
                 </li>
 
-                <li class="c-p" [routerLink]="['settings']" routerLinkActive="activeColor">
+                <li class="c-p"
+                    *ngIf="roleService.overviewPermission.subModules.subscriptions.subModule.settings.enabled"
+                    [routerLink]="['settings']" routerLinkActive="activeColor">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg">

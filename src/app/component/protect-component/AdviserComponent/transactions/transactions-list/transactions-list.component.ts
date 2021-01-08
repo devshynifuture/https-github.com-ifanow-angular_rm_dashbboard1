@@ -36,6 +36,7 @@ export class TransactionsListComponent implements OnInit {
   isAdvisorSection = true;
 
   isLoading = false;
+  hours: number;
 
   constructor(private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private utilService: UtilService,
@@ -59,7 +60,13 @@ export class TransactionsListComponent implements OnInit {
     if (this.isAdvisorSection) {
       this.getFilterOptionData();
     }
-
+    if (AuthService.getInvalidCredsTimeZone()) {
+      this.hours = new Date().getHours() - new Date(AuthService.getInvalidCredsTimeZone()).getHours();
+      if (this.hours > 4) {
+        sessionStorage.removeItem('invalidPopup');
+        this.hours = undefined
+      }
+    }
     // this.refresh(false);
   }
 
@@ -142,7 +149,12 @@ export class TransactionsListComponent implements OnInit {
         if (err === "Something went wrong !") {
           this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
         } else {
-          this.openCredentialsErrorPopup();
+          if (AuthService.getInvalidCredsTimeZone() && this.hours > 4) {
+            this.openCredentialsErrorPopup();
+          }
+          if (!AuthService.getInvalidCredsTimeZone() && !this.hours) {
+            this.openCredentialsErrorPopup();
+          }
         }
       }
     );

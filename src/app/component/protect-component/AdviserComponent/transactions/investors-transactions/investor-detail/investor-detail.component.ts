@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {FileUploadService} from '../../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../../config/main-config';
-import {appConfig} from '../../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {OnlineTransactionService} from '../../online-transaction.service';
-import {EventService} from '../../../../../../Data-service/event.service';
-import {MatDialog} from '@angular/material';
-import {UtilService} from 'src/app/services/util.service';
-import {ConfirmUploadComponent} from './confirm-upload/confirm-upload.component';
-import {TransactionRoleService} from '../../transaction-role.service';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { FileUploadService } from '../../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../../config/main-config';
+import { appConfig } from '../../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from '../../../../../../Data-service/event.service';
+import { MatDialog } from '@angular/material';
+import { UtilService } from 'src/app/services/util.service';
+import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
+import { TransactionRoleService } from '../../transaction-role.service';
 
 @Component({
   selector: 'app-investor-detail',
@@ -48,8 +48,8 @@ export class InvestorDetailComponent implements OnInit {
   loader1: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              public transactionRoleService: TransactionRoleService,
-              private eventService: EventService, private dialog: MatDialog) {
+    public transactionRoleService: TransactionRoleService,
+    private eventService: EventService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -118,7 +118,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   getInvestorStatus() {
-    const obj = {id: this.details.id};
+    const obj = { id: this.details.id };
     this.isLoading = true;
 
     this.onlineTransact.getInvestorStatusCheck(obj).subscribe(resultData => {
@@ -126,13 +126,17 @@ export class InvestorDetailComponent implements OnInit {
       this.isLoading = false;
     }, error => {
       this.isLoading = false;
-      this.eventService.openSnackBar(error, 'Discuss');
+      if (error == "Error: Investor activation pending.") {
+        this.eventService.openSnackBar("Investor activation pending", "Dismiss")
+      } else {
+        this.eventService.openSnackBar(error, 'Discuss');
+      }
       this.statusData[2].checked = false;
     });
   }
 
   getFormUploadDetail() {
-    const obj = {id: this.details.id};
+    const obj = { id: this.details.id };
     this.isLoading = true;
     this.onlineTransact.getInvestorFormUploadDetail(obj).subscribe(resultData => {
       /*if (this.details.aggregatorType == 2) {
@@ -168,7 +172,7 @@ export class InvestorDetailComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   openUploadConfirmBox(value, typeId) {
