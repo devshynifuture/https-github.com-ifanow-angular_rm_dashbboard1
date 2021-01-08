@@ -843,7 +843,7 @@ export class FinacialPlanSectionComponent implements OnInit {
             console.log('svg', this.svg)
             svg.unsubscribe();
           });
-      } else if (sectionName == "Risk profile") {
+      } else if (sectionName == "RiskProfile") {
         var svg = pdfContent.loadsvg
           //.pipe(delay(1))
           .subscribe(data => {

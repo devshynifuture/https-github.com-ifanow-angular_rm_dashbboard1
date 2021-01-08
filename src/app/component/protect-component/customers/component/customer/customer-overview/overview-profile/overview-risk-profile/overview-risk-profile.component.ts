@@ -381,15 +381,6 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
-    if (this.chart) {
-      this.svg = this.chart.getSVG();
-    }
-    if (this.finPlanObj) {
-      this.ref.detectChanges();//to refresh the dom when response come
-      this.loaded.emit(this.riskTemp.nativeElement);
-      this.loadsvg.emit(this.svg)
-
-    }
   }
 
   loadRiskProfile() {
@@ -422,6 +413,15 @@ export class OverviewRiskProfileComponent implements OnInit {
         setTimeout(() => {
           this.percentage(this.feedsRiskProfile)
         });
+        if (this.chart) {
+          this.svg = this.chart.getSVG();
+        }
+        if (this.finPlanObj) {
+          this.ref.detectChanges();//to refresh the dom when response come
+          this.loaded.emit(this.riskTemp.nativeElement);
+          this.loadsvg.emit(this.svg)
+
+        }
       } else {
 
         this.showResults = false;
