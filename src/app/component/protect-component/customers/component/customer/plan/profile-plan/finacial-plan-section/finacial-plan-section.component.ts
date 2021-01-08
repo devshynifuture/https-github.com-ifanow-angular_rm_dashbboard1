@@ -843,6 +843,14 @@ export class FinacialPlanSectionComponent implements OnInit {
             console.log('svg', this.svg)
             svg.unsubscribe();
           });
+      } else if (sectionName == "Risk profile") {
+        var svg = pdfContent.loadsvg
+          //.pipe(delay(1))
+          .subscribe(data => {
+            this.svg = data
+            console.log('svg', this.svg)
+            svg.unsubscribe();
+          });
       }
       this.isLoading = true;
       if (array.isSelectedCheckbox) {
