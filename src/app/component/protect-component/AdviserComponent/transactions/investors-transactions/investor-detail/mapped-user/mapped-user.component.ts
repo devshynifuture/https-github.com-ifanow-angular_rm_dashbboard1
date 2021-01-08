@@ -63,7 +63,13 @@ export class MappedUserComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
   mappedUser() {
-    this.onlineTransaction.mappedExistingUser({})
+    let obj1 = this.storeData.filter((x) => x.selected == true);
+    let obj = {
+      tpUserCredentialId: obj1[0].tpUserCredentialId,
+      clientCode: obj1[0].iin
+    }
+    console.log(obj)
+    this.onlineTransaction.mappedExistingUser(obj)
       .subscribe(res => {
         if (res) {
           console.log('mappedUser', res)
