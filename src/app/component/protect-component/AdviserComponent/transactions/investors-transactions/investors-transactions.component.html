@@ -48,7 +48,7 @@
       </mat-menu>
       <button
         *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection && dataSource2.length ==0"
-        class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+        class="btn-primary addon v-middle" (click)="openNewCustomerIIN()" mat-stroked-button> ADD NEW
       </button>
       <button
         *ngIf="transactionRoleService.investorsModule.capabilityMap.add&&dataSource.filteredData.length > 0&&isAdvisorSection && dataSource2.length > 0"
