@@ -138,7 +138,7 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       // adviceStatusId:1
       categoryMasterId: 4,
       categoryTypeId: 4,
-      statusFlag: 1
+      statusFlag: 0
     }
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allAsset = this.activityService.getAllAsset(obj);
