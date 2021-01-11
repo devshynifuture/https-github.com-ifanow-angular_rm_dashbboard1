@@ -9,6 +9,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
+import { ActiityService } from '../../../customer-activity/actiity.service';
 
 @Component({
   selector: 'app-add-suggest-policy',
@@ -41,9 +42,10 @@ export class AddSuggestPolicyComponent implements OnInit {
   policyDetails: any;
   isRecommended = false;
   recommendOrNot: any;
-  ids =[];
+  ids = [];
   todayDate: Date;
-  constructor(private datePipe: DatePipe,private eventService: EventService, private planService: PlanService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
+  adviceToCategoryId: number;
+  constructor(private activityService: ActiityService, private datePipe: DatePipe, private eventService: EventService, private planService: PlanService, private subInjectService: SubscriptionInject, private fb: FormBuilder, private customerService: CustomerService) { }
   validatorType = ValidatorType;
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
@@ -88,7 +90,7 @@ export class AddSuggestPolicyComponent implements OnInit {
       frequency: [(this.dataForEdit ? this.dataForEdit.frequency + '' : ''), [Validators.required]],
       insuranceAmount: [(this.dataForEdit ? this.dataForEdit.sumAssured : null), [Validators.required]],
       tenure: [(this.dataForEdit ? this.dataForEdit.policyTenure : null), [Validators.required]],
-      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.commencementDate)  : null), [Validators.required]],
+      implementationDate: [(this.dataForEdit ? new Date(this.dataForEdit.commencementDate) : null), [Validators.required]],
     })
     if (this.dataForEdit) {
       this.storeData = this.dataForEdit.suggestion;
@@ -141,6 +143,7 @@ export class AddSuggestPolicyComponent implements OnInit {
   selectPolicy(value) {
     this.selectedVal = value;
     this.policyDetails = value;
+    this.getCategoryId(value);
   }
   checkValidPolicy(value, input, typeValue) {
     if (this.selectedVal) {
@@ -151,6 +154,19 @@ export class AddSuggestPolicyComponent implements OnInit {
     } else if (!this.selectedVal) {
       this.suggestPolicyForm.controls.policyName.setErrors({ erroInPolicy: true });
       this.suggestPolicyForm.get('policyName').markAsTouched();
+    }
+  }
+  getCategoryId(value) {
+    switch (value.insuranceSubTypeId) {
+      case 1:
+        this.adviceToCategoryId = 42;
+        break;
+      case 2:
+        this.adviceToCategoryId = 43;
+        break;
+      case 3:
+        this.adviceToCategoryId = 44;
+        break;
     }
   }
   onChange(form, value, event) {
@@ -180,7 +196,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         'frequency': this.suggestPolicyForm.get('frequency').value,
         'sumAssured': this.suggestPolicyForm.get('insuranceAmount').value,
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
-        'commencementDate': this.datePipe.transform(this.suggestPolicyForm.get('implementationDate').value, 'yyyy-MM-dd') ,
+        'commencementDate': this.datePipe.transform(this.suggestPolicyForm.get('implementationDate').value, 'yyyy-MM-dd'),
         'realOrFictitious': 2,
         'suggestion': this.storeData,
         'isRecommend': this.showRecommendation ? 1 : 0,
@@ -198,7 +214,27 @@ export class AddSuggestPolicyComponent implements OnInit {
           }
         );
       } else {
-        this.planService.addSuggestNew(obj).subscribe(
+        let rational = obj.suggestion ? obj.suggestion.replace(/(<([^>]+)>)/ig, '') : '-';
+        const stringObj = {
+          id: null,
+          insuranceCategoryTypeId: this.adviceToCategoryId,
+          suggestedFrom: 1,
+          adviceDescription: rational ? rational : '',
+          adviceToCategoryTypeMasterId: 3,
+          adviceToLifeInsurance: { "insuranceAdviceId": 0, adviceDescription: rational ? rational : '' },
+          adviceToCategoryId: this.adviceToCategoryId ? this.adviceToCategoryId : null,
+          // adviceId: this.adviceForm.get('header').value,
+          adviceId: 0,
+          adviceAllotment: null,
+          clientId: AuthService.getClientId(),
+          advisorId: AuthService.getAdvisorId(),
+          // adviseCategoryTypeMasterId: 2,
+          adviceGivenDate: null,
+          applicableDate: obj.commencementDate
+        }
+        let objToSend = Object.assign(stringObj, { stringObject: obj });
+        this.activityService.suggestNewLifeInsurance(objToSend).subscribe(
+          // this.planService.addSuggestNew(obj).subscribe(
           data => {
             console.log(data);
             this.ids.push(data);
