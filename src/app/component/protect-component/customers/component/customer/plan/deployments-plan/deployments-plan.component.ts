@@ -20,7 +20,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
   styleUrls: ['./deployments-plan.component.scss']
 })
 export class DeploymentsPlanComponent implements OnInit {
-  displayedColumns: string[] = ['checkbox', 'name', 'weight', 'height', 'symbol', 'debt', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'assetDescription', 'name', 'weight', 'height', 'symbol', 'debt', 'status', 'icons'];
   displayedColumns1: string[] = ['position1', 'name1', 'weight1', 'symbol1'];
   dataSource;
   dataSourceT;
@@ -32,7 +32,7 @@ export class DeploymentsPlanComponent implements OnInit {
   viewMode: string;
   familyMemberList: any;
   selected = 0;
-  constructor(private peopleService:PeopleService,private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
+  constructor(private peopleService: PeopleService, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
   isLoading = false;
   ngOnInit() {
     this.viewMode = "tab1";
@@ -73,13 +73,13 @@ export class DeploymentsPlanComponent implements OnInit {
       },
       err => {
         this.eventService.openSnackBar("something went wrong", "Dismiss")
-        this.dataSource=[];
+        this.dataSource = [];
       }
-     
+
     )
 
   }
-  changTab(data){
+  changTab(data) {
     this.selected = data.id
     this.getDeploymentData();
   }
@@ -163,10 +163,10 @@ export class DeploymentsPlanComponent implements OnInit {
     else {
       component = SetupLumpsumDeploymentComponent;
       deploymentData =
-      {
-        data: [],
-        deploymentIdList: this.selectedDeployments
-      }
+        {
+          data: [],
+          deploymentIdList: this.selectedDeployments
+        }
       this.dataSource.forEach(singleElement => {
         if (singleElement.selected) {
           deploymentData.data.push(singleElement);
