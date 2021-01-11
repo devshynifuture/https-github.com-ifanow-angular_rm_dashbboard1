@@ -13,7 +13,7 @@
         </a>
 
         <mat-menu #menu5="matMenu">
-            <button (click)="pdf('Lead')" mat-menu-item>PDF</button>
+            <button (click)="pdf('template','Lead')" mat-menu-item>PDF</button>
             <button (click)="Excel('Lead')" mat-menu-item>XLS</button>
         </mat-menu>
 
@@ -178,7 +178,7 @@
 <!-- ---------------------------------------- pdf design --------------------------- -->
 
 
-<div style="display: none;">
+<div id="template" style="display: none;">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -205,11 +205,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email != '-' ? getOrgData.email:userInfo.emailList.length > 0?userInfo.emailList[0].email : userInfo.email}}
+                            </p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
                                     Report as on:
@@ -254,51 +255,68 @@
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             Last owner </td>
 
-                        <td
+                        <!-- <td
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                        </td>
+                        </td> -->
                     </tr>
 
-                    <tr>
+                    <tr *ngFor="let element of leadDataSource.data">
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            Karan
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{element.displayName}} </td>
+
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{(element.mobileNo!=0)?element.mobileNo:'N/A'}}</td>
+
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{element.email}}</td>
+
+                        <td
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            <span *ngIf="element.leadSource && element.leadSource!=0">
+                                <span *ngIf="element.leadSource==1">Search engine</span>
+                                <span *ngIf="element.leadSource==2">Website</span>
+                                <span *ngIf="element.leadSource==3">Refrerals from existing clients</span>
+                                <span *ngIf="element.leadSource==4">Refrerals from existing friends</span>
+                                <span *ngIf="element.leadSource==5">Refrerals from existing relatives</span>
+                                <span *ngIf="element.leadSource==6">LinkedIn</span>
+                                <span *ngIf="element.leadSource==7">Others</span>
+                            </span>
+                            <span *ngIf="!isLoading">
+                                <span *ngIf="element.leadSource==undefined || element.leadSource==0">
+                                    N/A
+                                </span>
+                            </span>
                         </td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            8585858855
+                            {{element.leadrating}}
                         </td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            karan@gmail.com
+                            <span *ngIf="element.leadStatus==0">N/A</span>
+                            <span *ngIf="element.leadStatus==1">New</span>
+                            <span *ngIf="element.leadStatus==2">Attempted to contact</span>
+                            <span *ngIf="element.leadStatus==3">Contacted</span>
+                            <span *ngIf="element.leadStatus==4">Qualified</span>
+                            <span *ngIf="element.leadStatus==5">Bad fit</span>
+                            <span *ngIf="element.leadStatus==6">Not interested</span>
+                            <span *ngIf="element.leadStatus==7">Lost</span>
                         </td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            DOUPS6823C
+                            {{element.ownerName}}
                         </td>
 
-                        <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            3
-                        </td>
-
-                        <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            Sagar Futurewise EmailID
-                        </td>
-
-                        <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            Pending
-                        </td>
-
-                        <td
+                        <!-- <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             1
-                        </td>
+                        </td> -->
 
                     </tr>
                 </table>
