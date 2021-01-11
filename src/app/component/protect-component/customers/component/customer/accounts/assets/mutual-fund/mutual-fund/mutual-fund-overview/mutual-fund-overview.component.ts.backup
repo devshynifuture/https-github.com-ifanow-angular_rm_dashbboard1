@@ -1,27 +1,27 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AddMutualFundComponent} from '../add-mutual-fund/add-mutual-fund.component';
-import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
-import {CustomerService} from '../../../../../customer.service';
-import {MatTableDataSource} from '@angular/material';
-import {map} from 'rxjs/operators';
-import {MfServiceService} from '../../mf-service.service';
+import { CustomerService } from '../../../../../customer.service';
+import { MatTableDataSource } from '@angular/material';
+import { map } from 'rxjs/operators';
+import { MfServiceService } from '../../mf-service.service';
 // import { WebworkerService } from 'src/app/services/web-worker.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
-import {DatePipe} from '@angular/common';
-import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import {MfImportCasFileComponent} from './../../mutual-fund/mf-import-cas-file/mf-import-cas-file.component';
-import {Input} from '@angular/core';
-import {ChangeDetectorRef} from '@angular/core';
-import {Subscription} from 'rxjs';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { DatePipe } from '@angular/common';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { MfImportCasFileComponent } from './../../mutual-fund/mf-import-cas-file/mf-import-cas-file.component';
+import { Input } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 HC_exporting(Highcharts);
 
@@ -55,7 +55,7 @@ export class MutualFundOverviewComponent implements OnInit {
   datasource1 = new MatTableDataSource([{}, {}, {}]);
   @Output() getCountData = new EventEmitter();
   subCategoryArray: any;
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   rightFilterData: any;
   showHideTable: any;
   showSummaryBar = true;
@@ -77,7 +77,7 @@ export class MutualFundOverviewComponent implements OnInit {
   @Output() changeAsPerCategory = new EventEmitter();
   @Output() loaded = new EventEmitter();
   @Output() loadsvg = new EventEmitter();
-  @Input() finPlanObj: any; // finacial plan pdf input
+  @Input() finPlanObj: any;//finacial plan pdf input
   total_net_Gain: number;
   cashFlowXirr: any;
   filterData: any;
@@ -96,7 +96,7 @@ export class MutualFundOverviewComponent implements OnInit {
   returnValue: any;
   transactionTypeList: any;
   changeViewModeSet: any;
-  @ViewChild('mfOverviewTemplate', {static: false}) mfOverviewTemplate: ElementRef;
+  @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
   svg: string;
   chart: Highcharts.Chart;
   reponseData: any;
@@ -110,7 +110,7 @@ export class MutualFundOverviewComponent implements OnInit {
   genObj: { htmlInput: string; name: string; landscape: boolean; key: string; svg: string; };
   sendaata: any;
   clientDetails: any;
-  loadingDone = false;
+  loadingDone: boolean = false;
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
@@ -131,38 +131,36 @@ export class MutualFundOverviewComponent implements OnInit {
   latestNavDate: any;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
-              private mfService: MfServiceService,
-              public routerActive: ActivatedRoute,
-              private backOfficeService: BackOfficeService,
-              private router: Router,
-              public eventService: EventService, private custumService: CustomerService,
-              private ref: ChangeDetectorRef,
-              private MfServiceService: MfServiceService, private settingService: SettingsService) {
-    if (routerActive) {
-      this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
-        if (queryParamMap.has('clientId')) {
-          const param1: any = queryParamMap.params;
-          this.clientId = parseInt(param1.clientId);
-          this.advisorId = parseInt(param1.advisorId);
-          // this.parentId = AuthService.getAdminAdvisorId();
-          this.parentId = parseInt(param1.parentId);
-          console.log('2423425', param1);
-        } else {
-          this.advisorId = AuthService.getAdvisorId();
-          this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-          this.parentId = AuthService.getParentId();
-        }
-      });
-      this.userInfo = AuthService.getUserInfo();
-      this.clientData = AuthService.getClientData();
-      this.getAdvisorDetail = AuthService.getAdvisorDetails();
-      this.details = AuthService.getProfileDetails();
-      this.getOrgData = AuthService.getOrgDetails();
-      console.log('advisorData', this.userInfo);
-      console.log('clientData', this.clientData);
-      console.log('getAdvisorDetail', this.getAdvisorDetail);
-      console.log('getOrgData', this.getOrgData);
-    }
+    private mfService: MfServiceService,
+    public routerActive: ActivatedRoute,
+    private backOfficeService: BackOfficeService,
+    private router: Router,
+    public eventService: EventService, private custumService: CustomerService,
+    private ref: ChangeDetectorRef,
+    private MfServiceService: MfServiceService, private settingService: SettingsService) {
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        const param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId);
+        this.advisorId = parseInt(param1.advisorId);
+        // this.parentId = AuthService.getAdminAdvisorId();
+        this.parentId = parseInt(param1.parentId);
+        console.log('2423425', param1);
+      } else {
+        this.advisorId = AuthService.getAdvisorId();
+        this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+        this.parentId = AuthService.getParentId();
+      }
+    });
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.getAdvisorDetail = AuthService.getAdvisorDetails();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
+    console.log('advisorData', this.userInfo);
+    console.log('clientData', this.clientData);
+    console.log('getAdvisorDetail', this.getAdvisorDetail);
+    console.log('getOrgData', this.getOrgData)
   }
 
   uploadData(data) {
@@ -175,12 +173,6 @@ export class MutualFundOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.initPoint();
-    if (!AuthService.isRefreshedOnce()) {
-      AuthService.setRefreshedOnce(true);
-      window.location.reload();
-      /* setTimeout(() => {
-       }, 1000);*/
-    }
     this.getMfDataSubs = this.mfService.refreshMutualFundDataThroughObs()
       .subscribe(res => {
         if (res) {
@@ -190,9 +182,8 @@ export class MutualFundOverviewComponent implements OnInit {
           this.mfGetData = '';
           this.initPoint();
         }
-      });
+      })
 
-    //
   }
 
   initPoint() {
@@ -201,9 +192,9 @@ export class MutualFundOverviewComponent implements OnInit {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
     }
 
-    this.queryParamsSubs = this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
+    this.queryParamsSubs = this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
-        const param1: any = queryParamMap.params;
+        const param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
@@ -254,7 +245,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.mfService.getCashFlowXirr()
       .subscribe(res => {
         this.cashFlowObj = res;
-      });
+      })
     this.mfService.getadvisorList()
       .subscribe(res => {
         this.adminAdvisorIds = res;
@@ -271,9 +262,9 @@ export class MutualFundOverviewComponent implements OnInit {
         this.showSummaryBar = false;
       }
     }
-    if (this.mutualFund && this.mfGetData == '') {
+    if(this.mutualFund && this.mfGetData == ''){
       this.getMutualFundResponse(this.mutualFund);
-    } else if (this.mfGetData && this.mfGetData != '') {
+    }else if (this.mfGetData && this.mfGetData != '') {
       this.getMutualFundResponse(this.mfGetData);
     } else {
       this.teamMemberListGet();
@@ -281,10 +272,9 @@ export class MutualFundOverviewComponent implements OnInit {
       // this.getMutualFundData();
     }
   }
-
   teamMemberListGet() {
     this.adminAdvisorIds = [];
-    this.custumService.getSubAdvisorListValues({advisorId: this.advisorId})
+    this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -308,7 +298,6 @@ export class MutualFundOverviewComponent implements OnInit {
 
       });
   }
-
   getTransactionTypeData() {
     const obj = {
       advisorIds: [this.advisorId],
@@ -434,8 +423,8 @@ export class MutualFundOverviewComponent implements OnInit {
         // mfService: this.mfService
       };
       // Create a new
-      const worker = new Worker('../../mutual-fund.worker.ts', {type: 'module'});
-      worker.onmessage = ({data}) => {
+      const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
+      worker.onmessage = ({ data }) => {
         this.totalValue = data.totalValue;
         this.sendaata.totalValue = this.totalValue;
         this.MfServiceService.setSendData(this.sendaata);
@@ -443,7 +432,7 @@ export class MutualFundOverviewComponent implements OnInit {
           this.getCashFlowStatus();
         }
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
-        if (this.showSummaryBar) {
+        if(this.showSummaryBar){
           this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
         }
         // this.isLoading = false;
@@ -479,7 +468,7 @@ export class MutualFundOverviewComponent implements OnInit {
         // if (cashFlow && cashFlow.hasOwnProperty('mutualFundCategoryMastersList') && cashFlow.mutualFundCategoryMastersList.length !== 0) {
         //   this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
         // }
-        this.getMutualFundResponse(data);
+        this.getMutualFundResponse(data)
         // if (cashFlow.mutualFundCategoryMastersList.length > 0) {
         //   if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
         //     if (cashFlow.mutualFundCategoryMastersList.length > 1) {
@@ -520,32 +509,30 @@ export class MutualFundOverviewComponent implements OnInit {
       }
     );
   }
-
-  getLatestNavDate(data) {
+  getLatestNavDate(data){
     let navDate;
-    if (data.schemeWise) {
-      console.log('NAv non Sorted .................', data.schemeWise);
+    if(data.schemeWise){
+      console.log('NAv non Sorted .................',data.schemeWise)
       let sortedData = this.MfServiceService.sortingDescending(data.schemeWise, 'navDate');
       sortedData = [...new Map(sortedData.map(item => [item.navDate, item])).values()];
-      console.log('NAv Sorted .................', sortedData);
-      if (sortedData.length > 0) {
-        const maxDateOne = new Date(sortedData[0].navDate);
+      console.log('NAv Sorted .................',sortedData)
+      if(sortedData.length > 0){
+        let maxDateOne = new Date(sortedData[0].navDate);
         // let maxDateTwo = new Date('2020-12-27');
-        console.log('maxDateOne', maxDateOne);
+         console.log('maxDateOne',maxDateOne);
         // console.log('maxDateTwo',maxDateTwo);
         // var Difference_In_Time = maxDateOne.getTime() - maxDateTwo.getTime();
         // var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         // console.log('Difference_In_Days',Difference_In_Days);
-        navDate = maxDateOne;
-      } else {
+        navDate = maxDateOne
+      }else{
         navDate = null;
       }
-    } else {
+    }else{
       navDate = null;
     }
     return navDate;
   }
-
   getMutualFundResponse(data) {
     this.showZeroFolio = this.setDefaultFilterData.showFolio ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : false;
 
@@ -623,26 +610,24 @@ export class MutualFundOverviewComponent implements OnInit {
     }
 
   }
-
-  getCashFlowData(data) {
-    const cashFlow = data;
+  getCashFlowData(data){
+    let cashFlow = data;
     if (cashFlow && cashFlow.hasOwnProperty('mutualFundCategoryMastersList') && cashFlow.mutualFundCategoryMastersList.length !== 0) {
       this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
     }
     this.cashFlowObj = {
-      cashFlowInvestment: this.mfData.total_cashflow_amount_inv,
-      cashFlowSwitchIn: this.mfData.total_cashflow_switch_in,
-      cashFlowSwitchOut: this.mfData.total_cashflow_switch_out,
-      cashFlowRedemption: this.mfData.total_cashflow_redemption,
-      cashFlowDividendPayout: this.mfData.total_cashflow_dividend_payout,
-      cashFlowNetInvestment: this.mfData.total_cashflow_net_investment,
-      cashFlowMarketValue: this.mfData.total_cashflow_current_value,
-      cashFlowNetGain: this.mfData.total_cashflow_net_gain,
-      cashFlowLifetimeXirr: this.cashFlowXirr,
-    };
+      'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
+      'cashFlowSwitchIn': this.mfData.total_cashflow_switch_in,
+      'cashFlowSwitchOut': this.mfData.total_cashflow_switch_out,
+      'cashFlowRedemption': this.mfData.total_cashflow_redemption,
+      'cashFlowDividendPayout': this.mfData.total_cashflow_dividend_payout,
+      'cashFlowNetInvestment': this.mfData.total_cashflow_net_investment,
+      'cashFlowMarketValue': this.mfData.total_cashflow_current_value,
+      'cashFlowNetGain': this.mfData.total_cashflow_net_gain,
+      'cashFlowLifetimeXirr': this.cashFlowXirr,
+    }
     this.mfService.setCashFlowXirr(this.cashFlowObj);
   }
-
   calculatePercentage(data) {// function for calculating percentage
     this.debtCurrentValue = 0;
     this.equityCurrentValue = 0;
@@ -654,10 +639,10 @@ export class MutualFundOverviewComponent implements OnInit {
     this.hybridPercenatge = 0;
     this.solution_OrientedPercenatge = 0;
     this.otherPercentage = 0;
-    this.commodityCurrentValue = 0;
-    this.commodityPercentage = 0;
-    this.liquidCurrentValue = 0;
-    this.liquidPercentage = 0;
+    this.commodityCurrentValue = 0
+    this.commodityPercentage = 0
+    this.liquidCurrentValue = 0
+    this.liquidPercentage = 0
     data.forEach(element => {
       if (element.category == 'DEBT') {
         this.debtCurrentValue = element.currentValue;
@@ -699,7 +684,6 @@ export class MutualFundOverviewComponent implements OnInit {
 
     this.MfServiceService.setSendData(this.sendaata);
   }
-
   // else if (element.category == 'SOLUTION ORIENTED') {
   //   this.solution_OrientedCurrentValue = element.currentValue;
   //   this.solution_OrientedPercenatge = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
@@ -714,26 +698,17 @@ export class MutualFundOverviewComponent implements OnInit {
           data: 'a. Investment',
           amts: (this.cashFlowObj.cashFlowInvestment) ? this.cashFlowObj.cashFlowInvestment : 0
         },
-        {data: 'b. Switch In', amts: (this.cashFlowObj.cashFlowSwitchIn) ? this.cashFlowObj.cashFlowSwitchIn : 0},
-        {data: 'c. Switch Out', amts: (this.cashFlowObj.cashFlowSwitchOut) ? this.cashFlowObj.cashFlowSwitchOut : 0},
-        {data: 'd. Redemption', amts: (this.cashFlowObj.cashFlowRedemption) ? this.cashFlowObj.cashFlowRedemption : 0},
-        {
-          data: 'e. Dividend Payout',
-          amts: (this.cashFlowObj.cashFlowDividendPayout) ? this.cashFlowObj.cashFlowDividendPayout : 0
-        },
+        { data: 'b. Switch In', amts: (this.cashFlowObj.cashFlowSwitchIn) ? this.cashFlowObj.cashFlowSwitchIn : 0 },
+        { data: 'c. Switch Out', amts: (this.cashFlowObj.cashFlowSwitchOut) ? this.cashFlowObj.cashFlowSwitchOut : 0 },
+        { data: 'd. Redemption', amts: (this.cashFlowObj.cashFlowRedemption) ? this.cashFlowObj.cashFlowRedemption : 0 },
+        { data: 'e. Dividend Payout', amts: (this.cashFlowObj.cashFlowDividendPayout) ? this.cashFlowObj.cashFlowDividendPayout : 0 },
         {
           data: 'f. Net Investment (a+b-c-d-e)',
           amts: (this.cashFlowObj.cashFlowNetInvestment) ? this.cashFlowObj.cashFlowNetInvestment : 0
         },
-        {
-          data: 'g. Market Value',
-          amts: (this.cashFlowObj.cashFlowMarketValue) ? this.cashFlowObj.cashFlowMarketValue : 0
-        },
-        {data: 'h. Net Gain (g-f)', amts: (this.cashFlowObj.cashFlowNetGain) ? this.cashFlowObj.cashFlowNetGain : 0},
-        {
-          data: 'i. Lifetime XIRR (All Transactions)',
-          amts: (this.cashFlowObj.cashFlowLifetimeXirr) ? this.cashFlowObj.cashFlowLifetimeXirr : 0
-        },
+        { data: 'g. Market Value', amts: (this.cashFlowObj.cashFlowMarketValue) ? this.cashFlowObj.cashFlowMarketValue : 0 },
+        { data: 'h. Net Gain (g-f)', amts: (this.cashFlowObj.cashFlowNetGain) ? this.cashFlowObj.cashFlowNetGain : 0 },
+        { data: 'i. Lifetime XIRR (All Transactions)', amts: (this.cashFlowObj.cashFlowLifetimeXirr) ? this.cashFlowObj.cashFlowLifetimeXirr : 0 },
 
       ];
 
@@ -770,7 +745,7 @@ export class MutualFundOverviewComponent implements OnInit {
       //   this.showSubCategory = false;
       // }
       if (this.dataSource3.data.length > 0) {
-        this.showSubCategory = this.showHideTable ? (this.showHideTable[5].selected ? true : false) : true;
+        this.showSubCategory = this.showHideTable  ? (this.showHideTable[5].selected ? true : false) : true;
       }
       // this.isLoading = false;
       this.changeInput.emit(false);
@@ -797,7 +772,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
       // }
       if (this.dataSource.data.length > 0) {
-        this.showFamilyMember = this.showHideTable ? (this.showHideTable[3].selected ? true : false) : true;
+        this.showFamilyMember = this.showHideTable  ? (this.showHideTable[3].selected ? true : false) : true;
       }
 
       // this.isLoading = false;
@@ -807,11 +782,11 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   schemeWiseAllocation(data) {
-    const mutualFundData = data;
+    let mutualFundData = data;
     let sortedData;
     const dataToShow = [];
     this.changeInput.emit(true);
-    const schemeData = [];
+    let schemeData = [];
     // this.dataSource2.data = [];
     let loadReportCall;
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
@@ -896,7 +871,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.changeInput.emit(false);
     }
     if (!loadReportCall) {
-      this.dataSource2 = new MatTableDataSource(sortedData);
+      this.dataSource2 = new MatTableDataSource(sortedData)
       // this.dataSource2 = new MatTableDataSource(schemeData);
       this.sendaata.dataSource2 = this.dataSource2;
       if (this.dataSource2.data.length > 0) {
@@ -909,7 +884,6 @@ export class MutualFundOverviewComponent implements OnInit {
       // this.isLoading = false;
     }
   }
-
   getAllData(data) {
     let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList, 'category');
     if (!this.showZeroFolio) {
@@ -925,7 +899,7 @@ export class MutualFundOverviewComponent implements OnInit {
     //   this.showCategory = false;
     // }
     if (this.dataSource4.data.length > 0) {
-      this.showCategory = this.showHideTable ? (this.showHideTable[4].selected ? true : false) : true;
+      this.showCategory = this.showHideTable  ? (this.showHideTable[4].selected ? true : false) : true;
     }
 
     this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
@@ -935,19 +909,18 @@ export class MutualFundOverviewComponent implements OnInit {
     if (this.datasource1.data.length == 0 && this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
       this.showSummaryBar = false;
       this.showCashFlow = false;
-      this.showSchemeWise = false;
+      this.showSchemeWise = false
       this.datasource1.data = [];
     }
     if (this.chart) {
       this.svg = this.chart.getSVG();
     }
-    if (this.finPlanObj) {
+    if(this.finPlanObj){
       this.ref.detectChanges();
       this.loaded.emit(this.mfOverviewTemplate.nativeElement);
-      this.loadsvg.emit(this.svg);
+      this.loadsvg.emit(this.svg)
     }
   }
-
   generatePdf() {
     this.svg = this.chart.getSVG();
     this.fragmentData.isSpinner = true;
@@ -959,7 +932,7 @@ export class MutualFundOverviewComponent implements OnInit {
       key: 'showPieChart',
       svg: this.svg
     };
-    const header = null;
+    let header = null
     this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg, true);
     console.log('return value ====', this.returnValue);
     return obj;
@@ -1007,7 +980,7 @@ export class MutualFundOverviewComponent implements OnInit {
         verticalAlign: 'middle',
         y: 60
       },
-      exporting: {enabled: false},
+      exporting: { enabled: false },
       tooltip: {
         pointFormat: ' <b>{point.percentage:.1f}%</b>'
       },
@@ -1120,7 +1093,7 @@ export class MutualFundOverviewComponent implements OnInit {
     }
     const fragmentData = {
       flag,
-      data: {flag},
+      data: { flag },
       id: 1,
       state: flag == 'addMutualFund' ? 'open' : 'open65',
       componentName: component
@@ -1329,7 +1302,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   generatePdfBulk() {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
-    this.loadingDone = true;
+    this.loadingDone = true
     this.svg = this.chart.getSVG();
     const para = document.getElementById('template');
 
@@ -1364,7 +1337,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('data', data);
     this.clientDetails = data;
     this.clientData = data.clientData;
-    this.getOrgData = data.advisorData;
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData;
   }
 

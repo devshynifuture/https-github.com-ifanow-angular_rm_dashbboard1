@@ -119,18 +119,18 @@ a:hover {
     height: 38px !important;
   }
 
-.dateIcon {
-  position: absolute;
-  top: 8px;
-  right: -3px;
-}
+  .dateIcon {
+    position: absolute;
+    top: 8px;
+    right: -3px;
+  }
 
 
 
 
-.mat-form-field-suffix {
-  position: inherit !important;
-}
+  .mat-form-field-suffix {
+    position: inherit !important;
+  }
 
 }
 
@@ -611,7 +611,7 @@ ul {
   height: 100%;
   width: 100%;
   position: fixed;
-  z-index: 102;
+  z-index: 112;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 1);
@@ -929,5 +929,3 @@ button.primary-sm {
     align-items: center;
   }
 }
-
-

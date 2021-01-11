@@ -186,47 +186,47 @@ export class SummaryPlanComponent implements OnInit {
     //     const header = this.summaryTemplateHeader.nativeElement.innerHTML
     //     this.util.htmlToPdf('', para, 'Financial plan', 'true', this.fragmentData, '', '', false);
     // }
-    generatePdfFinPlan(){
-        if(this.finPlanId){
+    generatePdfFinPlan() {
+        if (this.finPlanId) {
             this.fragmentData.isSpinner = true
             let obj = {
-              id: this.finPlanId
+                id: this.finPlanId
             }
             return this.http
-              .post(
-                apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
-                obj,
-                { responseType: 'blob' }
-              )
-              .subscribe((data) => {
-                if (data.type == "application/pdf") {
-                  this.generatePDF = 1
-                  this.fragmentData.isSpinner = false
-                  const file = new Blob([data], { type: 'application/pdf' });
-                  this.fragmentData.size = this.formatFileSize(data.size,0);
-                  this.fragmentData.date =  this.datePipe.transform(new Date(), 'dd/MM/yyyy');
-                  var date = new Date();
-                  const namePdf = this.clientData.name + '\'s ' + 'Financial plan' + ' as on ' + date;
-                  const a = document.createElement('a');
-                  a.href = window.URL.createObjectURL(file);
-                  a.download = namePdf + '.pdf';
-                  a.click();
-                } 
-        
-              });
-        }else{
+                .post(
+                    apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
+                    obj,
+                    { responseType: 'blob' }
+                )
+                .subscribe((data) => {
+                    if (data.type == "application/pdf") {
+                        this.generatePDF = 1
+                        this.fragmentData.isSpinner = false
+                        const file = new Blob([data], { type: 'application/pdf' });
+                        this.fragmentData.size = this.formatFileSize(data.size, 0);
+                        this.fragmentData.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+                        var date = new Date();
+                        const namePdf = this.clientData.name + '\'s ' + 'Financial plan' + ' as on ' + date;
+                        const a = document.createElement('a');
+                        a.href = window.URL.createObjectURL(file);
+                        a.download = namePdf + '.pdf';
+                        a.click();
+                    }
+
+                });
+        } else {
             this.eventService.openSnackBar("Financial plan not saved", "Ok")
         }
-        
+
     }
-    formatFileSize(bytes,decimalPoint) {
-        if(bytes == 0) return '0 Bytes';
+    formatFileSize(bytes, decimalPoint) {
+        if (bytes == 0) return '0 Bytes';
         var k = 1000,
             dm = decimalPoint || 2,
             sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-     }
+    }
     getAssetData(data) {
         let finalArray = [];
         if (data) {

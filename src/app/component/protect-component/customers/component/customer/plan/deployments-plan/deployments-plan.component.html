@@ -46,9 +46,10 @@
                 </div>
             </div>
             <div class="row pt-28">
-                <div class="col-md-12" *ngFor="let item of familyMemberList">
-                    <button mat-stroked-button class="br-0 text-custom" (click)="changTab(item)"
-                        [ngClass]="{'text-primary': selected == item.id}">{{item.name}}</button>
+                <div class="col-md-12">
+                    <button mat-button class="br-0 mr-10 text-custom" (click)="changTab(item)"
+                        *ngFor="let item of familyMemberList"
+                        [ngClass]="{'text-primary button-border': selected == item.id}">{{item.name}}</button>
                     <!-- <button mat-button class="br-0 text-custom">Shilpa Jain</button> -->
                 </div>
             </div>
@@ -83,6 +84,14 @@
                                 <div class="bar" *ngIf="!isLoading">
                                     <mat-checkbox [(ngModel)]="element.selected"
                                         (change)="selectSingleDeployment($event,element)"></mat-checkbox>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="assetDescription">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"><span
+                                        appFormatNumber>{{element.assetDescription ? element.assetDescription : '-'}}</span>
                                 </div>
                             </td>
                         </ng-container>
