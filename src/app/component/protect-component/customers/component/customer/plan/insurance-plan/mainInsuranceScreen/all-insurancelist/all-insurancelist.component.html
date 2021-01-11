@@ -62,13 +62,31 @@
         <app-life-insurance class="col-width-79 pb-44" [isLoaders]="isLoadingInInsurance" [data]='detailsInsurance'
             (stopLoaderWhenReponse)="stopLoader($event)" (outputChange)="getOutput($event)"></app-life-insurance>
     </div>
-    <div *ngIf="!showIsurance" class="row pt-70">
-        <div class="d-flex align-items-center col-md-12 flex-column justify-content-center">
+    <div *ngIf="!showIsurance" class="row">
+        <!-- <div class="d-flex align-items-center col-md-12 flex-column justify-content-center">
             <img src="assets/images/svg/documents-empty-states.svg">
             <h4 class="text-center mt-12 mb-20">No Data Found</h4>
             <button (click)="openUpperInsurance('open70')" class="btn-primary addon v-middle" mat-stroked-button>ADD
                 NEW
             </button>
+        </div> -->
+        <div class="col-md-12 emptyGoalmt d-flex align-items-center justify-content-center mt-150">
+
+            <div class="emptyImg">
+                <img src="/assets/images/svg/empty-goal-icon.svg">
+            </div>
+
+            <div class="textEmpty ml-60">
+
+                <p>Insurance planning ensures protection of yourself, your family, their health against unexpected
+                    events<br>
+                    Let's start planning for various insurance aspects and stay protected.
+
+                </p>
+                <button (click)="openAddgoals()" mat-stroked-button class="btn-primary br-0 addon">LET’S GET
+                    STARTED</button>
+            </div>
+
         </div>
 
     </div>
