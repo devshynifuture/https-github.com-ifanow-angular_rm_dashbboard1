@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { StockScripLevelTransactionComponent } from './stock-scrip-level-transaction/stock-scrip-level-transaction.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
-import { pieChart } from './highChart-pichart';
+// import { pieChart } from './highChart-pichart';
 import { StockDetailsViewComponent } from '../stock-details-view/stock-details-view.component';
 import { StockTransactionDetailsComponent } from './stock-transaction-details/stock-transaction-details.component';
 import { StockHoldingDetailsComponent } from './stock-holding-details/stock-holding-details.component';
