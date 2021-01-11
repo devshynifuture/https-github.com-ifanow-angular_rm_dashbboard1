@@ -1058,11 +1058,11 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
             let finalplanFeatureList = componentRefComponentValues[form].get('planFeatureForm') as FormArray
             if (finalplanFeatureList && finalplanFeatureList.controls.length > 0) {
               finalplanFeatureList.controls.forEach(element => {
-                if (element.get('planfeatures').value && element.get('sumInsured').value) {
+                if (element.get('planfeatures').value || element.get('sumInsured').value) {
                   let obj =
                   {
                     policyFeatureId: element.get('planfeatures').value,
-                    featureSumInsured: element.get('sumInsured').value,
+                    featureSumInsured: element.get('sumInsured') ? element.get('sumInsured').value : 0,
                   }
                   featureList.push(obj)
                 } else if (element.get('planfeatures').value) {
@@ -1365,7 +1365,7 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
       advisorId: AuthService.getAdvisorId(),
       adviceDescription: this.adviceForm.get('rationale').value,
       adviceToCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
-      adviceToGenInsurance: {genInsuranceId:obj.id ? obj.id : null, adviceDescription: this.adviceForm.get('rationale').value, genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
+      adviceToGenInsurance: { genInsuranceId: obj.id ? obj.id : null, adviceDescription: this.adviceForm.get('rationale').value, genInsuranceAdviceId: parseInt(this.adviceForm.get('headerEdit').value) },
       adviceToCategoryId: this.dataForEdit ? this.dataForEdit.adviceToCategoryId : null,
       adviseCategoryTypeMasterId: this.adviceToCategoryTypeMasterId,
       adviceGivenDate: this.datePipe.transform(this.adviceForm.get('givenOnDate').value, 'yyyy-MM-dd'),
