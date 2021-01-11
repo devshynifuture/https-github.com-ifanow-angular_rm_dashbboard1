@@ -367,6 +367,8 @@ export class AllInsurancelistComponent implements OnInit {
     );
   }
 
+  openAddgoals(){}
+
   opencurrentpolicies(data) {
     this.isLoading = true;
     const fragmentData = {
