@@ -201,7 +201,7 @@ export class MutualFundOverviewComponent implements OnInit {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
     }
 
-    this.queryParamsSubs = this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+    this.queryParamsSubs = this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
       if (queryParamMap.has('clientId')) {
         const param1: any = queryParamMap.params;
         this.clientId = parseInt(param1.clientId);
