@@ -299,7 +299,7 @@
                <ng-container matColumnDef="balanceUnitsTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span class="f-700">{{element.totalUnit}}</span>
+                        <span class="f-700">{{element.totalBalanceUnit}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -1149,8 +1149,7 @@
 
             </td>
          </tr>
-         <tr *ngIf="item.total && viewMode != 'All Transactions'"
-            style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
+         <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
                style=" border-bottom:1px solid #DADCE0;  width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                {{item[firstArrayTotalTran]}}
