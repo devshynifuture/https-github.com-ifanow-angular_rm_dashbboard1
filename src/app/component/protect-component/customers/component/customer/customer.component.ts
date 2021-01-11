@@ -45,6 +45,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   role: any;
   clientName: any;
   userInfo: any;
+  domainData: any;
 
   constructor(
     private router: Router,
@@ -204,8 +205,16 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   logout() {
     this.enumDataService.setSearchData([]);
     // if (!this.authService.isAdvisor()) {
+    this.domainData = AuthService.getDomainDetails();
     this.authService.logout();
-    this.router.navigate(['/login']);
+    if (this.domainData) {
+      let mainDomain;
+      let clientSubDomain = this.domainData.hostName;
+      mainDomain = `https://www${clientSubDomain.substring(clientSubDomain.indexOf('.'), clientSubDomain.length)}`
+      window.open(mainDomain, "_self")
+    } else {
+      this.router.navigate(['/login'])
+    }
     this.MfServiceService.clearStorage();
     // }
   }
