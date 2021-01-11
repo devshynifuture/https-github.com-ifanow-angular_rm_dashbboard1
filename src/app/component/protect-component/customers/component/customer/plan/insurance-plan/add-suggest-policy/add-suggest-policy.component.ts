@@ -214,14 +214,14 @@ export class AddSuggestPolicyComponent implements OnInit {
           }
         );
       } else {
-        let rational = obj.suggestion ? obj.suggestion.replace(/(<([^>]+)>)/ig, '') : '-';
+        let rational = obj.suggestion ? obj.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
         const stringObj = {
           id: null,
           insuranceCategoryTypeId: this.adviceToCategoryId,
           suggestedFrom: 1,
-          adviceDescription: rational ? rational : '',
+          adviceDescription: rational ? rational : null,
           adviceToCategoryTypeMasterId: 3,
-          adviceToLifeInsurance: { "insuranceAdviceId": 0, adviceDescription: rational ? rational : '' },
+          adviceToLifeInsurance: { "insuranceAdviceId": 0, adviceDescription: rational ? rational : null },
           adviceToCategoryId: this.adviceToCategoryId ? this.adviceToCategoryId : null,
           // adviceId: this.adviceForm.get('header').value,
           adviceId: 0,
