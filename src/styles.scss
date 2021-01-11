@@ -2181,3 +2181,7 @@ a.docFileName:hover {
   overflow-y: auto;
   max-height: calc(100vh - 290px);
 }
+
+.button-border {
+  border: 1px solid rgba(0, 0, 0, .12) !important;
+}
