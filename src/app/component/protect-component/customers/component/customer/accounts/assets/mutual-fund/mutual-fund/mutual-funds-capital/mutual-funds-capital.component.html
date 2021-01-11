@@ -46,10 +46,8 @@
                         class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
 
-                        <!--- Note that these columns can be defined in any order.
-                                  The actual rendered columns are set as a property on the row definition" -->
 
-                        <!-- Position Column -->
+
                         <ng-container matColumnDef="schemeName">
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme name </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -61,7 +59,7 @@
 
                         </ng-container>
 
-                        <!-- Name Column -->
+
                         <ng-container matColumnDef="folioNumber">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef sticky> Folio number </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
@@ -71,7 +69,7 @@
 
                         </ng-container>
 
-                        <!-- Weight Column -->
+
                         <ng-container matColumnDef="investorName">
                             <th class="br text-left" mat-header-cell *matHeaderCellDef sticky>
                                 Investor name </th>
@@ -84,7 +82,7 @@
 
                         </ng-container>
 
-                        <!-- Symbol Column -->
+
                         <ng-container matColumnDef="stGain">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef sticky> ST gain
                             </th>
@@ -211,10 +209,7 @@
                         class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
 
-                        <!--- Note that these columns can be defined in any order.
-                              The actual rendered columns are set as a property on the row definition" -->
 
-                        <!-- Position Column -->
                         <ng-container matColumnDef="schemeName">
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme name </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -225,7 +220,7 @@
 
                         </ng-container>
 
-                        <!-- Name Column -->
+
                         <ng-container matColumnDef="folioNumber">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef sticky> Folio number </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
@@ -235,7 +230,7 @@
 
                         </ng-container>
 
-                        <!-- Weight Column -->
+
                         <ng-container matColumnDef="investorName">
                             <th class="br text-left" mat-header-cell *matHeaderCellDef sticky>
                                 Investor name </th>
@@ -248,7 +243,7 @@
 
                         </ng-container>
 
-                        <!-- Symbol Column -->
+
                         <ng-container matColumnDef="stGain">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef sticky> ST gain
                             </th>
@@ -376,10 +371,7 @@
                         class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
 
-                        <!--- Note that these columns can be defined in any order.
-                                      The actual rendered columns are set as a property on the row definition" -->
 
-                        <!-- Position Column -->
                         <ng-container matColumnDef="schemeName2">
                             <th class="br" mat-header-cell *matHeaderCellDef sticky> Scheme name </th>
                             <td class="br" mat-cell *matCellDef="let element">
@@ -390,7 +382,7 @@
 
                         </ng-container>
 
-                        <!-- Name Column -->
+
                         <ng-container matColumnDef="folioNumber">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef sticky> Folio number </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
@@ -400,7 +392,7 @@
 
                         </ng-container>
 
-                        <!-- Weight Column -->
+
                         <ng-container matColumnDef="dividendPayoutAmount">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef sticky> Dividend payout amount
                             </th>
@@ -418,7 +410,7 @@
 
                         </ng-container>
 
-                        <!-- Symbol Column -->
+
                         <ng-container matColumnDef="dividendReInvestmentAmount">
                             <th class="br text-right" mat-header-cell *matHeaderCellDef sticky> Dividend re-investment
                                 amount
