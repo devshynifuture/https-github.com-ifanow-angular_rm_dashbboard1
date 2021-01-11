@@ -198,7 +198,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
         'commencementDate': this.datePipe.transform(this.suggestPolicyForm.get('implementationDate').value, 'yyyy-MM-dd'),
         'realOrFictitious': 2,
-        'suggestion': this.storeData,
+        'suggestion': this.storeData ? this.storeData : '',
         'isRecommend': this.showRecommendation ? 1 : 0,
       }
       if (this.dataForEdit) {
@@ -214,7 +214,7 @@ export class AddSuggestPolicyComponent implements OnInit {
           }
         );
       } else {
-        let rational = obj.suggestion ? obj.suggestion.replace(/(<([^>]+)>)/ig, '') : '-';
+        let rational = obj.suggestion ? obj.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
         const stringObj = {
           id: null,
           insuranceCategoryTypeId: this.adviceToCategoryId,
