@@ -25,14 +25,16 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="name">
                         <th mat-header-cell class="text-right" *matHeaderCellDef> Equity </th>
-                        <td mat-cell *matCellDef="let element" class="text-right" ><span appFormatNumber [value]="element.equity"></span>
+                        <td mat-cell *matCellDef="let element" class="text-right"><span appFormatNumber
+                                [value]="element.equity"></span>
                         </td>
                     </ng-container>
 
                     <!-- Weight Column -->
                     <ng-container matColumnDef="weight">
                         <th mat-header-cell class="text-right" *matHeaderCellDef> Debt </th>
-                        <td mat-cell class="text-right" *matCellDef="let element"><span appFormatNumber [value]="element.debt"></span>
+                        <td mat-cell class="text-right" *matCellDef="let element"><span appFormatNumber
+                                [value]="element.debt"></span>
                         </td>
                     </ng-container>
 
@@ -72,34 +74,35 @@
                     <mat-menu #menu1="matMenu">
                         <!-- category filter start -->
                         <p class="text-primitive m-0 pl-24 pb-4 pt-8">Categories</p>
-                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical [(ngModel)]="assetFilterValue">
+                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical
+                            [(ngModel)]="assetFilterValue">
                             <mat-button-toggle [value]="'all'" class="p-0 f-14 text-left btnHeight">
                                 <div class="row">
                                     <div class="col-md-2 d-flex align-items-center justify-content-center">
                                         <i class="material-icons" *ngIf="assetFilterValue == 'all'">
                                             done
-                                        </i> 
+                                        </i>
                                     </div>
                                     <div class="col-md-4 p-0">
                                         All
                                     </div>
-                                </div>    
+                                </div>
                             </mat-button-toggle>
 
                             <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'equity'">
-                                 
+
                                 <div class="row">
                                     <div class="col-md-2 d-flex align-items-center justify-content-center">
                                         <i class="material-icons width30" *ngIf="assetFilterValue == 'equity'">
                                             done
-                                        </i> 
+                                        </i>
                                     </div>
                                     <div class="col-md-4 p-0">
                                         Equity
                                     </div>
-                                </div> 
-                                
-                                  
+                                </div>
+
+
                             </mat-button-toggle>
 
                             <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'debt'">
@@ -107,19 +110,20 @@
                                     <div class="col-md-2 d-flex align-items-center justify-content-center">
                                         <i class="material-icons width30" *ngIf="assetFilterValue == 'debt'">
                                             done
-                                        </i>  
+                                        </i>
                                     </div>
                                     <div class="col-md-4 p-0">
                                         Debt
                                     </div>
-                                </div> 
-                             </mat-button-toggle>
+                                </div>
+                            </mat-button-toggle>
                         </mat-button-toggle-group>
                         <!-- category filter end -->
 
                         <!-- folio filter start -->
                         <p class="text-primitive m-0 pl-24 pb-4 pt-8">Folios</p>
-                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical [(ngModel)]="folioFilterValue">
+                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical
+                            [(ngModel)]="folioFilterValue">
                             <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'all'">
                                 <div class="row">
                                     <div class="col-md-2 d-flex align-items-center justify-content-center">
@@ -161,7 +165,8 @@
 
                         <!-- scheme filter start -->
                         <p class="text-primitive m-0 pl-24 pb-4 pt-8">Schemes</p>
-                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical [(ngModel)]="schemeFilterValue">
+                        <mat-button-toggle-group class="w-100 borderBtn br-0" (change)="filterAssets()" vertical
+                            [(ngModel)]="schemeFilterValue">
                             <mat-button-toggle class="p-0 f-14 text-left btnHeight" [value]="'all'">
                                 <div class="row">
                                     <div class="col-md-2 d-flex align-items-center justify-content-center">
@@ -223,18 +228,23 @@
                     <ng-container matColumnDef="value">
                         <th class="w-25 text-right" mat-header-cell *matHeaderCellDef> Value | Units </th>
                         <td *matCellDef="let element" class="text-right w-25" mat-cell>
-                            <span *ngIf="element.isSip != true" class="d-block" [value]="element.currentValue" appFormatNumber> | </span>
-                            <span *ngIf="element.isSip != true" class="text-primitive f-12" appFormatNumber [value]="element.balanceUnit"> |
+                            <span *ngIf="element.isSip != true" class="d-block" [value]="element.currentValue"
+                                appFormatNumber> | </span>
+                            <span *ngIf="element.isSip != true" class="text-primitive f-12" appFormatNumber
+                                [value]="element.balanceUnit"> |
                             </span><br />
-                            <span *ngIf="element.isSip == true" class="d-block f-12" appFormatNumber [value]="element.sipAmount"> | </span>
+                            <span *ngIf="element.isSip == true" class="d-block f-12" appFormatNumber
+                                [value]="element.sipAmount"> | </span>
                         </td>
                     </ng-container>
                     <!-- Weight Column -->
                     <ng-container matColumnDef="goal">
                         <th class="w-20" mat-header-cell *matHeaderCellDef>Goal </th>
-                        <td class="w-20 text-left" style="padding-right: 0px !important; vertical-align: top;" *matCellDef="let element" mat-cell>
-                            <div  class="" *ngFor="let allocatedGoal of element.goalAssetMapping">
-                                <div [ngClass]="allocatedGoal.sipPercent > 0 && allocatedGoal.sipPercent != 100? 'mb-10 pb-10 bb' : allocatedGoal.lumpsumPercent > 0 && allocatedGoal.lumpsumPercent != 100 ? 'mb-10 pb-10 bb':''">
+                        <td class="w-20 text-left" style="padding-right: 0px !important; vertical-align: top;"
+                            *matCellDef="let element" mat-cell>
+                            <div class="" *ngFor="let allocatedGoal of element.goalAssetMapping">
+                                <div
+                                    [ngClass]="allocatedGoal.sipPercent > 0 && allocatedGoal.sipPercent != 100? 'mb-10 pb-10 bb' : allocatedGoal.lumpsumPercent > 0 && allocatedGoal.lumpsumPercent != 100 ? 'mb-10 pb-10 bb':''">
                                     <div class="lh-14">{{allocatedGoal.goalName}}</div>
 
                                     <div *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
@@ -244,13 +254,13 @@
                                             Lumpsum-{{allocatedGoal.lumpsumPercent}}%</span>
                                     </div>
                                 </div>
-                              
+
                             </div>
 
                             <div *ngIf="element.absAllocation < 100">
                                 <div>0 %</div>
                             </div>
-                            
+
                         </td>
                     </ng-container>
                     <!-- <ng-container matColumnDef="value1">
@@ -284,39 +294,48 @@
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef class="t-10 text-right br">Allocations</th>
                         <td mat-cell *matCellDef="let element" class="t-10 br" style="padding-left: 0px !important;">
-                          
+
                             <div *ngFor="let allocatedGoal of element.goalAssetMapping">
-                                <div class="d-flex align-items-center" [ngClass]="allocatedGoal.sipPercent > 0 && allocatedGoal.sipPercent != 100? 'mb-10 pb-10 bb' : allocatedGoal.lumpsumPercent > 0 && allocatedGoal.lumpsumPercent != 100 ? 'mb-10 pb-10 bb':''"
+                                <div class="d-flex align-items-center"
+                                    [ngClass]="allocatedGoal.sipPercent > 0 && allocatedGoal.sipPercent != 100? 'mb-10 pb-10 bb' : allocatedGoal.lumpsumPercent > 0 && allocatedGoal.lumpsumPercent != 100 ? 'mb-10 pb-10 bb':''"
                                     *ngIf="allocatedGoal.sipPercent > 0 || allocatedGoal.lumpsumPercent > 0">
-                                    <button class="unallcoateBtn ml-10 text-danger"
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.goals.subModule.mfAllocations.capabilityList.Delete"
+                                        class="unallcoateBtn ml-10 text-danger"
                                         (click)="removeAllocation(element, allocatedGoal)">Unallocate</button>
-                                    <i class="material-icons c-p text-black" *ngIf="allocatedGoal.goalName == data.goalName"
+                                    <i class="material-icons c-p text-black"
+                                        *ngIf="allocatedGoal.goalName == data.goalName && roleService.planPermission.subModule.goals.subModule.mfAllocations.capabilityList.Edit"
                                         [matMenuTriggerFor]="menu4">
                                         more_vert
                                     </i>
                                     <mat-menu #menu4="matMenu">
-                                        <div  >
-                                            <button mat-menu-item (click)="reallocateAsset(element,allocatedGoal)">Edit allocation
+                                        <div>
+                                            <button mat-menu-item (click)="reallocateAsset(element,allocatedGoal)">Edit
+                                                allocation
                                                 %</button>
                                         </div>
                                     </mat-menu>
                                 </div>
                             </div>
-                           
-                             
-                                <div>
-                                    <div class="d-flex align-items-center"
-                                        *ngIf="(element.isSip == true && element.absSIP != 0)">
-                                        <button class="allcoateBtn ml-10 text-primary" [disabled]="disableAllocate"
-                                            (click)="allocateAssetToGoal(element)">Allocate</button>
-                                    </div>
-                                    <div class="d-flex align-items-center"
-                                        *ngIf="(element.isSip != true && element.absLumsum != 0)">
-                                        <button class="allcoateBtn ml-10 text-primary" [disabled]="disableAllocate"
-                                            (click)="allocateAssetToGoal(element)">Allocate</button>
-                                    </div>
+
+
+                            <div>
+                                <div class="d-flex align-items-center"
+                                    *ngIf="(element.isSip == true && element.absSIP != 0)">
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.goals.subModule.mfAllocations.capabilityList.Add"
+                                        class="allcoateBtn ml-10 text-primary" [disabled]="disableAllocate"
+                                        (click)="allocateAssetToGoal(element)">Allocate</button>
                                 </div>
-                            
+                                <div class="d-flex align-items-center"
+                                    *ngIf="(element.isSip != true && element.absLumsum != 0)">
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.goals.subModule.mfAllocations.capabilityList.Add"
+                                        class="allcoateBtn ml-10 text-primary" [disabled]="disableAllocate"
+                                        (click)="allocateAssetToGoal(element)">Allocate</button>
+                                </div>
+                            </div>
+
                         </td>
                     </ng-container>
 

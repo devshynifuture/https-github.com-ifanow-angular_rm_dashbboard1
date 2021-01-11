@@ -12,6 +12,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../../accounts/assets/file-upload-service.service';
 import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { SummaryPlanServiceService } from '../../summary-plan/summary-plan-service.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-income',
@@ -56,7 +57,9 @@ export class IncomeComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private planService: PlanService,
     private _bottomSheet: MatBottomSheet,
-    private summaryPlanService: SummaryPlanServiceService, private ref: ChangeDetectorRef) {
+    private summaryPlanService: SummaryPlanServiceService,
+    private ref: ChangeDetectorRef,
+    public roleService: RoleService) {
   }
 
   viewMode;
@@ -113,7 +116,7 @@ export class IncomeComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       addMonthlyDistribution: false,
-      idList : this.incomeId ? this.incomeId : 0
+      idList: this.incomeId ? this.incomeId : 0
     };
     this.planService.getIncomeData(obj).subscribe(
       data => {

@@ -6,7 +6,8 @@
             </div>
             <div class="col-md-3 text-right p-0">
                 <button mat-stroked-button class="btn-primary pb-8" (click)="addNew()"
-                    *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false"> ADD
+                    *ngIf="(moduleAdded.length > 0 || clientDetails.length) > 0 && hideTable == false && roleService.planPermission.subModule.profile.subModule.financialPlan.capabilityList.Add">
+                    ADD
                     NEW</button>
             </div>
         </div>
@@ -109,8 +110,9 @@
                             <td mat-cell [matMenuTriggerFor]="menu4" *matCellDef="let element" class="c-p text-center">
                                 <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
                                 <mat-menu #menu4="matMenu">
-                                    <button (click)="deletePlanSection('FIN PLAN',element)"
-                                        mat-menu-item>Delete</button>
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.profile.subModule.financialPlan.capabilityList.Delete"
+                                        (click)="deletePlanSection('FIN PLAN',element)" mat-menu-item>Delete</button>
                                 </mat-menu>
 
                             </td>

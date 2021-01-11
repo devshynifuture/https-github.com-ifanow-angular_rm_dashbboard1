@@ -85,7 +85,55 @@ export class RoleService {
   portfolioPermission = {
     enabled: true,
     subModule: {
-
+      portfolioDashboard: {
+        enabled: true
+      },
+      assets: {
+        enabled: true,
+        subModule: {
+          cashAndBanks: {
+            enabled: true
+          },
+          commodities: {
+            enabled: true
+          },
+          fixedIncome: {
+            enabled: true
+          },
+          mutualFunds: {
+            enabled: true
+          },
+          realEstate: {
+            enabled: true
+          },
+          retirementAccounts: {
+            enabled: true
+          },
+          smallSavingSchemes: {
+            enabled: true
+          },
+          stocks: {
+            enabled: true
+          },
+        }
+      },
+      insurance: {
+        enabled: true,
+        subModule: {
+          generalInsurance: {
+            enabled: true,
+            capabilityList: {} as any
+          },
+          lifeInsurance: {
+            enabled: true,
+            capabilityList: {} as any
+          }
+        }
+      },
+      liabilities: {
+        enabled: true,
+        capabilityList: {} as any
+      }
     }
   };
   transactionPermission = {
@@ -217,13 +265,58 @@ export class RoleService {
         enabled: true
       },
       goals: {
-        enabled: true
+        enabled: true,
+        subModule: {
+          preferences: {
+            enabled: true,
+            capabilityList: {} as any
+          },
+          allocations: {
+            enabled: true,
+            capabilityList: {} as any
+          },
+          calculators: {
+            enabled: true,
+            capabilityList: {} as any
+          },
+          keyInfo: {
+            enabled: true,
+          },
+          mfAllocations: {
+            enabled: true,
+            capabilityList: {} as any
+          }
+        }
       },
       insurance: {
-        enabled: true
+        enabled: true,
+        capabilityList: {} as any
       },
       profile: {
-        enabled: true
+        enabled: true,
+        subModule: {
+          income: {
+            enabled: true,
+            capabilityList: {} as any
+          },
+          expenses: {
+            enabled: true,
+            subModule: {
+              budgets: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              transactions: {
+                enabled: true,
+                capabilityList: {} as any
+              }
+            }
+          },
+          financialPlan: {
+            enabled: true,
+            capabilityList: {} as any
+          }
+        }
       },
       scenarios: {
         enabled: true
@@ -300,6 +393,7 @@ export class RoleService {
       adminDatasource.plan ? this.setPlanPermission(adminDatasource.plan.subModule) : this.planPermission.enabled = false;
       adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     }
+    adminDatasource.portfolio ? this.setPortfolioPermission(adminDatasource.portfolio) : this.portfolioPermission.enabled = false;
   }
 
   setPermissions(moduleId, enabled) {
@@ -424,7 +518,14 @@ export class RoleService {
   }
 
   setPortfolioPermission(portfolioPermission) {
-
+    this.portfolioPermission.subModule.portfolioDashboard.enabled = portfolioPermission.subModule.portfolioDashboard.showModule;
+    this.portfolioPermission.subModule.liabilities.enabled = portfolioPermission.subModule.liabilities.showModule;
+    this.portfolioPermission.subModule.insurance.enabled = portfolioPermission.subModule.insurance.showModule;
+    this.portfolioPermission.subModule.insurance.subModule.generalInsurance.enabled = portfolioPermission.subModule.insurance.subModule.generalInsurance.showModule;
+    this.portfolioPermission.subModule.insurance.subModule.lifeInsurance.enabled = portfolioPermission.subModule.insurance.subModule.lifeInsurance.showModule;
+    this.portfolioPermission.subModule.liabilities.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.liabilities.subModule.liabilities.capabilityList);
+    this.portfolioPermission.subModule.insurance.subModule.generalInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.generalInsurance.subModule.generalInsurance.capabilityList);
+    this.portfolioPermission.subModule.insurance.subModule.lifeInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.lifeInsurance.subModule.lifeInsurance.capabilityList);
   }
 
   setPlanPermission(planPermission) {
@@ -436,6 +537,25 @@ export class RoleService {
     this.planPermission.subModule.taxes.enabled = planPermission.plan.subModule.taxes.showModule
     this.planPermission.subModule.cashflows.enabled = planPermission.plan.subModule.cashflows.showModule
     this.planPermission.subModule.scenarios.enabled = planPermission.plan.subModule.scenarios.showModule
+    this.planPermission.subModule.profile.subModule.income.enabled = planPermission.plan.subModule.profile.subModule.income.showModule;
+    this.planPermission.subModule.profile.subModule.income.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.income.subModule.income.capabilityList)
+    this.planPermission.subModule.profile.subModule.expenses.enabled = planPermission.plan.subModule.profile.subModule.expenses.showModule;
+    this.planPermission.subModule.profile.subModule.expenses.subModule.budgets.enabled = planPermission.plan.subModule.profile.subModule.expenses.subModule.budgets.showModule;
+    this.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled = planPermission.plan.subModule.profile.subModule.expenses.subModule.transactions.showModule;
+    this.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.expenses.subModule.budgets.subModule.budgets.capabilityList);
+    this.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.expenses.subModule.transactions.subModule.transactions.capabilityList);
+    this.planPermission.subModule.profile.subModule.financialPlan.enabled = planPermission.plan.subModule.profile.subModule.financialPlan.showModule;
+    this.planPermission.subModule.profile.subModule.financialPlan.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.financialPlan.subModule.financialPlan.capabilityList)
+    this.planPermission.subModule.insurance.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.insurance.subModule.insurance.capabilityList)
+    this.planPermission.subModule.goals.subModule.allocations.enabled = planPermission.plan.subModule.goals.subModule.allocations.showModule
+    this.planPermission.subModule.goals.subModule.mfAllocations.enabled = planPermission.plan.subModule.goals.subModule.mfAllocations.showModule
+    this.planPermission.subModule.goals.subModule.keyInfo.enabled = planPermission.plan.subModule.goals.subModule.keyInfo.showModule
+    this.planPermission.subModule.goals.subModule.preferences.enabled = planPermission.plan.subModule.goals.subModule.preferences.showModule
+    this.planPermission.subModule.goals.subModule.calculators.enabled = planPermission.plan.subModule.goals.subModule.calculators.showModule
+    this.planPermission.subModule.goals.subModule.allocations.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.allocations.subModule.allocations.capabilityList);
+    this.planPermission.subModule.goals.subModule.mfAllocations.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.mfAllocations.subModule.mfAllocations.capabilityList);
+    this.planPermission.subModule.goals.subModule.preferences.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.preferences.subModule.preferences.capabilityList);
+    this.planPermission.subModule.goals.subModule.calculators.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.calculators.subModule.calculators.capabilityList);
   }
 
   setTransactionPermission(transactionPermission) {
@@ -452,9 +572,6 @@ export class RoleService {
       }
       if (this.overviewPermission.subModules.profile.enabled) {
         return url = '/customer/detail/overview/profile'
-      }
-      if (this.overviewPermission.subModules.myFeed.enabled) {
-        return url = '/customer/detail/overview/documents'
       }
       if (this.overviewPermission.subModules.documents.enabled) {
         return url = '/customer/detail/overview/documents'
@@ -480,7 +597,12 @@ export class RoleService {
       return url = "/customer/detail/account";
     }
     else if (this.planPermission.enabled) {
-      return url = "/customer/detail/plan";
+      if (this.planPermission.subModule.profile.enabled) {
+        return url = "/customer/detail/plan/profile"
+      }
+      if (this.planPermission.subModule.goals.enabled) {
+        return url = "/customer/detail/plan/goals"
+      }
     }
     else if (this.activityPermission.enabled) {
       return url = "/customer/detail/activity";

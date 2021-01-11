@@ -24,6 +24,7 @@ import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bot
 import { InsuranceService } from './insurance.service';
 import { arrayMax } from 'highcharts';
 import { AddOthersInsuranceInAssetComponent } from './add-others-insurance-in-asset/add-others-insurance-in-asset.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-insurance',
@@ -62,7 +63,6 @@ export class InsuranceComponent implements OnInit {
   countOthers = 0;
   exp: Date;
   difference: Date;
-  [x: string]: any;
 
   displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
@@ -130,6 +130,7 @@ export class InsuranceComponent implements OnInit {
   selectedInsuranceName = 'LIFE INSURANCE'
   @Output() loaded = new EventEmitter();
   @Input() finPlanObj: any;
+  insuranceCapabilityList: any = {};
   constructor(private cd: ChangeDetectorRef, private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private subInjectService: SubscriptionInject,
@@ -139,7 +140,8 @@ export class InsuranceComponent implements OnInit {
     private pdfGen: PdfGenService,
     private _bottomSheet: MatBottomSheet,
     private enumDataService: EnumDataService,
-    private insService: InsuranceService) {
+    private insService: InsuranceService,
+    public roleService: RoleService) {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.getAdvisorDetail = AuthService.getAdvisorDetails();
@@ -150,6 +152,11 @@ export class InsuranceComponent implements OnInit {
   insuranceTypeId;
 
   ngOnInit() {
+    if (this.roleService.portfolioPermission.subModule.insurance.subModule.lifeInsurance.enabled) {
+      this.getCapabilityListTypeWise(1)
+    } else {
+      this.getCapabilityListTypeWise(2)
+    }
     this.reportDate = new Date();
     this.isExpandedLife = true;
     this.isExpandedGeneral = false;
@@ -489,11 +496,11 @@ export class InsuranceComponent implements OnInit {
     let duration = this.year(diff)
     return duration;
   }
-  year(diff){
-    var num_years = Math.floor(diff /31536000000);
-    var num_months = Math.floor((diff % 31536000000)/2628000000);
-    var num_days = Math.floor(((diff % 31536000000) % 2628000000)/86400000);
-    let duration = (num_years!=0 ? ((num_years) + "Y ") : '') + (num_months!=0 ? ((num_months) + "M ") : '') + (num_days!=0 ? (Math.floor(num_days) + "D") : '')
+  year(diff) {
+    var num_years = Math.floor(diff / 31536000000);
+    var num_months = Math.floor((diff % 31536000000) / 2628000000);
+    var num_days = Math.floor(((diff % 31536000000) % 2628000000) / 86400000);
+    let duration = (num_years != 0 ? ((num_years) + "Y ") : '') + (num_months != 0 ? ((num_months) + "M ") : '') + (num_days != 0 ? (Math.floor(num_days) + "D") : '')
     return duration;
   }
   filterOtherInsuranceSingleData(element) {
@@ -599,9 +606,9 @@ export class InsuranceComponent implements OnInit {
     let dataFiltered;
 
     if (this.insuranceTypeId == 1) {
-      if(value == 'ALL'){
+      if (value == 'ALL') {
         dataFiltered = this.lifeInsuranceFilter;
-      }else{
+      } else {
         dataFiltered = this.lifeInsuranceFilter.filter(function (item) {
           return item[key] === value;
         });
@@ -628,9 +635,9 @@ export class InsuranceComponent implements OnInit {
         this.eventService.openSnackBar('No data found', 'Dismiss');
       }
     } else {
-      if(value == 'ALL'){
+      if (value == 'ALL') {
         dataFiltered = this.generalInsuranceDataFilter;
-      }else{
+      } else {
         dataFiltered = this.generalInsuranceDataFilter.filter(function (item) {
           return item[key] === value;
         });
@@ -1013,9 +1020,9 @@ export class InsuranceComponent implements OnInit {
             element.sumAssured += ele.addOnSumInsured;
           });
         }
-          // if(!element.sumAssured){
-          //   element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv : 0;
-          // }
+        // if(!element.sumAssured){
+        //   element.sumAssured = element.sumInsuredIdv ? element.sumInsuredIdv : 0;
+        // }
       });
       this.dataSourceGeneralInsurance.data.forEach(element => {
         this.totalSumAssured += element.sumAssured,
@@ -1297,6 +1304,14 @@ export class InsuranceComponent implements OnInit {
         }
       }
     );
+  }
+
+  getCapabilityListTypeWise(typeId) {
+    if (typeId == 1) {
+      this.insuranceCapabilityList = this.roleService.portfolioPermission.subModule.insurance.subModule.lifeInsurance.capabilityList
+    } else {
+      this.insuranceCapabilityList = this.roleService.portfolioPermission.subModule.insurance.subModule.generalInsurance.capabilityList
+    }
   }
 
   openAddInsurance(data) {

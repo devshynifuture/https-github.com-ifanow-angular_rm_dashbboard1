@@ -23,8 +23,9 @@
               <h5 class="m-0  f-500 text-black">OUTPUT</h5>
             </div>
             <div class="col-md-3 text-right pr-0">
-              <app-progress-button (btnClick)="saveEMIToGoal()" class="br-0 text-inherit  "
-                [options]="barButtonOptions">
+              <app-progress-button
+                *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.capabilityList.Add"
+                (btnClick)="saveEMIToGoal()" class="br-0 text-inherit  " [options]="barButtonOptions">
               </app-progress-button>
             </div>
           </div>
@@ -277,8 +278,9 @@
                 <button mat-stroked-button class="br-0 btn-primary mr-10 pl-8 pr-8 right"
                   (click)="calculateDelay()">Calculate</button>
 
-                <app-progress-button (btnClick)="saveDelayToGoal()" class="br-0 text-inherit  "
-                  [options]="barButtonOptions">
+                <app-progress-button
+                  *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.capabilityList.Add"
+                  (btnClick)="saveDelayToGoal()" class="br-0 text-inherit  " [options]="barButtonOptions">
                 </app-progress-button>
               </div>
             </div>
@@ -361,7 +363,8 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <app-progress-button (btnClick)="save()" class="br-0 text-inherit  " [options]="barButtonOptions1">
+      <app-progress-button *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.capabilityList.Add"
+        (btnClick)="save()" class="br-0 text-inherit  " [options]="barButtonOptions1">
       </app-progress-button>
     </div>
   </div>

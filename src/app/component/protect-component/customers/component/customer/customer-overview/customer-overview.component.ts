@@ -51,31 +51,28 @@ export class CustomerOverviewComponent implements OnInit {
     }
     this.name = this.clientData.displayName;
 
-    this.eventService.tabChangeData.subscribe(
-      data => this.getTabChangeData(data)
-    );
+    // this.eventService.tabChangeData.subscribe(
+    //   data => this.getTabChangeData(data)
+    // );
     console.log('customer overview  clientdata:', this.clientData);
     console.log('customer overview  name:', this.name);
 
     this.showRouter = true;
     this.selected = 1;
-    this._value = 1;
+    // this._value = 1;
     this.loading = false;
-    const routeName = this.router.url.split('/')[3];
-    if (routeName == 'overview') {
-      this.value = 1;
-    } else if (routeName == 'myFeed') {
-      this.value = 2;
-    } else if (routeName == 'profile') {
-      this.value = 3;
-    } else if (routeName == 'documents') {
-      this.value = 4;
-    } else if (routeName == 'emails') {
-      this.value = 5;
-    } else if (routeName == 'subscription') {
-      this.value = 5;
-    } else if (routeName == 'settings') {
-      this.value = 5;
+    // const routeName = this.router.url.split('/')[3];
+    // if (routeName == 'overview') {
+    //   this.value = 1;
+    // } else if (routeName == 'myFeed') {
+    //   this.value = 2;
+    // } else if (routeName == 'profile') {
+    //   this.value = 3;
+    // } else if (routeName == 'documents') {
+    //   this.value = 4;
+    // }
+    if (this.router.url.includes('subscription')) {
+      this._value = 5;
     }
     this.getClientData(this.clientData);
     // this.clientData = JSON.parse(sessionStorage.getItem('clientData'));
@@ -115,6 +112,26 @@ export class CustomerOverviewComponent implements OnInit {
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
     this.MfServiceService.clearStorage();
+  }
+
+  goToValidSubscriptionPage() {
+    let url;
+    if (this.roleService.overviewPermission.subModules.subscriptions.subModule.subscriptions.enabled) {
+      url = '/customer/detail/overview/subscription/subscriptions';
+    }
+    else if (this.roleService.overviewPermission.subModules.subscriptions.subModule.quotations.enabled) {
+      url = '/customer/detail/overview/subscription/quotations';
+    }
+    else if (this.roleService.overviewPermission.subModules.subscriptions.subModule.invoices.enabled) {
+      url = '/customer/detail/overview/subscription/invoices';
+    }
+    else if (this.roleService.overviewPermission.subModules.subscriptions.subModule.documents.enabled) {
+      url = '/customer/detail/overview/subscription/documents';
+    }
+    else {
+      url = '/customer/detail/overview/subscription/settings';
+    }
+    this.router.navigate([url])
   }
 
   logout() {

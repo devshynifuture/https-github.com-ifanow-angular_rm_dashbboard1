@@ -7,7 +7,8 @@
                 </div>
                 <div class="col-md-7 text-right pl-0 pr-12">
                     <!-- right side  -->
-                    <button (click)="openUpperInsurance('open70')" class="btn-primary insuranceAddBtn br-2"
+                    <button *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Add"
+                        (click)="openUpperInsurance('open70')" class="btn-primary insuranceAddBtn br-2"
                         mat-stroked-button>
                         ADD NEW</button>
                 </div>
@@ -66,7 +67,8 @@
         <div class="d-flex align-items-center col-md-12 flex-column justify-content-center">
             <img src="assets/images/svg/documents-empty-states.svg">
             <h4 class="text-center mt-12 mb-20">No Data Found</h4>
-            <button (click)="openUpperInsurance('open70')" class="btn-primary addon v-middle" mat-stroked-button>ADD
+            <button *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Add"
+                (click)="openUpperInsurance('open70')" class="btn-primary addon v-middle" mat-stroked-button>ADD
                 NEW
             </button>
         </div>

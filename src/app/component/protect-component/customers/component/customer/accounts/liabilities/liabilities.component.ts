@@ -16,6 +16,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../assets/file-upload-service.service';
 import { LoanAmortsComponent } from './loan-amorts/loan-amorts.component';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 @Component({
@@ -77,7 +78,8 @@ export class LiabilitiesComponent implements OnInit {
     public customerService: CustomerService,
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
-    public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService, private pdfGen: PdfGenService) {
+    public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService, private pdfGen: PdfGenService,
+    public roleService: RoleService) {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();

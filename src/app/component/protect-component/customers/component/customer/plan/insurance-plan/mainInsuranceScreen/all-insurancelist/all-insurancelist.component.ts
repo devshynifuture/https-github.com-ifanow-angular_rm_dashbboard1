@@ -12,6 +12,7 @@ import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatTableDataSource } from '@angular/material';
 import { InsurancePlanningServiceService } from '../../insurance-planning-service.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-all-insurancelist',
@@ -74,7 +75,9 @@ export class AllInsurancelistComponent implements OnInit {
   clientIdToClearStorage: string;
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
-    private eventService: EventService, private ipService: InsurancePlanningServiceService) {
+    private eventService: EventService,
+    private ipService: InsurancePlanningServiceService,
+    public roleService: RoleService) {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
   }
@@ -321,7 +324,7 @@ export class AllInsurancelistComponent implements OnInit {
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
-          if (UtilService.isRefreshRequired(upperSliderData) || upperSliderData['data']==true) {
+          if (UtilService.isRefreshRequired(upperSliderData) || upperSliderData['data'] == true) {
             this.selectedId = '';
             if (this.detailsInsurance) {
               this.detailsInsurance.dataLoaded = false;
@@ -329,7 +332,7 @@ export class AllInsurancelistComponent implements OnInit {
             this.getInsuranceList();
           }
           // if (upperSliderData['data']) {
-          
+
           // }
           // this.getClientSubscriptionList();
           subscription.unsubscribe();

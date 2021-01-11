@@ -188,8 +188,9 @@
 
 
 
-    <div cdkDropList [cdkDropListData]="displayedAssets" cdkDropListConnectedTo="allottedList"
-        [cdkDropListSortingDisabled]="true">
+    <div cdkDropList [cdkDropListData]="displayedAssets"
+        [ngClass]="{'event-none': !roleService.planPermission.subModule.goals.subModule.allocations.capabilityList.Add}"
+        cdkDropListConnectedTo="allottedList" [cdkDropListSortingDisabled]="true">
         <div class="mb-12" *ngFor="let asset of displayedAssets" cdkDrag [cdkDragData]="asset">
             <div class="row goal-border pb-8">
                 <div class="col-md-12 pl-8 pt-8">

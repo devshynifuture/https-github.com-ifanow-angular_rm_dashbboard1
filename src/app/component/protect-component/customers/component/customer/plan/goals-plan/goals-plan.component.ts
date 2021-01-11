@@ -27,6 +27,7 @@ import { Output } from '@angular/core';
 import { Input } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { map } from 'rxjs-compat/operator/map';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 
@@ -152,7 +153,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private allocateOtherAssetService: AddGoalService,
     private cd: ChangeDetectorRef,
-    public loaderFn: LoaderFunction
+    public loaderFn: LoaderFunction,
+    public roleService: RoleService
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();

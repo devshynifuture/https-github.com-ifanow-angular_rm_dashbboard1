@@ -13,9 +13,10 @@
         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
     </div>
     <div class="col-md-2 pr-0 right text-right c-p" *ngIf="!isLoadingPlan">
-        <img (click)="generatePdf()" class="" matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg"
-            class="pr-16 h-24">
-        <img (click)="deleteInsurance()" src="/assets/images/svg/insurance-delect-icon.svg">
+        <img (click)="generatePdf()" *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Download"
+            class="" matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg" class="pr-16 h-24">
+        <img (click)="deleteInsurance()" *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Delete"
+            src="/assets/images/svg/insurance-delect-icon.svg">
     </div>
 </div>
 
@@ -141,15 +142,18 @@
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td class="text-right" mat-cell *matCellDef="let element">
                                 <button mat-icon-button [matMenuTriggerFor]="menu"
-                                    (click)="isClick = true;expandedElement=null" *ngIf="!isLoadingPlan"
+                                    (click)="isClick = true;expandedElement=null"
+                                    *ngIf="!isLoadingPlan && (roleService.planPermission.subModule.insurance.capabilityList.Edit ||roleService.planPermission.subModule.insurance.capabilityList.Delete)"
                                     class="suggested-policies-icons">
                                     <mat-icon class="lh-16">more_vert</mat-icon>
                                 </button>
                                 <!-- suggestPolicyGi(inputData,element.insurance) -->
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item
+                                        *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Edit"
                                         (click)="inputData?.insuranceType == 1 ? suggestPolicy(element) : needAnalysis(null)">Edit</button>
-                                    <button mat-menu-item
+                                    <button *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Delete"
+                                        mat-menu-item
                                         (click)="deleteModal('INSURANCE',element.insurance)">Delete</button>
                                 </mat-menu>
                             </td>
@@ -277,7 +281,8 @@
                                         *ngIf="inputData?.insuranceType != 1">Detailed view</button>
                                     <!-- <button mat-menu-item
                                         (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button> -->
-                                    <button mat-menu-item
+                                    <button *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Delete"
+                                        mat-menu-item
                                         (click)="deleteModalRecommendations('INSURANCE',element)">Delete</button>
                                 </mat-menu>
                             </td>
@@ -427,7 +432,9 @@
                                         <!-- <button mat-menu-item *ngIf="element.advice"
                                             (click)="deleteModalRecommendations('INSURANCE',element)">Delete advice</button> -->
                                         <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
-                                            <button mat-menu-item [disabled]="!element.advice"
+                                            <button
+                                                *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Delete"
+                                                mat-menu-item [disabled]="!element.advice"
                                                 (click)="deleteModalRecommendations('INSURANCE',element)">Delete
                                                 Advice</button>
                                         </div>

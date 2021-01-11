@@ -28,6 +28,7 @@ import { DetailedViewInsurancePlanningComponent } from '../../detailed-view-insu
 import { SummaryPlanComponent } from '../../../summary-plan/summary-plan.component';
 import { SummaryPlanServiceService } from '../../../summary-plan/summary-plan-service.service';
 import { catchError } from 'rxjs/operators';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-life-insurance',
@@ -214,7 +215,8 @@ export class LifeInsuranceComponent implements OnInit {
     private UtilService: UtilService,
     private ref: ChangeDetectorRef,
     private activityService: ActiityService,
-    private summaryPlanService: SummaryPlanServiceService
+    private summaryPlanService: SummaryPlanServiceService,
+    public roleService: RoleService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
