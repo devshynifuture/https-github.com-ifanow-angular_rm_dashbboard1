@@ -153,7 +153,7 @@
               </mat-expansion-panel-header>
               <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.aumreconciliation.enabled"
                 routerLinkActive="bg-grey lter" mat-list-item
-                routerLink="/admin/backoffice-aum-reconciliation/reconciliation/cams">
+                [routerLink]="'/admin/backoffice-aum-reconciliation/reconciliation/' + visitedTab">
                 <span *ngIf="showTabs" class="title" mat-line>AUM Reconciliation</span>
               </a>
               <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.mis.enabled"
