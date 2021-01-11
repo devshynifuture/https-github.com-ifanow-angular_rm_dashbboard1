@@ -19,18 +19,22 @@
             </mat-tab>
         </mat-tab-group> -->
         <div class="pt-30">
-            <button class="br-0 text-custom proximaFont f-500" mat-button routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['cams']">
+            <button class="br-0 text-custom proximaFont f-500" mat-button
+                routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['cams']"
+                (click)="setRoutedOnValue('cams')">
                 CAMS
             </button>
-            <button class="br-0 text-custom proximaFont f-500" mat-button routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['karvy']">
+            <button class="br-0 text-custom proximaFont f-500" mat-button
+                routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['karvy']"
+                (click)="setRoutedOnValue('karvy')">
                 KARVY
             </button>
-            <button class="br-0 text-custom proximaFont f-500" mat-button routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['franklin']">
+            <button class="br-0 text-custom proximaFont f-500" mat-button
+                routerLinkActive="mat-stroked-button text-primitive" [routerLink]="['franklin']"
+                (click)="setRoutedOnValue('franklin')">
                 FRANKLIN
             </button>
         </div>
         <router-outlet></router-outlet>
     </div>
 </div>
-
-

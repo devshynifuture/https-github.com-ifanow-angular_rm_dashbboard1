@@ -128,17 +128,24 @@ export class MappedUserComponent implements OnInit {
       clientId: this.clientId
 
     }
-    console.log(obj)
-    this.onlineTransaction.mappedExistingUser(obj)
-      .subscribe(res => {
-        if (res) {
-          console.log('mappedUser', res)
-          this.eventService.openSnackBar("Mapped exsting user Successfully", "Dismiss");
-        } else {
-          this.eventService.openSnackBar("Mapped exsting user Unsuccessful", "Dismiss");
-        }
-      }, err => {
-        this.eventService.openSnackBar(err, "Dismiss");
-      })
+    if (this.stateCtrl.invalid) {
+      this.stateCtrl.setErrors({ invalid: true })
+      this.stateCtrl.markAllAsTouched();
+      return;
+    } else {
+      console.log(obj)
+      this.onlineTransaction.mappedExistingUser('')
+        .subscribe(res => {
+          if (res) {
+            console.log('mappedUser', res)
+            this.eventService.openSnackBar("Mapped exsting user Successfully", "Dismiss");
+          } else {
+            this.eventService.openSnackBar("Mapped exsting user Unsuccessful", "Dismiss");
+          }
+        }, err => {
+          this.eventService.openSnackBar(err, "Dismiss");
+        })
+    }
+
   }
 }
