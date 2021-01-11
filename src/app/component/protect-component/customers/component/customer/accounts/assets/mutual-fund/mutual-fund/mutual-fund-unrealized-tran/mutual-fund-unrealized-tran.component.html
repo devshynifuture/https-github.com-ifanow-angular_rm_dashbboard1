@@ -495,8 +495,7 @@
                </ng-container>
                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                <tr *matRowDef="let row; columns: displayedColumns; when: isSimpleRow" mat-row></tr>
-               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row
-                  [hidden]="viewMode == 'All Transactions'"></tr>
+               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
