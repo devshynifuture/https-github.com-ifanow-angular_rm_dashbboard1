@@ -1050,6 +1050,10 @@
   width: 99% !important;
 }
 
+.h-full {
+  height: 100% !important;
+}
+
 @media(max-width:1200px) {
   .w13-8 {
     width: 19.8% !important;
@@ -1063,6 +1067,6 @@
 }
 
 
-.img-max-width{
+.img-max-width {
   max-width: 100%;
 }
