@@ -226,46 +226,36 @@
 
                                         <span class="linebr"></span>
 
-                                        <p class="f-14 mb-0 roboto f-400">Monthly</p>
-                                        <h4 class="text-primary roboto f-400" *ngIf="!isLoadingGoals"><span
-                                                appFormatNumber [shouldRoundOff]="true"
-                                                [value]="goalSummaryCountObj?.monthlyInvestmentMappedToGoals ? goalSummaryCountObj?.monthlyInvestmentMappedToGoals : 0"></span>
-                                        </h4>
-                                        <div class="relClass" *ngIf="isLoadingGoals">
-                                            <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
-                                                <p class="text-primary roboto f-400">
-                                                    {{''}}</p>
-                                            </div>
-                                        </div>
-                                        <p class="f-14 mb-0 roboto f-400">Lumpsum</p>
-                                        <h4 class="text-primary roboto f-400" *ngIf="!isLoadingGoals"><span
-                                                appFormatNumber [shouldRoundOff]="true"
-                                                [value]="goalSummaryCountObj?.lumpsumInvestmentMappedToGoals ? goalSummaryCountObj?.lumpsumInvestmentMappedToGoals : 0"></span>
-                                        </h4>
-                                        <div class="relClass" *ngIf="isLoadingGoals">
-                                            <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
-                                                <p class="text-primary roboto f-400">
-                                                    {{''}}</p>
-                                            </div>
-                                        </div>
+                                        <div appSkeletonLoading [appSkeletonLoading]="isLoadingGoals">
+                                            <p class="f-14 mb-0 roboto f-400">Monthly</p>
+                                            <h4 *ngIf="!isLoadingGoals" class="text-primary roboto f-400">
+                                                <span appFormatNumber [shouldRoundOff]="true"
+                                                    [value]="goalSummaryCountObj?.monthlyInvestmentMappedToGoals ? goalSummaryCountObj?.monthlyInvestmentMappedToGoals : 0"></span>
+                                            </h4>
 
+                                            <div class="relClass" *ngIf="isLoadingGoals">
+                                                <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
+                                                    <p class="text-primary roboto f-400 mb-0">
+                                                        {{''}}</p>
+                                                </div>
+                                            </div>
+
+                                            <p class="f-14 mb-0 roboto f-400">Lumpsum</p>
+                                            <h4 class="text-primary roboto f-400" *ngIf="!isLoadingGoals"><span
+                                                    appFormatNumber [shouldRoundOff]="true"
+                                                    [value]="goalSummaryCountObj?.lumpsumInvestmentMappedToGoals ? goalSummaryCountObj?.lumpsumInvestmentMappedToGoals : 0"></span>
+                                            </h4>
+                                            <div class="relClass" *ngIf="isLoadingGoals">
+                                                <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
+                                                    <p class="text-primary roboto f-400 mb-0">
+                                                        {{''}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-md-4 pl-8 pr-0">
-                                    <div class="investmentBox text-center">
-                                        <p class="f-14 mb-10 l-18 roboto f-400">Additional <br> suggestions</p>
 
-                                        <span class="linebr"></span>
-
-                                        <p class="f-14 mb-0 roboto f-400">Monthly</p>
-                                        <h4 class="text-primary roboto f-400">₹14,000</h4>
-
-                                        <p class="f-14 mb-0 roboto f-400">Lumpsum</p>
-                                        <h4 class="text-primary roboto f-400">₹5,75,000</h4>
-
-                                    </div>
-                                </div> -->
                             </div>
 
                             <div class="pt-20" *ngIf="dataSource?.data?.length>0">
@@ -469,18 +459,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="insurancePlanList?.length > 0 && isLoadingSummary" class="relClass">
+                            <div *ngIf="insurancePlanList?.length > 0 && isLoadingSummary" class="">
                                 <div class="row bb c-p pt-10" *ngFor="let item of insurancePlanList">
-                                    <div [ngClass]="{'height23': isLoadingSummary}" class="bar">
-                                        <div class="col-md-2 p-0">
+                                    <div class="col-md-2 p-0 relClass">
+                                        <div [ngClass]="{'height23': isLoadingSummary}" class="bar">
                                             {{''}}
                                         </div>
-                                        <div class="col-md-10 pr-0 ">
-                                            <p class="f-14 m-0 roboto f-400">{{ '' }}</p>
-                                            <p class="f-14 mb-16 f-600"> <span appFormatNumber
-                                                    [shouldRoundOff]="true">{{''}}</span></p>
-                                        </div>
                                     </div>
+                                    <div class="col-md-10 pr-0">
+                                        <div class="relClass mb-10">
+                                            <div [ngClass]="{'height23': isLoadingSummary}" class="bar">
+                                            </div>
+                                        </div>
+
+                                        <div class="relClass mb-10">
+                                            <div [ngClass]="{'height23': isLoadingSummary}" class="bar">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
                             <div *ngIf="insurancePlanList?.length == 0 && !isLoadingSummary">
