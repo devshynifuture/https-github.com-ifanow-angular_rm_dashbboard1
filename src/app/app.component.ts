@@ -50,11 +50,12 @@ export class AppComponent implements AfterViewInit, OnInit {
     const obj = {
       hostName: data
     };
-    this.settingService.getDomainData(obj).subscribe(data => {
-      if (data) {
-        console.log(data);
-        AuthService.setDomainDetails(data);
-        this.setValuesAsPerDomain(data);
+    this.settingService.getDomainData(obj).subscribe(res => {
+      if (res) {
+        console.log(res);
+        res['hostName'] = data;
+        AuthService.setDomainDetails(res);
+        this.setValuesAsPerDomain(res);
       }
     },
       err => {

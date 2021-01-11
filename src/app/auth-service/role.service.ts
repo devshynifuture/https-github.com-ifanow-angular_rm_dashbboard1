@@ -84,9 +84,23 @@ export class RoleService {
   };
   portfolioPermission = {
     enabled: true,
+    subModule: {
+
+    }
   };
   transactionPermission = {
     enabled: true,
+    subModule: {
+      transactionsModule: {
+        enabled: true
+      },
+      investorsModule: {
+        enabled: true
+      },
+      mandateModule: {
+        enabled: true
+      }
+    }
   };
   peoplePermission = {
     enabled: true,
@@ -198,6 +212,29 @@ export class RoleService {
   };
   planPermission = {
     enabled: true,
+    subModule: {
+      cashflows: {
+        enabled: true
+      },
+      goals: {
+        enabled: true
+      },
+      insurance: {
+        enabled: true
+      },
+      profile: {
+        enabled: true
+      },
+      scenarios: {
+        enabled: true
+      },
+      summary: {
+        enabled: true
+      },
+      taxes: {
+        enabled: true
+      }
+    }
   };
   settingPermission = {
     enabled: true,
@@ -257,8 +294,11 @@ export class RoleService {
       adminDatasource.backoffice ? this.setBackofficePermissions(adminDatasource.backoffice.subModule) : this.backofficePermission.enabled = false;
       adminDatasource.dashboard ? this.setDashboardPermission(adminDatasource.dashboard.subModule) : '';
       adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
+      adminDatasource.plan ? this.setPlanPermission(adminDatasource.plan.subModule) : this.planPermission.enabled = false;
     } else {
       adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
+      adminDatasource.plan ? this.setPlanPermission(adminDatasource.plan.subModule) : this.planPermission.enabled = false;
+      adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     }
   }
 
@@ -381,6 +421,27 @@ export class RoleService {
     } else {
       this.overviewPermission.subModules.subscriptions.enabled = false;
     }
+  }
+
+  setPortfolioPermission(portfolioPermission) {
+
+  }
+
+  setPlanPermission(planPermission) {
+    this.planPermission.enabled = planPermission.plan.showModule
+    this.planPermission.subModule.summary.enabled = planPermission.plan.subModule.summary.showModule
+    this.planPermission.subModule.profile.enabled = planPermission.plan.subModule.profile.showModule
+    this.planPermission.subModule.insurance.enabled = planPermission.plan.subModule.insurance.showModule
+    this.planPermission.subModule.goals.enabled = planPermission.plan.subModule.goals.showModule
+    this.planPermission.subModule.taxes.enabled = planPermission.plan.subModule.taxes.showModule
+    this.planPermission.subModule.cashflows.enabled = planPermission.plan.subModule.cashflows.showModule
+    this.planPermission.subModule.scenarios.enabled = planPermission.plan.subModule.scenarios.showModule
+  }
+
+  setTransactionPermission(transactionPermission) {
+    this.transactionPermission.subModule.transactionsModule.enabled = transactionPermission.transactionsModule.showModule
+    this.transactionPermission.subModule.investorsModule.enabled = transactionPermission.investorsModule.showModule
+    this.transactionPermission.subModule.mandateModule.enabled = transactionPermission.mandateModule.showModule
   }
 
   goToValidClientSideUrl() {

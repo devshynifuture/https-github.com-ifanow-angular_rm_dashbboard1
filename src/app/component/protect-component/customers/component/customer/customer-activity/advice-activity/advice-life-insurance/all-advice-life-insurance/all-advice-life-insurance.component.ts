@@ -59,16 +59,16 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   adviceName: string;
   adviceNameObj: { adviceName: string; };
   familyMemberList: any;
-  constructor(private peopleService:PeopleService,private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
+  constructor(private peopleService: PeopleService, private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.adviceUtilService.getFamilyMemberList()
-    .subscribe(res => {
-      this.familyMemberList = res;
-    })
+      .subscribe(res => {
+        this.familyMemberList = res;
+      })
     this.adviceUtilService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
@@ -146,16 +146,16 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       catchError(error => of(error))
     );
     if (!this.familyMemberList && this.familyMemberList == '') {
-      familyMemberList = this.peopleService.getClientFamilyMemberListAsset({clientId: this.clientId})
+      familyMemberList = this.peopleService.getClientFamilyMemberListAsset({ clientId: this.clientId })
     } else {
       familyMemberList = empty().pipe(defaultIfEmpty(''));
 
     }
-    forkJoin(displayList, allAsset, portfolioLi,familyMemberList).subscribe(result => {
+    forkJoin(displayList, allAsset, portfolioLi, familyMemberList).subscribe(result => {
       this.globalObj['allAdviceLifeInsurance'] = result[1];
-      if(result[2]){
+      if (result[2]) {
         this.globalObj['LIData'] = result[2].insuranceList
-      }else{
+      } else {
         this.globalObj['LIData'] = [];
       }
       this.adviceUtilService.setStoredAdviceData(this.globalObj);
@@ -178,8 +178,8 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     });
   }
   filterLiData(data) {
-    if(data.length > 0){
-      data = data.filter(d => d.realOrFictitious === 1);
+    if (data.length > 0) {
+      data = data.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed' && d.status != 'Reduced paid up');
       data.forEach(element => {
         this.totalFundValues = 0;
         if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
@@ -189,7 +189,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
           });
         }
       });
-    }else{
+    } else {
       data = [];
     }
 
@@ -214,8 +214,8 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     });
     return filterdData;
   }
-  openDetailedView(heading,data) {
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+  openDetailedView(heading, data) {
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : 'Proposed policy'
     const sendData = {
       flag: 'detailedView',
@@ -229,8 +229,8 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       allInsurance: this.allInsurance,
       insuranceTypeId: data ? 1 : null,
       insuranceSubTypeId: data ? data.InsuranceDetails.insuranceSubTypeId : null,
-      adviceName : this.adviceName,
-      showInsurance: {heading : heading},
+      adviceName: this.adviceName,
+      showInsurance: { heading: heading },
     };
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(sendData).subscribe(
@@ -244,7 +244,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     );
   }
   getAllSchemeResponse(data) {
-    if(data.TERM_LIFE_INSURANCE || data.TRADITIONAL_LIFE_INSURANCE || data.ULIP_LIFE_INSURANCE){
+    if (data.TERM_LIFE_INSURANCE || data.TRADITIONAL_LIFE_INSURANCE || data.ULIP_LIFE_INSURANCE) {
       this.isLoading = false;
       console.log('data', data)
       this.dataSource = data;
@@ -270,7 +270,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       this.termDataSource['tableFlag'] = this.termDataSource.data.length == 0 ? false : true;
       this.traditionalDataSource['tableFlag'] = this.traditionalDataSource.data.length == 0 ? false : true;
       this.ulipDataSource['tableFlag'] = this.ulipDataSource.data.length == 0 ? false : true;
-    }else{
+    } else {
       this.isLoading = false;
       this.termDataSource = [];
       this.traditionalDataSource = [];
@@ -279,7 +279,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       this.traditionalDataSource['tableFlag'] = (this.traditionalDataSource.length == 0) ? false : true;
       this.ulipDataSource['tableFlag'] = (this.ulipDataSource.length == 0) ? false : true;
     }
-    
+
   }
   filterInsurance(key: string, value: any, name, array, dataSource) {
     let dataFiltered;
@@ -311,10 +311,10 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
         array.push(element);
       });
     }
-    if(liArray.length > 0 && data.length > 0){
+    if (liArray.length > 0 && data.length > 0) {
       liArray.forEach(element => {
         data.forEach(ele => {
-          if(ele.InsuranceDetails.id == element.InsuranceDetails.id){
+          if (ele.InsuranceDetails.id == element.InsuranceDetails.id) {
             element.hideGiveAdvice = true;
           }
         });
@@ -322,9 +322,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       liArray = liArray.filter(d => !d.hideGiveAdvice);
 
     }
-    
+
     if (liArray.length > 0) {
-      liArray = liArray.filter(d => d.realOrFictitious === 1);
+      liArray = liArray.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed' && d.status != 'Reduced paid up');
       array = [...liArray, ...array];
     }
     return array;
@@ -357,7 +357,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
 
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,this.familyMemberList);
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId, this.familyMemberList);
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
@@ -427,15 +427,15 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     return data;
   }
   openAddEditAdvice(value, data) {
-    if(data.childParentRel && data.childParentRel.FICT){
+    if (data && data.childParentRel && data.childParentRel.FICT) {
       data.InsuranceDetails.familyMemberName = data.childParentRel.FICT['familyMemberName']
     }
-    if(data.adviceDetails){
+    if (data && data.adviceDetails) {
       data.adviceDetails.adviceAllotment = data.adviceDetails.adviceToInsuranceProperties['adviceAllotment']
     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
-    this.adviceNameObj = {adviceName:this.adviceName};
+    this.adviceNameObj = { adviceName: this.adviceName };
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 }
     switch (value) {
       case "Term Insurance":
@@ -468,12 +468,12 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       state: 'open',
       componentName: SuggestAdviceComponent,
       childComponent: Component,
-      adviceNameObj:this.adviceNameObj,
-      adviceHeaderList:this.adviceHeaderList,
-      adviceToCategoryId :this.object.adviceToCategoryId,
-      adviceToCategoryTypeMasterId:3,
-      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
-      childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
+      adviceNameObj: this.adviceNameObj,
+      adviceHeaderList: this.adviceHeaderList,
+      adviceToCategoryId: this.object.adviceToCategoryId,
+      adviceToCategoryTypeMasterId: 3,
+      showHeaderEdit: (data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
+      childData: { adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance' },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -497,7 +497,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
         this.object.insuranceSubTypeId = 1;
         this.object.adviceToCategoryId = 42;
         this.object.showInsurance = 'TERM';
-        this.object.adviceToCategoryTypeMasterId=3;
+        this.object.adviceToCategoryTypeMasterId = 3;
         data ? data.InsuranceDetails.insuranceSubTypeId = 1 : '';
         break;
       case "Traditional Insurance":
@@ -531,8 +531,8 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
       data,
       id: 1,
       state: 'open',
-      adviceToCategoryTypeMasterId:this.object.adviceToCategoryTypeMasterId,
-      adviceToCategoryId:this.object.adviceToCategoryId,
+      adviceToCategoryTypeMasterId: this.object.adviceToCategoryTypeMasterId,
+      adviceToCategoryId: this.object.adviceToCategoryId,
       componentName: EditSuggestedAdviceComponent,
 
     };
