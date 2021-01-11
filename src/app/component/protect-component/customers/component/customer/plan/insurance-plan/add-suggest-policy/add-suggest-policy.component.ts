@@ -198,7 +198,7 @@ export class AddSuggestPolicyComponent implements OnInit {
         'policyTenure': this.suggestPolicyForm.get('tenure').value,
         'commencementDate': this.datePipe.transform(this.suggestPolicyForm.get('implementationDate').value, 'yyyy-MM-dd'),
         'realOrFictitious': 2,
-        'suggestion': this.storeData,
+        'suggestion': this.storeData ? this.storeData : '',
         'isRecommend': this.showRecommendation ? 1 : 0,
       }
       if (this.dataForEdit) {
@@ -219,9 +219,9 @@ export class AddSuggestPolicyComponent implements OnInit {
           id: null,
           insuranceCategoryTypeId: this.adviceToCategoryId,
           suggestedFrom: 1,
-          adviceDescription: rational ? rational : null,
+          adviceDescription: rational ? rational : '',
           adviceToCategoryTypeMasterId: 3,
-          adviceToLifeInsurance: { "insuranceAdviceId": 0, adviceDescription: rational ? rational : null },
+          adviceToLifeInsurance: { "insuranceAdviceId": 0, adviceDescription: rational ? rational : '' },
           adviceToCategoryId: this.adviceToCategoryId ? this.adviceToCategoryId : null,
           // adviceId: this.adviceForm.get('header').value,
           adviceId: 0,
