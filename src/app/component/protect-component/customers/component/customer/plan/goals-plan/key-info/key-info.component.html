@@ -91,86 +91,86 @@
       <i class="material-icons c-p pt-16 pr-12" (click)="close()"> clear</i>
     </div>
   </div>
-  <div class="wrapper-20 pt-72" *ngIf="data.singleOrMulti == 1">
+  <div class="wrapper-20 pt-80" *ngIf="data.singleOrMulti == 1">
     <div class="ba-light">
       <div class="row">
 
         <div class="col-md-6 bg-grey lter p-8 bb br">
           <p class="m-0 roboto f-500 text-black">Goal year</p>
         </div>
-        <div class="col-md-6 bg-grey lter p-8 bb br">
-          <p class="m-0 roboto text-right">{{data.dashboardData.goalYear}}</p>
+        <div class="col-md-6 bg-grey lter p-8 bb">
+          <p class="m-0 roboto text-right f-400">{{data.dashboardData.goalYear}}</p>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6 bg-grey lter p-8 bb br">
           <p class="m-0 roboto f-500 text-black">Present value</p>
         </div>
-        <div class="col-md-6 bg-grey lter p-8 bb br">
-          <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.presentValue}}</span></p>
+        <div class="col-md-6 bg-grey lter p-8 bb">
+          <p class="m-0 roboto text-right f-400">₹<span appFormatNumber>{{data.dashboardData.presentValue}}</span></p>
         </div>
 
       </div>
       <div class="row">
-        <div class="col-md-6 bg-grey lter p-8 bb br">
+        <div class="col-md-6 bg-grey lter p-8 br">
           <p class="m-0 roboto f-500 text-black">Future value</p>
         </div>
-        <div class="col-md-6 bg-grey lter p-8 bb br">
-          <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.futureValue}}</span></p>
+        <div class="col-md-6 bg-grey lter p-8">
+          <p class="m-0 roboto text-right f-400">₹<span appFormatNumber>{{data.dashboardData.futureValue}}</span></p>
         </div>
-      </div>
-
-
-
-      <div class="pt-20">
-        <p class="m-0 roboto f-500 text-black text-center pb-8">MONTHLY</p>
-      </div>
-      <div class="ba-light">
-        <div class="row">
-          <div class="col-md-6 bg-grey lter p-8 bb br">
-            <p class="m-0 roboto f-500 text-black">Equity</p>
-          </div>
-          <div class="col-md-6 bg-grey lter p-8 bb br">
-            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.equity_monthly}}</span></p>
-          </div>
-
-          <div class="col-md-6 bg-grey lter p-8  br">
-            <p class="m-0 roboto f-500 text-black">Debt</p>
-          </div>
-          <div class="col-md-6 bg-grey lter p-8 ">
-            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.debt_monthly}}</span></p>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="pt-20">
-        <p class="m-0 roboto f-500 text-black text-center pb-8">LUMPSUM</p>
-      </div>
-      <div class="ba-light">
-        <div class="row">
-          <div class="col-md-6 bg-grey lter p-8 bb br">
-            <p class="m-0 roboto f-500 text-black ">Equity</p>
-          </div>
-          <div class="col-md-6 bg-grey lter p-8 bb br">
-            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.lump_equity}}</span></p>
-          </div>
-
-          <div class="col-md-6 bg-grey lter p-8  br">
-            <p class="m-0 roboto f-500 text-black">Debt</p>
-          </div>
-          <div class="col-md-6 bg-grey lter p-8">
-            <p class="m-0 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.lump_debt}}</span></p>
-          </div>
-
-
-        </div>
-        <!-- <div class="row">
-          
-        </div> -->
       </div>
     </div>
+
+
+    <div class="pt-20">
+      <p class="m-0 roboto f-500 text-black pb-8">MONTHLY</p>
+    </div>
+    <div class="ba-light">
+      <div class="row">
+        <div class="col-md-6 bg-grey lter p-8 bb br">
+          <p class="m-0 roboto f-500 text-black">Equity</p>
+        </div>
+        <div class="col-md-6 bg-grey lter p-8 bb">
+          <p class="m-0 roboto text-right f-400">₹<span appFormatNumber>{{data.dashboardData.equity_monthly}}</span></p>
+        </div>
+
+        <div class="col-md-6 bg-grey lter p-8  br">
+          <p class="m-0 roboto f-500 text-black">Debt</p>
+        </div>
+        <div class="col-md-6 bg-grey lter p-8 ">
+          <p class="m-0 roboto text-right f-400">₹<span appFormatNumber>{{data.dashboardData.debt_monthly}}</span></p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pt-20">
+      <p class="m-0 roboto f-500 text-black pb-8">LUMPSUM</p>
+    </div>
+    <div class="ba-light">
+      <div class="row">
+        <div class="col-md-6 bg-grey lter p-8 bb br">
+          <p class="m-0 roboto f-500 text-black ">Equity</p>
+        </div>
+        <div class="col-md-6 bg-grey lter p-8 bb">
+          <p class="m-0 roboto text-right f-400">₹<span appFormatNumber>{{data.dashboardData.lump_equity}}</span></p>
+        </div>
+
+        <div class="col-md-6 bg-grey lter p-8  br">
+          <p class="m-0 roboto f-500 text-black">Debt</p>
+        </div>
+        <div class="col-md-6 bg-grey lter p-8">
+          <p class="m-0 roboto text-right f-400">₹<span appFormatNumber>{{data.dashboardData.lump_debt}}</span></p>
+        </div>
+
+
+      </div>
+      <!-- <div class="row">
+          
+        </div> -->
+    </div>
   </div>
+
   <div class="wrapper-20 pt-72" *ngIf="data.singleOrMulti == 2">
     <div class="ba-light">
       <div class="row">
@@ -187,7 +187,7 @@
             </div>
           </div>
         </div>
-        
+
       </div>
       <div class="row">
 
@@ -221,35 +221,40 @@
           </div>
         </div>
 
-        
-        
+
+
       </div>
       <div class="row">
         <div class="col-md-2 lter p-8 pb-0 bb br">
-          <p *ngFor="let d of data.dashboardData.key_arr_debt_monthly" class="mb-10 roboto text-left">{{d | date:'yyyy'}}</p>
+          <p *ngFor="let d of data.dashboardData.key_arr_debt_monthly" class="mb-10 roboto text-left">
+            {{d | date:'yyyy'}}</p>
         </div>
         <div class="col-md-2 lter p-8 pb-0 bb br">
-          <p *ngFor="let p of data.dashboardData.key_arr_debt_monthly" class="mb-10 roboto text-right">₹<span appFormatNumber>{{data.dashboardData.presentValue}}</span></p>
+          <p *ngFor="let p of data.dashboardData.key_arr_debt_monthly" class="mb-10 roboto text-right">₹<span
+              appFormatNumber>{{data.dashboardData.presentValue}}</span></p>
         </div>
         <div class="col-md-2 lter p-8 pb-0 bb br">
-          <p *ngFor="let p of goalYrAndFutValues" class="mb-10 roboto text-right">₹<span appFormatNumber>{{p}}</span></p>
+          <p *ngFor="let p of goalYrAndFutValues" class="mb-10 roboto text-right">₹<span appFormatNumber>{{p}}</span>
+          </p>
         </div>
 
         <div class="col-md-6 lter pr-0 pb-0 bb br">
-          <div class="row"> 
-          <div class="col-md-3 lter pr-8 pt-8 br">
-            <p *ngFor="let e of equity" class="mb-10 roboto text-right">₹<span appFormatNumber>{{e}}</span></p>
+          <div class="row">
+            <div class="col-md-3 lter pr-8 pt-8 br">
+              <p *ngFor="let e of equity" class="mb-10 roboto text-right">₹<span appFormatNumber>{{e}}</span></p>
+            </div>
+            <div class="col-md-3 lter pr-8 pt-8 br">
+              <p *ngFor="let d of debt" class="mb-10 roboto text-right">₹<span appFormatNumber>{{d}}</span></p>
+            </div>
+            <div class="col-md-3 lter pr-8 pt-8 br">
+              <p *ngFor="let el of equityLumpsum" class="mb-10 roboto text-right">₹<span appFormatNumber>{{el}}</span>
+              </p>
+            </div>
+            <div class="col-md-3 lter pr-8 pt-8 ">
+              <p *ngFor="let dl of debtLumpsum" class="mb-10  roboto text-right">₹<span appFormatNumber>{{dl}}</span>
+              </p>
+            </div>
           </div>
-          <div class="col-md-3 lter pr-8 pt-8 br">
-            <p *ngFor="let d of debt" class="mb-10 roboto text-right">₹<span appFormatNumber>{{d}}</span></p>
-          </div>
-          <div class="col-md-3 lter pr-8 pt-8 br">
-            <p *ngFor="let el of equityLumpsum" class="mb-10 roboto text-right">₹<span appFormatNumber>{{el}}</span></p>
-          </div>
-          <div class="col-md-3 lter pr-8 pt-8 ">
-            <p *ngFor="let dl of debtLumpsum" class="mb-10  roboto text-right">₹<span appFormatNumber>{{dl}}</span></p>
-          </div>
-        </div>
         </div>
 
 

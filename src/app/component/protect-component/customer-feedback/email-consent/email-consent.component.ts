@@ -35,11 +35,11 @@ export class EmailConsentComponent implements OnInit {
   adviceName: any;
   heading: any;
   clientData: any;
-  constructor(private dialog: MatDialog,private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) { 
+  constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
     this.clientData = AuthService.getClientData();
   }
-  displayedColumns2: string[] = ['position', 'investorName', 'policyName', 'currentValue', 'sumAssured', 'premium','advice','astatus','adate', 'view', 'actions'];
-  displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'expDate','advice','astatus','adate', 'view', 'actions'];
+  displayedColumns2: string[] = ['position', 'investorName', 'policyName', 'currentValue', 'sumAssured', 'premium', 'advice', 'astatus', 'adate', 'view', 'actions'];
+  displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'expDate', 'advice', 'astatus', 'adate', 'view', 'actions'];
   dataSource = new MatTableDataSource([{}, {}, {}]);
   selectedConsent = [];
   ngOnInit() {
@@ -64,42 +64,47 @@ export class EmailConsentComponent implements OnInit {
     );
   }
   openDialog(data): void {
-    if(data.adviceToLifeInsurance){
+    if (data.adviceToLifeInsurance) {
       let catId = data.adviceToLifeInsurance.insuranceCategoryTypeId;
-      let id = data ? (data.adviceToLifeInsurance ? (data.adviceToLifeInsurance.insuranceAdviceId) :this.adviceName ) :this.adviceName;
+      let id = data ? (data.adviceToLifeInsurance ? (data.adviceToLifeInsurance.insuranceAdviceId) : this.adviceName) : this.adviceName;
       this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
       this.heading = (catId == 42) ? 'Term Insurance' : (catId == 42) ? 'Term insurance' : (catId == 43) ? 'Traditional insurance' : 'Ulip insurance'
-      data.adviceDetails={adviceGivenDate:data.advice.createdDate,applicableDate:data.advice.applicableDate,
-      adviceDescription:data.adviceToLifeInsurance.adviceDescription,adviceStatusId:data.adviceToLifeInsurance.adviceStatusId,adviceAllotment:data.adviceToInsuranceProperties.adviceAllotment ? data.adviceToInsuranceProperties.adviceAllotment : null};
-    }else if(data.adviceToGenInsurance){
+      data.adviceDetails = {
+        adviceGivenDate: data.advice.createdDate, applicableDate: data.advice.applicableDate,
+        adviceDescription: data.adviceToLifeInsurance.adviceDescription, adviceStatusId: data.adviceToLifeInsurance.adviceStatusId, adviceAllotment: data.adviceToInsuranceProperties.adviceAllotment ? data.adviceToInsuranceProperties.adviceAllotment : null
+      };
+    } else if (data.adviceToGenInsurance) {
       let catId = data.adviceToGenInsurance.genInsuranceCategoryTypeId;
-      let id = data ? (data.adviceToGenInsurance ? (data.adviceToGenInsurance.genInsuranceAdviceId) :this.adviceName ) :this.adviceName;
-      this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' :  'Proposed policy'
+      let id = data ? (data.adviceToGenInsurance ? (data.adviceToGenInsurance.genInsuranceAdviceId) : this.adviceName) : this.adviceName;
+      this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Discontinue' : (id == 3) ? 'Port policy' : (id == 4) ? 'Increase sum assured' : (id == 5) ? 'Decrease sum assured' : (id == 6) ? 'Add members' : (id == 7) ? 'Remove members' : 'Proposed policy'
       this.heading = (catId == 34) ? 'Health Insurance' : (catId == 35) ? 'Personal accident' : (catId == 36) ? 'Critical illness' : (catId == 36) ? 'Critical illness' : (catId == 37) ? 'Motor insurance' :
-      (catId == 38) ? 'Travel insurance' :(catId == 39) ? 'Home insurance' : 'Fire & special perils insurance'
-      data.adviceDetails={adviceGivenDate:data.advice.createdDate,applicableDate:data.advice.applicableDate,
-        adviceDescription:data.adviceToGenInsurance.adviceDescription,adviceStatusId:data.adviceToGenInsurance.adviceStatusId,adviceAllotment:data.adviceToGenInsuranceProperties.adviceAllotment ? data.adviceToGenInsuranceProperties.adviceAllotment : null};
+        (catId == 38) ? 'Travel insurance' : (catId == 39) ? 'Home insurance' : 'Fire & special perils insurance'
+      data.adviceDetails = {
+        adviceGivenDate: data.advice.createdDate, applicableDate: data.advice.applicableDate,
+        adviceDescription: data.adviceToGenInsurance.adviceDescription, adviceStatusId: data.adviceToGenInsurance.adviceStatusId, adviceAllotment: data.adviceToGenInsuranceProperties.adviceAllotment ? data.adviceToGenInsuranceProperties.adviceAllotment : null
+      };
     }
-    
+
     const dialogRef = this.dialog.open(DialogDetailedViewInsPlanningComponent, {
-        width: '50%',
-        data: {data: data,
-          displayList: this.displayList,
-          allInsurance: this.allInsurance,
-          insuranceTypeId: data ? 1 : null,
-          insuranceSubTypeId: data ? data.insuranceSubTypeId : null,
-          adviceName : this.adviceName,
-          showInsurance: {heading :this.heading},
-         }
+      width: '50%',
+      data: {
+        data: data,
+        displayList: this.displayList,
+        allInsurance: this.allInsurance,
+        insuranceTypeId: data ? 1 : null,
+        insuranceSubTypeId: data ? data.insuranceSubTypeId : null,
+        adviceName: this.adviceName,
+        showInsurance: { heading: this.heading },
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        // setTimeout(() => {
-        //     this.bankList = this.enumService.getBank();
-        // }, 5000);
+      // setTimeout(() => {
+      //     this.bankList = this.enumService.getBank();
+      // }, 5000);
     })
 
-}
+  }
   openDetailedView(data) {
     const sendData = {
       flag: 'detailedView',
@@ -127,7 +132,21 @@ export class EmailConsentComponent implements OnInit {
     );
   }
   getSumAsssuredAndName(data, val) {
-    if (data[val] && data[val] && data[val].hasOwnProperty("insuredMembers") &&
+    // if (data[val] && data[val] && data[val].hasOwnProperty("insuredMembers") &&
+    //   data[val].insuredMembers.length > 0) {
+    //   data[val].displayHolderName = data[val].insuredMembers[0].name;
+    //   if (data[val].insuredMembers.length > 0) {
+    //     for (let i = 1; i < data[val].insuredMembers.length; i++) {
+    //       if (data[val].insuredMembers[i].name) {
+    //         const firstName = (data[val].insuredMembers[i].name as string).split(' ')[0];
+    //         data[val].displayHolderName += ', ' + firstName;
+    //       }
+    //     }
+    //   }
+    // } else {
+    //   data[val].displayHolderName = data[val].policyHolderName;
+    // }
+    if (data[val] && data[val].insuredMembers && data[val].hasOwnProperty("insuredMembers") &&
       data[val].insuredMembers.length > 0) {
       data[val].displayHolderName = data[val].insuredMembers[0].name;
       if (data[val].insuredMembers.length > 1) {
@@ -153,6 +172,18 @@ export class EmailConsentComponent implements OnInit {
     } else {
       data[val].sumAssured = data[val].sumInsuredIdv;
     }
+    if (!data[val].sumAssured && data[val].hasOwnProperty("insuredMembers") &&
+      data[val].insuredMembers.length > 0) {
+      data[val].sumAssured = 0;
+      data[val].insuredMembers.forEach(ele => {
+        data[val].sumAssured += ele.sumInsured;
+      });
+      if (data[val].sumAssured == 0) {
+        data[val].sumAssured = data[val].sumInsuredIdv;
+      }
+    } else {
+      data[val].sumAssured = data[val].sumInsuredIdv;
+    }
     if (data[val].hasOwnProperty("addOns") &&
       data[val].addOns.length > 0 && !data[val].sumAssured) {
       data[val].addOns.forEach(ele => {
@@ -169,16 +200,16 @@ export class EmailConsentComponent implements OnInit {
           this.id = element.advice.adviceToCategoryTypeMasterId;
           if (this.id == 4) {
             if (element.stringObject) {
-              if(element.stringObject.FICT && element.stringObject.REAL){
+              if (element.stringObject.FICT && element.stringObject.REAL) {
+                element.name = 'REAL'
                 this.getSumAsssuredAndName(element.stringObject, 'FICT');
                 this.getSumAsssuredAndName(element.stringObject, 'REAL');
-                this.name = 'REAL';
-              }else if(element.stringObject.FICT){
+              } else if (element.stringObject.FICT) {
+                element.name = 'FICT';
                 this.getSumAsssuredAndName(element.stringObject, 'FICT');
-                this.name = 'FICT';
-              }else{
+              } else {
+                element.name = 'REAL';
                 this.getSumAsssuredAndName(element.stringObject, 'REAL');
-                this.name = 'REAL';
               }
             }
           }

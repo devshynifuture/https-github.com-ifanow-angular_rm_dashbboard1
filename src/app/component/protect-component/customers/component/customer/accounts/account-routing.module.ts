@@ -19,6 +19,7 @@ const routes: Routes = [{
     {
       path: 'assets',
       loadChildren: () => import('./assets/assets.module').then(m => m.AssetsModule),
+      data: { preload: true }
       // data: { animation: 'Tab2' }
 
       // outlet: 'accountRouterOutlet'

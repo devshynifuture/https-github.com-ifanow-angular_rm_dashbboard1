@@ -1,3 +1,4 @@
+import { ReconciliationService } from 'src/app/component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from '../../../Data-service/event.service';
@@ -52,6 +53,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
   domainData: any;
+  visitedTab = '';
+  routedAUMReconTabSubs: Subscription;
 
   constructor(public authService: AuthService, private _eref: ElementRef,
     protected eventService: EventService, protected subinject: SubscriptionInject,
@@ -62,11 +65,20 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     private auth: AuthService,
     private utilService: UtilService, private peopleService: PeopleService,
     public roleService: RoleService,
-    public MfServiceService: MfServiceService) {
+    public MfServiceService: MfServiceService,
+    private reconService: ReconciliationService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
     super(eventService, subinject, dynamicComponentService);
+    this.routedAUMReconTabSubs = this.reconService.getRoutedOn()
+      .subscribe(value => {
+        if (value) {
+          this.visitedTab = value;
+        } else {
+          this.visitedTab = 'cams';
+        }
+      })
   }
 
   // getClientList(data) {
@@ -247,6 +259,12 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.getOrgProfiles();
     this.getPersonalProfiles();
 
+  }
+
+  ngOnDestroy() {
+    if (this.routedAUMReconTabSubs) {
+      this.routedAUMReconTabSubs.unsubscribe();
+    }
   }
 
   getOrgProfiles() {

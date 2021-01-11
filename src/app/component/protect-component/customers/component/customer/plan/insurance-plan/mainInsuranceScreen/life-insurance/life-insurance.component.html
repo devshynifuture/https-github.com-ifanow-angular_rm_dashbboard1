@@ -199,7 +199,7 @@
                         id="table-low">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
-                            <td mat-cell *matCellDef="let element" class="w-25">
+                            <td mat-cell *matCellDef="let element" class="w-25 bb-1">
                                 <div class="bar">
                                     {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
                                 </div>
@@ -210,7 +210,7 @@
                         <!-- Name Column -->
                         <ng-container matColumnDef="sum">
                             <th mat-header-cell class="w-20 text-right" *matHeaderCellDef> Sum assured </th>
-                            <td mat-cell *matCellDef="let element" class="text-right w-20 amt">
+                            <td mat-cell *matCellDef="let element" class="text-right w-20 amt bb-1">
                                 <div class="bar">
                                     {{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span
                                         appFormatNumber>
@@ -221,7 +221,7 @@
                         <!-- Weight Column -->
                         <ng-container matColumnDef="premium">
                             <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
-                            <td mat-cell class="text-right amt" *matCellDef="let element">
+                            <td mat-cell class="text-right amt bb-1" *matCellDef="let element">
                                 <div class="bar">{{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span
                                         appFormatNumber>
                                         {{element?.insurance?.premiumAmount}} </span></div>
@@ -240,8 +240,8 @@
 
                         <ng-container matColumnDef="advice">
                             <th mat-header-cell *matHeaderCellDef> Advice </th>
-                            <td mat-cell *matCellDef="let element">
-                                <div class="bar d-flex align-items-center justify-content-between">
+                            <td mat-cell *matCellDef="let element" class="bb-1">
+                                <div class="bar d-flex align-items-center justify-content-between ">
                                     {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
                                     <!-- <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
                                         keyboard_arrow_up
@@ -270,7 +270,7 @@
 
 
                             <th mat-header-cell *matHeaderCellDef> </th>
-                            <td class="text-right" mat-cell *matCellDef="let element">
+                            <td class="text-right bb-1" mat-cell *matCellDef="let element">
                                 <button mat-icon-button [matMenuTriggerFor]="menu4" *ngIf="!isLoadingPlan"
                                     class="suggested-policies-icons">
                                     <mat-icon class="lh-16">more_vert</mat-icon>
@@ -341,7 +341,7 @@
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell class="w-25 bl" *matHeaderCellDef> Policy name </th>
                                 <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null"
-                                    class="w-25 bl">
+                                    class="w-25 bl bb-1">
                                     <div class="bar">
                                         {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
                                     </div>
@@ -353,7 +353,7 @@
                             <ng-container matColumnDef="sum">
                                 <th mat-header-cell class="w-20 text-right" *matHeaderCellDef> Sum assured </th>
                                 <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null"
-                                    class="text-right   w-20 amt">
+                                    class="text-right   w-20 amt bb-1">
                                     <div class="bar">
                                         {{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span
                                             appFormatNumber>
@@ -364,8 +364,8 @@
                             <!-- Weight Column -->
                             <ng-container matColumnDef="premium">
                                 <th mat-header-cell class="textRight text-right" *matHeaderCellDef> Annual premium </th>
-                                <td mat-cell class="text-right   amt" (click)="isClick = false;expandedElement2=null"
-                                    *matCellDef="let element">
+                                <td mat-cell class="text-right bb-1  amt"
+                                    (click)="isClick = false;expandedElement2=null" *matCellDef="let element">
                                     <div class="bar">
                                         {{!isLoadingPlan || element?.insurance?.premiumAmount ? "₹" : ""}}<span
                                             appFormatNumber>
@@ -385,7 +385,7 @@
 
                             <ng-container matColumnDef="advice">
                                 <th mat-header-cell *matHeaderCellDef> Advice </th>
-                                <td mat-cell class=" " *matCellDef="let element"
+                                <td mat-cell class="bb-1" *matCellDef="let element"
                                     (click)="isClick = false;expandedElement2=null">
                                     <div class="bar d-flex align-items-center justify-content-between">
                                         {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
@@ -418,7 +418,7 @@
 
 
                                 <th mat-header-cell class="br" *matHeaderCellDef> </th>
-                                <td mat-cell class="c-p  br" [matMenuTriggerFor]="menu4" *matCellDef="let element">
+                                <td mat-cell class="c-p bb-1 br" [matMenuTriggerFor]="menu4" *matCellDef="let element">
                                     <img class="c-p " src="/assets/images/svg/dot-menu.svg">
 
 

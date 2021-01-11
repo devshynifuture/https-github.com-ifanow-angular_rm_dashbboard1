@@ -20,7 +20,7 @@
         <div class="row b-a">
             <div class="col-md-6 p-0">
                 <h5 class="text-center f-500 text-black bb-1 pt-12 pb-12 mb-16">Select existing policy</h5>
-                <div class="pl-12 pr-12">
+                <div class="pl-12 pr-12 pb-12">
                     <div class="scroll-table-health">
                         <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource"
                             class="skeletonAnimation" id="table-low" appSkeletonLoading
@@ -94,9 +94,10 @@
                                         </div> -->
                                         <div [matTooltip]="element.advice == null ? 'Advice is not given' : null">
                                             <button mat-menu-item [disabled]="!element.advice"
-                                            (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete Advice</button>
+                                                (click)="deleteModal('INSURANCE',element.insuranceDetails,'existingAdvice')">Delete
+                                                Advice</button>
                                         </div>
-                                       
+
                                     </mat-menu>
                                 </td>
                             </ng-container>
@@ -117,8 +118,9 @@
                         (click)="openHelthInsurance(showInsurance)">SELECT ONE
                     </button>
                 </div>
-                <p class="m-0 text-black roboto pt-20 pb-20 c-p pl-12 pr-12" *ngIf="!isLoading && dataSource.length > 0">
-                    <span  (click)="openHelthInsurance(showInsurance)">+ Add more</span>
+                <p class="m-0 text-black roboto pt-20 pb-20 c-p pl-12 pr-12"
+                    *ngIf="!isLoading && dataSource.length > 0">
+                    <span (click)="openHelthInsurance(showInsurance)">+ Add more</span>
                 </p>
             </div>
             <div class="col-md-6 bl-1 p-0">

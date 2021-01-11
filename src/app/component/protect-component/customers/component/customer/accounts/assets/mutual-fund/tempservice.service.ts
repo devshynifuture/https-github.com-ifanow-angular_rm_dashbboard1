@@ -163,7 +163,7 @@ export class TempserviceService {
     Object.keys(catObj).map(key => {
       // this.initializeValues(); // for initializing total values object
       let totalObj: any = {};
-      if (reportType != 'schemeName') {
+      if (reportType != 'schemeName' || reportType == 'ownerName') {
         (reportType == 'ownerName') ? filteredData.push({
           groupName: key,
           pan: catObj[key][0].pan,
@@ -171,6 +171,9 @@ export class TempserviceService {
         }) : filteredData.push({ groupName: key });
 
       }
+      let catObjLength = catObj[key].length;
+      const isgreatorThanZero = (number) => number.balanceUnit <= 0
+      let emptyObjOrNot = catObj[key].every(isgreatorThanZero);
       catObj[key].forEach((singleData) => {
         if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
           if (viewMode == 'All Transactions') {
@@ -221,8 +224,8 @@ export class TempserviceService {
 
             singleData.mutualFundTransactions.forEach((ele, ind) => {
               ele.indexId = (ind + 1);
-              if(ele.rtTypeId == 6 && !ele.fwTransactionType.includes("CAS")){
-                ele.fwTransactionType = ele.fwTransactionType+'(CAS)'
+              if (ele.rtTypeId == 6 && !ele.fwTransactionType.includes("CAS")) {
+                ele.fwTransactionType = ele.fwTransactionType + '(CAS)'
               }
               ele.currentAmount = ele.unit * ele.nav;
               filteredData.push(ele);
@@ -241,7 +244,12 @@ export class TempserviceService {
             }
           }
         } else {
-          if (filteredData.length > 0) {
+          // if (filteredData.length > 0) { /// commenting  for backup
+          //   if (filteredData[filteredData.length - 1].groupName) {
+          //     filteredData.pop();
+          //   }
+          // }
+          if (filteredData.length > 0 && emptyObjOrNot) {
             if (filteredData[filteredData.length - 1].groupName) {
               filteredData.pop();
             }
@@ -329,9 +337,9 @@ export class TempserviceService {
     absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
     xirr += (data.xirr) ? data.xirr : 0;
     divPayout += (data.dividendPayout) ? data.dividendPayout : 0;
-    if(data.currentValue == 0){
+    if (data.currentValue == 0) {
       withdrawals += (data.redemption) ? data.redemption : 0;
-    }else{
+    } else {
       withdrawals += (data.withdrawalsTillToday) ? data.withdrawalsTillToday : 0;
     }
     balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
@@ -419,9 +427,9 @@ export class TempserviceService {
       absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
       xirr += (data.xirr || data.xirr == 0) ? data.xirr : 0;
       allocationPer += (data.allocatedPercentage == 'NaN') ? 0 : (data.allocatedPercentage) ? data.allocatedPercentage : 0;
-      if(data.currentValue == 0){
+      if (data.currentValue == 0) {
         withdrawals += (data.redemption) ? data.redemption : 0;
-      }else{
+      } else {
         withdrawals += (data.withdrawalsTillToday) ? data.withdrawalsTillToday : 0;
       }
       sip += (data.sipAmount) ? data.sipAmount : 0;

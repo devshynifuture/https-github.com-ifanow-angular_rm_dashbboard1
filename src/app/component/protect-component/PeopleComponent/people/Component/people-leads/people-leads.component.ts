@@ -24,13 +24,20 @@ export class PeopleLeadsComponent implements OnInit {
   leadDataSource = new MatTableDataSource();
   isLoading: boolean;
   advisorId: any;
+  getOrgData: any;
+  userInfo: any;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('leadTableSort', { static: false }) leadTableSort: MatSort;
+  reportDate = new Date();
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService,
     public dialog: MatDialog, public eventService: EventService,
+    private utilService: UtilService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private cancelFlagService: CancelFlagService,
-    public roleService: RoleService) { }
+    public roleService: RoleService) {
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+  }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -75,9 +82,27 @@ export class PeopleLeadsComponent implements OnInit {
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows, tableTitle)
   }
-  pdf(tableTitle) {
+
+  fragmentData = { isSpinner: false };
+  returnValue: any;
+  pdf(template, tableTitle) {
+    // let rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.pdfGen.generatePdf(rows, tableTitle);
+
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
   }
   open(data, flag) {
     let component;

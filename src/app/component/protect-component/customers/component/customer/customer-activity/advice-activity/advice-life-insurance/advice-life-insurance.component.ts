@@ -382,7 +382,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     if(data && data.childParentRel && data.childParentRel.FICT){
       data.InsuranceDetails.familyMemberName = data.childParentRel.FICT['familyMemberName']
     }
-    if(data.adviceDetails){
+    if(data && data.adviceDetails){
       data.adviceDetails.adviceAllotment = data.adviceDetails.adviceToInsuranceProperties['adviceAllotment']
     }
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;

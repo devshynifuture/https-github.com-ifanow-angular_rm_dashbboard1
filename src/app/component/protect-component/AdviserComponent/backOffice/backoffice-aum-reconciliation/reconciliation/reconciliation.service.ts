@@ -3,7 +3,7 @@ import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpService } from 'src/app/http-service/http-service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { EventService } from '../../../../../../Data-service/event.service';
 import { HttpParams } from '@angular/common/http';
 @Injectable({
@@ -14,6 +14,8 @@ export class ReconciliationService {
         private http: HttpService,
         private eventService: EventService
     ) { }
+
+    routeOnObs = new BehaviorSubject(null);
 
     // api calling functions 
 
@@ -178,7 +180,14 @@ export class ReconciliationService {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_DELETE_AND_REORDER, data);
     }
 
+
     // common functions
 
+    getRoutedOn() {
+        return this.routeOnObs.asObservable();
+    }
 
+    setRoutedOn(data): void {
+        this.routeOnObs.next(data);
+    }
 }
