@@ -46,6 +46,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   clientName: any;
   userInfo: any;
   domainData: any;
+  tabValue: number;
 
   constructor(
     private router: Router,
@@ -136,7 +137,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     } else if (routeName == 'transact') {
       this.value = 5;
     }
-
+    this.activateTab();
     this.selected = 2;
     const passedParameter = history.state;
     this.clientId = passedParameter ? passedParameter.id : undefined;
@@ -157,6 +158,24 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
            this.eventService.showErrorMessage(error);
          }
        );*/
+  }
+
+  activateTab() {
+    if (this.router.url.includes('overview')) {
+      this.tabValue = 1;
+    }
+    if (this.router.url.includes('account')) {
+      this.tabValue = 2;
+    }
+    if (this.router.url.includes('plan')) {
+      this.tabValue = 3;
+    }
+    if (this.router.url.includes('activity')) {
+      this.tabValue = 4;
+    }
+    if (this.router.url.includes('transact')) {
+      this.tabValue = 5;
+    }
   }
 
   getClientData(data) {
@@ -200,6 +219,58 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
       }
     );
+  }
+
+  goToValidOverviewUrl() {
+    let url;
+    if (this.roleService.overviewPermission.subModules.myFeed.enabled) {
+      url = '/customer/detail/overview/myfeed'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.overviewPermission.subModules.profile.enabled) {
+      url = '/customer/detail/overview/profile'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.overviewPermission.subModules.documents.enabled) {
+      url = '/customer/detail/overview/documents'
+      this.router.navigate([url])
+      return
+    }
+  }
+
+  goToPlanValidUrl() {
+    let url;
+    if (this.roleService.planPermission.subModule.profile.enabled) {
+      url = 'customer/detail/plan/profile'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.planPermission.subModule.goals.enabled) {
+      url = 'customer/detail/plan/goals'
+      this.router.navigate([url])
+      return
+    }
+  }
+
+  goToPortfolioValidUrl() {
+    let url;
+    if (this.roleService.portfolioPermission.subModule.portfolioDashboard.enabled) {
+      url = '/customer/detail/account/summary'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.liabilities.enabled) {
+      url = '/customer/detail/account/liabilities'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.insurance.enabled) {
+      url = '/customer/detail/account/insurance'
+      this.router.navigate([url])
+      return
+    }
   }
 
   logout() {

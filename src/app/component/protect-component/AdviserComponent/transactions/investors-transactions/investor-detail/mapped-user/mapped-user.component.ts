@@ -28,6 +28,8 @@ export class MappedUserComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+
+  isLoading: boolean = false;
   isAdvisorSection = true;
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();

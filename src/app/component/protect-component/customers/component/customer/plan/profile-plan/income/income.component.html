@@ -34,7 +34,8 @@
                     *ngIf="dataSource.data.length > 0 && !isLoading">
                     <div class="pdfClass">
 
-                        <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                        <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1"
+                            *ngIf="!fragmentData.isSpinner && roleService.planPermission.subModule.profile.subModule.income.capabilityList.Download">
                             <img src="assets/images/svg/download-bordered.svg">
                         </a>
 
@@ -79,7 +80,8 @@
                             STATUS - MATURED
                         </button>
                     </mat-menu>
-                    <button (click)="addIncome('addIncome',null)" mat-stroked-button class="btn-primary addon v-middle">
+                    <button *ngIf="roleService.planPermission.subModule.profile.subModule.income.capabilityList.Add"
+                        (click)="addIncome('addIncome',null)" mat-stroked-button class="btn-primary addon v-middle">
                         ADD
                         NEW
                     </button>
@@ -196,7 +198,9 @@
                             <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
 
                             <mat-menu #menu4="matMenu">
-                                <button (click)="addIncome('editIncome',element)" mat-menu-item>Edit</button>
+                                <button
+                                    *ngIf="roleService.planPermission.subModule.profile.subModule.income.capabilityList.Edit"
+                                    (click)="addIncome('editIncome',element)" mat-menu-item>Edit</button>
                                 <button (click)="addIncomeDetail(element)" mat-menu-item>Detailed
                                     View
                                 </button>
@@ -205,7 +209,9 @@
                                         multiple type="file">
                                 </button>
                                 <!-- <button mat-menu-item>Activity</button> -->
-                                <button (click)="deleteModal('INCOME',element)" mat-menu-item>Delete</button>
+                                <button
+                                    *ngIf="roleService.planPermission.subModule.profile.subModule.income.capabilityList.Delete"
+                                    (click)="deleteModal('INCOME',element)" mat-menu-item>Delete</button>
                             </mat-menu>
                         </td>
                         <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
@@ -219,8 +225,9 @@
                 <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
                     <img class="width400" src="assets/images/svg/clients-img.svg">
                     <h4 class="pt-20">No income Found</h4>
-                    <button (click)="addIncome(null,null)" class="btn-primary addon v-middle mt-20"
-                        mat-stroked-button>ADD NEW
+                    <button *ngIf="roleService.planPermission.subModule.profile.subModule.income.capabilityList.Add"
+                        (click)="addIncome(null,null)" class="btn-primary addon v-middle mt-20" mat-stroked-button>ADD
+                        NEW
                     </button>
                 </div>
             </div>

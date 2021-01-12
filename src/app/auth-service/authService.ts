@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 // import {Router} from '@angular/router';
-import { Router } from '@angular/router';
-import { DashboardService } from '../component/protect-component/AdviserComponent/dashboard/dashboard.service';
+import {Router} from '@angular/router';
+import {DashboardService} from '../component/protect-component/AdviserComponent/dashboard/dashboard.service';
 
 @Injectable()
 export class AuthService {
@@ -205,6 +205,14 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  static setRefreshedOnce(refreshedOnce) {
+    sessionStorage.setItem('refreshedOnce', refreshedOnce);
+  }
+
+  static isRefreshedOnce() {
+    return sessionStorage.getItem('refreshedOnce');
   }
 
   logout() {

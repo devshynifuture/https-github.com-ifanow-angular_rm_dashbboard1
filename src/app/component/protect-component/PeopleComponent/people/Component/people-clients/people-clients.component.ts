@@ -39,13 +39,20 @@ export class PeopleClientsComponent implements OnInit {
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
   downloadLoader: boolean = false;
-
+  clientInfo: any;
+  getOrgData: any;
+  userInfo: any;
+  reportDate = new Date();
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
+    private utilService: UtilService,
     private subInjectService: SubscriptionInject, public eventService: EventService,
     private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelClientListService,
     public roleService: RoleService,
     private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, private enumDataService: EnumDataService,
   ) {
+    this.clientInfo = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   ngOnInit() {
@@ -137,10 +144,29 @@ export class PeopleClientsComponent implements OnInit {
     this.getFullClientList(title, flag);
   }
 
-  pdf(title, flag) {
+  fragmentData = { isSpinner: false };
+  returnValue: any;
+
+  pdf(template, tableTitle) {
     // const rows = this.tableEl._elementRef.nativeElement.rows;
     // this.pdfGen.generatePdf(rows, tableTitle);
-    this.getFullClientList(title, flag);
+    // this.getFullClientList(title, flag);
+
+
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
   }
 
   getFullClientList(title, flag) {

@@ -10,6 +10,7 @@ import * as Highcharts from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AppConstants } from 'src/app/services/app-constants';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-calculators',
@@ -18,7 +19,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 })
 export class CalculatorsComponent implements OnInit {
 
-  @Input() data :any;
+  @Input() data: any;
   validatorType = ValidatorType;
 
   incomeFG: FormGroup;
@@ -71,6 +72,7 @@ export class CalculatorsComponent implements OnInit {
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private planService: PlanService,
+    public roleService: RoleService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -149,8 +151,8 @@ export class CalculatorsComponent implements OnInit {
     }
   }
   pieChart(id) {
-    this.downPayement =parseFloat(((this.calculatedEMI.downPayment / this.calculatedEMI.goalAmount)*100).toFixed(2))
-    this.loanAmount = parseFloat(((this.calculatedEMI.loanAmount / this.calculatedEMI.goalAmount)*100).toFixed(2))
+    this.downPayement = parseFloat(((this.calculatedEMI.downPayment / this.calculatedEMI.goalAmount) * 100).toFixed(2))
+    this.loanAmount = parseFloat(((this.calculatedEMI.loanAmount / this.calculatedEMI.goalAmount) * 100).toFixed(2))
     console.log('this.downPayement', this.downPayement)
     console.log('this.loanAmount', this.loanAmount)
     Highcharts.chart('piechartMutualFund', {

@@ -2,7 +2,9 @@
     <div class="row" style="height: calc(100vh - 120px);">
         <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
             <ul class="vertical-menu">
-                <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
+                <li (click)="viewMode ='tab1'"
+                    *ngIf="roleService.planPermission.subModule.profile.subModule.income.enabled"
+                    [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img src="/assets/images/svg/income.svg">
@@ -12,7 +14,9 @@
                         </div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab2'" [ngClass]="{'activeColor':viewMode =='tab2'}" class="activeColor c-p">
+                <li (click)="viewMode ='tab2'"
+                    *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.enabled"
+                    [ngClass]="{'activeColor':viewMode =='tab2'}" class="activeColor c-p">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img src="/assets/images/svg/income.svg">
@@ -44,7 +48,9 @@
 
                     </div>
                 </li> -->
-                <li (click)="viewMode ='tab6'" [ngClass]="{'activeColor':viewMode =='tab6'}" class=" c-p">
+                <li (click)="viewMode ='tab6'"
+                    *ngIf="roleService.planPermission.subModule.profile.subModule.financialPlan.enabled"
+                    [ngClass]="{'activeColor':viewMode =='tab6'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img src="/assets/images/svg/income.svg">

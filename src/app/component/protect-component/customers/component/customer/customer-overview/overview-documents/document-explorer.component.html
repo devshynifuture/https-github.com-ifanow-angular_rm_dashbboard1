@@ -236,12 +236,14 @@
                                                         src="assets/images/svg/info-icon.svg">View
                                                     activity
                                                 </button>
-                                                <button (click)="openDialogCopy(element, 'Move')" *ngIf="valueTab != 4"
+                                                <button (click)="openDialogCopy(element, 'Move')"
+                                                    *ngIf="valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Move"
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/move-to-icon.svg">Move
                                                     to
                                                 </button>
-                                                <button (click)="openDialogCopy(element, 'Copy')" *ngIf=" valueTab != 4"
+                                                <button (click)="openDialogCopy(element, 'Copy')"
+                                                    *ngIf=" valueTab != 4 && roleService.overviewPermission.subModules.documents.documentCapabilityObj.Copy"
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/file-copy.svg">Copy to
                                                 </button>

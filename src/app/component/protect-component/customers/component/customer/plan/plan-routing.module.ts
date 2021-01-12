@@ -9,6 +9,7 @@ import { SummaryPlanComponent } from './summary-plan/summary-plan.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PlanComponent } from './plan.component';
+import { PlanGuard } from './plan.guard';
 // import {CustomerComponent} from './component/customer/customer.component';
 
 
@@ -22,7 +23,8 @@ const routes: Routes = [{
     },
     {
       path: 'profile',
-      loadChildren: () => import('./profile-plan/profile-plan.module').then(m => m.ProfilePlanModule)
+      loadChildren: () => import('./profile-plan/profile-plan.module').then(m => m.ProfilePlanModule),
+      canActivateChild: [PlanGuard]
     },
     {
       path: 'insurance',
@@ -30,7 +32,8 @@ const routes: Routes = [{
     },
     {
       path: 'goals',
-      loadChildren: () => import('./goals-plan/plan-goals.module').then(m => m.PlanGoalsModule)
+      loadChildren: () => import('./goals-plan/plan-goals.module').then(m => m.PlanGoalsModule),
+      canActivateChild: [PlanGuard]
     },
     {
       path: 'taxes',
