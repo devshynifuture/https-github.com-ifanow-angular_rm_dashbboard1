@@ -30,7 +30,7 @@
                 <div class="p-0 d-flex mr-10 align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <a *ngIf="fixedIncomeCapability.Download" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
@@ -59,7 +59,8 @@
                     </button>
                 </mat-menu>
 
-                <button mat-stroked-button class="btn-primary proximaFont addon v-middle ml-8"
+                <button *ngIf="fixedIncomeCapability.Add" mat-stroked-button
+                    class="btn-primary proximaFont addon v-middle ml-8"
                     (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
                 </button>
             </div>
@@ -199,8 +200,8 @@
 
 
                         <mat-menu #menu4="matMenu">
-                            <button (click)="openPortfolioSummary('addFixedDeposit',element)"
-                                mat-menu-item>Edit</button>
+                            <button *ngIf="fixedIncomeCapability.Edit"
+                                (click)="openPortfolioSummary('addFixedDeposit',element)" mat-menu-item>Edit</button>
                             <button (click)="openDetailedFixedDeposit('addFixedDeposit',element)" mat-menu-item>Detailed
                                 View
                             </button>
@@ -209,7 +210,8 @@
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
-                            <button (click)="deleteModal('FIXED DEPOSIT',element)" mat-menu-item>Delete</button>
+                            <button *ngIf="fixedIncomeCapability.Delet" (click)="deleteModal('FIXED DEPOSIT',element)"
+                                mat-menu-item>Delete</button>
                         </mat-menu>
 
                     </td>
@@ -228,7 +230,8 @@
                 <img src="assets/images/svg/documents-empty-states.svg">
 
                 <h4 class="text-center mt-12 mb-20"> No Fixed deposit found</h4>
-                <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                <button *ngIf="fixedIncomeCapability.Add" mat-stroked-button
+                    class="btn-primary proximaFont addon v-middle"
                     (click)="openPortfolioSummary('addFixedDeposit',null)"> ADD NEW
                 </button>
             </div>
@@ -247,7 +250,7 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
+                <a *ngIf="fixedIncomeCapability.Download" [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
@@ -272,7 +275,7 @@
                         STATUS - MATURED
                     </button>
                 </mat-menu>
-                <button mat-stroked-button class="btn-primary addon v-middle ml-8"
+                <button *ngIf="fixedIncomeCapability.Add" mat-stroked-button class="btn-primary addon v-middle ml-8"
                     (click)="openAddRecurringDeposit(null)">
                     ADD
                     NEW
@@ -394,7 +397,8 @@
                         <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
 
                         <mat-menu #menu4="matMenu">
-                            <button mat-menu-item (click)="openAddRecurringDeposit(element)">Edit</button>
+                            <button *ngIf="fixedIncomeCapability.Edit" mat-menu-item
+                                (click)="openAddRecurringDeposit(element)">Edit</button>
                             <button mat-menu-item (click)="detailedViewRecurringDeposit(element)">Detailed
                                 View</button>
                             <button mat-menu-item>Upload file
@@ -402,7 +406,8 @@
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
-                            <button mat-menu-item (click)="deleteModal('RECURRING DEPOSIT',element)">Delete</button>
+                            <button *ngIf="fixedIncomeCapability.Delete" mat-menu-item
+                                (click)="deleteModal('RECURRING DEPOSIT',element)">Delete</button>
                         </mat-menu>
 
                     </td>
@@ -416,7 +421,8 @@
             <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-36 flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">No Recurring deposits found</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddRecurringDeposit(null)">
+                <button *ngIf="fixedIncomeCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
+                    (click)="openAddRecurringDeposit(null)">
                     ADD NEW
                 </button>
             </div>
@@ -432,7 +438,7 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
+                <a *ngIf="fixedIncomeCapability.Download" [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
@@ -458,7 +464,8 @@
                         STATUS - MATURED
                     </button>
                 </mat-menu>
-                <button mat-stroked-button class="btn-primary addon v-middle  ml-8" (click)="openBonds(null)"> ADD NEW
+                <button *ngIf="fixedIncomeCapability.Add" mat-stroked-button class="btn-primary addon v-middle  ml-8"
+                    (click)="openBonds(null)"> ADD NEW
                 </button>
             </div>
         </div>
@@ -611,14 +618,16 @@
                             <img *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
 
                             <mat-menu #menu4="matMenu">
-                                <button mat-menu-item (click)="openBonds(element)">Edit</button>
+                                <button *ngIf="fixedIncomeCapability.Edit" mat-menu-item
+                                    (click)="openBonds(element)">Edit</button>
                                 <button mat-menu-item (click)="detailedViewBonds(element)">Detailed view</button>
                                 <button mat-menu-item>Upload file
                                     <input (change)="fetchData('Bonds',$event,element,15)" class="uploadInput"
                                         id="file-4" multiple type="file">
                                 </button>
                                 <!-- <button mat-menu-item>Activity</button> -->
-                                <button mat-menu-item (click)="deleteModal('BOND',element)">Delete</button>
+                                <button *ngIf="fixedIncomeCapability.Delete" mat-menu-item
+                                    (click)="deleteModal('BOND',element)">Delete</button>
                             </mat-menu>
 
                         </td>
@@ -633,7 +642,8 @@
             <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-36 flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">No Bonds found</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle" (click)="openBonds(null)"> ADD NEW
+                <button *ngIf="fixedIncomeCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
+                    (click)="openBonds(null)"> ADD NEW
                 </button>
             </div>
         </div>

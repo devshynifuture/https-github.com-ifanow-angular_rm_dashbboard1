@@ -26,6 +26,7 @@ import { DatailedViewNpsHoldingsComponent } from '../add-nps/datailed-view-nps-h
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 @Component({
@@ -89,6 +90,7 @@ export class RetirementAccountComponent implements OnInit {
   reportDate: Date;
   fragmentData = { isSpinner: false };
   returnValue: any;
+  retirementAccCapability: any = {};
 
   // async ExportTOExcel(value) {
   //   this.excelData = []
@@ -221,7 +223,8 @@ export class RetirementAccountComponent implements OnInit {
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
-    private assetValidation: AssetValidationService) {
+    private assetValidation: AssetValidationService,
+    public roleService: RoleService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -239,6 +242,7 @@ export class RetirementAccountComponent implements OnInit {
   datasource16;
   // isLoading = true;
   ngOnInit() {
+    this.retirementAccCapability = this.roleService.portfolioPermission.subModule.assets.subModule.realEstate.capabilityList
     this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { ActivatedRoute } from '@angular/router';
 import { AssetValidationService } from '../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-mutual-fund',
@@ -49,7 +50,8 @@ export class MutualFundComponent implements OnInit {
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,
     public routerActive: ActivatedRoute, private assetValidation: AssetValidationService,
-    private mfService: MfServiceService, private settingService: SettingsService, private cd: ChangeDetectorRef) {
+    private mfService: MfServiceService, private settingService: SettingsService,
+    private cd: ChangeDetectorRef, public roleService: RoleService) {
   }
 
   ngOnInit() {

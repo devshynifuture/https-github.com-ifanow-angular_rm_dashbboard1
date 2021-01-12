@@ -23,6 +23,7 @@ import { DatePipe } from '@angular/common';
 import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
 import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 @Component({
@@ -137,6 +138,8 @@ export class MutualFundSummaryComponent implements OnInit {
   loadingDone = false;
   download: boolean;
   pdfDownload: boolean;
+  mfCapability: any = {};
+  mfSummaryCapability: any = {};
 
   // setTrueKey = false;
 
@@ -167,6 +170,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private onlineTransact: OnlineTransactionService,
     private activatedRoute: ActivatedRoute,
     private assetValidation: AssetValidationService,
+    public roleService: RoleService,
     private cd: ChangeDetectorRef) {
     this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
       if (queryParamMap.has('clientId')) {
@@ -203,6 +207,8 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
+    this.mfSummaryCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList
     this.initPoint();
   }
 

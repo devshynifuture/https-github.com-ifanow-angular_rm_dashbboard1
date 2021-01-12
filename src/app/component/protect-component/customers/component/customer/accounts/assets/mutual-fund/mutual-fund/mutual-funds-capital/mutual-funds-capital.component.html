@@ -8,7 +8,8 @@
             <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
                 <!-- <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1"> -->
 
-                <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1"
+                    *ngIf="!fragmentData.isSpinner && mfCaptialGainCapability.Download">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <div class="hide" id="loadingDone" *ngIf="loadingDone == true">

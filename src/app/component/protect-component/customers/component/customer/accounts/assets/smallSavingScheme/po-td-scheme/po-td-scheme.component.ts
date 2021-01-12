@@ -15,6 +15,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-po-td-scheme',
@@ -56,6 +57,7 @@ export class PoTdSchemeComponent implements OnInit {
   getOrgData: any;
   returnValue: any;
   fragmentData = { isSpinner: false };
+  smallSavingCapability: any = {};
 
   constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
@@ -65,7 +67,8 @@ export class PoTdSchemeComponent implements OnInit {
     private cusService: CustomerService,
     private assetValidation: AssetValidationService,
     private _bottomSheet: MatBottomSheet,
-    private subInjectService: SubscriptionInject) {
+    private subInjectService: SubscriptionInject,
+    public roleService: RoleService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -78,6 +81,7 @@ export class PoTdSchemeComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
+    this.smallSavingCapability = this.roleService.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.capabilityList;
 
     if (!this.dataList && !this.assetValidation.potdlist) {
       this.getPoTdSchemedata();

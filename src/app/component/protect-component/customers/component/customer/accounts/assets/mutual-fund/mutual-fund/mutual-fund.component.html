@@ -7,11 +7,21 @@
           <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="changeViewMode('Overview Report')">Overview Report</button>
-          <button mat-menu-item (click)="changeViewMode('Summary')">Summary</button>
-          <button mat-menu-item (click)="changeViewMode('All Transactions')">All Transactions</button>
-          <button mat-menu-item (click)="changeViewMode('Unrealized Transactions')">Unrealized Transactions</button>
-          <button mat-menu-item (click)="changeViewMode('Capital Gains')">Capital Gains</button>
+          <button
+            *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.enabled"
+            mat-menu-item (click)="changeViewMode('Overview Report')">Overview Report</button>
+          <button
+            *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled"
+            mat-menu-item (click)="changeViewMode('Summary')">Summary</button>
+          <button
+            *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled"
+            mat-menu-item (click)="changeViewMode('All Transactions')">All Transactions</button>
+          <button
+            *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.enabled"
+            mat-menu-item (click)="changeViewMode('Unrealized Transactions')">Unrealized Transactions</button>
+          <button
+            *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.enabled"
+            mat-menu-item (click)="changeViewMode('Capital Gains')">Capital Gains</button>
 
         </mat-menu>
       </div>

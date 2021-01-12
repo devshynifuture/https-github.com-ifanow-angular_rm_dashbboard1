@@ -1,27 +1,28 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {AddMutualFundComponent} from '../add-mutual-fund/add-mutual-fund.component';
-import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
-import {CustomerService} from '../../../../../customer.service';
-import {MatTableDataSource} from '@angular/material';
-import {map} from 'rxjs/operators';
-import {MfServiceService} from '../../mf-service.service';
+import { CustomerService } from '../../../../../customer.service';
+import { MatTableDataSource } from '@angular/material';
+import { map } from 'rxjs/operators';
+import { MfServiceService } from '../../mf-service.service';
 // import { WebworkerService } from 'src/app/services/web-worker.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
-import {DatePipe} from '@angular/common';
-import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import {MfImportCasFileComponent} from './../../mutual-fund/mf-import-cas-file/mf-import-cas-file.component';
-import {Input} from '@angular/core';
-import {ChangeDetectorRef} from '@angular/core';
-import {Subscription} from 'rxjs';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { DatePipe } from '@angular/common';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { MfImportCasFileComponent } from './../../mutual-fund/mf-import-cas-file/mf-import-cas-file.component';
+import { Input } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 HC_exporting(Highcharts);
 
@@ -55,7 +56,7 @@ export class MutualFundOverviewComponent implements OnInit {
   datasource1 = new MatTableDataSource([{}, {}, {}]);
   @Output() getCountData = new EventEmitter();
   subCategoryArray: any;
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   rightFilterData: any;
   showHideTable: any;
   showSummaryBar = true;
@@ -96,7 +97,7 @@ export class MutualFundOverviewComponent implements OnInit {
   returnValue: any;
   transactionTypeList: any;
   changeViewModeSet: any;
-  @ViewChild('mfOverviewTemplate', {static: false}) mfOverviewTemplate: ElementRef;
+  @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
   svg: string;
   chart: Highcharts.Chart;
   reponseData: any;
@@ -129,15 +130,19 @@ export class MutualFundOverviewComponent implements OnInit {
   getMfDataSubs: Subscription;
   queryParamsSubs: Subscription;
   latestNavDate: any;
+  mfCapability: any;
+  overviewReportCapability: any = {};
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
-              private mfService: MfServiceService,
-              public routerActive: ActivatedRoute,
-              private backOfficeService: BackOfficeService,
-              private router: Router,
-              public eventService: EventService, private custumService: CustomerService,
-              private ref: ChangeDetectorRef,
-              private MfServiceService: MfServiceService, private settingService: SettingsService) {
+    private mfService: MfServiceService,
+    public routerActive: ActivatedRoute,
+    private backOfficeService: BackOfficeService,
+    private router: Router,
+    public eventService: EventService, private custumService: CustomerService,
+    private ref: ChangeDetectorRef,
+    private MfServiceService: MfServiceService, private settingService: SettingsService,
+    public roleService: RoleService
+  ) {
     if (routerActive) {
       this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
         if (queryParamMap.has('clientId')) {
@@ -174,6 +179,8 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
+    this.overviewReportCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.capabilityList
     this.initPoint();
     if (!AuthService.isRefreshedOnce()) {
       AuthService.setRefreshedOnce(true);
@@ -284,7 +291,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   teamMemberListGet() {
     this.adminAdvisorIds = [];
-    this.custumService.getSubAdvisorListValues({advisorId: this.advisorId})
+    this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -434,8 +441,8 @@ export class MutualFundOverviewComponent implements OnInit {
         // mfService: this.mfService
       };
       // Create a new
-      const worker = new Worker('../../mutual-fund.worker.ts', {type: 'module'});
-      worker.onmessage = ({data}) => {
+      const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
+      worker.onmessage = ({ data }) => {
         this.totalValue = data.totalValue;
         this.sendaata.totalValue = this.totalValue;
         this.MfServiceService.setSendData(this.sendaata);
@@ -714,9 +721,9 @@ export class MutualFundOverviewComponent implements OnInit {
           data: 'a. Investment',
           amts: (this.cashFlowObj.cashFlowInvestment) ? this.cashFlowObj.cashFlowInvestment : 0
         },
-        {data: 'b. Switch In', amts: (this.cashFlowObj.cashFlowSwitchIn) ? this.cashFlowObj.cashFlowSwitchIn : 0},
-        {data: 'c. Switch Out', amts: (this.cashFlowObj.cashFlowSwitchOut) ? this.cashFlowObj.cashFlowSwitchOut : 0},
-        {data: 'd. Redemption', amts: (this.cashFlowObj.cashFlowRedemption) ? this.cashFlowObj.cashFlowRedemption : 0},
+        { data: 'b. Switch In', amts: (this.cashFlowObj.cashFlowSwitchIn) ? this.cashFlowObj.cashFlowSwitchIn : 0 },
+        { data: 'c. Switch Out', amts: (this.cashFlowObj.cashFlowSwitchOut) ? this.cashFlowObj.cashFlowSwitchOut : 0 },
+        { data: 'd. Redemption', amts: (this.cashFlowObj.cashFlowRedemption) ? this.cashFlowObj.cashFlowRedemption : 0 },
         {
           data: 'e. Dividend Payout',
           amts: (this.cashFlowObj.cashFlowDividendPayout) ? this.cashFlowObj.cashFlowDividendPayout : 0
@@ -729,7 +736,7 @@ export class MutualFundOverviewComponent implements OnInit {
           data: 'g. Market Value',
           amts: (this.cashFlowObj.cashFlowMarketValue) ? this.cashFlowObj.cashFlowMarketValue : 0
         },
-        {data: 'h. Net Gain (g-f)', amts: (this.cashFlowObj.cashFlowNetGain) ? this.cashFlowObj.cashFlowNetGain : 0},
+        { data: 'h. Net Gain (g-f)', amts: (this.cashFlowObj.cashFlowNetGain) ? this.cashFlowObj.cashFlowNetGain : 0 },
         {
           data: 'i. Lifetime XIRR (All Transactions)',
           amts: (this.cashFlowObj.cashFlowLifetimeXirr) ? this.cashFlowObj.cashFlowLifetimeXirr : 0
@@ -1007,7 +1014,7 @@ export class MutualFundOverviewComponent implements OnInit {
         verticalAlign: 'middle',
         y: 60
       },
-      exporting: {enabled: false},
+      exporting: { enabled: false },
       tooltip: {
         pointFormat: ' <b>{point.percentage:.1f}%</b>'
       },
@@ -1120,7 +1127,7 @@ export class MutualFundOverviewComponent implements OnInit {
     }
     const fragmentData = {
       flag,
-      data: {flag},
+      data: { flag },
       id: 1,
       state: flag == 'addMutualFund' ? 'open' : 'open65',
       componentName: component
