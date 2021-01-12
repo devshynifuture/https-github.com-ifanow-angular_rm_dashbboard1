@@ -24,6 +24,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { forkJoin, of } from 'rxjs';
 import { SummaryPlanServiceService } from '../../plan/summary-plan/summary-plan-service.service';
 import { catchError } from 'rxjs/operators';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -152,11 +153,17 @@ export class ExpensesComponent implements OnInit {
     private constantService: ConstantsService, private eventService: EventService,
     public dialog: MatDialog, private util: UtilService, public peopleService: PeopleService,
     private summaryPlanService: SummaryPlanServiceService,
-    private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef,
+    public roleService: RoleService) {
   }
 
   ngOnInit() {
     console.log(this.finPlanObj);
+    if (this.roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled) {
+      this.viewMode = "Transactions"
+    } else {
+      this.viewMode = "Budget"
+    }
     this.summaryPlanService.getExpenseData()
       .subscribe(res => {
         this.storedData = '';
@@ -183,7 +190,7 @@ export class ExpensesComponent implements OnInit {
       // this.getListFamilyMem()
     } else {
       this.getStartAndEndDate('1');
-      this.viewMode = 'Transactions';
+      // this.viewMode = 'Transactions';
       if (this.chekToCallApi()) {
         this.getListFamilyMem()
         // this.getAllExpense();

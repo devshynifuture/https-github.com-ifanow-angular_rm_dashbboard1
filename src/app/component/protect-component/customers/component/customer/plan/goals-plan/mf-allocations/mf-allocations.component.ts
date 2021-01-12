@@ -1,16 +1,17 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
-import {PlanService} from '../../plan.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {LoaderFunction, UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {AddGoalService} from '../add-goal/add-goal.service';
-import {Subscriber} from 'rxjs';
-import {ReallocateAssetComponent} from '../reallocate-asset/reallocate-asset.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { PlanService } from '../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { LoaderFunction, UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { AddGoalService } from '../add-goal/add-goal.service';
+import { Subscriber } from 'rxjs';
+import { ReallocateAssetComponent } from '../reallocate-asset/reallocate-asset.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-mf-allocations',
@@ -59,7 +60,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     public loaderFn: LoaderFunction,
     private allocationService: AddGoalService,
     private allocateOtherAssetService: AddGoalService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public roleService: RoleService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

@@ -47,6 +47,7 @@ import { SaveFinPlanSectionComponent } from '../save-fin-plan-section/save-fin-p
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { CrmNotesComponent } from 'src/app/component/protect-component/AdviserComponent/Activities/crm-notes/crm-notes.component';
 import { OverviewRiskProfileComponent } from '../../../customer-overview/overview-profile/overview-risk-profile/overview-risk-profile.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -152,7 +153,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     private summaryPlanService: SummaryPlanServiceService,
     private planService: PlanService,
     private peopleService: PeopleService,
-    private subInjectService: SubscriptionInject) {
+    private subInjectService: SubscriptionInject,
+    public roleService: RoleService) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
     this.clientData = AuthService.getClientData();

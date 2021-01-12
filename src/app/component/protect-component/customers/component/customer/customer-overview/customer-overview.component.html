@@ -10,16 +10,17 @@
     <div class="col-md-8 col-lg-8 p-0 link-width">
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a *ngIf="roleService.overviewPermission.subModules.myFeed.enabled"
-                [routerLink]="['/customer/detail/overview/myfeed']" mat-tab-link routerLinkActive="active">MY FEED</a>
+                [routerLink]="['/customer/detail/overview/myfeed']" (click)="_value=1" mat-tab-link
+                routerLinkActive="active">MY FEED</a>
             <a *ngIf="roleService.overviewPermission.subModules.profile.enabled"
-                [routerLink]="['/customer/detail/overview/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
+                [routerLink]="['/customer/detail/overview/profile']" (click)="_value=2" mat-tab-link
+                routerLinkActive="active">PROFILE</a>
             <a *ngIf="roleService.overviewPermission.subModules.documents.enabled"
-                [routerLink]="['/customer/detail/overview/documents']" mat-tab-link
+                [routerLink]="['/customer/detail/overview/documents']" (click)="_value=3" mat-tab-link
                 routerLinkActive="active">DOCUMENTS</a>
             <!-- <a [routerLink]="['/customer/detail/overview/email/inbox']" mat-tab-link routerLinkActive="active">EMAIL</a> -->
-            <a *ngIf="roleService.overviewPermission.subModules.subscriptions.enabled" class="width-140"
-                [routerLink]="['/customer/detail/overview/subscription/subscriptions']" mat-tab-link
-                routerLinkActive="active">SUBSCRIPTION</a>
+            <a *ngIf="roleService.overviewPermission.subModules.subscriptions.enabled" [ngClass]="{'active': _value==5}"
+                class="width-140" (click)="goToValidSubscriptionPage();_value=5" mat-tab-link>SUBSCRIPTION</a>
         </nav>
     </div>
 

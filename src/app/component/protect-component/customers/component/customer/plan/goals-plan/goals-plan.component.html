@@ -317,15 +317,21 @@
 
                                             <div class="bar">
 
-                                                <button mat-icon-button class="c-p" [matMenuTriggerFor]="menu">
+                                                <button
+                                                    *ngIf="roleService.planPermission.subModule.goals.subModule.allocations.capabilityList.Edit || roleService.planPermission.subModule.goals.subModule.allocations.capabilityList.Delete"
+                                                    mat-icon-button class="c-p" [matMenuTriggerFor]="menu">
                                                     <mat-icon>more_vert</mat-icon>
                                                 </button>
 
 
                                                 <mat-menu #menu="matMenu">
-                                                    <button mat-menu-item (click)="reallocateAsset(allocation)">Change
+                                                    <button
+                                                        *ngIf="roleService.planPermission.subModule.goals.subModule.allocations.capabilityList.Edit"
+                                                        mat-menu-item (click)="reallocateAsset(allocation)">Change
                                                         allocation percentage</button>
-                                                    <button mat-menu-item (click)="removeAllocation(allocation)">Remove
+                                                    <button
+                                                        *ngIf="roleService.planPermission.subModule.goals.subModule.allocations.capabilityList.Delete"
+                                                        mat-menu-item (click)="removeAllocation(allocation)">Remove
                                                         Allocation</button>
                                                 </mat-menu>
                                             </div>
@@ -521,17 +527,23 @@
                             <h5 class="m-0 f-500 pb-8">Loan deatils</h5>
                         </div>
                         <div class="col-md-2 text-right pr-0">
-                            <button [matMenuTriggerFor]="menu" mat-button class="c-p more-dots-btn">
+                            <button
+                                *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.capabilityList.Edit || roleService.planPermission.subModule.goals.subModule.calculators.capabilityList.Delete"
+                                [matMenuTriggerFor]="menu" mat-button class="c-p more-dots-btn">
                                 <i class="material-icons">
                                     more_vert
                                 </i>
                             </button>
 
                             <mat-menu #menu="matMenu">
-                                <button mat-menu-item
+                                <button
+                                    *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.capabilityList.Edit"
+                                    mat-menu-item
                                     (click)="openInSideBar(selectedGoal?.remainingData?.loan, 'openCalculators')">Edit
                                     Loan</button>
-                                <button mat-menu-item (click)="deleteLoan(selectedGoal?.remainingData?.loan)">Delete
+                                <button
+                                    *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.capabilityList.Delete"
+                                    mat-menu-item (click)="deleteLoan(selectedGoal?.remainingData?.loan)">Delete
                                     Loan</button>
                             </mat-menu>
                         </div>
@@ -632,11 +644,15 @@
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                    <button mat-stroked-button class="in-btn"
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.goals.subModule.allocations.enabled"
+                                        mat-stroked-button class="in-btn"
                                         (click)="openInSideBar(null, 'openallocations')">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
 
-                                    <button mat-stroked-button class="in-btn-two"
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.goals.subModule.mfAllocations.enabled"
+                                        mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openMfAllocation')">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">MF allocations</button>
                                 </div>
@@ -646,11 +662,13 @@
 
 
 
-                                    <button mat-stroked-button class="in-btn"
-                                        (click)="openInSideBar(null, 'openKeyinfo')">
+                                    <button *ngIf="roleService.planPermission.subModule.goals.subModule.keyInfo.enabled"
+                                        mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
                                         <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
 
-                                    <button mat-stroked-button class="in-btn-two"
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.goals.subModule.preferences.enabled"
+                                        mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openPreferences')">
                                         <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
 
@@ -658,7 +676,9 @@
                                 </div>
 
                                 <div class="btnBox justify-content-center" [hidden]="loaderFn.loading">
-                                    <button mat-stroked-button class="in-btn-two"
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.enabled"
+                                        mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openCalculators')">
                                         <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
                                 </div>

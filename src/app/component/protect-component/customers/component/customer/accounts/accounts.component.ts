@@ -8,6 +8,7 @@ import { EnumDataService } from 'src/app/services/enum-data.service';
 import { MfServiceService } from './assets/mutual-fund/mf-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { AssetValidationService } from './assets/asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-accounts',
@@ -31,7 +32,8 @@ export class AccountsComponent implements OnInit {
   selected;
 
   constructor(private eventService: EventService, private router: Router, private ngZone: NgZone, private assetValidation: AssetValidationService,
-    public routingStateService: RoutingState, public enumService: EnumServiceService, public authService: AuthService, private MfServiceService: MfServiceService) {
+    public routingStateService: RoutingState, public enumService: EnumServiceService, public authService: AuthService, private MfServiceService: MfServiceService,
+    public roleService: RoleService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );

@@ -76,16 +76,21 @@ export class OverviewProfileComponent implements OnInit {
         this.Tab = params.Tab;
       }
     });
+    if (this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.enabled) {
+      this.Tab = "Tab1"
+      this.letsideBarLoader = true;
+      this.getClientData(this.clientData);
+      this.getAddressList(this.clientData);
+      this.getDematList(this.clientData);
+      this.getBankList(this.clientData);
+      this.enumDataService.getDataForTaxMasterService();
+      this.getFamilyMembersList(this.clientData);
+      this.enumDataService.searchClientList();
+    } else {
+      this.Tab = "Tab2"
+    }
     // console.log(sessionStorage.getItem('clientData'));
-    // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
-    this.letsideBarLoader = true;
-    this.getClientData(this.clientData);
-    this.getAddressList(this.clientData);
-    this.getDematList(this.clientData);
-    this.getBankList(this.clientData);
-    this.enumDataService.getDataForTaxMasterService();
-    this.getFamilyMembersList(this.clientData);
-    this.enumDataService.searchClientList();
+    // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData')); 
   }
 
   getClientData(data) {

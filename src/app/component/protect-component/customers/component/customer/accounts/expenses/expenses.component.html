@@ -6,9 +6,12 @@
                     <div class="row pt-28 pb-28">
                         <div class="col-md-4 pl-0">
                             <button mat-button
+                                *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled"
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Transactions','text-primary':viewMode == 'Transactions'}"
                                 (click)="viewMode='Transactions';getBugetTab(viewMode)">Transactions</button>
-                            <button mat-button (click)="viewMode='Budget';getBugetTab(viewMode)"
+                            <button mat-button
+                                *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled"
+                                (click)="viewMode='Budget';getBugetTab(viewMode)"
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
 
@@ -52,7 +55,7 @@
                                     <div class="pdfClass">
 
                                         <a class="c-p downloadPdfIcon mr-8" [matMenuTriggerFor]="menu1"
-                                            *ngIf="!fragmentData.isSpinner">
+                                            *ngIf="!fragmentData.isSpinner && roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList.Download">
                                             <img src="assets/images/svg/download-bordered.svg">
                                         </a>
 
@@ -86,7 +89,9 @@
                                     <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12"> -->
                                     <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                             class="material-icons">filter_list</i>FILTERS</button> -->
-                                    <button class="ml-8" mat-stroked-button class="btn-primary"
+                                    <button
+                                        *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList.Add"
+                                        class="ml-8" mat-stroked-button class="btn-primary"
                                         (click)="openExpenses('addExpenses',null)">
                                         ADD NEW</button>
                                 </div>
@@ -172,7 +177,9 @@
                                                         <img *ngIf="!isLoading" class="c-p"
                                                             src="/assets/images/svg/dot-menu.svg">
                                                         <mat-menu #menu4="matMenu">
-                                                            <button mat-menu-item
+                                                            <button
+                                                                *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList.Edit"
+                                                                mat-menu-item
                                                                 (click)="element.isRecuring = false;openExpenses('editExpenses',element)">Edit</button>
                                                             <button mat-menu-item
                                                                 (click)="detailedViewExpense(element,'Transactions')">Detailed
@@ -183,7 +190,9 @@
                                                                     type="file">
                                                             </button>
                                                             <!-- <button mat-menu-item>Activity</button> -->
-                                                            <button mat-menu-item
+                                                            <button
+                                                                *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList.Delete"
+                                                                mat-menu-item
                                                                 (click)="deleteModal('expense',element)">Delete</button>
                                                         </mat-menu>
                                                     </div>
@@ -313,7 +322,9 @@
                                         class="d-flex flex-column align-items-center">
                                         <img class="width400" src="assets/images/svg/clients-img.svg">
                                         <h4 class="text-center pt-12">No expense found</h4>
-                                        <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                                        <button
+                                            *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList.Add"
+                                            mat-stroked-button class="btn-primary proximaFont addon v-middle"
                                             (click)="openExpenses('addExpenses',null)"> ADD NEW
                                         </button>
                                     </div>
@@ -341,7 +352,7 @@
                                 <div class="pdfClass ">
 
                                     <a class="c-p downloadPdfIcon mr-8" [matMenuTriggerFor]="menu2"
-                                        *ngIf="!fragmentData.isSpinner">
+                                        *ngIf="!fragmentData.isSpinner && roleService.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList.Download">
                                         <img src="assets/images/svg/download-bordered.svg">
                                     </a>
 
@@ -376,7 +387,9 @@
                                     <i class="material-icons">filter_list</i>
                                     FILTERS
                                 </button> -->
-                                <button mat-stroked-button class="btn-primary addon v-middle"
+                                <button
+                                    *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList.Add"
+                                    mat-stroked-button class="btn-primary addon v-middle"
                                     (click)="openExpenses('addBudget', null)">
                                     <i class="material-icons">add</i>
                                     ADD NEW
@@ -470,7 +483,9 @@
                                                     <img *ngIf="!isLoadingBudget" class="c-p"
                                                         src="/assets/images/svg/dot-menu.svg">
                                                     <mat-menu #menu4="matMenu">
-                                                        <button mat-menu-item
+                                                        <button
+                                                            *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList.Edit"
+                                                            mat-menu-item
                                                             (click)="element.isRecuring = false;openExpenses('editBudget',element)">Edit</button>
                                                         <button mat-menu-item
                                                             (click)="detailedViewExpense(element,'Budget')">Detailed
@@ -480,7 +495,9 @@
                                                                 class="uploadInput" id="file-4" multiple type="file">
                                                         </button>
                                                         <!-- <button mat-menu-item>Activity</button> -->
-                                                        <button mat-menu-item
+                                                        <button
+                                                            *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList.Delete"
+                                                            mat-menu-item
                                                             (click)="deleteModal('budget',element)">Delete</button>
                                                     </mat-menu>
                                                 </div>
@@ -596,7 +613,9 @@
                             class="d-flex flex-column align-items-center">
                             <img class="width400" src="assets/images/svg/clients-img.svg">
                             <h4 class="text-center pt-12">No budget found</h4>
-                            <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                            <button
+                                *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList.Add"
+                                mat-stroked-button class="btn-primary proximaFont addon v-middle"
                                 (click)="openExpenses('addBudget', null)"> ADD NEW
                             </button>
                         </div>
@@ -668,7 +687,9 @@
         <tr>
             <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Transactions & Recurring commitments({{selectedPeriod == '1' ? 'This month' : selectedPeriod == '2' ? 'Last month' : selectedPeriod == '3' ? 'This quarter' : selectedPeriod == '4' ? 'Last quarter' : selectedPeriod == '5' ? 'This calender year' : selectedPeriod == '6' ? 'Last calender year' : selectedPeriod == '7' ? 'This financial year' : selectedPeriod == '8' ? 'Last financial year' :''}})</td>
+                Transactions & Recurring
+                commitments({{selectedPeriod == '1' ? 'This month' : selectedPeriod == '2' ? 'Last month' : selectedPeriod == '3' ? 'This quarter' : selectedPeriod == '4' ? 'Last quarter' : selectedPeriod == '5' ? 'This calender year' : selectedPeriod == '6' ? 'Last calender year' : selectedPeriod == '7' ? 'This financial year' : selectedPeriod == '8' ? 'Last financial year' :''}})
+            </td>
         </tr>
 
         <tr>
@@ -900,7 +921,9 @@
         <tr>
             <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
-                Budget & Other commitments ({{selectedPeriod == '1' ? 'This month' : selectedPeriod == '2' ? 'Last month' : selectedPeriod == '3' ? 'This quarter' : selectedPeriod == '4' ? 'Last quarter' : selectedPeriod == '5' ? 'This calender year' : selectedPeriod == '6' ? 'Last calender year' : selectedPeriod == '7' ? 'This financial year' : selectedPeriod == '8' ? 'Last financial year' :''}})</td>
+                Budget & Other commitments
+                ({{selectedPeriod == '1' ? 'This month' : selectedPeriod == '2' ? 'Last month' : selectedPeriod == '3' ? 'This quarter' : selectedPeriod == '4' ? 'Last quarter' : selectedPeriod == '5' ? 'This calender year' : selectedPeriod == '6' ? 'Last calender year' : selectedPeriod == '7' ? 'This financial year' : selectedPeriod == '8' ? 'Last financial year' :''}})
+            </td>
         </tr>
 
         <tr>

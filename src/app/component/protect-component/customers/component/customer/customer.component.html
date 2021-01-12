@@ -20,16 +20,21 @@
         </div>
         <div class="col-lg-8 col-md-9">
             <nav mat-tab-nav-bar>
-                <a [routerLink]="['/customer/detail/overview']" *ngIf="roleService.overviewPermission.enabled"
-                    routerLinkActive="successBorder" mat-tab-link>OVERVIEW</a>
-                <a [routerLink]="['/customer/detail/account']" *ngIf="roleService.portfolioPermission.enabled"
+                <a (click)="goToValidOverviewUrl();tabValue=1" [ngClass]="{'successBorder': tabValue==1}"
+                    *ngIf="roleService.overviewPermission.enabled" routerLinkActive="successBorder"
+                    mat-tab-link>OVERVIEW</a>
+                <a (click)="tabValue=2" [ngClass]="{'successBorder': tabValue==2}"
+                    [routerLink]="['/customer/detail/account']" *ngIf="roleService.portfolioPermission.enabled"
                     routerLinkActive="successBorder" mat-tab-link>PORTFOLIO</a>
-                <a class="planWidth" [routerLink]="['/customer/detail/plan']" *ngIf="roleService.planPermission.enabled"
+                <a (click)="goToPlanValidUrl();tabValue=3" [ngClass]="{'successBorder': tabValue==3}" class="planWidth"
+                    [routerLink]="['/customer/detail/plan']" *ngIf="roleService.planPermission.enabled"
                     routerLinkActive="successBorder" mat-tab-link>PLAN</a>
-                <a [routerLink]="['/customer/detail/activity']" *ngIf="roleService.activityPermission.enabled"
+                <a (click)="tabValue=4" [ngClass]="{'successBorder': tabValue==4}"
+                    [routerLink]="['/customer/detail/activity']" *ngIf="roleService.activityPermission.enabled"
                     routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
                 <!-- *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY" -->
-                <a [routerLink]="['/customer/detail/transact']" *ngIf="roleService.transactionPermission.enabled"
+                <a (click)="tabValue=5" [ngClass]="{'successBorder': tabValue==5}"
+                    [routerLink]="['/customer/detail/transact']" *ngIf="roleService.transactionPermission.enabled"
                     mat-tab-link routerLinkActive="successBorder">TRANSACT</a>
             </nav>
         </div>
