@@ -271,10 +271,10 @@ export class MutualFundOverviewComponent implements OnInit {
         this.showSummaryBar = false;
       }
     }
-    if (this.mutualFund && this.mfGetData == '') {
-      this.getMutualFundResponse(this.mutualFund);
-    } else if (this.mfGetData && this.mfGetData != '') {
+    if (this.mfGetData != '') {
       this.getMutualFundResponse(this.mfGetData);
+    } else if (this.mutualFund && this.mfGetData == '') {
+      this.getMutualFundResponse(this.mutualFund);
     } else {
       this.teamMemberListGet();
 
@@ -637,6 +637,8 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showCategory = false;
       this.datasource1.data = [];
       this.showCashFlow = false;
+      this.changeInput.emit(false);
+      this.MfServiceService.setDataForMfGet(null);
       this.eventService.openSnackBar(' No Mutual Fund Found', 'Dismiss');
     }
 
