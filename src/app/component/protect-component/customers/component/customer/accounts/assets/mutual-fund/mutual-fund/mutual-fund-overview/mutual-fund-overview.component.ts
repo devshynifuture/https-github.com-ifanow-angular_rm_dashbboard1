@@ -22,6 +22,7 @@ import { MfImportCasFileComponent } from './../../mutual-fund/mf-import-cas-file
 import { Input } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 HC_exporting(Highcharts);
 
@@ -129,6 +130,8 @@ export class MutualFundOverviewComponent implements OnInit {
   getMfDataSubs: Subscription;
   queryParamsSubs: Subscription;
   latestNavDate: any;
+  mfCapability: any;
+  overviewReportCapability: any = {};
 
   constructor(private ngZone: NgZone, private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -137,7 +140,9 @@ export class MutualFundOverviewComponent implements OnInit {
     private router: Router,
     public eventService: EventService, private custumService: CustomerService,
     private ref: ChangeDetectorRef,
-    private MfServiceService: MfServiceService, private settingService: SettingsService) {
+    private MfServiceService: MfServiceService, private settingService: SettingsService,
+    public roleService: RoleService
+  ) {
     if (routerActive) {
       this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
         if (queryParamMap.has('clientId')) {
@@ -174,6 +179,8 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
+    this.overviewReportCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.capabilityList
     this.initPoint();
     // if (!AuthService.isRefreshedOnce()) {
     //   AuthService.setRefreshedOnce(true);

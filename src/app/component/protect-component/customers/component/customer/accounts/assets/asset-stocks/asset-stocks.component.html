@@ -20,7 +20,8 @@
             <h4 class="m-0 text-black roboto pt-8">Stocks overview</h4>
         </div>
         <div *ngIf="portfolioData.length > 0" class="col-md-8 p-0 d-flex justify-content-end">
-            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon mr-10" *ngIf="!fragmentData.isSpinner">
+            <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon mr-10"
+                *ngIf="!fragmentData.isSpinner && stockCapabilityList.Download">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">
@@ -33,7 +34,8 @@
             <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
           class="material-icons">filter_list</i>FILTERS  -->
 
-            <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
+            <button *ngIf="stockCapabilityList.Add" mat-stroked-button class="btn-primary addon v-middle"
+                [matMenuTriggerFor]="menu1">
                 ADD NEW
             </button>
             <mat-menu #menu1="matMenu" class="add-new">
@@ -410,7 +412,8 @@
 
                                 <img class="c-p " src="/assets/images/svg/dot-menu.svg">
                                 <mat-menu #menu25="matMenu">
-                                    <button mat-menu-item (click)="editStock(element,singlePortfolio)">Edit</button>
+                                    <button *ngIf="stockCapabilityList.Edit" mat-menu-item
+                                        (click)="editStock(element,singlePortfolio)">Edit</button>
                                     <!-- build issue -->
 
                                     <button mat-menu-item (click)="opendetailviews(element,singlePortfolio)">Detailed
@@ -419,7 +422,8 @@
                                     <!-- <button mat-menu-item  (click)="opendetailviews(data)">Detailed view</button> -->
 
                                     <!-- <button mat-menu-item>Activity</button> -->
-                                    <button mat-menu-item (click)="deleteModal('STOCK',element)">Delete</button>
+                                    <button *ngIf="stockCapabilityList.Delete" mat-menu-item
+                                        (click)="deleteModal('STOCK',element)">Delete</button>
                                 </mat-menu>
                             </td>
 
@@ -446,7 +450,8 @@
     <div class="d-flex flex-column align-items-center mt-80 col-md-12">
         <img src="assets/images/svg/documents-empty-states.svg">
         <h4 class="text-center mt-12 mb-20">{{noData }}</h4>
-        <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD NEW
+        <button *ngIf="stockCapabilityList.Add" mat-stroked-button class="btn-primary addon v-middle"
+            [matMenuTriggerFor]="menu1">ADD NEW
         </button>
 
         <mat-menu #menu1="matMenu" class="add-new">

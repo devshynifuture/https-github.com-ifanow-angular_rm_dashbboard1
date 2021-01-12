@@ -20,6 +20,7 @@ import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { Subscription } from 'rxjs';
+import { RoleService } from 'src/app/auth-service/role.service';
 @Component({
   selector: 'app-cash-and-bank',
   templateUrl: './cash-and-bank.component.html',
@@ -61,12 +62,14 @@ export class CashAndBankComponent implements OnInit {
   reportDate: Date;
   fragmentData = { isSpinner: false };
   returnValue: Subscription;
+  cashAndBankCapability: any;
 
   constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService, private pdfGen: PdfGenService, private subInjectService: SubscriptionInject,
     private fileUpload: FileUploadServiceService, private enumService: EnumServiceService,
     private custumService: CustomerService, private eventService: EventService, private enumDataService: EnumDataService,
     public utils: UtilService, public dialog: MatDialog, private assetValidation: AssetValidationService,
-    private _bottomSheet: MatBottomSheet) {
+    private _bottomSheet: MatBottomSheet,
+    public roleService: RoleService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -79,6 +82,7 @@ export class CashAndBankComponent implements OnInit {
   clientFamilybankList: any = [];
   accountTypes: any = [];
   ngOnInit() {
+    this.cashAndBankCapability = this.roleService.portfolioPermission.subModule.assets.subModule.cashAndBanks.capabilityList
     this.reportDate = new Date();
     this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();

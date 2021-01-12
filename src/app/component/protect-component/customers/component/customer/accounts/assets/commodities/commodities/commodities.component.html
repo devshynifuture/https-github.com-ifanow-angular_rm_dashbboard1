@@ -21,7 +21,8 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon ">
+                <a *ngIf="commoditiesCapability.Download" [matMenuTriggerFor]="menu5"
+                    class="c-p mr-10 downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
@@ -50,7 +51,7 @@
 
                 <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button> -->
-                <button mat-stroked-button class="btn-primary addon v-middle"
+                <button *ngIf="commoditiesCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
@@ -161,7 +162,8 @@
 
                         <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item (click)="openCommodities('addGold','open',element)">Edit</button>
+                            <button *ngIf="commoditiesCapability.Edit" mat-menu-item
+                                (click)="openCommodities('addGold','open',element)">Edit</button>
                             <button mat-menu-item (click)="detailedViewGold('addGold',element)">Detailed
                                 view</button>
                             <button mat-menu-item>Upload file
@@ -169,7 +171,8 @@
                                     multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
-                            <button mat-menu-item (click)="deleteModal('GOLD',element)">Delete</button>
+                            <button *ngIf="commoditiesCapability.Delete" mat-menu-item
+                                (click)="deleteModal('GOLD',element)">Delete</button>
                         </mat-menu>
 
                     </td>
@@ -182,7 +185,7 @@
             <div *ngIf="goldList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle  "
+                <button *ngIf="commoditiesCapability.Add" mat-stroked-button class="btn-primary addon v-middle  "
                     (click)="openCommodities('addGold','open',null)"> ADD NEW</button>
             </div>
         </div>
@@ -197,7 +200,8 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon ">
+                <a *ngIf="commoditiesCapability.Download" [matMenuTriggerFor]="menu5"
+                    class="c-p mr-10 downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
@@ -227,7 +231,7 @@
 
                 <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                         class="material-icons">filter_list</i>FILTERS</button> -->
-                <button mat-stroked-button class="btn-primary addon v-middle"
+                <button *ngIf="commoditiesCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openOthers('addOthers','open',null)">
                     ADD NEW</button>
             </div>
@@ -347,7 +351,8 @@
                         class="t-2 c-p text-center br">
                         <img class="c-p " src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item (click)="openOthers('addOthers','open',element)">Edit</button>
+                            <button *ngIf="commoditiesCapability.Edit" mat-menu-item
+                                (click)="openOthers('addOthers','open',element)">Edit</button>
                             <button mat-menu-item (click)="detailedViewOthers('addOthers',element)">Detailed
                                 view</button>
                             <button mat-menu-item>Upload file
@@ -355,7 +360,8 @@
                                     multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
-                            <button (click)="deleteModal('OTHER',element)" mat-menu-item>Delete</button>
+                            <button *ngIf="commoditiesCapability.Delete" (click)="deleteModal('OTHER',element)"
+                                mat-menu-item>Delete</button>
                         </mat-menu>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br"> </td>
@@ -367,7 +373,7 @@
             <div *ngIf="otherCommodityList.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12">{{noData}}</h4>
-                <button mat-stroked-button class="btn-primary addon v-middle"
+                <button *ngIf="commoditiesCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openOthers('addOthers','open',null)"> ADD
                     NEW</button>
             </div>

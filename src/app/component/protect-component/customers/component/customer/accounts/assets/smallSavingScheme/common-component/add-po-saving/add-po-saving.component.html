@@ -51,9 +51,9 @@
             </div>
             <div class="col-md-2 d-flex align-items-center">
                 <i *ngIf="poSavingForm.value.getCoOwnerName.length < 3"
-                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
-                <i *ngIf="poSavingForm.value.getCoOwnerName.length > 1"
-                    class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
+                    class="material-icons text-primitive c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="poSavingForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive c-p pl-10"
+                    (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
         </div>
     </div>
@@ -219,10 +219,9 @@
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
                     <i *ngIf="poSavingForm.value.getNomineeName.length < 3"
-                        class="material-icons text-primitive f-20 c-p float-left"
-                        (click)="addNewNominee(undefined)">add</i>
+                        class="material-icons text-primitive c-p float-left" (click)="addNewNominee(undefined)">add</i>
                     <i *ngIf="poSavingForm.value.getNomineeName.length > 1"
-                        class="material-icons text-primitive f-20 c-p pl-10"
+                        class="material-icons text-primitive c-p pl-10"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 

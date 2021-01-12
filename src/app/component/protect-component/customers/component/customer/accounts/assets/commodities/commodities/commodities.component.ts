@@ -17,6 +17,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-commodities',
@@ -66,13 +67,16 @@ export class CommoditiesComponent implements OnInit {
   @Output() loaded = new EventEmitter();
   @Input() finPlanObj: any;//finacial plan pdf input
   returnValue: any;
+  commoditiesCapability: any;
   constructor(private excel: ExcelGenService,
     private fileUpload: FileUploadServiceService,
     private pdfGen: PdfGenService, private subInjectService: SubscriptionInject,
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService, private ref: ChangeDetectorRef) { }
+    private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService, private ref: ChangeDetectorRef,
+    public roleService: RoleService) { }
   ngOnInit() {
+    this.commoditiesCapability = this.roleService.portfolioPermission.subModule.assets.subModule.commodities.capabilityList
     this.reportDate = new Date();
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();

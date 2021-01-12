@@ -5,9 +5,11 @@ import { CustomerTransactComponent } from './customer-transact.component';
 import { TransactionsListComponent } from '../../../../AdviserComponent/transactions/transactions-list/transactions-list.component';
 import { InvestorsTransactionsComponent } from '../../../../AdviserComponent/transactions/investors-transactions/investors-transactions.component';
 import { MandatesTransactionsComponent } from '../../../../AdviserComponent/transactions/mandates-transactions/mandates-transactions.component';
+import { CustomerTransactGuard } from './customer-transact.guard';
 
 const routes: Routes = [{
   path: '', component: CustomerTransactComponent,
+  canActivateChild: [CustomerTransactGuard],
   children: [{ path: 'list', component: TransactionsListComponent },
   { path: 'investors', component: InvestorsTransactionsComponent },
   { path: 'mandate', component: MandatesTransactionsComponent },
