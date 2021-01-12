@@ -1,5 +1,5 @@
 import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, ElementRef, NgZone } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
@@ -228,7 +228,7 @@ export class MutualFundUnrealizedTranComponent {
   mfAllTransactionCapability: any = {};
   mfCapability: any = {};
   // setTrueKey = false;
-  constructor(public dialog: MatDialog, private datePipe: DatePipe,
+  constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService,
     private route: Router,
@@ -1105,7 +1105,9 @@ export class MutualFundUnrealizedTranComponent {
         if (this.isBulkEmailing && this.fromDate && this.toDate) {
           this.isTableShow = false;
         }
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.isLoading = false;
+        });
         this.customDataSource.data.arrayTran.forEach(element => {
           switch (element.index) {
             case 0:
@@ -1243,11 +1245,10 @@ export class MutualFundUnrealizedTranComponent {
           this.generatePdfBulk();
         }
         this.changeInput.emit(false);
-        this.cd.markForCheck();
-        this.cd.detectChanges();
+        // this.cd.markForCheck();
+        // this.cd.detectChanges();
         console.log('dataSource', this.dataSource)
 
-        console.log('isLoadingfalse', this.isLoading)
         if (this.finPlanObj) {
           this.showDownload = true;
           this.cd.detectChanges();

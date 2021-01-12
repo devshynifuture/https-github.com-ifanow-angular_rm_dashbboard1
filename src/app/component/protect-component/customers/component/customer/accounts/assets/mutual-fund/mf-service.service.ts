@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {BehaviorSubject} from 'rxjs';
-import {DatePipe} from '@angular/common';
+import { Injectable } from '@angular/core';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { BehaviorSubject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,7 @@ export class MfServiceService {
   private sendDataCapitalDetailed = new BehaviorSubject('')
   private setCashFlow = new BehaviorSubject('')
   private advisorIdList = new BehaviorSubject('')
+  private loading = new BehaviorSubject(Boolean)
   refreshMutualFundData = new BehaviorSubject(null);
 
   getPersonalDetails(data) {
@@ -75,10 +76,10 @@ export class MfServiceService {
     data.mutualFundList = this.casFolioNumber(data.mutualFundList)
     return data;
   }
-  casFolioNumber(data){
+  casFolioNumber(data) {
     data.forEach(element => {
-      if(element.rtMasterId == 6 && !element.folioNumber.includes("CAS")){
-        element.folioNumber = 'CAS-'+element.folioNumber;
+      if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+        element.folioNumber = 'CAS-' + element.folioNumber;
       }
 
     });
@@ -348,11 +349,11 @@ export class MfServiceService {
     //     );
     //   });
     // }
-    let arry =[];
+    let arry = [];
     if (dataForFilter.reportAsOn && (dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT')) {
       mutualFundList.forEach(element => {
         element.mutualFundTransactions.forEach(ele => {
-          if(this.datePipe.transform(ele.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn){
+          if (this.datePipe.transform(ele.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn) {
             arry.push(element);
           }
         });
@@ -753,7 +754,12 @@ export class MfServiceService {
   getadvisorList() {
     return this.advisorIdList.asObservable();
   }
-
+  setLoader(value) {
+    this.loading.next(value);
+  }
+  getLoader() {
+    return this.loading.asObservable();
+  }
   refreshMutualFundDataThroughObs() {
     return this.refreshMutualFundData.asObservable();
   }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, NgZone } from '@angular/core';
 import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
@@ -133,7 +133,7 @@ export class MutualFundOverviewComponent implements OnInit {
   mfCapability: any;
   overviewReportCapability: any = {};
 
-  constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
+  constructor(private ngZone: NgZone, private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public routerActive: ActivatedRoute,
     private backOfficeService: BackOfficeService,
@@ -182,12 +182,12 @@ export class MutualFundOverviewComponent implements OnInit {
     this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
     this.overviewReportCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.capabilityList
     this.initPoint();
-    if (!AuthService.isRefreshedOnce()) {
-      AuthService.setRefreshedOnce(true);
-      window.location.reload();
-      /* setTimeout(() => {
-       }, 1000);*/
-    }
+    // if (!AuthService.isRefreshedOnce()) {
+    //   AuthService.setRefreshedOnce(true);
+    //   window.location.reload();
+    //   /* setTimeout(() => {
+    //    }, 1000);*/
+    // }
     this.getMfDataSubs = this.mfService.refreshMutualFundDataThroughObs()
       .subscribe(res => {
         if (res) {
@@ -457,8 +457,13 @@ export class MutualFundOverviewComponent implements OnInit {
         if (this.router.url.split('?')[0] == '/pdf/overview') {
           this.generatePdfBulk();
         }
-        this.isLoading = false;
+        // this.isLoading = false;
         this.changeInput.emit(false);
+        if (Object.keys(this.totalValue).length > 0) {
+          this.ngZone.run(() => {
+            this.isLoading = false;
+          });
+        }
       };
       worker.postMessage(input);
     } else {
@@ -466,7 +471,20 @@ export class MutualFundOverviewComponent implements OnInit {
       // You should add a fallback so that your program still executes correctly.
     }
   }
-
+  loaderFalseFn() {
+    if (this.totalValue) {
+      this.ngZone.run(() => {
+        this.isLoading = false;
+      });
+    }
+  }
+  closeLoader() {
+    // let loader = false;
+    // if (!loader) {
+    this.isLoading = false;
+    // this.ref.detectChanges();
+    // }
+  }
   getTypeOf(value) {
     return typeof (value);
   }
