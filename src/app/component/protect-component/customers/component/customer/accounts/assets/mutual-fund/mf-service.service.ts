@@ -88,11 +88,13 @@ export class MfServiceService {
   filter(data, key) {// filtering data as per category
     const filterData = [];
     const finalDataSource = [];
-    data.filter(element => {
-      if ((element[key]) ? element[key].length > 0 : element[key]) {
-        filterData.push(element[key]);
-      }
-    });
+    if (data) {
+      data.filter(element => {
+        if ((element[key]) ? element[key].length > 0 : element[key]) {
+          filterData.push(element[key]);
+        }
+      });
+    }
     if (filterData.length > 0) {
       filterData.forEach(element => {
         if (element.length > 0) {

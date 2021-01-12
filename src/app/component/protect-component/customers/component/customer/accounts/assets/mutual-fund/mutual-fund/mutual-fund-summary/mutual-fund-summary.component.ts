@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild ,NgZone } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, NgZone } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
@@ -365,7 +365,7 @@ export class MutualFundSummaryComponent implements OnInit {
           };
           if (this.resData) {
             this.getMutualFundResponse(this.mfGetData);
-          } else if (this.mfGetData && this.mfGetData != '') {
+          } else if (this.mfGetData != '') {
             this.getMutualFundResponse(this.mfGetData);
           } else if (this.mutualFund) {
             this.getMutualFundResponse(this.mutualFund);
@@ -401,7 +401,9 @@ export class MutualFundSummaryComponent implements OnInit {
             });
           }
         }
-        if (this.mfGetData && this.mfGetData != '') {
+        if (this.resData) {
+          this.getMutualFundResponse(this.mfGetData);
+        } else if (this.mfGetData != '') {
           this.getMutualFundResponse(this.mfGetData);
         } else if (this.mutualFund) {
           this.getMutualFundResponse(this.mutualFund);
@@ -1161,6 +1163,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.changeInput.emit(false);
       this.isLoading = false;
       this.showDownload = true;
+      this.mfService.setDataForMfGet(null);
     }
   }
 
