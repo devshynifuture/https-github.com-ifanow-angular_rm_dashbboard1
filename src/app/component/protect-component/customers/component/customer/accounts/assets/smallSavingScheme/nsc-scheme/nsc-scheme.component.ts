@@ -15,6 +15,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-nsc-scheme',
@@ -59,6 +60,7 @@ export class NscSchemeComponent implements OnInit {
   getOrgData: any;
   fragmentData = { isSpinner: false };
   returnValue: any;
+  smallSavingCapability: any = {};
 
 
   constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService,
@@ -67,7 +69,8 @@ export class NscSchemeComponent implements OnInit {
     private assetValidation: AssetValidationService,
     private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
-    private _bottomSheet: MatBottomSheet) {
+    private _bottomSheet: MatBottomSheet,
+    public roleService: RoleService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -75,6 +78,7 @@ export class NscSchemeComponent implements OnInit {
 
 
   ngOnInit() {
+    this.smallSavingCapability = this.roleService.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.capabilityList;
     this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

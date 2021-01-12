@@ -1,25 +1,27 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {AssetsComponent} from './assets.component';
-import {MutualFundOverviewComponent} from './mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
-import {MutualFundUnrealizedTranComponent} from './mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
-import {MutualFundsCapitalComponent} from './mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
-import {MfCapitalDetailedComponent} from './mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
-import {MutualFundSummaryComponent} from './mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
-import {MutualFundComponent} from './mutual-fund/mutual-fund/mutual-fund.component';
-import {AssetStocksComponent} from './asset-stocks/asset-stocks.component';
-import {FixedIncomeComponent} from './fixedIncome/fixed-income/fixed-income.component';
-import {RealEstateComponent} from './realEstate/real-estate/real-estate.component';
-import {RetirementAccountComponent} from './retirementAccounts/retirement-account/retirement-account.component';
-import {SmallSavingSchemeComponent} from './smallSavingScheme/small-saving-scheme/small-saving-scheme.component';
-import {CashAndBankComponent} from './cash&bank/cash-and-bank/cash-and-bank.component';
-import {CommoditiesComponent} from './commodities/commodities/commodities.component';
-import {OthersAssetsComponent} from './others-assets/others-assets.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AssetsComponent } from './assets.component';
+import { MutualFundOverviewComponent } from './mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import { MutualFundUnrealizedTranComponent } from './mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+import { MutualFundsCapitalComponent } from './mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import { MfCapitalDetailedComponent } from './mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import { MutualFundSummaryComponent } from './mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
+import { MutualFundComponent } from './mutual-fund/mutual-fund/mutual-fund.component';
+import { AssetStocksComponent } from './asset-stocks/asset-stocks.component';
+import { FixedIncomeComponent } from './fixedIncome/fixed-income/fixed-income.component';
+import { RealEstateComponent } from './realEstate/real-estate/real-estate.component';
+import { RetirementAccountComponent } from './retirementAccounts/retirement-account/retirement-account.component';
+import { SmallSavingSchemeComponent } from './smallSavingScheme/small-saving-scheme/small-saving-scheme.component';
+import { CashAndBankComponent } from './cash&bank/cash-and-bank/cash-and-bank.component';
+import { CommoditiesComponent } from './commodities/commodities/commodities.component';
+import { OthersAssetsComponent } from './others-assets/others-assets.component';
+import { AssetsGuard } from './assets.guard';
 
 
 const routes: Routes = [
   {
     path: '', component: AssetsComponent,
+    canActivateChild: [AssetsGuard],
     // children: [
     // { path: 'mutual-funds', loadChildren: () => import('./mutual-fund/mutual-fund/mutual-fund.module').then(m => m.MutualFundModule) }
     // ]

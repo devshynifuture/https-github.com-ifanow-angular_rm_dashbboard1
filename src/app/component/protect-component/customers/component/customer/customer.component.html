@@ -33,9 +33,8 @@
                     [routerLink]="['/customer/detail/activity']" *ngIf="roleService.activityPermission.enabled"
                     routerLinkActive="successBorder" mat-tab-link>ACTIVITY</a>
                 <!-- *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY" -->
-                <a (click)="tabValue=5" [ngClass]="{'successBorder': tabValue==5}"
-                    [routerLink]="['/customer/detail/transact']" *ngIf="roleService.transactionPermission.enabled"
-                    mat-tab-link routerLinkActive="successBorder">TRANSACT</a>
+                <a (click)="tabValue=5;goToValidTransactionUrl()" [ngClass]="{'successBorder': tabValue==5}"
+                    *ngIf="roleService.transactionPermission.enabled" mat-tab-link>TRANSACT</a>
             </nav>
         </div>
         <div

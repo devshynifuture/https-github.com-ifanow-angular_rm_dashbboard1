@@ -16,6 +16,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { EnumServiceService } from '../../../../../../../../../services/enum-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -52,6 +53,7 @@ export class RealEstateComponent implements OnInit {
   reportDate: Date;
   fragmentData = { isSpinner: false };
   returnValue: any;
+  realEstateCapability: Date;
 
   constructor(public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
@@ -60,10 +62,12 @@ export class RealEstateComponent implements OnInit {
     private fileUpload: FileUploadServiceService,
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef) {
+    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef,
+    public roleService: RoleService) {
   }
 
   ngOnInit() {
+    this.realEstateCapability = this.roleService.portfolioPermission.subModule.assets.subModule.realEstate.capabilityList
     this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

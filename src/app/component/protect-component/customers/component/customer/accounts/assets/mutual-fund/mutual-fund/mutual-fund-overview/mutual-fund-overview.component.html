@@ -7,7 +7,8 @@
             </div>
             <div class="col-md-6 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
                 <div class="pdfClass">
-                    <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon b-0">
+                    <a *ngIf="overviewReportCapability.Download" [matMenuTriggerFor]="menu5"
+                        class="c-p downloadPdfIcon b-0">
                         <img src="assets/images/svg/mf-donwload.svg" *ngIf="!fragmentData.isSpinner">
                     </a>
                     <div class="hide" id="loadingDone" *ngIf="loadingDone == true">
@@ -29,7 +30,8 @@
                 <!-- put that code here Gayatri Pawar -->
 
                 <!-- end -->
-                <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu2">ADD
+                <button *ngIf="mfCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
+                    [matMenuTriggerFor]="menu2">ADD
                     NEW</button>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle"
                     (click)="openMutualFund('addMutualFund',null)">ADD
@@ -929,7 +931,8 @@
         <h4 class="text-center mt-12 mb-20">No Data Found</h4>
         <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)"  [matMenuTriggerFor]="menu1">ADD NEW
         </button> -->
-        <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">ADD
+        <button *ngIf="mfCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
+            [matMenuTriggerFor]="menu1">ADD
             NEW
         </button>
         <mat-menu #menu1="matMenu" class="add-new-2">

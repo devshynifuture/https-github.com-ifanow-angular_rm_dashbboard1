@@ -14,6 +14,7 @@ import { RightFilterDuplicateComponent } from 'src/app/component/protect-compone
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 import { DatePipe } from '@angular/common';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
     selector: 'app-mutual-funds-capital',
@@ -92,13 +93,15 @@ export class MutualFundsCapitalComponent implements OnInit {
     mfBulkEmailRequestId: number;
     criteriaDate: Date;
     loadingDone: boolean = false;
+    mfCaptialGainCapability: any = {};
     // capitalGainData: any;
     constructor(private cd: ChangeDetectorRef, private pdfGen: PdfGenService,
         public routerActive: ActivatedRoute,
         private datePipe: DatePipe,
         private route: Router,
         private backOfficeService: BackOfficeService,
-        private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) {
+        private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject,
+        public roleService: RoleService) {
 
 
         this.routerActive.queryParamMap.subscribe((queryParamMap) => {
@@ -135,6 +138,7 @@ export class MutualFundsCapitalComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.mfCaptialGainCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList
         this.MfServiceService.getadvisorList()
             .subscribe(res => {
                 this.adminAdvisorIds = res;

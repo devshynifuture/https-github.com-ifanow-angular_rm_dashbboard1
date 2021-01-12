@@ -27,6 +27,7 @@ import {
  */
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 const PAGESIZE = 20;
 const ROW_HEIGHT = 48;
@@ -224,6 +225,8 @@ export class MutualFundUnrealizedTranComponent {
   isDisabledOpacity = true;
   colspanValue: Number;
   resData: any;
+  mfAllTransactionCapability: any = {};
+  mfCapability: any = {};
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -232,7 +235,8 @@ export class MutualFundUnrealizedTranComponent {
     private backOfficeService: BackOfficeService,
     public routerActive: ActivatedRoute,
     private custumService: CustomerService, private eventService: EventService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public roleService: RoleService
               /*private changeDetectorRef: ChangeDetectorRef*/) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -297,6 +301,12 @@ export class MutualFundUnrealizedTranComponent {
   }
 
   ngOnInit() {
+    this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
+    if (this.viewMode == 'Unrealized Transactions') {
+      this.mfAllTransactionCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList
+    } else {
+      this.mfAllTransactionCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.capabilityList
+    }
     if (this.finPlanObj && this.finPlanObj.sectionName == 'Mutual fund all transaction') {
       this.viewMode = 'All Transactions';
       this.mode = 'All Transactions';

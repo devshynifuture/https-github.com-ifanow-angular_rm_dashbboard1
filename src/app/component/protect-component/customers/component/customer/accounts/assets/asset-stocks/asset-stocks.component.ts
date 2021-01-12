@@ -18,6 +18,7 @@ import { AssetValidationService } from '../asset-validation.service';
 import { StockPdfService } from 'src/app/services/stock-pdf.service';
 import * as Highcharts from 'highcharts';
 import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -57,12 +58,15 @@ export class AssetStocksComponent implements OnInit {
   userInfo: any;
   othersChartColor: any = '#A0AEB4'
   chartColour: any = ['#008FFF', '#5DC644', '#FFC100', '#FF6823']
+  stockCapabilityList: any = {};
   constructor(private ref: ChangeDetectorRef, public dialog: MatDialog, private backOfficeService: BackOfficeService, public UtilService: UtilService, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
-    private cusService: CustomerService, private eventService: EventService, private stockPDF: StockPdfService) {
+    private cusService: CustomerService, private eventService: EventService, private stockPDF: StockPdfService,
+    public roleService: RoleService) {
   }
 
   ngOnInit() {
     this.dataSource25 = ELEMENT_DATA25;
+    this.stockCapabilityList = this.roleService.portfolioPermission.subModule.assets.subModule.stocks.capabilityList;
     console.log(this.dataSource25);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

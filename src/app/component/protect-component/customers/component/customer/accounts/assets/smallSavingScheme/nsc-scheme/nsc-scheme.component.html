@@ -9,7 +9,7 @@
             <div class="p-0 d-flex mr-10 align-items-center justify-content-center mt-8">
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
-            <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
+            <a *ngIf="smallSavingCapability.Download" [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">
@@ -37,7 +37,8 @@
                     STATUS - Matured
                 </button>
             </mat-menu>
-            <button (click)="openAddNSC(null,'addNsc')" mat-stroked-button class="btn-primary addon v-middle"> ADD NEW
+            <button *ngIf="smallSavingCapability.Add" (click)="openAddNSC(null,'addNsc')" mat-stroked-button
+                class="btn-primary addon v-middle"> ADD NEW
             </button>
         </div>
     </div>
@@ -150,14 +151,16 @@
 
                     <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
                     <mat-menu #menubank="matMenu">
-                        <button mat-menu-item (click)="openAddNSC(element,'editNsc')">Edit</button>
+                        <button *ngIf="smallSavingCapability.Edit" mat-menu-item
+                            (click)="openAddNSC(element,'editNsc')">Edit</button>
                         <button mat-menu-item (click)="openAddNSC(element,'detailedNsc')">Detailed view</button>
                         <button mat-menu-item>Upload file
                             <input (change)="fetchData('NSC',$event,element, 22)" class="uploadInput" id="file-4"
                                 multiple type="file">
                         </button>
                         <!-- <button mat-menu-item>Activity</button> -->
-                        <button mat-menu-item (click)="deleteModal('NSC',element)">Delete</button>
+                        <button *ngIf="smallSavingCapability.Delete" mat-menu-item
+                            (click)="deleteModal('NSC',element)">Delete</button>
                     </mat-menu>
 
                 </td>
@@ -170,7 +173,8 @@
         <div *ngIf="datasource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
             <img src="assets/images/svg/documents-empty-states.svg">
             <h4 class="text-center mt-12 mb-20">No NSC found </h4>
-            <button (click)="openAddNSC(null,'addNsc')" mat-stroked-button class="btn-primary addon v-middle"> ADD NEW
+            <button *ngIf="smallSavingCapability.Add" (click)="openAddNSC(null,'addNsc')" mat-stroked-button
+                class="btn-primary addon v-middle"> ADD NEW
             </button>
         </div>
     </div>

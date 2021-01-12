@@ -20,6 +20,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 @Component({
@@ -72,6 +73,7 @@ export class FixedIncomeComponent implements OnInit {
   reportDate: Date;
   fragmentData = { isSpinner: false };
   returnValue: any;
+  fixedIncomeCapability: any = {};
 
   constructor(private ref: ChangeDetectorRef, private excelSer: ExcelService, private subInjectService: SubscriptionInject,
     private customerService: CustomerService, private eventService: EventService,
@@ -80,7 +82,8 @@ export class FixedIncomeComponent implements OnInit {
     private fileUpload: FileUploadServiceService,
     private custumService: CustomerService,
     public util: UtilService, public dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService) {
+    private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService,
+    public roleService: RoleService) {
   }
 
   viewMode;
@@ -93,6 +96,7 @@ export class FixedIncomeComponent implements OnInit {
 
   ngOnInit() {
     this.reportDate = new Date();
+    this.fixedIncomeCapability = this.roleService.portfolioPermission.subModule.assets.subModule.fixedIncome.capabilityList
     this.showRequring = '1';
     this.hidePdf = true;
     this.fragmentData.isSpinner = false
