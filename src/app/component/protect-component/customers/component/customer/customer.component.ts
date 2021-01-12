@@ -273,6 +273,25 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     }
   }
 
+  goToValidTransactionUrl() {
+    let url;
+    if (this.roleService.transactionPermission.subModule.transactionsModule.enabled) {
+      url = '/customer/detail/transact/list'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.transactionPermission.subModule.investorsModule.enabled) {
+      url = '/customer/detail/transact/investors'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.transactionPermission.subModule.mandateModule.enabled) {
+      url = '/customer/detail/transact/mandate'
+      this.router.navigate([url])
+      return
+    }
+  }
+
   logout() {
     this.enumDataService.setSearchData([]);
     // if (!this.authService.isAdvisor()) {

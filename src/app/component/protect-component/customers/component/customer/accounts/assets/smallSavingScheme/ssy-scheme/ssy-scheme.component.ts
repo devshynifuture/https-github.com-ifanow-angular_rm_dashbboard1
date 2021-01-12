@@ -15,6 +15,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -56,6 +57,7 @@ export class SsySchemeComponent implements OnInit {
   getOrgData: any;
   fragmentData = { isSpinner: false };
   returnValue: any;
+  smallSavingCapability: any = {};
 
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
@@ -66,13 +68,15 @@ export class SsySchemeComponent implements OnInit {
     private assetValidation: AssetValidationService,
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
-    private ref: ChangeDetectorRef) {
+    private ref: ChangeDetectorRef,
+    public roleService: RoleService) {
     this.clientData = AuthService.getClientData()
   }
 
   displayedColumns16 = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
+    this.smallSavingCapability = this.roleService.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.capabilityList;
     this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

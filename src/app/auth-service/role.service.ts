@@ -92,28 +92,62 @@ export class RoleService {
         enabled: true,
         subModule: {
           cashAndBanks: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           commodities: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           fixedIncome: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           mutualFunds: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any,
+            subModule: {
+              alltransactionsReport: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              capitalGains: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              manualTransactions: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              overviewReport: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              summaryReport: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              unrealizedTransactions: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+            }
           },
           realEstate: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           retirementAccounts: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           smallSavingSchemes: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           stocks: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
         }
       },
@@ -391,8 +425,8 @@ export class RoleService {
     } else {
       adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
       adminDatasource.plan ? this.setPlanPermission(adminDatasource.plan.subModule) : this.planPermission.enabled = false;
-      adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     }
+    adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     adminDatasource.portfolio ? this.setPortfolioPermission(adminDatasource.portfolio) : this.portfolioPermission.enabled = false;
   }
 
@@ -526,6 +560,32 @@ export class RoleService {
     this.portfolioPermission.subModule.liabilities.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.liabilities.subModule.liabilities.capabilityList);
     this.portfolioPermission.subModule.insurance.subModule.generalInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.generalInsurance.subModule.generalInsurance.capabilityList);
     this.portfolioPermission.subModule.insurance.subModule.lifeInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.lifeInsurance.subModule.lifeInsurance.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.cashAndBanks.enabled = portfolioPermission.subModule.cashAndBanks.showModule
+    this.portfolioPermission.subModule.assets.subModule.cashAndBanks.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.cashAndBanks.subModule.cashAndBanks.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.commodities.enabled = portfolioPermission.subModule.commodities.showModule
+    this.portfolioPermission.subModule.assets.subModule.commodities.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.commodities.subModule.commodities.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled = portfolioPermission.subModule.fixedIncome.showModule
+    this.portfolioPermission.subModule.assets.subModule.fixedIncome.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.fixedIncome.subModule.fixedIncome.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.realEstate.enabled = portfolioPermission.subModule.realEstate.showModule
+    this.portfolioPermission.subModule.assets.subModule.realEstate.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.realEstate.subModule.realEstate.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.retirementAccounts.enabled = portfolioPermission.subModule.retirementAccounts.showModule
+    this.portfolioPermission.subModule.assets.subModule.retirementAccounts.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.retirementAccounts.subModule.retirementAccounts.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.enabled = portfolioPermission.subModule.smallSavingSchemes.showModule
+    this.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.smallSavingSchemes.subModule.smallSavingSchemes.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.stocks.enabled = portfolioPermission.subModule.stocks.showModule
+    this.portfolioPermission.subModule.assets.subModule.stocks.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.stocks.subModule.stocks.capabilityList);
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled = portfolioPermission.subModule.mutualFunds.showModule
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.manualTransactions.subModule.manualTransactions.capabilityList)
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.overviewReport.showModule;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.summaryReport.showModule;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport.showModule;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.enabled = portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions.showModule;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.enabled = portfolioPermission.subModule.mutualFunds.subModule.capitalGains.showModule;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.overviewReport.subModule.overviewReport.capabilityList)
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.summaryReport.subModule.summaryReport.capabilityList)
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport.subModule.alltransactionsReport.capabilityList)
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions.subModule.unrealizedTransactions.capabilityList)
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.capitalGains.subModule.capitalGains.capabilityList)
   }
 
   setPlanPermission(planPermission) {
@@ -594,7 +654,16 @@ export class RoleService {
 
     }
     else if (this.portfolioPermission.enabled) {
-      return url = "/customer/detail/account";
+      // return url = "/customer/detail/account";
+      if (this.portfolioPermission.subModule.portfolioDashboard.enabled) {
+        return url = "/customer/detail/account/summary"
+      }
+      if (this.portfolioPermission.subModule.liabilities.enabled) {
+        return url = "/customer/detail/account/liabilities"
+      }
+      if (this.portfolioPermission.subModule.insurance.enabled) {
+        return url = "/customer/detail/account/insurance"
+      }
     }
     else if (this.planPermission.enabled) {
       if (this.planPermission.subModule.profile.enabled) {
@@ -608,7 +677,15 @@ export class RoleService {
       return url = "/customer/detail/activity";
     }
     else {
-      return url = "/customer/detail/transact";
+      if (this.transactionPermission.subModule.transactionsModule.enabled) {
+        return url = '/customer/detail/transact/list'
+      }
+      if (this.transactionPermission.subModule.investorsModule.enabled) {
+        return url = '/customer/detail/transact/investors'
+      }
+      if (this.transactionPermission.subModule.mandateModule.enabled) {
+        return url = '/customer/detail/transact/mandate'
+      }
     }
   }
 

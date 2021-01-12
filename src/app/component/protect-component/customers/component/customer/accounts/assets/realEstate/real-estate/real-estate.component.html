@@ -8,7 +8,7 @@
             <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
-            <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
+            <a *ngIf="realEstateCapability.Download" [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #menu5="matMenu">
@@ -17,7 +17,8 @@
             </mat-menu>
 
 
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')"> ADD
+            <button *ngIf="realEstateCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
+                (click)="open('realEstate','')"> ADD
                 NEW
             </button>
 
@@ -109,14 +110,16 @@
                         <img class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
 
                         <mat-menu #menu4="matMenu">
-                            <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
+                            <button *ngIf="realEstateCapability.Edit" mat-menu-item
+                                (click)="open('realEstate',element)">Edit</button>
                             <button mat-menu-item (click)="detailedViewRealEstate(element)">Detailed View </button>
                             <button mat-menu-item>Upload file
                                 <input (change)="fetchData('Real Estate',$event,element,8)" class="uploadInput"
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
-                            <button mat-menu-item (click)="deleteModal('REAL ESTATE',element)">Delete</button>
+                            <button *ngIf="realEstateCapability.Delete" mat-menu-item
+                                (click)="deleteModal('REAL ESTATE',element)">Delete</button>
                         </mat-menu>
 
                     </td>
@@ -130,7 +133,8 @@
         <div *ngIf="datasource3.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
             <img src="assets/images/svg/documents-empty-states.svg">
             <h4 class="text-center mt-12 mb-20">{{noData}}</h4>
-            <button mat-stroked-button class="btn-primary addon v-middle" (click)="open('realEstate','')">
+            <button *ngIf="realEstateCapability.Add" mat-stroked-button class="btn-primary addon v-middle"
+                (click)="open('realEstate','')">
                 ADD NEW
             </button>
         </div>

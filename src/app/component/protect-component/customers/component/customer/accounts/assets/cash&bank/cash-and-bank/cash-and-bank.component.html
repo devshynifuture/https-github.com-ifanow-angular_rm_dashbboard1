@@ -24,7 +24,8 @@
                 <div class="p-0 d-flex align-items-center mr-10 justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon ">
+                <a *ngIf="cashAndBankCapability.Download" [matMenuTriggerFor]="menu5"
+                    class="c-p mr-10 downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
@@ -34,8 +35,8 @@
                 </mat-menu>
 
 
-                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle"
-                    mat-stroked-button>ADD
+                <button *ngIf="cashAndBankCapability.Add" (click)="openAddEdit(null, 'bankAccount')"
+                    class="btn-primary addon v-middle" mat-stroked-button>ADD
                     NEW
                 </button>
             </div>
@@ -161,7 +162,8 @@
 
                         <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menubank="matMenu">
-                            <button (click)="openAddEdit(element, 'bankAccount')" mat-menu-item>Edit
+                            <button *ngIf="cashAndBankCapability.Edit" (click)="openAddEdit(element, 'bankAccount')"
+                                mat-menu-item>Edit
                             </button>
                             <button (click)="detailedViewbankAccount(element)" mat-menu-item>Detailed view</button>
                             <button mat-menu-item>Upload file
@@ -169,7 +171,8 @@
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
-                            <button (click)="deleteModal('BANK',element)" mat-menu-item>Delete</button>
+                            <button *ngIf="cashAndBankCapability.Delete" (click)="deleteModal('BANK',element)"
+                                mat-menu-item>Delete</button>
                         </mat-menu>
 
                     </td>
@@ -182,8 +185,8 @@
             <div *ngIf="bankAccountList.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">{{noData}}</h4>
-                <button (click)="openAddEdit(null, 'bankAccount')" class="btn-primary addon v-middle"
-                    mat-stroked-button>ADD NEW
+                <button *ngIf="cashAndBankCapability.Add" (click)="openAddEdit(null, 'bankAccount')"
+                    class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                 </button>
             </div>
         </div>
@@ -198,7 +201,8 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon ">
+                <a *ngIf="cashAndBankCapability.Download" [matMenuTriggerFor]="menu5"
+                    class="c-p mr-10 downloadPdfIcon ">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
@@ -208,7 +212,8 @@
                 </mat-menu>
 
 
-                <button (click)="openAddEdit(null, 'cashInHand')" class="btn-primary addon v-middle" mat-stroked-button>
+                <button *ngIf="cashAndBankCapability.Add" (click)="openAddEdit(null, 'cashInHand')"
+                    class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
@@ -285,7 +290,8 @@
 
                         <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item (click)="openAddEdit(element, 'cashInHand')">Edit</button>
+                            <button *ngIf="cashAndBankCapability.Edit" mat-menu-item
+                                (click)="openAddEdit(element, 'cashInHand')">Edit</button>
                             <button (click)="detailedViewCashInHand(element)" mat-menu-item>Detailed
                                 view</button>
                             <button mat-menu-item>Upload file
@@ -293,7 +299,8 @@
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button mat-menu-item>Activity</button> -->
-                            <button mat-menu-item (click)="deleteModal('CASH IN HAND',element)">Delete</button>
+                            <button *ngIf="cashAndBankCapability.Delete" mat-menu-item
+                                (click)="deleteModal('CASH IN HAND',element)">Delete</button>
                         </mat-menu>
 
                     </td>
@@ -306,8 +313,8 @@
             <div *ngIf="cashInHandList.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">{{noData}}</h4>
-                <button (click)="openAddEdit(null, 'cashInHand')" class="btn-primary addon v-middle"
-                    mat-stroked-button>ADD
+                <button *ngIf="cashAndBankCapability.Add" (click)="openAddEdit(null, 'cashInHand')"
+                    class="btn-primary addon v-middle" mat-stroked-button>ADD
                     NEW
                 </button>
             </div>
