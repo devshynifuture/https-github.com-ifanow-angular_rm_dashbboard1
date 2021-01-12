@@ -32,7 +32,7 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <a *ngIf="retirementAccCapability.Download" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
@@ -59,8 +59,8 @@
                         STATUS - MATURED
                     </button>
                 </mat-menu>
-                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle"
-                    mat-stroked-button> ADD NEW
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addEPF')"
+                    class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
             </div>
         </div>
@@ -200,7 +200,7 @@
                         mat-cell>
                         <img class="c-p" *ngIf="!isLoading" src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menubank="matMenu">
-                            <button mat-menu-item class="c-p"
+                            <button *ngIf="retirementAccCapability.Edit" mat-menu-item class="c-p"
                                 (click)="addDataFromSideBar(element, 'addEPF')">Edit</button>
                             <button mat-menu-item class="c-p"
                                 (click)="openDetailedView(element,'detailedViewEpf')">Detailed
@@ -211,7 +211,8 @@
                                     multiple type="file">
                             </button>
                             <!-- <button mat-menu-item class="c-p">Activity</button> -->
-                            <button mat-menu-item class="c-p" (click)="deleteModal('EPF',element)">Delete</button>
+                            <button *ngIf="retirementAccCapability.Delete" mat-menu-item class="c-p"
+                                (click)="deleteModal('EPF',element)">Delete</button>
                         </mat-menu>
                     </td>
                     <td *matFooterCellDef mat-footer-cell class="br"></td>
@@ -224,8 +225,8 @@
             <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column mt-60 align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">No EPF found</h4>
-                <button (click)="addDataFromSideBar(null, 'addEPF')" class="btn-primary addon v-middle"
-                    mat-stroked-button>
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addEPF')"
+                    class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
@@ -243,7 +244,8 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
+                <a *ngIf="retirementAccCapability.Download" [matMenuTriggerFor]="menu5"
+                    class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
@@ -268,7 +270,8 @@
                         STATUS - MATURED
                     </button>
                 </mat-menu>
-                <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
+                <button *ngIf="retirementAccCapability.Add" [matMenuTriggerFor]="menu1"
+                    class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
                 <mat-menu #menu1="matMenu" class="add-new">
                     <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b" mat-menu-item>
@@ -439,10 +442,12 @@
                                 </i> -->
                             <img class="" src="/assets/images/svg/dot-menu.svg">
                             <mat-menu #menubank="matMenu">
-                                <button mat-menu-item class="c-p" *ngIf="element?.holdingList?.length <= 0"
+                                <button mat-menu-item class="c-p"
+                                    *ngIf="element?.holdingList?.length <= 0 && retirementAccCapability.Edit"
                                     (click)="addDataFromSideBar(element, 'addSummaryPort')">Edit
                                 </button>
-                                <button mat-menu-item class="c-p" *ngIf="element?.holdingList?.length > 0"
+                                <button mat-menu-item class="c-p"
+                                    *ngIf="element?.holdingList?.length > 0 && retirementAccCapability.Edit"
                                     (click)="addDataFromSideBar(element, 'addSchemeHolding')">Edit
                                 </button>
                                 <button mat-menu-item class="c-p" *ngIf="element?.holdingList?.length <= 0"
@@ -455,7 +460,8 @@
                                         id="file-4" multiple type="file">
                                 </button>
                                 <!-- <button mat-menu-item class="c-p">Activity</button> -->
-                                <button mat-menu-item class="c-p" (click)="deleteModal('NPS',element)">Delete</button>
+                                <button *ngIf="retirementAccCapability.Delete" mat-menu-item class="c-p"
+                                    (click)="deleteModal('NPS',element)">Delete</button>
                             </mat-menu>
 
                         </td>
@@ -469,7 +475,8 @@
                     <img src="assets/images/svg/documents-empty-states.svg">
                     <h4 class="text-center mt-12 mb-20"> No NPS found </h4>
                     <!--              [matMenuTriggerFor]="menu1"-->
-                    <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle" mat-stroked-button>
+                    <button *ngIf="retirementAccCapability.Add" [matMenuTriggerFor]="menu1"
+                        class="btn-primary addon v-middle" mat-stroked-button>
                         ADD NEW
                     </button>
                     <mat-menu #menu1="matMenu" class="add-new">
@@ -482,7 +489,8 @@
                                     <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                                     </div>
-                                    <img class="c-p" src="assets/images/svg/download-bordered.svg">
+                                    <img *ngIf="retirementAccCapability.Download" class="c-p"
+                                        src="assets/images/svg/download-bordered.svg">
                                     <mat-menu #menu5="matMenu">
                                         <button (click)="pdf('template1','NPS')" mat-menu-item>PDF</button>
                                         <button (click)="Excel('NPS')" mat-menu-item>XLS</button>
@@ -503,8 +511,8 @@
                                     <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                                             class="material-icons">filter_list</i>FILTERS
                                     </button>
-                                    <button [matMenuTriggerFor]="menu1" class="btn-primary addon v-middle"
-                                        mat-stroked-button>ADD NEW
+                                    <button *ngIf="retirementAccCapability.Add" [matMenuTriggerFor]="menu1"
+                                        class="btn-primary addon v-middle" mat-stroked-button>ADD NEW
                                     </button>
                                     <mat-menu #menu1="matMenu" class="add-new">
                                         <button (click)="addDataFromSideBar(null, 'addSummaryPort')" class="b-b"
@@ -557,7 +565,8 @@
                 <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <a [matMenuTriggerFor]="menu5" class="c-p mr-10 downloadPdfIcon">
+                <a *ngIf="retirementAccCapability.Download" [matMenuTriggerFor]="menu5"
+                    class="c-p mr-10 downloadPdfIcon">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
@@ -600,8 +609,8 @@
                         STATUS - MATURED
                     </button>
                 </mat-menu>
-                <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle  "
-                    mat-stroked-button>ADD NEW
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addGratuity')"
+                    class="btn-primary addon v-middle  " mat-stroked-button>ADD NEW
                 </button>
             </div>
         </div>
@@ -719,7 +728,8 @@
 
                         <img *ngIf="!isLoading" class="c-p " src="/assets/images/svg/dot-menu.svg">
                         <mat-menu #menubank="matMenu">
-                            <button (click)="addDataFromSideBar(element, 'addGratuity')" class="c-p"
+                            <button *ngIf="retirementAccCapability.Edit"
+                                (click)="addDataFromSideBar(element, 'addGratuity')" class="c-p"
                                 mat-menu-item>Edit</button>
                             <button (click)="openDetailedView(element,'detailedViewGratuity')" class="c-p"
                                 mat-menu-item>Detailed
@@ -730,7 +740,8 @@
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button class="c-p" mat-menu-item>Activity</button> -->
-                            <button (click)="deleteModal('GRATUITY',element)" class="c-p" mat-menu-item>Delete</button>
+                            <button *ngIf="retirementAccCapability.Delete" (click)="deleteModal('GRATUITY',element)"
+                                class="c-p" mat-menu-item>Delete</button>
                         </mat-menu>
 
                     </td>
@@ -743,8 +754,8 @@
             <div *ngIf="dataSource.filteredData.length == 0" class="d-flex mt-60 flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">No Gratuity found</h4>
-                <button (click)="addDataFromSideBar(null, 'addGratuity')" class="btn-primary addon v-middle"
-                    mat-stroked-button>
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addGratuity')"
+                    class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
@@ -760,7 +771,8 @@
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+                <img *ngIf="retirementAccCapability.Download" class="c-p" src="assets/images/svg/download-bordered.svg"
+                    [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf('template','Superannuation')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Superannuation')" mat-menu-item>XLS</button>
@@ -781,8 +793,8 @@
                 <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle"
-                    mat-stroked-button>ADD
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addSuperannuation')"
+                    class="btn-primary addon v-middle" mat-stroked-button>ADD
                     NEW
                 </button>
             </div>
@@ -897,7 +909,8 @@
                             more_vert
                         </i>
                         <mat-menu #menubank="matMenu">
-                            <button (click)="addDataFromSideBar(element, 'addSuperannuation')" class="c-p"
+                            <button *ngIf="retirementAccCapability.Edit"
+                                (click)="addDataFromSideBar(element, 'addSuperannuation')" class="c-p"
                                 mat-menu-item>Edit</button>
                             <button (click)="openDetailedView(element,'detailedViewSuperannuation')" class="c-p"
                                 mat-menu-item>Detailed
@@ -907,7 +920,8 @@
                                     id="file-4" multiple type="file">
                             </button>
                             <!-- <button class="c-p" mat-menu-item>Activity</button> -->
-                            <button (click)="deleteModal('SUPERANNUATION',element)" class="c-p"
+                            <button *ngIf="retirementAccCapability.Delete"
+                                (click)="deleteModal('SUPERANNUATION',element)" class="c-p"
                                 mat-menu-item>Delete</button>
                         </mat-menu>
                     </td>
@@ -920,8 +934,8 @@
             <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">No Superannuation found</h4>
-                <button (click)="addDataFromSideBar(null, 'addSuperannuation')" class="btn-primary addon v-middle"
-                    mat-stroked-button>
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addSuperannuation')"
+                    class="btn-primary addon v-middle" mat-stroked-button>
                     ADD NEW
                 </button>
             </div>
@@ -937,7 +951,8 @@
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 </div>
-                <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5">
+                <img *ngIf="retirementAccCapability.Download" class="c-p" src="assets/images/svg/download-bordered.svg"
+                    [matMenuTriggerFor]="menu5">
                 <mat-menu #menu5="matMenu">
                     <button (click)="pdf(null,'EPS')" mat-menu-item>PDF</button>
                     <button (click)="Excel('EPS')" mat-menu-item>XLS</button>
@@ -957,8 +972,8 @@
                 <button class="btn-default addon mr-12 v-middle" mat-stroked-button><i
                         class="material-icons">filter_list</i>FILTERS
                 </button>
-                <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle"
-                    mat-stroked-button> ADD NEW
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addEPS')"
+                    class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
             </div>
         </div>
@@ -1060,7 +1075,8 @@
                                 more_vert
                             </i>
                             <mat-menu #menubank="matMenu">
-                                <button (click)="addDataFromSideBar(element, 'addEPS')" class="c-p"
+                                <button *ngIf="retirementAccCapability.Edit"
+                                    (click)="addDataFromSideBar(element, 'addEPS')" class="c-p"
                                     mat-menu-item>Edit</button>
                                 <button (click)="openDetailedView(element,'detailedViewEps')" class="c-p"
                                     mat-menu-item>Detailed
@@ -1070,7 +1086,8 @@
                                         multiple type="file">
                                 </button>
                                 <!-- <button class="c-p" mat-menu-item>Activity</button> -->
-                                <button (click)="deleteModal('EPS',element)" class="c-p" mat-menu-item>Delete</button>
+                                <button *ngIf="retirementAccCapability.Delete" (click)="deleteModal('EPS',element)"
+                                    class="c-p" mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
                     </td>
@@ -1083,8 +1100,8 @@
             <div *ngIf="dataSource.filteredData.length == 0" class="d-flex flex-column align-items-center">
                 <img src="assets/images/svg/documents-empty-states.svg">
                 <h4 class="text-center mt-12 mb-20">No EPS found </h4>
-                <button (click)="addDataFromSideBar(null, 'addEPS')" class="btn-primary addon v-middle"
-                    mat-stroked-button> ADD NEW
+                <button *ngIf="retirementAccCapability.Add" (click)="addDataFromSideBar(null, 'addEPS')"
+                    class="btn-primary addon v-middle" mat-stroked-button> ADD NEW
                 </button>
             </div>
         </div>

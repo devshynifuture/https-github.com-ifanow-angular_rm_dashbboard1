@@ -92,28 +92,62 @@ export class RoleService {
         enabled: true,
         subModule: {
           cashAndBanks: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           commodities: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           fixedIncome: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           mutualFunds: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any,
+            subModule: {
+              alltransactionsReport: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              capitalGains: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              manualTransactions: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              overviewReport: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              summaryReport: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+              unrealizedTransactions: {
+                enabled: true,
+                capabilityList: {} as any
+              },
+            }
           },
           realEstate: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           retirementAccounts: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           smallSavingSchemes: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
           stocks: {
-            enabled: true
+            enabled: true,
+            capabilityList: {} as any
           },
         }
       },
@@ -391,8 +425,8 @@ export class RoleService {
     } else {
       adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
       adminDatasource.plan ? this.setPlanPermission(adminDatasource.plan.subModule) : this.planPermission.enabled = false;
-      adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     }
+    adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     adminDatasource.portfolio ? this.setPortfolioPermission(adminDatasource.portfolio) : this.portfolioPermission.enabled = false;
   }
 
@@ -501,7 +535,7 @@ export class RoleService {
       this.overviewPermission.subModules.profile.enabled = overviewPermission.profile.showModule;
       this.overviewPermission.subModules.profile.profileCapabilityObj = UtilService.getDetailedCapabilityMap(overviewPermission.profile.subModule.keyInfo.subModule.keyInfo.capabilityList);
       this.overviewPermission.subModules.profile.subModule.keyInfo.enabled = overviewPermission.profile.subModule.keyInfo.showModule;
-      this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile.showModule;
+      this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile ? overviewPermission.profile.subModule.riskProfile.showModule : false;
     } else {
       this.overviewPermission.subModules.profile.enabled = false;
     }
@@ -518,14 +552,78 @@ export class RoleService {
   }
 
   setPortfolioPermission(portfolioPermission) {
-    this.portfolioPermission.subModule.portfolioDashboard.enabled = portfolioPermission.subModule.portfolioDashboard.showModule;
-    this.portfolioPermission.subModule.liabilities.enabled = portfolioPermission.subModule.liabilities.showModule;
-    this.portfolioPermission.subModule.insurance.enabled = portfolioPermission.subModule.insurance.showModule;
-    this.portfolioPermission.subModule.insurance.subModule.generalInsurance.enabled = portfolioPermission.subModule.insurance.subModule.generalInsurance.showModule;
-    this.portfolioPermission.subModule.insurance.subModule.lifeInsurance.enabled = portfolioPermission.subModule.insurance.subModule.lifeInsurance.showModule;
-    this.portfolioPermission.subModule.liabilities.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.liabilities.subModule.liabilities.capabilityList);
-    this.portfolioPermission.subModule.insurance.subModule.generalInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.generalInsurance.subModule.generalInsurance.capabilityList);
-    this.portfolioPermission.subModule.insurance.subModule.lifeInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.lifeInsurance.subModule.lifeInsurance.capabilityList);
+    this.portfolioPermission.subModule.portfolioDashboard.enabled = portfolioPermission.subModule.portfolioDashboard ? portfolioPermission.subModule.portfolioDashboard.showModule : false;
+    if (portfolioPermission.subModule.insurance) {
+      this.portfolioPermission.subModule.insurance.enabled = portfolioPermission.subModule.insurance.showModule;
+      this.portfolioPermission.subModule.insurance.subModule.generalInsurance.enabled = portfolioPermission.subModule.insurance.subModule.generalInsurance.showModule;
+      this.portfolioPermission.subModule.insurance.subModule.lifeInsurance.enabled = portfolioPermission.subModule.insurance.subModule.lifeInsurance.showModule;
+      this.portfolioPermission.subModule.insurance.subModule.generalInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.generalInsurance.subModule.generalInsurance.capabilityList);
+      this.portfolioPermission.subModule.insurance.subModule.lifeInsurance.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.insurance.subModule.lifeInsurance.subModule.lifeInsurance.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.insurance.enabled = false;
+    }
+    if (portfolioPermission.subModule.liabilities) {
+      this.portfolioPermission.subModule.liabilities.enabled = portfolioPermission.subModule.liabilities.showModule;
+      this.portfolioPermission.subModule.liabilities.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.liabilities.subModule.liabilities.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.liabilities.enabled = false;
+    }
+    if (portfolioPermission.subModule.cashAndBanks) {
+      this.portfolioPermission.subModule.assets.subModule.cashAndBanks.enabled = portfolioPermission.subModule.cashAndBanks.showModule
+      this.portfolioPermission.subModule.assets.subModule.cashAndBanks.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.cashAndBanks.subModule.cashAndBanks.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.assets.subModule.cashAndBanks.enabled = false
+    }
+    if (portfolioPermission.subModule.commodities) {
+      this.portfolioPermission.subModule.assets.subModule.commodities.enabled = portfolioPermission.subModule.commodities.showModule
+      this.portfolioPermission.subModule.assets.subModule.commodities.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.commodities.subModule.commodities.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.assets.subModule.commodities.enabled = false;
+    }
+    if (portfolioPermission.subModule.fixedIncome) {
+      this.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled = portfolioPermission.subModule.fixedIncome.showModule
+      this.portfolioPermission.subModule.assets.subModule.fixedIncome.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.fixedIncome.subModule.fixedIncome.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled = false
+    }
+    if (portfolioPermission.subModule.realEstate) {
+      this.portfolioPermission.subModule.assets.subModule.realEstate.enabled = portfolioPermission.subModule.realEstate.showModule
+      this.portfolioPermission.subModule.assets.subModule.realEstate.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.realEstate.subModule.realEstate.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.assets.subModule.realEstate.enabled = false
+    }
+    if (portfolioPermission.subModule.retirementAccounts) {
+      this.portfolioPermission.subModule.assets.subModule.retirementAccounts.enabled = portfolioPermission.subModule.retirementAccounts.showModule
+      this.portfolioPermission.subModule.assets.subModule.retirementAccounts.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.retirementAccounts.subModule.retirementAccounts.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.assets.subModule.retirementAccounts.enabled = false
+    }
+    if (portfolioPermission.subModule.smallSavingSchemes) {
+      this.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.enabled = portfolioPermission.subModule.smallSavingSchemes.showModule
+      this.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.smallSavingSchemes.subModule.smallSavingSchemes.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.enabled = false
+    }
+    if (portfolioPermission.subModule.stocks) {
+      this.portfolioPermission.subModule.assets.subModule.stocks.enabled = portfolioPermission.subModule.stocks.showModule
+      this.portfolioPermission.subModule.assets.subModule.stocks.capabilityList = UtilService.convertArrayListToObject(portfolioPermission.subModule.stocks.subModule.stocks.capabilityList);
+    } else {
+      this.portfolioPermission.subModule.assets.subModule.stocks.enabled = false
+    }
+
+
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled = portfolioPermission.subModule.mutualFunds ? portfolioPermission.subModule.mutualFunds.showModule : false
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList = portfolioPermission.subModule.mutualFunds ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.manualTransactions.subModule.manualTransactions.capabilityList) : false
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.overviewReport ? portfolioPermission.subModule.mutualFunds.subModule.overviewReport.showModule : false;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.summaryReport ? portfolioPermission.subModule.mutualFunds.subModule.summaryReport.showModule : false;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport ? portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport.showModule : false;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.enabled = portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions ? portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions.showModule : false;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.enabled = portfolioPermission.subModule.mutualFunds.subModule.capitalGains ? portfolioPermission.subModule.mutualFunds.subModule.capitalGains.showModule : false;
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.overviewReport ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.overviewReport.subModule.overviewReport.capabilityList) : {}
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.summaryReport ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.summaryReport.subModule.summaryReport.capabilityList) : {}
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport.subModule.alltransactionsReport.capabilityList) : {}
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions.subModule.unrealizedTransactions.capabilityList) : {}
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.capitalGains ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.capitalGains.subModule.capitalGains.capabilityList) : {}
   }
 
   setPlanPermission(planPermission) {
@@ -594,7 +692,44 @@ export class RoleService {
 
     }
     else if (this.portfolioPermission.enabled) {
-      return url = "/customer/detail/account";
+      // return url = "/customer/detail/account";
+      if (this.portfolioPermission.subModule.portfolioDashboard.enabled) {
+        return url = "/customer/detail/account/summary"
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.cashAndBanks.enabled) {
+        return url = '/customer/detail/account/assets/cash_bank';
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled) {
+        return url = '/customer/detail/account/assets/mutual';
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled) {
+        return url = '/customer/detail/account/assets/fix';
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.enabled) {
+        return url = '/customer/detail/account/assets/small';
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.commodities.enabled) {
+        return url = '/customer/detail/account/assets/commodities';
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.stocks.enabled) {
+        return url = '/customer/detail/account/assets/stock';
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.realEstate.enabled) {
+        return url = '/customer/detail/account/assets/real';
+      }
+      if (this.portfolioPermission.subModule.assets.subModule.retirementAccounts.enabled) {
+        return url = '/customer/detail/account/assets/retire';
+      }
+      // else{}
+      // if (state.url === '/customer/detail/account/assets/others') {
+      //   return true;
+      // }
+      if (this.portfolioPermission.subModule.liabilities.enabled) {
+        return url = "/customer/detail/account/liabilities"
+      }
+      if (this.portfolioPermission.subModule.insurance.enabled) {
+        return url = "/customer/detail/account/insurance"
+      }
     }
     else if (this.planPermission.enabled) {
       if (this.planPermission.subModule.profile.enabled) {
@@ -608,7 +743,15 @@ export class RoleService {
       return url = "/customer/detail/activity";
     }
     else {
-      return url = "/customer/detail/transact";
+      if (this.transactionPermission.subModule.transactionsModule.enabled) {
+        return url = '/customer/detail/transact/list'
+      }
+      if (this.transactionPermission.subModule.investorsModule.enabled) {
+        return url = '/customer/detail/transact/investors'
+      }
+      if (this.transactionPermission.subModule.mandateModule.enabled) {
+        return url = '/customer/detail/transact/mandate'
+      }
     }
   }
 

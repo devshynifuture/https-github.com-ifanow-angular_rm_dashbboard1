@@ -34,9 +34,9 @@ export class AccountsComponent implements OnInit {
   constructor(private eventService: EventService, private router: Router, private ngZone: NgZone, private assetValidation: AssetValidationService,
     public routingStateService: RoutingState, public enumService: EnumServiceService, public authService: AuthService, private MfServiceService: MfServiceService,
     public roleService: RoleService) {
-    this.eventService.tabChangeData.subscribe(
-      data => this.getTabChangeData(data)
-    );
+    // this.eventService.tabChangeData.subscribe(
+    //   data => this.getTabChangeData(data)
+    // );
   }
 
   // navBarClick(navigationUrl, navId) {
@@ -54,11 +54,20 @@ export class AccountsComponent implements OnInit {
   ngOnInit() {
     this.showRouter = true;
     this.selected = 1;
-    this._value = 1;
+    if (this.router.url.includes('/customer/detail/account/summary')) {
+      this._value = 1
+    }
+    if (this.router.url.includes('/customer/detail/account/assets')) {
+      this._value = 2
+    }
+    if (this.router.url.includes('/customer/detail/account/liabilities')) {
+      this._value = 3
+    } if (this.router.url.includes('/customer/detail/account/insurance')) {
+      this._value = 4
+    }
     this.loading = false;
     this.clientData = AuthService.getClientData();
     this.assetValidation.clearAssetData();
-    this.MfServiceService.clearStorage();//to clear the stored data of mutual fund
     // this.enumDataService.getAccountList();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     // var roterName = this.router.url.split('/')[3];
@@ -73,6 +82,51 @@ export class AccountsComponent implements OnInit {
     // } else if (roterName === 'documents') {
     //   this._value = 5;
     // }
+  }
+
+  goToValidAssetUrl() {
+    let url;
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled) {
+      url = '/customer/detail/account/assets/mutual'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.stocks.enabled) {
+      url = '/customer/detail/account/assets/stock'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled) {
+      url = '/customer/detail/account/assets/fix'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.realEstate.enabled) {
+      url = '/customer/detail/account/assets/real'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.retirementAccounts.enabled) {
+      url = '/customer/detail/account/assets/retire'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.enabled) {
+      url = '/customer/detail/account/assets/small'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.cashAndBanks.enabled) {
+      url = '/customer/detail/account/assets/cash_bank'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.commodities.enabled) {
+      url = '/customer/detail/account/assets/commodities'
+      this.router.navigate([url])
+      return
+    }
+    this.router.navigate(['/customer/detail/account/assets/others'])
   }
 
   goToAdvisorHome() {
@@ -100,7 +154,6 @@ export class AccountsComponent implements OnInit {
      });*/
 
     this.showRouter = false;
-    this.MfServiceService.clearStorage();//to clear the stored data of mutual fund
     setTimeout(() => {
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');

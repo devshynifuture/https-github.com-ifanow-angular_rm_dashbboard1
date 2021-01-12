@@ -131,6 +131,8 @@ export class InsuranceComponent implements OnInit {
   @Output() loaded = new EventEmitter();
   @Input() finPlanObj: any;
   insuranceCapabilityList: any = {};
+  showLifeInsurance: boolean;
+  showGeneralInsurance: boolean;
   constructor(private cd: ChangeDetectorRef, private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
     private subInjectService: SubscriptionInject,
@@ -152,11 +154,14 @@ export class InsuranceComponent implements OnInit {
   insuranceTypeId;
 
   ngOnInit() {
+    this.lifeInsuranceFlag = true;
+    this.generalInsuranceFlag = false;
     if (this.roleService.portfolioPermission.subModule.insurance.subModule.lifeInsurance.enabled) {
       this.getCapabilityListTypeWise(1)
     } else {
       this.getCapabilityListTypeWise(2)
     }
+    this.checkShowOrHide();
     this.reportDate = new Date();
     this.isExpandedLife = true;
     this.isExpandedGeneral = false;
@@ -179,13 +184,45 @@ export class InsuranceComponent implements OnInit {
       })
     this.getGlobalDataInsurance();
     if (!this.finPlanObj) {
-      this.getInsuranceData(1);
+      if (this.showLifeInsurance) {
+        this.getInsuranceData(1);
+      } else {
+        this.getInsuranceTypeData(2, 0)
+      }
     } else {
       this.finPlanLoadingFunction(); //to load different functions
     }
-    this.lifeInsuranceFlag = true;
-    this.generalInsuranceFlag = false;
+
     this.enumDataService.setBankAccountTypes();
+  }
+  checkShowOrHide() {
+    if (this.roleService.portfolioPermission.subModule.insurance.subModule.lifeInsurance.enabled && this.roleService.portfolioPermission.subModule.insurance.subModule.generalInsurance.enabled) {
+      this.showLifeInsurance = true;
+      this.showGeneralInsurance = true;
+      this.lifeInsuranceFlag = true;
+      this.generalInsuranceFlag = false;
+      this.showInsurance = 'Life'
+    } else if (this.roleService.portfolioPermission.subModule.insurance.subModule.lifeInsurance.enabled) {
+      this.showLifeInsurance = true;
+      this.lifeInsuranceFlag = true;
+      this.generalInsuranceFlag = false;
+      this.showInsurance = 'Life'
+    } else if (!this.roleService.portfolioPermission.subModule.insurance.subModule.generalInsurance.enabled) {
+      this.showGeneralInsurance = false;
+      this.lifeInsuranceFlag = false;
+      this.generalInsuranceFlag = true;
+      this.showInsurance = 'General'
+    } else if (this.roleService.portfolioPermission.subModule.insurance.subModule.generalInsurance.enabled) {
+      this.showGeneralInsurance = true;
+      this.lifeInsuranceFlag = false;
+      this.generalInsuranceFlag = true;
+      this.showInsurance = 'General'
+    } else if (!this.roleService.portfolioPermission.subModule.insurance.subModule.generalInsurance.enabled) {
+      this.showGeneralInsurance = false;
+      this.lifeInsuranceFlag = true;
+      this.generalInsuranceFlag = false;
+      this.showInsurance = 'Life'
+    }
   }
   finPlanLoadingFunction() {
     switch (this.finPlanObj.sectionName) {
@@ -748,10 +785,11 @@ export class InsuranceComponent implements OnInit {
   getInsuranceData(typeId) {
     this.countLi++
     this.stopLoadingLi = this.countLi > 1 ? false : true;
+    this.checkShowOrHide();
     // this.stopLoadingLi = true;
-    this.lifeInsuranceFlag = true;
-    this.generalInsuranceFlag = false;
-    this.showInsurance = 'Life';
+    // this.lifeInsuranceFlag = true;
+    // this.generalInsuranceFlag = false;
+    // this.showInsurance = 'Life';
     if (this.isAdded == undefined) {
       this.isLoading = true;
       this.dataSource = new MatTableDataSource([{}, {}, {}]);

@@ -15,6 +15,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
 import { element } from 'protractor';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -52,6 +53,7 @@ export class PPFSchemeComponent implements OnInit {
   reportDate: Date;
   fragmentData = { isSpinner: false };
   returnValue: any;
+  smallSavingCapability: any = {};
 
   constructor(private ref: ChangeDetectorRef, private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
@@ -59,13 +61,15 @@ export class PPFSchemeComponent implements OnInit {
     private utils: UtilService,
     public dialog: MatDialog, private cusService: CustomerService,
     private assetValidation: AssetValidationService,
-    private eventService: EventService, private subInjectService: SubscriptionInject) {
+    private eventService: EventService, private subInjectService: SubscriptionInject,
+    public roleService: RoleService) {
 
     this.clientData = AuthService.getClientData()
   }
   displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'number', 'mdate', 'desc', 'status', 'icons'];
 
   ngOnInit() {
+    this.smallSavingCapability = this.roleService.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.capabilityList;
     this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();

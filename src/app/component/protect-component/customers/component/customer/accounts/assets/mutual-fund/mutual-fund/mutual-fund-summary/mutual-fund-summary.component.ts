@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, NgZone } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
@@ -23,6 +23,7 @@ import { DatePipe } from '@angular/common';
 import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
 import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 @Component({
@@ -137,6 +138,8 @@ export class MutualFundSummaryComponent implements OnInit {
   loadingDone = false;
   download: boolean;
   pdfDownload: boolean;
+  mfCapability: any = {};
+  mfSummaryCapability: any = {};
 
   // setTrueKey = false;
 
@@ -152,6 +155,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   constructor(
+    private ngZone: NgZone,
     private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     public mfService: MfServiceService,
@@ -167,6 +171,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private onlineTransact: OnlineTransactionService,
     private activatedRoute: ActivatedRoute,
     private assetValidation: AssetValidationService,
+    public roleService: RoleService,
     private cd: ChangeDetectorRef) {
     this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
       if (queryParamMap.has('clientId')) {
@@ -203,6 +208,8 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
+    this.mfSummaryCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList
     this.initPoint();
   }
 
@@ -358,7 +365,7 @@ export class MutualFundSummaryComponent implements OnInit {
           };
           if (this.resData) {
             this.getMutualFundResponse(this.mfGetData);
-          } else if (this.mfGetData && this.mfGetData != '') {
+          } else if (this.mfGetData != '') {
             this.getMutualFundResponse(this.mfGetData);
           } else if (this.mutualFund) {
             this.getMutualFundResponse(this.mutualFund);
@@ -394,7 +401,9 @@ export class MutualFundSummaryComponent implements OnInit {
             });
           }
         }
-        if (this.mfGetData && this.mfGetData != '') {
+        if (this.resData) {
+          this.getMutualFundResponse(this.mfGetData);
+        } else if (this.mfGetData != '') {
           this.getMutualFundResponse(this.mfGetData);
         } else if (this.mutualFund) {
           this.getMutualFundResponse(this.mutualFund);
@@ -1154,6 +1163,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.changeInput.emit(false);
       this.isLoading = false;
       this.showDownload = true;
+      this.mfService.setDataForMfGet(null);
     }
   }
 
@@ -1357,7 +1367,9 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('header data', this.customDataSource);
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.dataSummary.customDataSourceData = data;
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.isLoading = false;
+        });
         this.customDataSource.data.array.forEach(element => {
           switch (element.index) {
             case 0:

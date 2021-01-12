@@ -8,7 +8,7 @@
 
 
             <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="summarydownload"
-                *ngIf="!fragmentData.isSpinner && summary.data.length > 0">
+                *ngIf="!fragmentData.isSpinner && summary.data.length > 0 && mfSummaryCapability.Download">
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #summarydownload="matMenu">
@@ -24,7 +24,7 @@
             <button mat-stroked-button class="btn-default addon mr-12 v-middle" (click)="openFilter()"><i
                     (click)="openFilter()" class="material-icons">filter_list</i>FILTERS</button>
             <button mat-stroked-button class="btn-primary addon v-middle" (click)="openMutualFund('addMutualFund',null)"
-                *ngIf="summary.data.length > 0">ADD NEW</button>
+                *ngIf="summary.data.length > 0 && mfCapability.Add">ADD NEW</button>
         </div>
     </div>
 
@@ -391,14 +391,16 @@
                                 (click)="openUpperFragment('addTransaction', element)">View
                                 transactions</button>
 
-                            <div [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
+                            <div *ngIf="mfCapability.Edit"
+                                [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
                                 [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
 
                                 <button mat-menu-item [disabled]="element.rtMasterId !== 14"
                                     (click)="openMutualEditFund('editMutualFund',element)">Edit
                                     Mutual Fund</button>
                             </div>
-                            <div [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'"
+                            <div *ngIf="mfCapability.Delete"
+                                [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'"
                                 [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
 
                                 <button mat-menu-item [disabled]="element.rtMasterId !== 14"
@@ -433,7 +435,7 @@
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12"> No data found</h4>
 
-                <button mat-stroked-button (click)="openMutualFund('addMutualFund',null)"
+                <button *ngIf="mfCapability.Add" mat-stroked-button (click)="openMutualFund('addMutualFund',null)"
                     class="btn-primary addon v-middle">
                     ADD NEW</button>
 

@@ -117,6 +117,8 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.folioList.push(foilo)
       // this.schemeList.push({'schemeName': this.schemeName})
       this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
+      Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
+      Object.assign(this.transactionSummary, { schemeName: this.schemeName });
       this.ExistingOrNew = 1
       this.mutualFundData = data.mutualFundData
     }
@@ -315,8 +317,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (this.purchaseTransaction.controls.folioSelection.value == '1' && !this.mutualFundData) {
       this.getFolioList();
     }
-    Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
-    Object.assign(this.transactionSummary, { schemeName: this.schemeName });
+    // Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
+    // Object.assign(this.transactionSummary, { schemeName: this.schemeName });
   }
 
   setMinAmount() {

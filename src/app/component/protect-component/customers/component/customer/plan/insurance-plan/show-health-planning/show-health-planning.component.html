@@ -111,10 +111,12 @@
                 <div *ngIf="dataSource.length == 0 "
                     class="d-flex flex-column align-items-center pb-20 scroll-table-health-empty">
                     <!-- <img class="width400" src="assets/images/svg/clients-img.svg"> -->
-                    <h4 class="text-center pt-12">Select from existing health insurance policies.
+                    <h4 class="text-center pt-12 f-16 mb-0">Select from existing health insurance policies.<br>
                         Once selected, you can give advice on them</h4>
-                    <h4 class="text-center pt-12 text-custom">You can give advice on multiple policies at once.</h4>
-                    <button mat-stroked-button class="btn-primary addon v-middle"
+                    <h4 class="text-center pt-10 text-custom f-14 mb-28">You can give advice on multiple policies at
+                        once.
+                    </h4>
+                    <button mat-stroked-button class="btn-primary addon v-middle mb-40"
                         (click)="openHelthInsurance(showInsurance)">SELECT ONE
                     </button>
                 </div>
@@ -263,11 +265,11 @@
 
                 <div *ngIf="dataSource1.length == 0 " class="d-flex flex-column align-items-center pt-12">
                     <!-- <img class="width400" src="assets/images/svg/clients-img.svg"> -->
-                    <h4 class="text-center pt-12">
+                    <h4 class="text-center pt-12 f-16 mb-0">
                         Suggest new policy from here.</h4>
-                    <h4 class="text-center pt-12 text-custom">
+                    <h4 class="text-center pt-10 text-custom f-14 mb-28">
                         You can suggest multiple policies too.</h4>
-                    <button mat-stroked-button class="btn-primary addon v-middle"
+                    <button mat-stroked-button class="btn-primary addon v-middle mb-40"
                         (click)="openAddEditAdvice(showInsurance,null,'suggestNew')">SUGGEST NEW
                     </button>
                     <!-- (click)="openSuggestHealth(showInsurance,null)" -->

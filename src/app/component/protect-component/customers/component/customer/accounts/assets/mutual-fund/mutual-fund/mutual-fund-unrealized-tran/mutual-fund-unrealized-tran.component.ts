@@ -1,5 +1,5 @@
 import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectorRef, ElementRef, NgZone } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
@@ -27,6 +27,7 @@ import {
  */
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 const PAGESIZE = 20;
 const ROW_HEIGHT = 48;
@@ -224,15 +225,18 @@ export class MutualFundUnrealizedTranComponent {
   isDisabledOpacity = true;
   colspanValue: Number;
   resData: any;
+  mfAllTransactionCapability: any = {};
+  mfCapability: any = {};
   // setTrueKey = false;
-  constructor(public dialog: MatDialog, private datePipe: DatePipe,
+  constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService,
     private route: Router,
     private backOfficeService: BackOfficeService,
     public routerActive: ActivatedRoute,
     private custumService: CustomerService, private eventService: EventService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public roleService: RoleService
               /*private changeDetectorRef: ChangeDetectorRef*/) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -297,6 +301,12 @@ export class MutualFundUnrealizedTranComponent {
   }
 
   ngOnInit() {
+    this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
+    if (this.viewMode == 'Unrealized Transactions') {
+      this.mfAllTransactionCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList
+    } else {
+      this.mfAllTransactionCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.capabilityList
+    }
     if (this.finPlanObj && this.finPlanObj.sectionName == 'Mutual fund all transaction') {
       this.viewMode = 'All Transactions';
       this.mode = 'All Transactions';
@@ -508,7 +518,7 @@ export class MutualFundUnrealizedTranComponent {
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
             this.getUnrealizedData();
-          }else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
+          } else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
             this.isLoading = true;
             this.getMutualFundResponse(this.mfGetData);
           } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
@@ -559,6 +569,9 @@ export class MutualFundUnrealizedTranComponent {
         if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
           this.isLoading = true;
           this.getUnrealizedData();
+        } else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
+          this.isLoading = true;
+          this.getMutualFundResponse(this.mfGetData);
         } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
           this.isLoading = true;
           this.changeInput.emit(true);
@@ -825,12 +838,12 @@ export class MutualFundUnrealizedTranComponent {
     // data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
     // return data;
   }
-  casFolioNumber(data){
+  casFolioNumber(data) {
     data.forEach(element => {
-      if(element.rtMasterId == 6 && !element.folioNumber.includes("CAS")){
-        element.folioNumber = 'CAS-'+element.folioNumber;
+      if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+        element.folioNumber = 'CAS-' + element.folioNumber;
       }
-      
+
     });
     return data;
   }
@@ -879,6 +892,7 @@ export class MutualFundUnrealizedTranComponent {
       this.customDataSource = [];
       this.customDataHolder = [];
       this.changeInput.emit(false);
+      this.mfService.setDataForMfGet(null);
       this.isLoading = false;
     }
   }
@@ -967,7 +981,7 @@ export class MutualFundUnrealizedTranComponent {
   // }
 
   getUnrealizedData() {
-    const myArray = (this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
+    const myArray = (this.mfGetData != '') ? (this.mfGetData ? this.mfGetData.mutualFundList : []) : this.mutualFund.mutualFundList;
     const list = [];
     myArray.forEach(val => list.push(Object.assign({}, val)));
     // let list =[];
@@ -1010,6 +1024,7 @@ export class MutualFundUnrealizedTranComponent {
         this.setUnrealizedDataSource([]);
         this.customDataSource = [];
         this.customDataHolder = [];
+        this.mfService.setDataForMfGet(null);
         this.eventService.showErrorMessage(error);
         this.changeInput.emit(false);
         // this.changeDetectorRef.detectChanges();
@@ -1095,7 +1110,9 @@ export class MutualFundUnrealizedTranComponent {
         if (this.isBulkEmailing && this.fromDate && this.toDate) {
           this.isTableShow = false;
         }
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.isLoading = false;
+        });
         this.customDataSource.data.arrayTran.forEach(element => {
           switch (element.index) {
             case 0:
@@ -1233,11 +1250,10 @@ export class MutualFundUnrealizedTranComponent {
           this.generatePdfBulk();
         }
         this.changeInput.emit(false);
-        this.cd.markForCheck();
-        this.cd.detectChanges();
+        // this.cd.markForCheck();
+        // this.cd.detectChanges();
         console.log('dataSource', this.dataSource)
 
-        console.log('isLoadingfalse', this.isLoading)
         if (this.finPlanObj) {
           this.showDownload = true;
           this.cd.detectChanges();

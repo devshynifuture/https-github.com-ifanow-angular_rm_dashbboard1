@@ -10,6 +10,8 @@ import { UpperCustomerComponent } from '../../../common-component/upper-customer
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AssetValidationService } from './asset-validation.service';
 import { MfServiceService } from './mutual-fund/mf-service.service';
+import { element } from 'protractor';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-assets',
@@ -26,15 +28,15 @@ export class AssetsComponent implements OnInit {
   // sidenavState: boolean = false;
   @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
   assetSideBarData = [
-    { name: 'Mutual funds', viewmode: 'tab1', count: 0, link: './mutual' },
-    { name: 'Stocks', viewmode: 'tab2', count: 0, link: './stock' },
-    { name: 'Fixed income', viewmode: 'tab3', count: 0, link: './fix' },
-    { name: 'Real estate', viewmode: 'tab4', count: 0, link: './real' },
-    { name: 'Retirement accounts', viewmode: 'tab5', count: 0, link: './retire' },
-    { name: 'Small saving scheme', viewmode: 'tab6', count: 0, link: './small' },
-    { name: 'Cash & Bank', viewmode: 'tab7', count: 0, link: './cash_bank' },
-    { name: 'Commodities', viewmode: 'tab8', count: 0, link: './commodities' },
-    { name: 'Other assets', viewmode: 'tab9', count: 0, link: './others' }
+    { name: 'Mutual funds', viewmode: 'tab1', count: 0, link: './mutual', tabName: 'mutual_fund' },
+    { name: 'Stocks', viewmode: 'tab2', count: 0, link: './stock', tabName: 'STOCKS' },
+    { name: 'Fixed income', viewmode: 'tab3', count: 0, link: './fix', tabName: 'fixedIncome' },
+    { name: 'Real estate', viewmode: 'tab4', count: 0, link: './real', tabName: 'real_estate' },
+    { name: 'Retirement accounts', viewmode: 'tab5', count: 0, link: './retire', tabName: 'retirementAccounts' },
+    { name: 'Small saving scheme', viewmode: 'tab6', count: 0, link: './small', tabName: 'smallSavingSchemes' },
+    { name: 'Cash & Bank', viewmode: 'tab7', count: 0, link: './cash_bank', tabName: 'cashAndBank' },
+    { name: 'Commodities', viewmode: 'tab8', count: 0, link: './commodities', tabName: 'commodities' },
+    { name: 'Other assets', viewmode: 'tab9', count: 0, link: './others', tabName: 'otherAsset' }
   ];
   tab: any;
   Settab: any;
@@ -49,7 +51,8 @@ export class AssetsComponent implements OnInit {
     private route: ActivatedRoute,
     private assetValidation: AssetValidationService,
     private router: Router, private enumDataService: EnumDataService,
-    private mfService: MfServiceService) {
+    private mfService: MfServiceService,
+    public roleService: RoleService) {
     this.assetValidation.assetCountObserver.subscribe(
       data => {
         if (data.type) {
@@ -90,6 +93,7 @@ export class AssetsComponent implements OnInit {
 
   ngOnInit() {
     // this.viewMode = 'tab2';
+    this.sidebarListBasedOnRolesSetting();
     this.enumDataService.setBankAccountTypes();
     this.enumDataService.getclientFamilybankList();
     this.advisorId = AuthService.getAdvisorId();
@@ -135,6 +139,33 @@ export class AssetsComponent implements OnInit {
         }
       }
     );
+  }
+
+  sidebarListBasedOnRolesSetting() {
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.cashAndBanks.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'cashAndBank')
+    }
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'mutual_fund')
+    }
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'fixedIncome')
+    }
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'smallSavingSchemes')
+    }
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.commodities.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'commodities')
+    }
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.stocks.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'STOCKS')
+    }
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.realEstate.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'real_estate')
+    }
+    if (!this.roleService.portfolioPermission.subModule.assets.subModule.retirementAccounts.enabled) {
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'retirementAccounts')
+    }
   }
 
   updateAssetCount(data) {
@@ -251,15 +282,44 @@ export class AssetsComponent implements OnInit {
       mutual_fund,
       otherAsset
     } = data;
-    this.assetSideBarData[0].count = mutual_fund;
-    this.assetSideBarData[1].count = STOCKS;
-    this.assetSideBarData[2].count = fixedIncome;
-    this.assetSideBarData[3].count = real_estate;
-    this.assetSideBarData[4].count = retirementAccounts;
-    this.assetSideBarData[5].count = smallSavingSchemes;
-    this.assetSideBarData[6].count = cashAndBank;
-    this.assetSideBarData[7].count = commodities;
-    this.assetSideBarData[8].count = otherAsset;
+    // this.assetSideBarData[0].count = mutual_fund;
+    // this.assetSideBarData[1].count = STOCKS;
+    // this.assetSideBarData[2].count = fixedIncome;
+    // this.assetSideBarData[3].count = real_estate;
+    // this.assetSideBarData[4].count = retirementAccounts;
+    // this.assetSideBarData[5].count = smallSavingSchemes;
+    // this.assetSideBarData[6].count = cashAndBank;
+    // this.assetSideBarData[7].count = commodities;
+    // this.assetSideBarData[8].count = otherAsset;
+    this.assetSideBarData.forEach(element => {
+      if (element.tabName == 'mutual_fund') {
+        element.count = mutual_fund
+      }
+      if (element.tabName == 'STOCKS') {
+        element.count = STOCKS
+      }
+      if (element.tabName == 'fixedIncome') {
+        element.count = fixedIncome
+      }
+      if (element.tabName == 'real_estate') {
+        element.count = real_estate
+      }
+      if (element.tabName == 'retirementAccounts') {
+        element.count = retirementAccounts
+      }
+      if (element.tabName == 'smallSavingSchemes') {
+        element.count = smallSavingSchemes
+      }
+      if (element.tabName == 'cashAndBank') {
+        element.count = cashAndBank
+      }
+      if (element.tabName == 'commodities') {
+        element.count = commodities
+      }
+      if (element.tabName == 'otherAsset') {
+        element.count = otherAsset
+      }
+    })
   }
   clickable(value) {
     this.sidenavState = false;

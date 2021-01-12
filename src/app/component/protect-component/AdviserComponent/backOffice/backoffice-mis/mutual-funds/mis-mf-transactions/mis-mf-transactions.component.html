@@ -106,7 +106,7 @@
     </div>
 </div>
 <div class="row pt-20">
-    <div class="col-md-12">
+    <div class="col-md-12 mb-20">
         <div *ngIf="mfTransaction.data.length  != 0">
             <div class="people-table-scroll" (scroll)="onWindowScroll($event)">
                 <table matSort #tableEl mat-table [dataSource]="mfTransaction" class="skeletonAnimation"

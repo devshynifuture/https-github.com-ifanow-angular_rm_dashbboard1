@@ -4,7 +4,7 @@
         <div class="col-md-12 col-lg-2 p-0 tabViewLiabilities pt-8 pb-20">
 
             <div class="vertical-menu bg-grey lter">
-                <ul class="d-block ">
+                <ul class="d-block " *ngIf="showLifeInsurance">
                     <li [ngClass]="{'bg-grey lt':lifeInsuranceFlag}" class="  pb-8 c-p">
                         <div (click)="getInsuranceData(1);selectedInsuranceName='LIFE INSURANCE';getCapabilityListTypeWise(1)"
                             class="row">
@@ -31,7 +31,7 @@
                 <!-- toggle('generalInsurance'); -->
 
 
-                <ul class="d-block b-t pt-12 mt-12 ">
+                <ul class="d-block" *ngIf="showGeneralInsurance" [ngClass]="{'b-t pt-12 mt-12': showLifeInsurance}">
                     <li [ngClass]="{'bg-grey lt':generalInsuranceFlag}" class="pb-8 c-p">
                         <div (click)="getInsuranceTypeData(2,0);selectedInsuranceName='GENERAL INSURANCE';getCapabilityListTypeWise(2)"
                             class="row">
@@ -162,7 +162,8 @@
                     <div [ngClass]="{'table-scroll':isLoading==false }"
                         class="col-md-12 new-border-table p-0 liabilities overflow-hidden">
 
-                        <table #tableEl *ngIf="insuranceTypeId == 1 && dataSource && dataSource.data.length > 0"
+                        <table #tableEl
+                            *ngIf="showLifeInsurance && insuranceTypeId == 1 && dataSource && dataSource.data.length > 0"
                             [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                             class="skeletonAnimation" id="tbs" mat-table matSort>
                             <ng-container matColumnDef="no" sticky>
@@ -174,7 +175,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="life">
-                                <th *matHeaderCellDef class="br w-13" mat-sort-header="lifeAssuredName">
+                                <th *matHeaderCellDef class="br w-13 bb" mat-sort-header="lifeAssuredName">
                                     Life assured
                                 </th>
                                 <td *matCellDef="let element" class="br" mat-cell>
@@ -184,7 +185,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="name">
-                                <th *matHeaderCellDef class="br w-17 " mat-sort-header="policyName"> Policy name
+                                <th *matHeaderCellDef class="br w-17 bb" mat-sort-header="policyName"> Policy name
                                 </th>
                                 <td *matCellDef="let element" class="br" mat-cell>
                                     <div class="bar"> {{element.policyName}} </div>
@@ -296,7 +297,7 @@
                                 <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                             </ng-container>
                             <ng-container matColumnDef="number">
-                                <th *matHeaderCellDef class="br textLeft w-11" mat-sort-header="policyNumber">
+                                <th *matHeaderCellDef class="br textLeft w-11 bb" mat-sort-header="policyNumber">
                                     Policy number
                                 </th>
                                 <td *matCellDef="let element" class="br" mat-cell>
@@ -353,7 +354,7 @@
                             </tr>
                         </table>
 
-                        <div *ngIf="insuranceTypeId == 1 && dataSource.data.length == 0"
+                        <div *ngIf="showLifeInsurance && insuranceTypeId == 1 && dataSource.data.length == 0"
                             class="w-100 mt-70 d-flex flex-column align-items-center">
                             <img src="assets/images/svg/documents-empty-states.svg">
                             <h4 class="text-center mt-12 mb-20">No Data Found</h4>
@@ -367,7 +368,7 @@
                         <!----------------------------------------------------------GENERAL INSURANCE TABLE------------------------------------------------------------------>
 
 
-                        <div class="new-border-table" *ngIf="insuranceTypeId == 2">
+                        <div class="new-border-table" *ngIf="showGeneralInsurance && insuranceTypeId == 2">
 
                             <table #tableEl2 *ngIf="dataSourceGeneralInsurance.data.length > 0"
                                 [appSkeletonLoading]="isLoading" [dataSource]="dataSourceGeneralInsurance"
@@ -380,7 +381,8 @@
                                     <td *matFooterCellDef class="bl-1 p-8 text-left" mat-footer-cell> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="life">
-                                    <th *matHeaderCellDef class="br textLeft w-15" mat-sort-header="policyHolderName">
+                                    <th *matHeaderCellDef class="br textLeft w-15 bb"
+                                        mat-sort-header="policyHolderName">
                                         {{showPolicyHolder}}</th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar"> {{isLoading ? '' : element.displayHolderName}} </div>
@@ -388,7 +390,7 @@
                                     <td *matFooterCellDef class=" p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="insurerName">
-                                    <th *matHeaderCellDef class="br w-15 textLeft" mat-sort-header="insurerName">
+                                    <th *matHeaderCellDef class="br w-15 textLeft bb" mat-sort-header="insurerName">
                                         {{(insuranceSubTypeId == 7) ? 'Name of insurer' : 'Name of insurer & Plan'}}
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -402,7 +404,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="sumInsured">
-                                    <th *matHeaderCellDef class="br w-10 rightTextHide" mat-sort-header="sumAssured">
+                                    <th *matHeaderCellDef class="br w-10 rightTextHide bb" mat-sort-header="sumAssured">
                                         Sum
                                         insured{{(insuranceSubTypeId == 8) ? ' (USD)' : ''}}{{(insuranceSubTypeId == 4) ? ' (IDV)' : ''}}
                                     </th>
