@@ -56,7 +56,6 @@ export class AccountsComponent implements OnInit {
     this.loading = false;
     this.clientData = AuthService.getClientData();
     this.assetValidation.clearAssetData();
-    this.MfServiceService.clearStorage();//to clear the stored data of mutual fund
     // this.enumDataService.getAccountList();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     // var roterName = this.router.url.split('/')[3];
@@ -98,7 +97,6 @@ export class AccountsComponent implements OnInit {
      });*/
 
     this.showRouter = false;
-    this.MfServiceService.clearStorage();//to clear the stored data of mutual fund
     setTimeout(() => {
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');
