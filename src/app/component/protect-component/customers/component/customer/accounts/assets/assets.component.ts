@@ -146,7 +146,7 @@ export class AssetsComponent implements OnInit {
       this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'cashAndBank')
     }
     if (!this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled) {
-      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'cashAndBank')
+      this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'mutual_fund')
     }
     if (!this.roleService.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled) {
       this.assetSideBarData = this.assetSideBarData.filter(element => element.tabName != 'fixedIncome')
