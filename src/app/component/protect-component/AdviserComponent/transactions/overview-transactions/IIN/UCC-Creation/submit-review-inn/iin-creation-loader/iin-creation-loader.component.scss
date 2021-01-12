@@ -24,9 +24,22 @@
     line-height: 18px;
 }
 
+.buttonMapp {
+    position: absolute;
+    bottom: 0px;
+    font-size: 14px;
+    right: 60px;
+    background: #02B875;
+    color: #ffffff;
+    padding: 0px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
 .uiCLass {
     display: block;
     padding-left: 20px;
+
     li {
         text-align: left;
         font-size: 14px;

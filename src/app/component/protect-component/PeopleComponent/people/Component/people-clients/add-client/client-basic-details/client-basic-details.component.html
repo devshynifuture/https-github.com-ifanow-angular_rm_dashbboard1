@@ -26,7 +26,7 @@
         <div class="col-md-6 p-0">
             <div class="row">
                 <div class="col-md-6 col-6 pl-0 pr-8 mob-pl-10">
-                    <p class="m-0 roboto mob-pb-5">Category</p>
+                    <p class="m-0 roboto mob-pb-5 f-400">Category</p>
                     <div *ngIf="fieldFlag=='client'" class="form-group">
                         <mat-form-field>
                             <mat-select (selectionChange)="changeInvestorType($event)"
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-6 pr-0 pl-8 mob-pr-10">
-                    <p class="m-0 roboto mob-pb-5">Resident status</p>
+                    <p class="m-0 roboto mob-pb-5 f-400">Resident status</p>
                     <div class="form-group">
                         <mat-form-field>
                             <mat-select (selectionChange)="changeTaxStatus($event.value)" [(ngModel)]="invTaxStatus"
@@ -199,7 +199,7 @@
                     <h5 class="mb-0 mt-20">Date of birth</h5>
                 </div>
                 <div class="col-md-3 pr-7 pl-0 mob-pl-10 mob-pr-10">
-                    <p class="m-0 roboto mob-pt-10 mob-pb-5">As per records</p>
+                    <p class="m-0 roboto mob-pt-10 mob-pb-5 f-400">As per records</p>
                     <div class="form-group mb-0">
                         <mat-form-field class="ba-date">
                             <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord"
