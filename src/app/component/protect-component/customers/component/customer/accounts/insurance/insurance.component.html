@@ -174,7 +174,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="life">
-                                <th *matHeaderCellDef class="br w-13" mat-sort-header="lifeAssuredName">
+                                <th *matHeaderCellDef class="br w-13 bb" mat-sort-header="lifeAssuredName">
                                     Life assured
                                 </th>
                                 <td *matCellDef="let element" class="br" mat-cell>
@@ -184,7 +184,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="name">
-                                <th *matHeaderCellDef class="br w-17 " mat-sort-header="policyName"> Policy name
+                                <th *matHeaderCellDef class="br w-17 bb" mat-sort-header="policyName"> Policy name
                                 </th>
                                 <td *matCellDef="let element" class="br" mat-cell>
                                     <div class="bar"> {{element.policyName}} </div>
@@ -296,7 +296,7 @@
                                 <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
                             </ng-container>
                             <ng-container matColumnDef="number">
-                                <th *matHeaderCellDef class="br textLeft w-11" mat-sort-header="policyNumber">
+                                <th *matHeaderCellDef class="br textLeft w-11 bb" mat-sort-header="policyNumber">
                                     Policy number
                                 </th>
                                 <td *matCellDef="let element" class="br" mat-cell>
@@ -380,7 +380,8 @@
                                     <td *matFooterCellDef class="bl-1 p-8 text-left" mat-footer-cell> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="life">
-                                    <th *matHeaderCellDef class="br textLeft w-15" mat-sort-header="policyHolderName">
+                                    <th *matHeaderCellDef class="br textLeft w-15 bb"
+                                        mat-sort-header="policyHolderName">
                                         {{showPolicyHolder}}</th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar"> {{isLoading ? '' : element.displayHolderName}} </div>
@@ -388,7 +389,7 @@
                                     <td *matFooterCellDef class=" p-8 text-left" mat-footer-cell></td>
                                 </ng-container>
                                 <ng-container matColumnDef="insurerName">
-                                    <th *matHeaderCellDef class="br w-15 textLeft" mat-sort-header="insurerName">
+                                    <th *matHeaderCellDef class="br w-15 textLeft bb" mat-sort-header="insurerName">
                                         {{(insuranceSubTypeId == 7) ? 'Name of insurer' : 'Name of insurer & Plan'}}
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
@@ -402,7 +403,7 @@
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="sumInsured">
-                                    <th *matHeaderCellDef class="br w-10 rightTextHide" mat-sort-header="sumAssured">
+                                    <th *matHeaderCellDef class="br w-10 rightTextHide bb" mat-sort-header="sumAssured">
                                         Sum
                                         insured{{(insuranceSubTypeId == 8) ? ' (USD)' : ''}}{{(insuranceSubTypeId == 4) ? ' (IDV)' : ''}}
                                     </th>
