@@ -40,7 +40,10 @@
   <div class="rejectClass bg-danger f-12 text-white p-10">
     {{failureMessage}}
   </div>
+  <div *ngIf="msg" class="f-12 text-danger p-10">
+    This user is mapeed with other broker, Do you want to mapped with self?</div>
 </div>
 <div>
+  <button *ngIf="msg" (click)="mappUser()" class="buttonMapp" mat-stroked-button>MAPP</button>
   <button (click)="dialogClose()" class="p-16" class="closeClass" mat-stroked-button>CLOSE</button>
 </div>
