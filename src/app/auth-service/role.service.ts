@@ -501,7 +501,7 @@ export class RoleService {
       this.overviewPermission.subModules.profile.enabled = overviewPermission.profile.showModule;
       this.overviewPermission.subModules.profile.profileCapabilityObj = UtilService.getDetailedCapabilityMap(overviewPermission.profile.subModule.keyInfo.subModule.keyInfo.capabilityList);
       this.overviewPermission.subModules.profile.subModule.keyInfo.enabled = overviewPermission.profile.subModule.keyInfo.showModule;
-      this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile.showModule;
+      this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile ? overviewPermission.profile.subModule.riskProfile.showModule : false;
     } else {
       this.overviewPermission.subModules.profile.enabled = false;
     }
