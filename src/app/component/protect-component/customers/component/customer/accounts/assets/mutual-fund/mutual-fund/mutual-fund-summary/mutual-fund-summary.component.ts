@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild ,NgZone } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
@@ -152,6 +152,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   constructor(
+    private ngZone: NgZone,
     private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     public mfService: MfServiceService,
@@ -1357,7 +1358,9 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('header data', this.customDataSource);
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.dataSummary.customDataSourceData = data;
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.isLoading = false;
+        });
         this.customDataSource.data.array.forEach(element => {
           switch (element.index) {
             case 0:
