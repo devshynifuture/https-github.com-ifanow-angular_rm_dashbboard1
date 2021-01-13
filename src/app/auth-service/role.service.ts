@@ -125,7 +125,7 @@ export class RoleService {
               },
               summaryReport: {
                 enabled: true,
-                capabilityList: {} as any
+                capabilityList: [] as any
               },
               unrealizedTransactions: {
                 enabled: true,
@@ -243,6 +243,10 @@ export class RoleService {
       calendar: {
         enabled: true
       },
+      deployments: {
+        enabled: true,
+        capabilityList: {} as any
+      },
       taskCapabilityList: [],
       calendarCapabilityList: [],
       emailCapabilityList: [],
@@ -258,8 +262,14 @@ export class RoleService {
       profile: {
         enabled: true,
         subModule: {
-          keyInfo: { enabled: true },
-          riskProfile: { enabled: true }
+          keyInfo: {
+            enabled: true,
+            capabilityList: {} as any
+          },
+          riskProfile: {
+            enabled: true,
+            capabilityList: {} as any
+          }
         },
         profileCapabilityObj: { add: true, edit: true, delete: true }
       },
@@ -417,7 +427,7 @@ export class RoleService {
     if (AuthService.getUserInfo().userType == 1) {
       adminDatasource.subscriptions ? this.setSubscriptionSubModulePermissions(adminDatasource.subscriptions.subModule) : '';
       adminDatasource.people ? this.setPeoplePermissions(adminDatasource.people.subModule) : '';
-      adminDatasource.activity ? this.setActivityPermissions(adminDatasource.activity.subModule) : '';
+      // adminDatasource.activity ? this.setActivityPermissions(adminDatasource.activity.subModule) : '';
       adminDatasource.backoffice ? this.setBackofficePermissions(adminDatasource.backoffice.subModule) : this.backofficePermission.enabled = false;
       adminDatasource.dashboard ? this.setDashboardPermission(adminDatasource.dashboard.subModule) : '';
       adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
@@ -426,6 +436,7 @@ export class RoleService {
       adminDatasource.overview ? this.setOverviewPermissions(adminDatasource.overview.subModule) : '';
       adminDatasource.plan ? this.setPlanPermission(adminDatasource.plan.subModule) : this.planPermission.enabled = false;
     }
+    adminDatasource.activity ? this.setActivityPermissions(adminDatasource.activity.subModule) : '';
     adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     adminDatasource.portfolio ? this.setPortfolioPermission(adminDatasource.portfolio) : this.portfolioPermission.enabled = false;
   }
@@ -489,13 +500,31 @@ export class RoleService {
   }
 
   setActivityPermissions(activityPermissions) {
-    this.activityPermission.subModule.tasks.enabled = activityPermissions.tasks ? activityPermissions.tasks.showModule : false;
-    this.activityPermission.subModule.emails.enabled = activityPermissions.emails ? activityPermissions.emails.showModule : false;
-    this.activityPermission.subModule.calendar.enabled = activityPermissions.calendar ? activityPermissions.calendar.showModule : false;
-    this.activityPermission.subModule.taskCapabilityList = activityPermissions.tasks.subModule.tasks.capabilityList;
-    this.activityPermission.subModule.taskCapabilityObj = UtilService.getCapabilityMap(activityPermissions.tasks.subModule.tasks.capabilityList);
-    this.activityPermission.subModule.calendarCapabilityList = activityPermissions.calendar.subModule.calendar.capabilityList;
-    this.activityPermission.subModule.emailCapabilityList = activityPermissions.emails.subModule.emails.capabilityList;
+    if (activityPermissions.tasks) {
+      this.activityPermission.subModule.tasks.enabled = activityPermissions.tasks.showModule;
+      this.activityPermission.subModule.taskCapabilityList = activityPermissions.tasks.subModule.tasks.capabilityList;
+      this.activityPermission.subModule.taskCapabilityObj = UtilService.getCapabilityMap(activityPermissions.tasks.subModule.tasks.capabilityList);
+    } else {
+      this.activityPermission.subModule.tasks.enabled = false;
+    }
+    if (activityPermissions.calendar) {
+      this.activityPermission.subModule.calendarCapabilityList = activityPermissions.calendar.subModule.calendar.capabilityList;
+      this.activityPermission.subModule.calendar.enabled = activityPermissions.calendar.showModule;
+    } else {
+      this.activityPermission.subModule.calendar.enabled = false;
+    }
+    if (activityPermissions.emails) {
+      this.activityPermission.subModule.emails.enabled = activityPermissions.emails ? activityPermissions.emails.showModule : false;
+      this.activityPermission.subModule.emailCapabilityList = activityPermissions.emails.subModule.emails.capabilityList;
+    } else {
+      this.activityPermission.subModule.emails.enabled = false;
+    }
+    if (activityPermissions.deployments) {
+      this.activityPermission.subModule.deployments.enabled = activityPermissions.deployments.showModule;
+      this.activityPermission.subModule.deployments.capabilityList = activityPermissions.deployments ? UtilService.convertArrayListToObject(activityPermissions.deployments.subModule.deployments.capabilityList) : {};
+    } else {
+      this.activityPermission.subModule.deployments.enabled = false;
+    }
   }
 
   setPeoplePermissions(peoplePermission) {
@@ -534,8 +563,18 @@ export class RoleService {
     if (overviewPermission.profile) {
       this.overviewPermission.subModules.profile.enabled = overviewPermission.profile.showModule;
       this.overviewPermission.subModules.profile.profileCapabilityObj = UtilService.getDetailedCapabilityMap(overviewPermission.profile.subModule.keyInfo.subModule.keyInfo.capabilityList);
-      this.overviewPermission.subModules.profile.subModule.keyInfo.enabled = overviewPermission.profile.subModule.keyInfo.showModule;
-      this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile ? overviewPermission.profile.subModule.riskProfile.showModule : false;
+      if (overviewPermission.profile.subModule.keyInfo) {
+        this.overviewPermission.subModules.profile.subModule.keyInfo.enabled = overviewPermission.profile.subModule.keyInfo.showModule;
+        this.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList = UtilService.convertArrayListToObject(overviewPermission.profile.subModule.keyInfo.subModule.keyInfo.capabilityList);
+      } else {
+        this.overviewPermission.subModules.profile.subModule.keyInfo.enabled = false;
+      }
+      if (overviewPermission.profile.subModule.riskProfile) {
+        this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile.showModule;
+        this.overviewPermission.subModules.profile.subModule.riskProfile.capabilityList = UtilService.convertArrayListToObject(overviewPermission.profile.subModule.riskProfile.subModule.riskProfile.capabilityList);
+      } else {
+        this.overviewPermission.subModules.profile.subModule.riskProfile.enabled = overviewPermission.profile.subModule.riskProfile = false;
+      }
     } else {
       this.overviewPermission.subModules.profile.enabled = false;
     }
@@ -613,14 +652,14 @@ export class RoleService {
 
 
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled = portfolioPermission.subModule.mutualFunds ? portfolioPermission.subModule.mutualFunds.showModule : false
-    this.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList = portfolioPermission.subModule.mutualFunds ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.manualTransactions.subModule.manualTransactions.capabilityList) : false
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList = portfolioPermission.subModule.mutualFunds ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.manualTransactions.subModule.manualTransactions.capabilityList) : {}
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.overviewReport ? portfolioPermission.subModule.mutualFunds.subModule.overviewReport.showModule : false;
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.summaryReport ? portfolioPermission.subModule.mutualFunds.subModule.summaryReport.showModule : false;
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled = portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport ? portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport.showModule : false;
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.enabled = portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions ? portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions.showModule : false;
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.enabled = portfolioPermission.subModule.mutualFunds.subModule.capitalGains ? portfolioPermission.subModule.mutualFunds.subModule.capitalGains.showModule : false;
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.overviewReport ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.overviewReport.subModule.overviewReport.capabilityList) : {}
-    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.summaryReport ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.summaryReport.subModule.summaryReport.capabilityList) : {}
+    this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.summaryReport ? portfolioPermission.subModule.mutualFunds.subModule.summaryReport.subModule.summaryReport.capabilityList : []
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.alltransactionsReport.subModule.alltransactionsReport.capabilityList) : {}
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.unrealizedTransactions.subModule.unrealizedTransactions.capabilityList) : {}
     this.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.capabilityList = portfolioPermission.subModule.mutualFunds.subModule.capitalGains ? UtilService.convertArrayListToObject(portfolioPermission.subModule.mutualFunds.subModule.capitalGains.subModule.capitalGains.capabilityList) : {}
@@ -628,32 +667,42 @@ export class RoleService {
 
   setPlanPermission(planPermission) {
     this.planPermission.enabled = planPermission.plan.showModule
-    this.planPermission.subModule.summary.enabled = planPermission.plan.subModule.summary.showModule
-    this.planPermission.subModule.profile.enabled = planPermission.plan.subModule.profile.showModule
-    this.planPermission.subModule.insurance.enabled = planPermission.plan.subModule.insurance.showModule
-    this.planPermission.subModule.goals.enabled = planPermission.plan.subModule.goals.showModule
-    this.planPermission.subModule.taxes.enabled = planPermission.plan.subModule.taxes.showModule
-    this.planPermission.subModule.cashflows.enabled = planPermission.plan.subModule.cashflows.showModule
-    this.planPermission.subModule.scenarios.enabled = planPermission.plan.subModule.scenarios.showModule
-    this.planPermission.subModule.profile.subModule.income.enabled = planPermission.plan.subModule.profile.subModule.income.showModule;
-    this.planPermission.subModule.profile.subModule.income.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.income.subModule.income.capabilityList)
-    this.planPermission.subModule.profile.subModule.expenses.enabled = planPermission.plan.subModule.profile.subModule.expenses.showModule;
-    this.planPermission.subModule.profile.subModule.expenses.subModule.budgets.enabled = planPermission.plan.subModule.profile.subModule.expenses.subModule.budgets.showModule;
-    this.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled = planPermission.plan.subModule.profile.subModule.expenses.subModule.transactions.showModule;
-    this.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.expenses.subModule.budgets.subModule.budgets.capabilityList);
-    this.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.expenses.subModule.transactions.subModule.transactions.capabilityList);
-    this.planPermission.subModule.profile.subModule.financialPlan.enabled = planPermission.plan.subModule.profile.subModule.financialPlan.showModule;
-    this.planPermission.subModule.profile.subModule.financialPlan.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.financialPlan.subModule.financialPlan.capabilityList)
-    this.planPermission.subModule.insurance.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.insurance.subModule.insurance.capabilityList)
-    this.planPermission.subModule.goals.subModule.allocations.enabled = planPermission.plan.subModule.goals.subModule.allocations.showModule
-    this.planPermission.subModule.goals.subModule.mfAllocations.enabled = planPermission.plan.subModule.goals.subModule.mfAllocations.showModule
-    this.planPermission.subModule.goals.subModule.keyInfo.enabled = planPermission.plan.subModule.goals.subModule.keyInfo.showModule
-    this.planPermission.subModule.goals.subModule.preferences.enabled = planPermission.plan.subModule.goals.subModule.preferences.showModule
-    this.planPermission.subModule.goals.subModule.calculators.enabled = planPermission.plan.subModule.goals.subModule.calculators.showModule
-    this.planPermission.subModule.goals.subModule.allocations.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.allocations.subModule.allocations.capabilityList);
-    this.planPermission.subModule.goals.subModule.mfAllocations.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.mfAllocations.subModule.mfAllocations.capabilityList);
-    this.planPermission.subModule.goals.subModule.preferences.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.preferences.subModule.preferences.capabilityList);
-    this.planPermission.subModule.goals.subModule.calculators.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.calculators.subModule.calculators.capabilityList);
+    this.planPermission.subModule.summary.enabled = planPermission.plan.subModule.summary ? planPermission.plan.subModule.summary.showModule : false;
+    if (planPermission.plan.subModule.profile) {
+      this.planPermission.subModule.profile.enabled = planPermission.plan.subModule.profile.showModule;
+      this.planPermission.subModule.profile.subModule.income.enabled = planPermission.plan.subModule.profile.subModule.income.showModule;
+      this.planPermission.subModule.profile.subModule.income.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.income.subModule.income.capabilityList)
+      this.planPermission.subModule.profile.subModule.expenses.enabled = planPermission.plan.subModule.profile.subModule.expenses.showModule;
+      this.planPermission.subModule.profile.subModule.expenses.subModule.budgets.enabled = planPermission.plan.subModule.profile.subModule.expenses.subModule.budgets.showModule;
+      this.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled = planPermission.plan.subModule.profile.subModule.expenses.subModule.transactions.showModule;
+      this.planPermission.subModule.profile.subModule.expenses.subModule.budgets.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.expenses.subModule.budgets.subModule.budgets.capabilityList);
+      this.planPermission.subModule.profile.subModule.expenses.subModule.transactions.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.expenses.subModule.transactions.subModule.transactions.capabilityList);
+      this.planPermission.subModule.profile.subModule.financialPlan.enabled = planPermission.plan.subModule.profile.subModule.financialPlan.showModule;
+      this.planPermission.subModule.profile.subModule.financialPlan.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.profile.subModule.financialPlan.subModule.financialPlan.capabilityList)
+    } else {
+      this.planPermission.subModule.profile.enabled = false;
+    }
+    if (planPermission.plan.subModule.goals) {
+      this.planPermission.subModule.goals.enabled = planPermission.plan.subModule.goals.showModule
+      this.planPermission.subModule.goals.subModule.allocations.enabled = planPermission.plan.subModule.goals.subModule.allocations.showModule
+      this.planPermission.subModule.goals.subModule.mfAllocations.enabled = planPermission.plan.subModule.goals.subModule.mfAllocations.showModule
+      this.planPermission.subModule.goals.subModule.keyInfo.enabled = planPermission.plan.subModule.goals.subModule.keyInfo.showModule
+      this.planPermission.subModule.goals.subModule.preferences.enabled = planPermission.plan.subModule.goals.subModule.preferences.showModule
+      this.planPermission.subModule.goals.subModule.calculators.enabled = planPermission.plan.subModule.goals.subModule.calculators.showModule
+      this.planPermission.subModule.goals.subModule.allocations.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.allocations.subModule.allocations.capabilityList);
+      this.planPermission.subModule.goals.subModule.mfAllocations.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.mfAllocations.subModule.mfAllocations.capabilityList);
+      this.planPermission.subModule.goals.subModule.preferences.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.preferences.subModule.preferences.capabilityList);
+      this.planPermission.subModule.goals.subModule.calculators.capabilityList = UtilService.convertArrayListToObject(planPermission.plan.subModule.goals.subModule.calculators.subModule.calculators.capabilityList);
+    } else {
+      this.planPermission.subModule.goals.enabled = false;
+    }
+    this.planPermission.subModule.insurance.enabled = planPermission.plan.subModule.insurance ? planPermission.plan.subModule.insurance.showModule : false;
+    this.planPermission.subModule.insurance.capabilityList = planPermission.plan.subModule.insurance ? UtilService.convertArrayListToObject(planPermission.plan.subModule.insurance.subModule.insurance.capabilityList) : false
+
+    this.planPermission.subModule.taxes.enabled = planPermission.plan.subModule.taxes ? planPermission.plan.subModule.taxes.showModule : false
+    this.planPermission.subModule.cashflows.enabled = planPermission.plan.subModule.cashflows ? planPermission.plan.subModule.cashflows.showModule : false
+    this.planPermission.subModule.scenarios.enabled = planPermission.plan.subModule.scenarios ? planPermission.plan.subModule.scenarios.showModule : false
+
   }
 
   setTransactionPermission(transactionPermission) {

@@ -108,7 +108,9 @@ export class AssetsComponent implements OnInit {
           if (this.stateOfPanel._animationState == 'void') {
             this.stateOfPanel.close();
           } else {
-            this.toggleSideNav();
+            this.stateOfPanel.close();
+
+            // this.toggleSideNav();
           }
         } else {
           this.sidenavState = false;

@@ -11,7 +11,8 @@
                 <div class="col-md-12 text-center">
                     <h3 class="f-22 m-0">Hi {{clientInfo.displayName}}, welcome!</h3>
                     <h5 class="m-0 pt-28 pb-28">Did you know your risk profile score? Find it out here.</h5>
-                    <button mat-stroked-button class="btn-primary br-0" (click)="takeTests()">Take the test</button>
+                    <button *ngIf="riskProfileCapability.Add" mat-stroked-button class="btn-primary br-0"
+                        (click)="takeTests()">Take the test</button>
                 </div>
             </div>
         </div>
@@ -24,7 +25,8 @@
                     <img src="assets/images/svg/primary-download-btn.svg">
                 </button>
 
-                <button mat-flat-button class="ba-2xb text-primary h-40 lh-38" (click)="takeTests()">Retake risk
+                <button *ngIf="riskProfileCapability.Add" mat-flat-button class="ba-2xb text-primary h-40 lh-38"
+                    (click)="takeTests()">Retake risk
                     assessment</button>
                 <button mat-flat-button class="ba-2xb ml-12 text-primary h-40 lh-38"
                     (click)="open('riskProfile', null)">History</button>

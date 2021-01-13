@@ -3,6 +3,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-history-risk-profile',
@@ -15,12 +16,14 @@ export class HistoryRiskProfileComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   advisorId: any;
   clientId: any;
-  dataSourceHistory:  Array<any> = [{}, {}, {}];
-  storeResult:any;
+  dataSourceHistory: Array<any> = [{}, {}, {}];
+  storeResult: any;
   isLoading = false;
+  riskProfileCapability: any = {};
 
-  constructor(private subInjectService: SubscriptionInject, public planService: PlanService, ) { }
+  constructor(private subInjectService: SubscriptionInject, public planService: PlanService, public roleService: RoleService) { }
   ngOnInit() {
+    this.riskProfileCapability = this.roleService.overviewPermission.subModules.profile.subModule.riskProfile.capabilityList
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.riskHistory();
@@ -36,6 +39,9 @@ export class HistoryRiskProfileComponent implements OnInit {
       });
   }
   viewResult(obj) {
+    if (!this.riskProfileCapability.View) {
+      return
+    }
     const data = {
       clientRiskProfileId: obj.id
     }
@@ -72,7 +78,7 @@ export class HistoryRiskProfileComponent implements OnInit {
       }
     );
   }
-  Close(flag, data={}) {
+  Close(flag, data = {}) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag, data: data });
   }
 

@@ -29,6 +29,7 @@ import { SummaryPlanComponent } from '../../../summary-plan/summary-plan.compone
 import { SummaryPlanServiceService } from '../../../summary-plan/summary-plan-service.service';
 import { catchError } from 'rxjs/operators';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { OtherInsuranceInsurancePlanningComponent } from '../other-insurance-insurance-planning/other-insurance-insurance-planning.component';
 
 @Component({
   selector: 'app-life-insurance',
@@ -150,6 +151,14 @@ export class LifeInsuranceComponent implements OnInit {
     insuranceType: 4,
     heading: 'Motor insurance',
     subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
+  }, {
+    value: '9',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Other Insurance',
+    smallHeading: 'other insurance',
+    insuranceType: 11,
+    heading: 'Other insurance',
+    subHeading: 'Select how you’d like to proceed with planning for other insurance policies.'
   }]
 
   logo: any;
@@ -337,6 +346,9 @@ export class LifeInsuranceComponent implements OnInit {
         break;
       case 10:
         fragmentData.componentName = FireInsuranceComponent;
+        break;
+      case 11:
+        fragmentData.componentName = OtherInsuranceInsurancePlanningComponent;
         break;
       default:
         fragmentData.componentName = SuggestHealthInsuranceComponent;
@@ -636,6 +648,13 @@ export class LifeInsuranceComponent implements OnInit {
         this.object.adviceToCategoryId = 40;
         this.object.showInsurance = 'Fire & special perils';
         component = FireInsuranceComponent;
+
+        break;
+      case 11:
+        this.object.insuranceSubTypeId = 11;
+        this.object.adviceToCategoryId = 40;
+        this.object.showInsurance = 'other insurance';
+        component = OtherInsuranceInsurancePlanningComponent;
 
         break;
     }

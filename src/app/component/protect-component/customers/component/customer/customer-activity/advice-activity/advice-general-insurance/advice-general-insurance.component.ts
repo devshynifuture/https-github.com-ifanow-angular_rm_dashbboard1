@@ -26,6 +26,7 @@ import { TravelInsuranceComponent } from '../../../plan/insurance-plan/mainInsur
 import { HouseholdersInsuranceComponent } from '../../../plan/insurance-plan/mainInsuranceScreen/householders-insurance/householders-insurance.component';
 import { FireInsuranceComponent } from '../../../plan/insurance-plan/mainInsuranceScreen/fire-insurance/fire-insurance.component';
 import { DetailedViewInsurancePlanningComponent } from '../../../plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
+import { OtherInsuranceInsurancePlanningComponent } from '../../../plan/insurance-plan/mainInsuranceScreen/other-insurance-insurance-planning/other-insurance-insurance-planning.component';
 
 @Component({
   selector: 'app-advice-general-insurance',
@@ -390,6 +391,15 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
           this.object.adviceToCategoryId = 40;
         this.object.showInsurance = 'Fire & special perils';
         component = FireInsuranceComponent;
+        this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }]
+        break;
+      case "Other insurance":
+        this.object.insuranceSubTypeId = 11;
+        this.object.insuranceType = 11;
+        this.object.value = '9',
+          this.object.adviceToCategoryId = 40;
+        this.object.showInsurance = 'other insurance';
+        component = OtherInsuranceInsurancePlanningComponent;
         this.adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }]
         break;
     }

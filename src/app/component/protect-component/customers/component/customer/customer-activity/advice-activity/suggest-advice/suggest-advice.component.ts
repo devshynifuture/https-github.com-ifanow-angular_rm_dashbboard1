@@ -1020,60 +1020,66 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
           } else {
             let obj;
             let memberList = [];
-            let finalMemberList = componentRefComponentValues[form].get('InsuredMemberForm') as FormArray;
-            if (finalMemberList && finalMemberList.controls.length > 0) {
-              finalMemberList.controls.forEach(element => {
-                let obj =
-                {
-                  familyMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
-                  sumInsured: element.get('sumAssured').value,
-                  relationshipId: element.get('relationshipId').value,
-                  insuredOrNominee: 1,
-                  id: (element.get('id').value) ? element.get('id').value : null
-                };
-                memberList.push(obj);
-              });
-            }
+            let finalMemberList;
             let addOns = [];
-            const addOnList = componentRefComponentValues[form].get('addOnForm') as FormArray;
-            if (addOnList && addOnList.controls.length > 0) {
-              addOnList.controls.forEach(element => {
-                if (element.get('additionalCovers').value && (element.get('sumAddOns').value || element.get('addOnSumInsured').value)) {
-                  let obj =
-                  {
-                    addOnId: element.get('additionalCovers').value,
-                    addOnSumInsured: element.get('sumAddOns').value,
-                  }
-                  addOns.push(obj)
-                } else if (element.get('additionalCovers').value) {
-                  const obj = {
-                    addOnId: element.get('additionalCovers').value,
-                    addOnSumInsured: null
-                  };
-                  addOns.push(obj);
-                }
-              });
-            }
             let featureList = [];
-            let finalplanFeatureList = componentRefComponentValues[form].get('planFeatureForm') as FormArray
-            if (finalplanFeatureList && finalplanFeatureList.controls.length > 0) {
-              finalplanFeatureList.controls.forEach(element => {
-                if (element.get('planfeatures').value || element.get('sumInsured').value) {
+
+            if (!componentRefComponentValues.hasOwnProperty('otherAssetForm')) {
+              finalMemberList = componentRefComponentValues[form].get('InsuredMemberForm') as FormArray;
+              if (finalMemberList && finalMemberList.controls.length > 0) {
+                finalMemberList.controls.forEach(element => {
                   let obj =
                   {
-                    policyFeatureId: element.get('planfeatures').value,
-                    featureSumInsured: element.get('sumInsured') ? element.get('sumInsured').value : 0,
+                    familyMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
+                    sumInsured: element.get('sumAssured').value,
+                    relationshipId: element.get('relationshipId').value,
+                    insuredOrNominee: 1,
+                    id: (element.get('id').value) ? element.get('id').value : null
+                  };
+                  memberList.push(obj);
+                });
+              }
+
+              const addOnList = componentRefComponentValues[form].get('addOnForm') as FormArray;
+              if (addOnList && addOnList.controls.length > 0) {
+                addOnList.controls.forEach(element => {
+                  if (componentRefComponentValues.insuranceType != 4 && element.get('additionalCovers').value && (element.get('sumAddOns').value)) {
+                    let obj =
+                    {
+                      addOnId: element.get('additionalCovers').value,
+                      addOnSumInsured: element.get('sumAddOns').value,
+                    }
+                    addOns.push(obj)
+                  } else if (element.get('additionalCovers').value) {
+                    const obj = {
+                      addOnId: element.get('additionalCovers').value,
+                      addOnSumInsured: null
+                    };
+                    addOns.push(obj);
                   }
-                  featureList.push(obj)
-                } else if (element.get('planfeatures').value) {
-                  let obj =
-                  {
-                    policyFeatureId: element.get('planfeatures').value,
+                });
+              }
+              let finalplanFeatureList = componentRefComponentValues[form].get('planFeatureForm') as FormArray
+              if (finalplanFeatureList && finalplanFeatureList.controls.length > 0) {
+                finalplanFeatureList.controls.forEach(element => {
+                  if (element.get('planfeatures').value && element.get('sumInsured').value) {
+                    let obj =
+                    {
+                      policyFeatureId: element.get('planfeatures').value,
+                      featureSumInsured: element.get('sumInsured').value,
+                    }
+                    featureList.push(obj)
+                  } else if (element.get('planfeatures').value) {
+                    let obj =
+                    {
+                      policyFeatureId: element.get('planfeatures').value,
+                    }
+                    featureList.push(obj)
                   }
-                  featureList.push(obj)
-                }
-              })
+                })
+              }
             }
+
             if (componentRefComponentValues.hasOwnProperty('healthInsuranceForm')) {
               componentRefFormValues = componentRefComponentValues.healthInsuranceForm.value;
               obj = {
@@ -1278,8 +1284,97 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 realOrFictitious: 2,
                 nominees: componentRefComponentValues.fireInsuranceForm.value.getNomineeName,
               }
+            } else if (componentRefComponentValues.hasOwnProperty('otherAssetForm')) {
+              componentRefFormValues = componentRefComponentValues.otherAssetForm.value;
+              let memberList = [];
+              let finalMemberList = componentRefComponentValues.otherAssetForm.get('InsuredMemberForm') as FormArray;
+              finalMemberList.controls.forEach(element => {
+                let obj =
+                {
+                  name: element.get('insuredMembers').value ? element.get('insuredMembers').value : 0,
+                  createdOn: null,
+                  // insuredMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
+                  share: element.get('sumAssured').value ? element.get('sumAssured').value : 0,
+                  // relationshipId: element.get('relationshipId').value,
+                  // insuredOrNominee: 1,
+                  id: (element.get('id').value) ? element.get('id').value : 0,
+                  // isActive: (element.get('isActive').value) ? element.get('isActive').value : 0,
+                  // isClient: (element.get('isClient').value) ? element.get('isClient').value : 0,
+                  isEdited: (element.get('isEdited').value) ? element.get('isEdited').value : 0,
+                  otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null
+                };
+                memberList.push(obj);
+              });
+              let addOns = [];
+              let addOnList = componentRefComponentValues.otherAssetForm.get('addOnForm') as FormArray
+              addOnList.controls.forEach(element => {
+                if (element.get('addOns').value && element.get('sumInsured').value) {
+                  let obj =
+                  {
+                    addOns: element.get('addOns').value,
+                    id: element.get('id').value ? element.get('id').value : 0,
+                    isActive: element.get('isActive').value ? element.get('isActive').value : 0,
+                    isEdited: element.get('isEdited').value ? element.get('isEdited').value : 0,
+                    otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null,
+                    sumInsured: element.get('sumInsured').value ? element.get('sumInsured').value : 0,
+                  }
+                  addOns.push(obj)
+                }
+              })
+              let featureList = [];
+              let finalplanFeatureList = componentRefComponentValues.otherAssetForm.get('planFeatureForm') as FormArray
+              finalplanFeatureList.controls.forEach(element => {
+                if (element.get('feature').value) {
+                  let obj =
+                  {
+                    feature: element.get('feature').value,
+                    id: element.get('id').value ? element.get('id').value : 0,
+                    isDeleted: element.get('isDeleted').value ? element.get('isDeleted').value : 0,
+                    isEdited: element.get('isEdited').value ? element.get('isEdited').value : 0,
+                    otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null,
+                  }
+                  featureList.push(obj)
+                }
+              })
+              obj = {
+                'clientId': this.clientId,
+                'advisorId': this.advisorId,
+                // 'policyHolderId': this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? this.clientId : this.otherAssetForm.value.getCoOwnerName[0].familyMemberId,
+                'cumulativeBonus': componentRefComponentValues.otherAssetForm.get('cumulativeBonus').value,
+                'cumulativeBonusRupeesOrPercent': componentRefComponentValues.otherAssetForm.get('bonusType').value,
+                'policyTypeId': componentRefComponentValues.otherAssetForm.get('PlanType').value,
+                'planType': componentRefComponentValues.otherAssetForm.get('PlanType').value,
+                'specialCondition': componentRefComponentValues.otherAssetForm.get('exclusion').value,
+                "financierName": componentRefComponentValues.otherAssetForm.get('financierName').value,
+                'planName': componentRefComponentValues.otherAssetForm.get('planeName').value,
+                'advisorName': componentRefComponentValues.otherAssetForm.get('advisorName').value,
+                'isFloater': (componentRefComponentValues.otherAssetForm.get('floaterOrIndividual').value) ? 1 : 0,
+                'serviceBranch': componentRefComponentValues.otherAssetForm.get('serviceBranch').value,
+                'linkedBankAccountId': componentRefComponentValues.otherAssetForm.get('bankAccount').value,
+                'insurerName': componentRefComponentValues.otherAssetForm.get('insurerName').value,
+                'insuranceSubTypeId': componentRefComponentValues.inputData.insuranceSubTypeId,
+                'premium': componentRefComponentValues.otherAssetForm.get('premium').value,
+                'sumAssuredIdv': componentRefComponentValues.otherAssetForm.get('sumAssuredIdv').value,
+                "id": (componentRefComponentValues.id) ? componentRefComponentValues.id : null,
+                // 'policyHolderName':this.otherAssetForm.value.getCoOwnerName[0].name,
+                'policyHolderName': componentRefComponentValues.otherAssetForm.get('policyHolderName').value,
+                // isClient:this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? 1 : 0,
+                otherInsuranceInsuredMembers: memberList,
+                otherInsuranceFeatureList: featureList,
+                otherInsuranceAddCovers: addOns,
+                nominees: componentRefComponentValues.otherAssetForm.value.getNomineeName,
+                createdOn: null
+              };
             }
-            if (obj) {
+            if (componentRefComponentValues.hasOwnProperty('otherAssetForm')) {
+              if (obj.otherInsuranceInsuredMembers.length > 0) {
+                obj.otherInsuranceInsuredMembers.forEach(element => {
+                  if (element.sumInsured == '') {
+                    element.sumInsured = null
+                  }
+                });
+              }
+            } else if (obj) {
               if (obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
                 obj.insuredMembers.forEach(element => {
                   if (element.sumInsured == '') {
