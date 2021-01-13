@@ -381,12 +381,19 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   onPaginationChange(event) {
-    console.log(event);
-    if (event.value >= 0) {
-      this.startLimit = event.value * 50;
+    // pageIndex starts from 0
+    // length: 80,
+    // pageIndex: 1,
+    // pageSize: 50,
+
+    // 1-50, 51 - 100? > length = 51-80
+
+    if (event.pageIndex > 0) {
+      this.startLimit = event.pageIndex * 50;
     } else {
       this.startLimit = 0;
     }
+    this.getMappedUnmappedNjSchemes();
     return event;
   }
   ngOnDestroy(): void {
