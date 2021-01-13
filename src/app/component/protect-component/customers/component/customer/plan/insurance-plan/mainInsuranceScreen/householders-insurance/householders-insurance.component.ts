@@ -125,7 +125,15 @@ export class HouseholdersInsuranceComponent implements OnInit {
 		insuranceType: 4,
 		heading: 'Motor insurance',
 		subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
-	}]
+	},{
+        value: '9',
+        logo: '/assets/images/svg/Fireinsurance.svg',
+        header: 'Add Other Insurance',
+        smallHeading: 'other insurance',
+        insuranceType: 11,
+        heading: 'Other insurance',
+        subHeading: 'Select how you’d like to proceed with planning for other insurance policies.'
+      }]
 	ownerIds = [];
 	insData: any;
 	showRecommendation: boolean;

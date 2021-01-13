@@ -14,6 +14,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { element } from 'protractor';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { forkJoin, pipe, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-investments-plan',
@@ -70,19 +72,42 @@ export class DeploymentsPlanComponent implements OnInit {
       advisorId: this.advisorId,
       familyMemberId: this.selected
     }
-    this.cusService.getAdviceDeploymentsData(obj).subscribe(
-      data => {
-        console.log(data);
-        this.isLoading = false;
-        this.dataSource = (this.type == 1) ? data.GoalBaseDeploymentList : data.nonGoalBasedDeploymentList;
-      },
-      err => {
-        this.eventService.openSnackBar("something went wrong", "Dismiss")
+    const obj2 = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    }
+    const deployment = this.cusService.getAdviceDeploymentsData(obj).pipe(
+      catchError(error => of(null))
+    );
+    const otherAssets = this.planService.getAssetsForAllocation(obj2).pipe(
+      catchError(error => of(null))
+    );
+    forkJoin(deployment, otherAssets).subscribe(result => {
+      this.isLoading = false;
+      if (result[0] && result[1]) {
+        this.getAssetType(result);
+        this.dataSource = (this.type == 1) ? result[0].GoalBaseDeploymentList : result[0].nonGoalBasedDeploymentList;
+      } else {
         this.dataSource = [];
       }
 
-    )
+    }, err => {
+      this.eventService.openSnackBar("something went wrong", "Dismiss")
+      this.dataSource = [];
+    })
 
+  }
+  getAssetType(data) {
+    if (data[0] && data[1]) {
+      let mergeArray = [...data[0].GoalBaseDeploymentList, ...data[0].nonGoalBasedDeploymentList];
+      mergeArray.forEach(element => {
+        data[1].forEach(ele => {
+          if (element.assetId == ele.assetId) {
+            element.assetName = ele.assetName
+          }
+        });
+      });
+    }
   }
   changTab(data) {
     this.selected = data.id
