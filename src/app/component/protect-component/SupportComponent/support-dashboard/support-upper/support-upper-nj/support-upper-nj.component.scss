@@ -24,3 +24,7 @@
 .pt-11 {
   padding-top: 11px !important;
 }
+
+::ng-deep .paginationCLass .mat-paginator-container {
+  min-height: auto;
+}
