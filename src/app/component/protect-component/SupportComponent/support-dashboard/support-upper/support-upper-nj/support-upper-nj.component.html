@@ -20,10 +20,10 @@
 </div>
 
 <div class="row pt-72">
-    <div class="col-md-12 pb-20">
+    <div class="col-md-12 pb-12">
         <h5> Search NJ scheme</h5>
     </div>
-    <div class="col-md-6 pr-12">
+    <div class="col-md-6 pr-12 remove-top-flex">
         <mat-form-field appearance="standard" floatLabel="never">
             <input #inputSearch class="form-control" matInput placeholder="Search" aria-label="State"
                 [matAutocomplete]="auto1" [formControl]="searchSchemeControl">
@@ -39,14 +39,15 @@
 
         </mat-form-field>
     </div>
-    <div class="col-md-3 pt-11">
-        <mat-select (selectionChange)="setMapUnmapOption($event)" [formControl]="mapUnmappedOptionFC">
+    <div class="col-md-3">
+        <mat-select class="form-control" (selectionChange)="setMapUnmapOption($event)"
+            [formControl]="mapUnmappedOptionFC">
             <mat-option *ngFor="let item of njOptionsDropdown" [value]="item.id">
                 {{item.title}}
             </mat-option>
         </mat-select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 d-flex align-items-center justify-content-end paginationCLass">
         <mat-paginator [length]="totalNjCount" [hidePageSize]="true" [pageSize]="50"
             [ngClass]="{'cursor-not-allowed': isLoading}"
             (page)="!isLoading ? pageEvent = onPaginationChange($event): $event.preventDefault()">
