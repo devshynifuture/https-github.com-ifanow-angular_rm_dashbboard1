@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {ProgressSpinnerMode, ThemePalette} from '@angular/material';
+import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
 
 // import { MatProgressButtonOptions } from '../../mat-progress-buttons.interface';
 
@@ -66,7 +66,7 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
     if (this.options.active) {
       setTimeout(() => {
         if (this.options.active && this.options.value < 100) {
-          this.options.value = this.options.value + 3;
+          this.options.value = this.options.value + 0.5;
           // console.log('this.options.value : ', this.options.value);
           // console.log('this.options.value : ', new Date().getMilliseconds());
 
