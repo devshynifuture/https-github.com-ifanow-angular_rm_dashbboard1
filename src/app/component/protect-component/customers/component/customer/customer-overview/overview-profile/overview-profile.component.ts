@@ -53,6 +53,7 @@ export class OverviewProfileComponent implements OnInit {
   duplicateFlag: any;
   clientList: any;
   relationList: any;
+  keyInfoCapability: any = {};
 
   constructor(private peopleService: PeopleService, private authService: AuthService,
     public dialog: MatDialog, public subInjectService: SubscriptionInject,
@@ -64,6 +65,7 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     this.enumDataService.setBankAccountTypes();
     this.clientData = AuthService.getClientData();
     this.enumDataService.getRoles();
@@ -296,6 +298,9 @@ export class OverviewProfileComponent implements OnInit {
 
 
   open(value, data) {
+    if (!this.keyInfoCapability.Edit) {
+      return
+    }
     this.enumDataService.setRelationShipStatus();
     let component;
     if (value == 'add') {

@@ -14,7 +14,7 @@
                 *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY"
                 class="min-width-90">ADVICE</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/deployments']"
-                *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY"
+                *ngIf="roleService.activityPermission.subModule.deployments.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY"
                 class="min-width-140">DEPLOYMENTS</a>
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/action-plan']"
                 *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION && !enumDataService.MARKET_SUMMARY"
