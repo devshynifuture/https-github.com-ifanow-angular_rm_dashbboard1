@@ -55,6 +55,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   domainData: any;
   visitedTab = '';
   routedAUMReconTabSubs: Subscription;
+  roleData: any;
 
   constructor(public authService: AuthService, private _eref: ElementRef,
     protected eventService: EventService, protected subinject: SubscriptionInject,
@@ -258,6 +259,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.enumDataService.getDataForTaxMasterService();
     this.getOrgProfiles();
     this.getPersonalProfiles();
+    this.roleData = AuthService.getUserRoleType()
 
   }
 
