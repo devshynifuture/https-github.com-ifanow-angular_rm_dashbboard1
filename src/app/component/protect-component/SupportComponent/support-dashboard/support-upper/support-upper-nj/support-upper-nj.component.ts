@@ -105,27 +105,29 @@ export class SupportUpperNjComponent implements OnInit {
         if (data) {
           let dataTable: any[] = [];
           this.apiCallingStack = [];
-          data.forEach(item => {
-            dataTable.push({
-              name: item.schemeName,
-              nav: item.nav,
-              schemeName: '',
-              schemeCode: '',
-              amficode: '',
-              navTwo: '',
-              navDate: '',
-              njCount: '',
-              map: '',
-              id: item.id,
-              transactionDate: item.transactionDate
+          if (data.njSchemeMasterList.length > 0) {
+            data.njSchemeMasterList.forEach(item => {
+              dataTable.push({
+                name: item.schemeName,
+                nav: item.nav,
+                schemeName: '',
+                schemeCode: '',
+                amficode: '',
+                navTwo: '',
+                navDate: '',
+                njCount: '',
+                map: '',
+                id: item.id,
+                transactionDate: item.transactionDate
+              });
             });
-          });
+          }
           console.log("this is some data::::::", dataTable);
           this.dataTable = dataTable;
           this.dataSource.data = dataTable;
           console.log(data);
           this.apiCallingStack = [];
-          this.filteredSchemes = data;
+          this.filteredSchemes = data.njSchemeMasterList;
           console.log("this is what i need::::::::", data);
           this.checkIfDataNotPresentAndShowError(data);
           console.log(this.filteredSchemes);
