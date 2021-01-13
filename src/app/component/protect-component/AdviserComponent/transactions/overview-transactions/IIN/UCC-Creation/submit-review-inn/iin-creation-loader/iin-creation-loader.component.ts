@@ -73,11 +73,12 @@ export class IinCreationLoaderComponent implements OnInit {
       clientId: this.fragmentData.requestJson.clientId
     }
     console.log('obj')
-    this.onlineTransact.mappedExistingUser('')
+    this.onlineTransact.mappedExistingUser(obj)
       .subscribe(res => {
         if (res) {
           console.log('mappedUser', res)
           this.eventService.openSnackBar("Mapped exsting user Successfully", "Dismiss");
+          this.dialogRef.close();
         } else {
           this.eventService.openSnackBar("Mapped exsting user Unsuccessful", "Dismiss");
         }
