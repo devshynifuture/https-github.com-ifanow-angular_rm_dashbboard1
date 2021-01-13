@@ -209,7 +209,14 @@ export class MutualFundSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
-    this.mfSummaryCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList
+    const summaryCapabilityList = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList
+    if (summaryCapabilityList && summaryCapabilityList.length > 0)
+      for (let i of summaryCapabilityList) {
+        i.capabilityName = i.capabilityName.replace(/ /g, '')
+        this.mfSummaryCapability[i.capabilityName] = i.enabledOrDisabled == 1 ? true : false
+      } else {
+      this.mfSummaryCapability = {}
+    }
     this.initPoint();
   }
 

@@ -61,7 +61,8 @@
                         </i></button>
                     <mat-menu #menu="matMenu">
                         <!-- add null for prod build -->
-                        <button mat-menu-item (click)="openDep('open70',null)">Add deployments</button>
+                        <button *ngIf="deploymentCapabilityList.Add" mat-menu-item (click)="openDep('open70',null)">Add
+                            deployments</button>
                     </mat-menu>
                 </div>
                 <div *ngIf="dataSource.length>0 && !isLoading" class="col-md-2 bt-grey b-l b-t br">
@@ -164,16 +165,19 @@
                                         more_vert
                                     </i>
                                     <mat-menu #menubank="matMenu">
-                                        <button mat-menu-item (click)="openPopup('deployment',element)">Manage
+                                        <button *ngIf="deploymentCapabilityList.Edit" mat-menu-item
+                                            (click)="openPopup('deployment',element)">Manage
                                             deployment
                                             breakup</button>
-                                        <button mat-menu-item (click)="openPopup('exclusions',element)">Manage
+                                        <button *ngIf="deploymentCapabilityList.Edit" mat-menu-item
+                                            (click)="openPopup('exclusions',element)">Manage
                                             exclusions</button>
                                         <button mat-menu-item (click)="openDep('open',element)">View record
                                             details</button>
                                         <button mat-menu-item (click)="openDep('open',element)">Deployment
                                             details</button>
-                                        <button mat-menu-item (click)="deleteDeployment(element,'DEPLOYMENT')">Delete
+                                        <button *ngIf="deploymentCapabilityList.Delete" mat-menu-item
+                                            (click)="deleteDeployment(element,'DEPLOYMENT')">Delete
                                             deployment</button>
                                     </mat-menu>
                                 </div>

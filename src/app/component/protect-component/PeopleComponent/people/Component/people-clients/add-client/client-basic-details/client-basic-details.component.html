@@ -14,7 +14,7 @@
     <button (click)="promoteModal('')" mat-menu-item>
         <span>Promote</span>
     </button>
-    <button (click)="deleteModal('FAMILY MEMBER')" mat-menu-item>
+    <button *ngIf="keyInfoCapability.Delete" (click)="deleteModal('FAMILY MEMBER')" mat-menu-item>
         <span>Delete</span>
     </button>
 </mat-menu>

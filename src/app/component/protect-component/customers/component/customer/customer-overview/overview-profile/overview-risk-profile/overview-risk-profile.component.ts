@@ -9,6 +9,7 @@ import { PlanService } from '../../../plan/plan.service';
 import { HistoryRiskProfileComponent } from '../../../plan/profile-plan/history-risk-profile/history-risk-profile.component';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 more(Highcharts);
 
 @Component({
@@ -62,6 +63,7 @@ export class OverviewRiskProfileComponent implements OnInit {
 
   @Input() finPlanObj: any;
   dateOfTest: any;
+  riskProfileCapability: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -71,7 +73,8 @@ export class OverviewRiskProfileComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private utilService: UtilService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    public roleService: RoleService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -83,6 +86,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.riskProfileCapability = this.roleService.overviewPermission.subModules.profile.subModule.riskProfile.capabilityList
     console.log(this.finPlanObj)
     if (this.finPlanObj && this.finPlanObj.data) {
       this.loadGlobalRiskProfile();

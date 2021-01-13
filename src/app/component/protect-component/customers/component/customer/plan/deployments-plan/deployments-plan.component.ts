@@ -13,6 +13,7 @@ import { PlanService } from '../plan.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { element } from 'protractor';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-investments-plan',
@@ -32,9 +33,13 @@ export class DeploymentsPlanComponent implements OnInit {
   viewMode: string;
   familyMemberList: any;
   selected = 0;
-  constructor(private peopleService: PeopleService, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService) { }
+  deploymentCapabilityList: any = {};
+  constructor(private peopleService: PeopleService, private eventService: EventService, private subInjectService: SubscriptionInject,
+    private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService,
+    public roleService: RoleService) { }
   isLoading = false;
   ngOnInit() {
+    this.deploymentCapabilityList = this.roleService.activityPermission.subModule.deployments.capabilityList
     this.viewMode = "tab1";
     this.type = 1;
     this.clientId = AuthService.getClientId();
@@ -163,10 +168,10 @@ export class DeploymentsPlanComponent implements OnInit {
     else {
       component = SetupLumpsumDeploymentComponent;
       deploymentData =
-        {
-          data: [],
-          deploymentIdList: this.selectedDeployments
-        }
+      {
+        data: [],
+        deploymentIdList: this.selectedDeployments
+      }
       this.dataSource.forEach(singleElement => {
         if (singleElement.selected) {
           deploymentData.data.push(singleElement);

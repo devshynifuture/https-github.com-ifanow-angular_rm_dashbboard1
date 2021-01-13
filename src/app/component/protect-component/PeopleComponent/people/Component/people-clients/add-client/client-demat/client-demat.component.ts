@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { EnumDataService } from "../../../../../../../../services/enum-data.service";
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 
 @Component({
@@ -53,11 +54,13 @@ export class ClientDematComponent implements OnInit {
   nomineesListFM1: any = [];
   callMethod1: { methodName: string; ParamValue: any; disControl: any; };
   bankList: any = [];
+  keyInfoCapability: any = {};
 
   constructor(private cusService: CustomerService, private fb: FormBuilder, private injector: Injector,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, public dialog: MatDialog,
-    public enumDataService: EnumDataService, private enumService: EnumDataService) {
+    public enumDataService: EnumDataService, private enumService: EnumDataService,
+    public roleService: RoleService) {
     this.createDematForm(null);
 
     this.dialogRef = this.injector.get(MatDialogRef, null);
@@ -360,6 +363,7 @@ export class ClientDematComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     if (!this.dialogRef) {
       this.getBankList();
     }
