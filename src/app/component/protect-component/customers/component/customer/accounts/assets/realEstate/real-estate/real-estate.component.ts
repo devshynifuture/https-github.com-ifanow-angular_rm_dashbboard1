@@ -53,7 +53,7 @@ export class RealEstateComponent implements OnInit {
   reportDate: Date;
   fragmentData = { isSpinner: false };
   returnValue: any;
-  realEstateCapability: Date;
+  realEstateCapability: any;
 
   constructor(public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,

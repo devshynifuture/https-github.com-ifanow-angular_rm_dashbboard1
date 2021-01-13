@@ -70,6 +70,7 @@ import { MotorInsuranceComponent } from './insurance-plan/mainInsuranceScreen/mo
 import { AddMilestoneComponent } from './goals-plan/add-milestone/add-milestone.component';
 import { SuggestAndGiveAdviceComponent } from './insurance-plan/suggest-and-give-advice/suggest-and-give-advice.component';
 import { AddNewLifeInsComponent } from '../customer-activity/advice-activity/advice-life-insurance/add-new-life-ins/add-new-life-ins.component';
+import { OtherInsuranceInsurancePlanningComponent } from './insurance-plan/mainInsuranceScreen/other-insurance-insurance-planning/other-insurance-insurance-planning.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -123,7 +124,8 @@ export const componentList = [
   FireInsuranceComponent,
   CriticalInsuranceComponent,
   SuggestAndGiveAdviceComponent,
-  AddNewLifeInsComponent
+  AddNewLifeInsComponent,
+  OtherInsuranceInsurancePlanningComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
@@ -133,7 +135,7 @@ export const componentList = [
 // ];
 
 @NgModule({
-  declarations: [...componentList,  CancerInsuranceComponent,CashflowTableEditDirective, ],
+  declarations: [...componentList, CancerInsuranceComponent, CashflowTableEditDirective,],
   imports: [
     CommonModule,
     MaterialModule,

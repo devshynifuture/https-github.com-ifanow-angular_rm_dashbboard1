@@ -878,8 +878,14 @@ export class FinacialPlanSectionComponent implements OnInit {
           //console.log(data.innerHTML);
           this.fragmentData.isSpinner = false;
           //this.generatePdf(data, sectionName, displayName);
-          this.uploadFile(data, sectionName, displayName, flag, array);
-          console.log(pdfContent.loaded);
+          if (sectionName == "RiskProfile") {
+            this.uploadFile(data, sectionName, displayName, flag, obj);
+            console.log(pdfContent.loaded);
+          } else {
+            this.uploadFile(data, sectionName, displayName, flag, array);
+            console.log(pdfContent.loaded);
+          }
+
           sub.unsubscribe();
         });
     }
