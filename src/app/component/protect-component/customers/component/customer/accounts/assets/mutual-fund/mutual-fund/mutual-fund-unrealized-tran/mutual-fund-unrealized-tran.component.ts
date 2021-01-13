@@ -569,6 +569,9 @@ export class MutualFundUnrealizedTranComponent {
         if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
           this.isLoading = true;
           this.getUnrealizedData();
+        } else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
+          this.isLoading = true;
+          this.getMutualFundResponse(this.mfGetData);
         } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
           this.isLoading = true;
           this.changeInput.emit(true);
@@ -889,6 +892,7 @@ export class MutualFundUnrealizedTranComponent {
       this.customDataSource = [];
       this.customDataHolder = [];
       this.changeInput.emit(false);
+      this.mfService.setDataForMfGet(null);
       this.isLoading = false;
     }
   }
@@ -977,7 +981,7 @@ export class MutualFundUnrealizedTranComponent {
   // }
 
   getUnrealizedData() {
-    const myArray = (this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
+    const myArray = (this.mfGetData != '') ? (this.mfGetData ? this.mfGetData.mutualFundList : []) : this.mutualFund.mutualFundList;
     const list = [];
     myArray.forEach(val => list.push(Object.assign({}, val)));
     // let list =[];
@@ -1020,6 +1024,7 @@ export class MutualFundUnrealizedTranComponent {
         this.setUnrealizedDataSource([]);
         this.customDataSource = [];
         this.customDataHolder = [];
+        this.mfService.setDataForMfGet(null);
         this.eventService.showErrorMessage(error);
         this.changeInput.emit(false);
         // this.changeDetectorRef.detectChanges();

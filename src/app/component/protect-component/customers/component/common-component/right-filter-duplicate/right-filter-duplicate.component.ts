@@ -110,7 +110,7 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService, private datePipe: DatePipe,) {
+    private mfService: MfServiceService, private datePipe: DatePipe, ) {
   }
 
   @Input()
@@ -1755,6 +1755,11 @@ export class RightFilterDuplicateComponent implements OnInit {
           console.log(data);
           this.barButtonOptions.active = false;
           this.finalFilterData.mfData = data;
+          this.Close(this.finalFilterData);
+        },
+        err => {
+          this.barButtonOptions.active = false;
+          this.finalFilterData.mfData = null;
           this.Close(this.finalFilterData);
         }
       );

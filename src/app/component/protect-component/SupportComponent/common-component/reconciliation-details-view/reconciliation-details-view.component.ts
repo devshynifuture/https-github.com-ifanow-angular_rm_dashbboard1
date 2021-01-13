@@ -95,6 +95,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       this.tableEntriesType = 2;
     }
     this.arnRiaCode = this.data.arnRiaCode;
+    this.freezeDate = this.data.freezeDate;
+
     if (this.router.url.includes('folio-query')) {
       let temArr = [];
       this.data.tableData.forEach(element => {
@@ -105,7 +107,6 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.freezeDate = this.data.freezeDate;
       let tableArr: PeriodicElement[];
       if (temArr.length > 0) {
         if (this.data && this.data.id && this.data.id !== 0) {
@@ -679,7 +680,11 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
                       if (this.isUnfreezeClicked) {
                         canDeleteTransaction = true;
                       } else {
-                        canDeleteTransaction = false;
+                        if (element.rt === 6) {
+                          canDeleteTransaction = true;
+                        } else {
+                          canDeleteTransaction = false;
+                        }
                       }
                     }
                     this.disableDeletionForTable2 = true;
@@ -699,7 +704,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
                     actions: '',
                     keep: element.keep,
                     nav: element.purchasePrice ? element.purchasePrice : null,
-                    canDeleteTransaction
+                    canDeleteTransaction,
+                    rt: element.rt
                   });
                   if (!(this.filterList.includes(element.fwTransactionType))) {
                     this.filterList.push(element.fwTransactionType);
@@ -729,7 +735,11 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
               if (this.isUnfreezeClicked) {
                 canDeleteTransaction = true
               } else {
-                canDeleteTransaction = false;
+                if (element.rt === 6) {
+                  canDeleteTransaction = true;
+                } else {
+                  canDeleteTransaction = false;
+                }
               }
             }
             this.disableDeletionForTable2 = true;
@@ -750,7 +760,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
             keep: element.keep,
             nav: element.purchasePrice ? element.purchasePrice : null,
             canDeleteTransaction,
-            effect: element.effect
+            effect: element.effect,
+            rt: element.rt
           });
           if (!(this.filterList.includes(element.fwTransactionType))) {
             this.filterList.push(element.fwTransactionType);

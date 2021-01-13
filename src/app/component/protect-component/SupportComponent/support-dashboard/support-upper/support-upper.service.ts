@@ -78,7 +78,7 @@ export class SupportUpperService {
   }
 
   postMapUnmappedNjPrudentScheme(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES + `?id=${data.id}&mutualFundSchemeMasterId=${data.mutualFundSchemeMasterId}&rt_id=${data.rt_id}&schemeCode=${data.schemeCode}`, null);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_MAP_UNMAPPED_NJPRUDENT_SCHEMES + `?id=${data.id}&mutualFundSchemeMasterId=${data.mutualFundSchemeMasterId}&rtId=${data.rt_id}&schemeCode=${data.schemeCode}`, null);
   }
 
 }

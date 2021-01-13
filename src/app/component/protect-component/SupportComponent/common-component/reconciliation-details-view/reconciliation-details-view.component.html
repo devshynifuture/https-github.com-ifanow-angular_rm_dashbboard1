@@ -176,7 +176,7 @@
                     <th class="br" mat-header-cell *matHeaderCellDef> Transaction type </th>
                     <td class="br" mat-cell *matCellDef="let element"
                         [ngClass]="element.date >= data.aumDate ? 'text-danger': ''">
-                        <div class="bar"> {{element.transactionType}} </div>
+                        <div class="bar"> {{element.transactionType}} <span *ngIf="element.rt === 6">(CAS)</span> </div>
                     </td>
                 </ng-container>
 
@@ -253,7 +253,7 @@
                 <ng-container matColumnDef="transactionType">
                     <th class="br" mat-header-cell *matHeaderCellDef> Transaction type </th>
                     <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.transactionType}} </div>
+                        <div class="bar"> {{element.transactionType}} <span *ngIf="element.rt === 6"> (CAS)</span></div>
                     </td>
                 </ng-container>
 

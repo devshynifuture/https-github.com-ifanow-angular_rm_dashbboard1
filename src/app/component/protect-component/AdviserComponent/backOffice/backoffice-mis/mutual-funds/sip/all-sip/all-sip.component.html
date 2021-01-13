@@ -138,11 +138,11 @@
                 <div class="col-md-12 d-flex justify-content-center align-items-center">
                     <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
                 </div>
+                <div *ngIf="dataSource.data == null" class="d-flex flex-column align-items-center b-a">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center p-44">No data found</h4>
+                </div>
 
-            </div>
-            <div *ngIf="dataSource.finalSipList?.length==0" class="d-flex flex-column align-items-center b-a">
-                <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
-                <h4 class="text-center pt-12">No data found</h4>
             </div>
         </div>
     </div>
@@ -208,7 +208,8 @@
                     {{(item.frequency) ? item.frequency : '-'}}</td>
                 <td
                     style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    <span appFormatNumber>{{(item.amount) ? item.amount : '-'}}</span></td>
+                    <span appFormatNumber>{{(item.amount) ? item.amount : '-'}}</span>
+                </td>
             </tr>
             <tr
                 style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
