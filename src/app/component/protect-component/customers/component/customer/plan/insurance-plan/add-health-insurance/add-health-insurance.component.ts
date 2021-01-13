@@ -29,6 +29,7 @@ import { MotorInsuranceComponent } from '../mainInsuranceScreen/motor-insurance/
 import { TravelInsuranceComponent } from '../mainInsuranceScreen/travel-insurance/travel-insurance.component';
 import { HouseholdersInsuranceComponent } from '../mainInsuranceScreen/householders-insurance/householders-insurance.component';
 import { FireInsuranceComponent } from '../mainInsuranceScreen/fire-insurance/fire-insurance.component';
+import { OtherInsuranceInsurancePlanningComponent } from '../mainInsuranceScreen/other-insurance-insurance-planning/other-insurance-insurance-planning.component';
 
 @Component({
   selector: 'app-add-health-insurance',
@@ -173,6 +174,15 @@ export class AddHealthInsuranceComponent implements OnInit {
     insuranceType: 4,
     heading: 'Motor insurance',
     subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
+  },
+  {
+    value: '9',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Other Insurance',
+    smallHeading: 'other insurance',
+    insuranceType: 11,
+    heading: 'Other insurance',
+    subHeading: 'Select how you’d like to proceed with planning for other insurance policies.'
   }]
 
   constructor(private ipService: InsurancePlanningServiceService, private peopleService: PeopleService, public planService: PlanService, public dialog: MatDialog, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
@@ -226,7 +236,7 @@ export class AddHealthInsuranceComponent implements OnInit {
       clientId: this.clientId,
       insuranceType: this.inputData.insuranceType ? this.inputData.insuranceType : this.showInsurance ? (this.showInsurance ? this.showInsurance.insuranceType : this.insuranceType) : this.insuranceType,
       realOrFictious: 1,
-      flag : (this.inputData && this.inputData.id) ? false : true
+      flag: (this.inputData && this.inputData.id) ? false : true
     }
     const obj2 = {
       clientId: this.clientId
@@ -415,6 +425,14 @@ export class AddHealthInsuranceComponent implements OnInit {
         component = FireInsuranceComponent;
 
         break;
+      case 10:
+        this.object.insuranceSubTypeId = 11;
+        this.object.adviceToCategoryId = 40;
+        this.object.showInsurance = 'other insurance';
+        component = OtherInsuranceInsurancePlanningComponent;
+
+        break;
+
     }
     data ? data['adviceHeaderList'] = this.adviceHeaderList : null;
     const fragmentData = {

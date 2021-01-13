@@ -57,6 +57,11 @@ export class AllInsurancelistComponent implements OnInit {
     header: 'Add Householders Insurance',
     heading: 'Householders',
     logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/Hsmall.svg',
+  },
+  {
+    header: 'Add Other Insurance',
+    heading: 'Other insurance',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/Hsmall.svg',
   }]
   detailsInsurance: any;
   clientId: any;

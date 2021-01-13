@@ -84,6 +84,28 @@ export class MutualFundComponent implements OnInit {
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     // this.getMutualFund();
 
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.enabled) {
+      this.viewMode = 'Overview Report';
+      this.mfService.changeViewMode(this.viewMode);
+      return;
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled) {
+      this.viewMode = 'Summary';
+      this.mfService.changeViewMode(this.viewMode);
+      return;
+    } if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled) {
+      this.viewMode = 'All Transactions';
+      this.mfService.changeViewMode(this.viewMode);
+      return;
+    } if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.enabled) {
+      this.viewMode = 'Unrealized Transactions';
+      this.mfService.changeViewMode(this.viewMode);
+      return;
+    } if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.enabled) {
+      this.viewMode = 'Capital Gains';
+      this.mfService.changeViewMode(this.viewMode);
+      return;
+    }
 
 
   }
