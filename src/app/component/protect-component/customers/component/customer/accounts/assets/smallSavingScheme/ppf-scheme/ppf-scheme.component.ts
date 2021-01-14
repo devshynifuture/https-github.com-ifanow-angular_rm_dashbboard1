@@ -263,25 +263,31 @@ export class PPFSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if (!this.dataList) {
+            if (!data || sideBarData.data) {
+              if (!this.dataList) {
 
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-              // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
-              this.dataList['sumOfAccountBalance'] = sideBarData.data.accountBalance;
-            }
-            else {
-              if (sideBarData.data) {
-                this.dataList.assetList.push(sideBarData.data);
-                this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+                this.dataList = { assetList: [sideBarData.data] };
+                this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
                 // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
-                this.dataList.sumOfAccountBalance += sideBarData.data.accountBalance;
+                this.dataList['sumOfAccountBalance'] = sideBarData.data.accountBalance;
               }
+              else {
+                if (sideBarData.data) {
+
+                  if (fragmentData.popupHeaderText == 'Edit Public provident fund (PPF)') {
+                    this.dataList.assetList = this.dataList.assetList.filter(x => x.id != sideBarData.data.id)
+                  }
+                  this.dataList.assetList.push(sideBarData.data);
+                  this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+                  // this.ppfList['sumOfAmountInvested'] = sideBarData.data.currentValuation;
+                  this.dataList.sumOfAccountBalance += sideBarData.data.accountBalance;
+                }
+              }
+              this.getPpfSchemeDataResponse(this.dataList);
+              console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+            } else {
+              this.getPpfSchemeData();
             }
-
-            this.getPpfSchemeDataResponse(this.dataList);
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
           }
           rightSideDataSub.unsubscribe();
         }

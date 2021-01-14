@@ -47,19 +47,27 @@
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
+                        Account balance
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        ₹<span appFormatNumber>{{realEstate.currentValue?realEstate.currentValue:'-'}}</span>
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Balance as on date
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{(realEstate.currentValueAsonDate)?(realEstate.currentValueAsonDate | date:'dd/MM/yyyy'):'-'}}
+                    </div>
+                </div>
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         ₹<span
                             appFormatNumber>{{realEstate.currentValueAsOnToday?realEstate.currentValueAsOnToday:'-'}}</span>
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current value as on date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(realEstate.currentValueAsonDate)?(realEstate.currentValueAsonDate | date:'dd/MM/yyyy'):'-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

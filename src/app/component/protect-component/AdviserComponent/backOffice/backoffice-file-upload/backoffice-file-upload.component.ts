@@ -50,6 +50,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   element: any;
   upload: boolean = false;
   typeMF: any;
+  fileTypeId: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private reconService: ReconciliationService,
@@ -148,6 +149,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   // }
   fileTypeSelectMF(type) {
     this.typeMF = type.name
+    this.fileTypeId = type.fileTypeId
     console.log(this.typeMF)
   }
   uploadTargetFile() {
@@ -163,12 +165,13 @@ export class BackofficeFileUploadComponent implements OnInit {
     if (this.typeMF == 'NJ') {
       let obj = {
         advisorId: this.advisorId,
-        arnId: this.arnRiaId
+        arnId: this.arnRiaId,
       }
       const file = this.targetFile.target.files[0];
       const requestMap = {
         advisorId: this.advisorId,
-        arnId: this.arnRiaId
+        arnId: this.arnRiaId,
+        fileType: this.fileTypeId
       };
       // this.byte = this.file.arrayBuffer();
       FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.UPLOAD_NJ_FILE,
