@@ -407,15 +407,17 @@
                 </div>
               </button>
 
-              <button mat-menu-item>
+              <button *ngIf="userInfo.paid && roleData.advisorOrClientRole==1" mat-menu-item>
                 <div class="row">
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/ruppess.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/pricing']">
-                    <p class="m-0 text-black roboto">Pricing</p>
-                    <p class="text-custom m-0 roboto">Compare pricing options & select what works
-                    </p>
+                  <div class="col-md-10 p-0">
+                    <a href="https://docs.google.com/document/d/1MxA1PrhYF1QjOD-91Po946_tcIL0KI8whi5HKZB_wpI/edit#"
+                      target="_blank">
+                      <p class="m-0 text-black roboto">Pricing</p>
+                      <p class="text-custom m-0 roboto">Compare pricing options & select what works </p>
+                    </a>
                   </div>
                 </div>
               </button>
@@ -621,18 +623,22 @@
                           </div>
                         </div>
                       </button>
-                      <button mat-menu-item>
+
+                      <button *ngIf="userInfo.paid" mat-menu-item>
                         <div class="row">
                           <div class="col-md-2 p-0">
                             <img src="/assets/images/svg/ruppess.svg" class="v-super">
                           </div>
-                          <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/pricing/home']">
-                            <p class="m-0 text-black roboto">Pricing</p>
-                            <p class="text-custom m-0 roboto">Compare pricing options & select what works
-                            </p>
+                          <div class="col-md-10 p-0">
+                            <a href="https://docs.google.com/document/d/1MxA1PrhYF1QjOD-91Po946_tcIL0KI8whi5HKZB_wpI/edit#"
+                              target="_blank">
+                              <p class="m-0 text-black roboto">Pricing</p>
+                              <p class="text-custom m-0 roboto">Compare pricing options & select what works </p>
+                            </a>
                           </div>
                         </div>
                       </button>
+
                       <button mat-menu-item>
                         <div class="row">
                           <div class="col-md-2 p-0">

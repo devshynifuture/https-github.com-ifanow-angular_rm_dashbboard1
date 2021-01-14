@@ -33,8 +33,8 @@
                                     <div class="bar120">
                                         <div class="profilePhoto containerOne">
                                             <img [src]="clientOverviewData.profilePicUrl">
-                                            <div (click)="OpenpersonalProfile(0)" *ngIf="!letsideBarLoader"
-                                                class="middleOne">
+                                            <div (click)="OpenpersonalProfile(0)"
+                                                *ngIf="!letsideBarLoader && keyInfoCapability.Edit" class="middleOne">
                                                 <p class="c-p"> Edit Image </p>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@
                                                     Years
                                                 </span>
                                                 <a (click)="openAgePopup()"
-                                                    *ngIf="!letsideBarLoader && clientOverviewData.age==0"
+                                                    *ngIf="!letsideBarLoader && clientOverviewData.age==0 && keyInfoCapability.Edit"
                                                     class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                             </h5>
                                         </div>
@@ -192,7 +192,7 @@
                                 </div>
                             </div>
 
-                            <div (click)="open('add',null)" *ngIf="!letsideBarLoader"
+                            <div (click)="open('add',null)" *ngIf="!letsideBarLoader && keyInfoCapability.Add"
                                 class="addFamilyMember c-p primary-border-dash ml-8">
                                 <i class=" material-icons text-primary ">
                                     add
@@ -211,7 +211,7 @@
                             </div>
 
                             <div *ngIf="!letsideBarLoader" class=" col-md-2 text-right ">
-                                <a (click)="openClient('edit client',clientOverviewData)"
+                                <a *ngIf="keyInfoCapability.Edit" (click)="openClient('edit client',clientOverviewData)"
                                     class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                             </div>
 
@@ -435,7 +435,8 @@
                                     </p>
                                 </div>
                                 <div class="col-md-3 pr-8 text-right">
-                                    <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')"
+                                    <a *ngIf="keyInfoCapability.Edit"
+                                        (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')"
                                         class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                 </div>
 
@@ -450,6 +451,7 @@
                                     <h4 *ngIf="showSectionError.addressList" class="text-center pt-12">Sorry! it's not
                                         you it's us</h4>
                                     <p (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
+                                        *ngIf="keyInfoCapability.Add"
                                         class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add new
                                     </p>
                                 </div>
@@ -478,7 +480,7 @@
                                     </h4>
                                     <h4 *ngIf="showSectionError.bankList" class="text-center pt-12">Sorry! it's not you
                                         it's us</h4>
-                                    <p (click)="openAddEdit(clientData,null,'Bank','Add')"
+                                    <p (click)="openAddEdit(clientData,null,'Bank','Add')" *ngIf="keyInfoCapability.Add"
                                         class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add new
                                     </p>
                                 </div>
@@ -521,7 +523,8 @@
                                             {{selectedBankData.ifscCode }} <br> {{selectedBankData.shortAddress}}
                                     </div>
                                     <div class=" col-md-3 p-0 text-right ">
-                                        <a (click)="openAddEdit(clientData,selectedBankData,'Bank','Edit')"
+                                        <a *ngIf="keyInfoCapability.Edit"
+                                            (click)="openAddEdit(clientData,selectedBankData,'Bank','Edit')"
                                             class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
                                 </div>
@@ -547,7 +550,7 @@
                                 </h4>
                                 <h4 *ngIf="showSectionError.dematList" class="text-center pt-12">Sorry! it's not you
                                     it's us</h4>
-                                <p (click)="openAddEdit(clientData,null,'Demat','Add')"
+                                <p (click)="openAddEdit(clientData,null,'Demat','Add')" *ngIf="keyInfoCapability.Add"
                                     class="text-primary f-400 roboto primary-border br-2 p-4 c-p"> Add new
                                 </p>
                             </div>
@@ -588,7 +591,8 @@
                                         </p>
                                     </div>
                                     <div class=" col-md-3 p-0 text-right pl-15-992">
-                                        <a (click)="openAddEdit(clientData,selectedDemat,'Demat','Edit')"
+                                        <a *ngIf="keyInfoCapability.Edit"
+                                            (click)="openAddEdit(clientData,selectedDemat,'Demat','Edit')"
                                             class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
                                 </div>

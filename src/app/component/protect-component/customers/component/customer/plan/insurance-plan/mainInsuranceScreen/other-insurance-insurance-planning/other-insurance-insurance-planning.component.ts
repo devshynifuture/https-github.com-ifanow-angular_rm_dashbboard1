@@ -152,6 +152,7 @@ export class OtherInsuranceInsurancePlanningComponent implements OnInit {
   isRecommended: boolean;
   showRecommendation: boolean;
   recommendOrNot: any;
+  insData: any;
   constructor(private planService: PlanService, private cusService: CustomerService, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
   }
 
@@ -163,6 +164,7 @@ export class OtherInsuranceInsurancePlanningComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData();
+    this.insData = data;
     this.inputData = data;
     this.policyList = data.displayList.policyTypes;
     this.addOns = data.displayList.addOns;

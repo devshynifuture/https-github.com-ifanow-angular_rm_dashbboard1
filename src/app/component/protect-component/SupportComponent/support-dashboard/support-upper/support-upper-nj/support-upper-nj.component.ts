@@ -381,13 +381,6 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   onPaginationChange(event) {
-    // pageIndex starts from 0
-    // length: 80,
-    // pageIndex: 1,
-    // pageSize: 50,
-
-    // 1-50, 51 - 100? > length = 51-80
-
     if (event.pageIndex > 0) {
       this.startLimit = event.pageIndex * 50;
     } else {

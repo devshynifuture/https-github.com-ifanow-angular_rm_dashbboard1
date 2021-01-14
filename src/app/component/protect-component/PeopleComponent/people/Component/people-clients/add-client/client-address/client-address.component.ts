@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 // import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps'
 import { from } from 'rxjs';
+import { RoleService } from 'src/app/auth-service/role.service';
 @Component({
   selector: 'app-client-address',
   templateUrl: './client-address.component.html',
@@ -48,10 +49,12 @@ export class ClientAddressComponent implements OnInit {
   valueChanges: boolean;
   valueChangeFlag: any;
   @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
+  keyInfoCapability: any = {};
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService,
-    private utilService: UtilService, public dialog: MatDialog, private ngZone: NgZone) {
+    private utilService: UtilService, public dialog: MatDialog, private ngZone: NgZone,
+    public roleService: RoleService) {
   }
   adressType: string;
 
@@ -79,6 +82,7 @@ export class ClientAddressComponent implements OnInit {
 
   ngOnInit() {
     // this.mapApiLoader.load().then(() => {
+    this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {
       types: [this.addressType],
       componentRestrictions: { 'country': 'IN' }

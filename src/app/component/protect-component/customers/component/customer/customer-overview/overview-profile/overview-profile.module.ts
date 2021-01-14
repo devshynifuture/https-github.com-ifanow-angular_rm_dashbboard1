@@ -25,7 +25,7 @@ import { CommonComponentModule } from 'src/app/component/protect-component/commo
     ReactiveFormsModule,
     CommonComponentModule
   ],
-  entryComponents: [],
+  entryComponents: [AgePopupComponent],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },

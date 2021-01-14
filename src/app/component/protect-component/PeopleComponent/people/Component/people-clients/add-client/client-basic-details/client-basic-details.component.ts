@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material';
 import { UnmapPopupComponent } from './unmap-popup/unmap-popup.component';
 import { MoveFamilymemberToClientComponent } from './move-familymember-to-client/move-familymember-to-client.component';
 import { DashboardService } from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 const moment = require('moment');
 
@@ -96,7 +97,8 @@ export class ClientBasicDetailsComponent implements OnInit {
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, private datePipe: DatePipe,
     private utilService: UtilService, private enumDataService: EnumDataService,
-    private cusService: CustomerService, private dialog: MatDialog) {
+    private cusService: CustomerService, private dialog: MatDialog,
+    public roleService: RoleService) {
   }
 
   @Input() set data(data) {
@@ -251,12 +253,14 @@ export class ClientBasicDetailsComponent implements OnInit {
     ];
     // }
   }
+  keyInfoCapability: any = {};
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, 'this.clientRoles 123A');
     console.log('tax status data', this.enumDataService.getDataForTaxMasterService());
+    this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
   }
 
   toUpperCase(formControl, event) {

@@ -11,6 +11,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -44,12 +45,14 @@ export class ClientBankComponent implements OnInit {
   nomineesListFM: any = [];
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   idData: any;
+  keyInfoCapability: any = {};
 
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
     private peopleService: PeopleService, private utilService: UtilService, public dialog: MatDialog,
-    public enumDataService: EnumDataService) {
+    public enumDataService: EnumDataService,
+    public roleService: RoleService) {
   }
 
   bankForm: FormGroup;
@@ -195,6 +198,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     this.accountTypes = this.enumDataService.getBankAccountTypes();
   }
 

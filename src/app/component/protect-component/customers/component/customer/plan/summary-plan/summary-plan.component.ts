@@ -41,7 +41,7 @@ export class SummaryPlanComponent implements OnInit {
     incomePercent: number;
     expensePercent: number;
     @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
-    fragmentData = { isSpinner: false, date: '', time: '', size: '' };
+    fragmentData = { isSpinner: false, date: null, time: '', size: '' };
     map: any;
     loopEle: number;
     isLoadingSummary = true;
@@ -58,6 +58,8 @@ export class SummaryPlanComponent implements OnInit {
     finPlanId: any;
     isSpinner: boolean;
     generatePDF: number;
+    finPlanList: any;
+    id: any;
 
     constructor(
         private summaryPlanService: SummaryPlanServiceService,
@@ -90,6 +92,7 @@ export class SummaryPlanComponent implements OnInit {
             .subscribe(res => {
                 this.finPlanId = res;
             });
+        this.getFinPlan();
         this.getStartAndEndDate();
         this.getGoalSummaryValues();
         this.getSummeryInsurance();
@@ -99,7 +102,96 @@ export class SummaryPlanComponent implements OnInit {
     ngAfterViewInit() {
         this.dataSource.paginator = this.paginator;
     }
+    sortingDescending(data, filterId) {
+        if (data) {
+            data.sort((a, b) =>
+                a[filterId] > b[filterId] ? -1 : (a[filterId] === b[filterId] ? 0 : 1)
 
+            );
+        }
+        return data
+    }
+    getFinPlan() {
+        let obj = {
+            advisorId: AuthService.getAdvisorId(),
+            clientId: AuthService.getClientId()
+        }
+        this.planService.getPlanSection(obj).subscribe(
+            data => {
+                if (data) {
+                    data = this.sortingDescending(data, 'createdDate');
+                    this.finPlanList = data[0];
+                    console.log(data);
+                } else {
+                    this.finPlanList = null;
+                    // this.eventService.openSnackBar("Financial plan not saved", "Ok")
+                }
+
+            },
+            err => {
+                console.error(err);
+            }
+        );
+    }
+    downloadPrevoius(element) {
+        if (element) {
+            this.fragmentData.isSpinner = true;
+            let obj = {
+                clientId: AuthService.getClientId(),
+                s3Objects: element.modules
+            }
+            this.planService.mergeCall(obj).subscribe(
+                data => {
+                    this.mergeCallRes(data)
+                }
+            );
+        } else {
+            this.fragmentData.isSpinner = false;
+        }
+    }
+
+    mergeCallRes(data) {
+        this.id = data
+        this.generatePDF = 0
+        this.isSpinner = false
+        setTimeout(() => {
+            this.getPDFCall(data)
+        }, 5000);
+    }
+    getPDFCall(data) {
+        this.isSpinner = false
+        let obj = {
+            id: data.id
+        }
+        // this.summaryPlanService.setFinPlanId(data.id);
+        return this.http
+            .post(
+                apiConfig.MAIN_URL + 'plan/financial-plan/pdf/get',
+                obj,
+                { responseType: 'blob' }
+            )
+            .subscribe((data) => {
+                if (data.type == "application/pdf") {
+                    this.generatePDF = 1
+                    this.fragmentData.isSpinner = false
+                    const file = new Blob([data], { type: 'application/pdf' });
+                    var date = new Date();
+                    this.fragmentData.size = this.formatFileSize(data.size, 0);
+                    this.fragmentData.date = new Date(this.finPlanList.createdDate);
+                    const namePdf = this.clientData.name + '\'s ' + 'Financial plan pdf' + ' as on ' + date;
+                    const a = document.createElement('a');
+                    a.href = window.URL.createObjectURL(file);
+                    a.download = namePdf + '.pdf';
+                    a.click();
+                } else {
+                    this.generatePDF = 0
+                    setTimeout(() => {
+                        this.getPDFCall(this.id)
+                    }, 5000);
+                }
+
+            });
+    }
     getBudgetApis() {
         this.isLoadingBudget = true;
         const obj2 = {
@@ -138,7 +230,7 @@ export class SummaryPlanComponent implements OnInit {
         }, err => {
             this.isLoadingBudget = false;
             this.budgetData = [];
-            this.eventService.openSnackBar(err, 'Dismiss');
+            // this.eventService.openSnackBar(err, 'Dismiss');
 
         })
     }
@@ -204,7 +296,8 @@ export class SummaryPlanComponent implements OnInit {
                         this.fragmentData.isSpinner = false
                         const file = new Blob([data], { type: 'application/pdf' });
                         this.fragmentData.size = this.formatFileSize(data.size, 0);
-                        this.fragmentData.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+                        // this.fragmentData.date = this.datePipe.transform(this.finPlanList.createdDate, 'dd/MM/yyyy');
+                        this.fragmentData.date = new Date(this.finPlanList.createdDate);
                         var date = new Date();
                         const namePdf = this.clientData.name + '\'s ' + 'Financial plan' + ' as on ' + date;
                         const a = document.createElement('a');
@@ -455,7 +548,7 @@ export class SummaryPlanComponent implements OnInit {
                 this.goalSummaryCountObj = ''
                 this.isLoadingGoals = false;
                 console.error(err);
-                this.eventService.openSnackBar("Something went wrong", "DISMISS")
+                // this.eventService.openSnackBar("Something went wrong", "DISMISS")
             })
 
     }
