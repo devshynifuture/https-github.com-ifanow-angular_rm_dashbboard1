@@ -171,7 +171,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       const requestMap = {
         advisorId: this.advisorId,
         arnId: this.arnRiaId,
-        fileTypeId: this.fileTypeId
+        fileType: this.fileTypeId
       };
       // this.byte = this.file.arrayBuffer();
       FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.UPLOAD_NJ_FILE,
