@@ -85,7 +85,7 @@
                     <!-- <input class="form-control" matInput
                         (focus)="getFilteredSchemes()">
                          -->
-                    <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-form-field *ngIf="isMapped != true" appearance="standard" floatLabel="never">
                         <input class="form-control" matInput placeholder="Search"
                             (focus)="showSuggestionsBasedOnSchemeName(element)" aria-label="State"
                             [matAutocomplete]="auto" [formControl]="schemeControl">
@@ -101,6 +101,9 @@
                         </mat-autocomplete>
 
                     </mat-form-field>
+                    <div class="bar" *ngIf="isMapped == true">
+                        {{element.schemeName}}
+                    </div>
                     <br>
                     <ng-container *ngIf="filteredSchemeError">
                         <span class="f-12">

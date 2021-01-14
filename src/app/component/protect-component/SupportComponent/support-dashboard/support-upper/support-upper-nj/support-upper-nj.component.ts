@@ -345,10 +345,10 @@ export class SupportUpperNjComponent implements OnInit {
 
   getMappedUnmappedNjSchemes() {
     if (this.isMapped == true) {
-      this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'njCount', 'map'];
+      this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'map'];
 
     } else {
-      ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
+      this.displayedColumns = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
     }
 
     this.isLoading = true;
@@ -369,8 +369,8 @@ export class SupportUpperNjComponent implements OnInit {
           name: item.schemeName,
           nav: item.nav,
           schemeName: '',
-          schemeCode: '',
-          amficode: '',
+          schemeCode: item.schemeCode,
+          amfiCode: item.amfiCode,
           navTwo: '',
           navDate: '',
           njCount: '',
@@ -379,6 +379,11 @@ export class SupportUpperNjComponent implements OnInit {
           transactionDate: item.transactionDate,
           isSchemeSelected: false
         });
+        if (this.isMapped == true) {
+          dataTable.forEach(element => {
+            element.schemeName = item.mutualFundSchemeName
+          });
+        }
       });
       console.log("this is some data::::::", dataTable);
       this.dataTable = dataTable;
