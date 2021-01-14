@@ -307,7 +307,7 @@ export class SupportUpperNjComponent implements OnInit {
 
   unMapMappedNjScheme(element) {
     let obj = {
-      id: this.selectedSchemeRes.id,
+      id: element.id,
       mutualFundSchemeMasterId: element.id,
       schemeCode: element.schemeCode
     }
