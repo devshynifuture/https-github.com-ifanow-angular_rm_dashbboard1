@@ -170,7 +170,7 @@ export class SupportUpperPrudentComponent implements OnInit {
 
   mapUnmappedPrudentScheme(element) {
     let obj = {
-      id: this.selectedSchemeRes.id,
+      id: element.id,
       mutualFundSchemeMasterId: element.id,
       rt_id: 4,
       schemeCode: element.schemeCode
@@ -182,6 +182,9 @@ export class SupportUpperPrudentComponent implements OnInit {
         if (res) {
           console.log(res);
           element.isMapped = true;
+        } else {
+          this.getMappedUnmappedPrudentList()
+          this.eventService.openSnackBar('umap successfully', 'Dismiss');
         }
       })
   }
@@ -336,8 +339,8 @@ export class SupportUpperPrudentComponent implements OnInit {
           name: item.schemeName,
           nav: item.nav,
           schemeName: '',
-          schemeCode: '',
-          amficode: '',
+          schemeCode: item.schemeCode,
+          amfiCode: item.amfiCode,
           navTwo: '',
           navDate: '',
           njCount: '',
@@ -347,10 +350,22 @@ export class SupportUpperPrudentComponent implements OnInit {
           transactionDate: item.transactionDate,
           isSchemeSelected: false
         });
+        if (this.isMapped == true) {
+          dataTable.forEach(element => {
+            element.schemeName = item.mutualFundSchemeName
+          });
+        }
       });
       console.log("this is some data::::::", dataTable);
       this.dataTable = dataTable;
       this.dataSource.data = dataTable;
+      if (this.isMapped == true) {
+        this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'map'];
+
+      } else {
+        ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
+      }
+
     }, err => {
       console.error(err);
     });
