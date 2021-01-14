@@ -602,7 +602,7 @@ export class AddPpfComponent implements OnInit {
   }
   close(data) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data ? true : false, data: data });
   }
 
   getBank() {

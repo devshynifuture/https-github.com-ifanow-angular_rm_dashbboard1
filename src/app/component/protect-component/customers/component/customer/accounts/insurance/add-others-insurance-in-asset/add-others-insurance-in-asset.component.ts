@@ -70,7 +70,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
   showHeader: any;
   clientData: any;
 
-  constructor(private cusService:CustomerService,private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
+  constructor(private cusService: CustomerService, private enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService, private dialog: MatDialog) {
   }
 
   get data() {
@@ -192,32 +192,32 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     }
     console.log(this.bankList, "this.bankList2");
   }
-  changeType(value){
+  changeType(value) {
     if (this.otherAssetForm.get('floaterOrIndividual').value == true) {
       this.showSumAssured = true
       this.showinsuredMemberSum = false
       let list = this.otherAssetForm.get('InsuredMemberForm') as FormArray;
       list.controls.forEach(element => {
-          element.get('sumAssured').setValue(null);
-          element.get('isEdited').setValue(1);
-          if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
-              element.get('sumAssured').setErrors(null);
-              element.get('sumAssured').setValidators(null);
-          }
+        element.get('sumAssured').setValue(null);
+        element.get('isEdited').setValue(1);
+        if (element.get('sumAssured').value == '' || element.get('sumAssured').value == null) {
+          element.get('sumAssured').setErrors(null);
+          element.get('sumAssured').setValidators(null);
+        }
       });
       if (!this.otherAssetForm.controls['sumAssuredIdv'].value) {
-          this.otherAssetForm.controls['sumAssuredIdv'].setValue(null);
-          this.otherAssetForm.get('sumAssuredIdv').setValidators([Validators.required]);
-          this.otherAssetForm.get('sumAssuredIdv').updateValueAndValidity();
-          this.otherAssetForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
+        this.otherAssetForm.controls['sumAssuredIdv'].setValue(null);
+        this.otherAssetForm.get('sumAssuredIdv').setValidators([Validators.required]);
+        this.otherAssetForm.get('sumAssuredIdv').updateValueAndValidity();
+        this.otherAssetForm.controls['sumAssuredIdv'].setErrors({ 'required': true });
       }
-  } else {
+    } else {
       this.showSumAssured = false
       this.showinsuredMemberSum = true
       this.otherAssetForm.controls['sumAssuredIdv'].setValue(null);
       this.otherAssetForm.controls['sumAssuredIdv'].setErrors(null);
       this.otherAssetForm.controls['sumAssuredIdv'].setValidators(null);
-  }
+    }
   }
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
@@ -264,8 +264,8 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     this.planFeatureForm.push(this.fb.group({
       feature: [data ? data.feature + '' : ''],
       id: [data ? data.id : null],
-      isDeleted: [data ? data.isDeleted: null],
-      isEdited: [data ? data.isEdited  : null],
+      isDeleted: [data ? data.isDeleted : null],
+      isEdited: [data ? data.isEdited : null],
       otherInsuranceId: [this.dataForEdit ? this.dataForEdit.id : null],
     }));
   }
@@ -284,7 +284,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]],
+      name: [data ? data.name : '',],
       share: [data ? data.share : ''],
       familyMemberId: [data ? data.familyMemberId : 0],
       id: [data ? data.id : 0],
@@ -331,7 +331,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     this.disabledMember(null, null);
   }
 
-  removeNewNominee(item,element) {
+  removeNewNominee(item, element) {
     this.disabledMember(null, null);
     this.getNominee.removeAt(item);
     if (this.otherAssetForm.value.getNomineeName.length == 1) {
@@ -506,7 +506,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         name: [''],
         sharePercentage: [0],
         familyMemberId: [0],
-        isClient:null,
+        isClient: null,
         id: [0],
         relationshipId: [0]
       })]),
@@ -518,18 +518,18 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         relationshipId: [''],
         clientId: [''],
         userType: [''],
-        isActive:null,
-        isClient:null,
-        isEdited:null,
-        otherInsuranceId:null
+        isActive: null,
+        isClient: null,
+        isEdited: null,
+        otherInsuranceId: null
 
       })]),
       addOnForm: this.fb.array([this.fb.group({
         addOns: [''],
-        id:null,
-        isActive:null,
-        isEdited:null,
-        otherInsuranceId:null,
+        id: null,
+        isActive: null,
+        isEdited: null,
+        otherInsuranceId: null,
         sumInsured: null,
       })]),
       planFeatureForm: this.fb.array([this.fb.group({
@@ -766,7 +766,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     this.getFamilyData(this.insuredMemberList);
     if (element.value.id) {
       this.customerService.deleteOtherMemberInsurance(element.value.id).subscribe(data => {
-        
+
       }
       )
     }
@@ -823,7 +823,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
 
     });
   }
-  getClientIdNominee(){
+  getClientIdNominee() {
     this.nomineesListFM.forEach(element => {
       for (const e in this.getNominee.controls) {
         const id = this.getNominee.controls[e].get('familyMemberId');
@@ -835,7 +835,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
     });
   }
   getIndexOfSelectedElement(trn) {
-    if(trn.get('id').value){
+    if (trn.get('id').value) {
       trn.get('isEdited').setValue(1);
     }
   }
@@ -868,7 +868,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       let obj =
       {
         name: element.get('insuredMembers').value ? element.get('insuredMembers').value : 0,
-        createdOn:null,
+        createdOn: null,
         // insuredMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
         share: element.get('sumAssured').value ? element.get('sumAssured').value : 0,
         // relationshipId: element.get('relationshipId').value,
@@ -890,9 +890,9 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
           addOns: element.get('addOns').value,
           id: element.get('id').value ? element.get('id').value : 0,
           isActive: element.get('isActive').value ? element.get('isActive').value : 0,
-          isEdited: element.get('isEdited').value ?element.get('isEdited').value:0,
+          isEdited: element.get('isEdited').value ? element.get('isEdited').value : 0,
           otherInsuranceId: this.dataForEdit ? this.dataForEdit.id : null,
-          sumInsured: element.get('sumInsured').value ? element.get('sumInsured').value :0,
+          sumInsured: element.get('sumInsured').value ? element.get('sumInsured').value : 0,
         }
         addOns.push(obj)
       }
@@ -941,13 +941,13 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
         'sumAssuredIdv': this.otherAssetForm.get('sumAssuredIdv').value,
         'id': (this.id) ? this.id : 0,
         // 'policyHolderName':this.otherAssetForm.value.getCoOwnerName[0].name,
-        'policyHolderName':this.otherAssetForm.get('policyHolderName').value,
+        'policyHolderName': this.otherAssetForm.get('policyHolderName').value,
         // isClient:this.otherAssetForm.value.getCoOwnerName[0].familyMemberId == this.clientId ? 1 : 0,
         otherInsuranceInsuredMembers: memberList,
-        otherInsuranceFeatureList:featureList,
-        otherInsuranceAddCovers:addOns,
+        otherInsuranceFeatureList: featureList,
+        otherInsuranceAddCovers: addOns,
         nominees: this.otherAssetForm.value.getNomineeName,
-        createdOn:null
+        createdOn: null
       };
       // if (this.otherAssetForm.get('addOns').value && this.otherAssetForm.get('sumInsured').value) {
       //   obj.otherInsuranceAddCovers = [{
@@ -965,7 +965,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
       if (obj.nominees.length > 0) {
         obj.nominees.forEach((element, index) => {
           if (element.name == '') {
-            this.removeNewNominee(index,null);
+            this.removeNewNominee(index, null);
           }
         });
         obj.nominees = this.otherAssetForm.value.getNomineeName;
@@ -1008,7 +1008,7 @@ export class AddOthersInsuranceInAssetComponent implements OnInit {
               insuranceTypeId: this.inputData.insuranceTypeId,
               insuranceSubTypeId: 11,
               id: data.id,
-              Insdata:data,
+              Insdata: data,
               isAdded: true
             };
             this.close(insuranceData);
