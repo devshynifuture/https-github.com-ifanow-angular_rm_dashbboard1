@@ -31,7 +31,7 @@ export class EmailAdviceComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-};
+  };
   groupId: any;
   @ViewChild('tempRef', { static: true }) tempRef: ElementRef;
   @ViewChild('EmailIdTo', { static: true }) EmailIdToRef: ElementRef;
@@ -40,7 +40,7 @@ export class EmailAdviceComponent implements OnInit {
   flag: any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   subjectFormCOntrol = new FormControl();
-  _inputData = { toEmail :'',fromEmail: '', subjectEditable: false, subject: '', bodyChange: '' };
+  _inputData = { toEmail: '', fromEmail: '', subjectEditable: false, subject: '', bodyChange: '' };
   getOrgData = AuthService.getOrgDetails();
   emailBody = `
   <html>
@@ -69,21 +69,21 @@ export class EmailAdviceComponent implements OnInit {
   clientData: any;
   userInfo: any;
   emailIdList = [];
-  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) { 
+  constructor(private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService, private route: Router, private datePipe: DatePipe) {
     this.getOrgData = AuthService.getOrgDetails();
     this.clientData = AuthService.getClientData();
 
   }
   @Input() set data(data) {
     this.getData = data.selectedAssetData;
-    console.log('clientData......................',this.clientData);
-    if(this.clientData.emailList){
+    console.log('clientData......................', this.clientData);
+    if (this.clientData.emailList) {
       this._inputData.toEmail = (this.clientData.emailList ? this.clientData.emailList[0].email : '')
     }
     this.getIds(data);
     this.emailIdList = [{ emailAddress: this._inputData.toEmail }];
     this.flag = data.flagData;
-    this._inputData.fromEmail = (this.getOrgData ? this.getOrgData.email :'');
+    this._inputData.fromEmail = (this.getOrgData ? this.getOrgData.email : '');
     this._inputData.subjectEditable = false;
     this._inputData.subject = 'Email advice request for consent ';
     // this._inputData.toEmail = 'gayatri@futurewise.co.in';
@@ -149,10 +149,10 @@ export class EmailAdviceComponent implements OnInit {
       );
     } else {
       const consentObj = {
-        "fromEmail":(this.getOrgData ? this.getOrgData.email :''),
-        "toEmail":this.emailIdList,
-        "adviceIdList":obj
-        }
+        "fromEmail": (this.getOrgData ? this.getOrgData.email : ''),
+        "toEmail": this.emailIdList,
+        "adviceIdList": obj
+      }
       this.cusService.generateGroupId(consentObj).subscribe(
         data => this.getResponse(data)
       )
@@ -176,7 +176,7 @@ export class EmailAdviceComponent implements OnInit {
         // "adviceUuid": 'abe26153-d112-410e-8ee1-5268a8911b4a',
         "sent": this.datePipe.transform(new Date(), 'yyyy-MM-dd')
       },
-      "fromEmail": (this.getOrgData ? this.getOrgData.email :''),
+      "fromEmail": (this.getOrgData ? this.getOrgData.email : ''),
       "emailSubject": this.emailBody,
       "placeholder": [
         {
