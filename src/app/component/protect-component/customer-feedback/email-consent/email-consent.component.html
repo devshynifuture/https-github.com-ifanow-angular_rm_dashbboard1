@@ -356,3 +356,317 @@
         </div>
     </div>
 </div>
+<!-- -------------------- pdf ---------------------------- -->
+
+<div id="templateEmail" class="hide">
+    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;">
+                            <p class="mb-10">Dear {{clientData ? clientData.name : ''}}</p>
+                            <p class="mb-10">The information provided below requires your consent so that we can proceed
+                                further and do the
+                                needful from
+                                our end. </p>
+                            <p class="mb-10">Please review it carefully and click on the OK button below to give your
+                                consent.</p>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table style="width: 100%;" *ngIf="id != 4 && dataSource.data.length > 0">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            No. </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Owner</th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Policy name </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Current value
+                        </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Sum assured </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Premium amount </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Advice </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Advice status </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Applicable date </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            View </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Status </th>
+
+                    </tr>
+
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let element of dataSource.data ;index as i">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading ? (element?.stringObject['REAL']?.lifeAssuredName) : ''}}
+                        </td>
+
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            {{!isLoading ? (element?.stringObject['REAL']?.policyName) : ''}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading &&  element?.stringObject['REAL']?.currentValue ? "₹" : ""}}<span
+                                appFormatNumber>
+                                {{(element?.stringObject['REAL']?.currentValue ? element?.stringObject['REAL']?.currentValue : '-')}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading &&  element?.stringObject['REAL']?.sumAssured ? "₹" : ""}}<span
+                                appFormatNumber>
+                                {{element?.stringObject['REAL']?.sumAssured ? element?.stringObject['REAL']?.sumAssured : '-'}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading &&  element?.stringObject['REAL']?.premiumAmount ? "₹" : ""}}<span
+                                appFormatNumber>
+                                {{element?.stringObject['REAL']?.premiumAmount ? element?.stringObject['REAL']?.premiumAmount :'-'}}</span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="element">
+                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==1">Continue</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==2">Surrender</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==3">Stop paying
+                                    premium</span>
+                                <!-- <span *ngIf="element?.adviceDetails?.adviceId==4">Take loan</span> -->
+                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==5">Partial
+                                    withdrawl</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.insuranceAdviceId==0">{{'Proposed policy'}}
+                                </span>
+                            </span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="element">
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==1">GIVEN</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==2">AWAITING CONSENT</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==3">ACCEPTED</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==4">IN PROGRESS</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==5">IMPLEMENTED</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==6">DECLINED</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==7">PENDING</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==8">SYSTEM GENERATED</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==9">REVISED</span>
+                                <span *ngIf="element?.adviceToLifeInsurance?.adviceStatusId==0">{{'-'}}</span>
+                            </span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="element?.advice">
+                                {{element?.advice?.applicableDate ? (element?.advice?.applicableDate | date:'dd/MM/yyyy') : '-'}}
+                            </span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="!isLoading" (click)="openDialog(element)"><i
+                                    class="material-icons c-p">reorder</i></span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            <div class="d-flex align-items-center" *ngIf="!isLoading">
+
+                                <button *ngIf="!isLoading" class="mat-button mr-12"
+                                    [ngClass]="{'mat-stroked-accepted': element.acceptedOrDeclined==1,'mat-accepted-bg':(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2)}"
+                                    (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
+
+                                <button *ngIf="!isLoading" class="mat-button"
+                                    [ngClass]="{'mat-stroked-danger': (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1),'mat-danger-bg':element.acceptedOrDeclined==2}"
+                                    (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+                <table style="width: 100%;" *ngIf="id==4 && dataSource.data.length > 0">
+                    <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            No. </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Owner</th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Name of insurer & Plan </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Sum insured
+                        </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Premium </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Policy expiry date </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Advice </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Advice status </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Applicable date </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            View </th>
+                        <th
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            Status </th>
+
+                    </tr>
+
+                    <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+                        *ngFor="let element of dataSource.data ;index as i">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{i + 1}}</td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            {{element?.stringObject[element.name]?.displayHolderName}}
+                        </td>
+
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            {{element?.stringObject[element.name]?.insurerName}}{{element?.stringObject[element.name]?.planName ? '-'+ element?.stringObject[element.name]?.planName : ''}}
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading &&  element?.stringObject[element.name]?.sumAssured ? "₹" : ""}}<span
+                                appFormatNumber>
+                                {{element?.stringObject[element.name]?.sumAssured ? element?.stringObject[element.name]?.sumAssured :'-'}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading &&  element?.stringObject[element.name]?.premiumAmount ? "₹" : ""}}<span
+                                appFormatNumber>
+                                {{element?.stringObject[element.name]?.premiumAmount ? element?.stringObject[element.name]?.premiumAmount : '-'}}</span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            <span appFormatNumber>
+                                {{element?.stringObject[element.name]?.policyExpiryDate ?  (element?.stringObject[element.name]?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}</span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="element">
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==1">Continue</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==2">Discontinue</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==3">Port policy</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==4">Increase sum
+                                    assured</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==5">Decrease sum
+                                    assured</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==6">Add members</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==7">Remove
+                                    members</span>
+                                <span
+                                    *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==0">{{'Proposed policy'}}</span>
+                            </span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="element">
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==1">GIVEN</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==2">AWAITING CONSENT</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==3">ACCEPTED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==4">IN PROGRESS</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==5">IMPLEMENTED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==6">DECLINED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==7">PENDING</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==8">SYSTEM GENERATED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==9">REVISED</span>
+                                <span *ngIf="element?.adviceToGenInsurance?.adviceStatusId==0">{{'-'}}</span>
+                            </span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="element?.advice">
+                                {{element?.advice?.applicableDate ? (element?.advice?.applicableDate | date:'dd/MM/yyyy') : '-'}}
+                            </span>
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>
+                            <span *ngIf="!isLoading" (click)="openDialog(element)"><i
+                                    class="material-icons c-p">reorder</i></span>
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            <div class="d-flex align-items-center" *ngIf="!isLoading">
+
+                                <button *ngIf="!isLoading" class="mat-button mr-12"
+                                    [ngClass]="{'mat-stroked-accepted': element.acceptedOrDeclined==1,'mat-accepted-bg':(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2)}"
+                                    (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
+
+                                <button *ngIf="!isLoading" class="mat-button"
+                                    [ngClass]="{'mat-stroked-danger': (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1),'mat-danger-bg':element.acceptedOrDeclined==2}"
+                                    (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr *ngIf="dataSource.data.length == 0 ">
+                        <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                            colspan="9">
+                            No data found
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <div class="mt-20">
+                            <button class="btn-primary btn-height text-uppercase mr-16"
+                                *ngIf="!isLoading && dataSource.data.length > 0" (click)="save()">Ok</button>
+                            <button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0"
+                                class="txt btn-height text-uppercase">Cancel</button>
+                        </div>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+
+    </table>
+</div>
