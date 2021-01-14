@@ -805,6 +805,33 @@ export class UtilService {
     return { firstLine, secondLine }
   }
 
+  static formatAddressInThreeLine(address1, address2, address3) {
+    let firstLine, secondLine, thirdLine;
+    if (address1 != '' && address1.length > 40) {
+      firstLine = address1.substring(0, 39);
+      let remainingFirstLine = firstLine.substr(firstLine.lastIndexOf(' '), firstLine.length) + address1.substring(39, address1.length)
+      firstLine = firstLine.trim();
+      address2 = remainingFirstLine + ' ' + address2;
+      firstLine = firstLine.substr(0, firstLine.lastIndexOf(' '))
+    }
+    if (address2 != '' && address2.length > 40) {
+      let remainingSecondLine = address2.substring(39, address2.length);
+      secondLine = address2.substring(0, 39);
+      secondLine = secondLine.trim()
+      address3 = remainingSecondLine + '' + address3;
+      secondLine = secondLine.substr(0, secondLine.lastIndexOf(' '))
+    }
+    if (address3 != '' && address3.length > 40) {
+      thirdLine = address3.substring(0, 39)
+    }
+    return {
+      firstLine: firstLine ? firstLine : address1,
+      secondLine: secondLine ? secondLine : address2,
+      thirdLine: thirdLine ? thirdLine : address3
+    }
+    // secondLine = secondLine.substr(secondLine.indexOf(' '), 79)
+  };
+
   isEmptyObj(obj) {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {

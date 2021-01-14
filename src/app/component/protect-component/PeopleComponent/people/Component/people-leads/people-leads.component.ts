@@ -114,8 +114,16 @@ export class PeopleLeadsComponent implements OnInit {
         data.fieldFlag = 'lead';
       }
       component = AddClientComponent;
-    } else {
-      component = LeadsClientsComponent;
+    }
+    if (flag == 'convertLead') {
+      if (data.pan == undefined || data.pan == 'XXXXX1234X') {
+        data.flag = 'Edit lead';
+        data.fieldFlag = 'lead';
+        data.panInvalid = true;
+        component = AddClientComponent;
+      } else {
+        component = LeadsClientsComponent;
+      }
     }
     const fragmentData = {
       flag,

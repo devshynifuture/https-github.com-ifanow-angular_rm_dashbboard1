@@ -477,6 +477,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getMandateDetails() {
+    this.showSchemeSpinner = true
     const obj1 = {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     };
@@ -498,49 +499,53 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getMandateDetailsRes(data) {
-    this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
+    if (data) {
+      this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
 
-    if (!this.mandateDetails || this.mandateDetails.length == 0) {
-      if (this.getDataSummary.defaultClient.aggregatorType == 1 && this.inputData.isAdvisorSection) {
-        /* this.mandateDetails = this.processTransaction.filterRejectedMandateData(data);
-         if (!this.mandateDetails || this.mandateDetails.length == 0) {
-         }*/
-        this.alertModal();
-        this.showSpinnerMandate = false;
-        return;
-      } else {
-        this.handleMandateFailure();
-        return;
+      if (!this.mandateDetails || this.mandateDetails.length == 0) {
+        if (this.getDataSummary.defaultClient.aggregatorType == 1 && this.inputData.isAdvisorSection) {
+          /* this.mandateDetails = this.processTransaction.filterRejectedMandateData(data);
+           if (!this.mandateDetails || this.mandateDetails.length == 0) {
+           }*/
+          this.alertModal();
+          this.showSpinnerMandate = false;
+          return;
+        } else {
+          this.handleMandateFailure();
+          return;
+        }
       }
-    }
-    this.showSpinnerMandate = false;
-    this.acceptedMandate = []
-    this.selectedMandate = {}
-    if (data.length > 0) {
-      data.forEach(element => {
-        if (element.statusString == 'ACCEPTED' || element.statusString == "APPROVED") {
-          this.acceptedMandate.push(element)
-          Object.assign(this.transactionSummary, { showUmrnEdit: true });
-          Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
-          if (element.statusString == "APPROVED") {
-            this.selectedMandate = element
-            Object.assign(this.transactionSummary, { defaultBank: element });
-            Object.assign(this.transactionSummary, { bankDetails: element });
-            this.transactionSummary = { ...this.transactionSummary };
-          } else {
-            if (this.bankDetails.ifscCode == element.ifscCode) {
+      this.showSpinnerMandate = false;
+      this.acceptedMandate = []
+      this.selectedMandate = {}
+      if (data.length > 0) {
+        data.forEach(element => {
+          if (element.statusString == 'ACCEPTED' || element.statusString == "APPROVED") {
+            this.acceptedMandate.push(element)
+            Object.assign(this.transactionSummary, { showUmrnEdit: true });
+            Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
+            if (element.statusString == "APPROVED") {
               this.selectedMandate = element
+              Object.assign(this.transactionSummary, { defaultBank: element });
+              Object.assign(this.transactionSummary, { bankDetails: element });
+              this.transactionSummary = { ...this.transactionSummary };
+            } else {
+              if (this.bankDetails.ifscCode == element.ifscCode) {
+                this.selectedMandate = element
+              }
             }
           }
-        }
-      });
-      Object.assign(this.transactionSummary, { showUmrnEdit: true });
-    }
+        });
+        Object.assign(this.transactionSummary, { showUmrnEdit: true });
+      }
 
-    if (this.selectedMandate) {
-      Object.assign(this.transactionSummary, { umrnNo: this.selectedMandate.umrnNo });
-      Object.assign(this.transactionSummary, { selectedMandate: this.selectedMandate });
-      this.setMinAmount();
+      if (this.selectedMandate) {
+        Object.assign(this.transactionSummary, { umrnNo: this.selectedMandate.umrnNo });
+        Object.assign(this.transactionSummary, { selectedMandate: this.selectedMandate });
+        this.setMinAmount();
+      }
+    } else {
+      this.handleMandateFailure();
     }
   }
 

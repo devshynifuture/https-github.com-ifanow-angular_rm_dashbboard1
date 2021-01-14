@@ -94,7 +94,10 @@ export class ClientAddressComponent implements OnInit {
         if (place.geometry === undefined || place.geometry === null) {
           return;
         }
-        this.addressForm.get('addressLine2').setValue(place.formatted_address)
+        // this.addressForm.get('addressLine2').setValue(place.formatted_address)
+        const { firstLine, secondLine } = UtilService.formatGoogleGeneratedAddress(place.formatted_address);
+        this.addressForm.get('addressLine2').setValue(firstLine);
+        this.addressForm.get('addressLine3').setValue(secondLine);
         // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
         this.getPincode(place.formatted_address)
         // console.log(place)
@@ -104,18 +107,27 @@ export class ClientAddressComponent implements OnInit {
   }
 
   createAddressForm(data) {
-    (data == undefined) ? data = {} : data;
+    if (data == undefined) {
+      data = {}
+    } else {
+      const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address1, data.address2, data.address3);
+      data.address1 = firstLine;
+      data.address2 = secondLine;
+      data.address3 = thirdLine;
+    };
     this.addressForm = this.fb.group({
       // addressType: [(data.addressType) ? String(data.addressType) : '1'],
       addProofType: [(this.userMappingIdFlag == false) ? '' : (data.proofType) ? String(data.proofType) : ''],
       proofIdNum: [(this.userMappingIdFlag == false) ? '' : data.proofIdNumber],
       addressLine1: [data.address1, [Validators.required]],
-      addressLine2: [data.address2],
+      addressLine2: [data.address2, [Validators.required]],
+      addressLine3: [data.address3],
       pinCode: [data.pinCode, [Validators.required]],
       city: [data.city, [Validators.required]],
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
+
     (data) ? this.proofTypeData = data : '';
     let regexPattern;
     if (data.proofType == '1') {
@@ -203,13 +215,14 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('city').disable();
     this.addressForm.get('state').disable();
     this.addressForm.get('country').disable();
-    let address1 = this.addressForm.get('addressLine2').value;
-    let pincodeFlag = address1.includes(`${this.addressForm.get('pinCode').value},`)
-    address1 = address1.replace(`${this.addressForm.get('city').value},`, '')
-    address1 = address1.replace(!pincodeFlag ? `${this.addressForm.get('state').value},` : this.addressForm.get('state').value, '')
-    address1 = address1.replace(this.addressForm.get('country').value, '');
-    address1 = address1.replace(pincodeFlag ? `${this.addressForm.get('pinCode').value},` : this.addressForm.get('pinCode').value, '')
-    this.addressForm.get('addressLine2').setValue(address1)
+    let addressLine3 = this.addressForm.get('addressLine3').value;
+    addressLine3 = addressLine3.replace(data[0].PostOffice[0].District, '')
+    addressLine3 = addressLine3.replace(data[0].PostOffice[0].State, '')
+    addressLine3 = addressLine3.replace(data[0].PostOffice[0].Circle, '');
+    addressLine3 = addressLine3.replace(data[0].PostOffice[0].Country, '');
+    addressLine3 = addressLine3.replace(/,/g, '')
+    this.addressForm.get('addressLine3').setValue(addressLine3)
+    // this.addressForm.get('addressLine2').setValue(address1)
   }
 
   getPincode(data) {
@@ -219,6 +232,8 @@ export class ClientAddressComponent implements OnInit {
     pincode = pincode ? pincode.join("") : '';
     pincode = pincode.substring(pincode.length - 6, pincode.length);
     this.addressForm.get('pinCode').setValue(pincode)
+    const addressLine3Value = this.addressForm.get('addressLine3').value;
+    this.addressForm.get('addressLine3').setValue(addressLine3Value.replace(pincode, ''));
     this.getPostalPin(pincode);
   }
 
@@ -275,7 +290,7 @@ export class ClientAddressComponent implements OnInit {
       const obj = {
         address1: this.addressForm.get('addressLine1').value,
         address2: this.addressForm.get('addressLine2').value,
-        address3: '',
+        address3: this.addressForm.get('addressLine3').value,
         pinCode: this.addressForm.get('pinCode').value,
         city: this.addressForm.get('city').value,
         state: this.addressForm.get('state').value,
