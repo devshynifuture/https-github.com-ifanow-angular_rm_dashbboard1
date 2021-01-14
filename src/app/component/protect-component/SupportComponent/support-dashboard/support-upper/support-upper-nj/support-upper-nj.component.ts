@@ -125,6 +125,13 @@ export class SupportUpperNjComponent implements OnInit {
           console.log("this is some data::::::", dataTable);
           this.dataTable = dataTable;
           this.dataSource.data = dataTable;
+          this.dataSource.data.forEach(element => {
+            if (this.isMapped == true) {
+              element.isMapped = true
+            } else {
+              element.isMapped = false
+            }
+          });
           console.log(data);
           this.apiCallingStack = [];
           this.filteredSchemes = data.njSchemeMasterList;
@@ -281,6 +288,13 @@ export class SupportUpperNjComponent implements OnInit {
             console.log("this is some data::::::", dataTable);
             this.dataTable = dataTable;
             this.dataSource.data = dataTable;
+            this.dataSource.data.forEach(element => {
+              if (this.isMapped == true) {
+                element.isMapped = true
+              } else {
+                element.isMapped = false
+              }
+            });
           } else {
             this.checkIfDataNotPresentAndShowError(res);
           }
@@ -330,6 +344,13 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   getMappedUnmappedNjSchemes() {
+    if (this.isMapped == true) {
+      this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'njCount', 'map'];
+
+    } else {
+      ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
+    }
+
     this.isLoading = true;
     let data = {
       rtMasterId: 5,
@@ -362,6 +383,13 @@ export class SupportUpperNjComponent implements OnInit {
       console.log("this is some data::::::", dataTable);
       this.dataTable = dataTable;
       this.dataSource.data = dataTable;
+      this.dataSource.data.forEach(element => {
+        if (this.isMapped == true) {
+          element.isMapped = true
+        } else {
+          element.isMapped = false
+        }
+      });
     }, err => {
       console.error(err);
     });
