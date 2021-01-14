@@ -165,12 +165,15 @@ export class OtherPayablesComponent implements OnInit {
   // }
 
   fetchData(value, fileName, element) {
+    element.advisorId = this.advisorId;
+    element.isClient = element.borrowers[0].isClient;
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: element.familyMemberId,
-      asset: value
+      familyMemberId: (element.borrowers[0].isClient == 1) ? 0 : element.borrowers[0].familyMemberId,
+      asset: value,
+      element: element
     }
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {

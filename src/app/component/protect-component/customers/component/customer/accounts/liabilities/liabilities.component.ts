@@ -141,12 +141,15 @@ export class LiabilitiesComponent implements OnInit {
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
   fetchData(value, fileName, element) {
+    element.advisorId = this.advisorId;
+    element.isClient = element.borrowers[0].isClient;
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
-      asset: value
+      familyMemberId: (element.borrowers[0].isClient == 1) ? 0 : element.borrowers[0].familyMemberId,
+      asset: value,
+      element: element
     }
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {
@@ -156,10 +159,10 @@ export class LiabilitiesComponent implements OnInit {
       data: this.myFiles,
     });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
-    if (this.fileUploadData) {
-      this.file = fileName
-      this.fileUpload.uploadFile(fileName)
-    }
+    // if (this.fileUploadData) {
+    //   this.file = fileName
+    //   this.fileUpload.uploadFile(fileName)
+    // }
     setTimeout(() => {
       this.isLoadingUpload = false
     }, 7000);
