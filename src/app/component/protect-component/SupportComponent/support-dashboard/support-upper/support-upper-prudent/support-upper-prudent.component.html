@@ -81,7 +81,7 @@
             <ng-container matColumnDef="schemeName">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
                 <td class="b-a matInputClass" mat-cell *matCellDef="let element">
-                    <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-form-field *ngIf="isMapped != true" appearance="standard" floatLabel="never">
                         <input class="form-control" matInput placeholder="Search"
                             (focus)="showSuggestionsBasedOnSchemeName(element)" aria-label="State"
                             [matAutocomplete]="auto" [formControl]="schemeControl">
@@ -97,6 +97,9 @@
                         </mat-autocomplete>
 
                     </mat-form-field>
+                    <div class="bar" *ngIf="isMapped == true">
+                        {{element.schemeName}}
+                    </div>
                     <br>
                     <ng-container *ngIf="filteredSchemeError">
                         <span class="f-12">
@@ -156,10 +159,15 @@
             <ng-container matColumnDef="map">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Map / Unmap </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
-                    <button class="btn-primary btn-Map" mat-stroked-button [disabled]="!element.isSchemeSelected"
+                    <button *ngIf="isMapped == true" class="btn-primary btn-Map" mat-stroked-button
+                        (click)="mapUnmappedPrudentScheme(element)">
+                        Unmap
+                    </button>
+                    <button *ngIf="isMapped == false" class="btn-primary btn-Map" mat-stroked-button
+                        [disabled]="!element.isSchemeSelected"
                         [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
                         (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedPrudentScheme(element):mapUnmappedPrudentScheme(element)):$event.preventDefault()">
-                        {{element.isMapped ? 'Unmap':'Map'}}
+                        Map
                     </button>
                 </td>
             </ng-container>

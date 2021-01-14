@@ -317,6 +317,11 @@ export class SupportUpperNjComponent implements OnInit {
         if (res) {
           console.log(res);
           element.isMapped = false;
+          this.getMappedUnmappedNjSchemes()
+
+        } else {
+          this.eventService.openSnackBar('umap successfully', 'Dismiss');
+          this.getMappedUnmappedNjSchemes()
         }
       })
   }
