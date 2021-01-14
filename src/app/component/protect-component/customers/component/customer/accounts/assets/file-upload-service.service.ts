@@ -112,7 +112,7 @@ export class FileUploadServiceService {
       advisorId: this.element.advisorId,
       clientId: this.element.clientId,
       userId: this.getUserInfo.userId,
-      userType: this.element.ownerList[0].isClient ? 2 : 3,
+      userType: this.element.ownerList ? this.element.ownerList[0].isClient ? 2 : 3 : this.element.isClient,
       assetCategoryOrSubCatTypeId: this.element.subCatTypeId,
       documentId: this.element.id,
       documentType: 5,

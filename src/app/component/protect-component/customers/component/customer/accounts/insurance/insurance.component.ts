@@ -283,12 +283,26 @@ export class InsuranceComponent implements OnInit {
   }
 
   fetchData(value, fileName, element) {
+    let famId;
+    if (this.insuranceTypeId == 1) {
+      famId = element.familyMemberIdLifeAssured;
+      element.familyMemberIdLifeAssured == this.clientId ? element.isClient = 2 : element.isClient = 3;
+    } else {
+      if (element.insuredMembers && element.insuredMembers.length > 0) {
+        famId = element.insuredMembers[0].familyMemberId;
+        element.insuredMembers[0].familyMemberId == this.clientId ? element.isClient = 2 : element.isClient = 3;
+      } else {
+        famId = element.policyHolderId;
+        element.policyHolderId == this.clientId ? element.isClient = 2 : element.isClient = 3;
+      }
+    }
     this.isLoadingUpload = true;
     let obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
-      asset: value
+      familyMemberId: (famId == this.clientId ? 0 : famId),
+      asset: value,
+      element: element
     };
     this.myFiles = [];
     for (let i = 0; i < fileName.target.files.length; i++) {
@@ -298,10 +312,10 @@ export class InsuranceComponent implements OnInit {
       data: this.myFiles,
     });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
-    if (this.fileUploadData) {
-      this.file = fileName;
-      this.fileUpload.uploadFile(fileName);
-    }
+    // if (this.fileUploadData) {
+    //   this.file = fileName;
+    //   this.fileUpload.uploadFile(fileName);
+    // }
     setTimeout(() => {
       this.isLoadingUpload = false;
     }, 7000);
