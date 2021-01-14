@@ -1030,10 +1030,10 @@ export class ClientBasicDetailsComponent implements OnInit {
     });
   }
 
-  openMoveFamilymemberToClient() {
+  openMoveFamilymemberToClient(flag) {
     const fragmentData = {
-      flag: 'moveFM',
-      data: this.basicDetailsData,
+      flag: flag,
+      data: { value: this.basicDetailsData, flag: flag },
       id: 1,
       state: 'open50',
       componentName: MoveFamilymemberToClientComponent,

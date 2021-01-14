@@ -8,8 +8,11 @@
     <button (click)="openUnmapPopupORNot()" mat-menu-item>
         <span>Unmap</span>
     </button>
-    <button (click)="openMoveFamilymemberToClient()" mat-menu-item>
+    <button (click)="openMoveFamilymemberToClient('Move')" mat-menu-item>
         <span>Move family member</span>
+    </button>
+    <button (click)="openMoveFamilymemberToClient('Merge')" mat-menu-item>
+        <span>Merge duplicate family member</span>
     </button>
     <button (click)="promoteModal('')" mat-menu-item>
         <span>Promote</span>
