@@ -166,12 +166,12 @@ export class BackofficeFileUploadComponent implements OnInit {
       let obj = {
         advisorId: this.advisorId,
         arnId: this.arnRiaId,
-        fileTypeId: this.fileTypeId
       }
       const file = this.targetFile.target.files[0];
       const requestMap = {
         advisorId: this.advisorId,
-        arnId: this.arnRiaId
+        arnId: this.arnRiaId,
+        fileTypeId: this.fileTypeId
       };
       // this.byte = this.file.arrayBuffer();
       FileUploadService.uploadFileToServer(apiConfig.MAIN_URL + appConfig.UPLOAD_NJ_FILE,
