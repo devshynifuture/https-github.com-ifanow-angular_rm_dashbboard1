@@ -8,8 +8,11 @@
     <button (click)="openUnmapPopupORNot()" mat-menu-item>
         <span>Unmap</span>
     </button>
-    <button (click)="openMoveFamilymemberToClient()" mat-menu-item>
+    <button (click)="openMoveFamilymemberToClient('Move')" mat-menu-item>
         <span>Move family member</span>
+    </button>
+    <button (click)="openMoveFamilymemberToClient('Merge')" mat-menu-item>
+        <span>Merge duplicate family member</span>
     </button>
     <button (click)="promoteModal('')" mat-menu-item>
         <span>Promote</span>
@@ -148,11 +151,13 @@
                             <mat-error *ngIf="basicDetails.get('pan').errors?.pattern">Pan invalid
                             </mat-error>
                             <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
-                            <mat-hint *ngIf="fieldFlag=='familyMember'">Optional</mat-hint>
+                            <mat-hint *ngIf="fieldFlag=='familyMember' || fieldFlag=='lead'">Optional</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="col-md-3 p-0 d-flex align-items-center">
+                    <p *ngIf="basicDetails.get('pan').value=='XXXXX1234X' && fieldFlag=='lead'"
+                        class="mb-0 d-flex roboto  f-400 c-p"> Dummy pan number</p>
                     <!-- <p class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
               <i class="material-icons mr-4"> check_circle </i> KYC compliant</p> -->
                 </div>
@@ -837,6 +842,7 @@
                         </mat-error>
                         <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
                         </mat-error>
+                        <mat-hint alien="start" *ngIf="fieldFlag=='lead'">Optional</mat-hint>
                         <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -950,6 +956,7 @@
                             formControlName="comPan" matInput maxlength="10" placeholder="Enter company pan">
                         <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This field is required
                         </mat-error>
+                        <mat-hint alien="start" *ngIf="fieldFlag=='lead'">Optional</mat-hint>
                         <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
                         </mat-error>
                         <mat-hint align="end">{{cpan.value.length}} / 10</mat-hint>

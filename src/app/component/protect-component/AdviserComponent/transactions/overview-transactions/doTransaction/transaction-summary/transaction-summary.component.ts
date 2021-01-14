@@ -208,9 +208,9 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
-    this.getMandateDetails();
     this.bankDetails = data;
     console.log('bank == ', this.bankDetails);
+    this.getMandateDetails();
     this.bankDetails.forEach(element => {
       if (element.defaultBankFlag == 'Y') {
         this.defaultBank = element;
@@ -278,6 +278,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.clientDataList = data.clientDataList;
     this.defaultCredential = data.defaultCredential;
     this.defaultClient = data.defaultClient;
+    this.transactionSummary.defaultClient = data.defaultClient;
     this.subBrokerCredList = data.subBrokerCredList;
     this.selectedPlatform = this.defaultCredential.aggregatorType;
     if (this.selectedPlatform == 1) {

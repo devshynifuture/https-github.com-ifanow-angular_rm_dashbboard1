@@ -209,6 +209,10 @@ export class PeopleService {
     return this.http.postEncoded(apiConfig.USER + appConfig.MOVE_FAMILY_MEMBER, data);
   }
 
+  mergeDuplicateFamilyMember(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.MERGE_DUPLICATE_FAMILY_MEMBER, data);
+  }
+
   getClientAllAssetCount(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ALL_ASSET_COUNT, data);
   }

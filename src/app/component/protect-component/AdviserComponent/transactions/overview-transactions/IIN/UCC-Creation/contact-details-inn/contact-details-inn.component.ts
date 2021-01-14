@@ -192,6 +192,11 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     if (!address) {
       address = {};
+    } else {
+      const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address.address1, data.address.address2, data.address.address3);
+      data.address.address1 = firstLine;
+      data.address.address2 = secondLine;
+      data.address.address3 = thirdLine;
     }
     this.contactDetails = this.fb.group({
       email: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
