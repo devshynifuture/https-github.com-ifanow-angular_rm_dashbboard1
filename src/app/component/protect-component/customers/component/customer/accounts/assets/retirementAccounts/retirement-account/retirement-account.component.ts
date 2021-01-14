@@ -440,32 +440,48 @@ export class RetirementAccountComponent implements OnInit {
               this.getListSuperannuation();
               break;
             case 'addGratuity':
-              if (!this.gratuityDatalist) {
-                this.gratuityDatalist = { assetList: [sideBarData.data] };
-                this.gratuityDatalist['sumOfAmountReceived'] = sideBarData.data.amountReceived;
-                this.gratuityDatalist['sumOfGratuityReceived'] = sideBarData.data.gratuityReceived;
+              if (!data || sideBarData.data) {
+                if (!this.gratuityDatalist) {
+                  this.gratuityDatalist = { assetList: [sideBarData.data] };
+                  this.gratuityDatalist['sumOfAmountReceived'] = sideBarData.data.amountReceived;
+                  this.gratuityDatalist['sumOfGratuityReceived'] = sideBarData.data.gratuityReceived;
+                }
+                else {
+                  if (fragmentData.popupHeaderText == 'Edit Gratuity') {
+                    this.gratuityDatalist.assetList = this.gratuityDatalist.assetList.filter(x => x.id != sideBarData.data.id)
+                  }
+                  this.gratuityDatalist.assetList.push(sideBarData.data);
+                  this.gratuityDatalist.sumOfAmountReceived += sideBarData.data.amountReceived;
+                  this.gratuityDatalist.sumOfGratuityReceived += sideBarData.data.gratuityReceived;
+                }
+                // this.getNPSRes(this.npsDatalist);
+                this.getGrauityRes(this.gratuityDatalist)
               }
               else {
-                this.gratuityDatalist.assetList.push(sideBarData.data);
-                this.gratuityDatalist.sumOfAmountReceived += sideBarData.data.amountReceived;
-                this.gratuityDatalist.sumOfGratuityReceived += sideBarData.data.gratuityReceived;
+                this.getListGratuity();
               }
-              // this.getNPSRes(this.npsDatalist);
-              this.getGrauityRes(this.gratuityDatalist)
               // this.getListGratuity();
               break;
             case 'addSummaryPort':
-              if (!this.npsDatalist) {
-                this.npsDatalist = { assetList: [sideBarData.data] };
-                this.npsDatalist['sumOfAmountInvested'] = sideBarData.data.totalAmountInvested;
-                this.npsDatalist['sumOfCurrentValue'] = sideBarData.data.currentValuation;
+              if (!data || sideBarData.data) {
+                if (!this.npsDatalist) {
+                  this.npsDatalist = { assetList: [sideBarData.data] };
+                  this.npsDatalist['sumOfAmountInvested'] = sideBarData.data.totalAmountInvested;
+                  this.npsDatalist['sumOfCurrentValue'] = sideBarData.data.currentValuation;
+                }
+                else {
+                  if (fragmentData.popupHeaderText == 'Edit Portfolio summary') {
+                    this.npsDatalist.assetList = this.npsDatalist.assetList.filter(x => x.id != sideBarData.data.id)
+                  }
+                  this.npsDatalist.assetList.push(sideBarData.data);
+                  this.npsDatalist.sumOfAmountInvested += sideBarData.data.totalAmountInvested;
+                  this.npsDatalist.sumOfCurrentValue += sideBarData.data.currentValuation;
+                }
+                this.getNPSRes(this.npsDatalist);
               }
               else {
-                this.npsDatalist.assetList.push(sideBarData.data);
-                this.npsDatalist.sumOfAmountInvested += sideBarData.data.totalAmountInvested;
-                this.npsDatalist.sumOfCurrentValue += sideBarData.data.currentValuation;
+                this.getListNPS();
               }
-              this.getNPSRes(this.npsDatalist);
               break;
             case 'addEPF':
               // this.epfDatalist.assetList.push(sideBarData.data)
@@ -473,38 +489,54 @@ export class RetirementAccountComponent implements OnInit {
               // this.epfDatalist.sumOfEpsBalanceTillToday+=;
 
               // this.getEPFRes(this.epfDatalist);
-              if (!this.epfDatalist) {
-                this.epfDatalist = { assetList: [sideBarData.data] };
-                this.epfDatalist['sumOfEpfBalanceTillToday'] = sideBarData.data.currentEpfValue;
-                this.epfDatalist['sumOfEpsBalanceTillToday'] = sideBarData.data.currentEpsValue;
-                // this.epfDatalist['sumOfcurrentValue'] = sideBarData.data.maturityValue;
-                this.epfDatalist['sumOfemployeesMonthlyContribution'] = sideBarData.data.currentValue;
-                this.epfDatalist['sumOfemployersMonthlyContribution'] = sideBarData.data.maturityValue;
+              if (!data || sideBarData.data) {
+                if (!this.epfDatalist) {
+                  this.epfDatalist = { assetList: [sideBarData.data] };
+                  this.epfDatalist['sumOfEpfBalanceTillToday'] = sideBarData.data.currentEpfValue;
+                  this.epfDatalist['sumOfEpsBalanceTillToday'] = sideBarData.data.currentEpsValue;
+                  // this.epfDatalist['sumOfcurrentValue'] = sideBarData.data.maturityValue;
+                  this.epfDatalist['sumOfemployeesMonthlyContribution'] = sideBarData.data.currentValue;
+                  this.epfDatalist['sumOfemployersMonthlyContribution'] = sideBarData.data.maturityValue;
+                }
+                else {
+                  if (fragmentData.popupHeaderText == 'Edit Employees providend fund (EPF)') {
+                    this.epfDatalist.assetList = this.epfDatalist.assetList.filter(x => x.id != sideBarData.data.id)
+                  }
+                  this.epfDatalist.assetList.push(sideBarData.data);
+                  this.epfDatalist.sumOfEpfBalanceTillToday += sideBarData.data.currentEpfValue;
+                  this.epfDatalist.sumOfEpsBalanceTillToday += sideBarData.data.currentEpsValue;
+                  // this.epfDatalist.sumOfcurrentValue+= sideBarData.data.maturityValue;
+                  this.epfDatalist.sumOfemployeesMonthlyContribution += sideBarData.data.employeesMonthlyContribution;
+                  this.epfDatalist.sumOfemployersMonthlyContribution += sideBarData.data.employersMonthlyContribution;
+
+                }
+                this.getEPFRes(this.epfDatalist);
               }
               else {
-                this.epfDatalist.assetList.push(sideBarData.data);
-
-                this.epfDatalist.sumOfEpfBalanceTillToday += sideBarData.data.currentEpfValue;
-                this.epfDatalist.sumOfEpsBalanceTillToday += sideBarData.data.currentEpsValue;
-                // this.epfDatalist.sumOfcurrentValue+= sideBarData.data.maturityValue;
-                this.epfDatalist.sumOfemployeesMonthlyContribution += sideBarData.data.employeesMonthlyContribution;
-                this.epfDatalist.sumOfemployersMonthlyContribution += sideBarData.data.employersMonthlyContribution;
+                this.getListEPF();
               }
-              this.getEPFRes(this.epfDatalist);
               break;
             case 'addSchemeHolding':
-              if (!this.npsDatalist) {
-                this.npsDatalist = { assetList: [sideBarData.data] };
-                this.npsDatalist['sumOfAmountInvested'] = sideBarData.data.totalAmountInvested;
-                this.npsDatalist['sumOfCurrentValue'] = sideBarData.data.currentValuation;
+              if (!data || sideBarData.data) {
+                if (!this.npsDatalist) {
+
+                  this.npsDatalist = { assetList: [sideBarData.data] };
+                  this.npsDatalist['sumOfAmountInvested'] = sideBarData.data.totalAmountInvested;
+                  this.npsDatalist['sumOfCurrentValue'] = sideBarData.data.currentValuation;
+                }
+                else {
+                  if (fragmentData.popupHeaderText == 'Edit Scheme level holdings') {
+                    this.npsDatalist.assetList = this.npsDatalist.assetList.filter(x => x.id != sideBarData.data.id)
+                  }
+                  this.npsDatalist.assetList.push(sideBarData.data);
+                  this.npsDatalist.sumOfAmountInvested += sideBarData.data.totalAmountInvested;
+                  this.npsDatalist.sumOfCurrentValue += sideBarData.data.currentValuation;
+                }
+                this.getNPSRes(this.npsDatalist);
               }
               else {
-                this.npsDatalist.assetList.push(sideBarData.data);
-                this.npsDatalist.sumOfAmountInvested += sideBarData.data.totalAmountInvested;
-                this.npsDatalist.sumOfCurrentValue += sideBarData.data.currentValuation;
+                this.getListNPS();
               }
-              this.getNPSRes(this.npsDatalist);
-
               break;
             default:
               console.error('A non flagged parameter was called');
