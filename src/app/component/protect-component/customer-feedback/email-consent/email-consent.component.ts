@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CustomerService } from '../../customers/component/customer/customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Location, DatePipe } from '@angular/common';
@@ -22,7 +22,7 @@ export class EmailConsentComponent implements OnInit {
   id: any;
   sumAssured: any;
   paramData: any;
-
+  fragmentData = { isSpinner: false };
   allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
     name: 'Health',
     id: 5
@@ -35,7 +35,7 @@ export class EmailConsentComponent implements OnInit {
   adviceName: any;
   heading: any;
   clientData: any;
-  constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
+  constructor(private cd: ChangeDetectorRef, private ngZone: NgZone, private utilService: UtilService, private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
     this.clientData = AuthService.getClientData();
   }
   displayedColumns2: string[] = ['position', 'investorName', 'policyName', 'currentValue', 'sumAssured', 'premium', 'advice', 'astatus', 'adate', 'view', 'actions'];
@@ -228,8 +228,15 @@ export class EmailConsentComponent implements OnInit {
           this.consentData.push(obj)
         });
         this.dataSource.data = data;
-        this.isLoading = false;
         getAdviceSubs.unsubscribe();
+
+        this.ngZone.run(() => {
+          this.isLoading = false;
+          this.cd.detectChanges();
+          const para = document.getElementById('templateEmail');
+          console.log(para.innerHTML)
+          this.utilService.htmlToPdf(null, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true);
+        });
       },
       error => {
         this.dataSource.data = [];

@@ -125,6 +125,13 @@ export class SupportUpperNjComponent implements OnInit {
           console.log("this is some data::::::", dataTable);
           this.dataTable = dataTable;
           this.dataSource.data = dataTable;
+          this.dataSource.data.forEach(element => {
+            if (this.isMapped == true) {
+              element.isMapped = true
+            } else {
+              element.isMapped = false
+            }
+          });
           console.log(data);
           this.apiCallingStack = [];
           this.filteredSchemes = data.njSchemeMasterList;
@@ -281,6 +288,13 @@ export class SupportUpperNjComponent implements OnInit {
             console.log("this is some data::::::", dataTable);
             this.dataTable = dataTable;
             this.dataSource.data = dataTable;
+            this.dataSource.data.forEach(element => {
+              if (this.isMapped == true) {
+                element.isMapped = true
+              } else {
+                element.isMapped = false
+              }
+            });
           } else {
             this.checkIfDataNotPresentAndShowError(res);
           }
@@ -293,7 +307,7 @@ export class SupportUpperNjComponent implements OnInit {
 
   unMapMappedNjScheme(element) {
     let obj = {
-      id: this.selectedSchemeRes.id,
+      id: element.id,
       mutualFundSchemeMasterId: element.id,
       schemeCode: element.schemeCode
     }
@@ -303,6 +317,11 @@ export class SupportUpperNjComponent implements OnInit {
         if (res) {
           console.log(res);
           element.isMapped = false;
+          this.getMappedUnmappedNjSchemes()
+
+        } else {
+          this.eventService.openSnackBar('umap successfully', 'Dismiss');
+          this.getMappedUnmappedNjSchemes()
         }
       })
   }
@@ -330,6 +349,13 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   getMappedUnmappedNjSchemes() {
+    if (this.isMapped == true) {
+      this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'map'];
+
+    } else {
+      this.displayedColumns = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
+    }
+
     this.isLoading = true;
     let data = {
       rtMasterId: 5,
@@ -348,8 +374,8 @@ export class SupportUpperNjComponent implements OnInit {
           name: item.schemeName,
           nav: item.nav,
           schemeName: '',
-          schemeCode: '',
-          amficode: '',
+          schemeCode: item.schemeCode,
+          amfiCode: item.amfiCode,
           navTwo: '',
           navDate: '',
           njCount: '',
@@ -358,10 +384,22 @@ export class SupportUpperNjComponent implements OnInit {
           transactionDate: item.transactionDate,
           isSchemeSelected: false
         });
+        if (this.isMapped == true) {
+          dataTable.forEach(element => {
+            element.schemeName = item.mutualFundSchemeName
+          });
+        }
       });
       console.log("this is some data::::::", dataTable);
       this.dataTable = dataTable;
       this.dataSource.data = dataTable;
+      this.dataSource.data.forEach(element => {
+        if (this.isMapped == true) {
+          element.isMapped = true
+        } else {
+          element.isMapped = false
+        }
+      });
     }, err => {
       console.error(err);
     });

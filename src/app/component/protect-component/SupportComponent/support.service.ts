@@ -61,6 +61,9 @@ export class SupportService {
   getBackofficeReports(data) {
     return null;
   }
+  getMappedUnmappedCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RM_MAPPED_UNMAPPED_SCHEME_COUNT_NJ_PRUDENT, data);
+  }
 
   getDailyServicesStatusReport(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DAILY_SERVICES_STATUS_REPORT, data);

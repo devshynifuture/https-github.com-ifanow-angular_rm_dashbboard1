@@ -310,7 +310,7 @@ export class SipTransactionComponent implements OnInit {
       this.getMandateDetails();
     } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
     }*/
-    this.getMandateDetails();
+    // this.getMandateDetails();
     this.oldDefaultData = data;
 
   }
@@ -392,6 +392,7 @@ export class SipTransactionComponent implements OnInit {
     this.getFrequency();
     Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
     // Object.assign(this.transactionSummary, { schemeName: this.schemeName });
+    this.getMandateDetails()
   }
 
   setMinAmount() {

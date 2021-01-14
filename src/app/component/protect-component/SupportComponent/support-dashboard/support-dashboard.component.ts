@@ -43,6 +43,8 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
 
   dashFG: FormGroup;
   currentWeekFrankline: any;
+  njCount: any;
+  prudentCount: any;
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
@@ -62,8 +64,29 @@ export class SupportDashboardComponent implements OnInit, OnDestroy {
     this.getDailyServicesStatusReport();
     this.getDailyFiles();
     this.getIfaMatricData();
+    this.getMappedUnmappedCount(4);
+    this.getMappedUnmappedCount(5);
   }
+  getMappedUnmappedCount(flag) {
+    let obj = {
+      rtId: flag,
+      isMapped: false
 
+    };
+    this.supportService.getMappedUnmappedCount(obj).subscribe(
+      data => {
+        if (data) {
+          console.log('count nkj prudent', data)
+          if (flag == 4) {
+            this.prudentCount = data
+          } else {
+            this.njCount = data
+          }
+        }
+      }
+      , err => this.eventService.openSnackBar(err, "Dismiss")
+    )
+  }
   createFormGroup() {
     this.dashFG = this.fb.group({
       bulkOptRtId: '',

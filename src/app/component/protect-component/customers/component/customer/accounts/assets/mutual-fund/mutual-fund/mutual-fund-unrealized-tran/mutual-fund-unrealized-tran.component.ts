@@ -808,7 +808,7 @@ export class MutualFundUnrealizedTranComponent {
         this.mfService.setCashFlowXirr(this.cashFlowObj);
       }, (error) => {
         this.isLoading = false;
-        this.eventService.showErrorMessage(error);
+        this.eventService.showErrorMessage('No data found');
         this.showDownload = true;
         this.cd.detectChanges();
         this.loaded.emit(this.unrealizedTranTemplate.nativeElement);
@@ -1024,8 +1024,10 @@ export class MutualFundUnrealizedTranComponent {
         this.setUnrealizedDataSource([]);
         this.customDataSource = [];
         this.customDataHolder = [];
-        this.mfService.setDataForMfGet(null);
-        this.eventService.showErrorMessage(error);
+        if (!this.mfGetData) {
+          this.mfService.setDataForMfGet(null);
+        }
+        this.eventService.showErrorMessage('No data found');
         this.changeInput.emit(false);
         // this.changeDetectorRef.detectChanges();
       }
