@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Inject } from '@angular/core/src/metadata/*';
-import { EventService } from '../../../../../../../../../Data-service/event.service';
-import { AuthService } from '../../../../../../../../../auth-service/authService';
-import { OnlineTransactionService } from '../../../../../online-transaction.service';
+import {Component, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Inject} from '@angular/core/src/metadata/*';
+import {EventService} from '../../../../../../../../../Data-service/event.service';
+import {AuthService} from '../../../../../../../../../auth-service/authService';
+import {OnlineTransactionService} from '../../../../../online-transaction.service';
 
 @Component({
   selector: 'app-iin-creation-loader',
@@ -18,8 +18,8 @@ export class IinCreationLoaderComponent implements OnInit {
   numb: any;
 
   constructor(public dialogRef: MatDialogRef<IinCreationLoaderComponent>,
-    @Inject(MAT_DIALOG_DATA) public fragmentData: any, private onlineTransact: OnlineTransactionService,
-    public eventService: EventService) {
+              @Inject(MAT_DIALOG_DATA) public fragmentData: any, private onlineTransact: OnlineTransactionService,
+              public eventService: EventService) {
   }
 
   emailId = '';
@@ -45,9 +45,9 @@ export class IinCreationLoaderComponent implements OnInit {
     this.isSuccess = false;
     this.failureMessage = message;
     this.msg = this.failureMessage.includes('MAPPED WITH SOME OTHER BROKER');
-    var numb = this.failureMessage.match(/\d/g);
-    this.numb = parseInt(numb.join(""));
-    console.log(this.numb)
+    const numb = this.failureMessage.match(/\d/g);
+    this.numb = parseInt(numb.join(''));
+    console.log(this.numb);
   }
 
   showMessageAfterProceed() {
@@ -65,25 +65,26 @@ export class IinCreationLoaderComponent implements OnInit {
       this.dialogRef.close(data);
     }
   }
+
   mappUser() {
-    let obj = {
+    const obj = {
       tpUserCredentialId: this.fragmentData.singleBrokerCred.tpUserCredentialId,
       clientCode: this.numb,
       familyMemberId: (this.fragmentData.requestJson.familyMemberId) ? this.fragmentData.requestJson.familyMemberId : 0,
       clientId: this.fragmentData.requestJson.clientId
-    }
-    console.log('obj')
+    };
+    console.log('obj');
     this.onlineTransact.mappedExistingUser(obj)
       .subscribe(res => {
         if (res) {
-          console.log('mappedUser', res)
-          this.eventService.openSnackBar("Mapped exsting user Successfully", "Dismiss");
+          console.log('mappedUser', res);
+          this.eventService.openSnackBar('Mapped exsting user Successfully', 'Dismiss');
           this.dialogRef.close();
         } else {
-          this.eventService.openSnackBar("Mapped exsting user Unsuccessful", "Dismiss");
+          this.eventService.openSnackBar('Mapped exsting user Unsuccessful', 'Dismiss');
         }
       }, err => {
-        this.eventService.openSnackBar(err, "Dismiss");
-      })
+        this.eventService.openSnackBar(err, 'Dismiss');
+      });
   }
 }
