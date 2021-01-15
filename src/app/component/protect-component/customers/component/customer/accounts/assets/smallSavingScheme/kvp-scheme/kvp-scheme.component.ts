@@ -227,7 +227,7 @@ export class KvpSchemeComponent implements OnInit {
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfCurrentValue -= element.currentValue;
-            this.dataList.sumOfAmountInvested -= element.accountBalance;
+            this.dataList.sumOfAmountInvested -= element.amountInvested;
             this.dataList.sumOfMaturityValue -= element.maturityValue;
 
             this.getKvpSchemedataResponse(this.dataList);
@@ -275,7 +275,7 @@ export class KvpSchemeComponent implements OnInit {
               if (sideBarData.data) {
                 this.dataList = { assetList: [sideBarData.data] };
                 this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-                this.dataList['sumOfAmountInvested'] = sideBarData.data.accountBalance;
+                this.dataList['sumOfAmountInvested'] = sideBarData.data.amountInvested;
                 this.dataList['sumOfMaturityValue'] = sideBarData.data.maturityValue;
               }
             }
@@ -283,7 +283,7 @@ export class KvpSchemeComponent implements OnInit {
 
               this.dataList.assetList.push(sideBarData.data);
               this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
-              this.dataList.sumOfAmountInvested += sideBarData.data.accountBalance;
+              this.dataList.sumOfAmountInvested += sideBarData.data.amountInvested;
               this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
 
             }
