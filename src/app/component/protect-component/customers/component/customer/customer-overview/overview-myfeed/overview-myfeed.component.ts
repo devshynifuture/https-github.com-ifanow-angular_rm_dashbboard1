@@ -15,6 +15,7 @@ import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.s
 // import {WebworkerService} from 'src/app/services/web-worker.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { BulkEmailTestComponent } from '../../accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
+import { CustomerOverviewService } from '../customer-overview.service';
 
 @Component({
   selector: 'app-overview-myfeed',
@@ -185,6 +186,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
+    private customerOverview: CustomerOverviewService
     // private workerService: WebworkerService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
@@ -324,20 +326,21 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     } else {
       this.getMutualFundResponse(this.mutualFund)
     }
+    // this.loadGlobalRiskProfile();
     this.loadLogicBasedOnRoleType();
     this.getFamilyMembersList();
     this.loadCustomerProfile();
     this.getAppearanceSettings();
     this.initializePieChart();
-    this.getAssetAllocationValues();
-    this.loadAssetAlocationData();
-    this.loadRTAFeedsTransactions();
-    this.loadRecentTransactions();
-    this.loadDocumentValutData();
-    this.loadRiskProfile();
-    this.loadGlobalRiskProfile();
+    !this.customerOverview.globalRiskProfileData ? this.loadGlobalRiskProfile() : this.loadGlobalRiskProfileRes(this.customerOverview.globalRiskProfileData);
+    !this.customerOverview.assetAllocationChart ? this.getAssetAllocationValues() : this.getAssetAllocationValuesRes(this.customerOverview.assetAllocationChart);;
+    !this.customerOverview.portFolioData ? this.loadAssetAlocationData() : this.loadAssetAlocationDataRes(this.customerOverview.portFolioData);
+    !this.customerOverview.rtaFeedsData ? this.loadRTAFeedsTransactions() : this.loadRTAFeedsTransactionsRes(this.customerOverview.rtaFeedsData);
+    !this.customerOverview.recentTransactionData ? this.loadRecentTransactions() : this.loadRecentTransactionsRes(this.customerOverview.recentTransactionData);
+    !this.customerOverview.documentVaultData ? this.loadDocumentValutData() : this.loadDocumentValutDataRes(this.customerOverview.documentVaultData);
+    !this.customerOverview.riskProfileData ? this.loadRiskProfile() : this.loadRiskProfileRes(this.customerOverview.riskProfileData);
     // this.loadGoalsData(); // Not to be implemented for demo purpose
-    this.loadCashFlowSummary(); // needs better implementation
+    !this.customerOverview.cashFlowData ? this.loadCashFlowSummary() : this.loadCashFlowSummaryRes(this.customerOverview.cashFlowData); // needs better implementation
   }
 
   ngAfterViewInit() {
@@ -555,75 +558,80 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.loaderFn.increaseCounter();
     this.customerService.calculateTotalValues(obj).subscribe(res => {
-      if (res == null) {
-        this.portFolioData = [];
-        this.tabsLoaded.portfolioData.hasData = false;
-      } else {
-        this.tabsLoaded.portfolioData.hasData = true;
-        const stock = res.find(d => d.assetType == 6);
-        this.portFolioData = res;
-        if (stock) {
-          this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
-          this.portFolioData.unshift(stock);
-        }
-        this.portFolioData.forEach(element => {
-          if (element.assetType == 6) {
-            element['path'] = '/customer/detail/account/assets/stock'
-          }
-          if (element.assetType == 7) {
-            element['path'] = '/customer/detail/account/assets/fix'
-          }
-          if (element.assetType == 8) {
-            element['path'] = '/customer/detail/account/assets/real'
-          }
-          if (element.assetType == 9) {
-            element['path'] = '/customer/detail/account/assets/retire'
-          }
-          if (element.assetType == 10) {
-            element['path'] = '/customer/detail/account/assets/small'
-          }
-          if (element.assetType == 31) {
-            element['path'] = '/customer/detail/account/assets/cash_bank'
-          }
-          if (element.assetType == 12) {
-            element['path'] = '/customer/detail/account/assets/commodities'
-          }
-          if (element.assetType == 5) {
-            element['path'] = '/customer/detail/account/assets/mutual'
-          }
-          if (element.assetType == 35) {
-            element['path'] = '/customer/detail/account/assets/others'
-          }
-        })
-        let mfValue = this.portFolioData.filter(record => record.assetType === 5);
-        this.portFolioData = this.portFolioData.filter(record => record.assetType !== 5);
-        this.portFolioData.forEach((element, ind) => {
-          if (element.assetType == 2) {
-            element['gainAmount'] = ''
-          }
-          if (element.assetType == 31) {
-            element['investedAmount'] = ''
-            element['gainAmount'] = ''
-          }
-          if (element.assetType == 9) {
-            element['investedAmount'] = ''
-            element['gainAmount'] = ''
-          }
-        })
-        this.portFolioData.unshift(this.mutualFundObj ? this.mutualFundObj : mfValue[0]);
-        // this.portFolioData.splice(mfIndex, 1)
-
-      }
-
-      this.tabsLoaded.portfolioData.isLoading = false;
-      // this.tabsLoaded.portfolioData.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
+      this.loadAssetAlocationDataRes(res);
     }, err => {
       this.hasError = true;
       this.tabsLoaded.portfolioData.isLoading = false;
       // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
+  }
+
+  loadAssetAlocationDataRes(res) {
+    this.customerOverview.portFolioData = res;
+    if (res == null) {
+      this.portFolioData = [];
+      this.tabsLoaded.portfolioData.hasData = false;
+    } else {
+      this.tabsLoaded.portfolioData.hasData = true;
+      const stock = res.find(d => d.assetType == 6);
+      this.portFolioData = res;
+      if (stock) {
+        this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+        this.portFolioData.unshift(stock);
+      }
+      this.portFolioData.forEach(element => {
+        if (element.assetType == 6) {
+          element['path'] = '/customer/detail/account/assets/stock'
+        }
+        if (element.assetType == 7) {
+          element['path'] = '/customer/detail/account/assets/fix'
+        }
+        if (element.assetType == 8) {
+          element['path'] = '/customer/detail/account/assets/real'
+        }
+        if (element.assetType == 9) {
+          element['path'] = '/customer/detail/account/assets/retire'
+        }
+        if (element.assetType == 10) {
+          element['path'] = '/customer/detail/account/assets/small'
+        }
+        if (element.assetType == 31) {
+          element['path'] = '/customer/detail/account/assets/cash_bank'
+        }
+        if (element.assetType == 12) {
+          element['path'] = '/customer/detail/account/assets/commodities'
+        }
+        if (element.assetType == 5) {
+          element['path'] = '/customer/detail/account/assets/mutual'
+        }
+        if (element.assetType == 35) {
+          element['path'] = '/customer/detail/account/assets/others'
+        }
+      })
+      let mfValue = this.portFolioData.filter(record => record.assetType === 5);
+      this.portFolioData = this.portFolioData.filter(record => record.assetType !== 5);
+      this.portFolioData.forEach((element, ind) => {
+        if (element.assetType == 2) {
+          element['gainAmount'] = ''
+        }
+        if (element.assetType == 31) {
+          element['investedAmount'] = ''
+          element['gainAmount'] = ''
+        }
+        if (element.assetType == 9) {
+          element['investedAmount'] = ''
+          element['gainAmount'] = ''
+        }
+      })
+      this.portFolioData.unshift(this.mutualFundObj ? this.mutualFundObj : mfValue[0]);
+      // this.portFolioData.splice(mfIndex, 1)
+
+    }
+
+    this.tabsLoaded.portfolioData.isLoading = false;
+    // this.tabsLoaded.portfolioData.dataLoaded = true;
+    this.loaderFn.decreaseCounter();
   }
 
   getAssetAllocationValues() {
@@ -635,87 +643,92 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     };
 
     this.customerService.getAssetAllocationSummary(obj).subscribe(res => {
-      this.isLoadingAssetAllocation = false;
-      if (res == null) {
-        this.isAssetAllocationDataLoaded = false;
-      } else {
-        this.isAssetAllocationDataLoaded = true;
-        // let stock = res.find(d => d.assetType == 6);
-        // this.portFolioData = res;
-        // if (stock) {
-        //   this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
-        //   this.portFolioData.unshift(stock);
-        // }
-
-        let chartData = [];
-        let counter = 0;
-        const othersData = {
-          y: 0,
-          name: 'Others',
-          color: AppConstants.DONUT_CHART_COLORS[3],
-          dataLabels: {
-            enabled: false
-          }
-        };
-        let chartTotal = 1;
-        let hasNoDataCounter = res.length;
-        const pieChartData = res;
-        // let pieChartData =  res.filter(element => element.assetType != 2 && element.currentValue != 0);
-        pieChartData.forEach(element => {
-          if (element.currentValue > 0) {
-            chartTotal += element.currentValue;
-            if (counter < 6) {
-              chartData.push({
-                y: element.currentValue,
-                name: element.assetTypeString,
-                color: AppConstants.DONUT_CHART_COLORS[counter],
-                dataLabels: {
-                  enabled: false
-                }
-              });
-            } else {
-              othersData.y += element.currentValue;
-            }
-            counter++;
-          } else {
-            hasNoDataCounter--;
-          }
-        });
-        if (chartData) {
-          let index;
-          let obj = {};
-          chartData = this.sorting(chartData, 'name');
-          chartData.forEach((element, ind) => {
-            if (element.name == 'Others') {
-              index = ind;
-            }
-          });
-          if (index) {
-            obj = chartData.splice(index, 1);
-            const outputObj = obj[0];
-            chartData.push(outputObj);
-          }
-        }
-        chartTotal -= 1;
-        if (chartTotal === 0) {
-          this.isAssetAllocationDataLoaded = false;
-
-        }
-        // if (counter > 4) {
-        //   chartData.push(othersData);
-        // }
-        if (counter > 0) {
-          this.chartTotal = chartTotal;
-          this.chartData = chartData;
-          this.assetAllocationPieChartDataMgnt(this.chartData);
-        }
-      }
+      this.getAssetAllocationValuesRes(res);
     }, err => {
       this.hasError = true;
       this.isLoadingAssetAllocation = false;
       this.isAssetAllocationDataLoaded = false;
       // this.eventService.openSnackBar(err, 'Dismiss');
     });
+  }
+
+  getAssetAllocationValuesRes(res) {
+    this.customerOverview.assetAllocationChart = res;
+    this.isLoadingAssetAllocation = false;
+    if (res == null) {
+      this.isAssetAllocationDataLoaded = false;
+    } else {
+      this.isAssetAllocationDataLoaded = true;
+      // let stock = res.find(d => d.assetType == 6);
+      // this.portFolioData = res;
+      // if (stock) {
+      //   this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+      //   this.portFolioData.unshift(stock);
+      // }
+
+      let chartData = [];
+      let counter = 0;
+      const othersData = {
+        y: 0,
+        name: 'Others',
+        color: AppConstants.DONUT_CHART_COLORS[3],
+        dataLabels: {
+          enabled: false
+        }
+      };
+      let chartTotal = 1;
+      let hasNoDataCounter = res.length;
+      const pieChartData = res;
+      // let pieChartData =  res.filter(element => element.assetType != 2 && element.currentValue != 0);
+      pieChartData.forEach(element => {
+        if (element.currentValue > 0) {
+          chartTotal += element.currentValue;
+          if (counter < 6) {
+            chartData.push({
+              y: element.currentValue,
+              name: element.assetTypeString,
+              color: AppConstants.DONUT_CHART_COLORS[counter],
+              dataLabels: {
+                enabled: false
+              }
+            });
+          } else {
+            othersData.y += element.currentValue;
+          }
+          counter++;
+        } else {
+          hasNoDataCounter--;
+        }
+      });
+      if (chartData) {
+        let index;
+        let obj = {};
+        chartData = this.sorting(chartData, 'name');
+        chartData.forEach((element, ind) => {
+          if (element.name == 'Others') {
+            index = ind;
+          }
+        });
+        if (index) {
+          obj = chartData.splice(index, 1);
+          const outputObj = obj[0];
+          chartData.push(outputObj);
+        }
+      }
+      chartTotal -= 1;
+      if (chartTotal === 0) {
+        this.isAssetAllocationDataLoaded = false;
+
+      }
+      // if (counter > 4) {
+      //   chartData.push(othersData);
+      // }
+      if (counter > 0) {
+        this.chartTotal = chartTotal;
+        this.chartData = chartData;
+        this.assetAllocationPieChartDataMgnt(this.chartData);
+      }
+    }
   }
 
   sorting(data, filterId) {
@@ -738,21 +751,26 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.tabsLoaded.rtaFeeds.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRTAFeeds(obj).subscribe(res => {
-      if (res == null) {
-        this.rtaFeedsData = [];
-      } else {
-        this.tabsLoaded.rtaFeeds.hasData = true;
-        this.rtaFeedsData = res;
-      }
-      this.tabsLoaded.rtaFeeds.isLoading = false;
-      this.tabsLoaded.rtaFeeds.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
+      this.loadRTAFeedsTransactionsRes(res)
     }, err => {
       this.hasError = true;
       this.tabsLoaded.rtaFeeds.isLoading = false;
       // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
+  }
+
+  loadRTAFeedsTransactionsRes(res) {
+    this.customerOverview.rtaFeedsData = res;
+    if (res == null) {
+      this.rtaFeedsData = [];
+    } else {
+      this.tabsLoaded.rtaFeeds.hasData = true;
+      this.rtaFeedsData = res;
+    }
+    this.tabsLoaded.rtaFeeds.isLoading = false;
+    this.tabsLoaded.rtaFeeds.dataLoaded = true;
+    this.loaderFn.decreaseCounter();
   }
 
   loadDocumentValutData() {
@@ -764,26 +782,31 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.tabsLoaded.documentsVault.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
-      if (res == null || res.fileStats.length == 0) {
-        this.documentVault = {};
-        this.tabsLoaded.documentsVault.hasData = false;
-      } else {
-        this.tabsLoaded.documentsVault.hasData = true;
-        this.documentVault = res;
-        this.documentVault.familyStats.unshift({
-          relationshipId: (this.clientData.genderId == 1 ? 2 : 3),
-          genderId: 0
-        });
-      }
-      this.tabsLoaded.documentsVault.isLoading = false;
-      this.tabsLoaded.documentsVault.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
+      this.loadDocumentValutDataRes(res);
     }, err => {
       this.hasError = true;
       this.tabsLoaded.documentsVault.isLoading = false;
       // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
+  }
+
+  loadDocumentValutDataRes(res) {
+    this.customerOverview.documentVaultData = res;
+    if (res == null || res.fileStats.length == 0) {
+      this.documentVault = {};
+      this.tabsLoaded.documentsVault.hasData = false;
+    } else {
+      this.tabsLoaded.documentsVault.hasData = true;
+      this.documentVault = res;
+      this.documentVault.familyStats.unshift({
+        relationshipId: (this.clientData.genderId == 1 ? 2 : 3),
+        genderId: 0
+      });
+    }
+    this.tabsLoaded.documentsVault.isLoading = false;
+    this.tabsLoaded.documentsVault.dataLoaded = true;
+    this.loaderFn.decreaseCounter();
   }
 
   loadRiskProfile() {
@@ -794,16 +817,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.tabsLoaded.riskProfile.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
-      if (res == null || res[0].id === 0) {
-        this.riskProfile = [];
-        this.tabsLoaded.riskProfile.hasData = false;
-      } else {
-        this.tabsLoaded.riskProfile.hasData = true;
-        this.riskProfile = res;
-      }
-      this.tabsLoaded.riskProfile.isLoading = false;
-      this.tabsLoaded.riskProfile.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
+      this.loadRiskProfileRes(res);
     }, err => {
       this.tabsLoaded.riskProfile.isLoading = false;
       this.tabsLoaded.riskProfile.dataLoaded = false;
@@ -813,17 +827,23 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     });
   }
 
+  loadRiskProfileRes(res) {
+    this.customerOverview.riskProfileData = res;
+    if (res == null || res[0].id === 0) {
+      this.riskProfile = [];
+      this.tabsLoaded.riskProfile.hasData = false;
+    } else {
+      this.tabsLoaded.riskProfile.hasData = true;
+      this.riskProfile = res;
+    }
+    this.tabsLoaded.riskProfile.isLoading = false;
+    this.tabsLoaded.riskProfile.dataLoaded = true;
+    this.loaderFn.decreaseCounter();
+  }
+
   loadGlobalRiskProfile() {
     this.customerService.getGlobalRiskProfile({}).subscribe(res => {
-      if (res == null) {
-        this.globalRiskProfile = [];
-      } else {
-        this.tabsLoaded.globalRiskProfile.hasData = true;
-        this.globalRiskProfile = res;
-      }
-      this.tabsLoaded.globalRiskProfile.dataLoaded = true;
-      this.tabsLoaded.globalRiskProfile.isLoading = false;
-      this.loaderFn.decreaseCounter();
+      this.loadGlobalRiskProfileRes(res);
     }, err => {
       this.hasError = true;
       this.tabsLoaded.globalRiskProfile.isLoading = false;
@@ -831,6 +851,19 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
+  }
+
+  loadGlobalRiskProfileRes(res) {
+    this.customerOverview.globalRiskProfileData = res;
+    if (res == null) {
+      this.globalRiskProfile = [];
+    } else {
+      this.tabsLoaded.globalRiskProfile.hasData = true;
+      this.globalRiskProfile = res;
+    }
+    this.tabsLoaded.globalRiskProfile.dataLoaded = true;
+    this.tabsLoaded.globalRiskProfile.isLoading = false;
+    this.loaderFn.decreaseCounter();
   }
 
   loadRecentTransactions() {
@@ -843,15 +876,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.loaderFn.increaseCounter();
 
     this.customerService.getRecentTransactions(obj).subscribe(res => {
-      if (res == null) {
-        this.recentTransactions = [];
-      } else {
-        this.tabsLoaded.recentTransactions.hasData = true;
-        this.recentTransactions = res;
-      }
-      this.tabsLoaded.recentTransactions.dataLoaded = true;
-      this.tabsLoaded.recentTransactions.isLoading = false;
-      this.loaderFn.decreaseCounter();
+      this.loadRecentTransactionsRes(res);
     }, err => {
       this.hasError = true;
       this.tabsLoaded.recentTransactions.dataLoaded = false;
@@ -859,6 +884,19 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
+  }
+
+  loadRecentTransactionsRes(res) {
+    this.customerOverview.recentTransactionData = res;
+    if (res == null) {
+      this.recentTransactions = [];
+    } else {
+      this.tabsLoaded.recentTransactions.hasData = true;
+      this.recentTransactions = res;
+    }
+    this.tabsLoaded.recentTransactions.dataLoaded = true;
+    this.tabsLoaded.recentTransactions.isLoading = false;
+    this.loaderFn.decreaseCounter();
   }
 
   loadGoalsData() {
@@ -899,22 +937,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     };
     this.loaderFn.increaseCounter();
     this.customerService.getCashFlowList(obj).subscribe(res => {
-      if (res == null) {
-        this.cashflowData = {
-          emptyData: [{
-            bankName: 'Not enough data to display',
-            inflow: 0,
-            outflow: 0,
-            netflow: 0
-          }]
-        };
-      } else {
-        this.tabsLoaded.cashflowData.hasData = true;
-        this.createCashflowFamilyObj(res);
-      }
-      this.tabsLoaded.cashflowData.dataLoaded = true;
-      this.tabsLoaded.cashflowData.isLoading = false;
-      this.loaderFn.decreaseCounter();
+      this.loadCashFlowSummaryRes(res)
     }, err => {
       this.tabsLoaded.cashflowData.dataLoaded = false;
       this.tabsLoaded.cashflowData.isLoading = false;
@@ -922,6 +945,26 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
     });
+  }
+
+  loadCashFlowSummaryRes(res) {
+    this.customerOverview.cashFlowData = res;
+    if (res == null) {
+      this.cashflowData = {
+        emptyData: [{
+          bankName: 'Not enough data to display',
+          inflow: 0,
+          outflow: 0,
+          netflow: 0
+        }]
+      };
+    } else {
+      this.tabsLoaded.cashflowData.hasData = true;
+      this.createCashflowFamilyObj(res);
+    }
+    this.tabsLoaded.cashflowData.dataLoaded = true;
+    this.tabsLoaded.cashflowData.isLoading = false;
+    this.loaderFn.decreaseCounter();
   }
 
   createCashflowFamilyObj(data) {

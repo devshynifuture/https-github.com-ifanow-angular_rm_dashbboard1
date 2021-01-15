@@ -17,6 +17,7 @@ import { map, startWith } from 'rxjs/operators';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { SchemeListComponent } from './scheme-list/scheme-list.component';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-nps-scheme-holding',
   templateUrl: './nps-scheme-holding.component.html',
@@ -70,7 +71,8 @@ export class NpsSchemeHoldingComponent implements OnInit {
   myControl = new FormControl();
   filteredOptions: Observable<any[]>;
   constructor(private event: EventService, public dialog: MatDialog, private enumService: EnumServiceService, private router: Router, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService,
-    private assetValidation: AssetValidationService) {
+    private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
 
   }
   @Input()
@@ -601,11 +603,15 @@ export class NpsSchemeHoldingComponent implements OnInit {
     }
   }
   getAdviceNscSchemeLevelRes(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.barButtonOptions.active = false;
     this.event.openSnackBar('NPS added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
   addNPSRes(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');

@@ -9,6 +9,7 @@ import { MatInput } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from '../../../../../../../../../services/enum-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-add-real-estate',
@@ -73,7 +74,8 @@ export class AddRealEstateComponent implements OnInit {
   constructor(public custumService: CustomerService, public subInjectService: SubscriptionInject,
     private fb: FormBuilder, public custmService: CustomerService,
     public eventService: EventService, public utils: UtilService,
-    public enumService: EnumServiceService, private assetValidation: AssetValidationService) {
+    public enumService: EnumServiceService, private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -636,6 +638,8 @@ export class AddRealEstateComponent implements OnInit {
   addRealEstateRes(data) {
     console.log(data);
     if (data) {
+      this.customerOverview.portFolioData = null;
+      this.customerOverview.assetAllocationChart = null;
       console.log(data);
       this.assetValidation.addAssetCount({ type: 'Add', value: 'real_estate' })
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
@@ -651,6 +655,8 @@ export class AddRealEstateComponent implements OnInit {
   editRealEstateRes(data) {
     console.log(data);
     if (data) {
+      this.customerOverview.portFolioData = null;
+      this.customerOverview.assetAllocationChart = null;
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Updated successfully!', 'OK');

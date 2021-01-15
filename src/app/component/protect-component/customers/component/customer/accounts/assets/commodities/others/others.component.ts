@@ -10,6 +10,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-others',
@@ -58,7 +59,7 @@ export class OthersComponent implements OnInit {
   nominees: any;
   todayDate = new Date();
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, private assetValidation: AssetValidationService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) {
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private assetValidation: AssetValidationService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -390,6 +391,8 @@ export class OthersComponent implements OnInit {
 
   }
   addOthersRes(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.barButtonOptions.active = false;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'commodities' })
     console.log('addrecuringDepositRes', data);
@@ -398,6 +401,8 @@ export class OthersComponent implements OnInit {
   }
 
   editOthersRes(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });

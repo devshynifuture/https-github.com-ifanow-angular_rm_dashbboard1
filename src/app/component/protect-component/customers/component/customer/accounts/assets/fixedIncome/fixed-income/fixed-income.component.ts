@@ -21,6 +21,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 
 @Component({
@@ -83,7 +84,8 @@ export class FixedIncomeComponent implements OnInit {
     private custumService: CustomerService,
     public util: UtilService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   viewMode;
@@ -455,6 +457,8 @@ export class FixedIncomeComponent implements OnInit {
           this.customerService.deleteFixedDeposite(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               // this.getFixedDepositList();
               this.fixDataList.assetList = this.fixDataList.assetList.filter(x => x.id != element.id);
               // this.dataSource.data = this.fixDataList.assetList;
@@ -472,6 +476,8 @@ export class FixedIncomeComponent implements OnInit {
           this.customerService.deleteRecurringDeposite(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               // this.getRecurringDepositList();
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'fixedIncome' })
               this.recDataList.assetList = this.recDataList.assetList.filter(x => x.id != element.id);
@@ -488,6 +494,8 @@ export class FixedIncomeComponent implements OnInit {
           this.customerService.deleteBond(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               // this.getBondsList();
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'fixedIncome' })
               this.bondDataList.assetList = this.bondDataList.assetList.filter(x => x.id != element.id);

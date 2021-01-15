@@ -908,7 +908,7 @@ export const appConfig = {
   GENERATE_UUID_FOR_LOGIN: 'user/generate/uuid',
   GET_LOGIN_DATA_FROM_RANDOM_STRING: 'user/advisor/marketplace-login',
   MOVE_FAMILY_MEMBER: 'user/family-member/move',
-  MERGE_DUPLICATE_FAMILY_MEMBER: '',
+  MERGE_DUPLICATE_FAMILY_MEMBER: 'user/client/merge/duplicate',
   PROMOTE_TO_CLIENT: 'user/family-member/promote',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',

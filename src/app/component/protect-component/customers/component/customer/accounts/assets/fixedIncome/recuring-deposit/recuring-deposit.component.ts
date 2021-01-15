@@ -13,6 +13,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 
 @Component({
@@ -81,7 +82,8 @@ export class RecuringDepositComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(private event: EventService, public dialog: MatDialog, private fb: FormBuilder, private enumService: EnumServiceService, private custumService: CustomerService,
-    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, private assetValidation: AssetValidationService) {
+    public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -487,12 +489,16 @@ export class RecuringDepositComponent implements OnInit {
     this.assetValidation.addAssetCount({ type: 'Add', value: 'fixedIncome' })
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editrecuringDepositRes(data) {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 

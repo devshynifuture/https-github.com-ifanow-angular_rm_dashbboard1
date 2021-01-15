@@ -13,6 +13,7 @@ import { ClientDematComponent } from 'src/app/component/protect-component/People
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 import { Subscription } from 'rxjs';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 
 @Component({
@@ -64,7 +65,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
   oldOwnerID: number;
   private unSubcripBank: Subscription;
   private unSubcripDemat: Subscription;
-  constructor(public dialog: MatDialog, private assetValidation: AssetValidationService, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private assetValidation: AssetValidationService, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService,
+    private customerOverview: CustomerOverviewService) { }
   @ViewChild('holding', { static: false }) holding;
   @Input() set data(data) {
     this.clientId = AuthService.getClientId();
@@ -570,6 +572,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
         this.cusService.editStockData(obj).subscribe(
           data => {
             console.log(data);
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             if (obj.id == 0) {
               data.stockList[0]['stockListForEditView'] = data.stockList;
               data.stockList[0]['portfolioId'] = data.id;
@@ -592,6 +596,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
       } else {
         this.cusService.addAssetStocks(obj).subscribe(
           data => {
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             console.log(data);
             this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
             this.barButtonOptions.active = false;

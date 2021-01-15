@@ -4,6 +4,7 @@ import { RoutingState } from '../../../../../../services/routing-state.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { CustomerOverviewService } from '../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-plan',
@@ -20,7 +21,8 @@ export class PlanComponent implements OnInit {
 
   constructor(private router: Router, private routingStateService: RoutingState,
     public authService: AuthService, public roleService: RoleService,
-    public enumDataService: EnumDataService
+    public enumDataService: EnumDataService,
+    private customerOverview: CustomerOverviewService
   ) {
   }
 
@@ -52,6 +54,7 @@ export class PlanComponent implements OnInit {
     localStorage.removeItem('clientData');
     sessionStorage.removeItem('clientData');
     this.routingStateService.goToSpecificRoute('/admin/dashboard');
+    this.customerOverview.clearServiceData();
 
   }
 }
