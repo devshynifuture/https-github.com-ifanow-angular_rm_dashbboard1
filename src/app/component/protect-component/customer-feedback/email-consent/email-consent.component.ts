@@ -47,23 +47,23 @@ export class EmailConsentComponent implements OnInit {
   <html>
   <head></head>
   <body>
-     <p #subBody class="pt-28 f-700 roboto">Request for advice consent from $company_name.
-      </p>
+   
       <p>
           <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;  text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Dear
               $client_name,</span></p>
-     <p class="pt-10 roboto">As discussed,we have reviewed your portfolio and given after thorough review &
-              analysis</p>
-      <p class="pt-10 roboto">You need to give your Consent in order to help us proceed further.You can go by
-      clicking here or on the button below</p>
-      <button mat-stroked-button class="btn-primary">PROCEED
-     </button>
-      <p class="pt-10 roboto">Consent link URL : http://www.my-planner/consent_confimramtion.html</p>
-      <p class="pt-10 ">Feel free to get back to us if you have any questions</p>
-      <i class="material-icons">
-      more_horiz</i>
+     <p class="pt-10 roboto">Here is your consent</p>
   </body>
   </html>`;
+  // <p #subBody class="pt-28 f-700 roboto">Request for advice consent from $company_name.
+  // </p>
+  //   <p class="pt-10 roboto">You need to give your Consent in order to help us proceed further.You can go by
+  //   clicking here or on the button below</p>
+  //   <button mat-stroked-button class="btn-primary">PROCEED
+  //  </button>
+  //   <p class="pt-10 roboto">Consent link URL : http://www.my-planner/consent_confimramtion.html</p>
+  //   <p class="pt-10 ">Feel free to get back to us if you have any questions</p>
+  //   <i class="material-icons">
+  //   more_horiz</i>
   displayedColumns2: string[] = ['position', 'investorName', 'policyName', 'currentValue', 'sumAssured', 'premium', 'advice', 'astatus', 'adate', 'view', 'actions'];
   displayedColumns: string[] = ['position', 'investorName', 'schemeDetails', 'currentValue', 'notionalGain', 'expDate', 'advice', 'astatus', 'adate', 'view', 'actions'];
   dataSource = new MatTableDataSource([{}, {}, {}]);
@@ -283,19 +283,15 @@ export class EmailConsentComponent implements OnInit {
     const para = document.getElementById('templateEmail');
     console.log(para.innerHTML)
     this.toEmail = (this.clientData.emailList ? this.clientData.emailList[0].email : '')
-    const emailRequestData = {
-      messageBody: 'This is your consent',
+    const obj = {
+      messageBody: 'Dear ' + this.clientData.name + 'Here is your consent',
       emailSubject: 'Email advice request for consent ',
       fromEmail: this.fromEmail,
       toEmail: [{ emailAddress: this.toEmail }, { emailAddress: this.fromEmail }],
-      documentList: [{ "id": 1029, "clientName": "Sarvesh H  Shinde", "documentName": "QUO-12", "planName": "This is a Basic plan", documentText: 'Hiiii Gayatri', "planId": 224 }],
-      "document_id": 1029,
-      attachmentName: 'Consent',
-      subscriptionFooter: true,
-      "quotation": true,
+      documentList: [{ docText: para.innerHTML, documentName: 'Consent' }],
     };
     // this.utilService.htmlToPdf(null, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true);
-    this.subscription.sendDocumentViaEmailInPdfFormat(emailRequestData).subscribe(
+    this.subscription.sendInvoiceEmail(obj).subscribe(
       data => {
         console.log(data)
       }, err => {
