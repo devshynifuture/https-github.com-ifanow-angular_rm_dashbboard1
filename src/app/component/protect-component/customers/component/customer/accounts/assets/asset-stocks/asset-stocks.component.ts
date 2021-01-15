@@ -19,6 +19,7 @@ import { StockPdfService } from 'src/app/services/stock-pdf.service';
 import * as Highcharts from 'highcharts';
 import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -61,7 +62,8 @@ export class AssetStocksComponent implements OnInit {
   stockCapabilityList: any = {};
   constructor(private ref: ChangeDetectorRef, public dialog: MatDialog, private backOfficeService: BackOfficeService, public UtilService: UtilService, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
     private cusService: CustomerService, private eventService: EventService, private stockPDF: StockPdfService,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   ngOnInit() {
@@ -444,6 +446,8 @@ export class AssetStocksComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deleteStockData(deleteArry).subscribe(
           data => {
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'STOCKS' })
             dialogRef.close();

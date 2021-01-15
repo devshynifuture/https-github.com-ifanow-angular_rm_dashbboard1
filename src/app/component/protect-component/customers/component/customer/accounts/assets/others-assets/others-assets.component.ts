@@ -16,6 +16,7 @@ import { AssetValidationService } from '../asset-validation.service';
 import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AddOthersAssetComponent } from './add-others-asset/add-others-asset.component';
 import { DetailedViewOthersAssetComponent } from './detailed-view-others-asset/detailed-view-others-asset.component';
+import { CustomerOverviewService } from '../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-others-assets',
@@ -55,7 +56,8 @@ export class OthersAssetsComponent implements OnInit {
     private fileUpload: FileUploadServiceService,
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef) {
+    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef,
+    private customerOverview: CustomerOverviewService) {
   }
 
   ngOnInit() {
@@ -211,6 +213,8 @@ export class OthersAssetsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'otherAsset' })
             // this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             // this.dataList.totalCurrentValue -= element.marketValue;

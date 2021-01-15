@@ -27,6 +27,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 
 @Component({
@@ -224,7 +225,8 @@ export class RetirementAccountComponent implements OnInit {
     public utils: UtilService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private assetValidation: AssetValidationService,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -583,7 +585,8 @@ export class RetirementAccountComponent implements OnInit {
             data => {
               dialogRef.close();
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
-
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               // this.getListEPF();
               this.epfDatalist.assetList = this.epfDatalist.assetList.filter(x => x.id != element.id);
               // this.dataSource.data = this.epfDatalist.assetList;
@@ -601,7 +604,8 @@ export class RetirementAccountComponent implements OnInit {
           this.custumService.deleteNPS(element.id).subscribe(
             data => {
               dialogRef.close(); this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
-
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               // this.getListNPS();
               this.npsDatalist.assetList = this.npsDatalist.assetList.filter(x => x.id != element.id);
               this.npsDatalist.sumOfAmountInvested -= element.totalAmountInvested;
@@ -616,7 +620,8 @@ export class RetirementAccountComponent implements OnInit {
           this.custumService.deleteGratuity(element.id).subscribe(
             data => {
               dialogRef.close(); this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
-
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               // this.getListGratuity();
               this.gratuityDatalist.assetList = this.gratuityDatalist.assetList.filter(x => x.id != element.id);
               this.gratuityDatalist.sumOfAmountReceived -= element.amountReceived;

@@ -10,6 +10,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-cash-in-hand',
@@ -56,7 +57,8 @@ export class CashInHandComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   constructor(private fb: FormBuilder, private custumService: CustomerService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService,
-    private assetValidation: AssetValidationService) {
+    private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -356,12 +358,16 @@ export class CashInHandComponent implements OnInit {
   }
   getAdviceCashInHandRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
 
   }
   addCashInHandRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'cashAndBank' })
     console.log('addrecuringDepositRes', data);
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: 2, refreshRequired: true });

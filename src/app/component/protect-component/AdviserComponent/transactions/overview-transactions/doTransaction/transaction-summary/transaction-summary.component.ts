@@ -63,7 +63,7 @@ export class TransactionSummaryComponent implements OnInit {
   @Output() folioChange = new EventEmitter();
 
   @Input() set data(data) {
-    this.advisorId = AuthService.getAdvisorId();
+    this.advisorId = AuthService.getAdminAdvisorId();
     this.inputData = data;
     this.transactionSummary = data;
     this.getDefaultDetails(this.transactionSummary.aggregatorType);

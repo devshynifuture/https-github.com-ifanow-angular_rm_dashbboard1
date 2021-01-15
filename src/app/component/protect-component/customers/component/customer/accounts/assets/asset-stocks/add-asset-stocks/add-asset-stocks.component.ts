@@ -13,6 +13,7 @@ import { ClientDematComponent } from 'src/app/component/protect-component/People
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 import { Subscription } from 'rxjs';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -50,7 +51,7 @@ export class AddAssetStocksComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   private unSubcripBank: Subscription;
   private unSubcripDemat: Subscription;
-  constructor(private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService, private enumService: EnumServiceService, public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private customerOverview: CustomerOverviewService, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService, private enumService: EnumServiceService, public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -450,6 +451,8 @@ export class AddAssetStocksComponent implements OnInit {
   }
   submitStockDataRes(data) {
     console.log(data)
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     // this.eventService.openSnackBar()
     this.close();
   }
