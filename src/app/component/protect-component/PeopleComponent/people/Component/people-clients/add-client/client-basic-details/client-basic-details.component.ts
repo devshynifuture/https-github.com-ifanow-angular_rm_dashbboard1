@@ -18,6 +18,7 @@ import { UnmapPopupComponent } from './unmap-popup/unmap-popup.component';
 import { MoveFamilymemberToClientComponent } from './move-familymember-to-client/move-familymember-to-client.component';
 import { DashboardService } from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { LeadsClientsComponent } from '../../../people-leads/leads-clients/leads-clients.component';
 
 const moment = require('moment');
 
@@ -676,6 +677,10 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
               data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
               this.changeTabAndSendData(data);
             } else {
+              if (this.tempBasicData.panInvalid) {
+                this.Open('clientcovertLead', data)
+                return;
+              }
               this.close(data);
             }
           },
@@ -1059,5 +1064,25 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     };
     this.subInjectService.changeNewRightSliderState(fragmentData);
   }
+
+  Open(value, data) {
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: LeadsClientsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
 
 }
