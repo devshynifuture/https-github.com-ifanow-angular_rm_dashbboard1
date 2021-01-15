@@ -104,6 +104,11 @@ export const appConfig = {
   PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE: 'mutual-fund/unmap/investor-detail/update',
   GET_MUTUAL_FUND_SIP_CLEANUP_LIST: 'mutual-fund/sip-cleanup/list/get',
   PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',
+  GET_SIP_WIZARD_COUNT: 'backoffice/sip-wizard/total-sip-count/get',
+  RUN_WIZARD: 'backoffice/sip-wizard/run',
+  PREVIOUS_WIZARD_LOG: 'backoffice/sip-wizard/history/get',
+  CURRENT_WIZARD_LOG: 'backoffice/sip-wizard/latest-log/get',
+  REFRESH_WIZARD: 'backoffice/sip-wizard-log/refresh',
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
