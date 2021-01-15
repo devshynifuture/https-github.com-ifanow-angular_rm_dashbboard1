@@ -16,6 +16,7 @@ import { CashAndBankComponent } from './cash&bank/cash-and-bank/cash-and-bank.co
 import { CommoditiesComponent } from './commodities/commodities/commodities.component';
 import { OthersAssetsComponent } from './others-assets/others-assets.component';
 import { AssetsGuard } from './assets.guard';
+import { SovereignGoldBondsComponent } from './sovereign-gold-bonds/sovereign-gold-bonds.component';
 
 
 const routes: Routes = [
@@ -52,6 +53,9 @@ const routes: Routes = [
       },
       {
         path: 'others', component: OthersAssetsComponent,
+      },
+      {
+        path: 'sgb', component: SovereignGoldBondsComponent,
       },
       {
         path: '',

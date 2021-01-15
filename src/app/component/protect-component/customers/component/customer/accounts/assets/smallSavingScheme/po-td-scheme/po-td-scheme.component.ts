@@ -16,6 +16,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-po-td-scheme',
@@ -68,7 +69,8 @@ export class PoTdSchemeComponent implements OnInit {
     private assetValidation: AssetValidationService,
     private _bottomSheet: MatBottomSheet,
     private subInjectService: SubscriptionInject,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -238,7 +240,8 @@ export class PoTdSchemeComponent implements OnInit {
             this.dataList.sumOfCurrentValue += element.currentValue;
             this.dataList.sumOfAmountInvested += element.amountInvested;
             this.dataList.sumOfMaturityValue += element.maturityValue;
-
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.getPoTdSchemedataResponse(this.dataList);
           },
           error => this.eventService.showErrorMessage(error)

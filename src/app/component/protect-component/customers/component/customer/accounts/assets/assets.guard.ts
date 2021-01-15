@@ -40,6 +40,9 @@ export class AssetsGuard implements CanActivateChild {
     if (state.url === '/customer/detail/account/assets/others') {
       return true;
     }
+    if (state.url === '/customer/detail/account/assets/sgb') {
+      return true;
+    }
     else {
       this.router.navigate(['unauthorized'])
       return false;

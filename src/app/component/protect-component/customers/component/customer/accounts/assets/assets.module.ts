@@ -37,6 +37,9 @@ import { MfCapitalDetailedComponent } from './mutual-fund/mutual-fund/mf-capital
 import { StockTransactionDetailsComponent } from './asset-stocks/stock-transaction-details/stock-transaction-details.component';
 import { StockHoldingDetailsComponent } from './asset-stocks/stock-holding-details/stock-holding-details.component';
 import { OthersAssetsComponent } from './others-assets/others-assets.component';
+import { SovereignGoldBondsComponent } from './sovereign-gold-bonds/sovereign-gold-bonds.component';
+import { AddSovereignGoldBondsComponent } from './sovereign-gold-bonds/add-sovereign-gold-bonds/add-sovereign-gold-bonds.component';
+import { DetailedViewSovereignGoldBondsComponent } from './sovereign-gold-bonds/detailed-view-sovereign-gold-bonds/detailed-view-sovereign-gold-bonds.component';
 
 
 // import { StockDetailsViewComponent } from './stock-details-view/stock-details-view.component';
@@ -70,6 +73,9 @@ import { OthersAssetsComponent } from './others-assets/others-assets.component';
     PoMisSchemeComponent,
     MfCapitalDetailedComponent,
     OthersAssetsComponent,
+    SovereignGoldBondsComponent,
+    AddSovereignGoldBondsComponent,
+    DetailedViewSovereignGoldBondsComponent,
 
 
 

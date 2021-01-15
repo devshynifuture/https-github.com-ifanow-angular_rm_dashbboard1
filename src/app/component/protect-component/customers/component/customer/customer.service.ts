@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {UtilService} from '../../../../../services/util.service';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { UtilService } from '../../../../../services/util.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,25 +33,25 @@ export class CustomerService {
   }
 
   deleteOtherInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE+ 'otherInsuranceId=' + data, '');
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE + 'otherInsuranceId=' + data, '');
   }
   getOtherInsurance(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHER_INSURANCE, httpParams);
   }
   deleteOtherAddonInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_ADDON+ 'otherInsuranceAddOnId=' + data, '');
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_ADDON + 'otherInsuranceAddOnId=' + data, '');
   }
   deleteNomineeonInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_NOMINEE+ 'otherInsuranceNomineeId=' + data, '');
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_NOMINEE + 'otherInsuranceNomineeId=' + data, '');
   }
 
   deleteOtherFeatureInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_FEATURE+ 'otherInsuranceFeatureId=' + data, '');
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_FEATURE + 'otherInsuranceFeatureId=' + data, '');
   }
 
   deleteOtherMemberInsurance(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_MEMBER+ 'otherInsuranceMemberId=' + data, '');
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_MEMBER + 'otherInsuranceMemberId=' + data, '');
   }
 
   addFixedDeposit(data) {
@@ -164,6 +164,11 @@ export class CustomerService {
   }
 
   getSmallSavingSchemePPFData(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PPF, httpParams);
+  }
+
+  getGoldBondsData(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PPF, httpParams);
   }

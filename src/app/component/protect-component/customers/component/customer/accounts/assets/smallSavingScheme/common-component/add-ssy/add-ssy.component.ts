@@ -12,6 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-add-ssy',
@@ -29,7 +30,8 @@ export class AddSsyComponent implements OnInit {
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private datePipe: DatePipe,
     public dialog: MatDialog, private enumService: EnumServiceService,
-    private assetValidation: AssetValidationService) {
+    private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -545,6 +547,8 @@ export class AddSsyComponent implements OnInit {
 
   addSSYSchemeResponse(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")
     } else {

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {AbstractControl, ValidationErrors} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,7 @@ export class AssetValidationService {
   otherDataList: any;
   otherAssetsList: any;
   stockDataList: any;
+  goldBondList: any;
   private assetCount = new BehaviorSubject<any>({});
   assetCountObserver = this.assetCount.asObservable();
 
