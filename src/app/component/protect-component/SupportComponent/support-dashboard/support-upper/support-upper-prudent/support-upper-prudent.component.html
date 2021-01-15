@@ -81,7 +81,7 @@
             <ng-container matColumnDef="schemeName">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
                 <td class="b-a matInputClass" mat-cell *matCellDef="let element">
-                    <mat-form-field *ngIf="isMapped != true" appearance="standard" floatLabel="never">
+                    <mat-form-field *ngIf="isMapped == false" appearance="standard" floatLabel="never">
                         <input class="form-control" matInput placeholder="Search"
                             (focus)="showSuggestionsBasedOnSchemeName(element)" aria-label="State"
                             [matAutocomplete]="auto" [formControl]="schemeControl">
