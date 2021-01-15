@@ -451,18 +451,20 @@
                                             <table style="width:100%">
                                                 <tr>
                                                     <th>Policy name</th>
-                                                    <th>Sum assured </th>
-                                                    <th>Annual premium</th>
+                                                    <th class="text-right">Sum assured </th>
+                                                    <th class="text-right">Annual premium</th>
                                                     <th>Advice</th>
                                                 </tr>
                                                 <tr>
                                                     <td>{{element?.childAsset?.policyName ? element?.childAsset?.policyName : element?.childAsset?.insurerName}}
                                                     </td>
-                                                    <td>{{!isLoadingPlan || element?.childAsset?.sumAssured || element?.childAsset?.sumInsuredIdv? "₹" : ""}}<span
+                                                    <td class="text-right">
+                                                        {{!isLoadingPlan || element?.childAsset?.sumAssured || element?.childAsset?.sumInsuredIdv? "₹" : ""}}<span
                                                             appFormatNumber>
                                                             {{element?.childAsset?.sumAssured ? element?.childAsset?.sumAssured : element?.childAsset?.sumInsuredIdv }}
                                                         </span></td>
-                                                    <td>{{!isLoadingPlan || element?.childAsset?.premiumAmount ? "₹" : ""}}<span
+                                                    <td class="text-right">
+                                                        {{!isLoadingPlan || element?.childAsset?.premiumAmount ? "₹" : ""}}<span
                                                             appFormatNumber>
                                                             {{element?.childAsset?.premiumAmount}} </span></td>
                                                     <td> {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
