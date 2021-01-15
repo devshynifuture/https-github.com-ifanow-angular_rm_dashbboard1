@@ -47,7 +47,7 @@ export class MisMfTransactionsComponent implements OnInit {
   rangesFooter;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  displayedColumns: string[] = ['name', 'scheme', 'folio','unit','Amount' ,'tType', 'tDate'];
+  displayedColumns: string[] = ['name', 'scheme', 'folio', 'unit', 'Amount', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
   isLoading: boolean;
@@ -260,7 +260,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
-    if (this.obj.end = "Invalid date") {
+    if (this.obj.end == "Invalid date") {
       this.obj.end = null
       this.obj.begin = null
     } else if (this.obj.end != {} || this.obj.begin != {}) {
@@ -322,7 +322,7 @@ export class MisMfTransactionsComponent implements OnInit {
         console.log(res);
         if (res) {
           this.isLoading = false
-          this.mfTransaction =new MatTableDataSource(res) 
+          this.mfTransaction = new MatTableDataSource(res)
           this.mfTransaction.sort = this.sort
         } else {
           this.isLoading = false
