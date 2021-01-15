@@ -66,7 +66,7 @@ export class MisMfTransactionsComponent implements OnInit {
     { name: 'LIQUID', id: 5, filterType: 'category' }
   ];
   dateChips = [
-    { name: 'Transaction date', value: 1 },
+    { name: 'Last one month', value: 1 }, { name: 'Last three month', value: 2 }, { name: 'Last six month', value: 3 }, { name: 'Last year', value: 4 }
   ];
   transactionTypeChips = [
   ];
@@ -161,6 +161,8 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   addFiltersDate(dateFilter) {
+    let selectedVal = dateFilter.value.value;
+    let beginDate;
     this.filterDate = [];
     this.dateFilterAdded = true
     if (this.filterDate.length >= 1) {
@@ -169,8 +171,17 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterDataArr = [];
     let filterValue = dateFilter.value;
     this.filterDate.push((filterValue.value == 1) ? 1 : (filterValue.value == 2) ? 2 : 3);
-    const beginDate = new Date();
-    beginDate.setMonth(beginDate.getMonth() - 1);
+    const date = new Date();
+    if (selectedVal == 1) {
+      beginDate = date.setMonth(date.getMonth() - 1);
+    } else if (selectedVal == 2) {
+      beginDate = date.setMonth(date.getMonth() - 3);
+    } else if (selectedVal == 3) {
+      beginDate = date.setMonth(date.getMonth() - 6);
+    } else {
+      beginDate = date.setMonth(date.getMonth() - 12);
+    }
+    beginDate = new Date(beginDate);
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
