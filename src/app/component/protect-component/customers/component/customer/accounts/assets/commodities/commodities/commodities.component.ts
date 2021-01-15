@@ -18,6 +18,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-commodities',
@@ -74,7 +75,8 @@ export class CommoditiesComponent implements OnInit {
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService, private ref: ChangeDetectorRef,
-    public roleService: RoleService) { }
+    public roleService: RoleService, private customerOverview: CustomerOverviewService) { }
+
   ngOnInit() {
     this.commoditiesCapability = this.roleService.portfolioPermission.subModule.assets.subModule.commodities.capabilityList
     this.reportDate = new Date();
@@ -242,6 +244,8 @@ export class CommoditiesComponent implements OnInit {
           this.custumService.deleteGold(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
               this.goldDataList.assetList = this.goldDataList.assetList.filter(x => x.id != element.id);
               this.goldList.data = this.goldDataList.assetList;
@@ -253,6 +257,8 @@ export class CommoditiesComponent implements OnInit {
           this.custumService.deleteOther(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
               this.otherDataList.assetList = this.otherDataList.assetList.filter(x => x.id != element.id);
               this.otherCommodityList.data = this.otherDataList.assetList;

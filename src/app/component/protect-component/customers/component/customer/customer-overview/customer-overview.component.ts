@@ -7,6 +7,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { MfServiceService } from '../accounts/assets/mutual-fund/mf-service.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from './customer-overview.service';
 
 @Component({
   selector: 'app-customer-overview',
@@ -24,7 +25,8 @@ export class CustomerOverviewComponent implements OnInit {
   constructor(private MfServiceService: MfServiceService, public authService: AuthService, private router: Router,
     private eventService: EventService, public routingStateService: RoutingState,
     private peopleService: PeopleService, public subInjectService: SubscriptionInject,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.subInjectService.singleProfileData.subscribe(
       data => {
         if (typeof data === 'string') {
@@ -106,6 +108,7 @@ export class CustomerOverviewComponent implements OnInit {
 
   goToAdvisorHome() {
     this.showRouter = false;
+    this.customerOverview.clearServiceData();
     setTimeout(() => {
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');

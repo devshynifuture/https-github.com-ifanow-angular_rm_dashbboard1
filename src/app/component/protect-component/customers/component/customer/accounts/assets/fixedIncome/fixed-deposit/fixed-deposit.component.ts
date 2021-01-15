@@ -16,6 +16,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 
 @Component({
@@ -119,7 +120,8 @@ export class FixedDepositComponent implements OnInit {
   constructor(public utils: UtilService, public dialog: MatDialog, private event: EventService, private router: Router,
     private fb: FormBuilder, private custumService: CustomerService, private enumService: EnumServiceService,
     public subInjectService: SubscriptionInject, private datePipe: DatePipe, public activityService: ActiityService,
-    private assetValidation: AssetValidationService) {
+    private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -681,11 +683,15 @@ export class FixedDepositComponent implements OnInit {
     this.assetValidation.addAssetCount({ type: 'Add', value: 'fixedIncome' })
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }
 
   editFixedDepositRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
   }

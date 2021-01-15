@@ -21,6 +21,7 @@ import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { Subscription } from 'rxjs';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-cash-and-bank',
   templateUrl: './cash-and-bank.component.html',
@@ -69,7 +70,8 @@ export class CashAndBankComponent implements OnInit {
     private custumService: CustomerService, private eventService: EventService, private enumDataService: EnumDataService,
     public utils: UtilService, public dialog: MatDialog, private assetValidation: AssetValidationService,
     private _bottomSheet: MatBottomSheet,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -275,6 +277,8 @@ export class CashAndBankComponent implements OnInit {
           this.custumService.deleteBankAccount(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'cashAndBank' })
               this.bankDataList = this.bankDataList.filter(x => x.id != element.id);
               this.bankAccountList.data = this.bankDataList;
@@ -286,6 +290,8 @@ export class CashAndBankComponent implements OnInit {
           this.custumService.deleteCashInHand(element.id).subscribe(
             data => {
               dialogRef.close();
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'cashAndBank' })
               this.cashDataList = this.cashDataList.filter(x => x.id != element.id);
               this.cashInHandList.data = this.cashDataList;
