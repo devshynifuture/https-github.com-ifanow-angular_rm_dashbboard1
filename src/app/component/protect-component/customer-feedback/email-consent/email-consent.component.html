@@ -359,8 +359,10 @@
 <!-- -------------------- pdf ---------------------------- -->
 
 <div id="templateEmail" class="hide">
+    <html>
+    <meta charset="UTF-8">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
-        <tr>
+        <!-- <tr>
             <td>
                 <table style="width: 100%;">
                     <tr>
@@ -375,7 +377,7 @@
                     </tr>
                 </table>
             </td>
-        </tr>
+        </tr> -->
 
         <tr>
             <td>
@@ -409,9 +411,6 @@
                         <th
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Applicable date </th>
-                        <th
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
-                            View </th>
                         <th
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Status </th>
@@ -485,21 +484,16 @@
                                 {{element?.advice?.applicableDate ? (element?.advice?.applicableDate | date:'dd/MM/yyyy') : '-'}}
                             </span>
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
-                            appFormatNumber>
-                            <span *ngIf="!isLoading" (click)="openDialog(element)"><i
-                                    class="material-icons c-p">reorder</i></span>
-                        </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <div class="d-flex align-items-center" *ngIf="!isLoading">
 
-                                <button *ngIf="!isLoading" class="mat-button mr-12"
-                                    [ngClass]="{'mat-stroked-accepted': element.acceptedOrDeclined==1,'mat-accepted-bg':(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2)}"
+                                <button *ngIf="!isLoading" class="mr-12"
+                                    [ngStyle]="(element.acceptedOrDeclined==1) ? {'background': '#008FFF', 'color': '#ffffff'} : (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2) ? {'border': '1px solid #008FFF', 'color': '#008FFF'} : {}"
                                     (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
 
-                                <button *ngIf="!isLoading" class="mat-button"
-                                    [ngClass]="{'mat-stroked-danger': (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1),'mat-danger-bg':element.acceptedOrDeclined==2}"
+                                <button *ngIf="!isLoading"
+                                    [ngStyle]="(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1) ? {'border': '1px solid #f16724', 'color': '#f16724'} : (element.acceptedOrDeclined==2) ? {'background': '#f16724', 'color': '#ffffff'} :{}"
                                     (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
                             </div>
                         </td>
@@ -536,9 +530,6 @@
                         <th
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Applicable date </th>
-                        <th
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
-                            View </th>
                         <th
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Status </th>
@@ -614,21 +605,24 @@
                                 {{element?.advice?.applicableDate ? (element?.advice?.applicableDate | date:'dd/MM/yyyy') : '-'}}
                             </span>
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
-                            appFormatNumber>
-                            <span *ngIf="!isLoading" (click)="openDialog(element)"><i
-                                    class="material-icons c-p">reorder</i></span>
-                        </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <div class="d-flex align-items-center" *ngIf="!isLoading">
 
-                                <button *ngIf="!isLoading" class="mat-button mr-12"
-                                    [ngClass]="{'mat-stroked-accepted': element.acceptedOrDeclined==1,'mat-accepted-bg':(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2)}"
+                                <!-- <button *ngIf="!isLoading" class="mat-button mr-12"
+                                    [ngStyle]="{'mat-stroked-accepted': element.acceptedOrDeclined==1,'mat-accepted-bg':(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2)}"
                                     (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
 
                                 <button *ngIf="!isLoading" class="mat-button"
-                                    [ngClass]="{'mat-stroked-danger': (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1),'mat-danger-bg':element.acceptedOrDeclined==2}"
+                                    [ngStyle]="{'mat-stroked-danger': (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1),'mat-danger-bg':element.acceptedOrDeclined==2}"
+                                    (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button> -->
+
+                                <button *ngIf="!isLoading" class="mr-12"
+                                    [ngStyle]="(element.acceptedOrDeclined==1) ? {'background': '#008FFF', 'color': '#ffffff'} : (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2) ? {'border': '1px solid #008FFF', 'color': '#008FFF'} : {}"
+                                    (click)="acceptOrDeclineConsent(element, i, 1)">ACCEPTED</button>
+
+                                <button *ngIf="!isLoading"
+                                    [ngStyle]="(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1) ? {'border': '1px solid #f16724', 'color': '#f16724'} : (element.acceptedOrDeclined==2) ? {'background': '#f16724', 'color': '#ffffff'} :{}"
                                     (click)="acceptOrDeclineConsent(element,i, 2)">DECLINE</button>
                             </div>
                         </td>
@@ -652,7 +646,7 @@
             </td>
         </tr>
 
-        <tr>
+        <!-- <tr>
             <td>
                 <table style="width: 100%;">
                     <tr>
@@ -665,8 +659,10 @@
                     </tr>
                 </table>
             </td>
-        </tr>
+        </tr> -->
 
 
     </table>
+
+    </html>
 </div>
