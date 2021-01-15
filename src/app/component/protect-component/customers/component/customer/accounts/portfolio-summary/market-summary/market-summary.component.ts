@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { PortfolioSummaryService } from '../portfolio-summary.service';
 
 @Component({
   selector: 'app-market-summary',
@@ -21,14 +22,38 @@ export class MarketSummaryComponent implements OnInit {
   bse: any = {};
   nifty50: any = {};
   isLoading: boolean = true;
+  stockData: any;
 
-  constructor(private cusService: CustomerService) {
+  constructor(private cusService: CustomerService,
+    private portfolioSummaryService: PortfolioSummaryService) {
   }
 
   ngOnInit() {
-    this.getStockFeeds();
-    this.getDeptData();
-    this.getNifty500Data();
+    if (!this.portfolioSummaryService.marketSummaryDept) {
+      this.getDeptData();
+    } else {
+      this.deptDataFlag = false;
+      this.deptData = this.portfolioSummaryService.marketSummaryDept;
+      this.loaderFun();
+    }
+    if (!this.portfolioSummaryService.marketSummaryNifty) {
+      this.getNifty500Data();
+    } else {
+      this.nifty500DataFlag = false;
+      this.nifty500Data =
+        this.portfolioSummaryService.marketSummaryNifty;
+      this.loaderFun();
+    }
+    if (!this.portfolioSummaryService.marketSummaryStocks) {
+      this.getStockFeeds();
+    } else {
+      this.getStockFeedsResponse(this.portfolioSummaryService.marketSummaryStocks);
+      // this.loaderFun();
+      this.selectedVal = 'Equities';
+    }
+    // this.getStockFeeds();
+    // this.getDeptData();
+    // this.getNifty500Data();
   }
 
   getStockFeeds() {
@@ -36,9 +61,8 @@ export class MarketSummaryComponent implements OnInit {
     this.StockFeedFlag = true;
     this.cusService.getStockFeeds().subscribe(
       data => {
-        this.StockFeedFlag = false;
-        this.loaderFun()
         console.log(data);
+        this.portfolioSummaryService.marketSummaryStocks = Object.assign({}, data);
         this.getStockFeedsResponse(data);
       }, error => {
         console.log('get stockfeed error : ', error);
@@ -50,15 +74,17 @@ export class MarketSummaryComponent implements OnInit {
     this.deptDataFlag = true;
     this.cusService.getDeptData().subscribe(
       data => {
-        console.log(data);
-        this.deptDataFlag = false;
-        this.loaderFun()
-        if (data) {
-          data.current_value = Math.round(data.current_value.replace(',', ''));
-          this.deptData = data;
-          this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage);
-          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage);
-        }
+        // console.log(data);
+        // this.deptDataFlag = false;
+        // this.loaderFun()
+        // if (data) {
+        //   data.current_value = Math.round(data.current_value.replace(',', ''));
+        //   this.deptData = data;
+        //   this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage);
+        //   data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage);
+
+        // }
+        this.getDeptResonse(data);
       }, error => {
         console.log('get DeptData error : ', error);
         this.deptDataFlag = false;
@@ -69,6 +95,10 @@ export class MarketSummaryComponent implements OnInit {
 
   getStockFeedsResponse(data) {
     //   this.StockFeedFlag = false;
+    this.stockData = data;
+    this.portfolioSummaryService.marketSummaryStocks = data;
+    this.StockFeedFlag = false;
+    this.loaderFun()
     let { bse_and_nse, carat_22, carat_24, silver } = data;
     if (bse_and_nse) {
       const regex = /\=/gi;
@@ -109,18 +139,35 @@ export class MarketSummaryComponent implements OnInit {
     this.silverData = silver;
   }
 
+  getDeptResonse(data) {
+    this.deptDataFlag = false;
+    this.loaderFun()
+    if (data) {
+      data.current_value = Math.round(data.current_value.replace(',', ''));
+      this.deptData = data;
+      this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage);
+      data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage);
+      this.portfolioSummaryService.marketSummaryDept = data;
+    }
+  }
+
+  getNiftyResponse(data) {
+    this.nifty500DataFlag = false;
+    this.loaderFun()
+    console.log(data);
+    if (data) {
+      data.current_value = Math.round(data.current_value.replace(',', ''));
+      data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''));
+      this.nifty500Data = data;
+      this.portfolioSummaryService.marketSummaryNifty = data;
+    }
+  }
+
   getNifty500Data() {
     this.nifty500DataFlag = true;
     this.cusService.getNiftyData().subscribe(
       data => {
-        this.nifty500DataFlag = false;
-        this.loaderFun()
-        console.log(data);
-        if (data) {
-          data.current_value = Math.round(data.current_value.replace(',', ''));
-          data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''));
-          this.nifty500Data = data;
-        }
+        this.getNiftyResponse(data)
       }, error => {
         console.log('get getNifty500Data error : ', error);
         this.nifty500DataFlag = false;

@@ -13,6 +13,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-bonds',
@@ -69,7 +70,8 @@ export class BondsComponent implements OnInit {
   bankList: any = [];
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
-  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService) {
+  constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -448,6 +450,8 @@ export class BondsComponent implements OnInit {
   addBondsRes(data) {
     console.log('addbondsRes', data);
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'fixedIncome' })
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
@@ -456,6 +460,8 @@ export class BondsComponent implements OnInit {
 
   editBondsRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 

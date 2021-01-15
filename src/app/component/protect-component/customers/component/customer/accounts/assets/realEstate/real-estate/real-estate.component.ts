@@ -17,6 +17,7 @@ import { EnumServiceService } from '../../../../../../../../../services/enum-ser
 import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -63,7 +64,8 @@ export class RealEstateComponent implements OnInit {
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   ngOnInit() {
@@ -217,7 +219,8 @@ export class RealEstateComponent implements OnInit {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'real_estate' })
-
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfMarketValue -= element.marketValue;
             // this.dataList.sumOfPurchaseValue += element.amountInvested;

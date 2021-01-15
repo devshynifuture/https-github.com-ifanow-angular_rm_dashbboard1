@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-add-others-asset',
@@ -79,7 +80,8 @@ export class AddOthersAssetComponent implements OnInit {
     private assetValidation: AssetValidationService,
     private fb: FormBuilder, public custmService: CustomerService,
     public eventService: EventService, public utils: UtilService,
-    public enumService: EnumServiceService) {
+    public enumService: EnumServiceService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -687,6 +689,8 @@ export class AddOthersAssetComponent implements OnInit {
   addOthersAssetsRes(data) {
     console.log(data);
     if (data) {
+      this.customerOverview.portFolioData = null;
+      this.customerOverview.assetAllocationChart = null;
       console.log(data);
       this.assetValidation.addAssetCount({ type: 'Add', value: 'otherAsset' })
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
@@ -703,6 +707,8 @@ export class AddOthersAssetComponent implements OnInit {
     console.log(data);
     if (data) {
       console.log(data);
+      this.customerOverview.portFolioData = null;
+      this.customerOverview.assetAllocationChart = null;
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Updated successfully!', 'OK');
     } else {

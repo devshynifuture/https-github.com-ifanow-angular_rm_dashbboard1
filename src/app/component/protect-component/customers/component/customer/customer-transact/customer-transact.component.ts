@@ -6,6 +6,7 @@ import { EnumDataService } from '../../../../../../services/enum-data.service';
 import { Router } from '@angular/router';
 import { NgZone } from '@angular/core/src/metadata/*';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-customer-transact',
@@ -20,7 +21,8 @@ export class CustomerTransactComponent implements OnInit {
 
   constructor(private eventService: EventService, private enumDataService: EnumDataService, private router: Router, private ngZone: NgZone,
     public routingStateService: RoutingState, public authService: AuthService,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.eventService.tabChangeData.subscribe(
       data => this.getTabChangeData(data)
     );
@@ -52,6 +54,7 @@ export class CustomerTransactComponent implements OnInit {
 
   goToAdvisorHome() {
     this.showRouter = false;
+    this.customerOverview.clearServiceData();
     setTimeout(() => {
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');

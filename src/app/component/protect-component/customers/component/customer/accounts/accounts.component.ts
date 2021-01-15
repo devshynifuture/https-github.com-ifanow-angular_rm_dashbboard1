@@ -9,6 +9,7 @@ import { MfServiceService } from './assets/mutual-fund/mf-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { AssetValidationService } from './assets/asset-validation.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-accounts',
@@ -33,7 +34,8 @@ export class AccountsComponent implements OnInit {
 
   constructor(private eventService: EventService, private router: Router, private ngZone: NgZone, private assetValidation: AssetValidationService,
     public routingStateService: RoutingState, public enumService: EnumServiceService, public authService: AuthService, private MfServiceService: MfServiceService,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     // this.eventService.tabChangeData.subscribe(
     //   data => this.getTabChangeData(data)
     // );
@@ -155,6 +157,7 @@ export class AccountsComponent implements OnInit {
 
     this.showRouter = false;
     setTimeout(() => {
+      this.customerOverview.clearServiceData();
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');
       this.routingStateService.goToSpecificRoute('/admin/dashboard');

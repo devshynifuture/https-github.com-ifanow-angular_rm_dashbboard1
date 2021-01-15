@@ -11,6 +11,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumDataService } from "../../../../../../../../../services/enum-data.service";
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-add-eps',
@@ -59,7 +60,8 @@ export class AddEPSComponent implements OnInit {
   constructor(private event: EventService, private fb: FormBuilder,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
     private datePipe: DatePipe, public utils: UtilService,
-    public enumDataService: EnumDataService, private assetValidation: AssetValidationService) {
+    public enumDataService: EnumDataService, private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -385,6 +387,8 @@ export class AddEPSComponent implements OnInit {
 
   addEPSRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
@@ -393,6 +397,8 @@ export class AddEPSComponent implements OnInit {
 
   editEPSRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }
