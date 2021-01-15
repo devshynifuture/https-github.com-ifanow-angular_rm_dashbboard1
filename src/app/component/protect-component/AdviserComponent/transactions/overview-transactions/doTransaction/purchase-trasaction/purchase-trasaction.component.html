@@ -30,7 +30,7 @@
             <div class="col-md-8 pl-0 pr-20">
                 <div class="row" *ngIf="!mutualFundData">
                     <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pb-10 text-black">Select from the following options</h5>
+                        <h5 class="mb-4 text-black">Select from the following options</h5>
                         <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option"
                             class="bigRadio" formControlName="schemeSelection">
                             <mat-radio-button
@@ -48,12 +48,9 @@
                     </div>
                 </div>
                 <!-- value == 1 -->
+
                 <div class="row">
-                    <div class="col-md-12 p-0 text-left">
-                        <h5 class="m-0 pt-28 text-black ">Select a scheme to invest in</h5>
-                    </div>
-                </div>
-                <div class="row">
+                    <h5 class="m-0 text-black ">Select a scheme to invest in</h5>
                     <div class="col-md-11 p-0">
                         <div class="form-group paddTopNone">
                             <mat-form-field appearance="standard" floatLabel="never">
