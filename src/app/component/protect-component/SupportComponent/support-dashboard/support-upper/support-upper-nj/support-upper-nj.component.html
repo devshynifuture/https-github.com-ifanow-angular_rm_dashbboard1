@@ -85,7 +85,7 @@
                     <!-- <input class="form-control" matInput
                         (focus)="getFilteredSchemes()">
                          -->
-                    <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-form-field *ngIf="isMapped != true" appearance="standard" floatLabel="never">
                         <input class="form-control" matInput placeholder="Search"
                             (focus)="showSuggestionsBasedOnSchemeName(element)" aria-label="State"
                             [matAutocomplete]="auto" [formControl]="schemeControl">
@@ -101,6 +101,9 @@
                         </mat-autocomplete>
 
                     </mat-form-field>
+                    <div class="bar" *ngIf="isMapped == true">
+                        {{element.schemeName}}
+                    </div>
                     <br>
                     <ng-container *ngIf="filteredSchemeError">
                         <span class="f-12">
@@ -158,13 +161,18 @@
             </ng-container>
 
             <ng-container matColumnDef="map">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> Map </th>
+                <th class="b-a" mat-header-cell *matHeaderCellDef> {{isMapped!= false ? 'Unmap':'Map'}} </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button class="btn-primary btn-Map" mat-stroked-button [disabled]="!element.isSchemeSelected"
+                        <button *ngIf="isMapped == true" class="btn-primary btn-Map" mat-stroked-button
+                            (click)="unMapMappedNjScheme(element)">
+                            Unmap
+                        </button>
+                        <button *ngIf="isMapped == false" class="btn-primary btn-Map" mat-stroked-button
+                            [disabled]="!element.isSchemeSelected"
                             [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
                             (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedNjScheme(element):mapUnmappedNJScheme(element)):$event.preventDefault()">
-                            {{element.isMapped? 'Unmap':'Map'}}
+                            Map
                         </button>
                     </div>
                 </td>

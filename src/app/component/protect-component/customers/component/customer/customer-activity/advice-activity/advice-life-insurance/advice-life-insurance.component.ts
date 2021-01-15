@@ -38,7 +38,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-};
+  };
   displayedColumns3: string[] = ['checkbox', 'position', 'policyName', 'name', 'weight', 'symbol', 'mdate', 'advice', 'astatus', 'adate', 'icon'];
   clientId: any;
   advisorId: any;
@@ -76,7 +76,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     name: 'Motor',
     id: 4
   }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
-  constructor(private peopleService:PeopleService,public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService,private adviceUtilService : AdviceUtilsService) { }
+  constructor(private peopleService: PeopleService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService, private adviceUtilService: AdviceUtilsService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -85,9 +85,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       this.clientIdToClearStorage = res;
     });
     this.adviceUtilService.getFamilyMemberList()
-    .subscribe(res => {
-      this.familyMemberList = res;
-    })
+      .subscribe(res => {
+        this.familyMemberList = res;
+      })
     if (this.clientIdToClearStorage) {
       if (this.clientIdToClearStorage != this.clientId) {
         this.adviceUtilService.clearStorage();
@@ -95,16 +95,16 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     }
     this.adviceUtilService.setClientId(this.clientId);
     this.adviceUtilService.getStoredAdviceData()
-    .subscribe(res => {
-      this.globalObj = {};
-      if(res == ""){
-        this.globalObj ={}
-      }else{
-        this.globalObj = res;
-      }
-    });
+      .subscribe(res => {
+        this.globalObj = {};
+        if (res == "") {
+          this.globalObj = {}
+        } else {
+          this.globalObj = res;
+        }
+      });
     // if (this.chekToCallApi()) {
-      this.getAdviceByAsset();
+    this.getAdviceByAsset();
     // } else {
     //   this.getAllSchemeResponse(this.globalObj['adviceLifeInsurance']);
     //   this.displayList = this.globalObj['displayList'];
@@ -147,15 +147,15 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     const displayList = this.cusService.getInsuranceGlobalData({});
     const allAsset = this.activityService.getAllAsset(obj);
     if (!this.familyMemberList && this.familyMemberList == '') {
-      familyMemberList = this.peopleService.getClientFamilyMemberListAsset({clientId: this.clientId})
+      familyMemberList = this.peopleService.getClientFamilyMemberListAsset({ clientId: this.clientId })
     } else {
       familyMemberList = empty().pipe(defaultIfEmpty(''));
 
     }
-    forkJoin(displayList, allAsset , familyMemberList).subscribe(result => {
-      this.globalObj={
-        displayList:result[0],
-        adviceLifeInsurance:result[1]
+    forkJoin(displayList, allAsset, familyMemberList).subscribe(result => {
+      this.globalObj = {
+        displayList: result[0],
+        adviceLifeInsurance: result[1]
       }
       this.adviceUtilService.setStoredAdviceData(this.globalObj);
       this.displayList = result[0];
@@ -185,8 +185,8 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     //   }
     // );
   }
-  openDetailedView(heading,data) {
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+  openDetailedView(heading, data) {
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : 'Proposed policy'
     const sendData = {
       flag: 'detailedView',
@@ -200,8 +200,8 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       allInsurance: this.allInsurance,
       insuranceTypeId: data ? 1 : null,
       insuranceSubTypeId: data ? data.InsuranceDetails.insuranceSubTypeId : null,
-      adviceName : this.adviceName,
-      showInsurance: {heading : heading},
+      adviceName: this.adviceName,
+      showInsurance: { heading: heading },
 
 
     };
@@ -246,13 +246,13 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     this.termDataSource = new MatTableDataSource(termData);
     console.log('fddata', termData);
     // this.termDataSource.sort = this.sort
-    this.allTrad  = data.TRADITIONAL_LIFE_INSURANCE;
+    this.allTrad = data.TRADITIONAL_LIFE_INSURANCE;
     let traditionalData = this.setCatId(data.TRADITIONAL_LIFE_INSURANCE);
     this.tradCopy = traditionalData
     this.traditionalDataSource = new MatTableDataSource(traditionalData);
     console.log('rdData', traditionalData)
     // this.traditionalDataSource.sort = this.sort
-    this.allUlip  = data.ULIP_LIFE_INSURANCE;
+    this.allUlip = data.ULIP_LIFE_INSURANCE;
     let ulipData = this.setCatId(data.ULIP_LIFE_INSURANCE);
     this.ulipCpy = ulipData
     this.ulipDataSource = new MatTableDataSource(ulipData);
@@ -265,7 +265,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
   filterInsurance(key: string, value: any, name, array, dataSource) {
     let dataFiltered;
     array = (name == 'Term insurance') ? this.allTerm : (name == 'Traditional insurance') ? this.allTrad : this.allUlip;
-    if(value != 0){
+    if (value != 0) {
       dataFiltered = array.filter(function (item) {
         return item.adviceDetails[key] === parseInt(value);
       });
@@ -275,7 +275,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       } else {
         this.eventService.openSnackBar("No data found", "Dismiss")
       }
-    }else{
+    } else {
       dataSource.data = array;
     }
   }
@@ -284,10 +284,10 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     if (data.length > 0) {
       data.forEach(element => {
         element.selected = false;
-        if (element.adviceDetails.adviceStatusId == 1) {
-          element.adviceDetails.adviceToCategoryTypeMasterId = 3
-          array.push(element);
-        }
+        // if (element.adviceDetails.adviceStatusId == 1) {
+        element.adviceDetails.adviceToCategoryTypeMasterId = 3
+        array.push(element);
+        // }
       });
     }
     return array;
@@ -309,7 +309,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
 
   checkAll(flag, tableDataList, tableFlag, ) {
     console.log(flag, tableDataList)
-    const { selectedIdList, count } =   AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId,this.familyMemberList);
+    const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId, this.familyMemberList);
     this.getFlagCount(tableFlag, count)
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
@@ -341,17 +341,17 @@ export class AdviceLifeInsuranceComponent implements OnInit {
         this.activityService.deleteAdvice(deletedId).subscribe(
           data => {
             this.eventService.openSnackBar("Deleted successfully", "Dismiss")
-             if(this.globalObj && this.globalObj['adviceLifeInsurance'] && Object.keys(this.globalObj['adviceLifeInsurance']).length > 0){
-                if(value == 'Term Insurance'){
-                  this.globalObj['adviceLifeInsurance']['TERM_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['TERM_LIFE_INSURANCE'],deletedId)
-                }else if(value == 'Traditional Insurance'){
-                  this.globalObj['adviceLifeInsurance']['TRADITIONAL_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['TRADITIONAL_LIFE_INSURANCE'],deletedId)
-                }else{
-                  this.globalObj['adviceLifeInsurance']['ULIP_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['ULIP_LIFE_INSURANCE'],deletedId)
-                }
-             }
-           
-             this.getAllSchemeResponse(this.globalObj['adviceLifeInsurance']);
+            if (this.globalObj && this.globalObj['adviceLifeInsurance'] && Object.keys(this.globalObj['adviceLifeInsurance']).length > 0) {
+              if (value == 'Term Insurance') {
+                this.globalObj['adviceLifeInsurance']['TERM_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['TERM_LIFE_INSURANCE'], deletedId)
+              } else if (value == 'Traditional Insurance') {
+                this.globalObj['adviceLifeInsurance']['TRADITIONAL_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['TRADITIONAL_LIFE_INSURANCE'], deletedId)
+              } else {
+                this.globalObj['adviceLifeInsurance']['ULIP_LIFE_INSURANCE'] = this.deleteValue(this.globalObj['adviceLifeInsurance']['ULIP_LIFE_INSURANCE'], deletedId)
+              }
+            }
+
+            this.getAllSchemeResponse(this.globalObj['adviceLifeInsurance']);
             dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
@@ -374,21 +374,21 @@ export class AdviceLifeInsuranceComponent implements OnInit {
 
     });
   }
-  deleteValue(data,id){
+  deleteValue(data, id) {
     data = data.filter(d => d.adviceDetails.id != id);
     return data;
   }
   openAddEditAdvice(value, data) {
-    if(data && data.childParentRel && data.childParentRel.FICT){
+    if (data && data.childParentRel && data.childParentRel.FICT) {
       data.InsuranceDetails.familyMemberName = data.childParentRel.FICT['familyMemberName']
     }
-    if(data && data.adviceDetails){
+    if (data && data.adviceDetails) {
       data.adviceDetails.adviceAllotment = data.adviceDetails.adviceToInsuranceProperties['adviceAllotment']
     }
-    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) :this.adviceName ) :this.adviceName;
+    let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
-    this.adviceNameObj = {adviceName:this.adviceName};
-    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
+    this.adviceNameObj = { adviceName: this.adviceName };
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1, adviceToCategoryId: 1 }
     switch (value) {
       case "Term Insurance":
         this.object.insuranceSubTypeId = 1;
@@ -417,15 +417,15 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       flag: 'Advice Insurance',
       data,
       id: 1,
-      adviceNameObj:this.adviceNameObj,
+      adviceNameObj: this.adviceNameObj,
       state: 'open',
-      adviceHeaderList:this.adviceHeaderList,
+      adviceHeaderList: this.adviceHeaderList,
       componentName: SuggestAdviceComponent,
       childComponent: Component,
-      adviceToCategoryId :this.object.adviceToCategoryId,
-      adviceToCategoryTypeMasterId:3,
-      showHeaderEdit:(data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
-      childData: { adviceNameObj:this.adviceNameObj,data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance',adviceToCategoryId:this.object.adviceToCategoryId },
+      adviceToCategoryId: this.object.adviceToCategoryId,
+      adviceToCategoryTypeMasterId: 3,
+      showHeaderEdit: (data ? (data.adviceDetails ? (!data.adviceDetails.adviceId ? false : true) : false) : false),
+      childData: { adviceNameObj: this.adviceNameObj, data: data ? data.InsuranceDetails : null, displayList: this.displayList, showInsurance: this.object.showInsurance, insuranceSubTypeId: this.object.insuranceSubTypeId, insuranceTypeId: 1, flag: 'Advice Insurance', adviceToCategoryId: this.object.adviceToCategoryId },
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -443,7 +443,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     );
   }
   editAdvice(value, data) {
-    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1 , adviceToCategoryId : 1}
+    this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1, adviceToCategoryId: 1 }
     switch (value) {
       case "Term Insurance":
         this.object.insuranceSubTypeId = 1;
@@ -468,9 +468,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     // this.getCategoriId(this.object.insuranceSubTypeId);
     data ? data['adviceHeaderList'] = this.adviceHeaderList : data = { adviceHeaderList: this.adviceHeaderList };
     let Component = AddNewLifeInsComponent;
-    data['displayList']=this.displayList;
-    data['showInsurance']=this.object.showInsurance;
-    data['insuranceSubTypeId']=data.InsuranceDetails.insuranceSubTypeId;
+    data['displayList'] = this.displayList;
+    data['showInsurance'] = this.object.showInsurance;
+    data['insuranceSubTypeId'] = data.InsuranceDetails.insuranceSubTypeId;
     data['insuranceTypeId'] = 1;
     data['adviceToCategoryId'] = this.object.adviceToCategoryId;
     const fragmentData = {
@@ -479,7 +479,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
       id: 1,
       state: 'open',
       componentName: EditSuggestedAdviceComponent,
-    
+
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, AfterViewInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -18,6 +18,7 @@ import { UnmapPopupComponent } from './unmap-popup/unmap-popup.component';
 import { MoveFamilymemberToClientComponent } from './move-familymember-to-client/move-familymember-to-client.component';
 import { DashboardService } from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { LeadsClientsComponent } from '../../../people-leads/leads-clients/leads-clients.component';
 
 const moment = require('moment');
 
@@ -26,7 +27,13 @@ const moment = require('moment');
   templateUrl: './client-basic-details.component.html',
   styleUrls: ['./client-basic-details.component.scss']
 })
-export class ClientBasicDetailsComponent implements OnInit {
+export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
+  tempBasicData: any;
+  ngAfterViewInit(): void {
+    if (this.tempBasicData.panInvalid) {
+      this.eventService.openSnackBar("Please add pan before converting it to client", "Dimiss");
+    }
+  }
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & CLOSE',
@@ -106,6 +113,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.advisorData = AuthService.getUserInfo();
     this.basicDetailsData = data;
+    this.tempBasicData = data;
     this.idData = (this.fieldFlag != 'familyMember') ? this.basicDetailsData.clientId : this.basicDetailsData.familyMemberId;
     if (data.fieldFlag == 'familyMember') {
       this.valueChangeFlag = true;
@@ -291,6 +299,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.basicDetails.controls.relationType.setValidators([Validators.required]);
       this.basicDetails.controls.relationType.updateValueAndValidity();
     }
+    if (this.fieldFlag == 'lead') {
+      this.basicDetails.controls.pan.setValidators([Validators.pattern(this.validatorType.PAN)]);
+    }
     // this.basicDetails.controls.email.updateValueAndValidity();
     this.basicDetails.controls.pan.updateValueAndValidity();
     if (this.userData.userType == 2 && this.basicDetailsData.userId) {
@@ -425,6 +436,9 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.nonIndividualForm.controls.leadOwner.disable();
       this.nonIndividualForm.controls.clientOwner.disable();
       this.nonIndividualForm.controls.role.disable();
+    }
+    if (this.fieldFlag == 'lead') {
+      this.nonIndividualForm.controls.comPan.setValidators([Validators.pattern(this.validatorType.PAN)]);
     }
     this.nonIndividualForm.valueChanges.subscribe(data => {
       if (this.valueChangeFlag) {
@@ -617,6 +631,9 @@ export class ClientBasicDetailsComponent implements OnInit {
         };
       }
       if (this.basicDetailsData.userId == null) {
+        if (obj.pan == undefined || obj.pan == '' && this.fieldFlag == 'lead') {
+          obj.pan = "XXXXX1234X"
+        }
         obj.sendEmail = true;
         this.peopleService.addClient(obj).subscribe(
           data => {
@@ -636,6 +653,9 @@ export class ClientBasicDetailsComponent implements OnInit {
           }
         );
       } else {
+        if (obj.pan == undefined || obj.pan == '' && this.fieldFlag == 'lead') {
+          obj.pan = "XXXXX1234X"
+        }
         obj.bio = this.basicDetailsData.bio;
         obj.remarks = this.basicDetailsData.remarks;
         obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
@@ -657,6 +677,10 @@ export class ClientBasicDetailsComponent implements OnInit {
               data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
               this.changeTabAndSendData(data);
             } else {
+              if (this.tempBasicData.panInvalid) {
+                this.Open('clientcovertLead', data)
+                return;
+              }
               this.close(data);
             }
           },
@@ -1030,15 +1054,35 @@ export class ClientBasicDetailsComponent implements OnInit {
     });
   }
 
-  openMoveFamilymemberToClient() {
+  openMoveFamilymemberToClient(flag) {
     const fragmentData = {
-      flag: 'moveFM',
-      data: this.basicDetailsData,
+      flag: flag,
+      data: { value: this.basicDetailsData, flag: flag },
       id: 1,
       state: 'open50',
       componentName: MoveFamilymemberToClientComponent,
     };
     this.subInjectService.changeNewRightSliderState(fragmentData);
   }
+
+  Open(value, data) {
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: LeadsClientsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
 
 }

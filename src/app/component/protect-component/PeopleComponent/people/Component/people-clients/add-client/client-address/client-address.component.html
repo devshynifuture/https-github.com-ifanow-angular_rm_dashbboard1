@@ -64,10 +64,10 @@
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0 remove-top">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input placeholder="Flat/building/street" autocomplete="off" #add1 maxlength="100" matInput
+                    <input placeholder="Flat/building/street" autocomplete="off" #add1 [maxLength]="40" matInput
                         formControlName="addressLine1" class="form-control">
                     <mat-error>This field is required</mat-error>
-                    <mat-hint align="end">{{add1.value.length}}/100</mat-hint>
+                    <mat-hint align="end">{{add1.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -80,9 +80,24 @@
             <div class="form-group mb-0 remove-top">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input #placeSearch spellcheck="off" placeholder="Block/locality" autocomplete="off" #add2 matInput
-                        maxlength="100" formControlName="addressLine2" class="form-control">
+                        [maxLength]="40" formControlName="addressLine2" class="form-control">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{add2.value.length}}/40</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-44">
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">Address line 3</h5>
+        </div>
+        <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
+            <div class="form-group mb-0 remove-top">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input #placeSearch spellcheck="off" placeholder="Block/locality" autocomplete="off" #add3 matInput
+                        [maxLength]="40" formControlName="addressLine3" class="form-control">
                     <mat-hint class="ml-8">Optional</mat-hint>
-                    <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
+                    <mat-hint align="end">{{add3.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>
         </div>

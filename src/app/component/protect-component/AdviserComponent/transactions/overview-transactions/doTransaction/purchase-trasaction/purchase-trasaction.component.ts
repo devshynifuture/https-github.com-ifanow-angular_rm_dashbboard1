@@ -570,12 +570,17 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getMandateDetailsRes(data) {
-    this.acceptedMandate = []
-    this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
-    if (!this.mandateDetails || this.mandateDetails.length == 0) {
-      this.handleMandateFailure();
-      return;
+    if (data) {
+      this.acceptedMandate = []
+      this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
+      if (!this.mandateDetails || this.mandateDetails.length == 0) {
+        this.handleMandateFailure();
+        return;
+      }
+    } else {
+      this.handleMandateFailure()
     }
+
 
     this.showSpinnerMandate = false;
     if (data.length > 0) {
