@@ -17,6 +17,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-po-rd-scheme',
@@ -67,7 +68,8 @@ export class PoRdSchemeComponent implements OnInit {
     private assetValidation: AssetValidationService,
     private datePipe: DatePipe, private pdfGen: PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -227,6 +229,8 @@ export class PoRdSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePORD(element.id).subscribe(
           data => {
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);

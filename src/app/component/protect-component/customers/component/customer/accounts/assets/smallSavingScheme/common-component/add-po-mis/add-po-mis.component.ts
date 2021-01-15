@@ -13,6 +13,7 @@ import { MAT_DATE_FORMATS, MatInput, MatDialog } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-add-po-mis',
   templateUrl: './add-po-mis.component.html',
@@ -66,7 +67,8 @@ export class AddPoMisComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private assetValidation: AssetValidationService, private dateFormatPipe: DatePipe, public subInjectService: SubscriptionInject,
-    public custumService: CustomerService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) {
+    public custumService: CustomerService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input()
@@ -445,6 +447,8 @@ export class AddPoMisComponent implements OnInit {
 
   editPOMISRes(data) {
     console.log(data);
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });

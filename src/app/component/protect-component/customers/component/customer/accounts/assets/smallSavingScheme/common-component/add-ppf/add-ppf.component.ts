@@ -13,6 +13,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DatePipe } from '@angular/common';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-add-ppf',
   templateUrl: './add-ppf.component.html',
@@ -81,7 +82,8 @@ export class AddPpfComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
   dataSource: { "advisorId": any; "clientId": number; "ownerName": any; "familyMemberId": any; "accountBalance": any; "balanceAsOn": any; "commencementDate": any; "description": any; "bankName": any; "linkedBankAccount": any; "nominees": any[]; "frequency": any; "futureApproxcontribution": any; "publicprovidendfundtransactionlist": any[]; };
   constructor(public utils: UtilService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService,
-    private assetValidation: AssetValidationService) { }
+    private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) { }
 
   @Input()
   set data(data) {
@@ -591,6 +593,8 @@ export class AddPpfComponent implements OnInit {
 
   addPPFResponse(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")
     } else {

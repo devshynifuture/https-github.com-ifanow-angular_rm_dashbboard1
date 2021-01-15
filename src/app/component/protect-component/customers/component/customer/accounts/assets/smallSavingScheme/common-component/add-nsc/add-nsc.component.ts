@@ -12,6 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-add-nsc',
   templateUrl: './add-nsc.component.html',
@@ -76,7 +77,8 @@ export class AddNscComponent implements OnInit {
 
   @Input() popupHeaderText: string = 'Add National savings certificate (NSC)';
 
-  constructor(private datePipe: DatePipe, public utils: UtilService, private assetValidation: AssetValidationService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private datePipe: DatePipe, public utils: UtilService, private assetValidation: AssetValidationService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService,
+    private customerOverview: CustomerOverviewService) { }
   isOptionalField
   ngOnInit() {
     if (this.data && this.data.flag) {
@@ -457,6 +459,8 @@ export class AddNscComponent implements OnInit {
   }
   addNSCResponse(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")
     } else {

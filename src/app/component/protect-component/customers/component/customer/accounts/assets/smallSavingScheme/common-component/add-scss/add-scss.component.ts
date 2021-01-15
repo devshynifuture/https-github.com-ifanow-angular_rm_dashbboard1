@@ -12,6 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DatePipe } from '@angular/common';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-add-scss',
   templateUrl: './add-scss.component.html',
@@ -60,7 +61,8 @@ export class AddScssComponent implements OnInit {
   adviceShowHeaderAndFooter: boolean = true;
 
   constructor(private subInjectService: SubscriptionInject, private dateFormatPipe: DatePipe, private fb: FormBuilder,
-    private cusService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService) {
+    private cusService: CustomerService, private eventService: EventService, public utils: UtilService, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   ngOnInit() {
@@ -383,6 +385,8 @@ export class AddScssComponent implements OnInit {
 
   }
   addScssResponse(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")
     } else {

@@ -12,6 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DatePipe } from '@angular/common';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-add-po-saving',
   templateUrl: './add-po-saving.component.html',
@@ -60,7 +61,7 @@ export class AddPoSavingComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
 
   constructor(public utils: UtilService, private dateFormatPipe: DatePipe, private assetValidation: AssetValidationService, private fb: FormBuilder, private cusService: CustomerService,
-    private eventService: EventService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService) {
+    private eventService: EventService, private customerOverview: CustomerOverviewService, private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService) {
   }
 
   @Input()
@@ -401,6 +402,8 @@ export class AddPoSavingComponent implements OnInit {
   }
   addPOSavingResponse(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.close(true);
     console.log(data);
     // (this.flag == "editPOSAVING") ? this.eventService.openSnackBar('Updated successfully!', 'Dismiss') : this.eventService.openSnackBar('Added successfully!', 'Dismiss');
