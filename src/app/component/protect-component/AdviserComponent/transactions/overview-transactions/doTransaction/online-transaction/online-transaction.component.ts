@@ -33,7 +33,7 @@ export class OnlineTransactionComponent implements OnInit {
               public processTransaction: ProcessTransactionService, private router: Router,
               private enumDataService: EnumDataService, private peopleService: PeopleService,
               public transactionRoleService: TransactionRoleService) {
-    this.advisorId = AuthService.getAdvisorId();
+    this.advisorId = AuthService.getAdminAdvisorId();
   }
 
   get data() {
@@ -59,7 +59,7 @@ export class OnlineTransactionComponent implements OnInit {
 
     } else {
       const obj = {
-        advisorId: AuthService.getAdvisorId(),
+        advisorId: this.advisorId,
       };
       this.peopleService.getClientFamilyMemberList(obj).subscribe(responseData => {
         this.familyMemberList = responseData;
@@ -169,7 +169,7 @@ export class OnlineTransactionComponent implements OnInit {
       return;
     }
     const obj = {
-      advisorId: AuthService.getAdvisorId(),
+      advisorId: this.advisorId,
       displayName: value
     };
     if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
