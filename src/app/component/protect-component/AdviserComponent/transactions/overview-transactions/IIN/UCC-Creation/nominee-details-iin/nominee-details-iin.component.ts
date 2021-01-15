@@ -215,6 +215,11 @@ export class NomineeDetailsIinComponent implements OnInit {
       };
     } else if (!data.address) {
       data.address = {};
+    } else {
+      const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address.address1, data.address.address2, data.address.address3);
+      data.address.address1 = firstLine;
+      data.address.address2 = secondLine;
+      data.address.address3 = thirdLine;
     }
     this.nomineeDetails = this.fb.group({
       name: [(!data) ? '' : (data.name) ? data.name : data.name, [Validators.required]],
