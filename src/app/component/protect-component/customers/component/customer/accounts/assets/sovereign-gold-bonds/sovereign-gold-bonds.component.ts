@@ -1,0 +1,179 @@
+
+import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelService } from '../../../excel.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../file-upload-service.service';
+import { EnumServiceService } from '../../../../../../../../services/enum-service.service';
+import { AssetValidationService } from '../asset-validation.service';
+import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
+@Component({
+  selector: 'app-sovereign-gold-bonds',
+  templateUrl: './sovereign-gold-bonds.component.html',
+  styleUrls: ['./sovereign-gold-bonds.component.scss']
+})
+export class SovereignGoldBondsComponent implements OnInit {
+  isLoading = false;
+  advisorId: any;
+  data: Array<any> = [{}, {}, {}];
+  datasource3 = new MatTableDataSource(this.data);
+  clientId: any;
+  ownerName: any;
+  totalCurrentValue: any = 0;
+  sumOfpurchasedValue: any = 0;
+  footer = [];
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChildren(FormatNumberDirective) formatNumber;
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Input() finPlanObj: any;//finacial plan pdf input
+  @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
+  displayedColumns3 = ['no', 'owner', 'value', 'interest', 'amountInvested', 'issueDate', 'mDate', 'bond', 'status', 'icons'];
+  excelData: any[];
+  noData: string;
+  fileUploadData: any;
+  file: any;
+  isLoadingUpload: boolean = false;
+  clientData: any;
+  myFiles: any;
+  userInfo: any;
+  getOrgData: any;
+  reportDate: Date;
+  activeFilter: any = 'All';
+  dataList: any;
+  hideFilter: boolean = false;
+  constructor(public subInjectService: SubscriptionInject,
+    public custmService: CustomerService, public cusService: CustomerService,
+    private excel: ExcelGenService, private pdfGen: PdfGenService,
+    private fileUpload: FileUploadServiceService,
+    public enumService: EnumServiceService, private assetValidation: AssetValidationService,
+    public eventService: EventService, public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef) {
+
+
+  }
+  displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'sdate', 'mvalue', 'mdate', 'bondseries', 'status', 'icons'];
+
+  ngOnInit() {
+    this.reportDate = new Date();
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+    if (this.assetValidation.goldBondList) {
+      this.getGoldBondsDataResponse(this.assetValidation.goldBondList)
+    }
+    else {
+      this.getGoldBondsData();
+    }
+  }
+
+  getGoldBondsData() {
+    this.isLoading = true;
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.datasource3.data = [{}, {}, {}];
+    // this.custmService.getGoldBondsData(obj).subscribe(
+    //   data => {
+    //     console.log(data, "others");
+
+    //     this.getGoldBondsDataResponse(data)
+    //   }, (error) => {
+    //     this.eventService.showErrorMessage(error);
+    //     this.datasource3.data = [];
+    //     this.isLoading = false;
+    //   });
+    this.getGoldBondsDataResponse(ELEMENT_DATA3)
+  }
+
+
+  getGoldBondsDataResponse(data) {
+    this.isLoading = false;
+    if (data == undefined) {
+      this.noData = 'No Real estate found';
+      this.datasource3.data = [];
+      this.hideFilter = true;
+      this.totalCurrentValue = 0;
+      this.sumOfpurchasedValue = 0;
+    } else if (data) {
+
+      console.log('getRealEstateRes', data);
+      this.dataList = data;
+      this.datasource3.data = this.dataList.assetList;
+      // data.assetList.forEach(singleAsset => {
+      //   singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
+      // });
+      // this.totalCurrentValue = 0;
+      // this.sumOfpurchasedValue = 0;
+      data.assetList.forEach(o => {
+        o.currentValueAsOnToday = (o.currentValueAsOnToday) ? o.currentValueAsOnToday : 0
+        this.totalCurrentValue += o.currentValueAsOnToday;
+        this.sumOfpurchasedValue += o.purchaseAmt;
+      });
+      this.datasource3.sort = this.sort;
+      // this.totalCurrentValue = this.dataList.totalCurrentValue;
+      // this.sumOfpurchasedValue = this.dataList.sumOfPurchaseValue;
+    } else {
+      this.noData = 'No schemes found';
+      this.datasource3.data = [];
+    }
+    // this.assetValidation.getAssetCountGLobalData()
+    this.ref.detectChanges();//to refresh the dom when response come
+    // this.loaded.emit(this.realEstateTemp.nativeElement);
+  }
+
+}
+
+const ELEMENT_DATA3 = {
+  assetList: [
+    {
+      "advisorId": 6561,
+      "clientId": 223102,
+      "ownerList": [
+        {
+          "name": "Aniket Bhatiya",
+          "share": "100",
+          "familyMemberId": 223102,
+          "id": 0,
+          "isClient": 1
+        }
+      ],
+      "bond": "Sovereign Gold Bonds 2020-21-Series V",
+      "issueDate": "2020-01-11",
+      "amountInterest": 10000,
+      "amountInvested": 10000,
+      "currentValueAsOnToday": 11000,
+      "units": 21,
+      "rates": 7,
+      "tenure": 9,
+      "bondNumber": 9,
+      "linkedDematAccount": 185505,
+      "linkedBankAccount": 185505,
+      "maturityValue": 1000,
+      "maturityDate": "2020-12-01",
+      "description": "abc",
+      "nomineeList": [
+        {
+          "name": "Ankita",
+          "sharePercentage": "100",
+          "familyMemberId": 380082,
+          "id": 0
+        }
+      ]
+    }
+  ],
+  sumOfPurchaseValue: 120000,
+  totalCurrentValue: 120000
+
+};
