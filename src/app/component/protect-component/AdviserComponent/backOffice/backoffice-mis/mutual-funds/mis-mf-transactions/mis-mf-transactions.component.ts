@@ -229,6 +229,26 @@ export class MisMfTransactionsComponent implements OnInit {
       this.filterApi(this.obj.categoryId)
     }
   }
+  // remove(item) { //backup 
+  //   if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
+  //     this.selectedStatusFilter = 'statusFilter';
+  //   }
+  //   this.filterStatus.splice(item, 1);
+  //   this.filterDataArr = this.filterDataArr.filter((x) => {
+  //     x.status != item.value;
+  //   });
+  //   if (this.obj.transactionTypeId.length > 0) {
+  //     this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
+  //       return item.id == ele
+  //     });
+  //     this.filterApi(this.obj.transactionTypeId)
+  //   } else if (this.obj.categoryId.length > 0) {
+  //     this.obj.categoryId = this.obj.categoryId.filter((ele) => {
+  //       return item.id == ele
+  //     });
+  //     this.filterApi(this.obj.categoryId)
+  //   }
+  // }
   onClose() {
     this.orgValueChange(this.selectedDateRange);
   }
