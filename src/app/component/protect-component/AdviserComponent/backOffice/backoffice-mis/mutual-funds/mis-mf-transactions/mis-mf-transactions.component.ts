@@ -200,22 +200,28 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterApi(this.obj.categoryId)
   }
 
-  remove(item) {
-    if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
+  remove(ind, name) {
+    if (this.filterStatus[ind].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
     }
-    this.filterStatus.splice(item, 1);
+    this.filterStatus.splice(ind, 1);
     this.filterDataArr = this.filterDataArr.filter((x) => {
-      x.status != item.value;
+      x.status != name.value;
     });
     if (this.obj.transactionTypeId.length > 0) {
+      // this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
+      //   return item == ele
+      // });
       this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
-        return item.id == ele
+        return name.id != ele
       });
       this.filterApi(this.obj.transactionTypeId)
     } else if (this.obj.categoryId.length > 0) {
+      // this.obj.categoryId = this.obj.categoryId.filter((ele) => {
+      //   return item == ele
+      // });
       this.obj.categoryId = this.obj.categoryId.filter((ele) => {
-        return item.id == ele
+        return name.id != ele
       });
       this.filterApi(this.obj.categoryId)
     }
@@ -246,6 +252,7 @@ export class MisMfTransactionsComponent implements OnInit {
                 }
               })
             }
+            this.obj.transactionTypeId = [...new Map(this.obj.transactionTypeId.map(item => [item, item])).values()]
 
           } else if (element.filterType == 'category') {
             if (this.obj.categoryId.length == 0) {
@@ -259,7 +266,7 @@ export class MisMfTransactionsComponent implements OnInit {
                 }
               })
             }
-
+            this.obj.categoryId = [...new Map(this.obj.categoryId.map(item => [item, item])).values()]
           }
         });
       }

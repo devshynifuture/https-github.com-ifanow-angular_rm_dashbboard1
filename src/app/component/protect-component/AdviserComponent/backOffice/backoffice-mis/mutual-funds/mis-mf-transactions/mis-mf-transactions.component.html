@@ -51,7 +51,7 @@
     <div class="col-md-7 pr-0 custom-tags">
         <mat-chip-list>
             <mat-chip *ngFor="let status of filterStatus; let ind = index" class="bg-white b-a c-p f-400 p-12">
-                {{status.name}}{{status.transactionType}}<i (click)="remove(ind)"
+                {{status.name}}{{status.transactionType}}<i (click)="remove(ind,status)"
                     class="material-icons f-16 text-custom ml-12">
                     cancel
                 </i></mat-chip>
