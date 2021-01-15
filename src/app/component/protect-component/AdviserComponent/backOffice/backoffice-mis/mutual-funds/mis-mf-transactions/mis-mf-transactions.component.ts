@@ -260,7 +260,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
-    if (this.obj.end == "Invalid date") {
+    if (!this.obj.end) {
       this.obj.end = null
       this.obj.begin = null
     } else if (this.obj.end != {} || this.obj.begin != {}) {
