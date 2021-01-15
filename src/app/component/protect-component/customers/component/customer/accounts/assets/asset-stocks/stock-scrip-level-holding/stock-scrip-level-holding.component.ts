@@ -14,6 +14,7 @@ import { ClientDematComponent } from 'src/app/component/protect-component/People
 import { MsgDailogComponent } from 'src/app/component/protect-component/common-component/msg-dailog/msg-dailog.component';
 import { Subscription } from 'rxjs';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -61,7 +62,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
   oldOwnerID: number;
   private unSubcripBank: Subscription;
   private unSubcripDemat: Subscription;
-  constructor(public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService, private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,
+    private customerOverview: CustomerOverviewService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -595,6 +597,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
           data => {
             console.log(data);
             this.barButtonOptions.active = false;
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.Close();
           },
           error => {
@@ -607,7 +611,8 @@ export class StockScripLevelHoldingComponent implements OnInit {
         console.log(obj)
         this.cusService.addAssetStocks(obj).subscribe(
           data => {
-            console.log(data);
+            console.log(data); this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
             this.Close();
             // if (data.stockList[0].transactionOrHoldingSummaryList[0].reasonOfError) {

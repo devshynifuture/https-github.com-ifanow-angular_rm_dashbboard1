@@ -1,115 +1,122 @@
 <div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">Mapped existing user </h4>
-        </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i (click)="closeRightSlider(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
-            </div>
-        </div>
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">Mapped existing user </h4>
     </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i (click)="closeRightSlider(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row ">
-    <div class="col-md-10 mt-80">
-        <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
-            <input #searchClient (input)="checkOwnerList(searchClient.value)" [formControl]="stateCtrl"
-                [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput
-                placeholder="Start typing to see investor names">
-            <mat-autocomplete #auto1="matAutocomplete" autoFocus>
-                <mat-option (onSelectionChange)="selectClient(f)" *ngFor="let f of filteredStates " [value]="f.name">
-                    <div class="row">
-                        <div class="col-md-1 p-0 d-flex align-items-center">
-                            <i class="material-icons"> person </i>
-                        </div>
-                        <div class="col-md-6 pl-0 d-flex align-items-center">
-                            <p class="t-left m-0">{{f.name}}</p>
-                        </div>
-                        <div class="col-md-5 p-0 text-right">
-                            <button *ngIf="f.userType==3" class="small-primitive memberBtnNotes " mat-stroked-button>
-                                FAMILY MEMBER
-                            </button>
-                            <button *ngIf="f.userType==2" class="small-primitive memberBtnNotes"
-                                mat-stroked-button>CLIENT
-                            </button>
-                        </div>
-                    </div>
-                </mat-option>
-            </mat-autocomplete>
-            <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
-                This family member does not exist
-            </mat-error>
-        </mat-form-field>
-    </div>
+  <div class="col-md-10 mt-80">
+    <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
+      <input #searchClient (input)="checkOwnerList(searchClient.value)" [formControl]="stateCtrl"
+             [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput
+             placeholder="Start typing to see investor names">
+      <mat-autocomplete #auto1="matAutocomplete" autoFocus>
+        <mat-option (onSelectionChange)="selectClient(f)" *ngFor="let f of filteredStates " [value]="f.name">
+          <div class="row">
+            <div class="col-md-1 p-0 d-flex align-items-center">
+              <i class="material-icons"> person </i>
+            </div>
+            <div class="col-md-6 pl-0 d-flex align-items-center">
+              <p class="t-left m-0">{{f.name}}</p>
+            </div>
+            <div class="col-md-5 p-0 text-right">
+              <button *ngIf="f.userType==3" class="small-primitive memberBtnNotes " mat-stroked-button>
+                FAMILY MEMBER
+              </button>
+              <button *ngIf="f.userType==2" class="small-primitive memberBtnNotes"
+                      mat-stroked-button>CLIENT
+              </button>
+            </div>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
+        This family member does not exist
+      </mat-error>
+    </mat-form-field>
+  </div>
 
-    <div class="col-md-12 mt-24">
-        <table mat-table [dataSource]="storeData" matSort class="mt-8 skeletonAnimation" id="table-low"
-            appSkeletonLoading *ngIf="storeData.length > 0" [appSkeletonLoading]="isLoading">
-            <ng-container matColumnDef="position">
-                <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <mat-checkbox [checked]="element.selected" (change)="changeCred($event,element)"></mat-checkbox>
-                        {{isLoading ? '' : (element.aggregatorType == 1) ? 'NSE' : (element.aggregatorType == 2) ? 'BSE' : '-'}}
-                    </div>
-                </td>
-            </ng-container>
+  <div class="col-md-12 mt-24">
+    <table mat-table [dataSource]="storeData" matSort class="mt-8 skeletonAnimation" id="table-low"
+           appSkeletonLoading *ngIf="storeData.length > 0" [appSkeletonLoading]="isLoading">
+      <ng-container matColumnDef="position">
+        <th mat-sort-header="aggregatorType" mat-header-cell *matHeaderCellDef class="br"> Platform</th>
+        <td mat-cell *matCellDef="let element" class="br">
+          <div class="bar">
+            <mat-radio-group [(ngModel)]="selectedCred">
+              <mat-radio-button
+                [value]="element"> {{isLoading ? '' : (element.aggregatorType == 1) ? 'NSE' : (element.aggregatorType == 2) ? 'BSE' : '-'}}
+              </mat-radio-button>
+            </mat-radio-group>
+            <!--            </mat-radio-group>-->
+            <!--            <mat-checkbox [(ngModel)]="element.checked" (change)="changeCred($event,element)"></mat-checkbox>-->
+            <!--            {{isLoading ? '' : (element.aggregatorType == 1) ? 'NSE' : (element.aggregatorType == 2) ? 'BSE' : '-'}}-->
+          </div>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="name">
-                <th mat-sort-header="accountType" mat-header-cell *matHeaderCellDef class="br"> Account type</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        {{isLoading ? '' : (element.accountType == 1) ? 'ARN' : (element.accountType == 2) ? 'RIA' : '-'}}
-                    </div>
-                </td>
-            </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-sort-header="accountType" mat-header-cell *matHeaderCellDef class="br"> Account type</th>
+        <td mat-cell *matCellDef="let element" class="br">
+          <div class="bar">
+            {{isLoading ? '' : (element.accountType == 1) ? 'ARN' : (element.accountType == 2) ? 'RIA' : '-'}}
+          </div>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="weight">
-                <th mat-sort-header="brokerCode" mat-header-cell *matHeaderCellDef class="br"> ARN/RIA</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{isLoading ? '' : element.brokerCode}}
-                    </div>
-                </td>
-            </ng-container>
+      <ng-container matColumnDef="weight">
+        <th mat-sort-header="brokerCode" mat-header-cell *matHeaderCellDef class="br"> ARN/RIA</th>
+        <td mat-cell *matCellDef="let element" class="br">
+          <div class="bar"> {{isLoading ? '' : element.brokerCode}}
+          </div>
+        </td>
+      </ng-container>
 
-            <ng-container matColumnDef="aid">
-                <th mat-sort-header="userId" mat-header-cell *matHeaderCellDef class="br"> Application id
-                </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{isLoading ? '' : element.userId}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="euin">
-                <th mat-sort-header="euin" mat-header-cell *matHeaderCellDef class="br"> EUIN</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{isLoading ? '' : element.euin}}</div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="set">
-                <th mat-header-cell *matHeaderCellDef class="br w-20"> Enter IIN to mapp</th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                        <input type="text" [(ngModel)]="element.iin" maxlength="11" [disabled]="!element.selected"
-                            placeholder="Enter IIN to mapp" class="form-control br-2">
-                    </div>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </div>
+      <ng-container matColumnDef="aid">
+        <th mat-sort-header="userId" mat-header-cell *matHeaderCellDef class="br"> Application id
+        </th>
+        <td mat-cell *matCellDef="let element" class="br">
+          <div class="bar"> {{isLoading ? '' : element.userId}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="euin">
+        <th mat-sort-header="euin" mat-header-cell *matHeaderCellDef class="br"> EUIN</th>
+        <td mat-cell *matCellDef="let element" class="br">
+          <div class="bar"> {{isLoading ? '' : element.euin}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="set">
+        <th mat-header-cell *matHeaderCellDef class="br w-20"> Enter IIN to mapp</th>
+        <td mat-cell *matCellDef="let element" class="br">
+          <div class="bar">
+            <input type="text" [(ngModel)]="element.iin" maxlength="11"
+                   [disabled]="!selectedCred||selectedCred.tpUserCredentialId!=element.tpUserCredentialId"
+                   placeholder="Enter IIN to mapp" class="form-control br-2">
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>
 
 
 <div class="bottom-fixed wrapper-12 pt-16">
-    <div class="row">
-        <div class="col-md-2">
-            <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
-        </div>
-        <div class="col-md-10 right text-right">
-            <app-progress-button (click)="mappedUser()" [options]="barButtonOptions" class="br-0 text-inherit ">
-            </app-progress-button>
-        </div>
+  <div class="row">
+    <div class="col-md-2">
+      <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
+    <div class="col-md-10 right text-right">
+      <app-progress-button (click)="mappedUser()" [options]="barButtonOptions" class="br-0 text-inherit ">
+      </app-progress-button>
+    </div>
+  </div>
 </div>

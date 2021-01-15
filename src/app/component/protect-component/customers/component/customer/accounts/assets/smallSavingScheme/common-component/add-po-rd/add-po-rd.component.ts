@@ -12,6 +12,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DatePipe } from '@angular/common';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-add-po-rd',
@@ -62,7 +63,8 @@ export class AddPoRdComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public utils: UtilService, private fb: FormBuilder, private dateFormatPipe: DatePipe, private cusService: CustomerService, private eventService: EventService,
-    private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService) {
+    private subInjectService: SubscriptionInject, public dialog: MatDialog, private enumService: EnumServiceService, private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input() popupHeaderText = 'Add Post office recurring deposit (PO RD)';
@@ -433,6 +435,8 @@ export class AddPoRdComponent implements OnInit {
 
   addPORDResponse(data, isAdd) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     if (isAdd) {
       this.assetValidation.addAssetCount({ type: 'Add', value: 'smallSavingSchemes' })
       this.eventService.openSnackBar('Added successfully!', 'Dismiss');

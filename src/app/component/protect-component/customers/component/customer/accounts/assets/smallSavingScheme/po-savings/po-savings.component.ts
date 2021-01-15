@@ -16,6 +16,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-po-savings',
@@ -68,7 +69,8 @@ export class PoSavingsComponent implements OnInit {
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
     private assetValidation: AssetValidationService,
     private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -217,6 +219,8 @@ export class PoSavingsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.getPoSavingSchemedata();
           },

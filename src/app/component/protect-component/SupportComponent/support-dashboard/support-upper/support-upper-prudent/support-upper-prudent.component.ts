@@ -363,7 +363,7 @@ export class SupportUpperPrudentComponent implements OnInit {
         this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'map'];
 
       } else {
-        ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
+        this.displayedColumns = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
       }
 
     }, err => {

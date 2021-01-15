@@ -16,6 +16,7 @@ import { BottomSheetComponent } from '../../../../../common-component/bottom-she
 import { AssetValidationService } from '../../asset-validation.service';
 import { element } from 'protractor';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -62,7 +63,8 @@ export class PPFSchemeComponent implements OnInit {
     public dialog: MatDialog, private cusService: CustomerService,
     private assetValidation: AssetValidationService,
     private eventService: EventService, private subInjectService: SubscriptionInject,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
 
     this.clientData = AuthService.getClientData()
   }
@@ -192,6 +194,8 @@ export class PPFSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePPF(element.id).subscribe(
           data => {
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             // this.getPpfSchemeData();

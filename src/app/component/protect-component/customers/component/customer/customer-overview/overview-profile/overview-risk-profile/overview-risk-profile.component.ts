@@ -10,6 +10,7 @@ import { HistoryRiskProfileComponent } from '../../../plan/profile-plan/history-
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../customer-overview.service';
 more(Highcharts);
 
 @Component({
@@ -74,7 +75,8 @@ export class OverviewRiskProfileComponent implements OnInit {
     private eventService: EventService,
     private utilService: UtilService,
     private ref: ChangeDetectorRef,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -302,6 +304,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   submitRiskRes(data) {
+    this.customerOverview.riskProfileData = undefined;
     this.isLoading = false
     this.showResults = true;
     this.isEmpty = false;

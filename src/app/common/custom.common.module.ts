@@ -14,6 +14,7 @@ import { DashEvent } from '../component/protect-component/AdviserComponent/Activ
 import { RealEstatePropertyComponent } from './real-estate-property/real-estate-property.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { CredentialsErrorPopupComponent } from './credentials-error-popup/credentials-error-popup.component';
+import { AccountAndBillingComponent } from './account-and-billing/account-and-billing.component';
 
 // import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
 // import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
@@ -29,6 +30,7 @@ import { CredentialsErrorPopupComponent } from './credentials-error-popup/creden
     CalendarScheduleComponent,
     DashEvent,
     CredentialsErrorPopupComponent,
+    AccountAndBillingComponent,
   ],
   imports: [
     MaterialModule,

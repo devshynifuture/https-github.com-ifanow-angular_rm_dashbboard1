@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {RoutingState} from '../../../../../../services/routing-state.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {RoleService} from 'src/app/auth-service/role.service';
-import {EnumDataService} from 'src/app/services/enum-data.service';
+import { Component, OnInit } from '@angular/core';
+import { RoutingState } from '../../../../../../services/routing-state.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { RoleService } from 'src/app/auth-service/role.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { CustomerOverviewService } from '../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-customer-activity',
@@ -13,9 +14,10 @@ export class CustomerActivityComponent implements OnInit {
   clientData: any;
 
   constructor(private routingStateService: RoutingState,
-              public roleService: RoleService,
-              public enumDataService: EnumDataService,
-              public authService: AuthService) {
+    public roleService: RoleService,
+    public enumDataService: EnumDataService,
+    public authService: AuthService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   ngOnInit() {
@@ -27,5 +29,6 @@ export class CustomerActivityComponent implements OnInit {
     localStorage.removeItem('clientData');
     sessionStorage.removeItem('clientData');
     this.routingStateService.goToSpecificRoute('/admin/dashboard');
+    this.customerOverview.clearServiceData();
   }
 }

@@ -12,6 +12,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DatePipe } from '@angular/common';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-add-kvp',
   templateUrl: './add-kvp.component.html',
@@ -58,7 +59,8 @@ export class AddKvpComponent implements OnInit {
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
-  constructor(public utils: UtilService, private datePipe: DatePipe, private assetValidation: AssetValidationService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(public utils: UtilService, private datePipe: DatePipe, private assetValidation: AssetValidationService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService,
+    private customerOverview: CustomerOverviewService) { }
 
   @Input()
   set data(data) {
@@ -388,6 +390,8 @@ export class AddKvpComponent implements OnInit {
     this.close(true);
   }
   addKVPResponse(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.barButtonOptions.active = false;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")

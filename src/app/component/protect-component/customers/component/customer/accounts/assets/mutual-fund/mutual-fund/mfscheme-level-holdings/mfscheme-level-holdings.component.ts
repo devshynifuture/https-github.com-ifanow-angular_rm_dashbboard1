@@ -17,6 +17,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { iif } from 'rxjs';
 import { element } from 'protractor';
 import { AssetValidationService } from '../../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -77,7 +78,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     private datePipe: DatePipe,
     private cusService: CustomerService,
     private peopleService: PeopleService,
-    private assetValidation: AssetValidationService
+    private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService
   ) { }
   familyMemberList = [];
   errorMsg = '';
@@ -655,6 +657,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         this.customerService.postEditTransactionMutualFund(postObj)
           .subscribe(res => {
             if (res || res == 0) {
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.recentTransactionData = null;
               console.log("success::", res);
               this.barButtonOptions.active = false;
               this.Close(true);
@@ -670,6 +675,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         this.customerService.postAddTransactionMutualFund(postObj)
           .subscribe(res => {
             if (res) {
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.recentTransactionData = null;
               console.log("success::", res);
               this.mfService.sendUpdatedTransactionAfterAdd(res);
               this.barButtonOptions.active = false;

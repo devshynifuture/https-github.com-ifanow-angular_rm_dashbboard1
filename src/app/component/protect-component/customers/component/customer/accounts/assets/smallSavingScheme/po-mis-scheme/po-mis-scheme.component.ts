@@ -16,6 +16,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AssetValidationService } from '../../asset-validation.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-po-mis-scheme',
@@ -70,7 +71,8 @@ export class PoMisSchemeComponent implements OnInit {
     private cusService: CustomerService, private subInjectService: SubscriptionInject,
     public util: UtilService,
     private _bottomSheet: MatBottomSheet,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -232,6 +234,8 @@ export class PoMisSchemeComponent implements OnInit {
       positiveMethod: () => {
         this.cusService.deletePOMIS(element.id).subscribe(
           data => {
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })

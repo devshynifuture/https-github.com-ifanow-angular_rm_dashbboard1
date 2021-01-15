@@ -370,11 +370,22 @@ export class BackOfficeService {
   getSipCleanUpListData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_SIP_CLEANUP_LIST, data);
   }
+  getSipWizardCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SIP_WIZARD_COUNT, data);
 
+  }
+  runSipWizard(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RUN_WIZARD, data);
+  }
+  previousSipWizard(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.PREVIOUS_WIZARD_LOG, data);
+  }
+  refreshWizard(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_WIZARD, data);
+  }
   putSipCleanUpUpdateStatus(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE, data)
   }
-
 
   getCatSubCatListData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CAT_SUBCAT_LIST_MIS_AUM, data);

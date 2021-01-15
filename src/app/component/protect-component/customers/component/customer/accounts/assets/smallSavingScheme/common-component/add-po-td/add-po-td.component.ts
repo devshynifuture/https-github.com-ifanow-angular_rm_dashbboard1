@@ -12,6 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { DatePipe } from '@angular/common';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-add-po-td',
   templateUrl: './add-po-td.component.html',
@@ -60,7 +61,7 @@ export class AddPoTdComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
 
-  constructor(public utils: UtilService, private fb: FormBuilder, private assetValidation: AssetValidationService, private dateFormatPipe: DatePipe, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(public utils: UtilService, private customerOverview: CustomerOverviewService, private fb: FormBuilder, private assetValidation: AssetValidationService, private dateFormatPipe: DatePipe, private cusService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject, private util: UtilService, public dialog: MatDialog, private enumService: EnumServiceService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -408,6 +409,8 @@ export class AddPoTdComponent implements OnInit {
   }
   response(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")
     } else {

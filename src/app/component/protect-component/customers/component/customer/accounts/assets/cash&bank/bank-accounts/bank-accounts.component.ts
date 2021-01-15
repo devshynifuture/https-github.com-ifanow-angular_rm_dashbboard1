@@ -13,6 +13,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-bank-accounts',
   templateUrl: './bank-accounts.component.html',
@@ -67,7 +68,8 @@ export class BankAccountsComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   userType: any;
   constructor(private fb: FormBuilder, private custumService: CustomerService, private enumDataService: EnumDataService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService,
-    private assetValidation: AssetValidationService) { }
+    private assetValidation: AssetValidationService,
+    private customerOverview: CustomerOverviewService) { }
 
   @Input()
   set data(data) {
@@ -441,6 +443,8 @@ export class BankAccountsComponent implements OnInit {
   }
   addBankAccountsRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'cashAndBank' })
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data: 1, refreshRequired: true })
@@ -449,6 +453,8 @@ export class BankAccountsComponent implements OnInit {
   }
   editBankAcountsRes(data) {
     this.barButtonOptions.active = false;
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.subInjectService.changeNewRightSliderState({ flag: 'editedbankAc', state: 'close', data: 1, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'OK');
 

@@ -10,6 +10,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AssetValidationService } from '../../asset-validation.service';
+import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-gold',
@@ -62,7 +63,8 @@ export class GoldComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   nominees: any;
 
-  constructor(private fb: FormBuilder, private assetValidation: AssetValidationService, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService) { }
+  constructor(private fb: FormBuilder, private assetValidation: AssetValidationService, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService,
+    private customerOverview: CustomerOverviewService) { }
 
   @Input()
   set data(data) {
@@ -386,6 +388,8 @@ export class GoldComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
   }
   addGoldRes(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.barButtonOptions.active = false;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'commodities' })
     console.log('addrecuringDepositRes', data)
@@ -394,6 +398,8 @@ export class GoldComponent implements OnInit {
 
   }
   editGoldRes(data) {
+    this.customerOverview.portFolioData = null;
+    this.customerOverview.assetAllocationChart = null;
     this.barButtonOptions.active = false;
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGold', state: 'close', data, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'OK');
