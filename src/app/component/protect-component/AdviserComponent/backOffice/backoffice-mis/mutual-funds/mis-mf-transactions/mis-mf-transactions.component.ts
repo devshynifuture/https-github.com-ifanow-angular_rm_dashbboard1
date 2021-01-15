@@ -208,21 +208,24 @@ export class MisMfTransactionsComponent implements OnInit {
     this.filterDataArr = this.filterDataArr.filter((x) => {
       x.status != name.value;
     });
-    if (this.obj.transactionTypeId.length > 0) {
-      // this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
-      //   return item == ele
-      // });
-      this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
-        return name.id != ele
-      });
+    if (name.filterType == 'transactionType') {
+      if (this.obj.transactionTypeId.length > 1) {
+        this.obj.transactionTypeId = this.obj.transactionTypeId.filter((ele) => {
+          return name.id != ele
+        });
+      } else {
+        this.obj.transactionTypeId = [];
+      }
       this.filterApi(this.obj.transactionTypeId)
-    } else if (this.obj.categoryId.length > 0) {
-      // this.obj.categoryId = this.obj.categoryId.filter((ele) => {
-      //   return item == ele
+    } else {
       // });
-      this.obj.categoryId = this.obj.categoryId.filter((ele) => {
-        return name.id != ele
-      });
+      if (this.obj.categoryId.length > 1) {
+        this.obj.categoryId = this.obj.categoryId.filter((ele) => {
+          return name.id != ele
+        });
+      } else {
+        this.obj.categoryId = [];
+      }
       this.filterApi(this.obj.categoryId)
     }
   }
