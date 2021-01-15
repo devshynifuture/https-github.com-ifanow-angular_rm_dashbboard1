@@ -105,7 +105,7 @@
                         {{element.schemeName}}
                     </div>
                     <br>
-                    <ng-container *ngIf="filteredSchemeError">
+                    <ng-container *ngIf="filteredSchemeError && isMapped != true">
                         <span class="f-12">
                             {{errorMsg}}
                         </span>

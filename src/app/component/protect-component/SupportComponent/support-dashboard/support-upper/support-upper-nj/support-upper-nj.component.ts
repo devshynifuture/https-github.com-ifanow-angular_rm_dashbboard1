@@ -308,7 +308,7 @@ export class SupportUpperNjComponent implements OnInit {
   unMapMappedNjScheme(element) {
     let obj = {
       id: element.id,
-      mutualFundSchemeMasterId: element.id,
+      mutualFundSchemeMasterId: element.mutualFundSchemeMasterId,
       schemeCode: element.schemeCode
     }
     console.log(obj);
@@ -387,6 +387,7 @@ export class SupportUpperNjComponent implements OnInit {
         if (this.isMapped == true) {
           dataTable.forEach(element => {
             element.schemeName = item.mutualFundSchemeName
+            element.mutualFundSchemeMasterId = item.mutualFundSchemeMasterId
           });
         }
       });
@@ -415,6 +416,7 @@ export class SupportUpperNjComponent implements OnInit {
     this.isMapped = event.value == 1 ? false : true;
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
+    this.filteredSchemes = [];
     this.getMappedUnmappedNjSchemes();
   }
 
