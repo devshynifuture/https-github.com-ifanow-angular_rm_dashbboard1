@@ -51,7 +51,7 @@ export class EmailConsentComponent implements OnInit {
       <p>
           <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;  text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Dear
               $client_name,</span></p>
-     <p class="pt-10 roboto">Here is your consent</p>
+     <p class="pt-10 roboto">Thank you for your consent & find the attached document for your reference. If you still wish to change/modify anything please do reply to this email.</p>
   </body>
   </html>`;
   // <p #subBody class="pt-28 f-700 roboto">Request for advice consent from $company_name.
@@ -79,7 +79,7 @@ export class EmailConsentComponent implements OnInit {
         console.log(params)
       }
     )
-
+    this.emailBody = this.emailBody.replace('$client_name', this.clientData.name);
   }
   getGlobalDataInsurance() {
     const obj = {};
@@ -94,7 +94,7 @@ export class EmailConsentComponent implements OnInit {
     if (data.adviceToLifeInsurance) {
       let catId = data.adviceToLifeInsurance.insuranceCategoryTypeId;
       let id = data ? (data.adviceToLifeInsurance ? (data.adviceToLifeInsurance.insuranceAdviceId) : this.adviceName) : this.adviceName;
-      this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
+      this.adviceName = (id == 0) ? 'Proposed policy' : (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : ''
       this.heading = (catId == 42) ? 'Term Insurance' : (catId == 42) ? 'Term insurance' : (catId == 43) ? 'Traditional insurance' : 'Ulip insurance'
       data.adviceDetails = {
         adviceGivenDate: data.advice.createdDate, applicableDate: data.advice.applicableDate,
@@ -239,6 +239,10 @@ export class EmailConsentComponent implements OnInit {
                 this.getSumAsssuredAndName(element.stringObject, 'REAL');
               }
             }
+          } else {
+            if (element.stringObject.FICT) {
+              element.stringObject.REAL = element.stringObject.FICT
+            }
           }
           let obj =
           {
@@ -271,7 +275,6 @@ export class EmailConsentComponent implements OnInit {
   }
 
   save() {
-    this.emailBody.replace('$client_name', this.clientData.name);
     this.cusService.updateAssetConsent(this.consentData).subscribe(
       data => {
         this.eventService.openSnackBar("Consent updated", "Dismiss")
@@ -284,7 +287,7 @@ export class EmailConsentComponent implements OnInit {
     console.log(para.innerHTML)
     this.toEmail = (this.clientData.emailList ? this.clientData.emailList[0].email : '')
     const obj = {
-      messageBody: 'Dear ' + this.clientData.name + 'Here is your consent',
+      messageBody: this.emailBody,
       emailSubject: 'Email advice request for consent ',
       fromEmail: this.fromEmail,
       toEmail: [{ emailAddress: this.toEmail }, { emailAddress: this.fromEmail }],
