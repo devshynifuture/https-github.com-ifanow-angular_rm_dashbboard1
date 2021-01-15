@@ -190,11 +190,9 @@ export class MisMfTransactionsComponent implements OnInit {
   }
 
   remove(item) {
-
     if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
       this.selectedStatusFilter = 'statusFilter';
     }
-
     this.filterStatus.splice(item, 1);
     this.filterDataArr = this.filterDataArr.filter((x) => {
       x.status != item.value;
@@ -234,7 +232,6 @@ export class MisMfTransactionsComponent implements OnInit {
               this.obj.transactionTypeId.forEach(ele => {
                 if (element.id != ele) {
                   this.obj.transactionTypeId.push(element.id)
-
                 }
               })
             }
@@ -260,7 +257,7 @@ export class MisMfTransactionsComponent implements OnInit {
     this.obj.parentId = this.parentId;
     this.obj.startFlag = 1
     this.obj.endFlag = 100
-    if (!this.obj.end) {
+    if (!this.obj.end && !this.obj.begin) {
       this.obj.end = null
       this.obj.begin = null
     } else if (this.obj.end != {} || this.obj.begin != {}) {
@@ -271,7 +268,6 @@ export class MisMfTransactionsComponent implements OnInit {
       this.obj.end = null
       this.obj.begin = null
     }
-    console.log('json', this.obj)
     let data = {}
     data = this.obj
     this.backoffice.filterData(data)
