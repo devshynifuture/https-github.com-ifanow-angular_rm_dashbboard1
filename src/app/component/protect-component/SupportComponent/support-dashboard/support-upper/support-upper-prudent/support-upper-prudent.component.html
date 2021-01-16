@@ -39,7 +39,7 @@
         </mat-form-field>
     </div>
 
-    <div class="col-md-3 pt-11">
+    <div class="col-md-3 pt-11" *ngIf="!isLoading">
         <mat-select (selectionChange)="setmapUnmap($event)" [formControl]="mapUnmapFC">
             <mat-option *ngFor="let item of prudentSelectOptionList" [value]="item.id">
                 {{ item.title }}

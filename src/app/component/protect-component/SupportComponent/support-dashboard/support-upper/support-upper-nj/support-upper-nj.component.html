@@ -39,7 +39,7 @@
 
         </mat-form-field>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3" *ngIf="!isLoading">
         <mat-select class="form-control" (selectionChange)="setMapUnmapOption($event)"
             [formControl]="mapUnmappedOptionFC">
             <mat-option *ngFor="let item of njOptionsDropdown" [value]="item.id">

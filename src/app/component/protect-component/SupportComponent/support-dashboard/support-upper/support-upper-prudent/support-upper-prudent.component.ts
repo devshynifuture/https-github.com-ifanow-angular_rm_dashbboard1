@@ -171,7 +171,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   mapUnmappedPrudentScheme(element) {
     let obj = {
       id: element.id,
-      mutualFundSchemeMasterId: element.id,
+      mutualFundSchemeMasterId: element.mutualFundSchemeMasterId,
       rt_id: 4,
       schemeCode: element.schemeCode
     }
@@ -353,6 +353,8 @@ export class SupportUpperPrudentComponent implements OnInit {
         if (this.isMapped == true) {
           dataTable.forEach(element => {
             element.schemeName = item.mutualFundSchemeName
+            element.mutualFundSchemeMasterId = item.mutualFundSchemeMasterId
+
           });
         }
       });
