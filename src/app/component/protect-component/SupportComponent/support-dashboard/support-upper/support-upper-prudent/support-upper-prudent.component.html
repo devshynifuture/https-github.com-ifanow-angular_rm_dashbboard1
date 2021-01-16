@@ -159,16 +159,19 @@
             <ng-container matColumnDef="map">
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Map / Unmap </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
-                    <button *ngIf="isMapped == true" class="btn-primary btn-Map" mat-stroked-button
-                        (click)="mapUnmappedPrudentScheme(element)">
-                        Unmap
-                    </button>
-                    <button *ngIf="isMapped == false" class="btn-primary btn-Map" mat-stroked-button
-                        [disabled]="!element.isSchemeSelected"
-                        [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
-                        (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedPrudentScheme(element):mapUnmappedPrudentScheme(element)):$event.preventDefault()">
-                        Map
-                    </button>
+                    <div class="bar">
+                        <button *ngIf="isMapped == true && !isLoading" class="btn-primary btn-Map" mat-stroked-button
+                            (click)="mapUnmappedPrudentScheme(element)">
+                            {{(isLoading) ? '': 'Unmap'}}
+                        </button>
+                        <button *ngIf="isMapped == false && !isLoading" class="btn-primary btn-Map" mat-stroked-button
+                            [disabled]="!element.isSchemeSelected"
+                            [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
+                            (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedPrudentScheme(element):mapUnmappedPrudentScheme(element)):$event.preventDefault()">
+                            {{(isLoading) ? '': 'Map'}}
+                        </button>
+                    </div>
+
                 </td>
             </ng-container>
 

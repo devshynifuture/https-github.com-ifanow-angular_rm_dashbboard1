@@ -164,11 +164,11 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> {{isMapped!= false ? 'Unmap':'Map'}} </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        <button *ngIf="isMapped == true" class="btn-primary btn-Map" mat-stroked-button
+                        <button *ngIf="isMapped == true && !isLoading" class="btn-primary btn-Map" mat-stroked-button
                             (click)="unMapMappedNjScheme(element)">
                             {{(isLoading) ? '': 'Unmap'}}
                         </button>
-                        <button *ngIf="isMapped == false" class="btn-primary btn-Map" mat-stroked-button
+                        <button *ngIf="isMapped == false && !isLoading" class="btn-primary btn-Map" mat-stroked-button
                             [disabled]="!element.isSchemeSelected"
                             [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
                             (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedNjScheme(element):mapUnmappedNJScheme(element)):$event.preventDefault()">
