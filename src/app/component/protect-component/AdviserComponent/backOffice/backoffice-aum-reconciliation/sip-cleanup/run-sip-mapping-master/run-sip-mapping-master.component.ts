@@ -15,6 +15,8 @@ export class RunSipMappingMasterComponent implements OnInit {
   countOfWizard: any;
   hideCount: boolean = false;
   wizardList: any;
+  isLoading: boolean;
+  percentage: number = 0;
   constructor(public dialogRef: MatDialogRef<RunSipMappingMasterComponent>,
     private backOfficeService: BackOfficeService, private eventService: EventService) { }
   showWizard: boolean = false
@@ -25,12 +27,13 @@ export class RunSipMappingMasterComponent implements OnInit {
     this.dialogRef.close()
   }
   getSipWizardCount() {
+    this.isLoading = true;
     let data = {
       advisorId: AuthService.getAdvisorId()
     }
     this.backOfficeService.getSipWizardCount(data).subscribe(
       (res) => {
-        // this.isLoading = false;
+        this.isLoading = false;
         this.countOfWizard = res
         console.log('count wizard')
         if (res) {
@@ -45,12 +48,13 @@ export class RunSipMappingMasterComponent implements OnInit {
     );
   }
   previousWizard() {
+    this.isLoading = true;
     let data = {
       advisorId: AuthService.getAdvisorId()
     }
     this.backOfficeService.previousSipWizard(data).subscribe(
       (res) => {
-        // this.isLoading = false;
+        this.isLoading = false;
         this.wizardList = []
         if (res.length > 1) {
           this.wizardList = res
@@ -70,15 +74,21 @@ export class RunSipMappingMasterComponent implements OnInit {
     );
   }
   refreshWizard(value) {
+    this.isLoading = true;
     let data = {
       id: value.id
     }
     this.backOfficeService.refreshWizard(data).subscribe(
       (res) => {
-        // this.isLoading = false;
+        this.isLoading = false;
         this.wizardList.forEach(element => {
           if (res.id == element.id) {
             element = res
+            if (element.processedCount == 0) {
+              this.percentage = 0
+            } else {
+              this.percentage = (element.totalSip / element.processedCount) * 100
+            }
           }
         });
         this.showWizard = true
@@ -96,14 +106,20 @@ export class RunSipMappingMasterComponent implements OnInit {
     );
   }
   runWizard() {
+    this.isLoading = true;
     let data = {
       advisorId: AuthService.getAdvisorId()
     }
     this.backOfficeService.runSipWizard(data).subscribe(
       (res) => {
-        // this.isLoading = false;
+        this.isLoading = false;
         this.wizardList = []
         this.wizardList.push(res)
+        if (res.processedCount == 0) {
+          this.percentage = 0
+        } else {
+          this.percentage = (res.totalSip / res.processedCount) * 100
+        }
         this.showWizard = true
         this.hideCount = true
         console.log('count wizard', res)
