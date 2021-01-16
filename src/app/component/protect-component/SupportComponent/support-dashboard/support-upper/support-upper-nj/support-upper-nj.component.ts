@@ -340,6 +340,7 @@ export class SupportUpperNjComponent implements OnInit {
         if (res) {
           console.log(res);
           element.isMapped = true;
+          this.getMappedUnmappedNjSchemes()
         }
       })
   }

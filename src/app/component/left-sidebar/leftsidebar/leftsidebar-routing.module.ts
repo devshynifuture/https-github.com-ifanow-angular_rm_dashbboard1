@@ -83,6 +83,10 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting/setting.module').then(m => m.SettingModule)
       },
       {
+        path: 'account-billing',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/account-and-billing/account-and-billing.module').then(m => m.AccountAndBillingModule)
+      },
+      {
         path: 'setting-support',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/setting-support/setting-support.module').then(m => m.SettingSupportModule)
       },
