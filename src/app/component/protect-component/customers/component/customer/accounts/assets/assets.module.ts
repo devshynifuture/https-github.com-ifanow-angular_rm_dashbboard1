@@ -73,12 +73,7 @@ import { DetailedViewSovereignGoldBondsComponent } from './sovereign-gold-bonds/
     PoMisSchemeComponent,
     MfCapitalDetailedComponent,
     OthersAssetsComponent,
-    SovereignGoldBondsComponent,
-    AddSovereignGoldBondsComponent,
-    DetailedViewSovereignGoldBondsComponent,
-
-
-
+    SovereignGoldBondsComponent
   ],
   imports: [
     CommonModule,

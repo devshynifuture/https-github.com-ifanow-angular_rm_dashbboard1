@@ -15,6 +15,7 @@ import { FileUploadServiceService } from '../file-upload-service.service';
 import { EnumServiceService } from '../../../../../../../../services/enum-service.service';
 import { AssetValidationService } from '../asset-validation.service';
 import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AddSovereignGoldBondsComponent } from './add-sovereign-gold-bonds/add-sovereign-gold-bonds.component';
 @Component({
   selector: 'app-sovereign-gold-bonds',
   templateUrl: './sovereign-gold-bonds.component.html',
@@ -131,6 +132,47 @@ export class SovereignGoldBondsComponent implements OnInit {
     // this.assetValidation.getAssetCountGLobalData()
     this.ref.detectChanges();//to refresh the dom when response come
     // this.loaded.emit(this.realEstateTemp.nativeElement);
+  }
+
+  open(value, data) {
+    let popupHeaderText = !!data ? 'Edit sovereign gold bonds' : 'Add sovereign gold bonds';
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: AddSovereignGoldBondsComponent,
+      popupHeaderText: popupHeaderText,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // if (data) {
+            this.getGoldBondsData();
+            // }
+            // else {
+            //   if (!this.dataList) {
+            //     this.dataList = { assetList: [sideBarData.data] };
+            //     this.dataList['totalCurrentValue'] = sideBarData.data.marketValue;
+            //     this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
+            //   }
+            //   else {
+            //     this.dataList.assetList.push(sideBarData.data)
+            //     this.dataList.totalCurrentValue += sideBarData.data.marketValue;
+            //     this.dataList.sumOfPurchaseValue += sideBarData.data.purchaseValue;
+            //   }
+            //   this.getOthersAssetsRes(this.dataList);
+            // }
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
   }
 
 }
