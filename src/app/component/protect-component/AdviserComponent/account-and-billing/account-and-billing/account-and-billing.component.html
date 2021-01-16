@@ -4,12 +4,8 @@
         <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
             <h5 class="m-0">Customer Type</h5>
         </div>
-        <div class="col-md-7 p-0 mob-text-center">
-            <!-- <mat-radio-group class="d-block clientmobs f-14" formControlName="customerType">
-                <mat-radio-button class="bu-primary" value="1">Business </mat-radio-button>
-                <mat-radio-button class="borderRadio f-14" value="2">Individual </mat-radio-button>
+        <div class="col-md-4 p-0 customerTypeRadio mob-text-center">
 
-            </mat-radio-group> -->
             <mat-radio-group class="d-block clientmobs f-14" formControlName="customerType">
                 <mat-radio-button
                     [ngClass]="{'b-a-custom': accountBillingForm.get('customerType').value=='1','text-primary':accountBillingForm.get('customerType').value=='1','borderRadio':accountBillingForm.get('customerType').value=='2'}"
@@ -23,12 +19,12 @@
 
 
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
             <h5 class="m-0">Primary Contact </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <!-- <mat-select class="form-control" matInput>
                         <mat-option value="option1">Option 1</mat-option>
@@ -47,12 +43,12 @@
         </div>
     </div>
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4 full-end">
             <h5 class="m-0">Company Name </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0  ">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" #customerName class="form-control" matInput formControlName="customerName">
                     <mat-hint align="end">{{customerName.value.length}}/ 20</mat-hint>
@@ -64,12 +60,12 @@
         </div>
     </div>
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
             <h5 class="m-0">Customer Email </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input type="text" placeholder="Enter email Id" class="form-control" matInput
                         formControlName="cusEmail">
@@ -82,12 +78,12 @@
         </div>
     </div>
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
             <h5 class="m-0">Customer Display Name </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" #cusDispName class="form-control" matInput formControlName="cusDispName">
                     <mat-hint align="end">{{cusDispName.value.length}}/ 20</mat-hint>
@@ -99,11 +95,11 @@
         </div>
     </div>
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4 full-end">
             <h5 class="m-0">Customer Phone </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
+        <div class="col-md-3 remove-top p-0 mob-text-center">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                     <input matInput #cusPhone formControlName="cusPhone" class="form-control" maxLength="10"
@@ -121,12 +117,12 @@
     </div>
 
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
             <h5 class="m-0">GST Treatment  </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <mat-select class="form-control" matInput formControlName="gstTreatment">
                         <mat-option value="option1">Register
@@ -142,13 +138,13 @@
         </div>
     </div>
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4 full-end">
             <h5 class="m-0">GST Identification Number (GSTIN)
             </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field appearance="standard" [floatLabel]="'never'">
                     <input type="text" #gstn class="form-control" matInput formControlName="gstNo">
                     <mat-hint align="end">{{gstn.value.length}}/ 30</mat-hint>
@@ -159,13 +155,13 @@
         </div>
     </div>
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
-            <h5 class="m-0">place of supply
+    <div class="row pt-32">
+        <div class="col-md-4   full-end">
+            <h5 class="m-0">Place of supply
             </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3  p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" #supplyPlace class="form-control" matInput formControlName="supplyPlace">
                     <mat-hint align="end">{{supplyPlace.value.length}}/ 20</mat-hint>
@@ -178,12 +174,12 @@
     </div>
 
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
             <h5 class="m-0">PAN Number </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <!-- <mat-form-field appearance="standard" floatLabel="never">
                     <input type="text" placeholder="Enter PAN" #pan class="form-control" matInput formControlName="panNumber">
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
@@ -204,12 +200,12 @@
         </div>
     </div>
 
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+    <div class="row pt-32">
+        <div class="col-md-4   full-end">
             <h5 class="m-0">Address </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" #address class="form-control" matInput formControlName="address">
                     <mat-hint align="end">{{address.value.length}}/ 40</mat-hint>
@@ -220,11 +216,11 @@
     </div>
 
     <div class="row pt-28">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+        <div class="col-md-4  full-end">
             <h5 class="m-0">City </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" class="form-control" matInput formControlName="city">
                 </mat-form-field>
@@ -236,8 +232,8 @@
         <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
             <h5 class="m-0">State </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" class="form-control" matInput formControlName="state">
                     <mat-error>This field is required</mat-error>
@@ -250,8 +246,8 @@
         <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
             <h5 class="m-0">Country/Region </h5>
         </div>
-        <div class="col-md-4 p-0 mob-text-center">
-            <div class="form-group mb-0">
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" class="form-control" matInput formControlName="contry">
                 </mat-form-field>
@@ -264,7 +260,7 @@
             <h5 class="m-0">ZIP Code </h5>
         </div>
         <div class="col-md-2 p-0 mob-text-center">
-            <div class="form-group mb-0">
+            <div class="form-group remove-top mb-0">
                 <mat-form-field>
                     <input type="text" class="form-control" matInput formControlName="zip">
                 </mat-form-field>
