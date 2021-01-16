@@ -1,7 +1,8 @@
 <div class="popup-header-fix w-65">
   <div class="row bb-1">
     <div class="col-md-8 p-0">
-      <h3 class="mb-0 wrapper-20"><!--LUMPSUM--> {{confirmData.transactType}} TRANSACTION STATUS</h3>
+      <h3 class="mb-0 wrapper-20">
+        <!--LUMPSUM--> {{confirmData.transactType}} TRANSACTION STATUS</h3>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
@@ -16,8 +17,8 @@
       <div class="col-md-12 p-0 text-center">
         <img class="pt-28" src="/assets/images/svg/last-step.svg">
         <h3 class="m-0 text-primary pt-24">So far so good. One last step!</h3>
-        <h5 class="m-0 pt-12 pb-12 b-h-dashed">{{salutationString}} needs to <b>authorize</b> the transaction
-          to <b>complete</b> it.</h5>
+        <h5 class="m-0 pt-12 pb-12 b-h-dashed"> {{salutationString}} needs to <b>authorize</b>
+          the transaction to <b>complete</b> it.</h5>
       </div>
     </div>
     <div
@@ -25,15 +26,15 @@
       class="row">
       <div class="col-md-12">
         <div class="p-8">
-          <p class="m-0 roboto pt-28"> An email has been sent to <b>registered email id.</b> Your
-            client should review the <b>transaction details</b> and click on the <b>payment link</b> provided there.</p>
-          <p class="m-0 roboto pt-28"> Next, {{salutationString.toLowerCase()}} will be redirected to the <b>net banking
-            page.</b> The
-            client needs to login and make
-            the payment.</p>
-          <p class="m-0 roboto pt-28"> Once the payment is done, {{platformName}} will send a <b>confirmation
-            email</b> to
-            the registered email id.</p>
+          <p class="m-0 roboto pt-28"> An email has been sent to the <b>registered email id of the client.</b> Your
+            client should review the  
+            <b>transaction details </b> and click on the <b>payment link </b>provided in the mail.</p>
+          <p class="m-0 roboto pt-28"> Next, {{salutationString.toLowerCase()}} will be redirected to the <b>Net Banking
+              page.
+            </b> The client needs to login using their login credentials and make the payment.
+          </p>
+          <p class="m-0 roboto pt-28">Once the payment is done, {{platformName}} will send a
+            <b>confirmation email to </b> the registered email id of {{salutationString.toLowerCase()}}.</p>
           <p class="m-0 roboto pt-28"> Additionally, the Purchase transaction has been added to the
             <u (click)="redirctTransaction()"> Transaction List.</u></p>
           <!--          <p class="m-0 roboto pt-28"> Track transaction status - <u>Track.</u></p>-->

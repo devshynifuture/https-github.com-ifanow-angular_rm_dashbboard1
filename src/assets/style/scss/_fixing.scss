@@ -218,9 +218,26 @@
     margin-left: 20px;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .popup-header-fix-50 {
+        width: 80%;
+    }
+    .tabViewScreen {
+        .w-50{
+            width: 80% !important;
+        }
+    }
+
+    .tabViewUser {
+        .w-35{
+            width: 50% !important;
+        }
+    }
+}
+
 @media(max-width: 767px) {
     .popup-header-fix-35,
-    .popup-header-fix-50,
+    .popup-header-fix-50,   
     .popup-header-fix-45,
     .popup-header-fix-70,
     .popup-header-fix-60,

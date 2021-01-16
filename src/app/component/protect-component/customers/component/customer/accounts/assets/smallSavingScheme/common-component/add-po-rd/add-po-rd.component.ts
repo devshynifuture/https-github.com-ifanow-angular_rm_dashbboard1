@@ -437,6 +437,10 @@ export class AddPoRdComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     if (isAdd) {
       this.assetValidation.addAssetCount({ type: 'Add', value: 'smallSavingSchemes' })
       this.eventService.openSnackBar('Added successfully!', 'Dismiss');

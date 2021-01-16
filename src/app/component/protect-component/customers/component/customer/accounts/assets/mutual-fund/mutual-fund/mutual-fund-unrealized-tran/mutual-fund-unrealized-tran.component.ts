@@ -28,6 +28,7 @@ import {
 import { DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 
 const PAGESIZE = 20;
 const ROW_HEIGHT = 48;
@@ -236,7 +237,8 @@ export class MutualFundUnrealizedTranComponent {
     public routerActive: ActivatedRoute,
     private custumService: CustomerService, private eventService: EventService,
     private cd: ChangeDetectorRef,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService
               /*private changeDetectorRef: ChangeDetectorRef*/) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -1374,6 +1376,13 @@ export class MutualFundUnrealizedTranComponent {
         this.custumService.postDeleteTransactionMutualFund(requestJsonObj)
           .subscribe(res => {
             if (res) {
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.recentTransactionData = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               this.isLoading = true;
               this.eventService.openSnackBar('Deleted Successfully', 'Dismiss');
               if (res) {

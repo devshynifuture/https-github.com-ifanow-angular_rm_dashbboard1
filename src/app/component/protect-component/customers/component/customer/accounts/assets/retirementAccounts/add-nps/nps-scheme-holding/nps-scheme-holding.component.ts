@@ -605,6 +605,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
   getAdviceNscSchemeLevelRes(data) {
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.barButtonOptions.active = false;
     this.event.openSnackBar('NPS added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
@@ -612,6 +616,10 @@ export class NpsSchemeHoldingComponent implements OnInit {
   addNPSRes(data) {
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');

@@ -359,6 +359,10 @@ export class CashInHandComponent implements OnInit {
   getAdviceCashInHandRes(data) {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.customerOverview.assetAllocationChart = null;
     this.eventService.openSnackBar('Cash in hand added successfully', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
@@ -368,6 +372,10 @@ export class CashInHandComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'cashAndBank' })
     console.log('addrecuringDepositRes', data);
     this.subInjectService.changeNewRightSliderState({ state: 'close', data: 2, refreshRequired: true });

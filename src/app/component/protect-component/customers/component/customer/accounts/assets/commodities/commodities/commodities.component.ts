@@ -246,6 +246,10 @@ export class CommoditiesComponent implements OnInit {
               dialogRef.close();
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
               this.goldDataList.assetList = this.goldDataList.assetList.filter(x => x.id != element.id);
               this.goldList.data = this.goldDataList.assetList;
@@ -259,6 +263,10 @@ export class CommoditiesComponent implements OnInit {
               dialogRef.close();
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
               this.otherDataList.assetList = this.otherDataList.assetList.filter(x => x.id != element.id);
               this.otherCommodityList.data = this.otherDataList.assetList;
