@@ -166,13 +166,13 @@
                     <div class="bar">
                         <button *ngIf="isMapped == true" class="btn-primary btn-Map" mat-stroked-button
                             (click)="unMapMappedNjScheme(element)">
-                            Unmap
+                            {{(isLoading) ? '': 'Unmap'}}
                         </button>
                         <button *ngIf="isMapped == false" class="btn-primary btn-Map" mat-stroked-button
                             [disabled]="!element.isSchemeSelected"
                             [ngClass]="{'cursor-not-allowed': !element.isSchemeSelected}"
                             (click)="element.isSchemeSelected ? (element.isMapped ? unMapMappedNjScheme(element):mapUnmappedNJScheme(element)):$event.preventDefault()">
-                            Map
+                            {{(isLoading) ? '': 'Map'}}
                         </button>
                     </div>
                 </td>
