@@ -227,6 +227,9 @@ export class TempserviceService {
               if (ele.rtTypeId == 6 && !ele.fwTransactionType.includes("CAS")) {
                 ele.fwTransactionType = ele.fwTransactionType + '(CAS)'
               }
+              if (ele.rtTypeId == 14 && !ele.fwTransactionType.includes("*")) {
+                ele.fwTransactionType = ele.fwTransactionType + '*'
+              }
               ele.currentAmount = ele.unit * ele.nav;
               filteredData.push(ele);
             });
