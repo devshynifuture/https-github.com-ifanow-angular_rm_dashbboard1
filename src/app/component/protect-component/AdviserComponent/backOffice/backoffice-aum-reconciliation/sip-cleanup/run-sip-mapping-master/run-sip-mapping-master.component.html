@@ -2,6 +2,11 @@
     <div class="row " *ngIf="hideCount == false">
         <div class="col-md-12 p-0">
             <h4 class="f-20 m-0 roboto f-500 ">What this wizard does?</h4>
+            <div class="text-right">
+                <div class="wrapper-12">
+                    <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
+                </div>
+            </div>
             <p class="f-16 roboto f-400 pt-20">This wizard will intelligently identify SIPs which are correct and mark
                 them
                 as
@@ -35,35 +40,54 @@
     </div>
     <div class="row running-sip-table" *ngIf="showWizard == true">
         <div class="col-md-8 p-0">
-            <mat-progress-bar mode="determinate" value="30" class="running-sip-progress-bar"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" [value]="percentage" class="running-sip-progress-bar">
+            </mat-progress-bar>{{percentage}}
             <p class="m-0 f-400 pt-20 roboto pb-12">Summary</p>
-            <table mat-table [dataSource]="wizardList" id="table-low">
+            <table mat-table [dataSource]="wizardList" id="table-low" class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="isLoading">
 
                 <!--- Note that these columns can be defined in any order.
                   The actual rendered columns are set as a property on the row definition" -->
                 <!-- Position Column -->
                 <ng-container matColumnDef="position">
                     <th mat-header-cell *matHeaderCellDef class="br f-500">Total records </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.totalSip}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            {{(isLoading) ? '':element.totalSip}}
+                        </div>
+                    </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef class="br f-500"> Records processed </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.processedCount}} <button mat-button
-                            (click)="refreshWizard(element)" class="refersh-btn right">Refresh</button></td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            {{(isLoading) ? '':element.processedCount}}
+                            <button mat-button (click)="refreshWizard(element)"
+                                class="refersh-btn right">Refresh</button>
+                        </div>
+                    </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="weight">
                     <th mat-header-cell *matHeaderCellDef class="br f-500"> Marked as Keep </th>
-                    <td mat-cell *matCellDef="let element" class="br"> {{element.isKeepCount}} </td>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            {{(isLoading) ? '':element.isKeepCount}}
+                        </div>
+                    </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="symbol">
                     <th mat-header-cell *matHeaderCellDef class="f-500"> Ignored </th>
-                    <td mat-cell *matCellDef="let element"> {{element.ignoredCount}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            {{(isLoading) ? '':element.ignoredCount}}
+                        </div>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
