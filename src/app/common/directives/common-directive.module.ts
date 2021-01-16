@@ -1,3 +1,4 @@
+import { NamedNumberPipe } from './../../services/namedNumbers.pipe';
 import { DateAgoPipe } from './../../services/date-ago.pipe';
 // import DialogContainerComponent from ''
 import { NgModule } from '@angular/core';
@@ -42,7 +43,8 @@ export const directiveList = [
   PrefixFocusDirective,
   ExternalDateFormatDirective,
   DateAgoPipe,
-  HolderNameDirective
+  HolderNameDirective,
+  NamedNumberPipe
 ];
 
 @NgModule({
