@@ -1375,14 +1375,14 @@ export class SuggestAdviceComponent implements OnInit, OnDestroy {
                 });
               }
             } else if (obj) {
-              if (obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
+              if (obj && obj.insuredMembers && obj.hasOwnProperty('insuredMembers') && obj.insuredMembers.length > 0) {
                 obj.insuredMembers.forEach(element => {
                   if (element.sumInsured == '') {
                     element.sumInsured = null
                   }
                 });
               }
-              if (obj.hasOwnProperty('nominees') && obj.nominees.length > 0) {
+              if (obj.nominees && obj.hasOwnProperty('nominees') && obj.nominees.length > 0) {
                 obj.nominees.forEach((element, index) => {
                   if (element.name == '') {
                     obj.nominees = [];

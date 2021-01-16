@@ -252,7 +252,9 @@ export class ShowHealthPlanningComponent implements OnInit {
       insuranceType: this.insuranceType,
       realOrFictious: 2
     };
-    const getCurrentPolicy = this.planService.getGeneralInsuranceNeedAnalysis(obj);
+    const getCurrentPolicy = this.planService.getGeneralInsuranceNeedAnalysis(obj).pipe(
+      catchError(error => of(null))
+    );
     if (!this.familyMemberList && this.familyMemberList == '') {
       familyMemberList = this.peopleService.getClientFamilyMemberListAsset(obj2)
     } else {
@@ -569,9 +571,11 @@ export class ShowHealthPlanningComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.isRefreshRequired = true;
-            this.insuranceIds = [];
-            this.inputData.id = sideBarData.data;
-            this.insuranceIds.push(this.inputData.id);
+            if(!this.inputData.id){
+              this.insuranceIds = [];
+              this.inputData.id = sideBarData.data;
+              this.insuranceIds.push(this.inputData.id);
+            }
             this.getStepOneAndTwoData();
             // this.getAdviceByAsset();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
