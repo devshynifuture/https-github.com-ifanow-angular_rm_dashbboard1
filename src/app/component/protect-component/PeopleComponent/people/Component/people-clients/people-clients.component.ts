@@ -42,6 +42,7 @@ export class PeopleClientsComponent implements OnInit {
   clientInfo: any;
   getOrgData: any;
   userInfo: any;
+  tabviewshow: any;
   reportDate = new Date();
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private utilService: UtilService,
@@ -201,7 +202,13 @@ export class PeopleClientsComponent implements OnInit {
     );
   }
 
+
+
   addClient(data) {
+    if (window.innerWidth <= 1024) {
+      this.tabviewshow = 'open80'
+    }
+    else { this.tabviewshow = 'open50' }
     if (data == null) {
       data = { flag: 'Add client', fieldFlag: 'client' };
     } else {
@@ -212,7 +219,7 @@ export class PeopleClientsComponent implements OnInit {
       flag: 'Add client',
       id: 1,
       data,
-      state: 'open50',
+      state: this.tabviewshow,
       componentName: AddClientComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

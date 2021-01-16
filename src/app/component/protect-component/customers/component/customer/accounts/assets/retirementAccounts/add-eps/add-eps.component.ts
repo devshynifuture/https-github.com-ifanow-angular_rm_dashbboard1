@@ -389,6 +389,10 @@ export class AddEPSComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     console.log('addrecuringDepositRes', data)
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
@@ -399,6 +403,10 @@ export class AddEPSComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'addedEps', state: 'close', data, refreshRequired: true })
   }

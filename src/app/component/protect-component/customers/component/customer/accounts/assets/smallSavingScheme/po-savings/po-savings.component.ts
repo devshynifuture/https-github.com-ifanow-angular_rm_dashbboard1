@@ -220,6 +220,10 @@ export class PoSavingsComponent implements OnInit {
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.customerOverview.portFolioData = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
             this.customerOverview.assetAllocationChart = null;
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.getPoSavingSchemedata();

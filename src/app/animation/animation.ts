@@ -143,6 +143,10 @@ export const rightSliderAnimation = trigger('openClose', [
     left: '{{from}}%',
     width: '70%'
   }), { params: { from: (100 - 70) } }),
+  state('open80', style({
+    left: '{{from}}%',
+    width: '80%'
+  }), { params: { from: (100 - 80) } }),
   state('close', style({
     left: '100%'
   })),

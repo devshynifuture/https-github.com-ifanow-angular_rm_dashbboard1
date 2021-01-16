@@ -221,6 +221,10 @@ export class RealEstateComponent implements OnInit {
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'real_estate' })
             this.customerOverview.portFolioData = null;
             this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             this.dataList.sumOfMarketValue -= element.marketValue;
             // this.dataList.sumOfPurchaseValue += element.amountInvested;

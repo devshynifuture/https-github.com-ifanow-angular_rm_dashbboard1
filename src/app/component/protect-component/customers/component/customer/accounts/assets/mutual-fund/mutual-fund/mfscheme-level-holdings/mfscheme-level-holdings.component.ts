@@ -568,6 +568,13 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         }
         this.customerService.postMutualFundAdd(postObj)
           .subscribe(res => {
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.recentTransactionData = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
             if (res) {
               this.assetValidation.addAssetCount({ type: 'Add', value: 'mutual_fund' });
               this.eventService.openSnackBar("Added sucessfully", "Dismiss")
@@ -616,6 +623,13 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
                 this.customerService.postMutualFundEdit(postObj)
                   .subscribe(res => {
+                    this.customerOverview.portFolioData = null;
+                    this.customerOverview.assetAllocationChart = null;
+                    this.customerOverview.recentTransactionData = null;
+                    this.customerOverview.summaryLeftsidebarData = null;
+                    this.customerOverview.aumGraphdata = null;
+                    this.customerOverview.assetAllocationChart = null;
+                    this.customerOverview.summaryCashFlowData = null;
                     if (res) {
                       console.log("success:: edit mutual fund", res);
                       this.barButtonOptions.active = false;
@@ -633,6 +647,13 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         } else {
           this.customerService.postMutualFundEdit(postObj)
             .subscribe(res => {
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.recentTransactionData = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               if (res) {
                 console.log("success:: edit mutual fund", res);
                 this.barButtonOptions.active = false;
@@ -660,6 +681,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
               this.customerOverview.recentTransactionData = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               console.log("success::", res);
               this.barButtonOptions.active = false;
               this.Close(true);
@@ -678,6 +703,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
               this.customerOverview.recentTransactionData = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               console.log("success::", res);
               this.mfService.sendUpdatedTransactionAfterAdd(res);
               this.barButtonOptions.active = false;

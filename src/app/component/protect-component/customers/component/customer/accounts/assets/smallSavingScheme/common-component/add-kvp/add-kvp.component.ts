@@ -392,6 +392,10 @@ export class AddKvpComponent implements OnInit {
   addKVPResponse(data) {
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.barButtonOptions.active = false;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")

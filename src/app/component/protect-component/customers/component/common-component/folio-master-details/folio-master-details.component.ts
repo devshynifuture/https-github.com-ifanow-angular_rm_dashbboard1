@@ -12,6 +12,8 @@ export class FolioMasterDetailsComponent implements OnInit {
   inputData: any;
   folioDetails = [];
   isLoading: boolean;
+  isNomineeLoading = false;
+  nomineeArray = [];
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) { }
   @Input()
@@ -34,17 +36,49 @@ export class FolioMasterDetailsComponent implements OnInit {
       data => this.getFolioMasterResponse(data), (error) => {
         this.isLoading = false;
         this.folioDetails = [];
-
       }
     );
+  }
+
+  onTabChanged(event) {
+    if (event.index == 2) {
+      if (this.nomineeArray.length == 0) {
+        this.getNomineeDetailsFolioSchemeWise();
+      }
+    }
+    console.log(this.inputData);
+  }
+
+  getNomineeDetailsFolioSchemeWise() {
+    let data = {
+      folioNumber: this.inputData.folioNumber,
+      schemeCode: this.inputData.schemeCode
+    }
+    this.isNomineeLoading = true;
+    this.custumService.getFolioSchemeWiseNomineeDetails(data)
+      .subscribe(res => {
+        this.isNomineeLoading = false;
+        if (res) {
+          const decodedRes = JSON.parse(atob(res['payLoad']));
+          console.log("nominee daata", decodedRes);
+          this.nomineeArray = [...decodedRes];
+        } else {
+          this.nomineeArray = [];
+        }
+      }, err => {
+        this.nomineeArray = [];
+        this.isNomineeLoading = true
+        console.error(err);
+        this.eventService.openSnackBar("Something went wrong", 'DISMISS');
+      })
   }
   getFolioMasterResponse(data) {
     this.isLoading = false;
     console.log(data);
     // this.folioDetails=data.folioMasterList;
-    if(data){
-      this.folioDetails=data;
-    }else{
+    if (data) {
+      this.folioDetails = data;
+    } else {
       this.folioDetails = [];
     }
   }

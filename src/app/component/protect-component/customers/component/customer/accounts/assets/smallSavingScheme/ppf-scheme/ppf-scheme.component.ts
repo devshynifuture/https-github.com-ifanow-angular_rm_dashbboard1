@@ -196,6 +196,10 @@ export class PPFSchemeComponent implements OnInit {
           data => {
             this.customerOverview.portFolioData = null;
             this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             // this.getPpfSchemeData();

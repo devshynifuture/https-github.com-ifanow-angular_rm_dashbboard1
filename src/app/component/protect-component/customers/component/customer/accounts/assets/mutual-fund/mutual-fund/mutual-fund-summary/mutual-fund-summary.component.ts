@@ -9,31 +9,32 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {FolioMasterDetailsComponent} from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
-import {SipDetailsComponent} from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
-import {AddMutualFundComponent} from '../add-mutual-fund/add-mutual-fund.component';
-import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
-import {MfServiceService} from '../../mf-service.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
+import { SipDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
+import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
+import { MfServiceService } from '../../mf-service.service';
 // import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 // import {WebworkerService} from '../../../../../../../../../../services/web-worker.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {UpperCustomerComponent} from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from '../../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {map} from 'rxjs/operators';
-import {ActivatedRoute, Router} from '@angular/router';
-import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import {DatePipe} from '@angular/common';
-import {OnlineTransactionComponent} from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
-import {OnlineTransactionService} from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
-import {AssetValidationService} from '../../../asset-validation.service';
-import {RoleService} from 'src/app/auth-service/role.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from '../../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { DatePipe } from '@angular/common';
+import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
+import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { AssetValidationService } from '../../../asset-validation.service';
+import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
 
 
 @Component({
@@ -52,11 +53,11 @@ export class MutualFundSummaryComponent implements OnInit {
   // subCategoryData: any[];
   // schemeWise: any[];
   mutualFundList: any[];
-  rightFilterData: any = {reportType: ''};
+  rightFilterData: any = { reportType: '' };
   summary = new MatTableDataSource([{}, {}, {}]);
   isLoading = false; // added for prod build
   displayColumnsPDf: any;
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   advisorData: any;
   userInfo = AuthService.getUserInfo();
   clientData = AuthService.getClientData();
@@ -64,7 +65,7 @@ export class MutualFundSummaryComponent implements OnInit {
   getOrgData = AuthService.getOrgDetails();
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
-  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('tableEl', { static: false }) tableEl;
   @Output() changeInput = new EventEmitter();
   @Output() getCountData = new EventEmitter();
   @Output() loaded = new EventEmitter();
@@ -182,7 +183,8 @@ export class MutualFundSummaryComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private assetValidation: AssetValidationService,
     public roleService: RoleService,
-    private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef,
+    private customerOverview: CustomerOverviewService) {
     this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
       if (queryParamMap.has('clientId')) {
         const param1 = queryParamMap.params;
@@ -205,8 +207,8 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   mutualFund;
-  @ViewChild('summaryTemplate', {static: false}) summaryTemplate: ElementRef;
-  @ViewChild('summaryTemplateHeader', {static: false}) summaryTemplateHeader: ElementRef;
+  @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
+  @ViewChild('summaryTemplateHeader', { static: false }) summaryTemplateHeader: ElementRef;
 
   uploadData(data) {
     if (data) {
@@ -438,7 +440,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   teamMemberListGet() {
     this.adminAdvisorIds = [];
-    this.customerService.getSubAdvisorListValues({advisorId: this.advisorId})
+    this.customerService.getSubAdvisorListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -1204,7 +1206,7 @@ export class MutualFundSummaryComponent implements OnInit {
           this.isBulkDataResponse = true;
           const response = this.mfService.doFiltering(data);
           this.mfData = response;
-          Object.assign(response.mutualFundList, {flag: true});
+          Object.assign(response.mutualFundList, { flag: true });
           response.mutualFundList.forEach(element => {
             element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
           });
@@ -1341,8 +1343,8 @@ export class MutualFundSummaryComponent implements OnInit {
         // mfService: this.mfService
       };
       // Create a new
-      const worker = new Worker('../../mutual-fund.worker.ts', {type: 'module'});
-      worker.onmessage = ({data}) => {
+      const worker = new Worker('../../mutual-fund.worker.ts', { type: 'module' });
+      worker.onmessage = ({ data }) => {
         this.grandTotal = data.totalValue;
         this.dataSummary.grandTotal = this.grandTotal;
         this.customDataSource.data = [];
@@ -1556,11 +1558,11 @@ export class MutualFundSummaryComponent implements OnInit {
       catObj = mfService.categoryFilter(mutualFundList, reportType);
       Object.keys(catObj).map(key => {
         mfService.initializeValues();
-        filteredArray.push({groupName: key});
+        filteredArray.push({ groupName: key });
         let totalObj: any = {};
         catObj[key].forEach((singleData) => {
           filteredArray.push(singleData);
-          totalObj = mfService.addTwoObjectValues(mfService.calculateTotalValue(singleData), totalObj, {schemeName: true});
+          totalObj = mfService.addTwoObjectValues(mfService.calculateTotalValue(singleData), totalObj, { schemeName: true });
         });
         filteredArray.push(totalObj);
       });
@@ -1741,7 +1743,7 @@ export class MutualFundSummaryComponent implements OnInit {
     }
     const fragmentData = {
       flag,
-      data: {flag},
+      data: { flag },
       id: 1,
       state: 'open',
       componentName: component
@@ -2001,12 +2003,19 @@ export class MutualFundSummaryComponent implements OnInit {
         // );
         // dialogRef.close(listIndex);
         if (value === 'mutualFund') {
-          const obj = {id: element.id};
+          const obj = { id: element.id };
           this.customerService.postMutualFundDelete(obj)
             .subscribe(res => {
+              this.customerOverview.portFolioData = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.recentTransactionData = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               if (res) {
                 this.eventService.openSnackBar('Deleted Successfully', 'Dismiss');
-                this.assetValidation.addAssetCount({type: 'Delete', value: 'mutual_fund'});
+                this.assetValidation.addAssetCount({ type: 'Delete', value: 'mutual_fund' });
                 dialogRef.close();
                 this.addedData = true;
                 this.mfService.setDataForMfGet('');
@@ -2051,7 +2060,7 @@ export class MutualFundSummaryComponent implements OnInit {
     // }
     const fragmentData = {
       flag: 'editTransaction',
-      data: {family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad},
+      data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad },
       id: 1,
       state: 'open',
       componentName: MFSchemeLevelHoldingsComponent
@@ -2081,7 +2090,7 @@ export class MutualFundSummaryComponent implements OnInit {
       const fragmentData = {
         flag: 'app-upper-customer',
         id: 1,
-        data: {family_member_list: ['family_member_list'], flag: 'addTransaction', ...element},
+        data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
         direction: 'top',
         componentName: UpperCustomerComponent,
         state: 'open'
@@ -2225,7 +2234,7 @@ export class MutualFundSummaryComponent implements OnInit {
     }
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: {isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data},
+      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data },
       id: 1,
       state: 'open65',
       componentName: OnlineTransactionComponent,

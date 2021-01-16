@@ -17,6 +17,7 @@ import { debounceTime, startWith } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { RoleService } from '../../../auth-service/role.service';
 import { MfServiceService } from '../../protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { CustomerOverviewService } from '../../protect-component/customers/component/customer/customer-overview/customer-overview.service';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -67,7 +68,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     private utilService: UtilService, private peopleService: PeopleService,
     public roleService: RoleService,
     public MfServiceService: MfServiceService,
-    private reconService: ReconciliationService) {
+    private reconService: ReconciliationService,
+    private customerOverview: CustomerOverviewService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
       private authService: AuthService) {*/
@@ -411,6 +413,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   logout() {
     this.clientList = [];
+    this.customerOverview.clearServiceData();
     this.domainData = AuthService.getDomainDetails();
     this.enumDataService.setSearchData(this.clientList);
     this.authService.logout();

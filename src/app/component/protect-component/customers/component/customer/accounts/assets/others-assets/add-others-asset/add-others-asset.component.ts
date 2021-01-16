@@ -691,6 +691,10 @@ export class AddOthersAssetComponent implements OnInit {
     if (data) {
       this.customerOverview.portFolioData = null;
       this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryLeftsidebarData = null;
+      this.customerOverview.aumGraphdata = null;
+      this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryCashFlowData = null;
       console.log(data);
       this.assetValidation.addAssetCount({ type: 'Add', value: 'otherAsset' })
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
@@ -709,6 +713,10 @@ export class AddOthersAssetComponent implements OnInit {
       console.log(data);
       this.customerOverview.portFolioData = null;
       this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryLeftsidebarData = null;
+      this.customerOverview.aumGraphdata = null;
+      this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryCashFlowData = null;
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Updated successfully!', 'OK');
     } else {

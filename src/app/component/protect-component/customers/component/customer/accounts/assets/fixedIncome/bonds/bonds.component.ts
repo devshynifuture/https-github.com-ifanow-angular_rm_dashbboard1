@@ -452,6 +452,10 @@ export class BondsComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'fixedIncome' })
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
@@ -462,6 +466,10 @@ export class BondsComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
 

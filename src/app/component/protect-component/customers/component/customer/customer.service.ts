@@ -1132,5 +1132,9 @@ export class CustomerService {
     return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST_ASSET, data);
   }
 
+  getFolioSchemeWiseNomineeDetails(data) {
+    return this.http.getHttpClient(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA + `?folioNumber=${data.folioNumber}&schemeCode=${data.schemeCode}`);
+  }
+
 }
 
