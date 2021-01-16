@@ -17,9 +17,16 @@
                 your business scale.</p>
 
             <p class="f-16 roboto f-400">To get started, just click on the “Run SIP Mapping wizard” button. </p>
-            <div class="bg-grey lter p-10 w-25">
+            <div class="bg-grey lter p-10 w-25" class="skeletonAnimation" [appSkeletonLoading]="isLoding"
+                appSkeletonLoading>
                 <p class="m-0 roboto f-400 text-black">Total SIP records</p>
-                <h5 class="m-0 f-500 roboto pt-10 text-black">{{(countOfWizard)?countOfWizard:0}}</h5>
+                <div class="relClass">
+                    <div class="bar height24">
+                        <h5 class="m-0 f-500 roboto pt-10 text-black">
+                            {{(isLoading) ? '': (countOfWizard)?countOfWizard:0}}</h5>
+                    </div>
+                </div>
+
             </div>
 
             <button mat-stroked-button class="btn-primary mt-24" (click)="runWizard()">Run SIP Mapping Wizard</button>
