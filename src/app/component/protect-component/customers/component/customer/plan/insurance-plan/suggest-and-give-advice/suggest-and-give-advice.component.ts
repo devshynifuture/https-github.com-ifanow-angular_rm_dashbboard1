@@ -1450,7 +1450,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
       applicableDate: this.datePipe.transform(this.adviceForm.get('implementDate').value, 'yyyy-MM-dd')
     }
     if (obj.insuranceSubTypeId != 11) {
-      if (obj && obj.insuredMembers.length > 0 && obj.hasOwnProperty('insuredMembers')) {
+      if (obj && obj.insuredMembers && obj.insuredMembers.length > 0 && obj.hasOwnProperty('insuredMembers')) {
         obj.insuredMembers.forEach(ele => {
           this.componentRefComponentVal.ownerIds.push({
             'ownerId': ele.familyMemberId == this.clientId ? 0 : ele.familyMemberId
@@ -1488,10 +1488,11 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
                 "id": this.componentRefComponentVal.inputData.id,
                 "insuranceIds": JSON.stringify([data])
               }
+              let insuranceId = data;
               const UpadtePolicy = this.planService.updateCurrentPolicyGeneralInsurance(addPlan);
               forkJoin(UpadtePolicy).subscribe(result => {
                 this.barButtonOptions.active = false;
-                this.getAdviceRes(result);
+                this.getAdviceRes(insuranceId);
               }, (error) => {
                 this.eventService.openSnackBar('error', 'Dismiss');
               });
