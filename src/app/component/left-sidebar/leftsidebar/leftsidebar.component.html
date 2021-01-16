@@ -840,7 +840,8 @@
                   [routerLink]="['/admin/setting/orgprofile']">
                   Profile
                 </li>
-                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
+                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1"
+                  [routerLink]="['/admin/account-billing/accountAndBilling']">Account & Billing</li>
                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1 && userInfo.referralCode"
                   [routerLink]="[ '/admin/setting-support/pricing/refer-earn' ]">Refer
                   & Earn
