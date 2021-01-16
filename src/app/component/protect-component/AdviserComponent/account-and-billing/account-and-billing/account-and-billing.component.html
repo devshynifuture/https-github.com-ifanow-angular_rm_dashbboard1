@@ -26,18 +26,11 @@
         <div class="col-md-3 p-0 mob-text-center">
             <div class="form-group remove-top mb-0">
                 <mat-form-field>
-                    <!-- <mat-select class="form-control" matInput>
-                        <mat-option value="option1">Option 1</mat-option>
-                        <mat-option value="option3">Option 2</mat-option>
-                    </mat-select> -->
-                    <mat-form-field>
-                        <input type="text" #primaryContact class="form-control" matInput
-                            formControlName="primaryContact">
-                        <mat-hint align="end">{{primaryContact.value.length}}/ 20</mat-hint>
-                        <mat-error class=" pt-4">
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
+                    <input type="text" #primaryContact class="form-control" matInput formControlName="primaryContact">
+                    <mat-hint align="end">{{primaryContact.value.length}}/ 20</mat-hint>
+                    <mat-error class=" pt-4">
+                        This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
