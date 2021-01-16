@@ -408,6 +408,10 @@ export class AddGratuityComponent implements OnInit {
   addGratuityRes(data) {
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.barButtonOptions.active = false;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'retirementAccounts' })
     console.log('addrecuringDepositRes', data)
@@ -417,6 +421,10 @@ export class AddGratuityComponent implements OnInit {
   editGratuityRes(data) {
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.barButtonOptions.active = false;
     this.subInjectService.changeNewRightSliderState({ flag: 'addedGratuity', state: 'close', data, refreshRequired: true })
     this.event.openSnackBar('Updated successfully!', 'Dismiss');

@@ -215,6 +215,10 @@ export class OthersAssetsComponent implements OnInit {
             dialogRef.close();
             this.customerOverview.portFolioData = null;
             this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'otherAsset' })
             // this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             // this.dataList.totalCurrentValue -= element.marketValue;

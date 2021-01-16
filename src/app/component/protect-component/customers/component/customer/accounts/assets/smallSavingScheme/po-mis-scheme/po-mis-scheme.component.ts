@@ -236,6 +236,10 @@ export class PoMisSchemeComponent implements OnInit {
           data => {
             this.customerOverview.portFolioData = null;
             this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
             this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
             dialogRef.close();
             this.assetValidation.addAssetCount({ type: 'Delete', value: 'smallSavingSchemes' })

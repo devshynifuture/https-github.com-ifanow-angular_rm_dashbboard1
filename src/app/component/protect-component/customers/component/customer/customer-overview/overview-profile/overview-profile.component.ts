@@ -20,6 +20,8 @@ import { AgePopupComponent } from './age-popup/age-popup.component';
 import { ClientSggestionListService } from './client-sggestion-list.service';
 import { ResetClientPasswordComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/reset-client-password/reset-client-password.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { CustomerOverviewComponent } from '../customer-overview.component';
+import { CustomerOverviewService } from '../customer-overview.service';
 
 @Component({
   selector: 'app-overview-profile',
@@ -38,7 +40,7 @@ export class OverviewProfileComponent implements OnInit {
   clientData: any;
   Tab = 'Tab1';
   letsideBarLoader: boolean;
-  adressFlag = true;
+  adressFlag: boolean;
   bankFlag: boolean;
   dematFlag: boolean;
   hasError = false;
@@ -61,7 +63,8 @@ export class OverviewProfileComponent implements OnInit {
     private utils: UtilService, private enumDataService: EnumDataService,
     private route: ActivatedRoute, private cancelFlagService: CancelFlagService,
     private clientSuggeService: ClientSggestionListService,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private customerOverview: CustomerOverviewService) {
   }
 
   ngOnInit() {
@@ -81,12 +84,12 @@ export class OverviewProfileComponent implements OnInit {
     if (this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.enabled) {
       this.Tab = "Tab1"
       this.letsideBarLoader = true;
-      this.getClientData(this.clientData);
-      this.getAddressList(this.clientData);
-      this.getDematList(this.clientData);
-      this.getBankList(this.clientData);
+      !this.customerOverview.clientData ? this.getClientData(this.clientData) : this.getClientDataResponse(this.customerOverview.clientData);
+      !this.customerOverview.addressList ? this.getAddressList(this.clientData) : this.getAddressListResponse(this.customerOverview.addressList);
+      !this.customerOverview.dematList ? this.getDematList(this.clientData) : this.getDematListResponse(this.customerOverview.dematList);
+      !this.customerOverview.bankList ? this.getBankList(this.clientData) : this.getBankListResponse(this.customerOverview.bankList);
       this.enumDataService.getDataForTaxMasterService();
-      this.getFamilyMembersList(this.clientData);
+      !this.customerOverview.familyMemberList ? this.getFamilyMembersList(this.clientData) : this.getFamilyMembersListRes(this.customerOverview.familyMemberList);
       this.enumDataService.searchClientList();
     } else {
       this.Tab = "Tab2"
@@ -102,42 +105,55 @@ export class OverviewProfileComponent implements OnInit {
     };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {
-        if (data == undefined) {
-          return;
-        } else {
-          this.letsideBarLoader = false;
-          // this.authService.setClientData(data);
-          if (data.mobileList && data.mobileList.length > 0 && data.mobileList[0].mobileNo !== 0) {
-            data.mobileNo = data.mobileList[0].mobileNo;
-            const obj = {
-              advisorId: AuthService.getAdvisorId(),
-              isdCodeId: data.mobileList[0].isdCodeId,
-              mobileNo: data.mobileNo
-            };
-            this.clientSuggeService.setSuggestionListUsingMobile(obj);
-          }
-          if (data.emailList && data.emailList.length > 0) {
-            data.email = data.emailList[0].email;
-            const obj = {
-              advisorId: AuthService.getAdvisorId(),
-              email: data.email
-            };
-            this.clientSuggeService.setSuggestionListUsingEmail(obj);
-          }
-          (data.martialStatusId == 1 || data.martialStatusId == 0) ? data.martialStatus = 'Married' : (data.martialStatusId == 2) ? data.martialStatus = 'Unmarried' : (data.martialStatusId == 0) ? data.martialStatus = 'N/A' : data.martialStatus = 'Other';
-          (data.genderId == 1) ? data.gender = 'Male' : (data.genderId == 2) ? data.gender = 'Female' : (data.genderId == 3) ? data.gender = 'Other' : data.gender = 'N/A';
-          this.clientOverviewData = data;
-          this.subInjectService.addSingleProfile(this.clientOverviewData.displayName);
-          AuthService.setClientProfilePic(this.clientOverviewData.profilePicUrl);
-          this.authService.setClientData(data);
-          this.calculateAge(this.clientOverviewData.dateOfBirth);
-        }
+        this.getClientDataResponse(data);
       },
       err => {
         console.error(err);
         this.hasError = true;
       }
     );
+  }
+
+  getClientDataResponse(data) {
+    this.customerOverview.clientData = data;
+    if (data == undefined) {
+      return;
+    } else {
+      this.letsideBarLoader = false;
+      // this.authService.setClientData(data);
+      if (data.mobileList && data.mobileList.length > 0 && data.mobileList[0].mobileNo !== 0) {
+        data.mobileNo = data.mobileList[0].mobileNo;
+        const obj = {
+          advisorId: AuthService.getAdvisorId(),
+          isdCodeId: data.mobileList[0].isdCodeId,
+          mobileNo: data.mobileNo
+        };
+        if (this.customerOverview.suggestedClientListUsingMobile) {
+          this.clientSuggeService.setSuggestionListUsingMobileRes(this.customerOverview.suggestedClientListUsingMobile)
+        } else {
+          this.clientSuggeService.setSuggestionListUsingMobile(obj);
+        }
+      }
+      if (data.emailList && data.emailList.length > 0) {
+        data.email = data.emailList[0].email;
+        const obj = {
+          advisorId: AuthService.getAdvisorId(),
+          email: data.email
+        };
+        if (this.customerOverview.suggestedClientListUsingEmail) {
+          this.clientSuggeService.setSuggestionListUsingEmailRes(this.customerOverview.suggestedClientListUsingEmail)
+        } else {
+          this.clientSuggeService.setSuggestionListUsingEmail(obj);
+        }
+      }
+      (data.martialStatusId == 1 || data.martialStatusId == 0) ? data.martialStatus = 'Married' : (data.martialStatusId == 2) ? data.martialStatus = 'Unmarried' : (data.martialStatusId == 0) ? data.martialStatus = 'N/A' : data.martialStatus = 'Other';
+      (data.genderId == 1) ? data.gender = 'Male' : (data.genderId == 2) ? data.gender = 'Female' : (data.genderId == 3) ? data.gender = 'Other' : data.gender = 'N/A';
+      this.clientOverviewData = data;
+      this.subInjectService.addSingleProfile(this.clientOverviewData.displayName);
+      AuthService.setClientProfilePic(this.clientOverviewData.profilePicUrl);
+      this.authService.setClientData(data);
+      this.calculateAge(this.clientOverviewData.dateOfBirth);
+    }
   }
 
   openAgePopup() {
@@ -162,27 +178,7 @@ export class OverviewProfileComponent implements OnInit {
     };
     this.cusService.getFamilyMembers(obj).subscribe(
       data => {
-        if (data && data.length > 0) {
-          this.duplicateFlag = data.map(element => {
-            return;
-          });
-          data.forEach(element => {
-            if (element.mobileList && element.mobileList.length > 0 && element.mobileList[0].mobileNo !== 0) {
-              element.mobileNo = element.mobileList[0].mobileNo;
-            }
-            if (element.emailList && element.emailList.length > 0) {
-              element.email = element.emailList[0].email;
-            }
-            if (element.name.length > 22) {
-              element.shortName = element.name.substr(0, element.name.indexOf(' '));
-            }
-          });
-          this.familyMemberList = data;
-          this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
-          console.log(this.familyMemberList);
-        } else {
-          this.familyMemberList = undefined;
-        }
+        this.getFamilyMembersListRes(data);
       },
       err => {
         this.familyMemberList = undefined;
@@ -190,6 +186,32 @@ export class OverviewProfileComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  getFamilyMembersListRes(data) {
+    this.customerOverview.familyMemberList = data;
+    this.customerOverview.documentFamilyMemberList = data;
+    if (data && data.length > 0) {
+      this.duplicateFlag = data.map(element => {
+        return;
+      });
+      data.forEach(element => {
+        if (element.mobileList && element.mobileList.length > 0 && element.mobileList[0].mobileNo !== 0) {
+          element.mobileNo = element.mobileList[0].mobileNo;
+        }
+        if (element.emailList && element.emailList.length > 0) {
+          element.email = element.emailList[0].email;
+        }
+        if (element.name.length > 22) {
+          element.shortName = element.name.substr(0, element.name.indexOf(' '));
+        }
+      });
+      this.familyMemberList = data;
+      this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+      console.log(this.familyMemberList);
+    } else {
+      this.familyMemberList = undefined;
+    }
   }
 
   getAddressList(data) {
@@ -200,13 +222,7 @@ export class OverviewProfileComponent implements OnInit {
     };
     this.cusService.getAddressList(obj).subscribe(
       data => {
-        console.log(data);
-        if (data && data.length > 0) {
-          this.addressList = data;
-        } else {
-          this.addressList == undefined;
-        }
-        this.adressFlag = false;
+        this.getAddressListResponse(data);
       },
       err => {
         this.adressFlag = false;
@@ -214,6 +230,17 @@ export class OverviewProfileComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  getAddressListResponse(data) {
+    console.log(data);
+    if (data && data.length > 0) {
+      this.customerOverview.addressList = data;
+      this.addressList = data;
+    } else {
+      this.addressList == undefined;
+    }
+    this.adressFlag = false;
   }
 
   getDematList(data) {
@@ -224,12 +251,7 @@ export class OverviewProfileComponent implements OnInit {
     };
     this.cusService.getDematList(obj).subscribe(
       data => {
-        this.dematFlag = false;
-        console.log(data);
-        if (data && data.length > 0) {
-          this.dematList = data;
-          this.selectedDemat = data[0];
-        }
+        this.getDematListResponse(data);
       }, err => {
         this.dematFlag = false;
         this.dematList = undefined;
@@ -237,6 +259,16 @@ export class OverviewProfileComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  getDematListResponse(data) {
+    this.dematFlag = false;
+    console.log(data);
+    if (data && data.length > 0) {
+      this.customerOverview.dematList = data;
+      this.dematList = data;
+      this.selectedDemat = data[0];
+    }
   }
 
   calculateAge(data) {
@@ -258,16 +290,7 @@ export class OverviewProfileComponent implements OnInit {
     }];
     this.cusService.getBankList(obj).subscribe(
       data => {
-        this.bankFlag = false;
-        console.log(data);
-        if (data && data.length > 0) {
-          this.bankList = data;
-          this.bankList.forEach(singleBank => {
-            singleBank.accountTypeName = (singleBank.accountType == '1') ? 'Saving A/c' : (singleBank.accountType == '2') ? 'Current A/c' : (singleBank.accountType == '3') ? 'NRE' : (singleBank.accountType == '4') ? 'NRO' : 'Cash credit A/c';
-            singleBank.shortAddress = singleBank.address ? singleBank.address.city ? singleBank.address.city : '' : '';
-          });
-          this.selectedBankData = data[0];
-        }
+        this.getBankListResponse(data);
       },
       err => {
         this.bankFlag = false;
@@ -276,6 +299,20 @@ export class OverviewProfileComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  getBankListResponse(data) {
+    this.bankFlag = false;
+    console.log(data);
+    if (data && data.length > 0) {
+      this.customerOverview.bankList = data;
+      this.bankList = data;
+      this.bankList.forEach(singleBank => {
+        singleBank.accountTypeName = (singleBank.accountType == '1') ? 'Saving A/c' : (singleBank.accountType == '2') ? 'Current A/c' : (singleBank.accountType == '3') ? 'NRE' : (singleBank.accountType == '4') ? 'NRO' : 'Cash credit A/c';
+        singleBank.shortAddress = singleBank.address ? singleBank.address.city ? singleBank.address.city : '' : '';
+      });
+      this.selectedBankData = data[0];
+    }
   }
 
 

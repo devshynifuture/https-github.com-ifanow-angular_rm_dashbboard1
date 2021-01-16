@@ -411,6 +411,10 @@ export class AddPoTdComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     if (this.editApi) {
       this.eventService.openSnackBar("Updated successfully!", "Dismiss")
     } else {
