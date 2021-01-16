@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
   roles: any[];
   isLoading: boolean = true;
   counter = 0;
+  tabviewshow: any;
   hasError = false;
   @Input() hideLabel;
   constructor(
@@ -57,6 +58,10 @@ export class UsersComponent implements OnInit {
   }
 
   addEditTeamMember(data, add_flag) {
+    if (window.innerWidth <= 1024) {
+      this.tabviewshow = 'open50'
+    }
+    else { this.tabviewshow = 'open35' }
     const dataObj = {
       mainData: data || {},
       is_add_call: add_flag,
@@ -65,7 +70,7 @@ export class UsersComponent implements OnInit {
       flag: 'add-ARI-RIA-details',
       data: dataObj,
       id: 1,
-      state: 'open35',
+      state: this.tabviewshow,
       componentName: NewTeamMemberComponent
     };
     const sidebar = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

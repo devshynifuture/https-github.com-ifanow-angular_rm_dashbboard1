@@ -1,0 +1,264 @@
+<div class="pt-150" [formGroup]="accountBillingForm">
+
+    <div class="row">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+            <h5 class="m-0">Customer Type</h5>
+        </div>
+        <div class="col-md-4 p-0 customerTypeRadio mob-text-center">
+
+            <mat-radio-group class="d-block clientmobs f-14" formControlName="customerType">
+                <mat-radio-button
+                    [ngClass]="{'b-a-custom': accountBillingForm.get('customerType').value=='1','text-primary':accountBillingForm.get('customerType').value=='1','borderRadio':accountBillingForm.get('customerType').value=='2'}"
+                    value="1">Business </mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'b-a-custom': accountBillingForm.get('customerType').value=='2','text-primary':accountBillingForm.get('customerType').value=='2','borderRadio text-custom':accountBillingForm.get('customerType').value=='1'}"
+                    value="2">Individual </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+
+
+
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
+            <h5 class="m-0">Primary Contact </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" #primaryContact class="form-control" matInput formControlName="primaryContact">
+                    <mat-hint align="end">{{primaryContact.value.length}}/ 20</mat-hint>
+                    <mat-error class=" pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4 full-end">
+            <h5 class="m-0">Company Name </h5>
+        </div>
+        <div class="col-md-3 p-0  ">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" #customerName class="form-control" matInput formControlName="customerName">
+                    <mat-hint align="end">{{customerName.value.length}}/ 20</mat-hint>
+                    <mat-error class=" pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
+            <h5 class="m-0">Customer Email </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input type="text" placeholder="Enter email Id" class="form-control" matInput
+                        formControlName="cusEmail">
+                    <mat-error class=" pt-4" *ngIf="accountBillingForm.get('cusEmail').errors?.required">This
+                        field is required</mat-error>
+                    <mat-error class=" pt-4" *ngIf="accountBillingForm.get('cusEmail').errors?.pattern">Please
+                        enter valid email</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
+            <h5 class="m-0">Customer Display Name </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" #cusDispName class="form-control" matInput formControlName="cusDispName">
+                    <mat-hint align="end">{{cusDispName.value.length}}/ 20</mat-hint>
+                    <mat-error class=" pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4 full-end">
+            <h5 class="m-0">Customer Phone </h5>
+        </div>
+        <div class="col-md-3 remove-top p-0 mob-text-center">
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
+                    <input matInput #cusPhone formControlName="cusPhone" class="form-control" maxLength="10"
+                        [maxLength]="10" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation>
+                    <mat-hint align="end" class="">{{cusPhone.value.length}}/10
+                    </mat-hint>
+                    <mat-error class=" pt-4" *ngIf="accountBillingForm.get('cusPhone').errors?.required">This
+                        field is required</mat-error>
+                    <mat-error class=" pt-4"
+                        *ngIf="accountBillingForm.get('cusPhone').errors?.maxlength || accountBillingForm.get('cusPhone').errors?.minlength || accountBillingForm.get('cusPhone').errors?.pattern">
+                        Please enter valid mobile number</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
+            <h5 class="m-0">GST Treatment  </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control" matInput formControlName="gstTreatment">
+                        <mat-option value="option1">Register
+                        </mat-option>
+
+                        <mat-option value="option3">Unregister</mat-option>
+                    </mat-select>
+                    <mat-error class=" pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4 full-end">
+            <h5 class="m-0">GST Identification Number (GSTIN)
+            </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field appearance="standard" [floatLabel]="'never'">
+                    <input type="text" #gstn class="form-control" matInput formControlName="gstNo">
+                    <mat-hint align="end">{{gstn.value.length}}/ 30</mat-hint>
+                    <mat-error class=" pt-4" *ngIf="accountBillingForm.get('gstNo').errors?.required">This field
+                        is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4   full-end">
+            <h5 class="m-0">Place of supply
+            </h5>
+        </div>
+        <div class="col-md-3  p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" #supplyPlace class="form-control" matInput formControlName="supplyPlace">
+                    <mat-hint align="end">{{supplyPlace.value.length}}/ 20</mat-hint>
+                    <mat-error class=" pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pt-32">
+        <div class="col-md-4  full-end">
+            <h5 class="m-0">PAN Number </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <!-- <mat-form-field appearance="standard" floatLabel="never">
+                    <input type="text" placeholder="Enter PAN" #pan class="form-control" matInput formControlName="panNumber">
+                    <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+
+                </mat-form-field> -->
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #pan (input)="toUpperCase(accountBillingForm.get('panNumber'),$event)"
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="off"
+                        class="form-control" formControlName="panNumber" matInput maxlength="10"
+                        placeholder="Enter pan">
+                    <mat-error *ngIf="accountBillingForm.get('panNumber').errors?.required">This field is required
+                    </mat-error>
+                    <mat-error *ngIf="accountBillingForm.get('panNumber').errors?.pattern">Invalid pan
+                    </mat-error>
+                    <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-32">
+        <div class="col-md-4   full-end">
+            <h5 class="m-0">Address </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" #address class="form-control" matInput formControlName="address">
+                    <mat-hint align="end">{{address.value.length}}/ 40</mat-hint>
+
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-28">
+        <div class="col-md-4  full-end">
+            <h5 class="m-0">City </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" class="form-control" matInput formControlName="city">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-28">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+            <h5 class="m-0">State </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" class="form-control" matInput formControlName="state">
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-28">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+            <h5 class="m-0">Country/Region </h5>
+        </div>
+        <div class="col-md-3 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" class="form-control" matInput formControlName="contry">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-28">
+        <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+            <h5 class="m-0">ZIP Code </h5>
+        </div>
+        <div class="col-md-2 p-0 mob-text-center">
+            <div class="form-group remove-top mb-0">
+                <mat-form-field>
+                    <input type="text" class="form-control" matInput formControlName="zip">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+</div>

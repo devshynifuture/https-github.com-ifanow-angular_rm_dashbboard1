@@ -26,6 +26,7 @@ export class PeopleLeadsComponent implements OnInit {
   advisorId: any;
   getOrgData: any;
   userInfo: any;
+  tabviewshow: any;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('leadTableSort', { static: false }) leadTableSort: MatSort;
   reportDate = new Date();
@@ -105,6 +106,10 @@ export class PeopleLeadsComponent implements OnInit {
     return obj;
   }
   open(data, flag) {
+    if (window.innerWidth <= 1024) {
+      this.tabviewshow = 'open80'
+    }
+    else { this.tabviewshow = 'open50' }
     let component;
     if (flag == 'lead') {
       if (data == null) {
@@ -129,7 +134,7 @@ export class PeopleLeadsComponent implements OnInit {
       flag,
       id: 1,
       data,
-      state: 'open50',
+      state: this.tabviewshow,
       componentName: component,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
