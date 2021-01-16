@@ -1,12 +1,17 @@
 <div class="pt-16 pb-10 pl-24 pr-24">
     <div class="row " *ngIf="hideCount == false">
-        <div class="col-md-12 p-0">
+
+        <div class="col-md-10">
             <h4 class="f-20 m-0 roboto f-500 ">What this wizard does?</h4>
-            <div class="text-right">
-                <div class="wrapper-12">
-                    <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
-                </div>
+
+        </div>
+        <div class="col-md-2 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p v-middle" (click)="close()"> clear</i>
             </div>
+        </div>
+
+        <div class="col-md-12 p-0">
             <p class="f-16 roboto f-400 pt-20">This wizard will intelligently identify SIPs which are correct and mark
                 them
                 as
