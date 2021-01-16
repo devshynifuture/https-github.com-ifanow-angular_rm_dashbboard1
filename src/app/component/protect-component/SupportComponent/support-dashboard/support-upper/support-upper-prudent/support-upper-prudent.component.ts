@@ -164,6 +164,7 @@ export class SupportUpperPrudentComponent implements OnInit {
         if (res) {
           console.log(res);
           element.isMapped = false;
+          this.getMappedUnmappedPrudentList()
         }
       })
   }
