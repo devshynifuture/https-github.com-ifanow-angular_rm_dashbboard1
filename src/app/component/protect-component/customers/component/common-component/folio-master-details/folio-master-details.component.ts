@@ -12,6 +12,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   inputData: any;
   folioDetails = [];
   isLoading: boolean;
+  isNomineeLoading = false;
   nomineeArray = [];
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) { }
@@ -35,14 +36,15 @@ export class FolioMasterDetailsComponent implements OnInit {
       data => this.getFolioMasterResponse(data), (error) => {
         this.isLoading = false;
         this.folioDetails = [];
-
       }
     );
   }
 
   onTabChanged(event) {
     if (event.index == 2) {
-      this.getNomineeDetailsFolioSchemeWise();
+      if (this.nomineeArray.length == 0) {
+        this.getNomineeDetailsFolioSchemeWise();
+      }
     }
     console.log(this.inputData);
   }
@@ -52,8 +54,10 @@ export class FolioMasterDetailsComponent implements OnInit {
       folioNumber: this.inputData.folioNumber,
       schemeCode: this.inputData.schemeCode
     }
+    this.isNomineeLoading = true;
     this.custumService.getFolioSchemeWiseNomineeDetails(data)
       .subscribe(res => {
+        this.isNomineeLoading = false;
         if (res) {
           const decodedRes = JSON.parse(atob(res['payLoad']));
           console.log("nominee daata", decodedRes);
@@ -63,6 +67,7 @@ export class FolioMasterDetailsComponent implements OnInit {
         }
       }, err => {
         this.nomineeArray = [];
+        this.isNomineeLoading = true
         console.error(err);
         this.eventService.openSnackBar("Something went wrong", 'DISMISS');
       })
