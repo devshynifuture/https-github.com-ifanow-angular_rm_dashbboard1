@@ -1,14 +1,16 @@
-<div class="row bb-1 popup-header-fix w-35">
-    <div class="col-md-10 p-0">
-        <h4 class="mb-0 l-22 wrapper-20 pr-0">{{data.is_add_call ? 'Add' : 'Edit'}} Team member</h4>
-    </div>
-    <div class="col-md-2 text-right" (click)="close()">
-        <i class="material-icons pt-20 c-p pr-16">
-            clear
-        </i>
+<div class="tabViewUser">
+    <div class="row bb-1 popup-header-fix w-35">
+        <div class="col-md-10 p-0">
+            <h4 class="mb-0 l-22 wrapper-20 pr-0">{{data.is_add_call ? 'Add' : 'Edit'}} Team member</h4>
+        </div>
+        <div class="col-md-2 text-right" (click)="close()">
+            <i class="material-icons pt-20 c-p pr-16">
+                clear
+            </i>
+        </div>
     </div>
 </div>
-<div class="pt-90 pl-28 pb-90 pr-28 mob-pl-0 mob-pr-0 remove-top" [formGroup]="teamMemberFG" *ngIf="!isLoading">
+<div class="pt-90 pl-28 pb-90  pr-28 mob-pl-0 mob-pr-0 remove-top" [formGroup]="teamMemberFG" *ngIf="!isLoading">
     <div class="row pt-28">
         <div class="col-md-3 col-lg-3 text-right pr-0 mob-pl-10 mob-pr-10 mob-text-left full-end">
             <h5 class="m-0">Full name</h5>
@@ -118,16 +120,19 @@
     </div>
 </div>
 
-<div class="bottom-fixed wrapper-12 w-35">
-    <div class="row">
-        <div class="col-md-4">
-            <!-- <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5> -->
-        </div>
-        <div class="col-md-8 right text-right">
-            <!-- <button mat-button class="btn-bottom br-0 text-inherit"
+<div class="tabViewUser">
+    <div class="bottom-fixed wrapper-12 w-35">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5> -->
+            </div>
+            <div class="col-md-8 right text-right">
+                <!-- <button mat-button class="btn-bottom br-0 text-inherit"
                 (click)="save()">{{data.is_add_call ? 'SEND INVITE' : 'SAVE'}}</button> -->
-            <app-progress-button *ngIf="!isLoading" (btnClick)="save()" class="br-0 text-inherit  "
-                [options]="barButtonOptions">
-            </app-progress-button>
+                <app-progress-button *ngIf="!isLoading" (btnClick)="save()" class="br-0 text-inherit  "
+                    [options]="barButtonOptions">
+                </app-progress-button>
+            </div>
         </div>
     </div>
+</div>
