@@ -494,11 +494,63 @@ ul.mf-import-second-point{
 
 
 
+.profileOverview {
+  .vertical-menu {
+    // height: 100vh;
+    width: 16.7%;
+    height: 100%;
+    display: block;
+    text-align: left;
+    position: fixed;
+  }
+
+  li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0px 0 24px !important;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+}
+
+
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
 
   .tabViewSideNav {
     display: none !important;
   }
+
+  .tab-bottom-view .bottom-fixed-50 {
+    width: 80%;
+  }
+
+.profileOverview {
+  .vertical-menu {
+    // height: 100vh;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    text-align: left;
+    position: inherit;
+    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  li {
+    height: auto;
+    line-height: inherit;
+    padding: 0 0px 0 24px !important;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 0px;
+    width: 15%;
+    display: flex;
+    align-items: center;
+  }
+}
 
   .tabMarBtm {
     margin-bottom: 10px;
@@ -511,6 +563,9 @@ ul.mf-import-second-point{
     .mat-form-field {
       width: 300px;
     }
+  }
+  .advisorHomeBtn .tabDisplay {
+    display: none !important;
   }
 
   .tabMenuVeiw {
@@ -875,7 +930,7 @@ ul.mf-import-second-point{
   #investmentPlan,
   #ui-overview-subscription,
   #ui-documents-overview,
-  #ui-overview-profile,
+  
   #ui-activity {
 
     .vertical-menu {
@@ -974,7 +1029,6 @@ ul.mf-import-second-point{
   #investmentPlan,
   #ui-overview-subscription,
   #ui-documents-overview,
-  #ui-overview-profile,
   #ui-activity {
 
     .vertical-menu {
@@ -1033,7 +1087,6 @@ ul.mf-import-second-point{
   #investmentPlan,
   #ui-overview-subscription,
   #ui-documents-overview,
-  #ui-overview-profile,
   #ui-activity {
 
     .vertical-menu {
@@ -1093,11 +1146,7 @@ ul.mf-import-second-point{
     background-color: #E4E8EB;
   }
 }
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  .advisorHomeBtn .tabDisplay {
-    display: none !important;
-  }
-}
+ 
 .overflow-myfeed{
   // width: 1200px !important;
   overflow-x: auto !important;
