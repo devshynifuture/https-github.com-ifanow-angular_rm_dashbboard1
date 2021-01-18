@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import { ColorString } from 'highcharts';
@@ -18,6 +18,7 @@ import { BackOfficeService } from "../../../../../AdviserComponent/backOffice/ba
 import { ChangeDetectorRef } from "@angular/core/src/metadata/*";
 import { SettingsService } from "../../../../../AdviserComponent/setting/settings.service";
 import { CustomerOverviewService } from '../../customer-overview/customer-overview.service';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -112,7 +113,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   families: any[] = [];
   cashFlowDescNaming: any[] = [];
   assetAllocationRes: boolean;
-
+  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
   constructor(
     public eventService: EventService,
     private cusService: CustomerService,
@@ -131,6 +132,13 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       bankfilter: ['all'],
       familyfilter: ['all']
     });
+
+    if (document.documentElement.clientWidth <= 768) {
+      this.sidenav.close();
+    } else {
+      this.sidenav.open();
+    }
+
     this.userData = AuthService.getUserInfo();
     console.log('Portfolio summary userData : ', this.userData);
     this.asOnDate = new Date().getTime();
@@ -146,6 +154,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.subscribeToCashflowChanges();
     this.cashFlowDescNaming = this.enumService.getAssetNamings();
   }
+
+  // onResize(event) {
+  //   if (event.target.innerWidth <= 768) {
+  //     this.sidenav.close();
+  //   } else {
+  //     this.sidenav.open();
+  //   }
+  // }
 
   subscribeToCashflowChanges() {
     this.cashFlowFG.valueChanges.subscribe(() => {
