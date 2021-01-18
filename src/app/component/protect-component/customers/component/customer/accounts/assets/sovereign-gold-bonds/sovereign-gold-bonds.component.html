@@ -14,8 +14,8 @@
         <img src="assets/images/svg/download-bordered.svg">
       </a>
       <mat-menu #menu5="matMenu">
-        <button (click)="pdf('Others assets')" mat-menu-item>PDF</button>
-        <button (click)="Excel('Others assets')" mat-menu-item>XLS</button>
+        <button (click)="pdf('Sovereign gold bonds')" mat-menu-item>PDF</button>
+        <button (click)="Excel('Sovereign gold bonds')" mat-menu-item>XLS</button>
       </mat-menu>
 
       <button mat-stroked-button class="btn-primary ml-10 addon v-middle" (click)="open('othersAsset','')"> ADD
@@ -47,7 +47,7 @@
           <td mat-footer-cell *matFooterCellDef class="br text-right pr-20 w-25 f-600 "> Total</td>
         </ng-container>
 
-        <ng-container matColumnDef="value">
+        <ng-container matColumnDef="cvalue">
           <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
             class="br w-15 right-hc text-right hide-arrow"> Current value
           </th>
@@ -63,7 +63,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="interest">
-          <th mat-sort-header="investedAmt" mat-header-cell *matHeaderCellDef
+          <th mat-sort-header="interestdAmt" mat-header-cell *matHeaderCellDef
             class="br w-15 right-hc text-right hide-arrow">
             Interest amount
           </th>
@@ -75,7 +75,7 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="amountInvested">
-          <th mat-sort-header="purchaseAmt" mat-header-cell *matHeaderCellDef
+          <th mat-sort-header="investedAmt" mat-header-cell *matHeaderCellDef
             class="br w-15 right-hc text-right hide-arrow">
             Invested Amount
           </th>
@@ -109,7 +109,7 @@
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
-        <ng-container matColumnDef="mDate">
+        <ng-container matColumnDef="mdate">
           <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef
             class="br w-15 right-hc text-right hide-arrow">
             Maturity date
@@ -120,12 +120,11 @@
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
-        <ng-container matColumnDef="bond">
-          <th mat-sort-header="purchaseAmt" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+        <ng-container matColumnDef="bondseries">
+          <th mat-sort-header="purchaseAmt" mat-header-cell *matHeaderCellDef class="br w-25">
             Bond Series
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-25">
             <div class="bar" *ngIf="element.bond">{{element.bond}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
@@ -148,10 +147,10 @@
 
             <mat-menu #menu4="matMenu">
               <button mat-menu-item (click)="open('realEstate',element)">Edit</button>
-              <button mat-menu-item (click)="detailedViewRealEstate(element)">Detailed View </button>
+              <button mat-menu-item (click)="detailedView(element)">Detailed View </button>
               <button mat-menu-item>Upload file
-                <input (change)="fetchData('Real Estate',$event,element,8)" class="uploadInput" id="file-4" multiple
-                  type="file">
+                <input (change)="fetchData('Sovereign gold bonds',$event,element,8)" class="uploadInput" id="file-4"
+                  multiple type="file">
               </button>
               <!-- <button mat-menu-item>Activity</button> -->
               <button mat-menu-item (click)="deleteModal('OTHER ASSETS',element)">Delete</button>

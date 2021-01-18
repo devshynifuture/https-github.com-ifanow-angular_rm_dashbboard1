@@ -15,6 +15,8 @@ import { FileUploadServiceService } from '../file-upload-service.service';
 import { EnumServiceService } from '../../../../../../../../services/enum-service.service';
 import { AssetValidationService } from '../asset-validation.service';
 import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AddSovereignGoldBondsComponent } from './add-sovereign-gold-bonds/add-sovereign-gold-bonds.component';
+import { DetailedViewSovereignGoldBondsComponent } from './detailed-view-sovereign-gold-bonds/detailed-view-sovereign-gold-bonds.component';
 @Component({
   selector: 'app-sovereign-gold-bonds',
   templateUrl: './sovereign-gold-bonds.component.html',
@@ -36,7 +38,7 @@ export class SovereignGoldBondsComponent implements OnInit {
   @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
   @Input() finPlanObj: any;//finacial plan pdf input
   @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
-  displayedColumns3 = ['no', 'owner', 'value', 'interest', 'amountInvested', 'issueDate', 'mDate', 'bond', 'status', 'icons'];
+  // displayedColumns3 = ['no', 'owner', 'value', 'interest', 'amountInvested', 'issueDate', 'mDate', 'bond', 'status', 'icons'];
   excelData: any[];
   noData: string;
   fileUploadData: any;
@@ -60,7 +62,7 @@ export class SovereignGoldBondsComponent implements OnInit {
 
 
   }
-  displayedColumns = ['no', 'owner', 'cvalue', 'rate', 'amt', 'sdate', 'mvalue', 'mdate', 'bondseries', 'status', 'icons'];
+  displayedColumns3 = ['no', 'owner', 'cvalue', 'interest', 'amountInvested', 'issueDate', 'mvalue', 'mdate', 'bondseries', 'status', 'icons'];
 
   ngOnInit() {
     this.reportDate = new Date();
@@ -77,6 +79,15 @@ export class SovereignGoldBondsComponent implements OnInit {
     }
   }
 
+  Excel(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, tableTitle);
+  }
+
+  pdf(tableTitle) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.pdfGen.generatePdf(rows, tableTitle);
+  }
   getGoldBondsData() {
     this.isLoading = true;
     const obj = {
@@ -133,6 +144,142 @@ export class SovereignGoldBondsComponent implements OnInit {
     // this.loaded.emit(this.realEstateTemp.nativeElement);
   }
 
+  open(value, data) {
+    let popupHeaderText = !!data ? 'Edit sovereign gold bonds' : 'Add sovereign gold bonds';
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: AddSovereignGoldBondsComponent,
+      popupHeaderText: popupHeaderText,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // if (data) {
+            this.getGoldBondsData();
+            // }
+            // else {
+            //   if (!this.dataList) {
+            //     this.dataList = { assetList: [sideBarData.data] };
+            //     this.dataList['totalCurrentValue'] = sideBarData.data.marketValue;
+            //     this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
+            //   }
+            //   else {
+            //     this.dataList.assetList.push(sideBarData.data)
+            //     this.dataList.totalCurrentValue += sideBarData.data.marketValue;
+            //     this.dataList.sumOfPurchaseValue += sideBarData.data.purchaseValue;
+            //   }
+            //   this.getOthersAssetsRes(this.dataList);
+            // }
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+
+  detailedView(data) {
+    const fragmentData = {
+      flag: 'DetailedViewRealEstateComponent',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: DetailedViewSovereignGoldBondsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+  fetchData(value, fileName, element, type) {
+    element['subCatTypeId'] = type;
+    this.isLoadingUpload = true;
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: element.clientId,
+      familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
+      asset: value,
+      element: element
+    };
+    this.myFiles = [];
+    for (let i = 0; i < fileName.target.files.length; i++) {
+      this.myFiles.push(fileName.target.files[i]);
+    }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName;
+      this.fileUpload.uploadFile(fileName);
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false;
+    }, 7000);
+  }
+
+  deleteModal(value, element) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let obj = {
+          "otherAssetId": element.id
+        }
+        this.cusService.deleteOtherAssets(element.id).subscribe(
+          data => {
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
+            dialogRef.close();
+
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'otherAsset' })
+            // this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            // this.dataList.totalCurrentValue -= element.marketValue;
+            // // this.dataList.sumOfPurchaseValue += element.amountInvested;
+            // this.getOthersAssetsRes(this.dataList);
+            // this.datasource3.data = this.dataList;
+            this.getGoldBondsData();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 }
 
 const ELEMENT_DATA3 = {
