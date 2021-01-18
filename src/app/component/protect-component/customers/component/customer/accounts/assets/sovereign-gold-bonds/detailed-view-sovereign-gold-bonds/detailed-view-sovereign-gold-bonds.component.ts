@@ -12,7 +12,7 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./detailed-view-sovereign-gold-bonds.component.scss']
 })
 export class DetailedViewSovereignGoldBondsComponent implements OnInit {
-  npsData: any;
+  data: any;
   schemeList: any = [];
   isLoading = false;
 
@@ -37,7 +37,7 @@ export class DetailedViewSovereignGoldBondsComponent implements OnInit {
 
     this.getGlobalList();
     this.isLoadingUpload = true;
-    this.fileUpload.getAssetsDoc(this.npsData).then((data) => {
+    this.fileUpload.getAssetsDoc(this.data).then((data) => {
       if (data != 0) {
         this.getMapDoc(data);
       }
@@ -69,7 +69,7 @@ export class DetailedViewSovereignGoldBondsComponent implements OnInit {
   docType: string;
   getMapDoc(docs) {
     docs.forEach((d, i) => {
-      if (d.documentId == this.npsData.id) {
+      if (d.documentId == this.data.id) {
         this.isLoadingUpload = false;
         this.docType = d.fileOgName.split('.').pop();
         this.doc = d;
