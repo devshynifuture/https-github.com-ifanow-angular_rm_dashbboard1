@@ -64,9 +64,9 @@
                 <div class="tabViewSelectMenu col-md-12 pr-8 text-right">
                     <mat-form-field>
                         <mat-select [(ngModel)]="viewMode" class="form-control select_menu">
-                            <mat-option value="" [value]="singleAssetType.viewmode"
+                            <mat-option [value]="singleAssetType.viewmode"
                                 *ngFor="let singleAssetType of assetSideBarData"
-                                (click)="viewMode =singleAssetType.viewmode;sidenavState = false;">
+                                (click)="goToRoute(singleAssetType);sidenavState = false;">
                                 {{ singleAssetType.name }}
                             </mat-option>
                         </mat-select>
