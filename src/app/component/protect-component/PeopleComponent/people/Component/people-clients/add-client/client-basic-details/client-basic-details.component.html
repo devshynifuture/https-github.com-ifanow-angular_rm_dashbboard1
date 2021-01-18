@@ -1,23 +1,24 @@
-<button *ngIf="fieldFlag=='familyMember'" mat-icon-button [matMenuTriggerFor]="menu" class="unmap-option c-p">
+<button *ngIf="fieldFlag=='familyMember' || fieldFlag=='client'" mat-icon-button [matMenuTriggerFor]="menu"
+    class="unmap-option c-p">
     <mat-icon>more_vert</mat-icon>
 </button>
 
-
-
 <mat-menu #menu="matMenu">
-    <button (click)="openUnmapPopupORNot()" mat-menu-item>
+    <button *ngIf="fieldFlag=='familyMember'" (click)="openUnmapPopupORNot()" mat-menu-item>
         <span>Unmap</span>
     </button>
-    <button (click)="openMoveFamilymemberToClient('Move')" mat-menu-item>
+    <button *ngIf="fieldFlag=='familyMember'" (click)="openMoveFamilymemberToClient('Move')" mat-menu-item>
         <span>Move family member</span>
     </button>
-    <button (click)="openMoveFamilymemberToClient('Merge')" mat-menu-item>
-        <span>Merge duplicate family member</span>
+    <button *ngIf="fieldFlag=='familyMember' || fieldFlag=='client'"
+        (click)="openMoveFamilymemberToClient('Merge',fieldFlag)" mat-menu-item>
+        <span>Merge duplicate {{fieldFlag=='familyMember'?'family member':'client'}}</span>
     </button>
-    <button (click)="promoteModal('')" mat-menu-item>
+    <button *ngIf="fieldFlag=='familyMember'" (click)="promoteModal('')" mat-menu-item>
         <span>Promote</span>
     </button>
-    <button *ngIf="keyInfoCapability.Delete" (click)="deleteModal('FAMILY MEMBER')" mat-menu-item>
+    <button *ngIf="keyInfoCapability.Delete && fieldFlag=='familyMember'" (click)="deleteModal('FAMILY MEMBER')"
+        mat-menu-item>
         <span>Delete</span>
     </button>
 </mat-menu>
@@ -391,7 +392,8 @@
             <div *ngIf="fieldFlag!='familyMember'" class="row pt-40 pb-28">
                 <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-12">Role</h5>
-                    <p class="m-0 f-12 text-custom mob-pt-10 mob-pb-5">The selected role decides<br class="mobile-none">
+                    <p class="m-0 f-12 text-custom mob-pt-10 mob-pb-5 lh-16">The selected role decides<br
+                            class="mobile-none">
                         what access the client has
                     </p>
                 </div>

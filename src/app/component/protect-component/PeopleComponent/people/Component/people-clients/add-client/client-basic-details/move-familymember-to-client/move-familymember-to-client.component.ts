@@ -41,10 +41,12 @@ export class MoveFamilymemberToClientComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  delayTime = 0.1;
   @Input() data;
   clientList: any;
   value: any;
   flag: any;
+  fieldFlag: any;
   constructor(private peopleService: PeopleService,
     private datePipe: DatePipe,
     private enumDataService: EnumDataService,
@@ -55,6 +57,7 @@ export class MoveFamilymemberToClientComponent implements OnInit {
   ngOnInit() {
     this.value = this.data.value;
     this.flag = this.data.flag;
+    this.fieldFlag = this.data.fieldFlag;
     this.barButtonOptions.text = this.flag;
     if (this.flag == 'Move') {
       this.clientList = this.enumDataService.getEmptySearchStateData().filter(element => element.clientId != this.data.clientId);
@@ -221,15 +224,29 @@ export class MoveFamilymemberToClientComponent implements OnInit {
       return
     }
     let obj;
-    if (this.selectedClientData.familyMemberId == 0) {
-      obj = {
-        familyMemberId: this.value.familyMemberId,
-        duplicateClientId: this.selectedClient.clientId
+    if (this.fieldFlag == 'familyMember') {
+      if (this.selectedClientData.familyMemberId == 0) {
+        obj = {
+          familyMemberId: this.value.familyMemberId,
+          duplicateClientId: this.selectedClient.clientId
+        }
+      } else {
+        obj = {
+          familyMemberId: this.value.familyMemberId,
+          duplicateFamilyMemberId: this.selectedClient.familyMemberId
+        }
       }
     } else {
-      obj = {
-        familyMemberId: this.value.familyMemberId,
-        duplicateFamilyMemberId: this.selectedClient.familyMemberId
+      if (this.selectedClientData.familyMemberId == 0) {
+        obj = {
+          clientId: this.value.clientId,
+          duplicateClientId: this.selectedClient.clientId
+        }
+      } else {
+        obj = {
+          clientId: this.value.clientId,
+          duplicateFamilyMemberId: this.selectedClient.familyMemberId
+        }
       }
     }
     this.barButtonOptions.active = true;
