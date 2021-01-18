@@ -62,7 +62,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ name </th>
                 <td mat-cell class="b-a" *matCellDef="let element">
                     <div class="bar">
-                        {{element.name}}
+                        {{(isLoading) ? '':element.name}}
                     </div>
                 </td>
             </ng-container>
@@ -72,7 +72,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ NAV </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.nav}}
+                        {{(isLoading) ? '':element.nav}}
                     </div>
                 </td>
             </ng-container>
@@ -98,7 +98,7 @@
 
                     </mat-form-field>
                     <div class="bar" *ngIf="isMapped == true">
-                        {{element.schemeName}}
+                        {{(isLoading) ? '':element.schemeName}}
                     </div>
                     <br>
                     <ng-container *ngIf="filteredSchemeError">
@@ -114,7 +114,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme code </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.schemeCode}}
+                        {{(isLoading) ? '':element.schemeCode}}
                     </div>
                 </td>
             </ng-container>
@@ -123,7 +123,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> AMFI code </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.amfiCode}}
+                        {{(isLoading) ? '':element.amfiCode}}
                     </div>
                 </td>
             </ng-container>
@@ -133,7 +133,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.nav}}
+                        {{(isLoading) ? '':element.nav}}
                     </div>
                 </td>
             </ng-container>
@@ -142,7 +142,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NAV date </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.navDate == ''?'':(element.navDate | date: 'dd/MM/yyyy')}}
+                        {{(isLoading) ? '':element.navDate == ''?'':(element.navDate | date: 'dd/MM/yyyy')}}
                     </div>
                 </td>
             </ng-container>
@@ -151,7 +151,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ count </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{element.njPrudentCount}}
+                        {{(isLoading) ? '':element.njPrudentCount}}
                     </div>
                 </td>
             </ng-container>
