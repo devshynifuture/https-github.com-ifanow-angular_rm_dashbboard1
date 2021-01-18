@@ -1271,7 +1271,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{plannerObj.liabilities ? '₹' :''}} <span appFormatNumber
                                             [value]="plannerObj.liabilities ? plannerObj.liabilities : '-'"></span>
                                     </td>
 
@@ -1296,11 +1296,15 @@
                                             <tr *ngFor="let element of dataSourceLiability">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                    <!-- <input type="checkbox" name="liability" id="liabilities"
+                                                        style="cursor: none"> -->
+                                                    <!-- <mat-checkbox class="disableCursor" [checked]="element.selected" style="cursor: none"
+                                                    #check (click)="$event.preventDefault()"> </mat-checkbox> -->
                                                     {{element.name}}
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    ₹
+                                                    {{element.total_loan_outstanding ? '₹' :''}}
                                                     <span>{{element.total_loan_outstanding ? formatNumber(element.total_loan_outstanding,0) :'-'}}</span>
                                                 </td>
                                                 <td
@@ -1333,7 +1337,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{plannerObj.dependantNeeds ? '₹' : ''}}<span appFormatNumber
                                             [value]="plannerObj.dependantNeeds ? plannerObj.dependantNeeds : '-'"></span>
                                     </td>
 
@@ -1358,11 +1362,13 @@
                                             <tr *ngFor="let element of dataSourceLifeInsurance">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    {{element.expenses}}
+                                                    <!-- <input type="checkbox" name="expense" id="dependantNeeds"
+                                                        style="cursor: none"> -->
+                                                    {{element.name}}
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    ₹{{element.amount ? formatNumber(element.amount,0) : '-'}}
+                                                    {{element.amount ? '₹' : ''}}<span>{{element.amount ? formatNumber(element.amount,0) : '-'}}</span>
                                                 </td>
                                                 <td
                                                     style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
@@ -1388,7 +1394,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{plannerObj.goalsMeet ? '₹' : ''}}<span appFormatNumber
                                             [value]="plannerObj.goalsMeet ? plannerObj.goalsMeet : '-'"></span>
                                     </td>
 
@@ -1415,7 +1421,8 @@
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                            ₹ <span>{{element.goalFV ? formatNumber(element.goalFV,0) : '-'}}</span>
+                                            {{element.goalFV ? '₹' : ''}}
+                                            <span>{{element.goalFV ? formatNumber(element.goalFV,0) : '-'}}</span>
                                         </td>
                                         <td
                                             style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
@@ -1443,7 +1450,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{plannerObj.GrossLifeinsurance ? '₹' : ''}} <span appFormatNumber
                                             [value]="plannerObj.GrossLifeinsurance ? plannerObj.GrossLifeinsurance : '-'"></span>
                                     </td>
 
@@ -1470,8 +1477,8 @@
                                         </td>
                                         <td
                                             style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                            <span appFormatNumber>
-                                                ₹{{element.amount ? formatNumber(element.amount,0) : '-'}} </span>
+                                            {{element.amount ? '₹' : ''}} <span appFormatNumber>
+                                                {{element.amount ? formatNumber(element.amount,0) : '-'}} </span>
                                         </td>
                                         <td
                                             style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
@@ -1498,7 +1505,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{plannerObj.incomeSource ? '₹' : ''}} <span appFormatNumber
                                             [value]="plannerObj.incomeSource ? plannerObj.incomeSource : '-'"></span>
                                     </td>
 
@@ -1527,8 +1534,8 @@
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    <span appFormatNumber>
-                                                        ₹{{element.amount ? formatNumber(element.amount,0) : '-'}}
+                                                    {{element.amount ? '₹' : ''}}<span appFormatNumber>
+                                                        {{element.amount ? formatNumber(element.amount,0) : '-'}}
                                                     </span>
                                                 </td>
                                                 <td
@@ -1560,7 +1567,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{plannerObj.existingLifeInsurance ? '₹' : ''}} <span appFormatNumber
                                             [value]="plannerObj.existingLifeInsurance ? plannerObj.existingLifeInsurance : '-'"></span>
                                     </td>
 
@@ -1589,8 +1596,8 @@
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    <span appFormatNumber>
-                                                        ₹{{element.amount ? formatNumber(element.amount,0) : '-'}}
+                                                    {{element.amount ? '₹' : ''}}<span appFormatNumber>
+                                                        {{element.amount ? formatNumber(element.amount,0) : '-'}}
                                                     </span>
                                                 </td>
                                                 <td
@@ -1621,7 +1628,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{plannerObj.existingAsset ? '₹' : ''}} <span appFormatNumber
                                             [value]="plannerObj.existingAsset ? plannerObj.existingAsset : '-'">
                                         </span>
                                     </td>
@@ -1651,8 +1658,9 @@
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                    {{element.currentValue ? '₹' : ''}}
                                                     <span appFormatNumber>
-                                                        ₹{{element.currentValue ? formatNumber(element.currentValue,0) : '-'}}
+                                                        {{element.currentValue ? formatNumber(element.currentValue,0) : '-'}}
                                                     </span>
                                                 </td>
                                                 <td
@@ -1685,7 +1693,7 @@
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-right: 0px;">
-                                        ₹ <span appFormatNumber
+                                        {{ plannerObj.additionalLifeIns ? '₹' : ''}} <span appFormatNumber
                                             [value]="plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : '-'"></span>
                                     </td>
 
@@ -1714,8 +1722,8 @@
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    <span appFormatNumber>
-                                                        ₹{{element.amount ? formatNumber(element.amount,0) : '-'}}
+                                                    {{element.amount ? '₹': ''}} <span appFormatNumber>
+                                                        {{element.amount ? formatNumber(element.amount,0) : '-'}}
                                                     </span>
                                                 </td>
                                                 <td

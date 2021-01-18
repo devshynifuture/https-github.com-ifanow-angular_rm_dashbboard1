@@ -65,6 +65,8 @@ export class AddSovereignGoldBondsComponent implements OnInit {
   _data: any;
   autoIncrement = 100;
   id: any;
+  flag: any;
+
   showErrorOwner = false;
   familyMemberId: any;
   ownerDataName: any;
@@ -73,6 +75,8 @@ export class AddSovereignGoldBondsComponent implements OnInit {
   ownerName: any;
   callMethod: any;
   adviceShowHeaderFooter = true;
+  @Input() popupHeaderText = 'Add Real estate';
+
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public custumService: CustomerService, private enumDataService: EnumDataService, private datePipe: DatePipe, public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private assetValidation: AssetValidationService,
@@ -340,7 +344,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
   }
 
   getGoldBond(data) {
-    // this.flag = data;
+    this.flag = data;
     if (data) {
       this.showMoreData = true;
     }
@@ -462,7 +466,132 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     }
   }
 
+  saveFormData() {
+    if (this.goldBondForm.invalid) {
+      // this.inputs.find(input => !input.ngControl.valid).focus();
+      this.goldBondForm.markAllAsTouched();
+      return;
+    } else {
+      if (!this.goldBondForm.get('hasMaturity').value) {
+        this.goldBondForm.get('maturityValue').setValue("");
+        this.goldBondForm.get('maturityDate').setValue(null);
+      }
+
+      if (!this.goldBondForm.get('hasRecurringContribution').value) {
+        this.goldBondForm.get('recurringContributionFrequency').setValue("");
+        this.goldBondForm.get('approxAmount').setValue(null);
+        this.goldBondForm.get('endDate').setValue(null);
+      }
+      this.barButtonOptions.active = true;
+      let obj = this.goldBondForm.value;
+      obj.hasMaturity = obj.hasMaturity ? 1 : 0;
+      obj.hasRecurringContribution = obj.hasRecurringContribution ? 1 : 0;
+      obj.currentValueAsonDate = obj.currentValueAsonDate ? this.datePipe.transform(obj.currentValueAsonDate, 'yyyy-MM-dd') : null;
+      obj.maturityDate = obj.maturityDate ? this.datePipe.transform(obj.maturityDate, 'yyyy-MM-dd') : null;
+      obj.endDate = obj.endDate ? this.datePipe.transform(obj.endDate, 'yyyy-MM-dd') : null;
+      obj.purchaseDate = obj.purchaseDate ? this.datePipe.transform(obj.purchaseDate, 'yyyy-MM-dd') : null;
+      obj.currentValue = parseInt(obj.currentValue);
+      obj.debtAssetAllocPerc = parseInt(obj.debtAssetAllocPerc);
+      obj.equityAssetAllocPerc = parseInt(obj.equityAssetAllocPerc);
+      obj.maturityValue = parseInt(obj.maturityValue);
+      obj.growthRate = parseInt(obj.growthRate);
+
+      obj.approxAmount = parseInt(obj.approxAmount);
+      obj.purchaseAmt = obj.purchaseAmt ? parseInt(obj.purchaseAmt) : null;
+      obj.recurringContributionFrequency = obj.recurringContributionFrequency ? parseInt(obj.recurringContributionFrequency) : null;
+      obj.getNomineeName.forEach((element, index) => {
+        if (element.name == '') {
+          this.removeNewNominee(index);
+        }
+      });
+      obj.getNomineeName = this.goldBondForm.value.getNomineeName;
+      obj['ownerList'] = this.goldBondForm.value.getCoOwnerName;
+      obj['nomineeList'] = this.goldBondForm.value.getNomineeName;
+      if (obj.id == undefined && this.flag != 'adviceRealEstate') {
+        delete obj['id'];
+        console.log(obj);
+        this.custumService.addOthersAssets(obj).subscribe(
+          data => this.addOthersAssetsRes(data), (error) => {
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error);
+          }
+        );
+      }
+      else {
+        console.log(obj);
+        this.custumService.editOthersAssets(obj).subscribe(
+          data => this.editOthersAssetsRes(data), (error) => {
+            this.barButtonOptions.active = false;
+            this.eventService.showErrorMessage(error);
+          }
+        );
+      }
+    }
+  }
+  addOthersAssetsRes(data) {
+    console.log(data);
+    if (data) {
+      // this.customerOverview.portFolioData = null;
+      // this.customerOverview.assetAllocationChart = null;
+      // this.customerOverview.summaryLeftsidebarData = null;
+      // this.customerOverview.aumGraphdata = null;
+      // this.customerOverview.assetAllocationChart = null;
+      // this.customerOverview.summaryCashFlowData = null;
+      console.log(data);
+      this.assetValidation.addAssetCount({ type: 'Add', value: 'otherAsset' })
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
+      this.eventService.openSnackBar('Added successfully!', 'OK');
+    } else {
+      this.eventService.openSnackBar('Error', 'Dismiss');
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
+    }
+    this.barButtonOptions.active = false;
+
+  }
+
+  editOthersAssetsRes(data) {
+    console.log(data);
+    if (data) {
+      console.log(data);
+      // this.customerOverview.portFolioData = null;
+      // this.customerOverview.assetAllocationChart = null;
+      // this.customerOverview.summaryLeftsidebarData = null;
+      // this.customerOverview.aumGraphdata = null;
+      // this.customerOverview.assetAllocationChart = null;
+      // this.customerOverview.summaryCashFlowData = null;
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+      this.eventService.openSnackBar('Updated successfully!', 'OK');
+    } else {
+      this.eventService.openSnackBar('Error', 'Dismiss');
+    }
+    this.barButtonOptions.active = false;
+  }
   close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+  }
+
+  getBank() {
+    if (this.enumService.getBank().length > 0) {
+      this.bankList = this.enumService.getBank();
+    }
+    else {
+      this.bankList = [];
+    }
+    console.log(this.bankList, "this.bankList2");
+  }
+
+
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.getCoOwner }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    });
+
   }
 }
