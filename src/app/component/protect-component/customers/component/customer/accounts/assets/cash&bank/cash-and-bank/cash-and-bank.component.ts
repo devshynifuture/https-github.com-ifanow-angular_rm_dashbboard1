@@ -279,6 +279,10 @@ export class CashAndBankComponent implements OnInit {
               dialogRef.close();
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'cashAndBank' })
               this.bankDataList = this.bankDataList.filter(x => x.id != element.id);
               this.bankAccountList.data = this.bankDataList;
@@ -292,6 +296,10 @@ export class CashAndBankComponent implements OnInit {
               dialogRef.close();
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'cashAndBank' })
               this.cashDataList = this.cashDataList.filter(x => x.id != element.id);
               this.cashInHandList.data = this.cashDataList;

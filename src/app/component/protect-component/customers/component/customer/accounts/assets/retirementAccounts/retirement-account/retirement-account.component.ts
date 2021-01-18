@@ -587,6 +587,10 @@ export class RetirementAccountComponent implements OnInit {
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               // this.getListEPF();
               this.epfDatalist.assetList = this.epfDatalist.assetList.filter(x => x.id != element.id);
               // this.dataSource.data = this.epfDatalist.assetList;
@@ -606,6 +610,10 @@ export class RetirementAccountComponent implements OnInit {
               dialogRef.close(); this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               // this.getListNPS();
               this.npsDatalist.assetList = this.npsDatalist.assetList.filter(x => x.id != element.id);
               this.npsDatalist.sumOfAmountInvested -= element.totalAmountInvested;
@@ -622,6 +630,10 @@ export class RetirementAccountComponent implements OnInit {
               dialogRef.close(); this.assetValidation.addAssetCount({ type: 'Delete', value: 'retirementAccounts' })
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               // this.getListGratuity();
               this.gratuityDatalist.assetList = this.gratuityDatalist.assetList.filter(x => x.id != element.id);
               this.gratuityDatalist.sumOfAmountReceived -= element.amountReceived;

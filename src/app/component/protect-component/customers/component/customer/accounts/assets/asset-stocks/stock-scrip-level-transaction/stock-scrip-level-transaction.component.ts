@@ -574,6 +574,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
             console.log(data);
             this.customerOverview.portFolioData = null;
             this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.summaryCashFlowData = null;
             if (obj.id == 0) {
               data.stockList[0]['stockListForEditView'] = data.stockList;
               data.stockList[0]['portfolioId'] = data.id;
@@ -598,6 +601,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
           data => {
             this.customerOverview.portFolioData = null;
             this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.summaryCashFlowData = null;
             console.log(data);
             this.assetValidation.addAssetCount({ type: 'Add', value: 'STOCKS' })
             this.barButtonOptions.active = false;

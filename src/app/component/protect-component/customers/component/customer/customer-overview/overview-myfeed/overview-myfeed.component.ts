@@ -328,9 +328,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }
     // this.loadGlobalRiskProfile();
     this.loadLogicBasedOnRoleType();
-    this.getFamilyMembersList();
+    !this.customerOverview.documentFamilyMemberList ? this.getFamilyMembersList() : this.getFamilyMembersListRes(this.customerOverview.documentFamilyMemberList);
     this.loadCustomerProfile();
-    this.getAppearanceSettings();
+    !this.customerOverview.appearancePortfolio ? this.getAppearanceSettings() : this.getAppearanceSettingsResponse(this.customerOverview.appearancePortfolio);
     this.initializePieChart();
     !this.customerOverview.globalRiskProfileData ? this.loadGlobalRiskProfile() : this.loadGlobalRiskProfileRes(this.customerOverview.globalRiskProfileData);
     !this.customerOverview.assetAllocationChart ? this.getAssetAllocationValues() : this.getAssetAllocationValuesRes(this.customerOverview.assetAllocationChart);;
@@ -477,13 +477,18 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     };
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
-        this.appearancePortfolio = data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation;
+        this.getAppearanceSettingsResponse(data);
       },
       err => {
         // this.eventService.openSnackBar(err, 'Dismiss');
         this.hasError = true;
       }
     );
+  }
+
+  getAppearanceSettingsResponse(data) {
+    this.customerOverview.appearancePortfolio = data;
+    this.appearancePortfolio = data.find(element => element.appearanceOptionId == 1).advisorOrOrganisation;
   }
 
   initializePieChart() {
@@ -1161,9 +1166,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     };
     this.customerService.getFamilyMembers(obj).subscribe(
       data => {
-        this.familyMembers = data;
-        this.tabsLoaded.familyMembers.dataLoaded = true;
-        this.tabsLoaded.familyMembers.hasData = true;
+        this.getFamilyMembersListRes(data);
       },
       err => {
         this.tabsLoaded.familyMembers.dataLoaded = false;
@@ -1172,6 +1175,13 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         console.error(err);
       }
     );
+  }
+
+  getFamilyMembersListRes(data) {
+    this.familyMembers = data;
+    this.customerOverview.documentFamilyMemberList = data;
+    this.tabsLoaded.familyMembers.dataLoaded = true;
+    this.tabsLoaded.familyMembers.hasData = true;
   }
 
   // copied from MF overview

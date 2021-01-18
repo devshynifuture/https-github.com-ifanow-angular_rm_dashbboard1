@@ -394,6 +394,10 @@ export class OthersComponent implements OnInit {
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
     this.barButtonOptions.active = false;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'commodities' })
     console.log('addrecuringDepositRes', data);
     this.eventService.openSnackBar('Added successfully!', 'Dismiss');
@@ -403,6 +407,10 @@ export class OthersComponent implements OnInit {
   editOthersRes(data) {
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true });

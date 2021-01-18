@@ -187,7 +187,8 @@ export class BackofficeFileUploadComponent implements OnInit {
           }
 
         });
-    } else if (this.typeMF == 'Prudent') {
+    } else if (this.typeMF == 'PRUDENT') {
+
       const file = this.targetFile.target.files[0];
       const requestMap = {
         advisorId: this.advisorId,

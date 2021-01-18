@@ -241,6 +241,10 @@ export class PoTdSchemeComponent implements OnInit {
             this.dataList.sumOfAmountInvested += element.amountInvested;
             this.dataList.sumOfMaturityValue += element.maturityValue;
             this.customerOverview.portFolioData = null;
+            this.customerOverview.summaryLeftsidebarData=null;
+            this.customerOverview.aumGraphdata=null;
+            this.customerOverview.assetAllocationChart=null;
+            this.customerOverview.summaryCashFlowData=null;
             this.customerOverview.assetAllocationChart = null;
             this.getPoTdSchemedataResponse(this.dataList);
           },

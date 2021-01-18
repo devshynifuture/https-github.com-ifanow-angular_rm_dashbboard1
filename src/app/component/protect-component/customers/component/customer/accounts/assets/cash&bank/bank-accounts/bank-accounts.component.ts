@@ -445,6 +445,10 @@ export class BankAccountsComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.assetValidation.addAssetCount({ type: 'Add', value: 'cashAndBank' })
     console.log('addrecuringDepositRes', data)
     this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data: 1, refreshRequired: true })
@@ -455,6 +459,10 @@ export class BankAccountsComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     this.subInjectService.changeNewRightSliderState({ flag: 'editedbankAc', state: 'close', data: 1, refreshRequired: true })
     this.eventService.openSnackBar('Updated successfully!', 'OK');
 

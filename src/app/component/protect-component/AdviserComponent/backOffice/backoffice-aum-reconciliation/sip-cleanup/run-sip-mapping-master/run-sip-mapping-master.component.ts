@@ -15,8 +15,12 @@ export class RunSipMappingMasterComponent implements OnInit {
   countOfWizard: any;
   hideCount: boolean = false;
   wizardList: any;
+<<<<<<< HEAD
   isLoading: boolean;
   isLoding: boolean = false;
+=======
+  isLoading: boolean = false;
+>>>>>>> 3991e8718c19a8c37cc41ec7b27c7367ad6a2d7c
   percentage: number = 0;
   constructor(public dialogRef: MatDialogRef<RunSipMappingMasterComponent>,
     private backOfficeService: BackOfficeService, private eventService: EventService) { }
@@ -56,15 +60,14 @@ export class RunSipMappingMasterComponent implements OnInit {
     this.backOfficeService.previousSipWizard(data).subscribe(
       (res) => {
         this.isLoading = false;
-        this.wizardList = []
-        if (res.length > 1) {
-          this.wizardList = res
-        }
-        this.showWizard = true
-        this.hideCount = true
-        console.log('previousSipWizard', res)
         if (res) {
-
+          this.wizardList = []
+          if (res.length > 1) {
+            this.wizardList = res
+          }
+          this.showWizard = true
+          this.hideCount = true
+          console.log('previousSipWizard', res)
         } else {
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }

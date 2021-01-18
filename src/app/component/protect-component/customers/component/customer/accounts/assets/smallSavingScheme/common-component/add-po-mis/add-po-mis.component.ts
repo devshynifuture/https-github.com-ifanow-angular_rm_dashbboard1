@@ -449,6 +449,10 @@ export class AddPoMisComponent implements OnInit {
     console.log(data);
     this.customerOverview.portFolioData = null;
     this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryLeftsidebarData = null;
+    this.customerOverview.aumGraphdata = null;
+    this.customerOverview.assetAllocationChart = null;
+    this.customerOverview.summaryCashFlowData = null;
     if (data) {
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });

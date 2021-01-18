@@ -640,6 +640,10 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       this.customerOverview.portFolioData = null;
       this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryLeftsidebarData = null;
+      this.customerOverview.aumGraphdata = null;
+      this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryCashFlowData = null;
       console.log(data);
       this.assetValidation.addAssetCount({ type: 'Add', value: 'real_estate' })
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
@@ -657,6 +661,10 @@ export class AddRealEstateComponent implements OnInit {
     if (data) {
       this.customerOverview.portFolioData = null;
       this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryLeftsidebarData = null;
+      this.customerOverview.aumGraphdata = null;
+      this.customerOverview.assetAllocationChart = null;
+      this.customerOverview.summaryCashFlowData = null;
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Updated successfully!', 'OK');

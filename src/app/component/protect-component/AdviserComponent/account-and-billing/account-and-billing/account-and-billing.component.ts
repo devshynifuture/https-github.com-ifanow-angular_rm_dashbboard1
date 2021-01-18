@@ -42,6 +42,7 @@ export class AccountAndBillingComponent implements OnInit {
   ngOnInit() {
     this.getAccBilling(null);
   }
+
   getAccBilling(data) {
     if (data) {
       this.flag = "Add account and billing";
@@ -59,7 +60,7 @@ export class AccountAndBillingComponent implements OnInit {
       gstTreatment: [data ? data.gstTreatment : '', [Validators.required]],
       gstNo: [data ? data.gstNo : null, [Validators.required]],
       supplyPlace: [data ? data.supplyPlace : null, [Validators.required]],
-      panNumber: [data ? data.panNumber : null, [Validators.required,Validators.pattern(this.validatorType.PAN)]],
+      panNumber: [data ? data.panNumber : null, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       address: [data ? data.address : null],
       city: [data ? data.city : null],
       state: [data ? data.state : null, [Validators.required]],

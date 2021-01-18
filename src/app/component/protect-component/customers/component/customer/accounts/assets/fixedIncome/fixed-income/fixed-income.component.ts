@@ -459,6 +459,10 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               // this.getFixedDepositList();
               this.fixDataList.assetList = this.fixDataList.assetList.filter(x => x.id != element.id);
               // this.dataSource.data = this.fixDataList.assetList;
@@ -478,6 +482,10 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               // this.getRecurringDepositList();
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'fixedIncome' })
               this.recDataList.assetList = this.recDataList.assetList.filter(x => x.id != element.id);
@@ -496,6 +504,10 @@ export class FixedIncomeComponent implements OnInit {
               dialogRef.close();
               this.customerOverview.portFolioData = null;
               this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryLeftsidebarData = null;
+              this.customerOverview.aumGraphdata = null;
+              this.customerOverview.assetAllocationChart = null;
+              this.customerOverview.summaryCashFlowData = null;
               // this.getBondsList();
               this.assetValidation.addAssetCount({ type: 'Delete', value: 'fixedIncome' })
               this.bondDataList.assetList = this.bondDataList.assetList.filter(x => x.id != element.id);
