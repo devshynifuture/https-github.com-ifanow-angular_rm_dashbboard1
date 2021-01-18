@@ -1,7 +1,7 @@
 <div class="myfeedWrapper">
     <div class="row">
-        <div class="col-md-3 col-lg-3 pr-24">
-            <ul class="d-block sticky-top myFeedUi">
+        <div class="col-md-12 col-lg-3 tab-sticky pr-24">
+            <ul class="sticky-top myFeedUi">
                 <li class="c-p" [ngClass]="{'activeClass': currentViewId == 1}" (click)="goToSectionView(60)">
                     <a class="f-14 roboto"> All feeds</a>
                 </li>
@@ -38,7 +38,7 @@
             </ul>
         </div>
 
-        <div class="col-md-6 col-lg-6 mb-20 pl-10">
+        <div class="col-md-8 col-lg-6 mb-20 pl-10">
             <div class="feedInformation">
                 <div class="clientNameBox" #allFeedsSection>
                     <h3 class="m-0 roboto">{{welcomeMessage}} {{clientData.name}}</h3>
@@ -1262,7 +1262,7 @@
             </div>
         </div>
 
-        <div class="col-md-3 col-lg-3 pr-0  pl-30 mt-40">
+        <div class="col-md-4 col-lg-3 pr-0  pl-30 mt-40">
             <div class="sticky-top z-0">
                 <div class="mb-20">
                     <div class="row b-b pb-20" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">

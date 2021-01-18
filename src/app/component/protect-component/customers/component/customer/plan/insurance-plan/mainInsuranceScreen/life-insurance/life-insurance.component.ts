@@ -1152,6 +1152,7 @@ export class LifeInsuranceComponent implements OnInit {
         element[amount] = element.amount;
         element.percent = element.percentage;
         element.selected = element.is_selected ? true : false;
+        // document.getElementById(totalAmount) ? document.getElementById(totalAmount)['checked'] = element.is_selected ? true : false : '';
       });
       data = data.filter(item => item[amount] > 0)
       this.plannerObj[totalAmount] = data[0].total_amount
