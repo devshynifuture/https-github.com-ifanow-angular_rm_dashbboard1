@@ -279,6 +279,11 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     }
 
   }
+  display(value) {
+    if (value) {
+      this.getAdviceByAsset();
+    }
+  }
   filterData(data, id) {
     let countSuggest = 0
     let GIArry = this.GIData.filter(item => item.insuranceSubTypeId === id);

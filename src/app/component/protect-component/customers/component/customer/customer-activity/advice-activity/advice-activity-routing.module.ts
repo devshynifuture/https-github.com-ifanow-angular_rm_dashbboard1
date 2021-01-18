@@ -22,12 +22,12 @@ const routes: Routes = [
     component: AdviceActivityComponent,
     children: [
       {
-        path: 'all-portfolio',
-        component: AdviceAllPortfolioComponent
+        path: 'lifeInsurance',
+        component: AdviceLifeInsuranceComponent
       },
       {
         path: '',
-        redirectTo: 'all-portfolio',
+        redirectTo: 'lifeInsurance',
         pathMatch: 'full'
       },
       {

@@ -41,7 +41,8 @@
     </div>
     <div class="row">
         <div class="col-md-12 p-0">
-            <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
+            <app-advice-action [data]="selectedAssetId" (valueChange)='display($event)'
+                [ngClass]="{'v-h': selectedAssetId.length==0}">
             </app-advice-action>
         </div>
     </div>
@@ -105,23 +106,26 @@
             </mat-menu>
         </div>
     </div>
-    <table  mat-table appSkeletonLoading [appSkeletonLoading]="isLoading"
-        [dataSource]="healthInsuranceDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="healthInsuranceDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="healthCount==healthInsuranceDataSource.data.length"
                     [indeterminate]="healthCount>0 && healthCount<healthInsuranceDataSource.data.length"
-                    *ngIf="isLoading == false && healthInsuranceDataSource.tableFlag" (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && healthInsuranceDataSource.tableFlag"
+                    (change)="checkAll($event,healthInsuranceDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
                     (change)="checkSingle($event,element,healthInsuranceDataSource,'Health Insurance')"
-                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+                    [checked]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -131,7 +135,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -142,7 +146,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -154,7 +158,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -164,7 +168,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -174,7 +178,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -191,7 +195,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -210,7 +214,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -218,7 +222,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
@@ -226,12 +230,16 @@
                     </i>
                     <mat-menu #menu="matMenu">
                         <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
-                                <button mat-menu-item [disabled]="element.hideGiveAdvice" (click)="openAddEditAdvice('Health Insurance',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                            <button mat-menu-item [disabled]="element.hideGiveAdvice"
+                                (click)="openAddEditAdvice('Health Insurance',element)"
+                                *ngIf="!element?.adviceDetails?.id">Give advice</button>
                         </div>
-                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Health Insurance',element)">Edit</button>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
+                            (click)="openAddEditAdvice('Health Insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Health Insurance',element)">Detailed View</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Health Insurance',element)">Delete</button>
+                            (click)="openDetailedView('Health Insurance',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="deleteModal('Health Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -302,23 +310,26 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table
-        [dataSource]="personalAccidentDataSource" class="mt-8 skeletonAnimation" id="table-low">
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="personalAccidentDataSource"
+        class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="personalCount==personalAccidentDataSource.data.length"
                     [indeterminate]="personalCount>0 && personalCount<personalAccidentDataSource.data.length"
-                    *ngIf="isLoading == false && personalAccidentDataSource.tableFlag" (change)="checkAll($event,personalAccidentDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && personalAccidentDataSource.tableFlag"
+                    (change)="checkAll($event,personalAccidentDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
                     (change)="checkSingle($event,element,personalAccidentDataSource,'Health Insurance')"
-                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+                    [checked]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -328,7 +339,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -339,7 +350,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -351,7 +362,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -361,7 +372,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -371,7 +382,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -388,7 +399,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -407,7 +418,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -415,20 +426,24 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
-                                    <button mat-menu-item [disabled]="element.hideGiveAdvice" (click)="openAddEditAdvice('Personal accident',element)" *ngIf="!element?.adviceDetails?.id">Give advice</button> 
-                            </div>
-                        <button mat-menu-item [disabled]="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Personal accident',element)">Edit</button>
+                        <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                            <button mat-menu-item [disabled]="element.hideGiveAdvice"
+                                (click)="openAddEditAdvice('Personal accident',element)"
+                                *ngIf="!element?.adviceDetails?.id">Give advice</button>
+                        </div>
+                        <button mat-menu-item [disabled]="element?.adviceDetails?.adviceId == 0"
+                            (click)="openAddEditAdvice('Personal accident',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Personal accident',element)">Detailed View</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Personal accident',element)">Delete</button>
+                            (click)="openDetailedView('Personal accident',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="deleteModal('Personal accident',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -499,23 +514,26 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="criticalInsDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="criticalInsDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="criticalCount==criticalInsDataSource.data.length"
                     [indeterminate]="criticalCount>0 && criticalCount<criticalInsDataSource.data.length"
-                    *ngIf="isLoading == false && criticalInsDataSource.tableFlag" (change)="checkAll($event,criticalInsDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && criticalInsDataSource.tableFlag"
+                    (change)="checkAll($event,criticalInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
                     (change)="checkSingle($event,element,criticalInsDataSource,'Health Insurance')"
-                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+                    [checked]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -525,7 +543,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -536,7 +554,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -548,7 +566,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -558,7 +576,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -568,7 +586,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -585,7 +603,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -604,7 +622,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -612,20 +630,24 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
-                                    <button mat-menu-item (click)="openAddEditAdvice('Critical illness',element)" [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give advice</button>    
-                            </div>
-                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Critical illness',element)">Edit</button>
+                        <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                            <button mat-menu-item (click)="openAddEditAdvice('Critical illness',element)"
+                                [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give
+                                advice</button>
+                        </div>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
+                            (click)="openAddEditAdvice('Critical illness',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Critical illness',element)">Detailed View</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Critical illness',element)">Delete</button>
+                            (click)="openDetailedView('Critical illness',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="deleteModal('Critical illness',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -686,23 +708,26 @@
             </mat-menu>
         </div>
     </div>
-    <table  mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="motorDataSource"
+    <table mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" [dataSource]="motorDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="motorCount==motorDataSource.data.length"
                     [indeterminate]="motorCount>0 && motorCount<motorDataSource.data.length"
-                    *ngIf="isLoading == false && motorDataSource.tableFlag" (change)="checkAll($event,motorDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && motorDataSource.tableFlag"
+                    (change)="checkAll($event,motorDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
                     (change)="checkSingle($event,element,motorDataSource,'Health Insurance')"
-                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+                    [checked]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -712,7 +737,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -723,7 +748,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -735,7 +760,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -745,7 +770,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -755,7 +780,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -772,7 +797,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -791,7 +816,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -799,20 +824,24 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
-                                    <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',element)" [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give advice</button>   
-                            </div>
-                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Motor insurance',element)">Edit</button>
+                        <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                            <button mat-menu-item (click)="openAddEditAdvice('Motor insurance',element)"
+                                [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give
+                                advice</button>
+                        </div>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
+                            (click)="openAddEditAdvice('Motor insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Motor insurance',element)">Detailed View</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Motor insurance',element)">Delete</button>
+                            (click)="openDetailedView('Motor insurance',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="deleteModal('Motor insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -873,23 +902,26 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="travelDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="travelDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="travelCount==travelDataSource.data.length"
                     [indeterminate]="travelCount>0 && travelCount<travelDataSource.data.length"
-                    *ngIf="isLoading == false && travelDataSource.tableFlag" (change)="checkAll($event,travelDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && travelDataSource.tableFlag"
+                    (change)="checkAll($event,travelDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
                     (change)="checkSingle($event,element,travelDataSource,'Health Insurance')"
-                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+                    [checked]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -899,7 +931,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -910,7 +942,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -922,7 +954,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -932,7 +964,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -942,7 +974,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -959,7 +991,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -978,7 +1010,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -986,20 +1018,24 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
-                                    <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',element)" [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give advice</button>
-                            </div>
-                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Travel insurance',element)">Edit</button>
+                        <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                            <button mat-menu-item (click)="openAddEditAdvice('Travel insurance',element)"
+                                [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give
+                                advice</button>
+                        </div>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
+                            (click)="openAddEditAdvice('Travel insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Travel insurance',element)">Detailed View</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Travel insurance',element)">Delete</button>
+                            (click)="openDetailedView('Travel insurance',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="deleteModal('Travel insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -1060,23 +1096,26 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="homeInsDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="homeInsDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="homeCount==homeInsDataSource.data.length"
                     [indeterminate]="homeCount>0 && homeCount<homeInsDataSource.data.length"
-                    *ngIf="isLoading == false && homeInsDataSource.tableFlag" (change)="checkAll($event,homeInsDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && homeInsDataSource.tableFlag"
+                    (change)="checkAll($event,homeInsDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
                     (change)="checkSingle($event,element,homeInsDataSource,'Health Insurance')"
-                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+                    [checked]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -1086,7 +1125,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -1097,7 +1136,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow text-right"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow text-right"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -1109,7 +1148,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -1119,7 +1158,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -1129,7 +1168,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1146,7 +1185,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1165,7 +1204,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -1173,20 +1212,24 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
-                                    <button mat-menu-item *ngIf="!element?.adviceDetails?.id" (click)="openAddEditAdvice('Home insurance',element)" [disabled]="element.hideGiveAdvice" >Give advice</button>    
-                            </div>
-                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0" (click)="openAddEditAdvice('Home insurance',element)">Edit</button>
+                        <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                            <button mat-menu-item *ngIf="!element?.adviceDetails?.id"
+                                (click)="openAddEditAdvice('Home insurance',element)"
+                                [disabled]="element.hideGiveAdvice">Give advice</button>
+                        </div>
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
+                            (click)="openAddEditAdvice('Home insurance',element)">Edit</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Home insurance',element)">Detailed View</button>
-                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id" (click)="deleteModal('Home insurance',element)">Delete</button>
+                            (click)="openDetailedView('Home insurance',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="deleteModal('Home insurance',element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>
@@ -1257,23 +1300,26 @@
             </mat-menu>
         </div>
     </div>
-    <table  appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="FireDataSource"
+    <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="FireDataSource"
         class="mt-8 skeletonAnimation" id="table-low">
         <ng-container matColumnDef="checkbox">
-            <th mat-header-cell *matHeaderCellDef  class="br">
+            <th mat-header-cell *matHeaderCellDef class="br">
                 <mat-checkbox [checked]="fireCount==FireDataSource.data.length"
                     [indeterminate]="fireCount>0 && fireCount<FireDataSource.data.length"
-                    *ngIf="isLoading == false && FireDataSource.tableFlag" (change)="checkAll($event,FireDataSource,'Health Insurance')">
+                    *ngIf="isLoading == false && FireDataSource.tableFlag"
+                    (change)="checkAll($event,FireDataSource,'Health Insurance')">
                 </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <mat-checkbox *ngIf="isLoading==false"
                     (change)="checkSingle($event,element,FireDataSource,'Health Insurance')"
-                    [checked]="element.selected" [disabled]="!element?.adviceDetails?.id"></mat-checkbox>
+                    [checked]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
+                </mat-checkbox>
             </td>
         </ng-container>
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insured members </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insured members </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element?.InsuranceDetails">
@@ -1283,7 +1329,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="desc">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Name of insurer & Plan
+            <th mat-header-cell *matHeaderCellDef class="br"> Name of insurer & Plan
             </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar"> <span *ngIf="element?.InsuranceDetails">
@@ -1294,7 +1340,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Sum insured
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Sum insured
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">
@@ -1306,7 +1352,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="empcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow"> Premium<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow"> Premium<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{!isLoading && element?.InsuranceDetails?.premiumAmount ? "₹" : ""}}<span
@@ -1316,7 +1362,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="emprcon">
-            <th mat-header-cell *matHeaderCellDef  class="br right-hcb hide-arrow">Policy expiry date<br>
+            <th mat-header-cell *matHeaderCellDef class="br right-hcb hide-arrow">Policy expiry date<br>
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"><span appFormatNumber *ngIf="element?.InsuranceDetails">
@@ -1326,7 +1372,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="advice">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice </th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1343,7 +1389,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="astatus">
-            <th mat-header-cell *matHeaderCellDef  class="br"> Advice status</th>
+            <th mat-header-cell *matHeaderCellDef class="br"> Advice status</th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                     <span *ngIf="element">
@@ -1362,7 +1408,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="adate">
-            <th mat-header-cell *matHeaderCellDef  class="br text-left"> Applicable date </th>
+            <th mat-header-cell *matHeaderCellDef class="br text-left"> Applicable date </th>
             <td mat-cell *matCellDef="let element" class="br text-left">
                 <div class="bar"> <span
                         *ngIf="element?.adviceDetails">{{element?.adviceDetails?.applicableDate ? (element?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}</span>
@@ -1370,19 +1416,21 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef > </th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
                     <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
-                            <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
-                                    <button mat-menu-item (click)="openAddEditAdvice('Fire & special perils insurance',element)" [disabled]="element.hideGiveAdvice"  *ngIf="!element?.adviceDetails?.id">Give advice</button>
-                            </div>
+                        <div [matTooltip]="element.hideGiveAdvice ? 'Cannot give more than one advice' : ''">
+                            <button mat-menu-item (click)="openAddEditAdvice('Fire & special perils insurance',element)"
+                                [disabled]="element.hideGiveAdvice" *ngIf="!element?.adviceDetails?.id">Give
+                                advice</button>
+                        </div>
                         <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
                             (click)="openAddEditAdvice('Fire & special perils insurance',element)">Edit</button>
-                            <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="openDetailedView('Fire & special perils insurance',element)">Detailed View</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="deleteModal('Fire & special perils insurance',element)">Delete</button>
