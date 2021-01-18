@@ -1054,10 +1054,10 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  openMoveFamilymemberToClient(flag) {
+  openMoveFamilymemberToClient(flag, fieldFlag) {
     const fragmentData = {
       flag: flag,
-      data: { value: this.basicDetailsData, flag: flag },
+      data: { value: this.basicDetailsData, flag: flag, fieldFlag: fieldFlag },
       id: 1,
       state: 'open50',
       componentName: MoveFamilymemberToClientComponent,
