@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../../../auth-service/authService';
 import { DialogContainerComponent } from '../../../../../common/dialog-container/dialog-container.component';
@@ -16,6 +16,7 @@ import * as $ from 'jquery';
 import { CustomerService } from "./customer.service";
 import { MfServiceService } from './accounts/assets/mutual-fund/mf-service.service';
 import { CustomerOverviewService } from './customer-overview/customer-overview.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-customer',
@@ -62,7 +63,8 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     public roleService: RoleService,
     public custumService: CustomerService,
     private MfServiceService: MfServiceService,
-    private customerOverview: CustomerOverviewService
+    private customerOverview: CustomerOverviewService,
+    @Inject(DOCUMENT) private document
   ) {
     super(eventService, subinject, dynamicComponentService);
     this.user = AuthService.getUserInfo();
@@ -103,6 +105,14 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   ngOnInit() {
+    let width, height;
+    width = document.documentElement.clientWidth;
+    height = document.documentElement.clientHeight;
+    if (height > width) {
+      this.document.getElementById('ui-customer-container').style.width = `${height}px`
+      this.document.getElementById('ui-customer-container').style.height = `${width}px`;
+      // console.log(height, width)
+    }
     this.jQuery = $;
     if (!this.jQuery) {
       console.log('JQUERY is not defined');
