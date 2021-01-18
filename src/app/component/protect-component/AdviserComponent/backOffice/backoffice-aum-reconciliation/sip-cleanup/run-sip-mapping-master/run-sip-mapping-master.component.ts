@@ -55,15 +55,14 @@ export class RunSipMappingMasterComponent implements OnInit {
     this.backOfficeService.previousSipWizard(data).subscribe(
       (res) => {
         this.isLoading = false;
-        this.wizardList = []
-        if (res.length > 1) {
-          this.wizardList = res
-        }
-        this.showWizard = true
-        this.hideCount = true
-        console.log('previousSipWizard', res)
         if (res) {
-
+          this.wizardList = []
+          if (res.length > 1) {
+            this.wizardList = res
+          }
+          this.showWizard = true
+          this.hideCount = true
+          console.log('previousSipWizard', res)
         } else {
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
