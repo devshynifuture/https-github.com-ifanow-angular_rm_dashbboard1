@@ -1,3 +1,191 @@
-<p>
-  detailed-view-sovereign-gold-bonds works!
-</p>
+<div class="popup-header-fix-35">
+  <div class="row bb-1">
+    <div class="col-md-10 p-0">
+      <h4 class="mb-0 wrapper-20">NPS - Detailed view</h4>
+    </div>
+    <div class="col-md-2 text-left">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="pl-20 pr-20 mt-44 pb-48">
+  <div class="row pt-40">
+    <div class="col-md-12 p-0">
+      <h4>Basic details</h4>
+      <div class="insurance-ui bt">
+        <div class="row bb p-8 b-l br" *ngFor="let obj of data.ownerList; let i = index">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{obj.name}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Bond name & series
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.bond? data.bond:'-'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Invested amount
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.amountInvested ? '₹':''}}<span
+              appFormatNumber>{{data.amountInvested ? data.amountInvested:'-'}}</span>
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Commencement date
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.issueDate | date:'dd/MM/yyyy'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Tenure(in Year)
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.tenure? data.tenure:'-'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Maturity date
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.maturityDate | date:'dd/MM/yyyy'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Interest rate
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.rate ? '%':''}}<span appFormatNumber>{{data.rate ? data.rate:'-'}}</span>
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Half yearly pay-out
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.yearlyPayout ? '₹':''}}<span appFormatNumber>{{data.yearlyPayout ? data.yearlyPayout:'-'}}</span>
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Pay-out received till date
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.payOutTillDate ? '₹':''}}<span
+              appFormatNumber>{{data.payOutTillDate ? data.payOutTillDate:'-'}}</span>
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Current value
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.currentValueAsOnToday ? '₹':''}}<span
+              appFormatNumber>{{data.currentValueAsOnToday ? data.currentValueAsOnToday:'-'}}</span>
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Maturity amount
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.maturityValue ? '₹':''}}<span appFormatNumber>{{data.maturityValue ? data.maturityValue:'-'}}</span>
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Bond number
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.bondNumber? data.bondNumber:'-'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Linked bank account
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.userBankMappingId"
+            *ngFor="let bank of bankList">
+            <div [ngSwitch]="data.userBankMappingId">
+              <div *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</div>
+            </div>
+          </div>
+          <div *ngIf="!data.userBankMappingId" class="col-md-4 text-right f-14 roboto p-0">
+            {{'-'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-6 text-left f-14 roboto p-0">
+            Description
+          </div>
+          <div class="col-md-6 text-right f-14 roboto p-0">
+            {{data.description ? data.description:'-'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div *ngIf="!noDoc" class="col-md-8 text-left f-14 roboto p-0">
+            Document
+          </div>
+          <div *ngIf="!doc && isLoadingUpload==true" style="width:275px;height:350px;"
+            class="p-0 d-flex align-items-center justify-content-center mt-8">
+            <mat-spinner [diameter]="30"></mat-spinner> Loading document
+          </div>
+          <div *ngIf="noDoc" class="col-md-8 text-left f-14 roboto p-0">
+            Document not found
+          </div>
+          <div *ngIf="doc">
+            <!--  -->
+            <div *ngIf="docType == 'jpg' || docType == 'png' || docType == 'jpeg'">
+              <img [src]="doc.imageUrl" height="200" width="250"> <br />
+            </div>
+            <div *ngIf="docType != 'jpg' && docType != 'png' && docType != 'jpeg'">
+              <ngx-doc-viewer [url]="doc.imageUrl" viewer="google" style="width:275px;height:350px;">
+              </ngx-doc-viewer>
+            </div>
+            <a class="text-left f-14 roboto p-0 docFileName" [href]="doc.imageUrl" download>
+              {{doc.fileOgName}}
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+
+      <h4 class="mt-32 mb-10">Nominees details</h4>
+      <div class="insurance-ui bt">
+        <div class="row bb p-8 b-l br" *ngIf="data.nomineeList.length == 0 ">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Nominee
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            -
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br" [hidden]="!data.nomineeList" *ngFor="let obj of data.nomineeList; let i = index">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Nominee {{i + 1}}
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{obj.name}} <span *ngIf="data.nomineeList.length > 1">sharing {{obj.sharePercentage}}%
+              Nominee share</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

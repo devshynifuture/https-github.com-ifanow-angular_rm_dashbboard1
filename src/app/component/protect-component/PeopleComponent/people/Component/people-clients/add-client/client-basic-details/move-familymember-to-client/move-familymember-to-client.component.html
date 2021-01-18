@@ -244,7 +244,7 @@
             </div>
 
             <div class="col-md-8 right text-right">
-                <app-progress-button *ngIf="selectedClientData && showSuggestion==false"
+                <app-progress-button [delayTime]="delayTime" *ngIf="selectedClientData && showSuggestion==false"
                     (btnClick)="flag=='Move'?moveFamilyMember():mergeDuplicateFamilyMember()"
                     [options]="barButtonOptions" class="br-0 text-inherit ">
                 </app-progress-button>
