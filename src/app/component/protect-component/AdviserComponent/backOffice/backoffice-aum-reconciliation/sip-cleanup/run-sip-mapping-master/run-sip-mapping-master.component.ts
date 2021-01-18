@@ -126,7 +126,6 @@ export class RunSipMappingMasterComponent implements OnInit {
         this.hideCount = true
         console.log('count wizard', res)
         if (res) {
-
         } else {
           this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
