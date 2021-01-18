@@ -1296,10 +1296,9 @@
                                             <tr *ngFor="let element of dataSourceLiability">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    <!-- <input type="checkbox" name="liability" id="liabilities"
-                                                        style="cursor: none"> -->
-                                                    <!-- <mat-checkbox class="disableCursor" [checked]="element.selected" style="cursor: none"
-                                                    #check (click)="$event.preventDefault()"> </mat-checkbox> -->
+                                                    <input type="checkbox" checked="element.selected" name="liability"
+                                                        id="liabilities" value="{{element.selected}}"
+                                                        style="cursor: none">{{element.selected}}
                                                     {{element.name}}
                                                 </td>
                                                 <td
@@ -1362,8 +1361,9 @@
                                             <tr *ngFor="let element of dataSourceLifeInsurance">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    <!-- <input type="checkbox" name="expense" id="dependantNeeds"
-                                                        style="cursor: none"> -->
+                                                    <input type="checkbox" checked="element.selected" name="liability"
+                                                        id="dependencyNeed" value="{{element.selected}}"
+                                                        style="cursor: none">
                                                     {{element.name}}
                                                 </td>
                                                 <td
@@ -1417,6 +1417,8 @@
                                     <tr *ngFor="let element of dataSourceGoals">
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                            <input type="checkbox" checked="element.selected" name="liability"
+                                                id="goalAmount" value="{{element.selected}}" style="cursor: none">
                                             {{element.name}}
                                         </td>
                                         <td
@@ -1473,6 +1475,8 @@
                                     <tr *ngFor="let element of dataSourceIncome">
                                         <td
                                             style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                            <input type="checkbox" checked="element.selected" name="liability"
+                                                id="grossLI" value="{{element.selected}}" style="cursor: none">
                                             {{element.name}}
                                         </td>
                                         <td
@@ -1530,7 +1534,9 @@
                                             <tr *ngFor="let element of dataSourceIncome">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    {{element.name
+                                                    <input type="checkbox" checked="element.selected" name="liability"
+                                                        id="income" value="{{element.selected}}" style="cursor: none">
+                                                    {{element.name}}
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
@@ -1592,6 +1598,9 @@
                                             <tr *ngFor="let element of dataSourceIncome">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                    <input type="checkbox" checked="element.selected" name="liability"
+                                                        id="existingLI" value="{{element.selected}}"
+                                                        style="cursor: none">
                                                     {{element.name}}
                                                 </td>
                                                 <td
@@ -1654,6 +1663,9 @@
                                             <tr *ngFor="let element of dataSourceAsset">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                    <input type="checkbox" checked="element.selected" name="liability"
+                                                        id="existingAsset" value="{{element.selected}}"
+                                                        style="cursor: none">
                                                     {{element.name}}
                                                 </td>
                                                 <td
@@ -1718,6 +1730,9 @@
                                             <tr *ngFor="let element of dataSourceIncome">
                                                 <td
                                                     style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                                    <input type="checkbox" checked="element.selected" name="liability"
+                                                        id="additionalLI" value="{{element.selected}}"
+                                                        style="cursor: none">
                                                     {{element.name}}
                                                 </td>
                                                 <td

@@ -11,7 +11,7 @@ import { ProgressSpinnerMode, ThemePalette } from '@angular/material';
 export class ProgressButtonComponent implements AfterViewInit, OnInit {
   islogBut = false;
   @Input() options: MatProgressButtonOptions;
-
+  @Input() delayTime;
   @Output() btnClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
 
   _logEvent: any;
@@ -36,7 +36,7 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
     if (this.options.text.trim() == 'Login to your account') {
       this.islogBut = true;
     }
-
+    this.delayTime = this.delayTime ? this.delayTime : 0.5
   }
 
   /*@ViewChild('progressBar', {
@@ -66,7 +66,7 @@ export class ProgressButtonComponent implements AfterViewInit, OnInit {
     if (this.options.active) {
       setTimeout(() => {
         if (this.options.active && this.options.value < 100) {
-          this.options.value = this.options.value + 0.5;
+          this.options.value = this.options.value + this.delayTime;
           // console.log('this.options.value : ', this.options.value);
           // console.log('this.options.value : ', new Date().getMilliseconds());
 
