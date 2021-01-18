@@ -4,17 +4,17 @@
 </button>
 
 <mat-menu #menu="matMenu">
-    <button *ngIf="fieldFlag=='familyMember'" (click)="openUnmapPopupORNot()" mat-menu-item>
+    <button *ngIf="fieldFlag=='familyMember'&&!enumDataService.PRODUCTION" (click)="openUnmapPopupORNot()" mat-menu-item>
         <span>Unmap</span>
     </button>
-    <button *ngIf="fieldFlag=='familyMember'" (click)="openMoveFamilymemberToClient('Move')" mat-menu-item>
+    <button *ngIf="fieldFlag=='familyMember'&&!enumDataService.PRODUCTION" (click)="openMoveFamilymemberToClient('Move')" mat-menu-item>
         <span>Move family member</span>
     </button>
-    <button *ngIf="fieldFlag=='familyMember' || fieldFlag=='client'"
+    <button *ngIf="(fieldFlag=='familyMember' || fieldFlag=='client')&&!enumDataService.PRODUCTION"
         (click)="openMoveFamilymemberToClient('Merge',fieldFlag)" mat-menu-item>
         <span>Merge duplicate {{fieldFlag=='familyMember'?'family member':'client'}}</span>
     </button>
-    <button *ngIf="fieldFlag=='familyMember'" (click)="promoteModal('')" mat-menu-item>
+    <button *ngIf="fieldFlag=='familyMember'" (click)="promoteModal('')&&!enumDataService.PRODUCTION" mat-menu-item>
         <span>Promote</span>
     </button>
     <button *ngIf="keyInfoCapability.Delete && fieldFlag=='familyMember'" (click)="deleteModal('FAMILY MEMBER')"
