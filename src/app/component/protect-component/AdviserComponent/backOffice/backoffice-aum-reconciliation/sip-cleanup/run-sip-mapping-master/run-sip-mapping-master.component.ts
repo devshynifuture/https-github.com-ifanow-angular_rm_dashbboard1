@@ -38,10 +38,12 @@ export class RunSipMappingMasterComponent implements OnInit {
           this.countOfWizard = res
           console.log('count wizard')
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
       (err) => {
+        this.isLoading = false;
         this.eventService.openSnackBar(err, "DISMISS")
       }
     );
@@ -63,6 +65,7 @@ export class RunSipMappingMasterComponent implements OnInit {
           this.hideCount = true
           console.log('previousSipWizard', res)
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
@@ -95,6 +98,7 @@ export class RunSipMappingMasterComponent implements OnInit {
         console.log('refreshWizard', res)
         if (res) {
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
@@ -124,11 +128,12 @@ export class RunSipMappingMasterComponent implements OnInit {
         if (res) {
 
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
       (err) => {
-
+        this.isLoading = false;
       }
     );
   }
