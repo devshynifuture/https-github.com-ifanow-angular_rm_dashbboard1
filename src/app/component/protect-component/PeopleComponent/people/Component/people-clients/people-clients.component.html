@@ -1,37 +1,35 @@
 <div [ngClass]="{'pe-none': isLoading}" (window:resize)="onResize()" class="row pt-150">
-    <div class="col-md-6 col-lg-7 d-flex align-items-center">
+    <div class="col-md-6 col-lg-6 d-flex align-items-center">
         <!-- <h4 class="m-0">Clients</h4> -->
     </div>
 
 
-    <div class="col-md-3 col-lg-3 pr-0 d-flex align-items-center justify-content-end pb-10">
+    <div class="col-md-6 col-lg-6  d-flex align-items-center justify-content-end pb-10">
         <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
             <input autocomplete="off" #inputSearch (input)="searchClientFamilyMember(inputSearch.value)"
                 class="form-control br-0 pt-8 mb-0" matInput placeholder="Type to search client">
         </mat-form-field>
-    </div>
-    <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
-        class="col-md-3 col-lg-2  d-flex align-items-center justify-content-end pb-10">
-        <a *ngIf="!downloadLoader && roleService.peoplePermission.subModule.clientsCapability.download"
-            [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
-            <img src="assets/images/svg/download-bordered.svg">
-        </a>
-        <mat-spinner *ngIf="downloadLoader" [diameter]="30"></mat-spinner>
-        <!-- <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p"> -->
-        <mat-menu #menu5="matMenu">
-            <button (click)="pdf('template','Clients')" mat-menu-item>PDF</button>
-            <button (click)="Excel('Clients','excel')" mat-menu-item>XLS</button>
-        </mat-menu>
-        <!-- <a class="c-p downloadPdfIcon iconBorderNone">
-        <img src="assets/images/svg/up-down.svg">
-        </a> -->
-        <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8"> -->
-        <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle">
-        <i class="material-icons">filter_list</i>FILTERS</button> -->
-        <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.add" (click)="addClient(null)"
-            class="btn-primary ml-10" mat-stroked-button>
-            ADD NEW
-        </button>
+
+
+        <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
+            class="d-flex align-items-center justify-content-end ml-16 ">
+            <a *ngIf="!downloadLoader && roleService.peoplePermission.subModule.clientsCapability.download"
+                [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                <img src="assets/images/svg/download-bordered.svg">
+            </a>
+            <mat-spinner *ngIf="downloadLoader" [diameter]="30"></mat-spinner>
+
+            <mat-menu #menu5="matMenu">
+                <button (click)="pdf('template','Clients')" mat-menu-item>PDF</button>
+                <button (click)="Excel('Clients','excel')" mat-menu-item>XLS</button>
+            </mat-menu>
+
+            <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.add" (click)="addClient(null)"
+                class="btn-primary ml-10" mat-stroked-button>
+                ADD NEW
+            </button>
+        </div>
+
     </div>
 </div>
 
