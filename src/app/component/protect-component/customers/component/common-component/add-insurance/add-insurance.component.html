@@ -249,7 +249,8 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40" *ngIf="(lifeInsuranceForm.get('policyStatus').value == '2' || lifeInsuranceForm.get('policyStatus').value == '4')">
+        <div class="row pt-40"
+            *ngIf="(lifeInsuranceForm.get('policyStatus').value == '2' || lifeInsuranceForm.get('policyStatus').value == '4')">
             <div class="col-md-5 pr-0"></div>
             <div class="col-md-3">
 
@@ -258,7 +259,8 @@
                 <label class="f-14 roboto">Last unpaid premium</label>
             </div>
         </div>
-        <div class="row " [ngClass]="{'pt-0':(lifeInsuranceForm.get('policyStatus').value == '4' || lifeInsuranceForm.get('policyStatus').value == '2'),'pt-40':(lifeInsuranceForm.get('policyStatus').value == '' || lifeInsuranceForm.get('policyStatus').value == '1' || lifeInsuranceForm.get('policyStatus').value == '3')}">
+        <div class="row "
+            [ngClass]="{'pt-0':(lifeInsuranceForm.get('policyStatus').value == '4' || lifeInsuranceForm.get('policyStatus').value == '2'),'pt-40':(lifeInsuranceForm.get('policyStatus').value == '' || lifeInsuranceForm.get('policyStatus').value == '1' || lifeInsuranceForm.get('policyStatus').value == '3')}">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Policy status</h5>
             </div>
@@ -266,8 +268,8 @@
                 <div class="form-group mb-0">
                     <label class="f-16 roboto"> </label>
                     <mat-form-field>
-                        <mat-select (selectionChange)="changePolicyStatus()" matInput formControlName="policyStatus" #policyStatus autocomplete="off"
-                            class="form-control  br-0">
+                        <mat-select (selectionChange)="changePolicyStatus()" matInput formControlName="policyStatus"
+                            #policyStatus autocomplete="off" class="form-control  br-0">
                             <mat-option value="1">In force</mat-option>
                             <mat-option value="2">Lapsed</mat-option>
                             <!-- <mat-option value="3">Paid up</mat-option> -->
@@ -290,7 +292,8 @@
                     </mat-form-field>
                 </div>
             </div> -->
-            <div class="col-md-3" *ngIf="(lifeInsuranceForm.get('policyStatus').value == '2' || lifeInsuranceForm.get('policyStatus').value == '4')">
+            <div class="col-md-3"
+                *ngIf="(lifeInsuranceForm.get('policyStatus').value == '2' || lifeInsuranceForm.get('policyStatus').value == '4')">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input matInput formControlName="policyStatusLastUnpaid" [max]="maxDate"

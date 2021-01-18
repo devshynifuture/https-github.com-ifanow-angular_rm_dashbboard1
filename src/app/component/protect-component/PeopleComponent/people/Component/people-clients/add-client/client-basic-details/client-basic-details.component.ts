@@ -103,7 +103,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, private datePipe: DatePipe,
-    private utilService: UtilService, private enumDataService: EnumDataService,
+    private utilService: UtilService, public enumDataService: EnumDataService,
     private cusService: CustomerService, private dialog: MatDialog,
     public roleService: RoleService) {
   }

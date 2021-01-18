@@ -246,6 +246,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   openrunSipMapping() {
     const dialogRef = this.dialog.open(RunSipMappingMasterComponent, {
       width: '900px',
+      // height: '100%'
 
       // data: {selectedFolios: data, type: 'backoffice'}
     });

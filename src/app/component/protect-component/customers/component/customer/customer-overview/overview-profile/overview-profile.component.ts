@@ -44,6 +44,7 @@ export class OverviewProfileComponent implements OnInit {
   bankFlag: boolean;
   dematFlag: boolean;
   hasError = false;
+  tabviewshow: any;
 
   // clientData;
   showSectionError = {
@@ -335,6 +336,13 @@ export class OverviewProfileComponent implements OnInit {
 
 
   open(value, data) {
+
+    if (window.innerWidth <= 1024) {
+      this.tabviewshow = 'open80'
+    }
+    else { this.tabviewshow = 'open50' }
+
+
     if (!this.keyInfoCapability.Edit) {
       return
     }
@@ -374,7 +382,7 @@ export class OverviewProfileComponent implements OnInit {
       flag: value,
       data,
       id: 1,
-      state: 'open50',
+      state: this.tabviewshow,
       componentName: component,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
