@@ -52,7 +52,8 @@
                 </ng-container>
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br" sticky> Registered
+                    <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br ws-nowrap" sticky>
+                        Registered
                         mobile
                     </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
