@@ -139,6 +139,8 @@ import { SaveFinPlanSectionComponent } from './component/protect-component/custo
 import { AddOthersInsuranceInAssetComponent } from './component/protect-component/customers/component/customer/accounts/insurance/add-others-insurance-in-asset/add-others-insurance-in-asset.component';
 import { DialogDetailedViewInsPlanningComponent } from './component/protect-component/customers/component/customer/plan/insurance-plan/dialog-detailed-view-ins-planning/dialog-detailed-view-ins-planning.component';
 import { AddDeploymentsComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/sip-cleanup/add-deployments/add-deployments.component';
+import { AddSovereignGoldBondsComponent } from './component/protect-component/customers/component/customer/accounts/assets/sovereign-gold-bonds/add-sovereign-gold-bonds/add-sovereign-gold-bonds.component';
+import { DetailedViewSovereignGoldBondsComponent } from './component/protect-component/customers/component/customer/accounts/assets/sovereign-gold-bonds/detailed-view-sovereign-gold-bonds/detailed-view-sovereign-gold-bonds.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -221,6 +223,8 @@ export const componentList = [
   AddInsuranceComponent,
   AddRealEstateComponent,
   AddOthersAssetComponent,
+  AddSovereignGoldBondsComponent,
+  DetailedViewSovereignGoldBondsComponent,
   AddNPSComponent,
   RecuringDepositComponent,
   OthersComponent,

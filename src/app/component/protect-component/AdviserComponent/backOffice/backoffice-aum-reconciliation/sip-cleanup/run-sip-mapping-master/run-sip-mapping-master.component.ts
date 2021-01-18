@@ -15,7 +15,7 @@ export class RunSipMappingMasterComponent implements OnInit {
   countOfWizard: any;
   hideCount: boolean = false;
   wizardList: any;
-  isLoading: boolean;
+  isLoading: boolean = false;
   percentage: number = 0;
   constructor(public dialogRef: MatDialogRef<RunSipMappingMasterComponent>,
     private backOfficeService: BackOfficeService, private eventService: EventService) { }
@@ -33,17 +33,18 @@ export class RunSipMappingMasterComponent implements OnInit {
     }
     this.backOfficeService.getSipWizardCount(data).subscribe(
       (res) => {
-        this.isLoading = false;
-        this.countOfWizard = res
-        console.log('count wizard')
         if (res) {
-
+          this.isLoading = false;
+          this.countOfWizard = res
+          console.log('count wizard')
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
       (err) => {
-
+        this.isLoading = false;
+        this.eventService.openSnackBar(err, "DISMISS")
       }
     );
   }
@@ -64,10 +65,12 @@ export class RunSipMappingMasterComponent implements OnInit {
           this.hideCount = true
           console.log('previousSipWizard', res)
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
       (err) => {
+        this.eventService.openSnackBar(err, "DISMISS")
 
       }
     );
@@ -94,13 +97,13 @@ export class RunSipMappingMasterComponent implements OnInit {
         this.hideCount = true
         console.log('refreshWizard', res)
         if (res) {
-
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
       (err) => {
-
+        this.eventService.openSnackBar(err, "DISMISS")
       }
     );
   }
@@ -125,11 +128,12 @@ export class RunSipMappingMasterComponent implements OnInit {
         if (res) {
 
         } else {
+          this.isLoading = false;
           this.eventService.openSnackBar("No Data Found!", "DISMISS")
         }
       },
       (err) => {
-
+        this.isLoading = false;
       }
     );
   }
