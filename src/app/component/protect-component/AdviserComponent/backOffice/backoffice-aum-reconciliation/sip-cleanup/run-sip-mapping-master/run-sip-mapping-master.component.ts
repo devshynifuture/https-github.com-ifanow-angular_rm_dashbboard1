@@ -134,6 +134,7 @@ export class RunSipMappingMasterComponent implements OnInit {
       },
       (err) => {
         this.isLoading = false;
+        this.eventService.openSnackBar(err, "DISMISS")
       }
     );
   }
