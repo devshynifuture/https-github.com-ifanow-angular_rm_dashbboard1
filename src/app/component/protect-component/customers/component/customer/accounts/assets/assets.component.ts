@@ -28,15 +28,15 @@ export class AssetsComponent implements OnInit {
   // sidenavState: boolean = false;
   @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
   assetSideBarData = [
-    { name: 'Mutual funds', viewmode: 'tab1', count: 0, link: './mutual', tabName: 'mutual_fund' },
-    { name: 'Stocks', viewmode: 'tab2', count: 0, link: './stock', tabName: 'STOCKS' },
-    { name: 'Fixed income', viewmode: 'tab3', count: 0, link: './fix', tabName: 'fixedIncome' },
-    { name: 'Real estate', viewmode: 'tab4', count: 0, link: './real', tabName: 'real_estate' },
-    { name: 'Retirement accounts', viewmode: 'tab5', count: 0, link: './retire', tabName: 'retirementAccounts' },
-    { name: 'Small saving scheme', viewmode: 'tab6', count: 0, link: './small', tabName: 'smallSavingSchemes' },
-    { name: 'Cash & Bank', viewmode: 'tab7', count: 0, link: './cash_bank', tabName: 'cashAndBank' },
-    { name: 'Commodities', viewmode: 'tab8', count: 0, link: './commodities', tabName: 'commodities' },
-    { name: 'Other assets', viewmode: 'tab9', count: 0, link: './others', tabName: 'otherAsset' },
+    { name: 'Mutual funds', viewmode: 'tab1', count: 0, link: '/customer/detail/account/assets/mutual', tabName: 'mutual_fund' },
+    { name: 'Stocks', viewmode: 'tab2', count: 0, link: '/customer/detail/account/assets/stock', tabName: 'STOCKS' },
+    { name: 'Fixed income', viewmode: 'tab3', count: 0, link: '/customer/detail/account/assets/fix', tabName: 'fixedIncome' },
+    { name: 'Real estate', viewmode: 'tab4', count: 0, link: '/customer/detail/account/assets/real', tabName: 'real_estate' },
+    { name: 'Retirement accounts', viewmode: 'tab5', count: 0, link: '/customer/detail/account/assets/retire', tabName: 'retirementAccounts' },
+    { name: 'Small saving scheme', viewmode: 'tab6', count: 0, link: '/customer/detail/account/assets/small', tabName: 'smallSavingSchemes' },
+    { name: 'Cash & Bank', viewmode: 'tab7', count: 0, link: '/customer/detail/account/assets/cash_bank', tabName: 'cashAndBank' },
+    { name: 'Commodities', viewmode: 'tab8', count: 0, link: '/customer/detail/account/assets/commodities', tabName: 'commodities' },
+    { name: 'Other assets', viewmode: 'tab9', count: 0, link: '/customer/detail/account/assets/others', tabName: 'otherAsset' },
     // { name: 'Gold bonds', viewmode: 'tab10', count: 0, link: './sgb', tabName: 'goldBonds' }
   ];
   tab: any;
@@ -142,6 +142,10 @@ export class AssetsComponent implements OnInit {
         }
       }
     );
+  }
+
+  goToRoute(assetData) {
+    this.router.navigate([assetData.link])
   }
 
   sidebarListBasedOnRolesSetting() {
