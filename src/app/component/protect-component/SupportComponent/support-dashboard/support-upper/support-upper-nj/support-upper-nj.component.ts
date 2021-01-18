@@ -341,6 +341,8 @@ export class SupportUpperNjComponent implements OnInit {
           console.log(res);
           element.isMapped = true;
           this.getMappedUnmappedNjSchemes()
+        } else {
+          this.getMappedUnmappedNjSchemes()
         }
       })
   }
@@ -418,6 +420,7 @@ export class SupportUpperNjComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.filteredSchemes = [];
+    this.schemeControl.setValue('');
     this.getMappedUnmappedNjSchemes();
   }
 
