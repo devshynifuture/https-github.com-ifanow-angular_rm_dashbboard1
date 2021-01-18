@@ -15,7 +15,7 @@ export class RunSipMappingMasterComponent implements OnInit {
   countOfWizard: any;
   hideCount: boolean = false;
   wizardList: any;
-  isLoading: boolean;
+  isLoading: boolean = false;
   percentage: number = 0;
   constructor(public dialogRef: MatDialogRef<RunSipMappingMasterComponent>,
     private backOfficeService: BackOfficeService, private eventService: EventService) { }
