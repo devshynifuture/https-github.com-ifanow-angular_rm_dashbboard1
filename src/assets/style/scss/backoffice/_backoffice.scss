@@ -17,6 +17,15 @@
   }
 }
 
+.table-run-sip-mapping-master {
+  max-height: 275px;
+  overflow: auto;
+
+  #tbs tr.mat-header-row {
+    height: 40px !important;
+  }
+}
+
 .remove-sip-clenup,
 .keep-sip-clenup {
   padding: 0 5px !important;
