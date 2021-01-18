@@ -12,7 +12,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./add-life-insurance.component.scss']
 })
 export class AddLifeInsuranceComponent implements OnInit {
-  displayedColumns: string[] = ['client', 'cat', 'des', 'checkbox'];
+  displayedColumns: string[] = ['client', 'cat', 'checkbox'];
   dataSource = new MatTableDataSource([]);
 
   counter: number;
@@ -50,8 +50,8 @@ export class AddLifeInsuranceComponent implements OnInit {
     this.getfamilyMemberInsurance()
     this.familyMemberSend = []
   }
-  close(state,flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close',data:flag,refreshRequired:flag });
+  close(state, flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: flag, refreshRequired: flag });
   }
   addInsurance(event, element) {
     console.log(element)
@@ -59,12 +59,12 @@ export class AddLifeInsuranceComponent implements OnInit {
     element.selected = event.checked
     if (event.checked == true) {
       this.addplan = false;
-      const obj={
-        advisorId:this.advisorId,
-        clientId:this.clientId,
-        insuranceType:1,
-        owners:[{
-          'ownerId':element.familyMemberId
+      const obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        insuranceType: 1,
+        owners: [{
+          'ownerId': element.familyMemberId
         }]
       }
       this.familyMemberSend.push(obj);
@@ -78,7 +78,7 @@ export class AddLifeInsuranceComponent implements OnInit {
     let obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      insuranceTypeId:1
+      insuranceTypeId: 1
     }
     this.loader(1);
     this.isLoadingLifeInsurance = true;
@@ -95,9 +95,9 @@ export class AddLifeInsuranceComponent implements OnInit {
     this.loader(-1);
     this.isLoadingLifeInsurance = false;
     console.log('getFamilyDetailsInsuranceRes', data)
-    if(data){
+    if (data) {
       this.dataSource.data = data
-    }else{
+    } else {
       this.dataSource.data = []
     }
   }
@@ -111,7 +111,7 @@ export class AddLifeInsuranceComponent implements OnInit {
   }
   saveInsurance() {
     let obj = this.familyMemberSend
-    if(this.familyMemberSend.length > 0){
+    if (this.familyMemberSend.length > 0) {
       this.barButtonOptions.active = true;
       this.loader(1);
       this.planService.addInsurance(obj).subscribe(
@@ -121,13 +121,13 @@ export class AddLifeInsuranceComponent implements OnInit {
           this.loader(-1);
         }
       );
-    }else{
-      this.addplan= true;
+    } else {
+      this.addplan = true;
     }
   }
   addInsuranceRes(data) {
     this.barButtonOptions.active = false;
-    this.close(false,true);
+    this.close(false, true);
     console.log(data)
   }
 }

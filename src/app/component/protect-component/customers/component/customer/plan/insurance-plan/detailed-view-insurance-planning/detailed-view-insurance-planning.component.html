@@ -859,21 +859,21 @@
                         </div>
                     </div>
                     <div class="row bb-1 pt-6 pb-6 br bl-1"
-                    *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
-                    <div class="col-md-4 f-400 f-14"
-                        *ngIf="_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'">
-                        {{(_data?.parentAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
-                    </div>
-                    <div class="col-md-4 f-500 f-14 roboto text-center"
                         *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
-                        sum insured </div>
-                    <div *ngIf="_data?.childAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'"
-                        class="col-md-4 f-400 f-14 text-right">
-                        {{(_data?.childAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv : '-'}}</span>
+                        <div class="col-md-4 f-400 f-14"
+                            *ngIf="_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'">
+                            {{(_data?.parentAsset?.sumInsuredIdv) ? '₹' : ''}}<span
+                                appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
+                        </div>
+                        <div class="col-md-4 f-500 f-14 roboto text-center"
+                            *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
+                            sum insured </div>
+                        <div *ngIf="_data?.childAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'"
+                            class="col-md-4 f-400 f-14 text-right">
+                            {{(_data?.childAsset?.sumInsuredIdv) ? '₹' : ''}}<span
+                                appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv : '-'}}</span>
+                        </div>
                     </div>
-                </div>
                 </div>
                 <!-- <p class="roboto f-400 text-custom f-12 text-right">Implemented on: 04/09/2019</p> -->
             </div>
@@ -925,7 +925,7 @@
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                            Amount
+                            {{adviceName == 'Surrender' ? 'Surrender value' : 'Sum assured'}}
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
                             {{( _data?.adviceDetails?.adviceAllotment) ? '₹' : ''}}<span

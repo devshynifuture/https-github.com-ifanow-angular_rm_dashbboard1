@@ -17,15 +17,15 @@ export class AdviceActivityComponent implements OnInit {
   constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService) { }
   selected;
-  selectedTab = "ALL PORTFOLIO";
+  selectedTab = "Life insurance";
   leftSidebarList = [
-    { name: "Stock", count: 1, urlPath: '/customer/detail/activity/advice/stocks' },
-    { name: "Fixed income", count: 1, urlPath: '/customer/detail/activity/advice/fixedIncome' },
-    { name: "Real estate", count: 1, urlPath: '/customer/detail/activity/advice/realAsset' },
-    { name: "Retirement accounts", count: 1, urlPath: '/customer/detail/activity/advice/retirement' },
-    { name: "Small saving schemes", count: 1, urlPath: '/customer/detail/activity/advice/smallSavingScheme' },
-    { name: "Cash & Bank", count: 1, urlPath: '/customer/detail/activity/advice/cashHand' },
-    { name: "Commodities", count: 1, urlPath: '/customer/detail/activity/advice/commodities' },
+    // { name: "Stock", count: 1, urlPath: '/customer/detail/activity/advice/stocks' },
+    // { name: "Fixed income", count: 1, urlPath: '/customer/detail/activity/advice/fixedIncome' },
+    // { name: "Real estate", count: 1, urlPath: '/customer/detail/activity/advice/realAsset' },
+    // { name: "Retirement accounts", count: 1, urlPath: '/customer/detail/activity/advice/retirement' },
+    // { name: "Small saving schemes", count: 1, urlPath: '/customer/detail/activity/advice/smallSavingScheme' },
+    // { name: "Cash & Bank", count: 1, urlPath: '/customer/detail/activity/advice/cashHand' },
+    // { name: "Commodities", count: 1, urlPath: '/customer/detail/activity/advice/commodities' },
     { name: "Life insurance", count: 1, urlPath: '/customer/detail/activity/advice/lifeInsurance' },
     { name: "General insurance", count: 1, urlPath: '/customer/detail/activity/advice/generalInsurance' }
   ]
