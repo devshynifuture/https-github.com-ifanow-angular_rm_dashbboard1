@@ -110,8 +110,12 @@
 
     <div class="row pt-20">
       <div class="col-md-12 text-center">
-        <button (click)="saveGeneralDetails(null)" class="f-16 m-0 btn-primary " mat-button> LET’S BEGIN <i
+        <button (click)="saveGeneralDetails(false)" class="f-16 m-0 btn-primary " mat-button> LET’S BEGIN <i
             class="material-icons text-right ml-16">
+            arrow_forward
+          </i></button>
+        <button *ngIf="showDraftButton == true" (click)="saveGeneralDetails(true)" class="f-16 ml-16 btn-primary "
+          mat-button>DRAFT <i class="material-icons text-right ml-16">
             arrow_forward
           </i></button>
       </div>
