@@ -84,17 +84,6 @@ export class ClientDematComponent implements OnInit {
     this.storeTempDematData = Object.assign({}, data);
     this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
-    (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
-    if (this.userData.dematData == undefined && this.fieldFlag) {
-      this.holdingMode = '1';
-      this.createDematForm(null);
-      this.getDematList(data);
-    } else {
-      this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
-      (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
-      this.barButtonOptions.text = 'SAVE & CLOSE';
-      this.createDematForm(this.userData.dematData);
-    }
   }
 
 
@@ -363,6 +352,17 @@ export class ClientDematComponent implements OnInit {
   }
 
   ngOnInit() {
+    (this.userData.dematData) ? this.dematList = this.userData.dematData : '';
+    if (this.userData.dematData == undefined && this.fieldFlag) {
+      this.holdingMode = '1';
+      this.createDematForm(null);
+      this.getDematList(this.userData);
+    } else {
+      this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
+      (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
+      this.barButtonOptions.text = 'SAVE & CLOSE';
+      this.createDematForm(this.userData.dematData);
+    }
     this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     if (!this.dialogRef) {
       this.getBankList();

@@ -73,14 +73,6 @@ export class ClientBankComponent implements OnInit {
     this.fieldFlag;
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
     this.createBankForm(data);
-    (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
-    if (this.userData.bankData == undefined && this.fieldFlag) {
-      this.getBankList(data);
-    } else {
-      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {};
-      this.barButtonOptions.text = 'SAVE & CLOSE';
-      this.createBankForm(this.userData.bankData);
-    }
   }
 
   toUpperCase(formControl, event) {
@@ -198,6 +190,14 @@ export class ClientBankComponent implements OnInit {
   }
 
   ngOnInit() {
+    (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
+    if (this.userData.bankData == undefined && this.fieldFlag) {
+      this.getBankList(this.userData);
+    } else {
+      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {};
+      this.barButtonOptions.text = 'SAVE & CLOSE';
+      this.createBankForm(this.userData.bankData);
+    }
     this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     this.accountTypes = this.enumDataService.getBankAccountTypes();
   }
