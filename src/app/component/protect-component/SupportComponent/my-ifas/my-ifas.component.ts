@@ -39,6 +39,7 @@ export class MyIfasComponent implements OnInit {
     "usingSince",
     "lastLogin",
     "accStatus",
+    "paidUpto",
     "team",
     "arn",
     "logout",
@@ -55,6 +56,7 @@ export class MyIfasComponent implements OnInit {
     this.supportService.getMyIFAValues(obj).subscribe(
       (data) => {
         console.log(data);
+        let today = new Date();
         if (data && data.length !== 0) {
           this.isLoading = false;
           let tableArray = [];
@@ -69,9 +71,8 @@ export class MyIfasComponent implements OnInit {
                 element.usingSinceMonth +
                 "M",
               lastLogin: element.last_login ? element.last_login : " - ",
-              accStatus: element.active == false ? 'Deactivate' : element.optedForTrial
-                ? 'Trial'
-                : 'Paid',
+              accStatus: element.active == false ? 'Deactivate' : element.optedForTrial ? (element.optedForTrial && element.paidUpto != null ? 'Expired' : (new Date(element.trialExpiryDate) <= today) ? 'Expired' : 'Trial') : 'Paid',
+              paidUpto: element.trialExpiryDate ? (new Date(element.trialExpiryDate) >= today ? element.trialExpiryDate : element.paidUpto) : element.paidUpto,
               active: element.active,
               // plan: element.plan ? element.plan : ' - ',
               //nextBilling: element.next_billing ? element.next_billing : ' - ',
@@ -250,6 +251,7 @@ const ELEMENT_DATA = [
     usingSince: "",
     lastLogin: "",
     accStatus: "",
+    paidUpto: "",
     team: "",
     arn: "",
     logout: "",
@@ -263,6 +265,7 @@ const ELEMENT_DATA = [
     usingSince: "",
     lastLogin: "",
     accStatus: "",
+    paidUpto: "",
     team: "",
     arn: "",
     logout: "",
@@ -276,6 +279,7 @@ const ELEMENT_DATA = [
     usingSince: "",
     lastLogin: "",
     accStatus: "",
+    paidUpto: "",
     team: "",
     arn: "",
     logout: "",
