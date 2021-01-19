@@ -40,8 +40,9 @@
         </div> -->
     </div>
     <div class="row">
-        <div class="col-md-12 p-0">
-            <app-advice-action [data]="selectedAssetId" [ngClass]="{'v-h': selectedAssetId.length==0}">
+        <div class="col-md-12 p-0" *ngIf="selectedAssetId.length > 0">
+            <app-advice-action [data]="selectedAssetId" (valueChange)='display($event)'
+                [ngClass]="{'v-h': selectedAssetId.length==0}">
             </app-advice-action>
         </div>
     </div>
@@ -105,7 +106,7 @@
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <mat-checkbox (change)="checkSingle($event,element,termDataSource,'term')" *ngIf="isLoading==false"
                     [(ngModel)]="element.selected" [checked]="element.selected"
-                    [disabled]="!element?.adviceDetails?.id">
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)">
                 </mat-checkbox>
             </td>
         </ng-container>
@@ -231,10 +232,10 @@
                                 advice</button>
                         </div>
 
-                        <button mat-menu-item  *ngIf="element?.adviceDetails?.adviceId == 0"
+                        <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
                             (click)="openAddEditAdvice('Term Insurance',element)">Edit</button>
-                            <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Term Insurance',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="openDetailedView('Term Insurance',element)">Detailed View</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="deleteModal('Term Insurance',element)">Delete</button>
                     </mat-menu>
@@ -316,7 +317,8 @@
             </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <mat-checkbox (change)="checkSingle($event,element,traditionalDataSource,'term')"
-                    *ngIf="isLoading==false" [(ngModel)]="element.selected" [disabled]="!element?.adviceDetails?.id"
+                    *ngIf="isLoading==false" [(ngModel)]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)"
                     [checked]="element.selected">
                 </mat-checkbox>
             </td>
@@ -443,8 +445,8 @@
                         </div>
                         <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
                             (click)="openAddEditAdvice('Traditional Insurance',element)">Edit</button>
-                            <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
-                        (click)="openDetailedView('Traditional Insurance',element)">Detailed View</button>
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                            (click)="openDetailedView('Traditional Insurance',element)">Detailed View</button>
                         <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="deleteModal('Traditional Insurance',element)">Delete</button>
                     </mat-menu>
@@ -516,7 +518,8 @@
             </th>
             <td mat-cell *matCellDef="let element;index as i" class="br">
                 <mat-checkbox (change)="checkSingle($event,element,ulipDataSource,'term')" *ngIf="isLoading==false"
-                    [(ngModel)]="element.selected" [disabled]="!element?.adviceDetails?.id"
+                    [(ngModel)]="element.selected"
+                    [disabled]="(element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1) || (!element?.adviceDetails?.id && element?.adviceDetails?.adviceStatusId !=1)"
                     [checked]="element.selected">
                 </mat-checkbox>
             </td>
@@ -643,9 +646,9 @@
                         </div>
                         <button mat-menu-item *ngIf="element?.adviceDetails?.adviceId == 0"
                             (click)="openAddEditAdvice('Ulip Insurance',element)">Edit</button>
-                            <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="openDetailedView('Ulip Insurance',element)">Detailed View</button>
-                            <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
+                        <button mat-menu-item [disabled]="!element?.adviceDetails?.id"
                             (click)="deleteModal('Ulip Insurance',element)">Delete</button>
                     </mat-menu>
                 </div>

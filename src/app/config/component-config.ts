@@ -786,7 +786,7 @@ export const appConfig = {
   REFRESH_FILE_ORDER_HISTORICAL_PER_ROW: 'fileorder/historical/advisor/order/refresh',
   REFRESH_FILE_ORDER_BULK_PER_ROW: 'fileorder/bulk/order/refresh',
   REFRESH_FILE_ORDER_UPPER: 'fileorder/refresh',
-
+  DEACTIVATE_ACCOUNT: 'rmdashboard/activate-deactivate/advisor',
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',

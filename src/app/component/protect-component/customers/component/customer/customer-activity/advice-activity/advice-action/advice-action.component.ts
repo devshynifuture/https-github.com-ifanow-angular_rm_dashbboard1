@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { EmailAdviceComponent } from '../email-advice/email-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -16,6 +16,7 @@ export class AdviceActionComponent implements OnInit {
   familyMemberList: any;
 
   constructor(private eventService: EventService, private datePipe: DatePipe, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  @Output() valueChange = new EventEmitter();
   @Input() set data(data) {
     console.log(data)
     this.selectedAssetData = data;
@@ -34,16 +35,13 @@ export class AdviceActionComponent implements OnInit {
     fragmentData.data = {
       selectedAssetData: this.selectedAssetData,
       flagData: data,
-      familyList:this.familyMemberList
+      familyList: this.familyMemberList
     }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
-
-          }
+          this.valueChange.emit(sideBarData.refreshRequired);
           rightSideDataSub.unsubscribe();
         }
 

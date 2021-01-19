@@ -71,9 +71,10 @@ export class MyIfasComponent implements OnInit {
                 element.usingSinceMonth +
                 "M",
               lastLogin: element.last_login ? element.last_login : " - ",
-              accStatus: element.account_status
-                ? element.account_status
-                : " - ",
+              accStatus: element.active == false ? 'Deactivate' : element.optedForTrial
+                ? 'Trial'
+                : 'Paid',
+              active: element.active,
               // plan: element.plan ? element.plan : ' - ',
               //nextBilling: element.next_billing ? element.next_billing : ' - ',
               team: element.teamMemberCount,
@@ -179,6 +180,45 @@ export class MyIfasComponent implements OnInit {
       this.dataSource.data = this.tableData;
     }
   }
+  deactivateAccount(value, data) {
+    const dialogData = {
+      data: value,
+      header: data.active ? 'DEACTIVATE ACCOUNT' : 'ACTIVATE ACCOUNT',
+      body: data.active ? 'Are you sure you want to deactivate this account?' : 'Are you sure you want to activate this account?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: data.active ? 'DEACTIVATE' : 'ACTIVATE',
+      positiveMethod: () => {
+        const obj = {
+          "advisorId": data.advisorId,
+          "isActive": data.active ? false : true
+        }
+        this.supportService.deactivateAccount(obj).subscribe(
+          data => {
+            console.log(data);
+            this.dataSource.data = ELEMENT_DATA;
+            this.getMyIfasList();
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 
   deleteSip(value, advisorData) {
     const dialogData = {
@@ -269,6 +309,7 @@ const ELEMENT_DATA = [
     arn: "",
     logout: "",
     menu: "",
+    active: "",
   },
   {
     adminName: "",
@@ -281,6 +322,7 @@ const ELEMENT_DATA = [
     arn: "",
     logout: "",
     menu: "",
+    active: "",
   },
   {
     adminName: "",
@@ -293,5 +335,6 @@ const ELEMENT_DATA = [
     arn: "",
     logout: "",
     menu: "",
+    active: "",
   },
 ];

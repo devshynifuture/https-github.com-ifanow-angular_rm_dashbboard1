@@ -1433,7 +1433,11 @@ export class DashboardComponent implements OnInit {
     }
     this.utils.calculateAgeFromCurrentDate(arr);
     this.birthdayAnniList = arr;
-    console.log(this.birthdayAnniList);
+    this.birthdayAnniList = this.birthdayAnniList.sort((a, b) =>
+      a['daysToGo'] > b['daysToGo'] ? 1 : (a['daysToGo'] === b['daysToGo'] ? 0 : -1)
+    );
+
+    console.log('final list', this.birthdayAnniList);
   }
   getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
