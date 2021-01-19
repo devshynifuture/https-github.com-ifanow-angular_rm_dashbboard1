@@ -19,6 +19,9 @@ import { MoveFamilymemberToClientComponent } from './move-familymember-to-client
 import { DashboardService } from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { LeadsClientsComponent } from '../../../people-leads/leads-clients/leads-clients.component';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { RoutingState } from 'src/app/services/routing-state.service';
+import { CustomerOverviewService } from 'src/app/component/protect-component/customers/component/customer/customer-overview/customer-overview.service';
 
 const moment = require('moment');
 
@@ -105,7 +108,10 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     private eventService: EventService, private datePipe: DatePipe,
     private utilService: UtilService, public enumDataService: EnumDataService,
     private cusService: CustomerService, private dialog: MatDialog,
-    public roleService: RoleService) {
+    public roleService: RoleService,
+    private MfServiceService: MfServiceService,
+    public routingStateService: RoutingState,
+    private customerOverview: CustomerOverviewService) {
   }
 
   @Input() set data(data) {
@@ -947,9 +953,10 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         };
         this.peopleService.promoteToClient(obj).subscribe(
           data => {
-            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
+            this.eventService.openSnackBar('Promoted successfully!', 'Dismiss');
             dialogRef.close();
             this.close(data);
+            this.goToAdvisorHome();
           },
           error => this.eventService.showErrorMessage(error)
         );
@@ -970,6 +977,17 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  goToAdvisorHome() {
+    this.customerOverview.clearServiceData();
+    setTimeout(() => {
+      localStorage.removeItem('clientData');
+      sessionStorage.removeItem('clientData');
+      sessionStorage.removeItem('clientList')
+      this.routingStateService.goToSpecificRoute('/admin/people');
+    }, 200);
+    this.MfServiceService.clearStorage();
   }
 
   openUnmapPopupORNot() {
