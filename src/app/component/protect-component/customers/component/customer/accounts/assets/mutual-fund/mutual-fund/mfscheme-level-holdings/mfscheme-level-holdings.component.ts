@@ -66,6 +66,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   selectedTransactionType: any;
   maximumDate: any;
   errorMsgForScheme: boolean;
+  storedVal: any;
 
   constructor(
     public subInjectService: SubscriptionInject,
@@ -182,11 +183,15 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   getFilteredSchemesList(value) {
     if (value !== '' && (typeof value === 'string')) {
       if (value.length > 2) {
-        return this.customerService.getSchemeNameList({ schemeName: value })
+        if (this.storedVal != value) {
+          this.storedVal = value;
+          return this.customerService.getSchemeNameList({ schemeName: value })
+        }
       }
-    } else if (typeof (value) === 'object') {
-      return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
     }
+    // else if (typeof (value) === 'object') {
+    //   return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
+    // }
   }
 
   mapSchemeWithForm(scheme) {
