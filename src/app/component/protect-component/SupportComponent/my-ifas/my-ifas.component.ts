@@ -9,6 +9,7 @@ import { MatSort, MatTableDataSource, MatDialog } from "@angular/material";
 import { OrderHistoricalFileComponent } from "./../order-historical-file/order-historical-file.component";
 import { SupportService } from "../support.service";
 import { EventService } from "src/app/Data-service/event.service";
+import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: "app-my-ifas",
@@ -20,10 +21,12 @@ export class MyIfasComponent implements OnInit {
   isLoading = false;
   tableData = [];
   isMainLoading: boolean;
+  isLoader: boolean;
   constructor(
     private subInjectService: SubscriptionInject,
     private supportService: SupportService,
-    private eventService: EventService
+    private eventService: EventService,
+    private dialog: MatDialog
   ) { }
 
   filterName;
@@ -58,6 +61,7 @@ export class MyIfasComponent implements OnInit {
           let tableArray = [];
           data.forEach((element) => {
             tableArray.push({
+              isLoader: false,
               adminName: element.name,
               email: element.emailId,
               mobile: element.mobileNo,
@@ -174,6 +178,59 @@ export class MyIfasComponent implements OnInit {
     } else {
       this.dataSource.data = this.tableData;
     }
+  }
+
+  deleteSip(value, advisorData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const obj = {
+          advisorId: advisorData.advisorId
+        }
+        this.supportService.deleteSip(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar("SIP deleted sucessfully", "Dimiss");
+            dialogRef.close();
+          }, err => {
+            this.eventService.openSnackBar(err, "Dismiss");
+          }
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  refreshDashboard(advisorData) {
+    const obj = {
+      id: advisorData.advisorId
+    }
+    advisorData.isLoader = true;
+    this.supportService.refreshDashboard(obj).subscribe(data => {
+      advisorData.isLoader = false;
+      this.eventService.openSnackBar("Refreshed sucessfully", "Dimiss")
+    }, err => {
+      advisorData.isLoader = false;
+      this.eventService.openSnackBar(err, "Dimiss");
+    })
   }
 
   openIfaRightSilder(data) {
