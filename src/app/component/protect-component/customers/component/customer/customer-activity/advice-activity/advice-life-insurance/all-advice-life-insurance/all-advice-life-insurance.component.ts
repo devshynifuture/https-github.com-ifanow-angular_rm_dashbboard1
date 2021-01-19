@@ -362,6 +362,11 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     this.selectedAssetId = selectedIdList;
     console.log(this.selectedAssetId);
   }
+  display(value) {
+    if (value) {
+      this.getAdviceByAsset();
+    }
+  }
   getFlagCount(flag, count) {
     switch (true) {
       case (flag == 'term'):

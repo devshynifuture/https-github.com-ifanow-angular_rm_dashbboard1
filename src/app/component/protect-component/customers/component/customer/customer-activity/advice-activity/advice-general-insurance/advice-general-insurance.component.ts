@@ -437,6 +437,11 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       }
     );
   }
+  display(value) {
+    if (value) {
+      this.getAdviceByAsset();
+    }
+  }
   editAdvice(value, data) {
     this.object = { data: data, displayList: this.displayList, showInsurance: '', insuranceSubTypeId: 1, insuranceTypeId: 1, adviceToCategoryId: 1 }
     switch (value) {

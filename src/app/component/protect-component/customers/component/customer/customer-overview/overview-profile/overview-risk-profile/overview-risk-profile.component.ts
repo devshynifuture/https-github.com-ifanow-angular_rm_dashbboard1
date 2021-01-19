@@ -91,7 +91,12 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.riskProfileCapability = this.roleService.overviewPermission.subModules.profile.subModule.riskProfile.capabilityList
     console.log(this.finPlanObj)
     if (this.finPlanObj && this.finPlanObj.data) {
-      this.loadGlobalRiskProfile();
+      if (!this.customerOverview.globalRiskProfileData) {
+        this.loadGlobalRiskProfile();
+      } else {
+        this.loaderFn.increaseCounter();
+        this.loadGlobalRiskProfileRes(this.customerOverview.globalRiskProfileData);
+      }
       this.riskAssessmentQuestionList = this.finPlanObj.data.assessmentResult
       this.dateOfTest = this.finPlanObj.data.assessmentScore.riskAssessmentDate
       this.mergeRiskProfile(this.finPlanObj.data.assessmentScore);
@@ -103,7 +108,12 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.showRetakeTestsButton = true;
 
     }
-    this.loadGlobalRiskProfile();
+    if (!this.customerOverview.globalRiskProfileData) {
+      this.loadGlobalRiskProfile();
+    } else {
+      this.loaderFn.increaseCounter();
+      this.loadGlobalRiskProfileRes(this.customerOverview.globalRiskProfileData);
+    }
     this.getdataForm('');
     this.sendRiskList = [];
     // this.progressBar = [];
@@ -377,18 +387,28 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.loaderFn.increaseCounter();
     this.hasError = false;
     this.customerService.getGlobalRiskProfile({}).subscribe(res => {
-      if (res == null) {
-        this.globalRiskProfile = [];
-      } else {
-        this.globalRiskProfile = res;
-      }
-      this.loadRiskProfile();
-      this.loaderFn.decreaseCounter();
+      this.loadGlobalRiskProfileRes(res);
     }, err => {
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+  }
+
+  loadGlobalRiskProfileRes(res) {
+    this.customerOverview.globalRiskProfileData = res;
+    if (res == null) {
+      this.globalRiskProfile = [];
+    } else {
+      this.globalRiskProfile = res;
+    }
+    if (!this.customerOverview.riskProfileData) {
+      this.loadRiskProfile();
+    } else {
+      this.loaderFn.increaseCounter();
+      this.loadRiskProfileRes(this.customerOverview.riskProfileData);
+    }
+    this.loaderFn.decreaseCounter();
   }
 
   loadRiskProfile() {
@@ -399,48 +419,53 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.loaderFn.increaseCounter();
     this.hasError = false;
     this.customerService.getRiskProfile(obj).subscribe(res => {
-      if (res) {
-        this.feedsRiskProfile = res[0];
-        this.showResults = true;
-        this.isEmpty = false;
-
-        const globalProfile = this.globalRiskProfile.find(risk => risk.id == this.feedsRiskProfile.riskProfileId);
-        if (globalProfile) {
-          this.feedsRiskProfile = {
-            equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
-            equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
-            ...this.feedsRiskProfile
-          }
-        } else {
-          this.feedsRiskProfile = {
-            equityAllocationUpperLimit: 0,
-            equityAllocationLowerLimit: 0,
-            ...this.feedsRiskProfile
-          }
-        }
-        setTimeout(() => {
-          this.percentage(this.feedsRiskProfile)
-        });
-        if (this.chart) {
-          this.svg = this.chart.getSVG();
-        }
-        if (this.finPlanObj) {
-          this.ref.detectChanges();//to refresh the dom when response come
-          this.loaded.emit(this.riskTemp.nativeElement);
-          this.loadsvg.emit(this.svg)
-
-        }
-      } else {
-
-        this.showResults = false;
-        this.isEmpty = true;
-      }
-      this.loaderFn.decreaseCounter();
+      this.loadRiskProfileRes(res);
     }, err => {
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+  }
+
+  loadRiskProfileRes(res) {
+    this.customerOverview.riskProfileData = res;
+    if (res) {
+      this.feedsRiskProfile = res[0];
+      this.showResults = true;
+      this.isEmpty = false;
+
+      const globalProfile = this.globalRiskProfile.find(risk => risk.id == this.feedsRiskProfile.riskProfileId);
+      if (globalProfile) {
+        this.feedsRiskProfile = {
+          equityAllocationUpperLimit: globalProfile.equityAllocationUpperLimit,
+          equityAllocationLowerLimit: globalProfile.equityAllocationLowerLimit,
+          ...this.feedsRiskProfile
+        }
+      } else {
+        this.feedsRiskProfile = {
+          equityAllocationUpperLimit: 0,
+          equityAllocationLowerLimit: 0,
+          ...this.feedsRiskProfile
+        }
+      }
+      setTimeout(() => {
+        this.percentage(this.feedsRiskProfile)
+      });
+      if (this.chart) {
+        this.svg = this.chart.getSVG();
+      }
+      if (this.finPlanObj) {
+        this.ref.detectChanges();//to refresh the dom when response come
+        this.loaded.emit(this.riskTemp.nativeElement);
+        this.loadsvg.emit(this.svg)
+
+      }
+    } else {
+
+      this.showResults = false;
+      this.isEmpty = true;
+    }
+    this.loaderFn.decreaseCounter();
   }
 
   cancelTest() {
