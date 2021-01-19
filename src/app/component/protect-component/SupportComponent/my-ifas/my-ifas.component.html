@@ -84,9 +84,11 @@
             <!-- acc Status column -->
             <ng-container matColumnDef="accStatus">
                 <th mat-header-cell *matHeaderCellDef class="b-a" mat-sort-header="accStatus"> A/c Status </th>
-                <td mat-cell *matCellDef="let element" class="b-a fc-yellow">
+                <td mat-cell *matCellDef="let element" class="b-a ">
                     <div class="bar">
-                        {{element.accStatus}}
+                        <span class="fc-yellow" *ngIf="element.accStatus == 'Trial'">{{'Trial'}}</span>
+                        <span class="fc-green" *ngIf="element.accStatus == 'Paid'">{{'Paid'}}</span>
+                        <span class="fc-warning" *ngIf="element.accStatus == 'Deactivate'">{{'Deactivate'}}</span>
                     </div>
                 </td>
             </ng-container>
@@ -129,7 +131,8 @@
                         <mat-menu #appMenu="matMenu">
                             <button mat-menu-item (click)="recalculateBalanceUnit(element)">Recalculate Balance
                                 Units</button>
-                            <button mat-menu-item>Deactivate Account</button>
+                            <button mat-menu-item (click)="deactivateAccount('',element)">
+                                <span>{{element.active ? 'Deactivate Account' : 'Activate Account'}}</span></button>
                             <button mat-menu-item (click)="mergeSchemeCode(element)">Merge Scheme Code</button>
                             <button mat-menu-item (click)="openOrderHistoricalFile('')">Order Historical file</button>
                         </mat-menu>
