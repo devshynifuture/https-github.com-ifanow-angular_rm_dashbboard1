@@ -36,6 +36,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
   logoText = 'Your Logo here';
+  showDraftButton: boolean = false;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     public processTransaction: ProcessTransactionService,
@@ -214,6 +215,11 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId;
     this.clientData = value;
+    if (localStorage.getItem('holderList' + this.clientData.clientId)) {
+      this.showDraftButton = true
+    } else {
+      this.showDraftButton = false
+    }
     let clientType = 1;
     if (value.clientType > 0) {
       clientType = value.clientType;
@@ -244,6 +250,11 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   }
 
   saveGeneralDetails(data) {
+    if (localStorage.getItem('holderList' + this.clientData.clientId)) {
+      this.showDraftButton = true
+    } else {
+      this.showDraftButton = false
+    }
     if (this.generalDetails.invalid) {
       this.generalDetails.markAllAsTouched();
       return;
@@ -256,7 +267,8 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
       advisorId: this.advisorId,
       taxMaster: this.generalDetails.controls.taxMaster.value,
       taxMasterId: this.generalDetails.controls.taxMaster.value.taxMasterId,
-      clientData: this.clientData
+      clientData: this.clientData,
+      draft: data
     };
     this.openPersonalDetails(obj);
   }

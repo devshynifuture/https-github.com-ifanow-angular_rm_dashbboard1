@@ -63,6 +63,16 @@ export class ContactDetailsInnComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if (JSON.parse(localStorage.getItem('contact' + data.clientData.clientId))) {
+      this.inputData = JSON.parse(localStorage.getItem('contact' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in contact detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.inputData = data;
     // this.doneData.nominee = true;
     // this.doneData.bank = true;
@@ -367,6 +377,7 @@ export class ContactDetailsInnComponent implements OnInit {
       }
       // this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
       this.sendObj.holderList = this.obj1;
+      localStorage.setItem('contact' + (this.data.clientId), JSON.stringify(this.sendObj));
       this.openBankDetails(this.sendObj);
     }
   }

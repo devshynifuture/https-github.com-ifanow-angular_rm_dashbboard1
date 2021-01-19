@@ -68,6 +68,16 @@ export class NomineeDetailsIinComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if (JSON.parse(localStorage.getItem('nominee' + data.clientData.clientId))) {
+      this.inputData = JSON.parse(localStorage.getItem('nominee' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in nominee detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.inputData = data;
     console.log('Data in nominee detail : ', data);
     this.doneData = {};
@@ -447,6 +457,7 @@ export class NomineeDetailsIinComponent implements OnInit {
         confirmationFlag: 1,
         // inputData: this.inputData,
       };
+      localStorage.setItem('nominee' + (this.data.clientId), JSON.stringify(obj));
       this.openFatcaDetails(obj);
     }
   }

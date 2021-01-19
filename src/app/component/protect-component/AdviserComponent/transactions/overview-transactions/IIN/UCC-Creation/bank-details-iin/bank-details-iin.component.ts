@@ -40,6 +40,16 @@ export class BankDetailsIINComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if (JSON.parse(localStorage.getItem('bank' + data.clientData.clientId))) {
+      this.inputData = JSON.parse(localStorage.getItem('bank' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in bank detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.inputData = data;
     console.log('Data in bank detail : ', data);
     this.clientData = data.clientData;
@@ -456,6 +466,7 @@ export class BankDetailsIINComponent implements OnInit {
         paymentMode: this.bankDetailsForm.controls.paymentMode.value,
         bankDetailList: this.bank
       };
+      localStorage.setItem('bank' + (this.data.clientId), JSON.stringify(this.sendObj));
       this.openNomineeDetails(this.sendObj);
     }
   }
