@@ -76,7 +76,8 @@ export const appConfig = {
   ///////////////////////////// rm dashboard ///////////////////////////////////////////
   RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
   RM_SEARCH_NJ_PRUDENT_SCHEMES: 'rmdashboard/get/filtered/njprudent/schemes',
-
+  DELETE_SIP: 'admin/dashboard/mf-sip/reset',
+  REFRESH_DASHBOARD: 'admin/dashboard/key/metrics/refresh',
   ///////////////////////////// back office/////////////////////////////////////////////
 
 

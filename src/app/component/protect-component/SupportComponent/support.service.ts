@@ -165,6 +165,14 @@ export class SupportService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_ORDER_ARN_RIA_LIST, data);
   }
 
+  deleteSip(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SIP, data);
+  }
+
+  refreshDashboard(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_DASHBOARD, data);
+  }
+
   deactivateAccount(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DEACTIVATE_ACCOUNT, data);
   }
