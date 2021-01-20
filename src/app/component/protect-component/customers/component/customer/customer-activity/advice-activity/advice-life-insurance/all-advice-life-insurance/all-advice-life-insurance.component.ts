@@ -179,7 +179,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   }
   filterLiData(data) {
     if (data.length > 0) {
-      data = data.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed');
+      data = data.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed' && d.status != 'MATURED');
       data.forEach(element => {
         this.totalFundValues = 0;
         if (element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3) {
@@ -215,6 +215,9 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     return filterdData;
   }
   openDetailedView(heading, data) {
+    if (data && data.adviceDetails) {
+      data.adviceDetails.adviceAllotment = data.adviceDetails.adviceToInsuranceProperties['adviceAllotment']
+    }
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : 'Proposed policy'
     const sendData = {
@@ -324,7 +327,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     }
 
     if (liArray.length > 0) {
-      liArray = liArray.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed' && d.status != 'Reduced paid up');
+      liArray = liArray.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed' && d.status != 'MATURED');
       array = [...liArray, ...array];
     }
     return array;
