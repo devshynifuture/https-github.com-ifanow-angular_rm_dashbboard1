@@ -614,7 +614,7 @@
 
         .myfeedWrapper {
           li.activeClass {
-            width: 30%;
+          //  width: 30%;
             /* height: 40px; */
             
           }
@@ -625,14 +625,7 @@
           }
         }
 
-        .myFeedUi{
-          display: flex;
-           li{
-             padding-left: 0px;
-             width: 30%;
-             justify-content: center;
-           }
-        }
+         
 
         .borderChatBoxEmpty {
           height: auto;

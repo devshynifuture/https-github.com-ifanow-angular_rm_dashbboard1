@@ -38,7 +38,7 @@
             </ul>
         </div>
 
-        <div class="col-md-8 col-lg-6 mb-20 pl-10">
+        <div class="col-md-6 col-lg-6 mb-20 pl-10">
             <div class="feedInformation">
                 <div class="clientNameBox" #allFeedsSection>
                     <h3 class="m-0 roboto">{{welcomeMessage}} {{clientData.name}}</h3>
@@ -87,13 +87,13 @@
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white md-text-center">
                                     <div class="row skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
-                                        <div class="col-lg-6 col-md-12 pr-0 heightBox md-text-center">
+                                        <div class="col-lg-6 col-md-6 pr-0 heightBox md-text-center">
                                             <div class="relClass">
                                                 <div class="bar220" [ngClass]="{'height220': isLoading}">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-12 md-text-center md-pt-16">
+                                        <div class="col-lg-6 col-md-6 md-text-center md-pt-16">
                                             <div class="loaderMargin">
                                                 <div class="relClass">
                                                     <div class="bar" [ngClass]="{'height24': isLoading}"></div>
@@ -118,13 +118,13 @@
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-12 pr-0 heightBox md-text-center">
+                                        <div class="col-lg-6 col-md-6 pr-0 heightBox md-text-center">
                                             <div class="piechartMutualFund" *ngIf="!isLoadingAssetAllocation"
                                                 [chart]="assetAllocationPieConfig">
                                             </div>
 
                                         </div>
-                                        <div class="col-lg-6 col-md-12 d-flex align-items-center md-pt-16">
+                                        <div class="col-lg-6 col-md-6 d-flex align-items-center md-pt-16">
                                             <ul class="pointUl">
                                                 <li *ngFor="let data of chartData">
                                                     <span class="pointNumber" [style.background-color]="data.color">
@@ -1262,7 +1262,7 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-lg-3 pr-0  pl-30 mt-40">
+        <div class="col-md-3 col-lg-3 pr-0  pl-30 mt-40">
             <div class="sticky-top z-0">
                 <div class="mb-20">
                     <div class="row b-b pb-20" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">

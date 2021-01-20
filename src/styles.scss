@@ -2132,7 +2132,7 @@ ngx-slick-carousel>.slick-disabled {
   float: right;
 }
 
-
+ 
 
 
 @media (max-width: 1124px) {
@@ -2201,4 +2201,11 @@ a.docFileName:hover {
 
 .button-border {
   border: 1px solid rgba(0, 0, 0, .12) !important;
+}
+
+
+
+.tabviewClass {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
 }
