@@ -35,10 +35,18 @@ export class PersonalDetailsInnComponent implements OnInit {
   }
 
   @Input()
-  set data(data) {
-    this.inputData = data;
-    console.log('Data in personal detail : ', data);
 
+  set data(data) {
+    if (JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId)) && data.draft == true) {
+      this.inputData = JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in personal detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.clientData = data.clientData;
     this.obj1 = { ...data };
     if (!this.inputData.taxMaster.minorFlag) {
@@ -317,6 +325,7 @@ export class PersonalDetailsInnComponent implements OnInit {
 
     this.obj1.holderList = holderList;
     if (flag == true) {
+      localStorage.setItem('holderList' + (this.clientData.clientId), JSON.stringify(this.obj1));
       this.openContactDetails(this.obj1);
     }
   }
