@@ -232,4 +232,7 @@ export class PeopleService {
   deleteNotes(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_NOTES_ACTIVITY, data);
   }
+  checkValidUsername(data) {
+    return this.http.putEncoded(apiConfig.USER + appConfig.CHECK_VALID_USERNAME, data);
+  }
 }
