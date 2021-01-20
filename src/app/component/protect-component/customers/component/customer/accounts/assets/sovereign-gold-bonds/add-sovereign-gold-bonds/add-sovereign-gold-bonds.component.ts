@@ -76,6 +76,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
   callMethod: any;
   adviceShowHeaderFooter = true;
   @Input() popupHeaderText = 'Add Real estate';
+  private unSubcripDemat: Subscription;
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   constructor(public custumService: CustomerService, private enumDataService: EnumDataService, private datePipe: DatePipe, public dialog: MatDialog, public subInjectService: SubscriptionInject,
@@ -94,13 +95,20 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     this.getGoldBond(inputData);
   }
 
+  bankDematList: any = [];
   ngOnInit() {
     //link bank
     this.bankList = this.enumService.getBank();
     //link bank
+    this.unSubcripDemat = this.enumService.getDenatAC().subscribe((data: any) => {
+      this.bankDematList = data;
+    });
   }
 
-
+  ngOnDestroy() {
+    // this.unSubcripBank.unsubscribe();
+    this.unSubcripDemat.unsubscribe();
+  }
   // ===================owner-nominee directive=====================//
   display(value) {
     console.log('value selected', value);
@@ -364,12 +372,14 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       bond: [data.bond, [Validators.required]],
       issueDate: [new Date(data.issueDate), [Validators.required]],
       amountInvested: [data.amountInvested, [Validators.required]],
+      issuePrice: [data.issuePrice, [Validators.required]],
       units: [data.units, [Validators.required]],
       rates: [data.rates, [Validators.required]],
       tenure: [data.tenure, [Validators.required]],
       bondNumber: [data.bondNumber],
       userBankMappingId: [!data ? '' : data.userBankMappingId],
-      linkedDematAccount: [!data ? '' : data.userBankMappingId],
+      linkedBankAccount: [!data ? '' : data.userBankMappingId],
+      linkedDematAccount: [!data ? '' : data.linkedDematAccount],
       description: [data.description],
       id: [data.id],
       getNomineeName: this.fb.array([this.fb.group({
@@ -464,6 +474,14 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       // this.ownerData = this.goldBondForm.controls;
 
     }
+  }
+
+  checkOwner() {
+    if (this.goldBondForm.value.getCoOwnerName[0].name == '') {
+      this.eventService.openSnackBar("Please select owner");
+    }
+    // console.log(this.scipLevelHoldingForm.value.getCoOwnerName[0].name == '', "test owner");
+
   }
 
   saveFormData() {

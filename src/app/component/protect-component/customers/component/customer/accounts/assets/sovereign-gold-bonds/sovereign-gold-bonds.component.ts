@@ -62,7 +62,7 @@ export class SovereignGoldBondsComponent implements OnInit {
 
 
   }
-  displayedColumns3 = ['no', 'owner', 'cvalue', 'interest', 'amountInvested', 'issueDate', 'mvalue', 'mdate', 'bondseries', 'status', 'icons'];
+  displayedColumns3 = ['no', 'owner', 'units', 'cvalue', 'interest', 'amountInvested', 'issueDate', 'mvalue', 'mdate', 'bondseries', 'xirrDate', 'status', 'icons'];
 
   ngOnInit() {
     this.reportDate = new Date();
@@ -310,6 +310,7 @@ const ELEMENT_DATA3 = {
       "maturityValue": 1000,
       "maturityDate": "2020-12-01",
       "description": "abc",
+      "status": 1,
       "nomineeList": [
         {
           "name": "Ankita",
