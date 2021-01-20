@@ -68,19 +68,19 @@ export class ClientAddressComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
+  }
+
+  ngOnInit() {
     (this.fieldFlag != 'familyMember' && this.userData.clientType == 1) ? this.permanentAddFlag = false : this.permanentAddFlag = true;
     (this.userData.addressData) ? this.addressList = this.userData.addressData : '';
     this.proofType = (this.userData.addressData) ? String(this.userData.addressData.addressType) : '1';
     if (this.userData.addressData == undefined && this.fieldFlag) {
       this.createAddressForm(null);
-      this.getAddressList(data);
+      this.getAddressList(this.userData);
     } else {
       this.barButtonOptions.text = 'SAVE & CLOSE';
       this.createAddressForm(this.userData.addressData);
     }
-  }
-
-  ngOnInit() {
     // this.mapApiLoader.load().then(() => {
     this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     const autoCompelete = new google.maps.places.Autocomplete(this.placeSearch.nativeElement, {

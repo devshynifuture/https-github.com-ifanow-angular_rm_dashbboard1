@@ -853,6 +853,10 @@ export class SipTransactionComponent implements OnInit {
   }
 
   sip() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
+    this.barButtonOptions.active = true;
     if (this.validateSingleTransaction()) {
       const obj = this.getSingleTransactionJson();
 
@@ -864,7 +868,6 @@ export class SipTransactionComponent implements OnInit {
         });
       }
       this.removeUnnecessaryDataFromJson(obj);
-      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
           this.isSuccessfulTransaction = true;
@@ -920,6 +923,9 @@ export class SipTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     if (this.validateSingleTransaction()) {
       Object.assign(this.transactionSummary, { multiTransact: true });
       this.multiTransact = true;

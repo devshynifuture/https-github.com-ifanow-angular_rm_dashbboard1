@@ -768,6 +768,11 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   purchase() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
+    this.barButtonOptions.active = true;
+
     if (this.validateSinglePurchase()) {
       const obj = this.getSingleTransactionJson();
       if (this.multiTransact == true) {
@@ -778,7 +783,6 @@ export class PurchaseTrasactionComponent implements OnInit {
         });
       }
       this.removeUnnecessaryDataFromJson(obj);
-      this.barButtonOptions.active = true;
       // console.log('purchase obj: ', obj);
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
@@ -804,6 +808,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     this.utilService.scrollToTopForRightSlider();
     if (this.validateSinglePurchase()) {
       if (this.isEdit != true) {

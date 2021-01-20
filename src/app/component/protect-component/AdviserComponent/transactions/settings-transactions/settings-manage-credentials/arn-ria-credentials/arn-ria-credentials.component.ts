@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {AddArnRiaCredentialsComponent} from './add-arn-ria-credentials/add-arn-ria-credentials.component';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {TransactionRoleService} from '../../../transaction-role.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { AddArnRiaCredentialsComponent } from './add-arn-ria-credentials/add-arn-ria-credentials.component';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { TransactionRoleService } from '../../../transaction-role.service';
 
 @Component({
   selector: 'app-arn-ria-credentials',
@@ -21,11 +21,11 @@ export class ArnRiaCredentialsComponent implements OnInit {
   advisorId: any;
   brokerCredentials: any;
   noData: string;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private eventService: EventService, private onlineTransact: OnlineTransactionService,
-              private utilService: UtilService, private subInjectService: SubscriptionInject,
-              public transactionRoleService: TransactionRoleService, public dialog: MatDialog) {
+    private utilService: UtilService, private subInjectService: SubscriptionInject,
+    public transactionRoleService: TransactionRoleService, public dialog: MatDialog) {
   }
 
   isLoading = false;
@@ -36,7 +36,7 @@ export class ArnRiaCredentialsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   getBSECredentials() {
@@ -85,14 +85,15 @@ export class ArnRiaCredentialsComponent implements OnInit {
       this.noData = 'No scheme found';
       this.dataSource.data = [];
     } else {
-      this.brokerCredentials.forEach(function(ad) {
-        const subBrokerMatch = data.find(function(tm) {
+      this.brokerCredentials.forEach(function (ad) {
+        const subBrokerMatch = data.find(function (tm) {
           return ad.id == tm.tpUserCredentialId;
         });
         if (subBrokerMatch && subBrokerMatch.euin) {
           ad.euin = subBrokerMatch.euin;
           ad.tp_nse_subbroker_mapping_id = subBrokerMatch.tpUserCredentialId;
           ad.subBrokerCode = subBrokerMatch.subBrokerCode;
+          ad.tpSubBrokerCredentialId = subBrokerMatch.id;
         }
       });
       this.dataSource.data = this.brokerCredentials;

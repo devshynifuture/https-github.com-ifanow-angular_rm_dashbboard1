@@ -40,6 +40,16 @@ export class BankDetailsIINComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if (JSON.parse(localStorage.getItem('bank' + data.clientData.clientId))) {
+      this.inputData = JSON.parse(localStorage.getItem('bank' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in bank detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.inputData = data;
     console.log('Data in bank detail : ', data);
     this.clientData = data.clientData;
@@ -456,6 +466,54 @@ export class BankDetailsIINComponent implements OnInit {
         paymentMode: this.bankDetailsForm.controls.paymentMode.value,
         bankDetailList: this.bank
       };
+      // const obj = {
+      //   branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
+      //   branchName: this.bankForm.get('branchName').value,
+      //   bankName: this.bankForm.get('bankName').value,
+      //   accountType: this.bankForm.get('accType').value,
+      //   accountNumber: this.bankForm.get('accNumber').value,
+      //   micrNo: this.bankForm.get('micrName').value,
+      //   ifscCode: this.bankForm.get('ifscCode').value,
+      //   address: {
+      //     address1: this.bankForm.get('branchAddressLine1').value,
+      //     address2: this.bankForm.get('branchAddressLine2').value,
+      //     address3: '',
+      //     pinCode: this.bankForm.get('branchPinCode').value,
+      //     city: this.bankForm.get('branchCity').value,
+      //     state: this.bankForm.get('branchState').value,
+      //     country: this.bankForm.get('branchCountry').value,
+      //     addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
+      //   },
+      //   userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      //   userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
+      //   minorAccountHolderName: (this.userData.id) ? '' : null,
+      //   guardianAccountHolderName: (this.userData.id) ? '' : null,
+      //   holderNameList: holderList,
+      //   userBankMappingId: (this.userData.bankData) ? this.userData.bankData.userBankMappingId : (this.bankList) ? this.bankList.userBankMappingId : null,
+      //   bankId: (this.userData.bankData) ? this.userData.bankData.bankId : (this.bankList) ? this.bankList.bankId : null,
+      //   addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
+      // };
+      // this.peopleService.addEditClientBankDetails(obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     this.disableBtn = false;
+      //     this.tabDisableFlag.emit(false);
+      //     this.barButtonOptions.active = false;
+      //     if (flag == 'Next') {
+      //       this.tabChange.emit(1);
+      //       this.saveNextData.emit(true);
+      //       this.refreshClientUploadBankDetails.emit(true);
+      //     } else {
+      //       this.closeAndSave();
+      //     }
+      //   },
+      //   err => {
+      //     this.disableBtn = false;
+      //     this.eventService.openSnackBar(err, 'Dismiss');
+      //     this.barButtonOptions.active = false;
+      //   }
+      // );
+      localStorage.setItem('bank' + (this.data.clientId), JSON.stringify(this.sendObj));
       this.openNomineeDetails(this.sendObj);
     }
   }
