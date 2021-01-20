@@ -509,6 +509,9 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switch() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     this.barButtonOptions.active = true;
     if (this.mutualFundData) {
       this.switchTransaction.controls.investmentAccountSelection.setValue(this.folioNumber)
@@ -593,6 +596,9 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     if (this.isEdit != true) {
       this.id++;
     }
