@@ -137,7 +137,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   getBSESubBrokerCredentialsRes(data) {
     this.isLoading = false;
     if (data == undefined || data.length == 0) {
-      this.noData = 'No scheme found';
+      this.noData = 'No Investors found';
       this.dataSource2 = [];
     } else {
       this.brokerCredentials.forEach(function (ad) {

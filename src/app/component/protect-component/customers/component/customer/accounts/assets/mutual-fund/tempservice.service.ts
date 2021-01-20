@@ -86,8 +86,10 @@ export class TempserviceService {
       array = 'mutualFundCategoryMastersList';
       mainDataId = 'categoryId';
     } else if (reportType == 'ownerName') {
-      array = 'family_member_list';
-      mainDataId = 'familyMemberId';
+      // array = 'family_member_list';
+      // mainDataId = 'familyMemberId';
+      array = 'schemeWise';
+      mainDataId = 'schemeId';
     } else if (reportType = 'schemeName') {
       array = 'schemeWise';
       mainDataId = 'schemeId';
