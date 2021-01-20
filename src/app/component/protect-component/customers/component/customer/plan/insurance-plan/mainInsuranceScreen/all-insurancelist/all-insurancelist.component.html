@@ -1,7 +1,7 @@
 <div id="ui-planinsurance">
     <div class="row" *ngIf="showIsurance == true">
         <div class="col-width-21 br-grey zIndex2 pb-44">
-            <div class="row insuListFixedHeader pt-20 pb-10 bb-grey">
+            <div class="row insuListFixedHeader pt-20 pb-10">
                 <div class="col-md-5 p-0">
                     <h3 class="m-0 text-black pt-4">Insurance </h3>
                 </div>
@@ -19,7 +19,7 @@
 
 
             <!-- Life insurance - Rahul Jain -->
-            <div class="mt-70   ">
+            <div class="mt-66 borderLineTop ">
                 <div class="row pt-10 skeletonAnimation" *ngFor="let insurance of insurancePlanningList"
                     appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
                     <div *ngIf="!isLoadingPlan" class="col-md-12 p-0 c-p br-4 h-105 overflow-hidden"
