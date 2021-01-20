@@ -1,0 +1,121 @@
+<div class="popup-header-fix-50">
+    <div class="row bb-1 pt-16 pb-16">
+        <div class="col-10 pr-0">
+            <h4 class="mb-0">
+                Refresh mutual funds
+            </h4>
+        </div>
+        <div class="col-2 text-right full-center">
+
+            <i (click)="close(false)" class="material-icons c-p"> clear</i>
+
+        </div>
+    </div>
+</div>
+
+<div class="pt-80 pb-90 ">
+    <div class="pl-20 mob-pl-15 mob-pr-15">
+        <div>
+
+            <div class="row">
+                <div class="col-md-8 p-0">
+                    <h5 class="m-0 text-black">Select an investor from the search box below</h5>
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input #searchClient (keyup)="filterTableByName($event)" aria-label="client"
+                            class="form-control pl-8" matInput placeholder="Start typing to see investor names">
+
+                        <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
+                            This client member does not exist
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="showSpinnerOwner" class="col-md-1 align-items-end d-flex">
+                    <mat-spinner class=" " [diameter]="30"></mat-spinner>
+                </div>
+            </div>
+
+
+
+            <!--start-->
+            <div class="row">
+                <div class="col-md-12 pl-0 mob-pr-0" *ngIf="dataSource.data.length > 0">
+                    <div [ngClass]="{'table-scroll':isLoading==false }" class="overflow-y-788">
+                        <table matSort mat-table [dataSource]="dataSource" id="tbs" class="mt-20 skeletonAnimation"
+                            appSkeletonLoading [appSkeletonLoading]="isLoading">
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="bar">
+                                        {{element.name}}
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="mobile">
+                                <th mat-header-cell *matHeaderCellDef> Mobile No. </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="bar"><span
+                                            *ngIf="!isLoading">{{element.mobileNo ?element.mobileNo:'N/A'}}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="email">
+                                <th mat-header-cell *matHeaderCellDef> Email Id </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.emailId}} </div>
+                                </td>
+                            </ng-container>
+
+                            <!-- Symbol Column -->
+                            <ng-container matColumnDef="pan">
+                                <th mat-header-cell *matHeaderCellDef> PAN No.</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="bar"> {{element.pan}} </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="refresh">
+                                <th mat-header-cell *matHeaderCellDef></th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-spinner *ngIf="element.isLoader" [diameter]="20"></mat-spinner>
+                                    <img (click)="refreshMfOfClient(element)" src="/assets/images/svg/logout.svg"
+                                        alt="no image" *ngIf="!isLoading && !element.isLoader">
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row matTooltip="{{row.disable?'Review already received from client':''}}"
+                                *matRowDef="let row; columns: displayedColumns;"
+                                (click)="row.disable?'':selection.toggle(row)">
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12 p-0" *ngIf="stateCtrl.errors?.invalid == true">
+                <h4 class="d-flex justify-content-center b-a p-44 pt-20">
+                    No clients found
+                </h4>
+            </div>
+            <!--End-->
+        </div>
+
+
+
+
+    </div>
+    <div class="bottom-fixed-50 wrapper-12 z-index-9">
+        <div class="row">
+            <div class="col-md-4 col-4">
+                <h5 (click)="close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            </div>
+
+            <div class="col-md-8 col-8 right text-right">
+            </div>
+        </div>
+    </div>
+</div>

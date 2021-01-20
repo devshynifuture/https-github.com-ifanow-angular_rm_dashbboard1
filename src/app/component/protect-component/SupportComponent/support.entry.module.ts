@@ -23,6 +23,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CustomFilterDatepickerDialogComponent } from './file-ordering-upload/custom-filter-datepicker-dialog.component';
+import { RefreshMfComponent } from './my-ifas/refresh-mf/refresh-mf.component';
 
 const componentList = [
     AdminDetailsComponent,
@@ -40,7 +41,8 @@ const componentList = [
     FileOrderingUpperComponent,
     FileOrderingDetailComponent,
     FileOrderingSetupComponent,
-    CustomFilterDatepickerDialogComponent
+    CustomFilterDatepickerDialogComponent,
+    RefreshMfComponent
 ]
 
 @NgModule({

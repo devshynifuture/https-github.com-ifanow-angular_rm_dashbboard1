@@ -10,6 +10,7 @@ import { OrderHistoricalFileComponent } from "./../order-historical-file/order-h
 import { SupportService } from "../support.service";
 import { EventService } from "src/app/Data-service/event.service";
 import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
+import { RefreshMfComponent } from './refresh-mf/refresh-mf.component';
 
 @Component({
   selector: "app-my-ifas",
@@ -218,6 +219,23 @@ export class MyIfasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
 
+    });
+  }
+
+  refreshMF(flag, data) {
+    const fragmentData = {
+      flag,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: RefreshMfComponent
+    };
+    const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
+      if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+        }
+        subscription.unsubscribe();
+      }
     });
   }
 

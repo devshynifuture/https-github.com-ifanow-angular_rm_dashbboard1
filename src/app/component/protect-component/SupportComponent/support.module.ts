@@ -17,6 +17,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { SupportManagementComponent } from './support-management/support-management.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { RefreshMfComponent } from './my-ifas/refresh-mf/refresh-mf.component';
 
 @NgModule({
   declarations: [
