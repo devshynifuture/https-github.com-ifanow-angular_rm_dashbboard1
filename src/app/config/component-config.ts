@@ -788,6 +788,7 @@ export const appConfig = {
   REFRESH_FILE_ORDER_UPPER: 'fileorder/refresh',
   DEACTIVATE_ACCOUNT: 'rmdashboard/activate-deactivate/advisor',
   REFRESH_MF_LIST: 'mutual-fund/mutualfund/list/refresh',
+  CONVERT_TO_PAID_DATE: 'rmdashboard/advisor/paid-upto/update',
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',

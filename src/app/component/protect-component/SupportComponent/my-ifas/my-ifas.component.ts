@@ -232,6 +232,8 @@ export class MyIfasComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {
+          this.dataSource.data = ELEMENT_DATA;
+          this.getMyIfasList();
         }
       });
   }
