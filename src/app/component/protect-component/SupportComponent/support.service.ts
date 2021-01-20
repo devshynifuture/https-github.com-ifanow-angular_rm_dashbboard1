@@ -180,4 +180,9 @@ export class SupportService {
   refreshMutualFundList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_MF_LIST, data);
   }
+
+  convertToPaidDate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.CONVERT_TO_PAID_DATE, data);
+  }
+
 }
