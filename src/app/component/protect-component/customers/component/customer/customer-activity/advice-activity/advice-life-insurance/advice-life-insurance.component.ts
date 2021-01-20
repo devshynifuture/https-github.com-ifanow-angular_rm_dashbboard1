@@ -191,6 +191,9 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     }
   }
   openDetailedView(heading, data) {
+    if (data && data.adviceDetails) {
+      data.adviceDetails.adviceAllotment = data.adviceDetails.adviceToInsuranceProperties['adviceAllotment']
+    }
     let id = data ? (data.adviceDetails ? (data.adviceDetails.adviceId) : this.adviceName) : this.adviceName;
     this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : 'Proposed policy'
     const sendData = {
