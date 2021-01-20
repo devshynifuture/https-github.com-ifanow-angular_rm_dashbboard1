@@ -64,6 +64,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   searchFC: FormControl;
   searchName: string;
   selectedClientArray = [];
+  tempData: any = [];
 
   constructor(
     public authService: AuthService,
@@ -180,6 +181,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   responseHandlerForClientApi(data) {
     this.barButtonOptions.active = false;
     if (data && data.length > 0) {
+      this.tempData = this.tempData && this.tempData.length == 0 ? data : this.tempData.concat(data);
       data.forEach((singleData) => {
         if (singleData.emailList && singleData.emailList.length > 0) {
           singleData.email = singleData.emailList[0].email;
@@ -270,8 +272,8 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     if (tableOffsetTop <= tableOffsetHeight) {
       if (!this.hasEndReached) {
         console.log("on entering inside", this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
-        this.infiniteScrollingFlag = true;
-        if (!this.fromSearch) {
+        // this.infiniteScrollingFlag = true;
+        if (!this.fromSearch && !this.infiniteScrollingFlag) {
           this.getClientListValue(this.infiniteScrollClientList.length);
         }
         // this.getAllSip(this.finalSipList.length, 20);
@@ -337,7 +339,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       this.selectedClientsCount = 0;
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
-        if (element.selected) {
+        if (element.selected && element.email) {
           this.selectedClientArray.push(element.clientId)
           this.selectedClientsCount++;
           this.dataCount++;

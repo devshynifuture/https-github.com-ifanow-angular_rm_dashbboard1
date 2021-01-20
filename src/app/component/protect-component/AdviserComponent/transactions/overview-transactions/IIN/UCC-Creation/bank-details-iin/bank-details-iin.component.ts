@@ -242,8 +242,8 @@ export class BankDetailsIINComponent implements OnInit {
       //branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       paymentMode: [(!data) ? '02' : (data.paymentMode) ? data.paymentMode : '02', [Validators.required]],
-      address1: [!data.address ? '' : data.address.address1, [Validators.required]],
-      address2: [!data.address ? '' : data.address.address2, [Validators.required]],
+      address1: [!data.address ? '' : data.address.address1 ? UtilService.removeSpecialCharactersFromString(data.address.address1) : '', [Validators.required]],
+      address2: [!data.address ? '' : data.address.address1 ? UtilService.removeSpecialCharactersFromString(data.address.address2) : '', [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
@@ -348,8 +348,8 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode ? value.paymentMode : '02');
     if (value.address) {
-      this.bankDetailsForm.controls.address1.setValue(value.address.address1);
-      this.bankDetailsForm.controls.address2.setValue(value.address.address2);
+      this.bankDetailsForm.controls.address1.setValue(UtilService.removeSpecialCharactersFromString(value.address.address1));
+      this.bankDetailsForm.controls.address2.setValue(UtilService.removeSpecialCharactersFromString(value.address.address2));
       this.bankDetailsForm.controls.pinCode.setValue(value.address.pinCode);
       this.bankDetailsForm.controls.city.setValue(value.address.city);
       this.bankDetailsForm.controls.state.setValue(value.address.state);
@@ -535,8 +535,8 @@ export class BankDetailsIINComponent implements OnInit {
       addressId: holder.addressId
     };
     value.address = {
-      address1: holder.address1,
-      address2: holder.address2,
+      address1: UtilService.removeSpecialCharactersFromString(holder.address1),
+      address2: UtilService.removeSpecialCharactersFromString(holder.address2),
       pinCode: holder.pinCode,
       state: holder.state,
       city: holder.city,
