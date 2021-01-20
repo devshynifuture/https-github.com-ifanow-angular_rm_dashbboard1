@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CustomerActivityComponent } from './customer-activity.component';
 import { DeploymentsActivityComponent } from './deployments-activity/deployments-activity.component';
 import { AdviceAllPortfolioComponent } from './advice-activity/advice-all-portfolio/advice-all-portfolio.component';
+import { AdviceLifeInsuranceComponent } from './advice-activity/advice-life-insurance/advice-life-insurance.component';
 
 const routes: Routes = [
   {
@@ -11,8 +12,8 @@ const routes: Routes = [
     component: CustomerActivityComponent,
     children: [
       {
-        path: 'all-portfolio',
-          component: AdviceAllPortfolioComponent
+        path: 'lifeInsurance',
+        component: AdviceLifeInsuranceComponent
       },
       {
         path: 'assets',

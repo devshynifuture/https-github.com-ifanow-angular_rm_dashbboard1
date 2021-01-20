@@ -2085,44 +2085,46 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   openUpperFragment(flag, element) {
-    console.log('this is what element is:::', element);
-    if (flag == 'addTransaction') {
-      const fragmentData = {
-        flag: 'app-upper-customer',
-        id: 1,
-        data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
-        direction: 'top',
-        componentName: UpperCustomerComponent,
-        state: 'open'
-      };
-      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-        upperSliderData => {
-          if (UtilService.isDialogClose(upperSliderData)) {
-            if (UtilService.isRefreshRequired(upperSliderData)) {
-              // this.ngOnInit();
-              this.initPoint();
-              // code to refresh ...
-              // this.getMutualFund();
-              // this.getMutualFundResponse(upperSliderData);
-              // this.customDataSource = new MatTableDataSource([{}, {}, {}]);
-              // this.mfService.getDataForMfGet()
-              // .subscribe(res => {
-              // this.mfGetData = res;
-              // })
-              // if(this.mfGetData){
-              // this.isLoading = true;
-              // this.changeInput.emit(true);
-              // this.getMutualFundResponse(this.mfGetData)
-              // }
+    this.ngZone.run(() => {
+      if (flag == 'addTransaction') {
+        const fragmentData = {
+          flag: 'app-upper-customer',
+          id: 1,
+          data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
+          direction: 'top',
+          componentName: UpperCustomerComponent,
+          state: 'open'
+        };
+        const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+          upperSliderData => {
+            if (UtilService.isDialogClose(upperSliderData)) {
+              if (UtilService.isRefreshRequired(upperSliderData)) {
+                // this.ngOnInit();
+                this.initPoint();
+                // code to refresh ...
+                // this.getMutualFund();
+                // this.getMutualFundResponse(upperSliderData);
+                // this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+                // this.mfService.getDataForMfGet()
+                // .subscribe(res => {
+                // this.mfGetData = res;
+                // })
+                // if(this.mfGetData){
+                // this.isLoading = true;
+                // this.changeInput.emit(true);
+                // this.getMutualFundResponse(this.mfGetData)
+                // }
 
+              }
+
+              // this.getClientSubscriptionList();
+              subscription.unsubscribe();
             }
-
-            // this.getClientSubscriptionList();
-            subscription.unsubscribe();
           }
-        }
-      );
-    }
+        );
+      }
+    });
+    console.log('this is what element is:::', element);
 
   }
 

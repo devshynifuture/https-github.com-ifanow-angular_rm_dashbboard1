@@ -1,13 +1,13 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {HttpService} from 'src/app/http-service/http-service';
-import {HttpHeaders} from '@angular/common/http';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {FileUploadServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/file-upload-service.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { HttpService } from 'src/app/http-service/http-service';
+import { HttpHeaders } from '@angular/common/http';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { FileUploadServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/file-upload-service.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-client-upload',
@@ -86,9 +86,9 @@ export class ClientUploadComponent implements OnInit {
   imageType: any;
 
   constructor(private subInjectService: SubscriptionInject, private http: HttpService,
-              private custumService: CustomerService, private enumService: EnumServiceService,
-              private eventService: EventService,
-              private fileUpload: FileUploadServiceService,) {
+    private custumService: CustomerService, private enumService: EnumServiceService,
+    private eventService: EventService,
+    private fileUpload: FileUploadServiceService, ) {
     this.clientData = AuthService.getClientData();
     this.clientId = AuthService.getClientId();
   }
@@ -98,18 +98,6 @@ export class ClientUploadComponent implements OnInit {
   @Input() set data(data) {
     console.log(data, 'user data1');
     this.userData = data;
-    this.getBankList();
-    const obj = {
-      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ?
-        this.userData.clientId : this.userData.familyMemberId,
-      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    };
-    this.custumService.getClientUploadFile(obj).subscribe((data) => {
-      console.log('added get', data);
-      if (data && data.length > 0) {
-        this.getUploadedImg(data);
-      }
-    });   ////////// user data////////////////////
   }
   @Input() set isRefreshBank(data) {
     if (data) {
@@ -123,6 +111,18 @@ export class ClientUploadComponent implements OnInit {
 
     this.proofTypes = this.enumService.getProofType();
     this.bankLIst = this.enumService.getBank();
+    this.getBankList();
+    const obj = {
+      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ?
+        this.userData.clientId : this.userData.familyMemberId,
+      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
+    };
+    this.custumService.getClientUploadFile(obj).subscribe((data) => {
+      console.log('added get', data);
+      if (data && data.length > 0) {
+        this.getUploadedImg(data);
+      }
+    });   ////////// user data////////////////////
   }
 
   saveClose() {

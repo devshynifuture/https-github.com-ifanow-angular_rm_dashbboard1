@@ -149,6 +149,7 @@ export class SupportUpperPrudentComponent implements OnInit {
     this.isMapped = event.value == 1 ? false : true;
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
+    this.schemeControl.setValue('');
     this.getMappedUnmappedPrudentList();
   }
 
@@ -183,6 +184,8 @@ export class SupportUpperPrudentComponent implements OnInit {
         if (res) {
           console.log(res);
           element.isMapped = true;
+          this.getMappedUnmappedPrudentList()
+          this.eventService.openSnackBar('umap successfully', 'Dismiss');
         } else {
           this.getMappedUnmappedPrudentList()
           this.eventService.openSnackBar('umap successfully', 'Dismiss');

@@ -66,6 +66,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   selectedTransactionType: any;
   maximumDate: any;
   errorMsgForScheme: boolean;
+  storedVal: any;
 
   constructor(
     public subInjectService: SubscriptionInject,
@@ -182,11 +183,15 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   getFilteredSchemesList(value) {
     if (value !== '' && (typeof value === 'string')) {
       if (value.length > 2) {
-        return this.customerService.getSchemeNameList({ schemeName: value })
+        if (this.storedVal != value) {
+          this.storedVal = value;
+          return this.customerService.getSchemeNameList({ schemeName: value })
+        }
       }
-    } else if (typeof (value) === 'object') {
-      return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
     }
+    // else if (typeof (value) === 'object') {
+    //   return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
+    // }
   }
 
   mapSchemeWithForm(scheme) {
@@ -226,7 +231,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
       this.schemeLevelHoldingForm.get('folioNumber').setValue(this.data.folioNumber);
-      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmountInt) ? this.data.sipAmountInt : 0);
+      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmountInt) ? this.data.sipAmountInt : (this.data.sipAmount) ? this.data.sipAmount : 0);
       this.schemeLevelHoldingForm.get('tag').setValue(this.data.tag);
       this.schemeNameControl.patchValue(this.data.schemeName);
     } else {
@@ -245,7 +250,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
     }
 
-    if (this.data && this.data.flag === 'addTransaction' || this.data.flag === 'editTransaction') {
+    if (this.data && this.data.rtMasterId != 14 && (this.data.flag === 'editMutualFund' || this.data.flag === 'addTransaction' || this.data.flag === 'editTransaction')) {
       this.schemeLevelHoldingForm.get('ownerName').disable();
       this.schemeLevelHoldingForm.get('folioNumber').disable();
       this.schemeLevelHoldingForm.get('sip').disable();
@@ -291,11 +296,12 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         isEdited: this.data.isEdited,
         isAdded: null,
         previousUnit: this.data.previousUnit,
-        previousEffect: this.data.effect
+        previousEffect: this.data.effect,
+        rtTypeId: this.data.rtTypeId
       }))
     } else {
       if (data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund')) {
-        data.mutualFundTransactions.forEach((element: { transactionTypeMasterId: any; transactionDate: string | number | Date; amount: any; unit: any; id: any; assetMutualFundTransactionTypeMasterId: any; assetTypeTransactionId: any; isEdited: any; previousUnit: any; effect: any; }) => {
+        data.mutualFundTransactions.forEach((element: { transactionTypeMasterId: any; transactionDate: string | number | Date; amount: any; unit: any; id: any; assetMutualFundTransactionTypeMasterId: any; assetTypeTransactionId: any; isEdited: any; previousUnit: any; effect: any; rtTypeId: any }) => {
           this.transactionArray.push(this.fb.group({
             transactionType: [element.transactionTypeMasterId, Validators.required],
             date: [new Date(element.transactionDate), [Validators.required]],
@@ -306,8 +312,19 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
             isEdited: element.isEdited,
             isAdded: null,
             previousUnit: element.previousUnit,
-            previousEffect: element.effect
+            previousEffect: element.effect,
+            rtTypeId: element.rtTypeId
           }))
+          this.transactionArray.controls
+        });
+        let trnList = this.transactionList.transactionListArray as FormArray;
+        trnList.controls.forEach(element => {
+          if (element.get('rtTypeId').value != 14) {
+            element.get('transactionType').disable();
+            element.get('date').disable()
+            element.get('transactionAmount').disable()
+            element.get('Units').disable()
+          }
         });
       }
       else {
@@ -321,7 +338,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           isEdited: false,
           isAdded: null,
           previousUnit: [],
-          previousEffect: []
+          previousEffect: [],
+          rtTypeId: []
 
         }))
       }
@@ -347,40 +365,47 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       isEdited: false,
       previousUnit: [],
       previousEffect: [],
-      isAdded: true
+      isAdded: true,
+      rtTypeId: null
     }))
   }
   setDateChange(event) {
     console.log("this is event", event);
     this.dateChanged = true;
   }
-  removeTransactions(index) {
-    let id;
-    let deletedTrn;
-    if (this.transactionArray.controls[index].value.id) {
-      id = this.transactionArray.controls[index].value.id;
-      deletedTrn = this.data.mutualFundTransactions.filter(item => item.id === id);
-    }
-    if (deletedTrn) {
-      let requestJsonObj;
-      const data = {
-        id: deletedTrn[0].id,
-        unit: deletedTrn[0].unit,
-        effect: deletedTrn[0].effect,
-        mutualFundId: this.data.id
-      };
-      requestJsonObj = {
-        freezeDate: deletedTrn[0].freezeDate ? deletedTrn[0].freezeDate : null,
-        mutualFundTransactions: [data]
+  removeTransactions(index, ele) {
+    if (ele.get('rtTypeId').value == 14 || ele.get('rtTypeId').value == null) {
+      console.log(ele.get('rtTypeId').value);
+      let id;
+      let deletedTrn;
+      if (this.transactionArray.controls[index].value.id) {
+        id = this.transactionArray.controls[index].value.id;
+        deletedTrn = this.data.mutualFundTransactions.filter(item => item.id === id);
       }
-      this.cusService.postDeleteTransactionMutualFund(requestJsonObj)
-        .subscribe(res => {
-          if (res) {
-            this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
-          }
-        });
+      if (deletedTrn) {
+        let requestJsonObj;
+        const data = {
+          id: deletedTrn[0].id,
+          unit: deletedTrn[0].unit,
+          effect: deletedTrn[0].effect,
+          mutualFundId: this.data.id
+        };
+        requestJsonObj = {
+          freezeDate: deletedTrn[0].freezeDate ? deletedTrn[0].freezeDate : null,
+          mutualFundTransactions: [data]
+        }
+        this.cusService.postDeleteTransactionMutualFund(requestJsonObj)
+          .subscribe(res => {
+            if (res) {
+              this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
+            }
+          });
+      }
+      (this.transactionArray.length == 1) ? console.log("cannot remove") : this.transactionArray.removeAt(index)
+    } else {
+      console.log('efg');
     }
-    (this.transactionArray.length == 1) ? console.log("cannot remove") : this.transactionArray.removeAt(index)
+
 
   }
   display(value) {

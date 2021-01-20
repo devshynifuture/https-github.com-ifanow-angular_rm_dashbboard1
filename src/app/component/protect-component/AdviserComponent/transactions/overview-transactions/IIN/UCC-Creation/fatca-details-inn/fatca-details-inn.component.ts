@@ -87,6 +87,16 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
 
   @Input()
   set data(data) {
+    if (JSON.parse(localStorage.getItem('fatca' + data.clientData.clientId))) {
+      this.inputData = JSON.parse(localStorage.getItem('fatca' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in fatca detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.inputData = data;
     console.log('Data in fatca detail : ', data);
     this.clientData = data.clientData;
@@ -221,6 +231,8 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
         commMode: 1,
         confirmationFlag: 1,
       };
+      localStorage.setItem('fatca' + (this.data.clientId), JSON.stringify(obj1));
+
       this.openReviwSubmit(obj1);
     }
 

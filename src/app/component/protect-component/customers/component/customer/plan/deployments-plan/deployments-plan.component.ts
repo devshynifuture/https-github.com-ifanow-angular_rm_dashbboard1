@@ -23,7 +23,8 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./deployments-plan.component.scss']
 })
 export class DeploymentsPlanComponent implements OnInit {
-  displayedColumns: string[] = ['checkbox', 'assetDescription', 'name', 'weight', 'height', 'symbol', 'debt', 'status', 'icons'];
+  // displayedColumns: string[] = ['checkbox', 'assetDescription', 'name', 'weight', 'height', 'symbol', 'debt', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'assetDescription', 'name', 'weight', 'height', 'symbol', 'debt', 'status'];
   displayedColumns1: string[] = ['position1', 'name1', 'weight1', 'symbol1'];
   dataSource;
   dataSourceT;

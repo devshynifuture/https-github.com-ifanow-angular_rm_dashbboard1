@@ -66,7 +66,8 @@ export class AdviceUtilsService {
     dataList.forEach(element => {
       // (element.selected) ? count++ : '';
       element.selected = element.adviceDetails.id ? flag.checked : false;
-      if (flag.checked) {
+      element.selected = element.adviceDetails.adviceStatusId == 1 ? flag.checked : false;
+      if (element.selected) {
         count++;
         element.adviceDetails.familyMemberList = famList;
         selectedIdList.push(element.adviceDetails);

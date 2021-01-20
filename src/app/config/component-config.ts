@@ -76,7 +76,8 @@ export const appConfig = {
   ///////////////////////////// rm dashboard ///////////////////////////////////////////
   RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
   RM_SEARCH_NJ_PRUDENT_SCHEMES: 'rmdashboard/get/filtered/njprudent/schemes',
-
+  DELETE_SIP: 'admin/dashboard/mf-sip/reset',
+  REFRESH_DASHBOARD: 'admin/dashboard/key/metrics/refresh',
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
@@ -785,7 +786,7 @@ export const appConfig = {
   REFRESH_FILE_ORDER_HISTORICAL_PER_ROW: 'fileorder/historical/advisor/order/refresh',
   REFRESH_FILE_ORDER_BULK_PER_ROW: 'fileorder/bulk/order/refresh',
   REFRESH_FILE_ORDER_UPPER: 'fileorder/refresh',
-
+  DEACTIVATE_ACCOUNT: 'rmdashboard/activate-deactivate/advisor',
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',

@@ -374,10 +374,11 @@
 
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" [matMenuTriggerFor]="menu3" class="c-p" mat-cell>
+                    <td *matCellDef="let element" [matMenuTriggerFor]="menu3" [ngClass]="{ 'disabledOpacity' :true }"
+                        class="zIndex c-p" mat-cell>
 
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg" alt="">
-                        <mat-menu #menu3="matMenu">
+                        <mat-menu #menu3="matMenu" class="disabledOpacity">
                             <button mat-menu-item *ngIf="mfSummaryCapability.Foliomasterdetails"
                                 (click)="openFolioMaster(element)">Folio master details</button>
                             <button mat-menu-item *ngIf="mfSummaryCapability.SIPdetails"
@@ -393,13 +394,12 @@
                             <button mat-menu-item class="bt-1"
                                 (click)="openUpperFragment('addTransaction', element)">View
                                 transactions</button>
-
-                            <div *ngIf="mfCapability.Edit"
-                                [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
-                                [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
-
-                                <button mat-menu-item [disabled]="element.rtMasterId !== 14"
-                                    (click)="openMutualEditFund('editMutualFund',element)">Edit
+                            <!-- Hidden because we show edit to all cams,carvy data -->
+                            <!-- [disabled]="element.rtMasterId !== 14" -->
+                            <!-- [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
+                                [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below" -->
+                            <div *ngIf="mfCapability.Edit">
+                                <button mat-menu-item (click)="openMutualEditFund('editMutualFund',element)">Edit
                                     Mutual Fund</button>
                             </div>
                             <div *ngIf="mfCapability.Delete"
