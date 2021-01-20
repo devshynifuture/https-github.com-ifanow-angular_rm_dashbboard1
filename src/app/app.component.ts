@@ -38,6 +38,14 @@ export class AppComponent implements AfterViewInit, OnInit {
   setNewTime: any;
 
   ngOnInit() {
+    let width, height;
+    width = document.documentElement.clientWidth;
+    height = document.documentElement.clientHeight;
+    if (height > width) {
+      this.document.getElementById('tabviewJs').style.width = `${height}px`
+      this.document.getElementById('tabviewJs').style.height = `${width}px`;
+      // console.log(height, width)
+    }
     this.getDomainData(document.location.hostname);
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',

@@ -1,17 +1,4 @@
-<!--<h1>hI this is gaurav</h1>-->
-<!-- <div class="offline-alert">
-  <div *ngIf="!onlineStatus && isConnected==false" class="alert alert-primary" role="alert">
-    Connecting
-  </div>
-  <div *ngIf="!onlineStatus && isConnected==false" class="alert alert-danger" role="alert">
-    Connecting
-  </div>
-  <div *ngIf="!onlineStatus && isConnected==false" class="alert alert-warning d-flex" role="alert">
-    <p class="m-0 pt-8">Connection lost. Reconnecting in seconds {{showTimeRemaining}}...</p>
-    <div class="spinner-border text-warning"></div>
-  </div>
-</div> -->
-<div cdkScrollable>
+<div cdkScrollable class="">
   <router-outlet #mainrouter>
     <ng2-slim-loading-bar [color]="'#32a0fb'" [height]="'6px'">
     </ng2-slim-loading-bar>
