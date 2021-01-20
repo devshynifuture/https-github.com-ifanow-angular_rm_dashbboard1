@@ -10,6 +10,7 @@ import { OrderHistoricalFileComponent } from "./../order-historical-file/order-h
 import { SupportService } from "../support.service";
 import { EventService } from "src/app/Data-service/event.service";
 import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
+import { ConvertToPaidComponent } from './convert-to-paid/convert-to-paid.component';
 
 @Component({
   selector: "app-my-ifas",
@@ -79,6 +80,7 @@ export class MyIfasComponent implements OnInit {
               // plan: element.plan ? element.plan : ' - ',
               //nextBilling: element.next_billing ? element.next_billing : ' - ',
               team: element.teamMemberCount,
+              optedForTrial: element.optedForTrial,
               arn: element.arnRiaDetailCount,
               logout: element.logout ? element.logout : " - ",
               adminAdvisorId: element.adminAdvisorId,
@@ -220,7 +222,18 @@ export class MyIfasComponent implements OnInit {
 
     });
   }
+  convertToPaid(data) {
+    const dialogRef = this.dialog.open(ConvertToPaidComponent, {
+      width: '300px',
+      data
+    });
 
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+        }
+      });
+  }
   deleteSip(value, advisorData) {
     const dialogData = {
       data: value,
