@@ -92,7 +92,7 @@ export class StpTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.folioList = []
-    this.reInvestmentOpt =[]
+    this.reInvestmentOpt = []
     this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
@@ -437,7 +437,6 @@ export class StpTransactionComponent implements OnInit {
   dateArray(sipDates) {
     const currentDate = UtilService.getEndOfDay(new Date());
     currentDate.setDate(currentDate.getDate() + 7);
-
     this.dates = sipDates.split(',');
     this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true);
     this.dateDisplay = this.dateDisplay.filter(element => {
@@ -498,7 +497,7 @@ export class StpTransactionComponent implements OnInit {
     );
     if (!this.mutualFundData) {
       this.stpTransaction.controls.transferIn.valueChanges.subscribe((newValue) => {
-          this.filterNewSchemeList = of(this.processTransaction.filterScheme(newValue + '', this.schemeListTransfer));
+        this.filterNewSchemeList = of(this.processTransaction.filterScheme(newValue + '', this.schemeListTransfer));
       });
     }
     this.ownerData = this.stpTransaction.controls;
@@ -513,7 +512,7 @@ export class StpTransactionComponent implements OnInit {
       this.scheme = {
         'schemeName': this.schemeName,
         'mutualFundSchemeMasterId': this.mutualFundData.schemeId,
-        'amcId':this.mutualFundData.amcId
+        'amcId': this.mutualFundData.amcId
       }
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
@@ -528,16 +527,16 @@ export class StpTransactionComponent implements OnInit {
       );
       this.showUnits = true;
       this.navOfSelectedScheme = this.mutualFundData.nav
-      
-    this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
-    this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
-    this.currentValue =  Math.round(this.currentValue)
-    this.stpTransaction.controls.currentValue.setValue(this.currentValue);
-    this.stpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
-    this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
-    Object.assign(this.folioDetails, {balanceUnit: this.mutualFundData.balanceUnit});
-    Object.assign(this.transactionSummary, {folioNumber: this.mutualFundData.folioNumber});
-    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId});
+
+      this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
+      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+      this.currentValue = Math.round(this.currentValue)
+      this.stpTransaction.controls.currentValue.setValue(this.currentValue);
+      this.stpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
+      this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
+      Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
+      Object.assign(this.transactionSummary, { folioNumber: this.mutualFundData.folioNumber });
+      Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });
     }
   }
 
@@ -554,6 +553,10 @@ export class StpTransactionComponent implements OnInit {
   }
 
   stp() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
+    this.barButtonOptions.active = true;
     if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
       this.stpTransaction.get('reinvest').markAsTouched();
     } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
@@ -626,7 +629,6 @@ export class StpTransactionComponent implements OnInit {
         this.AddMultiTransaction();
         obj.childTransactions = this.childTransactions;
       }
-      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
           this.stpBSERes(data);
@@ -650,6 +652,9 @@ export class StpTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
       this.stpTransaction.get('reinvest').markAsTouched();
     } else if (this.stpTransaction.get('schemeStp').invalid) {

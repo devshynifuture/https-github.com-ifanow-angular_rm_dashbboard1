@@ -30,7 +30,7 @@
 
 <div class="row pt-135 pb-28" id="ui-dashboard-advisor">
 
-  <div class="col-xl-3 col-lg-4 col-md-5 pl-20 pr-20 mt-44 new-grid-842">
+  <div class="col-lg-3 col-md-3  pl-20 pr-20 mt-44 new-grid-842">
     <div class="sticky-top z-0">
       <h5 *ngIf="roleService.dashboardPermission.dashboardCapability.Key_metrics" class="m-0 roboto f-500 pb-16">Key
         metrics</h5>
@@ -244,7 +244,7 @@
   </div>
 
 
-  <div class="col-xl-6 col-lg-8 col-md-7 bl-1 br p-0">
+  <div class="col-lg-6 col-md-6  bl-1 br p-0">
     <div class="pl-24 pr-24 plr-16-992">
       <div class="advisor-status pl-20 mb-24">
         <h3 class="m-0 roboto f-500 roboto text-black pt-20">{{greeting}} {{advisorName}}</h3>
@@ -253,8 +253,8 @@
 
       <!--  -->
       <div class="openGuideBox" *ngIf="!answerFlag && answerObj.nextStep!='finished'">
-        <div class="row column-reverse-992 text-center-992">
-          <div class="col-xl-8 col-lg-8 col-md-12 p-0">
+        <div class="row  ">
+          <div class="col-xl-8 col-lg-8 col-md-8 p-0">
             <div class="orangeBox">
               <p class="text-white roboto f-500">First things first, {{advisorName}}! We’ve created an onboarding guide
                 for you. </p>
@@ -263,7 +263,7 @@
               <button (click)="openGuideDialog()" class="openGuideBtn d-none-992" mat-button>Open the guide</button>
             </div>
           </div>
-          <div class="col-xl-4 col-lg-4 col-md-12 d-flex align-items-center justify-content-center ptb-20-992">
+          <div class="col-xl-4 col-lg-4 col-md-4 d-flex align-items-center justify-content-center ptb-20-992">
             <img src="assets/images/svg/sport-cup.svg">
           </div>
         </div>
@@ -1443,7 +1443,7 @@
   </div>
 
 
-  <div class="col-xl-3 col-lg-8 col-md-12 mt-44   ">
+  <div class="col-lg-3 col-md-3  mt-44">
     <div class="sticky-top z-0">
       <mat-tab-group animationDuration="0ms" id="advisor-radio">
         <mat-tab *ngIf="roleService.dashboardPermission.dashboardCapability.To_do" label="To-do">

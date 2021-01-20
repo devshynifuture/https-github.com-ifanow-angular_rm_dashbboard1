@@ -22,6 +22,8 @@ import { LeadsClientsComponent } from '../../../people-leads/leads-clients/leads
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { RoutingState } from 'src/app/services/routing-state.service';
 import { CustomerOverviewService } from 'src/app/component/protect-component/customers/component/customer/customer-overview/customer-overview.service';
+import { Subscription, Observable } from 'rxjs';
+import { startWith, debounceTime } from 'rxjs/operators';
 
 const moment = require('moment');
 
@@ -32,6 +34,7 @@ const moment = require('moment');
 })
 export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   tempBasicData: any;
+  userNameLoader: boolean;
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
       this.eventService.openSnackBar("Please add pan before converting it to client", "Dimiss");
@@ -100,7 +103,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   valueChangeFlag: boolean;
   userData;
   unmapFmData: any;
-
+  usernameOutputSubscription: Subscription;
+  usernameOutputObservable: Observable<any> = new Observable<any>();
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
@@ -286,7 +290,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     this.basicDetails = this.fb.group({
       fullName: [data.name, [Validators.required]],
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
-      username: [{ value: data.userName, disabled: true }],
+      username: [data.userName],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '', [Validators.required]],
       relationType: [(data.relationshipId != 0) ? data.relationshipId : ''],
@@ -304,6 +308,11 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     } else {
       this.basicDetails.controls.relationType.setValidators([Validators.required]);
       this.basicDetails.controls.relationType.updateValueAndValidity();
+    }
+    if (this.fieldFlag == 'client') {
+      if (this.basicDetailsData.userId) {
+        this.basicDetails.controls.username.setValidators([Validators.required]);
+      }
     }
     if (this.fieldFlag == 'lead') {
       this.basicDetails.controls.pan.setValidators([Validators.pattern(this.validatorType.PAN)]);
@@ -414,15 +423,10 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       comName: [data.name, [Validators.required]],
       dateOfIncorporation: [(data.dateOfBirth) ? new Date(data.dateOfBirth) : ''],
       comStatus: [(data.companyStatus) ? String(data.companyStatus) : '', [Validators.required]],
-      // comEmail: [{
-      //   value: (data.emailList && data.emailList.length > 0) ? data.emailList[0].email : '',
-      //   disabled: this.basicDetailsData.userId ? true : false
-      // }, [Validators.required, Validators.pattern(this.validatorType.EMAIL)]],
       comPan: [data.pan, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
       gstinNum: [data.gstin, [Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')]],
-      // taxStatus: [data.taxStatusId ? String(data.taxStatusId) : '', [Validators.required]],
       comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
-      username: [{ value: data.userName, disabled: true }],
+      username: [data.userName],
       leadSource: [data.leadSource ? data.leadSource : ''],
       leadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
@@ -437,6 +441,9 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     if (this.fieldFlag == 'client') {
       this.nonIndividualForm.controls.clientOwner.setValidators([Validators.required]);
       this.nonIndividualForm.controls.role.setValidators([Validators.required]);
+      if (this.basicDetailsData.userId) {
+        this.nonIndividualForm.controls.username.setValidators([Validators.required]);
+      }
     }
     if (this.userData.userType == 2 && this.basicDetailsData.userId) {
       this.nonIndividualForm.controls.leadOwner.disable();
@@ -668,6 +675,9 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         obj.martialStatusId = this.basicDetailsData.martialStatusId;
         // obj['taxStatusId'] = taxStatusId;
         obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
+        if (this.basicDetailsData.userName != obj.username) {
+          obj['updateUserName'] = true;
+        }
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
@@ -1100,6 +1110,39 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         }
       }
     );
+  }
+
+  checkValidUsername(userName) {
+    if (this.basicDetailsData.userName == userName) {
+      return;
+    }
+    const obj = {
+      userName: userName,
+      userId: this.basicDetailsData.userId
+    }
+    if (this.usernameOutputSubscription && !this.usernameOutputSubscription.closed) {
+      this.usernameOutputSubscription.unsubscribe();
+    }
+    this.usernameOutputSubscription = this.usernameOutputObservable.pipe(startWith(''),
+      debounceTime(700)).subscribe(
+        data => {
+          this.userNameLoader = true;
+          this.peopleService.checkValidUsername(obj).subscribe(data => {
+            this.userNameLoader = false;
+            if (data) {
+
+            }
+          }), err => {
+            this.userNameLoader = false;
+            if (userName.length > 0)
+              if (this.basicDetailsData.clientType == 1) {
+                this.basicDetails.get('username').setErrors({ invalid: true });
+              } else {
+                this.nonIndividualForm.get('username').setErrors({ invalid: true });
+              }
+          }
+        }
+      );
   }
 
 

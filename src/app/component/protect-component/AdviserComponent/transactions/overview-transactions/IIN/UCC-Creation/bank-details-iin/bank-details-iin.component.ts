@@ -242,8 +242,8 @@ export class BankDetailsIINComponent implements OnInit {
       //branchCode: [!data ? '' : (data.branchCode) ? data.branchCode : data.bankId, [Validators.required]],
       branchName: [!data ? '' : data.branchName, [Validators.required]],
       paymentMode: [(!data) ? '02' : (data.paymentMode) ? data.paymentMode : '02', [Validators.required]],
-      address1: [!data.address ? '' : data.address.address1, [Validators.required]],
-      address2: [!data.address ? '' : data.address.address2, [Validators.required]],
+      address1: [!data.address ? '' : data.address.address1 ? UtilService.removeSpecialCharactersFromString(data.address.address1) : '', [Validators.required]],
+      address2: [!data.address ? '' : data.address.address1 ? UtilService.removeSpecialCharactersFromString(data.address.address2) : '', [Validators.required]],
       pinCode: [!data.address ? '' : data.address.pinCode, [Validators.required]],
       city: [!data.address ? '' : data.address.city, [Validators.required]],
       state: [!data.address ? '' : data.address.state, [Validators.required]],
@@ -348,8 +348,8 @@ export class BankDetailsIINComponent implements OnInit {
     this.bankDetailsForm.controls.branchName.setValue(value.branchName);
     this.bankDetailsForm.controls.paymentMode.setValue(value.paymentMode ? value.paymentMode : '02');
     if (value.address) {
-      this.bankDetailsForm.controls.address1.setValue(value.address.address1);
-      this.bankDetailsForm.controls.address2.setValue(value.address.address2);
+      this.bankDetailsForm.controls.address1.setValue(UtilService.removeSpecialCharactersFromString(value.address.address1));
+      this.bankDetailsForm.controls.address2.setValue(UtilService.removeSpecialCharactersFromString(value.address.address2));
       this.bankDetailsForm.controls.pinCode.setValue(value.address.pinCode);
       this.bankDetailsForm.controls.city.setValue(value.address.city);
       this.bankDetailsForm.controls.state.setValue(value.address.state);
@@ -466,6 +466,53 @@ export class BankDetailsIINComponent implements OnInit {
         paymentMode: this.bankDetailsForm.controls.paymentMode.value,
         bankDetailList: this.bank
       };
+      // const obj = {
+      //   branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
+      //   branchName: this.bankForm.get('branchName').value,
+      //   bankName: this.bankForm.get('bankName').value,
+      //   accountType: this.bankForm.get('accType').value,
+      //   accountNumber: this.bankForm.get('accNumber').value,
+      //   micrNo: this.bankForm.get('micrName').value,
+      //   ifscCode: this.bankForm.get('ifscCode').value,
+      //   address: {
+      //     address1: this.bankForm.get('branchAddressLine1').value,
+      //     address2: this.bankForm.get('branchAddressLine2').value,
+      //     address3: '',
+      //     pinCode: this.bankForm.get('branchPinCode').value,
+      //     city: this.bankForm.get('branchCity').value,
+      //     state: this.bankForm.get('branchState').value,
+      //     country: this.bankForm.get('branchCountry').value,
+      //     addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
+      //   },
+      //   userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
+      //   userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
+      //   minorAccountHolderName: (this.userData.id) ? '' : null,
+      //   guardianAccountHolderName: (this.userData.id) ? '' : null,
+      //   holderNameList: holderList,
+      //   userBankMappingId: (this.userData.bankData) ? this.userData.bankData.userBankMappingId : (this.bankList) ? this.bankList.userBankMappingId : null,
+      //   bankId: (this.userData.bankData) ? this.userData.bankData.bankId : (this.bankList) ? this.bankList.bankId : null,
+      //   addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
+      // };
+      // this.peopleService.addEditClientBankDetails(obj).subscribe(
+      //   data => {
+      //     console.log(data);
+      //     this.disableBtn = false;
+      //     this.tabDisableFlag.emit(false);
+      //     this.barButtonOptions.active = false;
+      //     if (flag == 'Next') {
+      //       this.tabChange.emit(1);
+      //       this.saveNextData.emit(true);
+      //       this.refreshClientUploadBankDetails.emit(true);
+      //     } else {
+      //       this.closeAndSave();
+      //     }
+      //   },
+      //   err => {
+      //     this.disableBtn = false;
+      //     this.eventService.openSnackBar(err, 'Dismiss');
+      //     this.barButtonOptions.active = false;
+      //   }
+      // );
       localStorage.setItem('bank' + (this.data.clientId), JSON.stringify(this.sendObj));
       this.openNomineeDetails(this.sendObj);
     }
@@ -488,8 +535,8 @@ export class BankDetailsIINComponent implements OnInit {
       addressId: holder.addressId
     };
     value.address = {
-      address1: holder.address1,
-      address2: holder.address2,
+      address1: UtilService.removeSpecialCharactersFromString(holder.address1),
+      address2: UtilService.removeSpecialCharactersFromString(holder.address2),
       pinCode: holder.pinCode,
       state: holder.state,
       city: holder.city,

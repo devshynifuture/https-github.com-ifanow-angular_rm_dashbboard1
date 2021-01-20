@@ -224,9 +224,9 @@ export class ProcessTransactionService {
     for (let i = 0; i < arr.length; i++) {
       datesArr.push(moment(t).set('date', arr[i]));
     }
-    datesArr = datesArr.filter((dt) => {
-      return (moment(dt).isSameOrBefore(t));
-    });
+    // datesArr = datesArr.filter((dt) => {
+    //   return (moment(dt).isSameOrBefore(t));
+    // });
     for (let i = 0; i < arr.length; i++) {
       datesArr.push(moment(t).set('date', arr[i]).add(1, 'months'));
     }

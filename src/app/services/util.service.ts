@@ -795,6 +795,11 @@ export class UtilService {
     }
   }
 
+  static removeSpecialCharactersFromString(string) {
+    string = string.replace(/[\/\\#+()$~%.'":*?<>{}]/g, '')
+    return string
+  }
+
   static formatGoogleGeneratedAddress(address: string) {
     let firstLine = address.substring(0, 39)
     firstLine = firstLine.substr(0, firstLine.lastIndexOf(' '))

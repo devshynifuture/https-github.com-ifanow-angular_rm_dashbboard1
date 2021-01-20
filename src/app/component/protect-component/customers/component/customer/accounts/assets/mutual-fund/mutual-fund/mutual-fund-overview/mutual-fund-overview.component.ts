@@ -793,11 +793,12 @@ export class MutualFundOverviewComponent implements OnInit {
       this.sendaata.dataSource3 = this.dataSource3;
 
       this.MfServiceService.setSendData(this.sendaata);
-      // if (this.dataSource3.data.length == 0) {
-      //   this.showSubCategory = false;
-      // }
+
       if (this.dataSource3.data.length > 0) {
         this.showSubCategory = this.showHideTable ? (this.showHideTable[5].selected ? true : false) : true;
+      }
+      if (this.dataSource3.data.length == 0) {
+        this.showSubCategory = false;
       }
       // this.isLoading = false;
       this.changeInput.emit(false);
@@ -819,14 +820,13 @@ export class MutualFundOverviewComponent implements OnInit {
       this.sendaata.dataSource = this.dataSource;
 
       this.MfServiceService.setSendData(this.sendaata);
-      // if (this.dataSource.data.length == 0) {
-      //   this.showFamilyMember = false;
 
-      // }
       if (this.dataSource.data.length > 0) {
         this.showFamilyMember = this.showHideTable ? (this.showHideTable[3].selected ? true : false) : true;
       }
-
+      if (this.dataSource.data.length == 0) {
+        this.showFamilyMember = false;
+      }
       // this.isLoading = false;
       this.changeInput.emit(false);
 
@@ -930,7 +930,9 @@ export class MutualFundOverviewComponent implements OnInit {
         // this.showSchemeWise = true;
         this.showSchemeWise = this.showHideTable ? (this.showHideTable[1].selected ? true : false) : true;
       }
-
+      if (this.dataSource2.data.length == 0) {
+        this.showSchemeWise = false;
+      }
       this.MfServiceService.setSendData(this.sendaata);
       this.getAllData(mutualFundData);
       // this.isLoading = false;
@@ -948,18 +950,19 @@ export class MutualFundOverviewComponent implements OnInit {
     this.sendaata.dataSource4 = this.dataSource4;
 
     this.MfServiceService.setSendData(this.sendaata);
-    // if (this.dataSource4.data.length == 0) {
-    //   this.showCategory = false;
-    // }
+
     if (this.dataSource4.data.length > 0) {
       this.showCategory = this.showHideTable ? (this.showHideTable[4].selected ? true : false) : true;
     }
-
+    if (this.dataSource4.data.length == 0) {
+      this.showCategory = false;
+    }
     this.getsubCategorywiseAllocation(data); // For subCategoryWiseAllocation
     this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     // this.isLoading = false;
+    // this.datasource1.data.length == 0 && 
     this.changeInput.emit(false);
-    if (this.datasource1.data.length == 0 && this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
+    if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
       this.showSummaryBar = false;
       this.showCashFlow = false;
       this.showSchemeWise = false;

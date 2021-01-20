@@ -96,8 +96,8 @@ export class ClientAddressComponent implements OnInit {
         }
         // this.addressForm.get('addressLine2').setValue(place.formatted_address)
         const { firstLine, secondLine } = UtilService.formatGoogleGeneratedAddress(place.formatted_address);
-        this.addressForm.get('addressLine2').setValue(firstLine);
-        this.addressForm.get('addressLine3').setValue(secondLine);
+        this.addressForm.get('addressLine2').setValue(UtilService.removeSpecialCharactersFromString(firstLine));
+        this.addressForm.get('addressLine3').setValue(UtilService.removeSpecialCharactersFromString(secondLine));
         // this.addressForm.get('addressLine2').setValue(`${place.address_components[0].long_name},${place.address_components[2].long_name}`)
         this.getPincode(place.formatted_address)
         // console.log(place)
@@ -110,6 +110,9 @@ export class ClientAddressComponent implements OnInit {
     if (data == undefined) {
       data = {}
     } else {
+      data.address1 = UtilService.removeSpecialCharactersFromString(data.address1);
+      data.address2 = UtilService.removeSpecialCharactersFromString(data.address2);;
+      data.address3 = UtilService.removeSpecialCharactersFromString(data.address3);;
       const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address1, data.address2, data.address3);
       data.address1 = firstLine;
       data.address2 = secondLine;
@@ -288,9 +291,9 @@ export class ClientAddressComponent implements OnInit {
     } else {
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
       const obj = {
-        address1: this.addressForm.get('addressLine1').value,
-        address2: this.addressForm.get('addressLine2').value,
-        address3: this.addressForm.get('addressLine3').value,
+        address1: UtilService.removeSpecialCharactersFromString(this.addressForm.get('addressLine1').value),
+        address2: UtilService.removeSpecialCharactersFromString(this.addressForm.get('addressLine2').value),
+        address3: UtilService.removeSpecialCharactersFromString(this.addressForm.get('addressLine3').value),
         pinCode: this.addressForm.get('pinCode').value,
         city: this.addressForm.get('city').value,
         state: this.addressForm.get('state').value,
