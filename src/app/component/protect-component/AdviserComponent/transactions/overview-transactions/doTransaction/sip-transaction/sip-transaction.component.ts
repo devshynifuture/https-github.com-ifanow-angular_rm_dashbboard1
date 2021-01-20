@@ -853,6 +853,7 @@ export class SipTransactionComponent implements OnInit {
   }
 
   sip() {
+    this.barButtonOptions.active = true;
     if (this.validateSingleTransaction()) {
       const obj = this.getSingleTransactionJson();
 
@@ -864,7 +865,6 @@ export class SipTransactionComponent implements OnInit {
         });
       }
       this.removeUnnecessaryDataFromJson(obj);
-      this.barButtonOptions.active = true;
       this.onlineTransact.transactionBSE(obj).subscribe(
         data => {
           this.isSuccessfulTransaction = true;

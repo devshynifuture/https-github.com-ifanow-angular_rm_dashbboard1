@@ -298,7 +298,8 @@
         <!-- <button mat-button class="btn-green text-white ml-12" (click)="purchase()">
 SAVE & PROCEED
 </button> -->
-        <app-progress-button (click)="purchase()" [options]="barButtonOptions" class="btn-green text-white ml-12">
+        <app-progress-button [disabled]="this.barButtonOptions.active !=true" (click)="purchase()"
+            [options]="barButtonOptions" class="btn-green text-white ml-12">
         </app-progress-button>
     </div>
 
