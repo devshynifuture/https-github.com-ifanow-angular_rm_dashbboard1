@@ -24,6 +24,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CustomFilterDatepickerDialogComponent } from './file-ordering-upload/custom-filter-datepicker-dialog.component';
 import { ConvertToPaidComponent } from './my-ifas/convert-to-paid/convert-to-paid.component';
+import { RefreshMfComponent } from './my-ifas/refresh-mf/refresh-mf.component';
 
 const componentList = [
     AdminDetailsComponent,
@@ -42,7 +43,8 @@ const componentList = [
     FileOrderingDetailComponent,
     FileOrderingSetupComponent,
     CustomFilterDatepickerDialogComponent,
-    ConvertToPaidComponent
+    ConvertToPaidComponent,
+    RefreshMfComponent
 ]
 
 @NgModule({
