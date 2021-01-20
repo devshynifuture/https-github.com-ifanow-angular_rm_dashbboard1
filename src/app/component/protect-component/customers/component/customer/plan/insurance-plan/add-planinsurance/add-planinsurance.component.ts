@@ -622,10 +622,10 @@ export class AddPlaninsuranceComponent implements OnInit {
           plannerNotes: this.plannerNotesNeed,
           needBasedObject: needBasedAnalysis,
           mainDependentId: this.familyMemberId,
-          lifeExpectency: this.expectancy.value,
-          retirementAge: this.retirementAgeControl.value,
-          isClient: (parseInt(this.familyMemberId) == this.clientId) ? true : false
-
+          lifeExpectency: parseInt(this.expectancy.value),
+          retirementAge: parseInt(this.retirementAgeControl.value),
+          isClient: (parseInt(this.familyMemberId) == this.clientId) ? true : false,
+          inflationAdjustedRate : this.inflationAdjustedRate
         }
         this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
           data => this.saveLifeInsuranceAnalysisRes(data),
