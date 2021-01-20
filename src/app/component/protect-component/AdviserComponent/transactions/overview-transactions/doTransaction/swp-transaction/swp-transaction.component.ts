@@ -471,6 +471,9 @@ export class SwpTransactionComponent implements OnInit {
 
   // getSingleTransactionJson() {}
   swp() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     this.barButtonOptions.active = true;
     if (this.swpTransaction.get('investmentAccountSelection').invalid) {
       this.swpTransaction.get('investmentAccountSelection').markAsTouched();
@@ -554,6 +557,9 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     if (this.swpTransaction.get('schemeSwp').invalid) {
       this.swpTransaction.get('schemeSwp').markAsTouched();
       return;

@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
+import {Router} from '@angular/router';
 // import 'rxjs/Rx';
-import { AuthService } from '../auth-service/authService';
+import {AuthService} from '../auth-service/authService';
 import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/operator/map';
-import { catchError } from 'rxjs/operators';
-import { EmailUtilService } from '../services/email-util.service';
-import { apiConfig } from '../config/main-config';
+import {catchError} from 'rxjs/operators';
+import {EmailUtilService} from '../services/email-util.service';
+import {apiConfig} from "../config/main-config";
 
 // declare var require: any;
 const Buffer = require('buffer/').Buffer;
@@ -28,7 +28,7 @@ export class CacheEntry {
 export class HttpService {
 
   constructor(private _http: HttpClient, private _userService: AuthService, private _router: Router,
-    // private enumDataService: EnumDataService
+              // private enumDataService: EnumDataService
   ) {
     this.authToken = this._userService.getToken();
   }
@@ -81,7 +81,9 @@ export class HttpService {
     } else {
       // let headers = new HttpHeaders().set('Content-Type', 'application/json');
       let headers: HttpHeaders = new HttpHeaders();
-      headers = headers.set('Content-Encoding', 'gzip');
+      if (apiConfig.PRODUCTION) {
+        headers = headers.set('Content-Encoding', 'gzip');
+      }
       headers = headers.set('Content-Type', 'application/json');
       httpOptions = {
         headers
@@ -101,7 +103,7 @@ export class HttpService {
 
     // console.log('compressedBody : ', pako.gzip(JSON.stringify(body)));
     return this._http
-      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, apiConfig.PRODUCTION ? compressedBody.buffer : body, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
         return this.sendSuccessResponse(res);
       });
@@ -114,7 +116,8 @@ export class HttpService {
       httpOptions = options;
     } else {
       let headers: HttpHeaders = new HttpHeaders();
-      headers = headers.set('Content-Encoding', 'gzip');
+      if (apiConfig.PRODUCTION)
+        headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
       httpOptions = {
         headers
@@ -124,11 +127,11 @@ export class HttpService {
       }
     }
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
-    const inputData = { query: this.changeBase64Data(body) };
+    const inputData = {query: this.changeBase64Data(body)};
     const compressedBody = pako.gzip(JSON.stringify(inputData));
 
     return this._http
-      .post(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .post(this.baseUrl + url, apiConfig.PRODUCTION ? compressedBody.buffer : inputData, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -149,7 +152,8 @@ export class HttpService {
       httpOptions = options;
     } else {
       let headers: HttpHeaders = new HttpHeaders();
-      headers = headers.set('Content-Encoding', 'gzip');
+      if (apiConfig.PRODUCTION)
+        headers = headers.set('Content-Encoding', 'gzip');
       headers = headers.set('Content-Type', 'application/json');
 
       // headers = headers.set('Content-Type', 'application/octet-stream');
@@ -165,12 +169,12 @@ export class HttpService {
       }
     }
 
-    const inputData = { query: this.changeBase64Data(body) };
+    const inputData = {query: this.changeBase64Data(body)};
     const compressedBody = pako.gzip(JSON.stringify(inputData));
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
-      .put(this.baseUrl + url, compressedBody.buffer, httpOptions).pipe(this.errorObservable)
+      .put(this.baseUrl + url, apiConfig.PRODUCTION ? compressedBody.buffer : inputData, httpOptions).pipe(this.errorObservable)
       .map((res: any) => {
 
         if (res.status === 200 || res.status === 201) {
@@ -187,7 +191,8 @@ export class HttpService {
 
   put(url: string, body, params?): Observable<any> {
     let headers: HttpHeaders = new HttpHeaders();
-    headers = headers.set('Content-Encoding', 'gzip');
+    // if (apiConfig.PRODUCTION)
+    //   headers = headers.set('Content-Encoding', 'gzip');
     headers = headers.set('Content-Type', 'application/json');
 
     let httpOptions: any = {
@@ -201,7 +206,7 @@ export class HttpService {
       httpOptions = params;
     }
 
-    const compressedBody = pako.gzip(JSON.stringify(body));
+    // const compressedBody = pako.gzip(JSON.stringify(body));
     console.log('Request api :', this.baseUrl + url, ' requestBody : ', JSON.stringify(body));
 
     return this._http
@@ -261,7 +266,7 @@ export class HttpService {
           return res;
         } else if (res.status === 200) {
           const resData = this.changeBase64ToString(res);
-          return { res: resData, statusCode: res.status };
+          return {res: resData, statusCode: res.status};
         } else {
           const err = new Error(res.message);
           throwError(err);
@@ -296,7 +301,7 @@ export class HttpService {
     }
 
     return this._http
-      .request('delete', url, { body }).pipe(this.errorObservable)
+      .request('delete', url, {body}).pipe(this.errorObservable)
       .map((res: any) => {
         if (res.status === 200) {
           const resData = this.changeBase64ToString(res);

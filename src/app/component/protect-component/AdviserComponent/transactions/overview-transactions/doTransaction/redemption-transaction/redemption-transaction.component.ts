@@ -506,6 +506,9 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   redeem() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     this.barButtonOptions.active = true;
     if (this.validateSingleTransaction()) {
       const obj = this.getSingleTransactionJson();
@@ -541,7 +544,9 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
-
+    if (this.barButtonOptions.active) {
+      return;
+    }
     if (this.validateSingleTransaction()) {
       this.multiTransact = true;
       if (this.isEdit != true) {

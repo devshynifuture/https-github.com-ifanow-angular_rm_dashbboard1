@@ -553,6 +553,9 @@ export class StpTransactionComponent implements OnInit {
   }
 
   stp() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     this.barButtonOptions.active = true;
     if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
       this.stpTransaction.get('reinvest').markAsTouched();
@@ -649,6 +652,9 @@ export class StpTransactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
+    if (this.barButtonOptions.active) {
+      return;
+    }
     if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
       this.stpTransaction.get('reinvest').markAsTouched();
     } else if (this.stpTransaction.get('schemeStp').invalid) {
