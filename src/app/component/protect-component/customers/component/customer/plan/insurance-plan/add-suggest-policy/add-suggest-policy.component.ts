@@ -214,7 +214,7 @@ export class AddSuggestPolicyComponent implements OnInit {
           }
         );
       } else {
-        let rational = obj.suggestion ? obj.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
+        let rational = obj.suggestion ? obj.suggestion.replace(/(<([^>]+)>|&nbsp;)/ig, '') : null;
         const stringObj = {
           id: null,
           insuranceCategoryTypeId: this.adviceToCategoryId,
