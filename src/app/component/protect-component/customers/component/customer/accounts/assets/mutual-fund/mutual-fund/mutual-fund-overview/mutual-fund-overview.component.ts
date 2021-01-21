@@ -1361,7 +1361,7 @@ export class MutualFundOverviewComponent implements OnInit {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     this.loadingDone = true;
     this.svg = this.chart.getSVG();
-    const para = document.getElementById('template');
+    const para = this.mfOverviewTemplate.nativeElement
 
     const obj = {
       htmlInput: para.innerHTML,
