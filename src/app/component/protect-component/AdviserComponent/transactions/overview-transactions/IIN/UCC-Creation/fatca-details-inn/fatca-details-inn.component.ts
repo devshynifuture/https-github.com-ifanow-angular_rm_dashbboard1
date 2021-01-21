@@ -87,7 +87,7 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
 
   @Input()
   set data(data) {
-    if (JSON.parse(localStorage.getItem('fatca' + data.clientData.clientId))) {
+    if (JSON.parse(localStorage.getItem('fatca' + data.clientData.clientId)) && data.draft == true) {
       this.inputData = JSON.parse(localStorage.getItem('fatca' + data.clientData.clientId));
       console.log('local storage', this.inputData)
     }
