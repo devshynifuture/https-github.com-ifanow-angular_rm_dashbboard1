@@ -35,6 +35,7 @@ const moment = require('moment');
 export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   tempBasicData: any;
   userNameLoader: boolean;
+  mobileEditedData: any;
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
       this.eventService.openSnackBar("Please add pan before converting it to client", "Dimiss");
@@ -567,21 +568,25 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
     } else {
-      const mobileList = [];
+      let mobileList = [];
       if (this.mobileData) {
-        this.mobileData.controls.forEach(element => {
-          console.log(element);
-          const mobileNo = element.get('number').value;
-          if (mobileNo) {
+        this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
+        if (this.tempBasicData.mobileList.length == 0) {
+          this.mobileEditedData.forEach(element => {
             mobileList.push({
-              userType: 2,
-              mobileNo: element.get('number').value,
-              isdCodeId: element.get('code').value
-            });
-          }
-        });
+              userId: this.basicDetailsData.userId,
+              mobileNo: element.number,
+              isdCodeId: element.code,
+              defaultFlag: true
+            })
+          });
+        } else {
+          this.mobileEditedData.forEach((element, index) => {
+            (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
+          });
+          mobileList = this.mobileEditedData;
+        }
       }
-
       let advisorId;
       if (this.selectedClientOwner && this.selectedClientOwner != '') {
         advisorId = this.selectedClientOwner;
@@ -736,16 +741,24 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   }
 
   saveNextFamilyMember(flag) {
-    const mobileList = [];
+    let mobileList = [];
     if (this.mobileData) {
-      this.mobileData.controls.forEach(element => {
-        console.log(element);
-        mobileList.push({
-          mobileNo: element.get('number').value,
-          verificationStatus: 0,
-          isdCodeId: element.get('code').value
+      this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
+      if (this.tempBasicData.mobileList.length == 0) {
+        this.mobileEditedData.forEach(element => {
+          mobileList.push({
+            userId: this.basicDetailsData.userId,
+            mobileNo: element.number,
+            isdCodeId: element.code,
+            defaultFlag: true
+          })
         });
-      });
+      } else {
+        this.mobileEditedData.forEach((element, index) => {
+          (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
+        });
+        mobileList = this.mobileEditedData;
+      }
     }
     if (this.invTypeCategory == '1') {
       this.basicDetails.get('role').clearValidators();

@@ -11,7 +11,7 @@
                         formControlName="emailAddress" placeholder="Enter email">
                     </app-email-domain-auto-suggest>
                     <mat-error *ngIf="emailForm.get('emailAddress').errors?.pattern">Email is not valid</mat-error>
-                        <mat-error *ngIf="emailForm.get('emailAddress').errors?.required">This field is required
+                    <mat-error *ngIf="emailForm.get('emailAddress').errors?.required">This field is required
                     </mat-error>
                     <mat-error *ngIf="emailForm.get('emailAddress').errors?.notUnique">Email must be unique
                     </mat-error>
@@ -26,11 +26,11 @@
 
         </div>
         <div class="col-md-1 d-flex align-items-center justify-content-center">
-            <i *ngIf="i+1==getEmailAddressFormList.length && i<2" (click)="addEmail(null)"
+            <i *ngIf="i==getEmailAddressFormList.length-1 && i!=2" (click)="addEmail(null)"
                 class="material-icons c-p f-20">
                 add </i>
 
-            <i *ngIf="i+1!=getEmailAddressFormList.length || i==2"
+            <i *ngIf="getEmailAddressFormList.length!=1"
                 (click)="emailForm.get('id').value==undefined?removeEmail(i):deleteEmail(i,emailForm)"
                 class="material-icons c-p f-20">
                 remove </i>

@@ -141,7 +141,12 @@ export class AddNumberComponent implements OnInit {
         this.compulsionCount++;
         this.getMobileNumList.push(this.fb.group({
           code: [data.isdCodeId, [Validators.required]],
-          number: [data.mobileNo, [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]]
+          number: [data.mobileNo != 0 ? data.mobileNo : '', [Validators.pattern(this.validatorType.TEN_DIGITS), Validators.required]],
+          defaultFlag: [data.defaultFlag == undefined ? true : data.defaultFlag],
+          id: [data.id],
+          isUpdate: [data.isUpdate],
+          userId: [data.userId],
+          isActive: [data.isActive]
         }));
       } else {
         if (this.taxstatusId == 1) {
@@ -149,7 +154,12 @@ export class AddNumberComponent implements OnInit {
         }
         this.getMobileNumList.push(this.fb.group({
           code: [data.isdCodeId],
-          number: [data.mobileNo, Validators.pattern(this.validatorType.TEN_DIGITS)]
+          number: [data.mobileNo != 0 ? data.mobileNo : '', Validators.pattern(this.validatorType.TEN_DIGITS)],
+          defaultFlag: [data.defaultFlag == undefined ? true : data.defaultFlag],
+          id: [data.id],
+          isUpdate: [data.isUpdate],
+          userId: [data.userId],
+          isActive: [data.isActive],
         }));
       }
 
