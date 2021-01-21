@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
@@ -55,6 +55,7 @@ export class ClientDematComponent implements OnInit {
   callMethod1: { methodName: string; ParamValue: any; disControl: any; };
   bankList: any = [];
   keyInfoCapability: any = {};
+  mobileEditedData: any[];
 
   constructor(private cusService: CustomerService, private fb: FormBuilder, private injector: Injector,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
@@ -419,17 +420,34 @@ export class ClientDematComponent implements OnInit {
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
     } else {
-      const mobileList = [];
+      let mobileList = [];
       const holderList = [];
-      if (this.mobileData) {
-        this.mobileData.controls.forEach(element => {
-          console.log(element);
+      if (!this.dematList.dematId) {
+        this.mobileData.value.forEach(element => {
           mobileList.push({
-            id: 0,
-            mobileNo: element.get('number').value,
-            isdCodeId: element.get('code').value
-          });
+            mobileNo: element.number,
+            isdCodeId: element.code,
+            defaultFlag: true,
+          })
         });
+      }
+      else {
+        this.mobileEditedData = UtilService.checkMobileListUpdation(this.dematList.mobileDataList, this.mobileData)
+        if (this.dematList.mobileDataList.length == 0) {
+          this.mobileEditedData.forEach(element => {
+            mobileList.push({
+              userId: this.userData.userId,
+              mobileNo: element.number,
+              isdCodeId: element.code,
+              defaultFlag: true
+            })
+          });
+        } else {
+          this.mobileEditedData.forEach((element, index) => {
+            (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
+          });
+          mobileList = this.mobileEditedData;
+        }
       }
       // if (this.holderList) {
       //   this.holderList.controls.forEach(element => {
