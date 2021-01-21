@@ -789,6 +789,8 @@ export const appConfig = {
   REFRESH_FILE_ORDER_BULK_PER_ROW: 'fileorder/bulk/order/refresh',
   REFRESH_FILE_ORDER_UPPER: 'fileorder/refresh',
   DEACTIVATE_ACCOUNT: 'rmdashboard/activate-deactivate/advisor',
+  REFRESH_MF_LIST: 'mutual-fund/mutualfund/list/refresh',
+  CONVERT_TO_PAID_DATE: 'rmdashboard/advisor/paid-upto/update',
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',
@@ -902,6 +904,7 @@ export const appConfig = {
   GET_CLIENT_SEARCH_LIST: 'user/client/filter/details/get',
   GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
   GET_TEAM_MEMBER_INFO: 'user/info/get',
+  CHECK_VALID_USERNAME: 'user/username/update',
   // CLIENT_SEARCH: 'user/client/all/names/get',
   CLIENT_SEARCH: 'user/client/all/names/count/get',
   EDIT_BITHDATE: 'user/client/birth-date/update',

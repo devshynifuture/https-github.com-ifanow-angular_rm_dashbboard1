@@ -18,6 +18,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { SupportManagementComponent } from './support-management/support-management.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { SendyExcelComponent } from './sendy-excel/sendy-excel.component';
+import { ConvertToPaidComponent } from './my-ifas/convert-to-paid/convert-to-paid.component';
+import { RefreshMfComponent } from './my-ifas/refresh-mf/refresh-mf.component';
 
 @NgModule({
   declarations: [

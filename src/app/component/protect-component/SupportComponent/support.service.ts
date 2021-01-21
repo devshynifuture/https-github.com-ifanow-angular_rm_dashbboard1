@@ -190,4 +190,12 @@ export class SupportService {
   postSendyDataAfterFileUpload(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.RM_DASHBOARD_POST_AFTER_SENDY_FILE_UPLOAD, data);
   }
+  refreshMutualFundList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_MF_LIST, data);
+  }
+
+  convertToPaidDate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.CONVERT_TO_PAID_DATE, data);
+  }
+
 }

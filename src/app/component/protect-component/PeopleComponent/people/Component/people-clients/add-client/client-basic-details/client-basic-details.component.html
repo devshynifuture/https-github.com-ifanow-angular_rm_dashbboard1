@@ -194,12 +194,18 @@
                 <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group">
                         <mat-form-field>
-                            <input #username [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation
-                                autocomplete="off" class="form-control" formControlName="username" matInput>
+                            <input #username (input)="checkValidUsername(username.value)" autocomplete="off"
+                                class="form-control" formControlName="username" matInput>
                             <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
-                            <mat-error>This field is required</mat-error>
+                            <mat-error *ngIf="basicDetails.get('username').errors?.required">This field is required
+                            </mat-error>
+                            <mat-error *ngIf="basicDetails.get('username').errors?.invalid">Username is already
+                                registered</mat-error>
                         </mat-form-field>
                     </div>
+                </div>
+                <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
+                    <mat-spinner *ngIf="userNameLoader" [diameter]="20"></mat-spinner>
                 </div>
             </div>
             <div class="row pt-28">
@@ -1047,12 +1053,18 @@
             <div class="col-md-5 p-0">
                 <div class="form-group">
                     <mat-form-field>
-                        <input #username [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50"
-                            appInputValueValidation class="form-control" formControlName="username" matInput>
+                        <input #username (input)="checkValidUsername(username.value)" [maxLength]="50"
+                            class="form-control" formControlName="username" matInput>
                         <mat-hint align="end">{{username.value.length}}/ 50</mat-hint>
-                        <mat-error>This field is required</mat-error>
+                        <mat-error *ngIf="nonIndividualForm.get('username').errors?.required">This field is required
+                        </mat-error>
+                        <mat-error *ngIf="nonIndividualForm.get('username').errors?.invalid">Username is already
+                            registered</mat-error>
                     </mat-form-field>
                 </div>
+            </div>
+            <div class="col-md-1 p-0">
+                <mat-spinner *ngIf="userNameLoader" [diameter]="20"></mat-spinner>
             </div>
         </div>
         <div *ngIf="fieldFlag=='lead'" class="row pt-44">
