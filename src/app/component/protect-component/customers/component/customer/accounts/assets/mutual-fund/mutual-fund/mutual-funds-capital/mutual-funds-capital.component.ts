@@ -530,6 +530,7 @@ export class MutualFundsCapitalComponent implements OnInit {
                 this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
             }
             this.mfList = this.MfServiceService.sorting(this.mfList, 'schemeName');
+            this.mfList = [...new Map(this.mfList.map(item => [item.id, item])).values()];
             this.mfList = this.MfServiceService.casFolioNumber(this.mfList);
             this.mfList.forEach(element => {
                 if (element.redemptionTransactions) {
@@ -540,7 +541,7 @@ export class MutualFundsCapitalComponent implements OnInit {
                             trnDate.setHours(0, 0, 0, 0);
                             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
                                 if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
-                                    this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
+                                    // this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
                                     let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
                                     ele.stGain = totalValue.stGain;
                                     ele.ltGain = totalValue.ltGain;
@@ -578,7 +579,7 @@ export class MutualFundsCapitalComponent implements OnInit {
                             trnDate.setHours(0, 0, 0, 0);
                             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
                                 if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
-                                    this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
+                                    // this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
                                     redeemArray.push(ele.purchaceAgainstRedemptionTransactions);
                                 } else {
                                     ele.purchaceAgainstRedemptionTransactions = []
@@ -644,12 +645,12 @@ export class MutualFundsCapitalComponent implements OnInit {
         let indexLoss = 0;
 
         data.forEach(element => {
-            let purchaseTrnDate = new Date(element.transactionDate)
-            if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
-                gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
-            } else {
-                gainLossBasedOnGrandfathering = 'gainOrLossAmount'
-            }
+            // let purchaseTrnDate = new Date(element.transactionDate)
+            // if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
+            //     gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
+            // } else {
+            //     gainLossBasedOnGrandfathering = 'gainOrLossAmount'
+            // }
             if (element.days < days) {
                 stGain += ((element[gainLossBasedOnGrandfathering] >= 0) ? (element[gainLossBasedOnGrandfathering]) : 0)
                 stLoss += ((element[gainLossBasedOnGrandfathering] < 0) ? (element[gainLossBasedOnGrandfathering]) : 0)
