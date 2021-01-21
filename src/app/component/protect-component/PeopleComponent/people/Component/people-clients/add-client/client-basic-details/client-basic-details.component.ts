@@ -570,21 +570,32 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     } else {
       let mobileList = [];
       if (this.mobileData) {
-        this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
-        if (this.tempBasicData.mobileList.length == 0) {
-          this.mobileEditedData.forEach(element => {
+        if (this.basicDetailsData.userId == undefined) {
+          this.mobileData.value.forEach(element => {
             mobileList.push({
-              userId: this.basicDetailsData.userId,
               mobileNo: element.number,
               isdCodeId: element.code,
-              defaultFlag: true
+              defaultFlag: true,
             })
           });
-        } else {
-          this.mobileEditedData.forEach((element, index) => {
-            (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
-          });
-          mobileList = this.mobileEditedData;
+        }
+        else {
+          this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
+          if (this.tempBasicData.mobileList.length == 0) {
+            this.mobileEditedData.forEach(element => {
+              mobileList.push({
+                userId: this.basicDetailsData.userId,
+                mobileNo: element.number,
+                isdCodeId: element.code,
+                defaultFlag: true
+              })
+            });
+          } else {
+            this.mobileEditedData.forEach((element, index) => {
+              (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
+            });
+            mobileList = this.mobileEditedData;
+          }
         }
       }
       let advisorId;

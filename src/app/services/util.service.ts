@@ -839,11 +839,37 @@ export class UtilService {
   };
 
   static checkEmailListUpdation(originalEmailList, editedEmailList) {
+    let emailListJson = []
     originalEmailList.forEach(singleEmail => {
       editedEmailList.forEach(secondEmail => {
-
+        if (singleEmail.id == secondEmail.id && singleEmail.mobileNo != secondEmail.number) {
+          singleEmail['isUpdate'] = 1;
+          singleEmail['isActive'] = 1;
+          singleEmail['email'] = secondEmail.emailAddress;
+          emailListJson.push(singleEmail);
+        } else if (secondEmail.id == undefined) {
+          singleEmail['defaultFlag'] = true;
+          emailListJson.push({
+            email: secondEmail.emailAddress,
+            defaultFlag: true,
+            userId: singleEmail.userId
+          });
+        }
+        else if ((singleEmail.id == secondEmail.id && singleEmail.mobileNo == secondEmail.emailAddress)) {
+          emailListJson.push(singleEmail);
+        }
+        else if (editedEmailList.value.some(element => element.id != singleEmail.id)) {
+          emailListJson.push({
+            email: secondEmail.emailAddress,
+            userId: singleEmail.userId,
+            isUpdate: 1,
+            isActive: 0
+          });
+          emailListJson[0].defaultFlag = true;
+        }
       });
     })
+    emailListJson = UtilService.getUniqueListBy(emailListJson, 'id')
     return originalEmailList;
   }
 
