@@ -31,9 +31,10 @@ import { MY_FORMATS2 } from '../../../constants/date-format.constant';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { DashboardEntryModule } from '../../protect-component/AdviserComponent/dashboard/dashboard-entry.module';
 import { SettingSupportPricingEntryModule } from '../../protect-component/AdviserComponent/setting-support/setting-support-pricing/setting-support-pricing-entry.module';
+import { RestrictedUserComponent } from './restricted-user/restricted-user.component';
 
 @NgModule({
-  declarations: [LeftsidebarComponent],
+  declarations: [LeftsidebarComponent, RestrictedUserComponent],
   imports: [
     CommonModule,
     MaterialModule,

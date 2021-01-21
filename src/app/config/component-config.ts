@@ -78,6 +78,8 @@ export const appConfig = {
   RM_SEARCH_NJ_PRUDENT_SCHEMES: 'rmdashboard/get/filtered/njprudent/schemes',
   DELETE_SIP: 'admin/dashboard/mf-sip/reset',
   REFRESH_DASHBOARD: 'admin/dashboard/key/metrics/refresh',
+  RM_DASHBOARD_MISC_SENDY_FILE_URL_GET: 'misc/sendy-excel/upload-url/get',
+  RM_DASHBOARD_POST_AFTER_SENDY_FILE_UPLOAD: 'misc/sendy/subscribe/excel',
   ///////////////////////////// back office/////////////////////////////////////////////
 
 

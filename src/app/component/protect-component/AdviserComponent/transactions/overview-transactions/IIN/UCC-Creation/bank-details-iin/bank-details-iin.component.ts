@@ -24,6 +24,7 @@ export class BankDetailsIINComponent implements OnInit {
   bankListArr: any;
   activeDetailsClass = 'first';
   accountTypes: any;
+  userData: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private postalService: PostalService,
@@ -40,7 +41,7 @@ export class BankDetailsIINComponent implements OnInit {
 
   @Input()
   set data(data) {
-    if (JSON.parse(localStorage.getItem('bank' + data.clientData.clientId))) {
+    if (JSON.parse(localStorage.getItem('bank' + data.clientData.clientId)) && data.draft == true) {
       this.inputData = JSON.parse(localStorage.getItem('bank' + data.clientData.clientId));
       console.log('local storage', this.inputData)
     }
@@ -133,6 +134,7 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   getBankList(data, shouldSetValue) {
+    this.userData = data
     const obj = [{
       userId: (data.userType == 2) ? data.clientId : (data.userType == 3) ? data.familyMemberId : data.clientId,
       userType: data.userType
@@ -467,32 +469,33 @@ export class BankDetailsIINComponent implements OnInit {
         bankDetailList: this.bank
       };
       // const obj = {
-      //   branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
-      //   branchName: this.bankForm.get('branchName').value,
-      //   bankName: this.bankForm.get('bankName').value,
-      //   accountType: this.bankForm.get('accType').value,
-      //   accountNumber: this.bankForm.get('accNumber').value,
-      //   micrNo: this.bankForm.get('micrName').value,
-      //   ifscCode: this.bankForm.get('ifscCode').value,
+      //   branchCode: null,
+      //   branchName: this.sendObj.bankDetailList[0].branchName,
+      //   bankName: this.sendObj.bankDetailList[0].bankName,
+      //   accountType: this.sendObj.bankDetailList[0].accountType,
+      //   accountNumber: this.sendObj.bankDetailList[0].accountNumber,
+      //   micrNo: this.sendObj.bankDetailList[0].micrNo,
+      //   ifscCode: this.sendObj.bankDetailList[0].ifscCode,
       //   address: {
-      //     address1: this.bankForm.get('branchAddressLine1').value,
-      //     address2: this.bankForm.get('branchAddressLine2').value,
-      //     address3: '',
-      //     pinCode: this.bankForm.get('branchPinCode').value,
-      //     city: this.bankForm.get('branchCity').value,
-      //     state: this.bankForm.get('branchState').value,
-      //     country: this.bankForm.get('branchCountry').value,
-      //     addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
+      //     address1: this.sendObj.bankDetailList[0].address.address1,
+      //     address2: this.sendObj.bankDetailList[0].address.address2,
+      //     address3: this.sendObj.bankDetailList[0].address.address3,
+      //     pinCode: this.sendObj.bankDetailList[0].address.pinCode,
+      //     city: this.sendObj.bankDetailList[0].address.city,
+      //     state: this.sendObj.bankDetailList[0].address.state,
+      //     country: this.sendObj.bankDetailList[0].address.country,
+      //     addressId: this.sendObj.bankDetailList[0].address.addressId,
       //   },
-      //   userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      //   userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
+      //   userId: (this.userData.userType == 2) ? this.userData.clientId : (this.userData.userType == 3) ? this.userData.familyMemberId : this.userData.clientId,
+      //   userType: this.userData.userType,
       //   minorAccountHolderName: (this.userData.id) ? '' : null,
       //   guardianAccountHolderName: (this.userData.id) ? '' : null,
-      //   holderNameList: holderList,
+      //   // holderNameList: holderList,
       //   userBankMappingId: (this.userData.bankData) ? this.userData.bankData.userBankMappingId : (this.bankList) ? this.bankList.userBankMappingId : null,
-      //   bankId: (this.userData.bankData) ? this.userData.bankData.bankId : (this.bankList) ? this.bankList.bankId : null,
+      //   bankId: this.sendObj.bankDetailList[0].bankId,
       //   addressId: (this.userData.bankData) ? this.userData.bankData.address.addressId : (this.bankList.address) ? this.bankList.address.addressId : null
       // };
+      // console.log('bank details', obj)
       // this.peopleService.addEditClientBankDetails(obj).subscribe(
       //   data => {
       //     console.log(data);

@@ -136,7 +136,7 @@
             </app-multiple-email-address>
             <!-- [userData]="basicDetailsData" -->
             <app-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
-                [isResidential]="invTaxStatus" [numberList]=" basicDetailsData.mobileList">
+                [isResidential]="invTaxStatus" [numberList]=" tempBasicData.mobileList">
             </app-add-number>
             <div class=" row">
                 <div class="col-md-4 d-flex align-items-center justify-content-end">
@@ -671,7 +671,7 @@
                 </div>
             </div>
             <app-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
-                [isResidential]="invTaxStatus" [numberList]="basicDetailsData.mobileList"></app-add-number>
+                [isResidential]="invTaxStatus" [numberList]="tempBasicData.mobileList"></app-add-number>
             <div class="row pt-14">
                 <div class="col-md-4 text-right full-end">
                     <h5 class="m-0">PAN</h5>
@@ -836,7 +836,7 @@
         </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='4'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
-            [isResidential]="invTaxStatus" [numberList]="basicDetailsData.mobileList"></app-add-number>
+            [isResidential]="invTaxStatus" [numberList]="tempBasicData.mobileList"></app-add-number>
 
         <div *ngIf="invTypeCategory=='4'" class="row pt-28">
             <div class="col-md-4 text-right full-end">
@@ -954,7 +954,7 @@
         </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='3'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
-            [isResidential]="invTaxStatus" [numberList]="basicDetailsData.mobileList"></app-add-number>
+            [isResidential]="invTaxStatus" [numberList]="tempBasicData.mobileList"></app-add-number>
 
         <div *ngIf="invTypeCategory=='3'" class="row pt-28">
             <div class="col-md-4 text-right full-end">

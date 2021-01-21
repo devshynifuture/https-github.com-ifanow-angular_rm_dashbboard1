@@ -32,6 +32,7 @@ export class AdviceUtilsService {
       }
     });
     console.log(count)
+    selectedIdList = [...new Map(selectedIdList.map(item => [item, item])).values()];
     return { selectedIdList, count };
 
   }
@@ -80,6 +81,7 @@ export class AdviceUtilsService {
       }
     });
     console.log(count)
+    selectedIdList = [...new Map(selectedIdList.map(item => [item, item])).values()];
     return { selectedIdList, count };
 
   }

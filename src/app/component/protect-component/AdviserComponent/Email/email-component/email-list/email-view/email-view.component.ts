@@ -1,21 +1,15 @@
-import {AuthService} from './../../../../../../../auth-service/authService';
-import {EventService} from './../../../../../../../Data-service/event.service';
-// import { EmailUtilService } from './../../../../../../../services/email-util.service';
-import {ComposeEmailComponent} from './../../compose-email/compose-email.component';
-// import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-// import { UtilService } from '../../../../../../../services/util.service';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {EmailServiceService} from '../../../email-service.service';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {EmailReplyComponent} from '../email-reply/email-reply.component';
-// import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
-import {Location} from '@angular/common';
-import {Subscription} from 'rxjs';
-import {EmailUtilService} from 'src/app/services/email-util.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { AuthService } from './../../../../../../../auth-service/authService';
+import { EventService } from './../../../../../../../Data-service/event.service';
+import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 
-// import { DomSanitizer } from '@angular/platform-browser';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { EmailServiceService } from '../../../email-service.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { EmailReplyComponent } from '../email-reply/email-reply.component';
+import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { EmailUtilService } from 'src/app/services/email-util.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-view',
@@ -52,11 +46,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   isLoadingForAttachment: boolean;
 
   constructor(private emailService: EmailServiceService,
-              private _bottomSheet: MatBottomSheet,
-              private location: Location,
-              private eventService: EventService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) {
+    private _bottomSheet: MatBottomSheet,
+    private location: Location,
+    private eventService: EventService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -83,11 +77,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         console.log("detailed message::", response);
         // gmail api explorer based integration
-        const {id} = response;
+        const { id } = response;
         this.messageId = id;
 
-        const {payload: {headers}} = response;
-        const {payload: {parts}} = response;
+        const { payload: { headers } } = response;
+        const { payload: { parts } } = response;
         if (response.payload.body !== null) {
           if (response.payload.mimeType === 'text/html') {
             this.decodedPartsDetail.push({
@@ -104,11 +98,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                           item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
                         })
                       }
-                      //  else if (multiPartAlternativeElement.mimeType === 'text/plain') {
-                      //   this.decodedPartsDetail.push({
-                      //     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
-                      //   })
-                      // }
                     });
                   }
                 } else if (multiPartElement.mimeType === 'text/html') {
@@ -116,11 +105,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartElement.body.data),
                   })
                 }
-                //  else if (multiPartElement.mimeType === 'text/plain') {
-                //   this.decodedPartsDetail.push({
-                //     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartElement.body.data),
-                //   })
-                // }
               });
             }
           } else if (response.payload.mimeType === 'multipart/alternative') {
@@ -132,17 +116,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
                   })
                 }
-                //  else if (multiPartAlternativeElement.mimeType === 'text/plain') {
-                //   this.decodedPartsDetail.push({
-                //     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
-                //   })
-                // }
               });
             }
           } else {
             if (response.payload.hasOwnProperty('parts') && response.payload.parts.length !== 0) {
               response.payload.parts.forEach(part => {
-                const {parts} = part;
+                const { parts } = part;
                 if (part.body.data !== null) {
                   this.decodedPartsDetail.push({
                     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -150,7 +129,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                 }
                 if (part.parts && part.parts.length !== 0) {
                   parts.forEach(part => {
-                    const {parts} = part;
+                    const { parts } = part;
                     if (part.body.data !== null) {
                       this.decodedPartsDetail.push({
                         item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -158,7 +137,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                     }
                     if (part.parts && part.parts.length !== 0) {
                       parts.forEach(part => {
-                        const {parts} = part;
+                        const { parts } = part;
                         if (part.body.data !== null) {
                           this.decodedPartsDetail.push({
                             item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -240,7 +219,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
       window.navigator.msSaveOrOpenBlob(blobData, part.filename);
     } else { // chrome
-      const blob = new Blob([blobData], {type: part.mimeType});
+      const blob = new Blob([blobData], { type: part.mimeType });
       const url = window.URL.createObjectURL(blob);
       // window.open(url);
 
@@ -264,7 +243,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
       console.log("this is what im getting from listing:::", this.emailObj);
       if (!this.emailObj) {
         this.eventService.openSnackBar("No email data !", "Dismiss");
-        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
       }
       if (this.emailObj) {
 
@@ -272,49 +251,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           this.emailObj.idsOfMessages.forEach((element, index) => {
             const id = element;
             this.getGmailDetailMessageRaw(id);
-            //       part.body.data = res;
           });
-          // thread.messages.forEach((message) => {
-          // const id = thread.id;
-          // if (message.payload.parts !== null) {
-          //   const newParts = message.payload.parts.map((part)=>{
-          //     if(part.body.data === null){
-          //       const res = this.getGmailDetailMessageRaw(id);
-          //       part.body.data = res;
-          //     }
-          //     return part
-          //   });
-          //   message.payload.parts = newParts;
-          // }
-
-          // if (message.payload.parts !== null){
-          //   const newParts = message.payload.parts.map((part) => {
-          //     if (part.body.data == null) {
-          //       // get message object;
-          //       this.emailService.gmailMessageDetail(id)
-          //         .subscribe((response) => {
-          //           const raw = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.raw);
-          //           if(raw !== null){
-          //             part.body.data = raw;
-          //           }
-          //         });
-          //     }
-          //     return part;
-          //   });
-          //   message.payload.parts = newParts;
-          // }
-          // });
         }
-        let {parsedData: {headers}} = this.emailObj;
+        let { parsedData: { headers } } = this.emailObj;
 
-        let {messageHeaders} = this.emailObj;
+        let { messageHeaders } = this.emailObj;
         this.messagesHeaders = messageHeaders;
-
-        // if (this.messagesHeaders.length !== 0) {
-        //   this.messagesHeaders.forEach(item => {
-
-        //   });
-        // }
 
         let subject = headers.filter((header) => {
           return header.name === 'Subject';
@@ -324,10 +266,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           return header.name === 'From';
         })
 
-        let {parsedData: {decodedPart}} = this.emailObj;
+        let { parsedData: { decodedPart } } = this.emailObj;
         this.decodedPart = decodedPart;
 
-        let {messageDates} = this.emailObj;
+        let { messageDates } = this.emailObj;
 
         let extractHtmlValue;
         if (decodedPart.length > 2) {
@@ -343,7 +285,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         }
 
         extractHtmlValue = extractHtmlValue.map((item, index) => {
-          return {item, date: messageDates[index]}
+          return { item, date: messageDates[index] }
         })
 
         this.body = extractHtmlValue;
@@ -365,9 +307,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     // id param to work on
     const messageToTrashSubscription = this.emailService.moveMessageToTrashFromView()
       .subscribe(response => {
-          messageToTrashSubscription.unsubscribe();
-        },
+        messageToTrashSubscription.unsubscribe();
+      },
         error => {
+          console.error(error);
+          this.eventService.openSnackBar("Something went wrong", "DISMISS");
         })
   }
 
@@ -375,9 +319,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     // need to pass ids
     const messageFromTrashSubscription = this.emailService.moveMessagesFromTrashToList()
       .subscribe(response => {
-          messageFromTrashSubscription.unsubscribe();
-        },
+        messageFromTrashSubscription.unsubscribe();
+      },
         error => {
+          console.error(error);
+          this.eventService.openSnackBar("Something Went wrong", "DISMISS");
         });
   }
 
@@ -386,6 +332,8 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     const deleteMessageSubscription = this.emailService.deleteMessageFromView().subscribe(response => {
       deleteMessageSubscription.unsubscribe();
     }, error => {
+      console.error(error);
+      this.eventService.openSnackBar("Something Went wrong", "DISMISS");
     });
   }
 
@@ -396,10 +344,6 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   openEmailAddTask(data) {
     this.emailService.openEmailAddTask(data, ComposeEmailComponent);
   }
-
-  // openComposeEmail(data) {
-  //   this.emailService.openComposeEmail(data, ComposeEmailComponent, );
-  // }
 
   goBack() {
     this.location.back();

@@ -27,7 +27,7 @@ export class RoleGuard implements CanActivate {
       return true;
     }
     else {
-      this.router.navigate(['unauthorized']);
+      this.router.navigate(['/admin/restricted']);
       return false;
     }
   }

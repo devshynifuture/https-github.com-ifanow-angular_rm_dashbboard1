@@ -600,7 +600,8 @@ export class AdviceGeneralInsuranceComponent implements OnInit {
       this.selectedAssetId.splice(this.selectedAssetId.indexOf(selectedData.adviceDetails), 1)
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
-    this.getFlagCount(tableFlag, countValue)
+    this.getFlagCount(tableFlag, countValue);
+    this.selectedAssetId = [...new Map(this.selectedAssetId.map(item => [item, item])).values()];
     console.log(this.selectedAssetId)
   }
   getFlagCount(flag, count) {
