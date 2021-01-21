@@ -1099,7 +1099,7 @@ export class LifeInsuranceComponent implements OnInit {
     console.log('getDetailsInsuranceRes res', data)
     if (data) {
       this.insuranceDetails = data
-      this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>|&nbsp;)/ig, '') : '-';
+      this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>|&nbsp;)/ig, '') : null;
       if (!this.insuranceDetails.graph) {
         if (this.plannerObj.additionalLifeIns) {
           this.insuranceDetails.graph = Math.round((this.insuranceDetails.actual / this.plannerObj.additionalLifeIns) * 100);
