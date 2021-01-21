@@ -14,8 +14,8 @@
       <a [routerLink]="['/customer/detail/plan/profile']" *ngIf="roleService.planPermission.subModule.profile.enabled"
         mat-tab-link routerLinkActive="active">PROFILE</a>
       <a [routerLink]="['/customer/detail/plan/insurance']"
-        *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY && roleService.planPermission.subModule.insurance.enabled"
-        class="width110" mat-tab-link routerLinkActive="active">INSURANCE</a>
+        *ngIf="roleService.planPermission.subModule.insurance.enabled" class="width110" mat-tab-link
+        routerLinkActive="active">INSURANCE</a>
       <a [routerLink]="['/customer/detail/plan/goals']" *ngIf="roleService.planPermission.subModule.goals.enabled"
         class="width70" mat-tab-link routerLinkActive="active">GOALS</a>
       <a [routerLink]="['/customer/detail/plan/taxes']"
