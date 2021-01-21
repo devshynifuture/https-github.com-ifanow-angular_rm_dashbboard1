@@ -29,7 +29,7 @@ export class MultipleEmailAddressComponent implements OnInit {
   @Input() fieldFlag;
 
   @Output() emailFireEvent = new EventEmitter();
-
+  @Output() deletedEmailFireEvent = new EventEmitter();
   @Input() set emailList(data) {
     this.validatorType = ValidatorType
     this.emailFormGroup = this.fb.group({
@@ -112,6 +112,10 @@ export class MultipleEmailAddressComponent implements OnInit {
     }
     this.peopleService.deleteEmail(obj).subscribe(
       res => {
+        this.emailFormGroup.value.emailList[index].defaultFlag = this.emailFormGroup.value.emailList[index].markAsPrimary
+        this.emailFormGroup.value.emailList[index].isUpdate = 1
+        this.emailFormGroup.value.emailList[index].isActive = 0
+        this.deletedEmailFireEvent.emit(this.emailFormGroup.value.emailList[index]);
         this.cancelFlagService.setCancelFlag(true);
         (this.emailFormGroup.controls.emailList.length == 1) ? '' : this.emailFormGroup.controls.emailList.removeAt(index);
         this.eventService.openSnackBar("Email deleted sucessfully!", "Dismiss")

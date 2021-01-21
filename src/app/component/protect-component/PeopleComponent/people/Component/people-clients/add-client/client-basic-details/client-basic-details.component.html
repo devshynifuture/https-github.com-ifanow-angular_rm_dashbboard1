@@ -132,7 +132,8 @@
                 </div>
             </div> -->
             <app-multiple-email-address (emailFireEvent)="getEmailDetails($event)"
-                [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+                (deletedEmailFireEvent)="getdeletedEmailRes($event)" [emailList]="basicDetailsData.emailList"
+                [fieldFlag]="fieldFlag">
             </app-multiple-email-address>
             <!-- [userData]="basicDetailsData" -->
             <app-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
@@ -831,8 +832,8 @@
             </div>
         </div> -->
 
-        <app-multiple-email-address *ngIf="invTypeCategory=='4'" (emailFireEvent)="getEmailDetails($event)"
-            [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+        <app-multiple-email-address *ngIf="invTypeCategory=='4'" (deletedEmailFireEvent)="getdeletedEmailRes($event)"
+            (emailFireEvent)="getEmailDetails($event)" [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
         </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='4'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
@@ -949,8 +950,8 @@
             </div>
         </div> -->
 
-        <app-multiple-email-address *ngIf="invTypeCategory=='3'" (emailFireEvent)="getEmailDetails($event)"
-            [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+        <app-multiple-email-address *ngIf="invTypeCategory=='3'" (deletedEmailFireEvent)="getdeletedEmailRes($event)"
+            (emailFireEvent)="getEmailDetails($event)" [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
         </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='3'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
