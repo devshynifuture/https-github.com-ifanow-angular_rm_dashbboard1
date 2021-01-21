@@ -203,6 +203,9 @@ export class ContactDetailsInnComponent implements OnInit {
     if (!address) {
       address = {};
     } else {
+      data.address.address1 = UtilService.removeSpecialCharactersFromString(data.address.address1);
+      data.address.address2 = UtilService.removeSpecialCharactersFromString(data.address.address2);;
+      data.address.address3 = UtilService.removeSpecialCharactersFromString(data.address.address3);;
       const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address.address1, data.address.address2, data.address.address3);
       data.address.address1 = firstLine;
       data.address.address2 = secondLine;
@@ -241,8 +244,8 @@ export class ContactDetailsInnComponent implements OnInit {
           return;
         }
         const { firstLine, secondLine } = UtilService.formatGoogleGeneratedAddress(place.formatted_address);
-        this.contactDetails.get('address2').setValue(firstLine);
-        this.contactDetails.get('address3').setValue(secondLine);
+        this.contactDetails.get('address2').setValue(UtilService.removeSpecialCharactersFromString(firstLine));
+        this.contactDetails.get('address3').setValue(UtilService.removeSpecialCharactersFromString(secondLine));
         this.getPincode(place.formatted_address);
       });
     });
@@ -402,9 +405,9 @@ export class ContactDetailsInnComponent implements OnInit {
     };
     if (formId == 'overseas') {
       holder.foreignAddress = {
-        address1: formValue.address1,
-        address2: formValue.address2,
-        address3: formValue.address3,
+        address1: UtilService.removeSpecialCharactersFromString(formValue.address1),
+        address2: UtilService.removeSpecialCharactersFromString(formValue.address2),
+        address3: UtilService.removeSpecialCharactersFromString(formValue.address3),
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,
@@ -414,9 +417,9 @@ export class ContactDetailsInnComponent implements OnInit {
     } else if (formId == 'first') {
       holder.address = {
 
-        address1: formValue.address1,
-        address2: formValue.address2,
-        address3: formValue.address3,
+        address1: UtilService.removeSpecialCharactersFromString(formValue.address1),
+        address2: UtilService.removeSpecialCharactersFromString(formValue.address2),
+        address3: UtilService.removeSpecialCharactersFromString(formValue.address3),
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,

@@ -582,7 +582,7 @@
                         <div class="col-md-11 p-0">
                             Planner notes
                         </div>
-                        <div class="mt-16">
+                        <div class="mt-16" *ngIf="storeDataNeed != ''">
                             <app-froala (modelChange)="saveDataNeed($event)" [(model)]="storeDataNeed"></app-froala>
                         </div>
                     </div>
@@ -601,10 +601,10 @@
                 <div *ngIf="isLodingNeedAnalysis" class="d-flex flex-column align-items-center bg-white pt-20">Loading data...</div>
             </div> -->
             <div *ngIf="isLodingNeedAnalysis" class="bg-white p-20">
-                    <div class="col-md-12 d-flex justify-content-center align-items-center text-center h-80vh">
-                        <div class="pl-28 pr-28 text-center">Loading data...</div>
-                    </div>
+                <div class="col-md-12 d-flex justify-content-center align-items-center text-center h-80vh">
+                    <div class="pl-28 pr-28 text-center">Loading data...</div>
                 </div>
+            </div>
         </mat-tab>
 
         <mat-tab class="f-14 f-500 roboto" label="Manual">
@@ -634,7 +634,7 @@
                         <div class="col-md-11 p-0">
                             Planner notes
                         </div>
-                        <div class="mt-16">
+                        <div class="mt-16" *ngIf="storeData != ''">
                             <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
                         </div>
                     </div>

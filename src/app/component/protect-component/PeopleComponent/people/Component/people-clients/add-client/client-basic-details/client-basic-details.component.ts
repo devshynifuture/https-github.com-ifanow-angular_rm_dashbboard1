@@ -675,6 +675,9 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         obj.martialStatusId = this.basicDetailsData.martialStatusId;
         // obj['taxStatusId'] = taxStatusId;
         obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
+        if (this.basicDetailsData.userName != obj.username) {
+          obj['updateUserName'] = true;
+        }
         // (this.invTypeCategory == '2') ? '' : obj.occupationId = this.basicDetailsData.occupationId;
         this.peopleService.editClient(obj).subscribe(
           data => {
