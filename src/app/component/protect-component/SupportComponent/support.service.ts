@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { appConfig } from './../../../config/component-config';
@@ -10,7 +11,9 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 })
 export class SupportService {
 
-  constructor(private http: HttpService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private http: HttpService) { }
 
   private subject = new BehaviorSubject<any>('');
 
@@ -175,5 +178,16 @@ export class SupportService {
 
   deactivateAccount(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DEACTIVATE_ACCOUNT, data);
+  }
+
+  getFileUrlForSendy(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.RM_DASHBOARD_MISC_SENDY_FILE_URL_GET, data)
+  }
+
+  putUploadSendyExcelFile(url, data) {
+    return this.httpClient.put(url, data);
+  }
+  postSendyDataAfterFileUpload(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.RM_DASHBOARD_POST_AFTER_SENDY_FILE_UPLOAD, data);
   }
 }

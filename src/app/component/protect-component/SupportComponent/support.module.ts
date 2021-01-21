@@ -17,6 +17,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { SupportManagementComponent } from './support-management/support-management.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { SendyExcelComponent } from './sendy-excel/sendy-excel.component';
 
 @NgModule({
   declarations: [
@@ -27,11 +28,12 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     SupportMiscellaneousComponent,
     SchemeMappingComponent,
     SupportManagementComponent,
+    SendyExcelComponent,
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
     SupportRoutingModule,
     MaterialModule,
     ScrollDispatchModule,

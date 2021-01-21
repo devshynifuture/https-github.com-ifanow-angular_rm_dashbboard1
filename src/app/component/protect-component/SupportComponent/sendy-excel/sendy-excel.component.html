@@ -1,0 +1,49 @@
+<div id="ui-subscriptions">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="m-0 pt-20"> Sendy excel file</h3>
+    </div>
+  </div>
+  <div class="row pt-120" *ngIf="!isMainLoading">
+    <div class="col-md-5">
+      <h4>
+        Template for excel:
+      </h4>
+      <p>
+        <img class="w-550" src="/assets/images/sendy-file.png" alt="no image">
+      </p>
+      <a download href="/assets/files/sendyEmailSubscribe.xlsx">
+        Download
+      </a>
+    </div>
+    <div class="col-md-5" [formGroup]="sendyForm">
+      <div class="form-group">
+        <mat-label>
+          List Id
+        </mat-label>
+        <mat-form-field appearance="standard" floatLabel="never">
+          <input type="text" class="form-control br" matInput formControlName="listId">
+          <mat-error>
+            This field is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <h4 class="header mt-36">
+        Select your file
+      </h4>
+      <div>
+        <input type="file" class="d-none" #file (change)="onFileSelected($event)" formControlName="file"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+        <mat-error *ngIf="sendyForm.get('file').touched && sendyForm.get('file').errors">
+          This field is required
+        </mat-error>
+      </div>
+      <button (click)="file.click()">
+        Select Excel file
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isMainLoading">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div>
+</div>
