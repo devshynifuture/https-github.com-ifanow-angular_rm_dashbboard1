@@ -111,6 +111,8 @@ export class AddPlaninsuranceComponent implements OnInit {
   showErrorExpectancy = false;
   storeDataNeed = ''
   plannerNotesNeed: any;
+  plannerManual: any;
+  plannerNeedData: any;
   constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
     private planService: PlanService, private constantService: ConstantsService, private peopleService: PeopleService) {
@@ -281,10 +283,19 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
   saveData(data) {
     this.plannerNotes = data;
-
+    this.plannerManual = this.plannerNotesNeed;
+    this.plannerManual = this.plannerManual ? this.plannerManual.replace(/(<([^>]+)>|&nbsp;)/ig, '') : '-';
+    if (this.plannerManual.length > 2000) {
+      this.eventService.openSnackBar('Do not write planner note more than 2000 character', 'Dismiss')
+    }
   }
   saveDataNeed(data) {
     this.plannerNotesNeed = data;
+    this.plannerNeedData = this.plannerNotesNeed;
+    this.plannerNeedData = this.plannerNeedData ? this.plannerNeedData.replace(/(<([^>]+)>|&nbsp;)/ig, '') : '-';
+    if (this.plannerNeedData.length > 2000) {
+      this.eventService.openSnackBar('Do not write planner note more than 2000 character', 'Dismiss')
+    }
   }
   getListFamilyMem() {
 
@@ -523,14 +534,14 @@ export class AddPlaninsuranceComponent implements OnInit {
     data.forEach(element => {
       if (element.needTypeId == 2) {
         this.getdataForm(element);
-        this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
+        this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>|&nbsp;)/ig, '') : '-';
         this.plannerNotes = element.plannerNotes ? element.plannerNotes : '';
         this.manualObj = element
 
       } else {
         this.needBase = element
         this.getdataForm(element);
-        // this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
+        // this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>|&nbsp;)/ig, '') : '-';
         this.storeDataNeed = element.plannerNotes ? element.plannerNotes : '';
         this.plannerNotesNeed = element.plannerNotes ? element.plannerNotes : '';
       }
@@ -611,35 +622,39 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
   saveAnalysis() {
     if (this.tab == 0) {
-      if (this.showError || this.showErrorRetirement || this.showErrorExpectancy || this.expectancy.invalid || this.mainDependent.invalid || this.retirementAgeControl.invalid) {
-        this.expectancy.markAllAsTouched();
-        this.mainDependent.markAllAsTouched();
-        this.retirementAgeControl.markAllAsTouched();
+      if (this.plannerManual > 20000 || this.plannerNeedData.length > 2000) {
+        this.eventService.openSnackBar('Do not write planner note more than 2000 character', 'Dismiss')
       } else {
-        this.barButtonOptions3.active = true;
-        let needBasedAnalysis = this.getNeedBasedObj();
-        this.sendObj = {
-          lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
-          needTypeId: 1,
-          id: this.needBase ? this.needBase.id : 0,
-          adviceAmount: null,
-          // adviceAmount: this.needBase ? this.needBase.adviceAmount : null,
-          // plannerNotes: this.needBase ? (this.needBase.plannerNotes ? this.needBase.plannerNotes : this.plannerNotesNeed) : this.plannerNotesNeed,
-          plannerNotes: this.plannerNotesNeed,
-          needBasedObject: needBasedAnalysis,
-          mainDependentId: this.familyMemberId,
-          lifeExpectency: parseInt(this.expectancy.value),
-          retirementAge: parseInt(this.retirementAgeControl.value),
-          isClient: (parseInt(this.familyMemberId) == this.clientId) ? true : false,
-          inflationAdjustedRate: this.inflationAdjustedRate
-        }
-        this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
-          data => this.saveLifeInsuranceAnalysisRes(data),
-          err => {
-            this.barButtonOptions3.active = false;
-            this.eventService.openSnackBar(err, 'Dismiss');
+        if (this.showError || this.showErrorRetirement || this.showErrorExpectancy || this.expectancy.invalid || this.mainDependent.invalid || this.retirementAgeControl.invalid) {
+          this.expectancy.markAllAsTouched();
+          this.mainDependent.markAllAsTouched();
+          this.retirementAgeControl.markAllAsTouched();
+        } else {
+          this.barButtonOptions3.active = true;
+          let needBasedAnalysis = this.getNeedBasedObj();
+          this.sendObj = {
+            lifeInsurancePlanningId: this.needBase ? this.needBase.lifeInsurancePlanningId : this.insuranceData.id,
+            needTypeId: 1,
+            id: this.needBase ? this.needBase.id : 0,
+            adviceAmount: null,
+            // adviceAmount: this.needBase ? this.needBase.adviceAmount : null,
+            // plannerNotes: this.needBase ? (this.needBase.plannerNotes ? this.needBase.plannerNotes : this.plannerNotesNeed) : this.plannerNotesNeed,
+            plannerNotes: this.plannerNotesNeed,
+            needBasedObject: needBasedAnalysis,
+            mainDependentId: this.familyMemberId,
+            lifeExpectency: parseInt(this.expectancy.value),
+            retirementAge: parseInt(this.retirementAgeControl.value),
+            isClient: (parseInt(this.familyMemberId) == this.clientId) ? true : false,
+            inflationAdjustedRate: this.inflationAdjustedRate
           }
-        );
+          this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
+            data => this.saveLifeInsuranceAnalysisRes(data),
+            error => {
+              this.barButtonOptions3.active = false;
+              this.eventService.openSnackBar(error, 'Dismiss');
+            }
+          );
+        }
       }
     } else {
       if (this.manualForm.invalid) {
@@ -655,9 +670,9 @@ export class AddPlaninsuranceComponent implements OnInit {
         }
         this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
           data => this.saveLifeInsuranceAnalysisRes(data),
-          err => {
+          error => {
             this.barButtonOptions3.active = false;
-            this.eventService.openSnackBar(err, 'Dismiss');
+            this.eventService.openSnackBar(error, 'Dismiss');
           }
         );
       }

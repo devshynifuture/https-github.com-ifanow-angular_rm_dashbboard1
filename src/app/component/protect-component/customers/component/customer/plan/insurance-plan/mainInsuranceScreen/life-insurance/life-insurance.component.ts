@@ -1099,7 +1099,7 @@ export class LifeInsuranceComponent implements OnInit {
     console.log('getDetailsInsuranceRes res', data)
     if (data) {
       this.insuranceDetails = data
-      this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
+      this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>|&nbsp;)/ig, '') : '-';
       if (!this.insuranceDetails.graph) {
         if (this.plannerObj.additionalLifeIns) {
           this.insuranceDetails.graph = Math.round((this.insuranceDetails.actual / this.plannerObj.additionalLifeIns) * 100);
@@ -1172,7 +1172,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.clicked = true;
     // ele.expanded = true;
     array.filter(element => {
-      element.insurance.suggestion = element.insurance.suggestion ? element.insurance.suggestion.replace(/(<([^>]+)>)/ig, '') : null;
+      element.insurance.suggestion = element.insurance.suggestion ? element.insurance.suggestion.replace(/(<([^>]+)>|&nbsp;)/ig, '') : null;
       if (element.insurance.id == ele.insurance.id && ele.expanded == true) {
         element.expanded = false;
       } else if (element.insurance.id != ele.insurance.id) {
