@@ -30,6 +30,7 @@ import { SummaryPlanServiceService } from '../../../summary-plan/summary-plan-se
 import { catchError } from 'rxjs/operators';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { OtherInsuranceInsurancePlanningComponent } from '../other-insurance-insurance-planning/other-insurance-insurance-planning.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-life-insurance',
@@ -212,6 +213,7 @@ export class LifeInsuranceComponent implements OnInit {
   type: any;
   clickedRecommend = false;
   recommendationsId: any;
+  notes: any;
 
 
   constructor(private subInjectService: SubscriptionInject,
@@ -225,7 +227,8 @@ export class LifeInsuranceComponent implements OnInit {
     private ref: ChangeDetectorRef,
     private activityService: ActiityService,
     private summaryPlanService: SummaryPlanServiceService,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private sanitizer: DomSanitizer
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -574,6 +577,13 @@ export class LifeInsuranceComponent implements OnInit {
         }
       );
     }
+  }
+  innerHtmlText(text) {
+    let htmlText;
+    if (text) {
+      htmlText = this.sanitizer.bypassSecurityTrustHtml(text);
+    }
+    return htmlText;
   }
   checkAndPushRecommendationData(array, id) {
     let singleData = this.storedData.filter(d => d.id == this.inputData.id);
@@ -1099,7 +1109,7 @@ export class LifeInsuranceComponent implements OnInit {
     console.log('getDetailsInsuranceRes res', data)
     if (data) {
       this.insuranceDetails = data
-      this.insuranceDetails.needAnalysis.plannerNotes = this.insuranceDetails.needAnalysis.plannerNotes ? this.insuranceDetails.needAnalysis.plannerNotes.replace(/(<([^>]+)>|&nbsp;)/ig, '') : null;
+      this.notes = this.insuranceDetails.needAnalysis.plannerNotes ? this.innerHtmlText(this.insuranceDetails.needAnalysis.plannerNotes) : null;
       if (!this.insuranceDetails.graph) {
         if (this.plannerObj.additionalLifeIns) {
           this.insuranceDetails.graph = Math.round((this.insuranceDetails.actual / this.plannerObj.additionalLifeIns) * 100);
