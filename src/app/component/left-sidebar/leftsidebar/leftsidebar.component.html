@@ -31,8 +31,7 @@
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
 
-          <a class="sidenav-link" *ngIf="roleService.dashboardPermission.enabled" routerLinkActive="bg-grey lter"
-            mat-list-item routerLink="/admin/dashboard">
+          <a class="sidenav-link" (click)="goToDashBoard()" routerLinkActive="bg-grey lter" mat-list-item>
             <img src="assets/images/svg/time-meter.svg">
             <span *ngIf="showTabs" class="title" mat-line>Dashboard</span>
           </a>

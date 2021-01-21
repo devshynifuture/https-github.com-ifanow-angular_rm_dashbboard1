@@ -288,6 +288,14 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     );
   }
 
+  goToDashBoard() {
+    if (this.roleService.dashboardPermission.enabled) {
+      this.router.navigate(['/admin/dashboard']);
+    } else {
+      this.router.navigate(['/admin/restricted']);
+    }
+  }
+
   searchClientFamilyMember(value) {
     if (value.length <= 2) {
       this.showDefaultDropDownOnSearch = false;
