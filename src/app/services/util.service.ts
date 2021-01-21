@@ -13,6 +13,7 @@ import { quotationTemplate } from './quotationTemplate';
 import { debounceTime } from 'rxjs/operators';
 import { AppConstants } from './app-constants';
 import { apiConfig } from '../config/main-config';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root',
@@ -836,6 +837,62 @@ export class UtilService {
     }
     // secondLine = secondLine.substr(secondLine.indexOf(' '), 79)
   };
+
+  static checkEmailListUpdation(originalEmailList, editedEmailList) {
+    originalEmailList.forEach(singleEmail => {
+      editedEmailList.forEach(secondEmail => {
+
+      });
+    })
+    return originalEmailList;
+  }
+
+  static checkMobileListUpdation(originalMobileList, editedMobileList) {
+    let mobileListJson = []
+    if (originalMobileList.length == 0) {
+      mobileListJson = editedMobileList.value;
+    } else {
+      originalMobileList.forEach(singleMobile => {
+        editedMobileList.value.forEach(secondMobile => {
+          if (singleMobile.id == secondMobile.id && singleMobile.mobileNo != secondMobile.number) {
+            singleMobile['isUpdate'] = 1;
+            singleMobile['isActive'] = 1;
+            singleMobile['mobileNo'] = secondMobile.number;
+            singleMobile['isdCodeId'] = secondMobile.code
+            mobileListJson.push(singleMobile);
+          } else if (secondMobile.id == undefined) {
+            singleMobile['defaultFlag'] = true;
+            mobileListJson.push({
+              mobileNo: secondMobile.number,
+              isdCodeId: secondMobile.code,
+              defaultFlag: true,
+              userId: singleMobile.userId
+            });
+          }
+          else if ((singleMobile.id == secondMobile.id && singleMobile.mobileNo == secondMobile.number)) {
+            mobileListJson.push(singleMobile);
+          }
+          else if (editedMobileList.value.some(element => element.id != singleMobile.id)) {
+            mobileListJson.push({
+              mobileNo: secondMobile.number,
+              isdCodeId: secondMobile.code,
+              defaultFlag: true,
+              userId: singleMobile.userId,
+              isUpdate: 1,
+              isActive: 0
+            });
+            mobileListJson[0].defaultFlag = true;
+          }
+        });
+      })
+    }
+    mobileListJson = UtilService.getUniqueListBy(mobileListJson, 'id')
+    return mobileListJson;
+  }
+
+  static getUniqueListBy(arr, key) {
+    return [...new Map(arr.map(item => [item[key], item])).values()];
+  }
 
   isEmptyObj(obj) {
     for (const key in obj) {
