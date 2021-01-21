@@ -39,8 +39,8 @@ export class AddBudgetComponent implements OnInit {
 
     if (this.isViewInitCalled) {
       if (this.isViewInitCalled) {
-          this.getdataFormRec(data)
-          this.getdataForm(data);
+        this.getdataFormRec(data)
+        this.getdataForm(data);
       }
     }
   }
@@ -73,23 +73,23 @@ export class AddBudgetComponent implements OnInit {
   getdataFormRec(data) {
     if (data == undefined) {
       data = {};
-    }else{
+    } else {
       this.isRecuring = data.isRecuring
     }
     this.recuring = this.fb.group({
       timeInMilliSec: [(data == undefined) ? '' : data.timeInMilliSec, [Validators.required]],
       expenseDoneOn: [(data == undefined) ? '' : new Date(data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency: [(data == undefined) ? '' : data.repeatFrequency+'', [Validators.required]],
+      repeatFrequency: [(data == undefined) ? '' : data.repeatFrequency + '', [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date(data.startsFrom), [Validators.required]],
       continuesDate: [(data == undefined) ? '' : new Date(data.continuesDate), [Validators.required]],
-      continueTill: [(data == undefined) ? '' : (data.continueTill)+'', [Validators.required]],
+      continueTill: [(data == undefined) ? '' : (data.continueTill) + '', [Validators.required]],
       description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      numberOfYearOrNumberOfTime:[(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
+      numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       category: [(data == undefined) ? '' : data.expenseCategoryId, [Validators.required]],
       familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
-      paymentModeId: [(data == undefined) ? '' : data.paymentModeId+'', [Validators.required]],
+      paymentModeId: [(data == undefined) ? '' : data.paymentModeId + ''],
       isRecuring: true
     });
     this.expenseList = this.constantService.expenseList
@@ -100,7 +100,7 @@ export class AddBudgetComponent implements OnInit {
   getdataForm(data) {
     if (data == undefined) {
       data = {}
-    }else{
+    } else {
       this.isRecuring = data.isRecuring
     }
     this.budget = this.fb.group({
@@ -111,7 +111,7 @@ export class AddBudgetComponent implements OnInit {
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       category: [(data == undefined) ? '' : data.BudgetCategoryId, [Validators.required]],
       familyMember: [(data == undefined) ? '' : data.familyMember, [Validators.required]],
-      paymentModeId: [(data == undefined) ? '' : data.paymentModeId+'', [Validators.required]],
+      paymentModeId: [(data == undefined) ? '' : data.paymentModeId + ''],
       isRecuring: false
     });
     this.expenseList = this.constantService.expenseList
@@ -155,12 +155,12 @@ export class AddBudgetComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
-        repeatFrequency:this.recuring.controls.repeatFrequency.value,
+        repeatFrequency: this.recuring.controls.repeatFrequency.value,
         amount: this.recuring.controls.amount.value,
-        paymentModeId:this.recuring.controls.paymentModeId.value,
-        startsFrom:this.recuring.controls.startsFrom.value,
-        continueTill:parseInt(this.recuring.controls.continueTill.value),
-        numberOfYearOrNumberOfTime:(this.recuring.controls.numberOfYearOrNumberOfTime.value == undefined)?null:this.recuring.controls.numberOfYearOrNumberOfTime.value,
+        paymentModeId: this.recuring.controls.paymentModeId.value ? this.recuring.controls.paymentModeId.value : null,
+        startsFrom: this.recuring.controls.startsFrom.value,
+        continueTill: parseInt(this.recuring.controls.continueTill.value),
+        numberOfYearOrNumberOfTime: (this.recuring.controls.numberOfYearOrNumberOfTime.value == undefined) ? null : this.recuring.controls.numberOfYearOrNumberOfTime.value,
         expenseCategoryId: this.recuring.controls.category.value,
       }
       if (this.recuring.controls.id.value == undefined) {
@@ -204,7 +204,7 @@ export class AddBudgetComponent implements OnInit {
         startsFrom: this.budget.controls.expenseDoneOn.value,
         amount: this.budget.controls.amount.value,
         time: this.budget.controls.timeInMilliSec.value,
-        paymentModeId: this.budget.controls.paymentModeId.value,
+        paymentModeId: this.budget.controls.paymentModeId.value ? this.budget.controls.paymentModeId.value : null,
         BudgetCategoryId: this.budget.controls.category.value,
         description: this.budget.controls.description.value,
         id: this.budget.controls.id.value

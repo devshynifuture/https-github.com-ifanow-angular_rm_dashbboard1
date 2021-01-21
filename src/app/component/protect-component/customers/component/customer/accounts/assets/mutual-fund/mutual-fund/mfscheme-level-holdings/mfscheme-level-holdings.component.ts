@@ -66,6 +66,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   selectedTransactionType: any;
   maximumDate: any;
   errorMsgForScheme: boolean;
+  storedVal: any;
 
   constructor(
     public subInjectService: SubscriptionInject,
@@ -182,11 +183,15 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   getFilteredSchemesList(value) {
     if (value !== '' && (typeof value === 'string')) {
       if (value.length > 2) {
-        return this.customerService.getSchemeNameList({ schemeName: value })
+        if (this.storedVal != value) {
+          this.storedVal = value;
+          return this.customerService.getSchemeNameList({ schemeName: value })
+        }
       }
-    } else if (typeof (value) === 'object') {
-      return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
     }
+    // else if (typeof (value) === 'object') {
+    //   return this.customerService.getSchemeNameList({ schemeName: value.schemeName })
+    // }
   }
 
   mapSchemeWithForm(scheme) {
@@ -226,7 +231,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
       this.schemeLevelHoldingForm.get('folioNumber').setValue(this.data.folioNumber);
-      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmountInt) ? this.data.sipAmountInt : 0);
+      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmountInt) ? this.data.sipAmountInt : (this.data.sipAmount) ? this.data.sipAmount : 0);
       this.schemeLevelHoldingForm.get('tag').setValue(this.data.tag);
       this.schemeNameControl.patchValue(this.data.schemeName);
     } else {
@@ -312,16 +317,15 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           }))
           this.transactionArray.controls
         });
-        if (data.rtMasterId != 14) {
-          let trnList = this.transactionList.transactionListArray as FormArray;
-          trnList.controls.forEach(element => {
+        let trnList = this.transactionList.transactionListArray as FormArray;
+        trnList.controls.forEach(element => {
+          if (element.get('rtTypeId').value != 14) {
             element.get('transactionType').disable();
             element.get('date').disable()
             element.get('transactionAmount').disable()
             element.get('Units').disable()
-
-          });
-        }
+          }
+        });
       }
       else {
         this.transactionArray.push(this.fb.group({

@@ -91,7 +91,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   inflationAdjustedRate: any;
   dependantYears: any;
   plannerNote: any;
-  storeData: any;
+  storeData = '';
   dataSource3 = [];
   dataSource4 = [];
   blockExpansion = true;
@@ -109,7 +109,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   expectancy = new FormControl('', [Validators.required]);
   showErrorRetirement = false;
   showErrorExpectancy = false;
-  storeDataNeed: any
+  storeDataNeed = ''
   plannerNotesNeed: any;
   constructor(private dialog: MatDialog, private subInjectService: SubscriptionInject,
     private eventService: EventService, private fb: FormBuilder,
@@ -131,7 +131,6 @@ export class AddPlaninsuranceComponent implements OnInit {
     this.getListFamilyMem()
     this.years = this.constantService.yearsMap;
     this.getdataForm(null)
-    this.getAnalysis()
     if (this.insuranceData && this.insuranceData.needAnalysisSaved && this.insuranceData.hasOwnProperty('needAnalysisSaved')) {
       this.isLodingNeedAnalysis = false
     } else {
@@ -232,6 +231,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       }
       this.plannerObj = this.setAll(this.plannerObj, 0);
     }
+    this.getAnalysis()
   }
   getFilterData(data, totalAmount, name, amount) {
     if (data) {
@@ -270,7 +270,11 @@ export class AddPlaninsuranceComponent implements OnInit {
       // plannerNote: [(!data) ? '' : (data.plannerNotes) + '', [Validators.required]],
       insuranceAmount: [(!data) ? '' : data.adviceAmount, [Validators.required]],
     });
-    this.storeData = data ? data.plannerNotes : '';
+    if (data && data.needTypeId == 2) {
+      this.storeData = data ? data.plannerNotes : null;
+    } else {
+      this.storeDataNeed = data ? data.plannerNotes : null;
+    }
 
     // this.storeDataNeed = this.insuranceData.needAnalysisSaved ? (data ? data.plannerNotes : '') : '';
 
@@ -341,6 +345,7 @@ export class AddPlaninsuranceComponent implements OnInit {
         if (!lifeExpectancy && this.mainDependent.value && this.retirementAgeControl.value && this.expectancy.value) {
           this.eventService.openSnackBar('Please select main dependent', 'Dismiss')
         }
+        this.getAnalysis()
       },
       err => {
         // this.eventService.openSnackBar('No data found', 'Dismiss');
@@ -524,6 +529,7 @@ export class AddPlaninsuranceComponent implements OnInit {
 
       } else {
         this.needBase = element
+        this.getdataForm(element);
         // this.plannerNote = element.plannerNotes ? element.plannerNotes.replace(/(<([^>]+)>)/ig, '') : '-';
         this.storeDataNeed = element.plannerNotes ? element.plannerNotes : '';
         this.plannerNotesNeed = element.plannerNotes ? element.plannerNotes : '';
@@ -622,10 +628,10 @@ export class AddPlaninsuranceComponent implements OnInit {
           plannerNotes: this.plannerNotesNeed,
           needBasedObject: needBasedAnalysis,
           mainDependentId: this.familyMemberId,
-          lifeExpectency: this.expectancy.value,
-          retirementAge: this.retirementAgeControl.value,
-          isClient: (parseInt(this.familyMemberId) == this.clientId) ? true : false
-
+          lifeExpectency: parseInt(this.expectancy.value),
+          retirementAge: parseInt(this.retirementAgeControl.value),
+          isClient: (parseInt(this.familyMemberId) == this.clientId) ? true : false,
+          inflationAdjustedRate: this.inflationAdjustedRate
         }
         this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
           data => this.saveLifeInsuranceAnalysisRes(data),

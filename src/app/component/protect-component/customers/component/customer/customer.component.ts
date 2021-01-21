@@ -105,14 +105,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
 
 
   ngOnInit() {
-    let width, height;
-    width = document.documentElement.clientWidth;
-    height = document.documentElement.clientHeight;
-    if (height > width) {
-      this.document.getElementById('ui-customer-container').style.width = `${height}px`
-      this.document.getElementById('ui-customer-container').style.height = `${width}px`;
-      // console.log(height, width)
-    }
+
     this.jQuery = $;
     if (!this.jQuery) {
       console.log('JQUERY is not defined');

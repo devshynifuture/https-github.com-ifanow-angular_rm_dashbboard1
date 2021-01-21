@@ -63,6 +63,16 @@ export class ContactDetailsInnComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if (JSON.parse(localStorage.getItem('contact' + data.clientData.clientId))) {
+      this.inputData = JSON.parse(localStorage.getItem('contact' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in contact detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.inputData = data;
     // this.doneData.nominee = true;
     // this.doneData.bank = true;
@@ -193,6 +203,9 @@ export class ContactDetailsInnComponent implements OnInit {
     if (!address) {
       address = {};
     } else {
+      data.address.address1 = UtilService.removeSpecialCharactersFromString(data.address.address1);
+      data.address.address2 = UtilService.removeSpecialCharactersFromString(data.address.address2);;
+      data.address.address3 = UtilService.removeSpecialCharactersFromString(data.address.address3);;
       const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address.address1, data.address.address2, data.address.address3);
       data.address.address1 = firstLine;
       data.address.address2 = secondLine;
@@ -231,8 +244,8 @@ export class ContactDetailsInnComponent implements OnInit {
           return;
         }
         const { firstLine, secondLine } = UtilService.formatGoogleGeneratedAddress(place.formatted_address);
-        this.contactDetails.get('address2').setValue(firstLine);
-        this.contactDetails.get('address3').setValue(secondLine);
+        this.contactDetails.get('address2').setValue(UtilService.removeSpecialCharactersFromString(firstLine));
+        this.contactDetails.get('address3').setValue(UtilService.removeSpecialCharactersFromString(secondLine));
         this.getPincode(place.formatted_address);
       });
     });
@@ -367,6 +380,7 @@ export class ContactDetailsInnComponent implements OnInit {
       }
       // this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
       this.sendObj.holderList = this.obj1;
+      localStorage.setItem('contact' + (this.data.clientId), JSON.stringify(this.sendObj));
       this.openBankDetails(this.sendObj);
     }
   }
@@ -391,9 +405,9 @@ export class ContactDetailsInnComponent implements OnInit {
     };
     if (formId == 'overseas') {
       holder.foreignAddress = {
-        address1: formValue.address1,
-        address2: formValue.address2,
-        address3: formValue.address3,
+        address1: UtilService.removeSpecialCharactersFromString(formValue.address1),
+        address2: UtilService.removeSpecialCharactersFromString(formValue.address2),
+        address3: UtilService.removeSpecialCharactersFromString(formValue.address3),
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,
@@ -403,9 +417,9 @@ export class ContactDetailsInnComponent implements OnInit {
     } else if (formId == 'first') {
       holder.address = {
 
-        address1: formValue.address1,
-        address2: formValue.address2,
-        address3: formValue.address3,
+        address1: UtilService.removeSpecialCharactersFromString(formValue.address1),
+        address2: UtilService.removeSpecialCharactersFromString(formValue.address2),
+        address3: UtilService.removeSpecialCharactersFromString(formValue.address3),
         pinCode: formValue.pinCode,
         city: formValue.city,
         state: formValue.state,

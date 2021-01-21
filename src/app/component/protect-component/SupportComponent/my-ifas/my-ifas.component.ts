@@ -9,6 +9,9 @@ import { MatSort, MatTableDataSource, MatDialog } from "@angular/material";
 import { OrderHistoricalFileComponent } from "./../order-historical-file/order-historical-file.component";
 import { SupportService } from "../support.service";
 import { EventService } from "src/app/Data-service/event.service";
+import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
+import { ConvertToPaidComponent } from './convert-to-paid/convert-to-paid.component';
+import { RefreshMfComponent } from './refresh-mf/refresh-mf.component';
 
 @Component({
   selector: "app-my-ifas",
@@ -20,10 +23,12 @@ export class MyIfasComponent implements OnInit {
   isLoading = false;
   tableData = [];
   isMainLoading: boolean;
+  isLoader: boolean;
   constructor(
     private subInjectService: SubscriptionInject,
     private supportService: SupportService,
-    private eventService: EventService
+    private eventService: EventService,
+    private dialog: MatDialog
   ) { }
 
   filterName;
@@ -37,6 +42,7 @@ export class MyIfasComponent implements OnInit {
     "usingSince",
     "lastLogin",
     "accStatus",
+    "paidUpto",
     "team",
     "arn",
     "logout",
@@ -53,11 +59,13 @@ export class MyIfasComponent implements OnInit {
     this.supportService.getMyIFAValues(obj).subscribe(
       (data) => {
         console.log(data);
+        let today = new Date();
         if (data && data.length !== 0) {
           this.isLoading = false;
           let tableArray = [];
           data.forEach((element) => {
             tableArray.push({
+              isLoader: false,
               adminName: element.name,
               email: element.emailId,
               mobile: element.mobileNo,
@@ -67,12 +75,13 @@ export class MyIfasComponent implements OnInit {
                 element.usingSinceMonth +
                 "M",
               lastLogin: element.last_login ? element.last_login : " - ",
-              accStatus: element.account_status
-                ? element.account_status
-                : " - ",
+              accStatus: element.active == false ? 'Deactivate' : element.optedForTrial ? (element.optedForTrial && element.paidUpto != null ? 'Expired' : (new Date(element.trialExpiryDate) <= today) ? 'Expired' : 'Trial') : 'Paid',
+              paidUpto: element.trialExpiryDate ? (new Date(element.trialExpiryDate) >= today ? element.trialExpiryDate : element.paidUpto) : element.paidUpto,
+              active: element.active,
               // plan: element.plan ? element.plan : ' - ',
               //nextBilling: element.next_billing ? element.next_billing : ' - ',
               team: element.teamMemberCount,
+              optedForTrial: element.optedForTrial,
               arn: element.arnRiaDetailCount,
               logout: element.logout ? element.logout : " - ",
               adminAdvisorId: element.adminAdvisorId,
@@ -175,6 +184,128 @@ export class MyIfasComponent implements OnInit {
       this.dataSource.data = this.tableData;
     }
   }
+  deactivateAccount(value, data) {
+    const dialogData = {
+      data: value,
+      header: data.active ? 'DEACTIVATE ACCOUNT' : 'ACTIVATE ACCOUNT',
+      body: data.active ? 'Are you sure you want to deactivate this account?' : 'Are you sure you want to activate this account?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: data.active ? 'DEACTIVATE' : 'ACTIVATE',
+      positiveMethod: () => {
+        const obj = {
+          "advisorId": data.advisorId,
+          "isActive": data.active ? false : true
+        }
+        this.supportService.deactivateAccount(obj).subscribe(
+          data => {
+            console.log(data);
+            this.dataSource.data = ELEMENT_DATA;
+            this.getMyIfasList();
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+  convertToPaid(data) {
+    const dialogRef = this.dialog.open(ConvertToPaidComponent, {
+      width: '300px',
+      data
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.dataSource.data = ELEMENT_DATA;
+          this.getMyIfasList();
+        }
+      });
+  }
+  refreshMF(flag, data) {
+    const fragmentData = {
+      flag,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: RefreshMfComponent
+    };
+    const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
+      if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+        }
+        subscription.unsubscribe();
+      }
+    });
+  }
+
+  deleteSip(value, advisorData) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const obj = {
+          advisorId: advisorData.advisorId
+        }
+        this.supportService.deleteSip(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar("SIP deleted sucessfully", "Dimiss");
+            dialogRef.close();
+          }, err => {
+            this.eventService.openSnackBar(err, "Dismiss");
+          }
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  refreshDashboard(advisorData) {
+    const obj = {
+      id: advisorData.advisorId
+    }
+    advisorData.isLoader = true;
+    this.supportService.refreshDashboard(obj).subscribe(data => {
+      advisorData.isLoader = false;
+      this.eventService.openSnackBar("Refreshed sucessfully", "Dimiss")
+    }, err => {
+      advisorData.isLoader = false;
+      this.eventService.openSnackBar(err, "Dimiss");
+    })
+  }
 
   openIfaRightSilder(data) {
     const fragmentData = {
@@ -208,10 +339,12 @@ const ELEMENT_DATA = [
     usingSince: "",
     lastLogin: "",
     accStatus: "",
+    paidUpto: "",
     team: "",
     arn: "",
     logout: "",
     menu: "",
+    active: "",
   },
   {
     adminName: "",
@@ -220,10 +353,12 @@ const ELEMENT_DATA = [
     usingSince: "",
     lastLogin: "",
     accStatus: "",
+    paidUpto: "",
     team: "",
     arn: "",
     logout: "",
     menu: "",
+    active: "",
   },
   {
     adminName: "",
@@ -232,9 +367,11 @@ const ELEMENT_DATA = [
     usingSince: "",
     lastLogin: "",
     accStatus: "",
+    paidUpto: "",
     team: "",
     arn: "",
     logout: "",
     menu: "",
+    active: "",
   },
 ];

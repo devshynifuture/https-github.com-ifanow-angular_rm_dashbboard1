@@ -354,11 +354,20 @@ img.header-img {
 
 
 
+
+
+
+
 @media screen and (min-width: 768px) and (max-width: 991px) {
   
   .widthSerachBox{ 
     width: 60% !important;
   }
+  // .smallNav {
+  //   transform: rotate(-90deg);
+  //   transform-origin: 30% 47%;
+ 
+  // }
 }
 
 @media screen and (max-width: 767px) {

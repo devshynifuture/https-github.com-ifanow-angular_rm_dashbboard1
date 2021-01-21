@@ -73,14 +73,6 @@ export class ClientBankComponent implements OnInit {
     this.fieldFlag;
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
     this.createBankForm(data);
-    (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
-    if (this.userData.bankData == undefined && this.fieldFlag) {
-      this.getBankList(data);
-    } else {
-      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {};
-      this.barButtonOptions.text = 'SAVE & CLOSE';
-      this.createBankForm(this.userData.bankData);
-    }
   }
 
   toUpperCase(formControl, event) {
@@ -133,8 +125,8 @@ export class ClientBankComponent implements OnInit {
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : ''],
       branchPinCode: [(data.address) ? data.address.pinCode : ''],
-      branchAddressLine1: [(data.address) ? data.address.address1 : ''],
-      branchAddressLine2: [(data.address) ? data.address.address2 : ''],
+      branchAddressLine1: [(data.address) ? UtilService.removeSpecialCharactersFromString(data.address.address1) : ''],
+      branchAddressLine2: [(data.address) ? UtilService.removeSpecialCharactersFromString(data.address.address2) : ''],
       branchCity: [(data.address) ? data.address.city : ''],
       branchState: [(data.address) ? data.address.state : ''],
       getNomineeName: this.fb.array([this.fb.group({
@@ -198,6 +190,14 @@ export class ClientBankComponent implements OnInit {
   }
 
   ngOnInit() {
+    (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
+    if (this.userData.bankData == undefined && this.fieldFlag) {
+      this.getBankList(this.userData);
+    } else {
+      (this.userData.bankData) ? this.bankList = this.userData.bankData : this.bankList = {};
+      this.barButtonOptions.text = 'SAVE & CLOSE';
+      this.createBankForm(this.userData.bankData);
+    }
     this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     this.accountTypes = this.enumDataService.getBankAccountTypes();
   }
@@ -251,8 +251,8 @@ export class ClientBankComponent implements OnInit {
     this.bankForm.get('branchState').setValue(data.state);
     this.bankForm.get('branchName').setValue(data.centre);
     this.bankForm.get('branchCountry').setValue('India');
-    this.bankForm.get('branchAddressLine1').setValue(address1);
-    this.bankForm.get('branchAddressLine2').setValue(address2);
+    this.bankForm.get('branchAddressLine1').setValue(UtilService.removeSpecialCharactersFromString(address1));
+    this.bankForm.get('branchAddressLine2').setValue(UtilService.removeSpecialCharactersFromString(address2));
     this.bankForm.get('branchPinCode').setValue(pincode);
 
     this.bankForm.get('bankName').disable();
@@ -315,8 +315,8 @@ export class ClientBankComponent implements OnInit {
         micrNo: this.bankForm.get('micrName').value,
         ifscCode: this.bankForm.get('ifscCode').value,
         address: {
-          address1: this.bankForm.get('branchAddressLine1').value,
-          address2: this.bankForm.get('branchAddressLine2').value,
+          address1: UtilService.removeSpecialCharactersFromString(this.bankForm.get('branchAddressLine1').value),
+          address2: UtilService.removeSpecialCharactersFromString(this.bankForm.get('branchAddressLine2').value),
           address3: '',
           pinCode: this.bankForm.get('branchPinCode').value,
           city: this.bankForm.get('branchCity').value,

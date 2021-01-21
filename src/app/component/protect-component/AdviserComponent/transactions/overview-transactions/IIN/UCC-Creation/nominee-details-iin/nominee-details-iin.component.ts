@@ -68,6 +68,16 @@ export class NomineeDetailsIinComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if (JSON.parse(localStorage.getItem('nominee' + data.clientData.clientId))) {
+      this.inputData = JSON.parse(localStorage.getItem('nominee' + data.clientData.clientId));
+      console.log('local storage', this.inputData)
+    }
+    if (this.inputData) {
+      data = this.inputData
+      console.log('Data in nominee detail : ', data);
+    } else {
+      this.inputData = data;
+    }
     this.inputData = data;
     console.log('Data in nominee detail : ', data);
     this.doneData = {};
@@ -216,6 +226,9 @@ export class NomineeDetailsIinComponent implements OnInit {
     } else if (!data.address) {
       data.address = {};
     } else {
+      data.address.address1 = UtilService.removeSpecialCharactersFromString(data.address.address1);
+      data.address.address2 = UtilService.removeSpecialCharactersFromString(data.address.address2);;
+      data.address.address3 = UtilService.removeSpecialCharactersFromString(data.address.address3);;
       const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address.address1, data.address.address2, data.address.address3);
       data.address.address1 = firstLine;
       data.address.address2 = secondLine;
@@ -251,8 +264,8 @@ export class NomineeDetailsIinComponent implements OnInit {
           return;
         }
         const { firstLine, secondLine } = UtilService.formatGoogleGeneratedAddress(place.formatted_address);
-        this.nomineeDetails.get('address2').setValue(firstLine);
-        this.nomineeDetails.get('address3').setValue(secondLine);
+        this.nomineeDetails.get('address2').setValue(UtilService.removeSpecialCharactersFromString(firstLine));
+        this.nomineeDetails.get('address3').setValue(UtilService.removeSpecialCharactersFromString((secondLine)));
         this.getPincode(place.formatted_address);
         // this.getPincode(place.formatted_address);
         // console.log(place);
@@ -447,6 +460,7 @@ export class NomineeDetailsIinComponent implements OnInit {
         confirmationFlag: 1,
         // inputData: this.inputData,
       };
+      localStorage.setItem('nominee' + (this.data.clientId), JSON.stringify(obj));
       this.openFatcaDetails(obj);
     }
   }
@@ -467,9 +481,9 @@ export class NomineeDetailsIinComponent implements OnInit {
     };
     value.address = {
       addressType: holder.addressType,
-      address1: holder.address1,
-      address2: holder.address2,
-      address3: holder.address3,
+      address1: UtilService.removeSpecialCharactersFromString(holder.address1),
+      address2: UtilService.removeSpecialCharactersFromString(holder.address2),
+      address3: UtilService.removeSpecialCharactersFromString(holder.address3),
       pinCode: holder.pinCode,
       city: holder.city,
       state: holder.state,

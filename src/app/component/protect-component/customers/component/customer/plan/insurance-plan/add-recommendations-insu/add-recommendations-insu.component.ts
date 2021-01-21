@@ -138,7 +138,7 @@ export class AddRecommendationsInsuComponent implements OnInit {
       }
       data.insuranceList = data.insuranceList.filter(d => d.familyMemberIdLifeAssured == this.inputData.displayHolderId);
       // data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1);
-      data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed');
+      data.insuranceList = data.insuranceList.filter(d => d.realOrFictitious === 1 && d.status != 'Lapsed' && d.status != 'MATURED');
       data.insuranceList.forEach(element => {
         element.insurance = element;
         if (mergeArray.length > 0) {

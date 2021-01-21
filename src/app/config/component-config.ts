@@ -76,7 +76,8 @@ export const appConfig = {
   ///////////////////////////// rm dashboard ///////////////////////////////////////////
   RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
   RM_SEARCH_NJ_PRUDENT_SCHEMES: 'rmdashboard/get/filtered/njprudent/schemes',
-
+  DELETE_SIP: 'admin/dashboard/mf-sip/reset',
+  REFRESH_DASHBOARD: 'admin/dashboard/key/metrics/refresh',
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
@@ -785,7 +786,9 @@ export const appConfig = {
   REFRESH_FILE_ORDER_HISTORICAL_PER_ROW: 'fileorder/historical/advisor/order/refresh',
   REFRESH_FILE_ORDER_BULK_PER_ROW: 'fileorder/bulk/order/refresh',
   REFRESH_FILE_ORDER_UPPER: 'fileorder/refresh',
-
+  DEACTIVATE_ACCOUNT: 'rmdashboard/activate-deactivate/advisor',
+  REFRESH_MF_LIST: 'mutual-fund/mutualfund/list/refresh',
+  CONVERT_TO_PAID_DATE: 'rmdashboard/advisor/paid-upto/update',
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',
@@ -899,6 +902,7 @@ export const appConfig = {
   GET_CLIENT_SEARCH_LIST: 'user/client/filter/details/get',
   GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
   GET_TEAM_MEMBER_INFO: 'user/info/get',
+  CHECK_VALID_USERNAME: 'user/username/update',
   // CLIENT_SEARCH: 'user/client/all/names/get',
   CLIENT_SEARCH: 'user/client/all/names/count/get',
   EDIT_BITHDATE: 'user/client/birth-date/update',
