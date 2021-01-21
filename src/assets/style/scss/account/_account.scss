@@ -522,31 +522,7 @@ ul.mf-import-second-point{
     width: 80%;
   }
 
-.profileOverview-2 {
-  .vertical-menu {
-    // height: 100vh;
-    width: 95%;
-    height: 100%;
-    display: flex;
-    text-align: left;
-    position: inherit;
-    margin-top: 15px;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
 
-  li {
-    height: auto;
-    line-height: inherit;
-    padding: 0 0px 0 24px !important;
-    font-size: 14px;
-    text-align: left;
-    margin-bottom: 0px;
-    width: 15%;
-    display: flex;
-    align-items: center;
-  }
-}
 
   .tabMarBtm {
     margin-bottom: 10px;
@@ -563,8 +539,8 @@ ul.mf-import-second-point{
   }
 
   #ui-assets-account .vertical-menu {
-    height: 150px;
-    position: static;
+   // height: 150px;
+    // position: static;
 
     .NumbrTabNone {
       display: none;
