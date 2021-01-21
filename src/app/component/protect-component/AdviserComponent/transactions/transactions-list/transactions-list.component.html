@@ -60,7 +60,7 @@
             <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
                 appSkeletonLoading class="skeletonAnimation mt-8" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="platformName" sticky>
-                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="platformName"> Platform</th>
+                    <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="platformName"> Platform </th>
                     <td *matCellDef="let element" class="br c-p" mat-cell>
                         <div class="bar"> {{element.platformName}} </div>
                     </td>

@@ -845,31 +845,34 @@ export class UtilService {
     } else {
       originalEmailList.forEach(singleEmail => {
         editedEmailList.value.forEach(secondEmail => {
-          if ((singleEmail.id === secondEmail.id) && (singleEmail.email != secondEmail.emailAddress || singleEmail.defaultFlag != secondEmail.markAsPrimary)) {
-            singleEmail['isUpdate'] = 1;
-            singleEmail['isActive'] = 1;
-            singleEmail['email'] = secondEmail.emailAddress;
-            emailListJson.push(singleEmail);
-          } else if (secondEmail.id == undefined) {
+          if (singleEmail.id === secondEmail.id) {
+            if ((singleEmail.email != secondEmail.emailAddress || singleEmail.defaultFlag != secondEmail.markAsPrimary)) {
+              singleEmail['isUpdate'] = 1;
+              singleEmail['isActive'] = 1;
+              singleEmail['email'] = secondEmail.emailAddress;
+              singleEmail['defaultFlag'] = secondEmail.markAsPrimary
+              emailListJson.push(singleEmail);
+            } else {
+              emailListJson.push(singleEmail);
+            }
+          }
+          if (secondEmail.id == undefined) {
             emailListJson.push({
               email: secondEmail.emailAddress,
               userId: singleEmail.userId,
               defaultFlag: secondEmail.markAsPrimary
             });
           }
-          else if (editedEmailList.value.some(element => element.id && element.id != singleEmail.id && element.email == singleEmail.emailAddress)) {
-            emailListJson.push(singleEmail);
-          }
-          else if (editedEmailList.value.some(element => element.id && element.id != singleEmail.id)) {
-            emailListJson.push({
-              email: singleEmail.email,
-              userId: singleEmail.userId,
-              isUpdate: 1,
-              isActive: 0,
-              defaultFlag: singleEmail.markAsPrimary ? singleEmail.markAsPrimary : singleEmail.defaultFlag
-            });
-            emailListJson[0].defaultFlag = true;
-          }
+          // if (editedEmailList.value.some(element => element.id && element.id != singleEmail.id)) {
+          //   emailListJson.push({
+          //     email: singleEmail.email,
+          //     userId: singleEmail.userId,
+          //     isUpdate: 1,
+          //     isActive: 0,
+          //     defaultFlag: singleEmail.markAsPrimary ? singleEmail.markAsPrimary : singleEmail.defaultFlag
+          //   });
+          //   emailListJson[0].defaultFlag = true;
+          // }
         });
       })
     }

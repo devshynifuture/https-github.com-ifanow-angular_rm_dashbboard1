@@ -132,7 +132,8 @@
                 </div>
             </div> -->
             <app-multiple-email-address (emailFireEvent)="getEmailDetails($event)"
-                [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+                (deletedEmailFireEvent)="getdeletedEmailRes($event)" [emailList]="basicDetailsData.emailList"
+                [fieldFlag]="fieldFlag">
             </app-multiple-email-address>
             <!-- [userData]="basicDetailsData" -->
             <app-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
@@ -204,7 +205,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
+                <div class="col-md-2 d-flex justify-content-center mt-12 p-0 mob-pl-10 mob-pr-10">
                     <mat-spinner *ngIf="userNameLoader" [diameter]="20"></mat-spinner>
                 </div>
             </div>
@@ -831,8 +832,8 @@
             </div>
         </div> -->
 
-        <app-multiple-email-address *ngIf="invTypeCategory=='4'" (emailFireEvent)="getEmailDetails($event)"
-            [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+        <app-multiple-email-address *ngIf="invTypeCategory=='4'" (deletedEmailFireEvent)="getdeletedEmailRes($event)"
+            (emailFireEvent)="getEmailDetails($event)" [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
         </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='4'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
@@ -949,8 +950,8 @@
             </div>
         </div> -->
 
-        <app-multiple-email-address *ngIf="invTypeCategory=='3'" (emailFireEvent)="getEmailDetails($event)"
-            [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
+        <app-multiple-email-address *ngIf="invTypeCategory=='3'" (deletedEmailFireEvent)="getdeletedEmailRes($event)"
+            (emailFireEvent)="getEmailDetails($event)" [emailList]="basicDetailsData.emailList" [fieldFlag]="fieldFlag">
         </app-multiple-email-address>
 
         <app-add-number *ngIf="invTypeCategory=='3'" (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
