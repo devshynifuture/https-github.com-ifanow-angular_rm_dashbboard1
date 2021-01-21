@@ -57,9 +57,7 @@ export class TransactionsListComponent implements OnInit {
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.selectedBroker = this.credentialData[0];
-    if (this.isAdvisorSection) {
-      this.getFilterOptionData();
-    }
+    this.getFilterOptionData();
     if (AuthService.getInvalidCredsTimeZone()) {
       this.hours = new Date().getHours() - new Date(AuthService.getInvalidCredsTimeZone()).getHours();
       if (this.hours > 4) {
