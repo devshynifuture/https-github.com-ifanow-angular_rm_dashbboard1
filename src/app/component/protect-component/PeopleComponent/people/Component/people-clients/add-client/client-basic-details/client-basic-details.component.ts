@@ -582,9 +582,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
           });
         } else {
           this.mobileEditedData.forEach((element, index) => {
-            if (index == 0) {
-              element['defaultFlag'] = true;
-            }
+            (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
           });
           mobileList = this.mobileEditedData;
         }
@@ -757,9 +755,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         });
       } else {
         this.mobileEditedData.forEach((element, index) => {
-          if (index == 0) {
-            element['defaultFlag'] = true;
-          }
+          (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
         });
         mobileList = this.mobileEditedData;
       }
