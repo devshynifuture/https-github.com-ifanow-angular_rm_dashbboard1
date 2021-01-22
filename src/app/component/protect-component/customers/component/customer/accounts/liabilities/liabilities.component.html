@@ -1,6 +1,6 @@
 <div id="ui-liabilities" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
-        <div class="col-md-12 col-lg-2 p-0 pt-8 tabViewLiabilities">
+        <div class="col-md-12 col-lg-2 p-0 pt-8 ">
             <ul class="vertical-menu bg-grey lter ">
                 <li (click)="viewMode ='tab1'" (click)="sortTable('tab1');selectedItem='LIABILITIES'"
                     [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
@@ -76,26 +76,7 @@
             </ul>
         </div>
 
-        <div class="col-md-12 deskLiabilities text-right">
-            <mat-form-field>
-                <mat-select [(ngModel)]="selectedItem" class="form-control">
-                    <mat-option value="LIABILITIES" (click)="viewMode ='tab1'" (click)="sortTable('1')">LIABILITIES
-                    </mat-option>
-                    <mat-option value="Home" (click)="viewMode ='tab1'" (click)="sortTable('1')">Home</mat-option>
-                    <mat-option value="Vehicle" (click)="viewMode ='tab1'" (click)="sortTable('2')">Vehicle</mat-option>
-                    <mat-option value="Education" (click)="viewMode ='tab1'" (click)="sortTable('3')">Education
-                    </mat-option>
-                    <mat-option value="Personal" (click)="viewMode ='tab1'" (click)="sortTable('5')">Personal
-                    </mat-option>
-                    <mat-option value="Credit card" (click)="viewMode ='tab1'" (click)="sortTable('4')">Credit card
-                    </mat-option>
-                    <mat-option value="Mortgage" (click)="viewMode ='tab1'" (click)="sortTable('6')">Mortgage
-                    </mat-option>
-                    <mat-option value="OTHERS" (click)="viewMode ='tab2'" (click)="sortTable('tab2')">OTHERS
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+
 
 
         <div class="col-md-12 col-lg-10 p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab1'">
