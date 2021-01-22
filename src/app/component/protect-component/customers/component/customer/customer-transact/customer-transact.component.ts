@@ -55,11 +55,14 @@ export class CustomerTransactComponent implements OnInit {
   goToAdvisorHome() {
     this.showRouter = false;
     this.customerOverview.clearServiceData();
-    setTimeout(() => {
+    this.roleService.getClientRoleDetails(AuthService.getUserInfo().roleId, (rolesData) => {
+      this.roleService.constructAdminDataSource(rolesData);
+      // setTimeout(() => {
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
-    }, 200);
+      // }, 200);
+    });
   }
 
 }

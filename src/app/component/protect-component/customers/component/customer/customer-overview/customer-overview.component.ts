@@ -109,11 +109,15 @@ export class CustomerOverviewComponent implements OnInit {
   goToAdvisorHome() {
     this.showRouter = false;
     this.customerOverview.clearServiceData();
-    setTimeout(() => {
+    this.roleService.getClientRoleDetails(AuthService.getUserInfo().roleId, (rolesData) => {
+      this.routingStateService.goToSpecificRoute('/admin/dashboard');
+      // setTimeout(() => {
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');
-      this.routingStateService.goToSpecificRoute('/admin/dashboard');
-    }, 200);
+      setTimeout(() => {
+        this.roleService.constructAdminDataSource(rolesData);
+      }, 200);
+    });
     this.MfServiceService.clearStorage();
   }
 

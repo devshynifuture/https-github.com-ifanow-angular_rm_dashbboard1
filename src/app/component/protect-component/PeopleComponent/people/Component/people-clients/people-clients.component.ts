@@ -244,9 +244,12 @@ export class PeopleClientsComponent implements OnInit {
   selectClient(singleClientData) {
     console.log(singleClientData);
     this.ngZone.run(() => {
-      const url = this.roleService.goToValidClientSideUrl();
-      this.authService.setClientData(singleClientData);
-      this.router.navigate([url], { state: { ...singleClientData } });
+      this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
+        this.roleService.constructClientDataSource(rolesData);
+        const url = this.roleService.goToValidClientSideUrl();
+        this.authService.setClientData(singleClientData);
+        this.router.navigate([url], { state: { ...singleClientData } });
+      });
     });
   }
 
