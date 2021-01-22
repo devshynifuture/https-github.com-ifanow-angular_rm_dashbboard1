@@ -102,8 +102,9 @@
           <h5 class="m-0 f-14">As on date</h5>
           <div class="form-group mb-0">
             <mat-form-field class="ba-date">
-              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
-                (focus)="picker.open()" [matDatepicker]="picker" formControlName="currentValueAsonDate" readonly>
+              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="currentDate"
+                [min]="minBalDate" (focus)="picker.open()" [matDatepicker]="picker"
+                formControlName="currentValueAsonDate" readonly>
               <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error class="f-12">
@@ -182,8 +183,9 @@
           <h5 class="m-0 f-14 ">Amount</h5>
           <div class="form-group mb-0">
             <mat-form-field>
-              <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                type="text" class="form-control rupess br-0 " formControlName="maturityValue">
+              <input autocomplete="off" [min]="currentDate" [max]="maxMaturityDate" matInput appInputValueValidation
+                [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0 "
+                formControlName="maturityValue">
               <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
               <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint> -->
               <mat-error class="f-12">
@@ -340,7 +342,7 @@
             <h5 class="m-0 f-14">Date</h5>
             <div class="form-group mb-0">
               <mat-form-field class="ba-date ">
-                <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="maxDate"
+                <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="currentDate"
                   (focus)="picker.open()" [matDatepicker]="picker" formControlName="purchaseDate" readonly>
                 <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>

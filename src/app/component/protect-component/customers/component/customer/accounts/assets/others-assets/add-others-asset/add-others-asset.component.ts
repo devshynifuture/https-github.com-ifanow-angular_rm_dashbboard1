@@ -37,7 +37,7 @@ export class AddOthersAssetComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  maxDate: Date = new Date();
+  currentDate: Date = new Date();
   validatorType = ValidatorType;
   othersAssetForm: any;
   ownerData: any;
@@ -73,6 +73,8 @@ export class AddOthersAssetComponent implements OnInit {
   flag: any;
   ownerName: any;
   callMethod: any;
+  minBalDate: Date = new Date();
+  maxMaturityDate: Date = new Date();
   adviceShowHeaderFooter = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   private unSubcrip2: Subscription;
@@ -103,6 +105,8 @@ export class AddOthersAssetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.minBalDate.setFullYear(this.minBalDate.getFullYear() - 20);
+    this.maxMaturityDate.setFullYear(this.maxMaturityDate.getFullYear() + 50);
     if (this.data && this.data.flag) {
       this.adviceShowHeaderFooter = false;
     } else {
