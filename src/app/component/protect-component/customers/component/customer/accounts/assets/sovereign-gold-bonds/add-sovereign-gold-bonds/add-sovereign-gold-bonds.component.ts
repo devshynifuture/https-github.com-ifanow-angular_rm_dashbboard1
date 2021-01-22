@@ -103,6 +103,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     this.unSubcripDemat = this.enumService.getDenatAC().subscribe((data: any) => {
       this.bankDematList = data;
     });
+    this.getIssuePrice();
   }
 
   ngOnDestroy() {
@@ -388,6 +389,11 @@ export class AddSovereignGoldBondsComponent implements OnInit {
         familyMemberId: [0],
         id: [0]
       })]),
+      sovereignGoldTransactionList: this.fb.array([this.fb.group({
+        transactionDate: [''],
+        unit: [''],
+        amount: [''],
+      })]),
       // ownerPercent: [data.ownerPerc, [Validators.required]],
 
     });
@@ -484,61 +490,93 @@ export class AddSovereignGoldBondsComponent implements OnInit {
 
   }
 
+  bondSeriesList: any;
+  getIssuePrice() {
+    this.custumService.getSovereignGoldBondIssuePrice().subscribe(
+      data => {
+        this.bondSeriesList = data;
+      }, (error) => {
+        this.barButtonOptions.active = false;
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+
+  // add transaction
+
+  get getTransaction() {
+    return this.goldBondForm.get('sovereignGoldTransactionList') as FormArray;
+  }
+
+  addTransaction(data) {
+    this.getTransaction.push(this.fb.group({
+      transactionDate: [!data ? '' : data.transactionDate],
+      unit: [!data ? '' : data.unit],
+      amount: [!data ? '' : data.amount],
+    }));
+  }
+
+  removeTransaction(item) {
+    this.getTransaction.removeAt(item);
+  }
+
+  // add transaction
+
+
+  getSelectedBondPrice(data) {
+    let price = this.bondSeriesList.filter(x => x.seriesName == data);
+    this.goldBondForm.get("issuePrice").setValue(price[0].retailPrice);
+  }
+
   saveFormData() {
+    let bondObj = {
+      "clientId": this.goldBondForm.value.clientId,
+      "advisorId": this.goldBondForm.value.advisorId,
+      "bondNameAndSeries": this.goldBondForm.value.bond,
+      "investmentOrIssueDate": this.datePipe.transform(this.goldBondForm.value.issueDate.value, 'yyyy-MM-dd'),
+      "investmentAmount": this.goldBondForm.value.amountInvested,
+      "unitsInGram": this.goldBondForm.value.units,
+      // "interestAmountYearly": (this.goldBondForm.value.amountInvested / 100) * this.goldBondForm.value.rates, //chetan said no needed in request
+      // "interestHalfYearly": (this.goldBondForm.value.amountInvested / 100) * this.goldBondForm.value.rates / 2, //chetan said no needed in request
+      "interestRate": this.goldBondForm.value.rates,
+      "tenure": this.goldBondForm.value.tenure,
+      "bondNumber": this.goldBondForm.value.bondNumber,
+      "linkedBankAccount": this.goldBondForm.value.linkedBankAccount,
+      "linkedDematAccount": this.goldBondForm.value.linkedDematAccount,
+      "description": this.goldBondForm.value.description,
+      "ownerList": this.goldBondForm.value.getCoOwnerNamebond,
+      "sovereignGoldTransactionList": this.goldBondForm.value.bond,
+      "nomineeList": this.goldBondForm.value.getNomineeName,
+      "id": this.goldBondForm.value.id,
+    }
     if (this.goldBondForm.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       this.goldBondForm.markAllAsTouched();
       return;
     } else {
-      if (!this.goldBondForm.get('hasMaturity').value) {
-        this.goldBondForm.get('maturityValue').setValue("");
-        this.goldBondForm.get('maturityDate').setValue(null);
-      }
 
-      if (!this.goldBondForm.get('hasRecurringContribution').value) {
-        this.goldBondForm.get('recurringContributionFrequency').setValue("");
-        this.goldBondForm.get('approxAmount').setValue(null);
-        this.goldBondForm.get('endDate').setValue(null);
-      }
-      this.barButtonOptions.active = true;
-      let obj = this.goldBondForm.value;
-      obj.hasMaturity = obj.hasMaturity ? 1 : 0;
-      obj.hasRecurringContribution = obj.hasRecurringContribution ? 1 : 0;
-      obj.currentValueAsonDate = obj.currentValueAsonDate ? this.datePipe.transform(obj.currentValueAsonDate, 'yyyy-MM-dd') : null;
-      obj.maturityDate = obj.maturityDate ? this.datePipe.transform(obj.maturityDate, 'yyyy-MM-dd') : null;
-      obj.endDate = obj.endDate ? this.datePipe.transform(obj.endDate, 'yyyy-MM-dd') : null;
-      obj.purchaseDate = obj.purchaseDate ? this.datePipe.transform(obj.purchaseDate, 'yyyy-MM-dd') : null;
-      obj.currentValue = parseInt(obj.currentValue);
-      obj.debtAssetAllocPerc = parseInt(obj.debtAssetAllocPerc);
-      obj.equityAssetAllocPerc = parseInt(obj.equityAssetAllocPerc);
-      obj.maturityValue = parseInt(obj.maturityValue);
-      obj.growthRate = parseInt(obj.growthRate);
-
-      obj.approxAmount = parseInt(obj.approxAmount);
-      obj.purchaseAmt = obj.purchaseAmt ? parseInt(obj.purchaseAmt) : null;
-      obj.recurringContributionFrequency = obj.recurringContributionFrequency ? parseInt(obj.recurringContributionFrequency) : null;
-      obj.getNomineeName.forEach((element, index) => {
+      bondObj.nomineeList.forEach((element, index) => {
         if (element.name == '') {
           this.removeNewNominee(index);
         }
       });
-      obj.getNomineeName = this.goldBondForm.value.getNomineeName;
-      obj['ownerList'] = this.goldBondForm.value.getCoOwnerName;
-      obj['nomineeList'] = this.goldBondForm.value.getNomineeName;
-      if (obj.id == undefined && this.flag != 'adviceRealEstate') {
-        delete obj['id'];
-        console.log(obj);
-        this.custumService.addOthersAssets(obj).subscribe(
-          data => this.addOthersAssetsRes(data), (error) => {
+      bondObj.nomineeList = this.goldBondForm.value.getNomineeName;
+      bondObj['ownerList'] = this.goldBondForm.value.getCoOwnerName;
+      bondObj['nomineeList'] = this.goldBondForm.value.getNomineeName;
+      if (bondObj.id == undefined && this.flag != 'adviceRealEstate') {
+        delete bondObj['id'];
+        // console.log(obj);
+        this.custumService.addSovereignGoldBond(bondObj).subscribe(
+          data => this.addSovereignGoldBondRes(data), (error) => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
         );
       }
       else {
-        console.log(obj);
-        this.custumService.editOthersAssets(obj).subscribe(
-          data => this.editOthersAssetsRes(data), (error) => {
+        console.log(bondObj);
+        this.custumService.editSovereignGoldBond(bondObj).subscribe(
+          data => this.editSovereignGoldBondRes(data), (error) => {
             this.barButtonOptions.active = false;
             this.eventService.showErrorMessage(error);
           }
@@ -546,7 +584,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       }
     }
   }
-  addOthersAssetsRes(data) {
+  addSovereignGoldBondRes(data) {
     console.log(data);
     if (data) {
       // this.customerOverview.portFolioData = null;
@@ -567,7 +605,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
 
   }
 
-  editOthersAssetsRes(data) {
+  editSovereignGoldBondRes(data) {
     console.log(data);
     if (data) {
       console.log(data);
