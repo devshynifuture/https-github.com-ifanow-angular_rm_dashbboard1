@@ -204,7 +204,7 @@ export class AddBudgetComponent implements OnInit {
         startsFrom: this.budget.controls.expenseDoneOn.value,
         amount: this.budget.controls.amount.value,
         time: this.budget.controls.timeInMilliSec.value,
-        paymentModeId: this.budget.controls.paymentModeId.value ? this.budget.controls.paymentModeId.value : null,
+        paymentModeId: this.budget.controls.paymentModeId.value ? this.budget.controls.paymentModeId.value : '0',
         BudgetCategoryId: this.budget.controls.category.value,
         description: this.budget.controls.description.value,
         id: this.budget.controls.id.value
