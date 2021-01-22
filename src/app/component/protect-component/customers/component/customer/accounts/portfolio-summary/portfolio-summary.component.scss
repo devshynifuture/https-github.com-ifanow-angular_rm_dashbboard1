@@ -1337,13 +1337,7 @@ mat-drawer-content {
   top: 172px;
 }
 
-
-@media screen and (min-width: 768px) and (max-width: 991px) {
-  
-  
-   
-
-}
+ 
 
 @media(max-width:670px) {
   .desktop-none {
@@ -1400,5 +1394,13 @@ mat-drawer-content {
   border-radius: 50%;
   img {
     max-width: 100%;
+  }
+}
+
+
+@media screen and (orientation:portrait) { 
+
+  .sidenav-container {
+    height: auto;
   }
 }

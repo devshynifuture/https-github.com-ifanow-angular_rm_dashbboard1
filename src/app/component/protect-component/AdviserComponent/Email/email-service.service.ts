@@ -42,7 +42,7 @@ export class EmailServiceService {
     });
   }
 
-  modifyThreadIds(data){
+  modifyThreadIds(data) {
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MODIFY_MULTIPLE_THREADS, data);
   }
 
@@ -106,13 +106,15 @@ export class EmailServiceService {
     let sendReq;
 
     if (data.hasOwnProperty('q')) {
-      sendReq = {
-        email: userInfo.userName,
-        userId: userInfo.advisorId,
-        labelIds,
-        maxResults,
-        pageToken,
-        q: data.q
+      if (!!userInfo.userName && !!userInfo.advisorId) {
+        sendReq = {
+          email: userInfo.userName,
+          userId: userInfo.advisorId,
+          labelIds,
+          maxResults,
+          pageToken,
+          q: data.q
+        }
       }
     } else {
       sendReq = {

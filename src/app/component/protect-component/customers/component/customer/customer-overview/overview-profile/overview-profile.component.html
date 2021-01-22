@@ -1,6 +1,6 @@
 <div class="profileOverview-2" *ngIf="!hasError" id="ui-overview-profile">
     <div class="row  ">
-        <div class="col-md-12 col-lg-2  pt-8 pb-20 pl-0 pr-0    ">
+        <div class="col-md-2 col-lg-2  pt-8 pb-20 pl-0 pr-0    ">
             <ul class="vertical-menu  bg-grey lter">
                 <li (click)="Tab='Tab1'"
                     *ngIf="roleService.overviewPermission.subModules.profile.subModule.keyInfo.enabled"
@@ -21,7 +21,7 @@
             </ul>
         </div>
 
-        <div *ngIf="Tab=='Tab1'" class="col-md-12 col-lg-10 p-20 mt-5  ">
+        <div *ngIf="Tab=='Tab1'" class="col-md-10 col-lg-10 p-20 mt-5  ">
             <div class="bg-grey lter p-9 borRd">
                 <div class="row">
                     <div class="col-md-10">

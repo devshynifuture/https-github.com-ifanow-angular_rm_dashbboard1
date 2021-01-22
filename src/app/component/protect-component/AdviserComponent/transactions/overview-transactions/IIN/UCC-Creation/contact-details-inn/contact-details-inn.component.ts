@@ -63,7 +63,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
   @Input()
   set data(data) {
-    if (JSON.parse(localStorage.getItem('contact' + data.clientData.clientId))) {
+    if (JSON.parse(localStorage.getItem('contact' + data.clientData.clientId)) && data.draft == true) {
       this.inputData = JSON.parse(localStorage.getItem('contact' + data.clientData.clientId));
       console.log('local storage', this.inputData)
     }

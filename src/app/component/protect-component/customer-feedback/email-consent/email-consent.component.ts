@@ -11,6 +11,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
 import { DialogDetailedViewInsPlanningComponent } from '../../customers/component/customer/plan/insurance-plan/dialog-detailed-view-ins-planning/dialog-detailed-view-ins-planning.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../../AdviserComponent/Subscriptions/subscription.service';
+import { PeopleService } from '../../PeopleComponent/people.service';
 
 @Component({
   selector: 'app-email-consent',
@@ -39,8 +40,10 @@ export class EmailConsentComponent implements OnInit {
   fromEmail: any;
   getOrgData: any;
   toEmail: any;
-  constructor(private subscription: SubscriptionService, private cd: ChangeDetectorRef, private ngZone: NgZone, private utilService: UtilService, private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
-    this.clientData = AuthService.getClientData();
+  clientId: any;
+  storedData: any;
+  constructor(private peopleService: PeopleService, private subscription: SubscriptionService, private cd: ChangeDetectorRef, private ngZone: NgZone, private utilService: UtilService, private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
+    // this.clientData = AuthService.getClientData();
     this.getOrgData = AuthService.getOrgDetails();
   }
   emailBody = `
@@ -132,6 +135,27 @@ export class EmailConsentComponent implements OnInit {
     })
 
   }
+  getClientData(clientId) {
+    const obj = {
+      clientId: clientId
+    };
+    this.peopleService.getClientOrLeadData(obj).subscribe(
+      data => {
+        this.clientData = data;
+        this.dataSource.data = this.storedData;
+        this.ngZone.run(() => {
+          this.isLoading = false;
+          this.cd.detectChanges();
+          // this.utilService.htmlToPdf(null, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true);
+        });
+        console.log('dddddddddddddddddddddddddddddddddd', this.clientData)
+
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
   openDetailedView(data) {
     const sendData = {
       flag: 'detailedView',
@@ -173,6 +197,11 @@ export class EmailConsentComponent implements OnInit {
     // } else {
     //   data[val].displayHolderName = data[val].policyHolderName;
     // }
+    if (data && data[val]) {
+      this.clientId = data[val].clientId
+      console.log('dddddddddddddddddddddddddddddddddddddddddddddd', this.clientId);
+      this.getClientData(this.clientId);
+    }
     if (data[val] && data[val].insuredMembers && data[val].hasOwnProperty("insuredMembers") &&
       data[val].insuredMembers.length > 0) {
       data[val].displayHolderName = data[val].insuredMembers[0].name;
@@ -258,14 +287,11 @@ export class EmailConsentComponent implements OnInit {
           }
           this.consentData.push(obj)
         });
-        this.dataSource.data = data;
+        this.storedData = data;
+        // this.dataSource.data = data;
         getAdviceSubs.unsubscribe();
 
-        this.ngZone.run(() => {
-          this.isLoading = false;
-          this.cd.detectChanges();
-          // this.utilService.htmlToPdf(null, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true);
-        });
+
       },
       error => {
         this.dataSource.data = [];

@@ -25,7 +25,8 @@
         <p class="mb-10">The information provided below requires your consent so that we can proceed further and do the
             needful from
             our end. </p>
-        <p class="mb-10">Please review it carefully and click on the OK button below to give your consent.</p>
+        <p class="mb-10" *ngIf="!isLoading">Please review it carefully and click on the OK button below to give your
+            consent.</p>
 
         <div class="overflow-hidden mt-8 real-estate mob-overview-auto">
             <!-- appSkeletonLoading [appSkeletonLoading]="isLoading" -->
@@ -487,11 +488,11 @@
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <div class="d-flex align-items-center" *ngIf="!isLoading">
 
-                                <button *ngIf="!isLoading" class="mr-12"
+                                <button *ngIf="!isLoading && element.acceptedOrDeclined == 1" class="mr-12"
                                     [ngStyle]="(element.acceptedOrDeclined==1) ? {'background': '#008FFF', 'color': '#ffffff'} : (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2) ? {'border': '1px solid #008FFF', 'color': '#008FFF'} : {}"
                                     (click)="acceptOrDeclineConsent(element, i, 1)">{{element.acceptedOrDeclined==1 ? 'ACCEPTED' : 'ACCEPT'}}</button>
 
-                                <button *ngIf="!isLoading"
+                                <button *ngIf="!isLoading && element.acceptedOrDeclined == 2"
                                     [ngStyle]="(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1) ? {'border': '1px solid #f16724', 'color': '#f16724'} : (element.acceptedOrDeclined==2) ? {'background': '#f16724', 'color': '#ffffff'} :{}"
                                     (click)="acceptOrDeclineConsent(element,i, 2)">{{element.acceptedOrDeclined == 2 ? 'DECLINED' : 'DECLINE'}}</button>
 
@@ -609,11 +610,11 @@
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <div class="d-flex align-items-center" *ngIf="!isLoading">
 
-                                <button *ngIf="!isLoading" class="mr-12"
+                                <button *ngIf="!isLoading && element.acceptedOrDeclined == 1 " class="mr-12"
                                     [ngStyle]="(element.acceptedOrDeclined==1) ? {'background': '#008FFF', 'color': '#ffffff'} : (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2) ? {'border': '1px solid #008FFF', 'color': '#008FFF'} : {}"
                                     (click)="acceptOrDeclineConsent(element, i, 1)">{{element.acceptedOrDeclined==1 ? 'ACCEPTED' : 'ACCEPT'}}</button>
 
-                                <button *ngIf="!isLoading"
+                                <button *ngIf="!isLoading && element.acceptedOrDeclined == 2"
                                     [ngStyle]="(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1) ? {'border': '1px solid #f16724', 'color': '#f16724'} : (element.acceptedOrDeclined==2) ? {'background': '#f16724', 'color': '#ffffff'} :{}"
                                     (click)="acceptOrDeclineConsent(element,i, 2)">{{element.acceptedOrDeclined == 2 ? 'DECLINED' : 'DECLINE'}}</button>
                             </div>

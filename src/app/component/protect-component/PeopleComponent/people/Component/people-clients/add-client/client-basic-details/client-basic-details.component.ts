@@ -35,6 +35,9 @@ const moment = require('moment');
 export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   tempBasicData: any;
   userNameLoader: boolean;
+  mobileEditedData: any;
+  emailEditedData: any[];
+  deletedEmailData = [];
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
       this.eventService.openSnackBar("Please add pan before converting it to client", "Dimiss");
@@ -500,6 +503,12 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     this.emailData = data;
   }
 
+  getdeletedEmailRes(data) {
+    if (data) {
+      this.deletedEmailData.push(data);
+    }
+  }
+
   numberFlag(data) {
     this.countryCodeFlag = data.residentFlag;
   }
@@ -567,44 +576,71 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
     } else {
-      const mobileList = [];
+      let mobileList = [];
       if (this.mobileData) {
-        this.mobileData.controls.forEach(element => {
-          console.log(element);
-          const mobileNo = element.get('number').value;
-          if (mobileNo) {
+        if (this.basicDetailsData.userId == undefined) {
+          this.mobileData.value.forEach(element => {
             mobileList.push({
-              userType: 2,
-              mobileNo: element.get('number').value,
-              isdCodeId: element.get('code').value
+              mobileNo: element.number,
+              isdCodeId: element.code,
+              defaultFlag: true,
+            })
+          });
+        }
+        else {
+          this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
+          if (this.tempBasicData.mobileList.length == 0) {
+            this.mobileEditedData.forEach(element => {
+              mobileList.push({
+                userId: this.basicDetailsData.userId,
+                mobileNo: element.number,
+                isdCodeId: element.code,
+                defaultFlag: true
+              })
             });
+          } else {
+            this.mobileEditedData.forEach((element, index) => {
+              (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
+            });
+            mobileList = this.mobileEditedData;
           }
-        });
+        }
       }
-
       let advisorId;
       if (this.selectedClientOwner && this.selectedClientOwner != '') {
         advisorId = this.selectedClientOwner;
       }
-
+      let count = 0;
+      let emailList = [];
       if (this.emailData.length == 1) {
         this.emailData.controls[0].get('markAsPrimary').setValue(true);
       }
 
-      let count = 0;
-      let emailList = [];
-      if (this.emailData.valid) {
+      if (!this.basicDetailsData.userId) {
         this.emailData.controls.forEach(element => {
           if (element.get('markAsPrimary').value) {
             count++;
           }
           emailList.push({
-            userType: 2,
             email: element.get('emailAddress').value,
-            defaultFlag: element.get('markAsPrimary').value
+            defaultFlag: element.get('markAsPrimary').value,
           });
         });
       }
+
+      if (this.emailData.valid && this.basicDetailsData.userId) {
+        this.emailEditedData = UtilService.checkEmailListUpdation(this.tempBasicData.emailList, this.emailData)
+        emailList = this.emailEditedData;
+        if (this.deletedEmailData.length > 0) {
+          emailList = emailList.concat(this.deletedEmailData);
+        }
+        emailList.forEach(element => {
+          if (element.defaultFlag) {
+            count++;
+          }
+        });
+      }
+
       emailList = emailList.sort(function (a, b) {
         return b.defaultFlag - a.defaultFlag;
       });
@@ -736,16 +772,24 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   }
 
   saveNextFamilyMember(flag) {
-    const mobileList = [];
+    let mobileList = [];
     if (this.mobileData) {
-      this.mobileData.controls.forEach(element => {
-        console.log(element);
-        mobileList.push({
-          mobileNo: element.get('number').value,
-          verificationStatus: 0,
-          isdCodeId: element.get('code').value
+      this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
+      if (this.tempBasicData.mobileList.length == 0) {
+        this.mobileEditedData.forEach(element => {
+          mobileList.push({
+            userId: this.basicDetailsData.userId,
+            mobileNo: element.number,
+            isdCodeId: element.code,
+            defaultFlag: true
+          })
         });
-      });
+      } else {
+        this.mobileEditedData.forEach((element, index) => {
+          (index == 0) ? element['defaultFlag'] = true : element['defaultFlag'] = false;
+        });
+        mobileList = this.mobileEditedData;
+      }
     }
     if (this.invTypeCategory == '1') {
       this.basicDetails.get('role').clearValidators();
@@ -791,12 +835,12 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     } else {
       gardianObj = null;
     }
-    let emailList = [];
     let count = 0;
-    if (this.emailData && this.emailData.valid) {
-      if (this.emailData.length == 1) {
-        this.emailData.controls[0].get('markAsPrimary').setValue(true);
-      }
+    let emailList = [];
+    if (this.emailData.length == 1) {
+      this.emailData.controls[0].get('markAsPrimary').setValue(true);
+    }
+    if (this.basicDetailsData.emailList.length == 0) {
       this.emailData.controls.forEach(element => {
         if (element.get('markAsPrimary').value) {
           count++;
@@ -804,17 +848,31 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         emailList.push({
           email: element.get('emailAddress').value,
           defaultFlag: element.get('markAsPrimary').value,
-          verificationStatus: 0,
-          id: element.get('id').value
         });
       });
-      emailList = emailList.sort(function (a, b) {
-        return b.defaultFlag - a.defaultFlag;
-      });
-      if (count == 0) {
-        this.eventService.openSnackBar('Please mark one email as a primary', 'Dimiss');
-        return;
+    }
+
+
+
+    if (this.emailData.valid && this.basicDetailsData.emailList.length > 0) {
+      this.emailEditedData = UtilService.checkEmailListUpdation(this.tempBasicData.emailList, this.emailData)
+      emailList = this.emailEditedData;
+      if (this.deletedEmailData.length > 0) {
+        emailList = emailList.concat(this.deletedEmailData);
       }
+      emailList.forEach(element => {
+        if (element.defaultFlag) {
+          count++;
+        }
+      });
+    }
+
+    emailList = emailList.sort(function (a, b) {
+      return b.defaultFlag - a.defaultFlag;
+    });
+    if (count == 0) {
+      this.eventService.openSnackBar('Please mark one email as a primary', 'Dimiss');
+      return;
     }
 
 
