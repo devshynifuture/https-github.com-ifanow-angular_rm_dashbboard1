@@ -23,7 +23,7 @@
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input matInput formControlName="name" class="form-control"
                                     [placeholder]="formPlaceHolder.ENTER_FULL_NAME" maxLength="40" [maxLength]="40"
-                                    [inputValidator]="validatorType.PERSON_NAME" appInputValueValidation>
+                                    appInputValueValidation>
                                 <mat-hint align="end" class="">{{personalProfile.get('name').value.length}}/40
                                 </mat-hint>
                                 <mat-error class=" pt-4" *ngIf="personalProfile.get('name').errors?.required">This field
@@ -220,14 +220,14 @@
                                     [placeholder]="formPlaceHolder.REENTER_NEW_PASSWORD" (keyup)="checkPassword()"
                                     [type]="hide2 ? 'password' : 'text'" tabindex="2" class="form-control br-0" matInput
                                     type="password">
-                                    <mat-icon matSuffix (click)="hide2 = !hide2" *ngIf="hide2"
-                                        class="material-icons eyesPassword c-p text-primitive">
-                                        visibility
-                                    </mat-icon>
-                                    <mat-icon matSuffix (click)="hide2 = !hide2" *ngIf="hide2==false"
-                                        class="material-icons eyesPassword c-p text-primitive">
-                                        visibility_off
-                                    </mat-icon>
+                                <mat-icon matSuffix (click)="hide2 = !hide2" *ngIf="hide2"
+                                    class="material-icons eyesPassword c-p text-primitive">
+                                    visibility
+                                </mat-icon>
+                                <mat-icon matSuffix (click)="hide2 = !hide2" *ngIf="hide2==false"
+                                    class="material-icons eyesPassword c-p text-primitive">
+                                    visibility_off
+                                </mat-icon>
                                 <mat-error *ngIf="setNewPasswordForm.get('confirmPassword').errors?.required">
                                     This field is required</mat-error>
                                 <mat-error *ngIf="setNewPasswordForm.get('confirmPassword').errors?.mismatch">
@@ -237,10 +237,12 @@
                         <ul class="pt-28 d-grid password-strength">
                             <li [ngClass]="{'text-success': setNewPasswordForm.get('newPassword').value.length > 7,'text-primitive': setNewPasswordForm.get('newPassword').value.length < 8}"
                                 class="">
-                                <i *ngIf="setNewPasswordForm.get('newPassword').value.length > 7" class="material-icons mr-4">
+                                <i *ngIf="setNewPasswordForm.get('newPassword').value.length > 7"
+                                    class="material-icons mr-4">
                                     check_circle
                                 </i>
-                                <i *ngIf="setNewPasswordForm.get('newPassword').value.length < 8" class="material-icons mr-4">
+                                <i *ngIf="setNewPasswordForm.get('newPassword').value.length < 8"
+                                    class="material-icons mr-4">
                                     cancel
                                 </i>
                                 Min 8 characters
