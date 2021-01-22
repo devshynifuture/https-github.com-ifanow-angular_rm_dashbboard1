@@ -38,7 +38,7 @@ export class OthersAssetsComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
   @Input() finPlanObj: any;//finacial plan pdf input
-  @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
+  @ViewChild('otherAssetTemp', { static: false }) otherAssetTemp: ElementRef;
   displayedColumns3 = ['no', 'owner', 'type', 'value', 'pvalue', 'pDate', 'rate', 'desc', 'status', 'icons'];
   excelData: any[];
   noData: string;
@@ -50,6 +50,8 @@ export class OthersAssetsComponent implements OnInit {
   userInfo: any;
   getOrgData: any;
   reportDate: Date;
+  fragmentData = { isSpinner: false };
+  returnValue: any;
   constructor(public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,
@@ -57,6 +59,7 @@ export class OthersAssetsComponent implements OnInit {
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef,
+    private utilService: UtilService,
     private customerOverview: CustomerOverviewService) {
   }
 
@@ -109,9 +112,21 @@ export class OthersAssetsComponent implements OnInit {
     }, 7000);
   }
 
-  pdf(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+  pdf(template, tableTitle) {
+    this.fragmentData.isSpinner = true;
+    const para = this.otherAssetTemp.nativeElement
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
 
   // async ExportTOExcel(value) {
