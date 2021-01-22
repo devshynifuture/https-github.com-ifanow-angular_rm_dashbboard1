@@ -463,7 +463,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
                             if (obj.purchaceAgainstRedemptionTransactions || (obj.purchaceAgainstRedemptionTransactions) ? obj.purchaceAgainstRedemptionTransactions.length > 0 : obj.purchaceAgainstRedemptionTransactions) {
                                 obj.purchaceAgainstRedemptionTransactions.forEach((ele, ind) => {
-                                    // this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
+                                    this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
                                     totalObj = this.getFilteredValues(ele, category);
                                     ele.stGain = totalObj.stGain;
                                     ele.ltGain = totalObj.ltGain;
@@ -473,17 +473,16 @@ export class MfCapitalDetailedComponent implements OnInit {
                                     ele.indexLoss = totalObj.indexLoss;
                                     let purchaseTrnDate = new Date(ele.transactionDate)
                                     purchaseTrnDate.setHours(0, 0, 0, 0)
-                                    // if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
-                                    //     ele.purchasePriceRate = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
-                                    //     // ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
-                                    //     ele.purchaseAmt = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
-                                    //     // ele.amount = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
-                                    // } else {
-                                    //     ele.purchasePriceRate = ele.purchasePrice;
-                                    //     ele.purchaseAmt = ele.amount
-                                    // }
-                                    ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
-                                    ele.purchaseAmt = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
+                                    if (this.grandFatheringEffect && category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
+                                        ele.purchasePriceRate = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
+                                        // ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
+                                        ele.purchaseAmt = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
+                                        // ele.amount = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
+                                    } else {
+                                        ele.purchasePriceRate = ele.purchasePrice;
+                                        ele.purchaseAmt = ele.amount
+                                    }
+
 
                                     if (ind == 0) {
                                         ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
@@ -569,7 +568,12 @@ export class MfCapitalDetailedComponent implements OnInit {
         let indexGain;
         let indexLoss;
         let purchaseTrnDate = new Date(data.transactionDate)
-        // if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
+        if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate && this.grandFatheringEffect) {
+            gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
+        } else {
+            gainLossBasedOnGrandfathering = 'gainOrLossAmount'
+        }
+        // if (category == 'EQUITY') {
         //     gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
         // } else {
         //     gainLossBasedOnGrandfathering = 'gainOrLossAmount'

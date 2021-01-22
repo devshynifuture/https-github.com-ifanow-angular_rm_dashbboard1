@@ -541,7 +541,7 @@ export class MutualFundsCapitalComponent implements OnInit {
                             trnDate.setHours(0, 0, 0, 0);
                             if (trnDate >= this.fromDate && trnDate <= this.toDate) {
                                 if (ele.purchaceAgainstRedemptionTransactions || (ele.purchaceAgainstRedemptionTransactions) ? ele.purchaceAgainstRedemptionTransactions.length > 0 : ele.purchaceAgainstRedemptionTransactions) {
-                                    // this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
+                                    this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
                                     let totalValue = this.getCalculatedValues(ele.purchaceAgainstRedemptionTransactions, category);
                                     ele.stGain = totalValue.stGain;
                                     ele.ltGain = totalValue.ltGain;
@@ -645,8 +645,13 @@ export class MutualFundsCapitalComponent implements OnInit {
         let indexLoss = 0;
 
         data.forEach(element => {
-            // let purchaseTrnDate = new Date(element.transactionDate)
-            // if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate) {
+            let purchaseTrnDate = new Date(element.transactionDate)
+            if (category == 'EQUITY' && this.criteriaDate >= purchaseTrnDate && this.grandFatheringEffect) {
+                gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
+            } else {
+                gainLossBasedOnGrandfathering = 'gainOrLossAmount'
+            }
+            // if (category == 'EQUITY') {
             //     gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
             // } else {
             //     gainLossBasedOnGrandfathering = 'gainOrLossAmount'
@@ -659,8 +664,8 @@ export class MutualFundsCapitalComponent implements OnInit {
                 ltLoss += ((element[gainLossBasedOnGrandfathering] < 0) ? element[gainLossBasedOnGrandfathering] : 0);
             }
             if (ltGain || ltLoss) {
-                indexGain = ((data.indexGainOrLoss >= 0) ? (data.indexGainOrLoss) : 0)
-                indexLoss = ((data.indexGainOrLoss < 0) ? (data.indexGainOrLoss) : 0)
+                indexGain = ((element.indexGainOrLoss >= 0) ? (element.indexGainOrLoss) : 0)
+                indexLoss = ((element.indexGainOrLoss < 0) ? (element.indexGainOrLoss) : 0)
             }
         });
         let obj = {
