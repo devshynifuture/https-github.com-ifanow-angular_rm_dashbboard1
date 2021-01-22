@@ -218,10 +218,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
             return;
           } else {
             this.auth.setClientData(data);
-            this.myControl.setValue(singleClientData.displayName);
+            this.myControl.setValue(data.displayName);
             this.ngZone.run(() => {
-              const url = this.roleService.goToValidClientSideUrl();
-              this.router.navigate([url], { state: { ...data } });
+              this.roleService.getClientRoleDetails(data.roleId, (rolesData) => {
+                this.roleService.constructClientDataSource(rolesData);
+                const url = this.roleService.goToValidClientSideUrl();
+                this.router.navigate([url], { state: { ...data } });
+              });
             });
           }
         },
@@ -233,8 +236,11 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.auth.setClientData(singleClientData);
       this.myControl.setValue(singleClientData.displayName);
       this.ngZone.run(() => {
-        const url = this.roleService.goToValidClientSideUrl();
-        this.router.navigate([url], { state: { ...singleClientData } });
+        this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
+          this.roleService.constructClientDataSource(rolesData);
+          const url = this.roleService.goToValidClientSideUrl();
+          this.router.navigate([url], { state: { ...singleClientData } });
+        });
       });
     }
   }

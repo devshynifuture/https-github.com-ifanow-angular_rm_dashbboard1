@@ -156,12 +156,15 @@ export class AccountsComponent implements OnInit {
      });*/
 
     this.showRouter = false;
-    setTimeout(() => {
+    // setTimeout(() => {
+    this.roleService.getClientRoleDetails(AuthService.getUserInfo().roleId, (rolesData) => {
+      this.roleService.constructAdminDataSource(rolesData);
       this.customerOverview.clearServiceData();
       localStorage.removeItem('clientData');
       sessionStorage.removeItem('clientData');
       this.routingStateService.goToSpecificRoute('/admin/dashboard');
-    }, 200);
+    });
+    // }, 200);
   }
 
 }

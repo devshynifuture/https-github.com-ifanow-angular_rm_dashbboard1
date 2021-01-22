@@ -26,27 +26,27 @@
         <div class="col-width-69 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
             <div class="row pt-28" *ngIf="inputData?.insuranceType == 1">
                 <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">ACTUAL</p>
+                    <p class="f-12 m-0 text-primitive">COVERAGE</p>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
                             <h3 class="m-0  ">
                                 <span [hidden]="isLoadingPlan">&#8377;</span>
-                                <span appFormatNumber [value]="insuranceDetails?.actual"></span>
+                                <span appFormatNumber [value]="insuranceDetails?.actualAmount"></span>
                             </h3>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">ADVICE</p>
+                    <p class="f-12 m-0 text-primitive">ADDITIONAL REQUIRED</p>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
                             <h3 class="m-0" *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                    [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
+                                    [value]="insuranceDetails?.adviceAmount ? insuranceDetails?.adviceAmount : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
                             </h3>
                             <h3 class="m-0" *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                    [value]="insuranceDetails?.advice"></span>
+                                    [value]="insuranceDetails?.adviceAmount"></span>
                             </h3>
                         </div>
                     </div>
@@ -1084,26 +1084,26 @@
                                 <tr>
                                     <td>
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
-                                            ACTUAL </p>
+                                            COVERAGE </p>
                                         <h5 style="font-size: 18px; margin: 0px;">
                                             Rs. <span appFormatNumber
-                                                [value]="inputData?.insuranceType == 1 ? insuranceDetails?.actual : '0'"></span>
+                                                [value]="inputData?.insuranceType == 1 ? insuranceDetails?.actualAmount : '0'"></span>
                                         </h5>
                                     </td>
 
 
                                     <td>
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
-                                            ADVICE </p>
+                                            ADDITIONAL REQUIRED </p>
                                         <h5 style="font-size: 18px; margin: 0px;"
                                             *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                             <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                                [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
+                                                [value]="insuranceDetails?.adviceAmount ? insuranceDetails?.adviceAmount : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
                                         </h5>
                                         <h5 style="font-size: 18px; margin: 0px;"
                                             *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
                                             <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                                [value]="insuranceDetails?.advice"></span>
+                                                [value]="insuranceDetails?.adviceAmount"></span>
                                         </h5>
                                     </td>
                                 </tr>

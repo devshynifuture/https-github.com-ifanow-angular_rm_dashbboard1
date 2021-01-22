@@ -11,8 +11,7 @@
             <a (click)="_value=1" [routerLink]="['/customer/detail/account/summary']"
                 *ngIf="roleService.portfolioPermission.subModule.portfolioDashboard.enabled" mat-tab-link
                 routerLinkActive="active">SUMMARY</a>
-            <a (click)="_value=2" (click)="goToValidAssetUrl()" mat-tab-link
-                [ngClass]="{'active': _value==2}">ASSETS</a>
+            <a (click)="_value=2;goToValidAssetUrl()" mat-tab-link [ngClass]="{'active': _value==2}">ASSETS</a>
             <a (click)="_value=3" [routerLink]="['/customer/detail/account/liabilities']"
                 *ngIf="roleService.portfolioPermission.subModule.liabilities.enabled" mat-tab-link
                 routerLinkActive="active">LIABILITIES</a>

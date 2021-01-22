@@ -859,6 +859,10 @@ button.primary-sm {
   flex-wrap: nowrap !important;
 }
 
+.plan-profile-full-height{
+  height: calc(100vh - 120px);
+}
+
 @media(max-width:1200px) {
   .pl-15-1200 {
     padding-left: 15px !important;
@@ -931,21 +935,41 @@ button.primary-sm {
 }
 
 
-//  @media screen and (orientation:portrait) {
-//    #tabviewJs {
-//     transform: rotate(-90deg);
-//     transform-origin: 49% 66%
-// }
-// .loginBox_adv .h-100vh{
-//   height: auto ;
-// }
-// #ui-overview-subscription .vertical-menu {
-//   height: 63vh;
-// }
+ @media screen  and (orientation:portrait) {
+   #tabviewJs {
+    transform: rotate(-90deg);
+    transform-origin: 49% 66%;
+}
+.loginBox_adv .h-100vh{
+  height: auto ;
+}
+#ui-overview-subscription .vertical-menu {
+  height: 63vh;
+}
 
-// .width-220 {
-//   width: 175px;
-//   height: auto; 
-// }
+.width-220 {
+  width: 175px;
+  height: auto; 
+}
 
-// }
+.plan-profile-full-height {
+  height: calc(100vh - 410px);
+}
+
+
+
+}
+
+
+@media(max-width:767px) {
+
+  #tabviewJs {
+    transform: none;
+    transform-origin: center;
+    width: auto !important;
+    height: auto !important;
+}
+.loginBox_adv .h-100vh {
+  height: 100vh;
+}
+ }

@@ -1007,8 +1007,30 @@
                                     <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.other_commodity != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #otherComm
-                                                (change)="checkAndLoadPdf($event.checked,'OthersComm','','Portfolio / Others',false,otherComm)">
+                                                (change)="checkAndLoadPdf($event.checked,'other','','Portfolio / Others',false,otherComm)">
                                                 Portfolio / Others
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12" (opened)="panelOpenState = true"
+                                *ngIf="mfCount && mfCount.otherAsset != 0">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
+                                        <h5 class=" m-0">Other assets
+                                        </h5>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #other
+                                                (change)="checkAndLoadPdf($event.checked,'other','','Portfolio / Other',false,other)">
+                                                Portfolio / Other assets
                                             </mat-checkbox>
                                         </div>
 

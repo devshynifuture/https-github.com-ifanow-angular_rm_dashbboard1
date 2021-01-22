@@ -90,12 +90,12 @@ export class LoginService {
       authService.setUserInfo(userData);
       router.navigate(['support', 'dashboard']);
     } else {
-      this.roleService.getRoleDetails(userData.roleId, (rolesData) => {
+      this.roleService.getClientRoleDetails(userData.roleId, (rolesData) => {
         authService.setToken('authTokenInLoginComponent');
         authService.setUserInfo(userData);
         userData.id = userData.clientId;
         authService.setClientData(userData);
-        this.roleService.constructAdminDataSource(rolesData);
+        this.roleService.constructClientDataSource(rolesData);
         const url = this.roleService.goToValidClientSideUrl();
         router.navigate([url]);
       });

@@ -23,9 +23,9 @@
                 <a (click)="goToValidOverviewUrl();tabValue=1" [ngClass]="{'successBorder': tabValue==1}"
                     *ngIf="roleService.overviewPermission.enabled" routerLinkActive="successBorder"
                     mat-tab-link>OVERVIEW</a>
-                <a (click)="tabValue=2" [ngClass]="{'successBorder': tabValue==2}"
-                    [routerLink]="['/customer/detail/account']" *ngIf="roleService.portfolioPermission.enabled"
-                    routerLinkActive="successBorder" mat-tab-link>PORTFOLIO</a>
+                <a (click)="tabValue=2;goToPortfolioValidUrl()" [ngClass]="{'successBorder': tabValue==2}"
+                    *ngIf="roleService.portfolioPermission.enabled" routerLinkActive="successBorder"
+                    mat-tab-link>PORTFOLIO</a>
                 <a (click)="goToPlanValidUrl();tabValue=3" [ngClass]="{'successBorder': tabValue==3}" class="planWidth"
                     [routerLink]="['/customer/detail/plan']" *ngIf="roleService.planPermission.enabled"
                     routerLinkActive="successBorder" mat-tab-link>PLAN</a>

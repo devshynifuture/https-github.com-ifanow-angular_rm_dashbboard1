@@ -51,10 +51,12 @@ export class PlanComponent implements OnInit {
   }
 
   goToAdvisorHome() {
-    localStorage.removeItem('clientData');
-    sessionStorage.removeItem('clientData');
-    this.routingStateService.goToSpecificRoute('/admin/dashboard');
-    this.customerOverview.clearServiceData();
-
+    this.roleService.getClientRoleDetails(AuthService.getUserInfo().roleId, (rolesData) => {
+      this.roleService.constructAdminDataSource(rolesData);
+      localStorage.removeItem('clientData');
+      sessionStorage.removeItem('clientData');
+      this.routingStateService.goToSpecificRoute('/admin/dashboard');
+      this.customerOverview.clearServiceData();
+    });
   }
 }

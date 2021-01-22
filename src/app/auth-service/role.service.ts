@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Injectable } from '@angular/core/src/metadata/*';
 import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
 import { UtilService } from '../services/util.service';
@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 export class RoleService {
 
   constructor(
-    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private settingsService: SettingsService,
     private utilService: UtilService,
     private authService: AuthService
@@ -24,7 +24,7 @@ export class RoleService {
         this.constructAdminDataSource(advisorRoleData);
       }
       if (AuthService.getUserInfo()) {
-        this.getRoleDetails(AuthService.getUserInfo().roleId, undefined);
+        (!AuthService.getClientData()) ? this.getRoleDetails(AuthService.getUserInfo().roleId, undefined) : this.getClientRoleDetails(AuthService.getClientData().roleId, undefined);
       }
     }
   }
@@ -405,6 +405,27 @@ export class RoleService {
     return;
   }
 
+  getClientRoleDetails(roleId, callbackMethod: (args: any) => void) {
+    // const observable = new Observable();
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
+      console.log('roleService getRoleDetails response : ', res);
+      if (callbackMethod) {
+        callbackMethod(res);
+      }
+      if (res) {
+        AuthService.setAdvisorRolesSettings(res);
+        this.allPermissionData.next(res);
+        this.constructClientDataSource(res);
+      }
+    }, err => {
+      if (callbackMethod) {
+        callbackMethod(err);
+      }
+      console.log('roleService getRoleDetails err : ', err);
+    });
+    return;
+  }
+
   constructAdminDataSource(adminDatasource) {
     for (const key in adminDatasource) {
       const subModules = adminDatasource[key];
@@ -439,6 +460,31 @@ export class RoleService {
     adminDatasource.activity ? this.setActivityPermissions(adminDatasource.activity.subModule) : '';
     adminDatasource.transact ? this.setTransactionPermission(adminDatasource.transact.subModule) : this.transactionPermission.enabled = false;
     adminDatasource.portfolio ? this.setPortfolioPermission(adminDatasource.portfolio) : this.portfolioPermission.enabled = false;
+  }
+
+  constructClientDataSource(clientDatasource) {
+    for (const key in clientDatasource) {
+      const subModules = clientDatasource[key];
+      this.setClientPermissions(subModules.parentId, subModules.showModule);
+    }
+    clientDatasource.activity ? this.setActivityPermissions(clientDatasource.activity.subModule) : '';
+    clientDatasource.transact ? this.setTransactionPermission(clientDatasource.transact.subModule) : this.transactionPermission.enabled = false;
+    clientDatasource.portfolio ? this.setPortfolioPermission(clientDatasource.portfolio) : this.portfolioPermission.enabled = false;
+    clientDatasource.overview ? this.setOverviewPermissions(clientDatasource.overview.subModule) : '';
+    clientDatasource.plan ? this.setPlanPermission(clientDatasource.plan.subModule) : this.planPermission.enabled = false;
+  }
+  setClientPermissions(moduleId, enabled) {
+    if (moduleId == 66) {
+      this.activityPermission.enabled = enabled;
+    } else if (moduleId == 74) {
+      this.transactionPermission.enabled = enabled;
+    } else if (moduleId == 8) {
+      this.overviewPermission.enabled = enabled;
+    } else if (moduleId == 42) {
+      this.planPermission.enabled = enabled;
+    } else if (moduleId == 23) {
+      this.portfolioPermission.enabled = enabled;
+    }
   }
 
   setPermissions(moduleId, enabled) {
@@ -528,11 +574,19 @@ export class RoleService {
   }
 
   setPeoplePermissions(peoplePermission) {
-    this.peoplePermission.subModule.clients.enabled = peoplePermission.clients.showModule;
-    this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
-    this.peoplePermission.subModule.clientsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.clients.subModule.clients.capabilityList);
-    this.peoplePermission.subModule.leadsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.leads.subModule.leads.capabilityList);
-    this.peoplePermission.subModule.leadsCapability.convertToclient = peoplePermission.leads.subModule.leads.capabilityList[7].enabledOrDisabled == 1 ? true : false;
+    if (peoplePermission.clients) {
+      this.peoplePermission.subModule.clients.enabled = peoplePermission.clients.showModule;
+      this.peoplePermission.subModule.clientsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.clients.subModule.clients.capabilityList);
+    } else {
+      this.peoplePermission.subModule.clients.enabled = false;
+    }
+    if (peoplePermission.leads) {
+      this.peoplePermission.subModule.leads.enabled = peoplePermission.leads.showModule;
+      this.peoplePermission.subModule.leadsCapability = UtilService.getDetailedCapabilityMap(peoplePermission.leads.subModule.leads.capabilityList);
+      this.peoplePermission.subModule.leadsCapability.convertToclient = peoplePermission.leads.subModule.leads.capabilityList[7].enabledOrDisabled == 1 ? true : false;
+    } else {
+      this.peoplePermission.subModule.leads.enabled = false;
+    }
   }
 
   setBackofficePermissions(backOfficePermission) {
