@@ -335,7 +335,7 @@
       </div>
     </div>
     <div formArrayName="sovereignGoldTransactionList">
-      <div *ngIf="addTransactionList>0" class="row  add-liabilities">
+      <div class="row  add-liabilities">
         <div class="col-md-3 pl-0">
           <label class="f-14"> Transaction date</label>
         </div>
@@ -347,7 +347,7 @@
         </div>
       </div>
       <div class="pb-28 row"
-        *ngFor="let singleTransForm of oldBondForm.controls['sovereignGoldTransactionList'].controls;index as i">
+        *ngFor="let singleTransForm of goldBondForm.controls['sovereignGoldTransactionList'].controls;index as i">
         <div class="col-md-3 pl-0">
           <div class="form-group mb-0">
             <mat-form-field class="ba-date">
@@ -396,8 +396,7 @@
         </div>
         <div class="col-md-2 p-0">
           <div class="pt-8">
-            <i class="material-icons text-primitive c-p f-20 float-left" *ngIf="i==addTransactionList-1"
-              (click)="addTransaction()">add</i>
+            <i class="material-icons text-primitive c-p f-20 float-left" (click)="addTransaction(null)">add</i>
             <i class="material-icons text-primitive c-p f-20 pl-10 " (click)="removeTransaction(i)">remove</i>
           </div>
         </div>

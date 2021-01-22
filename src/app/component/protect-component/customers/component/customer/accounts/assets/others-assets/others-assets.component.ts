@@ -129,6 +129,38 @@ export class OthersAssetsComponent implements OnInit {
     //this.pdfGen.generatePdf(rows, tableTitle);
   }
 
+  activeFilter: any = 'All';
+  filterFixedIncome(key: string, value: any, data: any) {
+    this.totalCurrentValue = 0;
+    // this.sumMaturityValue = 0;
+    let dataFiltered = [];
+    this.activeFilter = value;
+    if (value == "All") {
+      this.getOthersAssetsRes(data)
+    }
+    else {
+      data.forEach(item => {
+        if (item[key] === value) {
+          if (item.currentValueAsOnToday) {
+            this.totalCurrentValue += item.currentValueAsOnToday;
+          }
+        }
+      });
+      dataFiltered = data.filter(function (item) {
+        return item[key] === value;
+      });
+      if (dataFiltered.length <= 0) {
+        this.hideFilter = false;
+      }
+      this.datasource3.data = dataFiltered;
+    }
+
+    // this.isFixedIncomeFiltered = true;
+
+    // this.dataSource = new MatTableDataSource(data);
+    // this.dataSource.sort = this.fixedIncomeTableSort;
+  }
+
   // async ExportTOExcel(value) {
 
   //   this.excelData = [];
@@ -304,7 +336,7 @@ export class OthersAssetsComponent implements OnInit {
     );
   }
 
-  activeFilter: any = 'All';
+
   dataList: any;
   hideFilter: boolean = false;
 

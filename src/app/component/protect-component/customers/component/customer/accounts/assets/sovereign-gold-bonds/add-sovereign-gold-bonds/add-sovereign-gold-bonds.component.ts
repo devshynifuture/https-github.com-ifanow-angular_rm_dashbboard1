@@ -74,6 +74,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
   bankList: any;
   ownerName: any;
   callMethod: any;
+  minDate: Date = new Date();
   adviceShowHeaderFooter = true;
   @Input() popupHeaderText = 'Add Real estate';
   private unSubcripDemat: Subscription;

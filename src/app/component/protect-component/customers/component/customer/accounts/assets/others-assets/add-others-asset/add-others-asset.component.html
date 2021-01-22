@@ -88,10 +88,11 @@
           <h5 class="m-0 f-14 ">Amount</h5>
           <div class="form-group mb-0">
             <mat-form-field>
-              <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                type="text" class="form-control rupess br-0 " formControlName="currentValue">
-              <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
-              <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint> -->
+              <input autocomplete="off" #anuBal matInput appInputValueValidation maxlength="10"
+                [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0 "
+                formControlName="currentValue">
+              <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint> -->
+              <mat-hint align="end" class="f-12">{{anuBal.value.length}}/10</mat-hint>
               <mat-error class="f-12">
                 This field is required
               </mat-error>
@@ -102,8 +103,8 @@
           <h5 class="m-0 f-14">As on date</h5>
           <div class="form-group mb-0">
             <mat-form-field class="ba-date">
-              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="currentDate"
-                [min]="minBalDate" (focus)="picker.open()" [matDatepicker]="picker"
+              <input autocomplete="off" matInput class="form-control br-0 b-0" (dateChange)="getAsOnDate()" matInput
+                [max]="currentDate" [min]="minBalDate" (focus)="picker.open()" [matDatepicker]="picker"
                 formControlName="currentValueAsonDate" readonly>
               <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
@@ -130,9 +131,9 @@
           <h5 class="m-0 f-14 ">Debt</h5>
           <div class="form-group mb-0 iconPetage">
             <mat-form-field>
-              <input autocomplete="off" (keyup)="percentageErr()" matInput type="text" appInputValueValidation
-                [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
-                formControlName="debtAssetAllocPerc">
+              <input autocomplete="off" (input)="restrictFrom100($event)" (keyup)="percentageErr()" matInput type="text"
+                appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                class="form-control br-0 percentage" formControlName="debtAssetAllocPerc">
               <mat-error class="f-12" *ngIf="!percentErr">
                 This field is required
               </mat-error>
@@ -143,9 +144,9 @@
           <h5 class="m-0 f-14">Equity</h5>
           <div class="form-group mb-0 iconPetage">
             <mat-form-field>
-              <input autocomplete="off" (keyup)="percentageErr()" matInput type="text" appInputValueValidation
-                [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 percentage"
-                formControlName="equityAssetAllocPerc">
+              <input autocomplete="off" (input)="restrictFrom100($event)" (keyup)="percentageErr()" matInput type="text"
+                appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                class="form-control br-0 percentage" formControlName="equityAssetAllocPerc">
               <mat-error class="f-12" *ngIf="!percentErr">
                 This field is required
               </mat-error>
@@ -156,7 +157,7 @@
 
         </div>
         <div class="f-12" *ngIf="percentErr" style="color:#f44336">
-          Sum of debf and equity percentage should be 100.
+          Sum of debt and equity percentage should be 100.
         </div>
       </div>
     </div>
@@ -199,7 +200,8 @@
           <div class="form-group mb-0">
             <mat-form-field class="ba-date">
               <input autocomplete="off" matInput class="form-control br-0 b-0" matInput (focus)="picker2.open()"
-                [matDatepicker]="picker2" formControlName="maturityDate" readonly>
+                [max]='maxMaturityDate' [min]='AsOnDate' (dateChange)="getmaturityDate()" [matDatepicker]="picker2"
+                formControlName="maturityDate" readonly>
               <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker2"></mat-datepicker-toggle>
               <mat-datepicker #picker2></mat-datepicker>
               <mat-error class="f-12">
@@ -266,12 +268,12 @@
 
         </div>
 
-        <div class="col-md-4 pr-0 iconRupess">
+        <div class="col-md-4 pr-0 iconRupess" *ngIf="othersAssetForm.get('hasMaturity').value">
           <h5 class="m-0 f-14">End date</h5>
           <div class="form-group mb-0">
             <mat-form-field class="ba-date">
-              <input autocomplete="off" matInput class="form-control br-0 b-0" matInput (focus)="picker3.open()"
-                [matDatepicker]="picker3" formControlName="endDate" readonly>
+              <input autocomplete="off" matInput class="form-control br-0 b-0" [min]='AsOnDate' [max]='futureConMaxDate'
+                matInput (focus)="picker3.open()" [matDatepicker]="picker3" formControlName="endDate" readonly>
               <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker3"></mat-datepicker-toggle>
               <mat-datepicker #picker3></mat-datepicker>
               <mat-error class="f-12">
@@ -328,8 +330,11 @@
             <h5 class="m-0 f-14 ">Amount</h5>
             <div class="form-group mb-0">
               <mat-form-field class="">
-                <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                  type="text" class="form-control rupess br-0 " formControlName="purchaseAmt">
+                <input autocomplete="off" #purAmt matInput appInputValueValidation (input)="setValidation()"
+                  [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0 "
+                  maxlength="10" formControlName="purchaseAmt">
+                <mat-hint align="end" class="f-12">{{purAmt.value.length}}/10</mat-hint>
+
                 <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                 <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint> -->
                 <mat-error class="f-12">
@@ -342,8 +347,9 @@
             <h5 class="m-0 f-14">Date</h5>
             <div class="form-group mb-0">
               <mat-form-field class="ba-date ">
-                <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [max]="currentDate"
-                  (focus)="picker.open()" [matDatepicker]="picker" formControlName="purchaseDate" readonly>
+                <input autocomplete="off" matInput class="form-control br-0 b-0" matInput [min]='minPurchaseDate'
+                  [max]="AsOnDate" (focus)="picker.open()" [matDatepicker]="picker" formControlName="purchaseDate"
+                  readonly>
                 <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-error class="f-12">
