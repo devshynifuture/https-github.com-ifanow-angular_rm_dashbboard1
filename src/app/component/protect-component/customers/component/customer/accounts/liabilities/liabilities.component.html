@@ -1,6 +1,6 @@
 <div id="ui-liabilities" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
-        <div class="col-md-12 col-lg-2 p-0 pt-8 ">
+        <div class="col-md-2 col-lg-2 p-0 pt-8 ">
             <ul class="vertical-menu bg-grey lter ">
                 <li (click)="viewMode ='tab1'" (click)="sortTable('tab1');selectedItem='LIABILITIES'"
                     [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
@@ -79,7 +79,7 @@
 
 
 
-        <div class="col-md-12 col-lg-10 p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab1'">
+        <div class="col-md-10 col-lg-10 p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab1'">
             <div *ngSwitchCase="'tab1'">
                 <div class="wrapper-8">
                     <!-- <div class="row">

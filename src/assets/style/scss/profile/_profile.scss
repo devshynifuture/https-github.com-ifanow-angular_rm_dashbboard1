@@ -6,7 +6,7 @@
     display: block !important;
     width: 100%;
     text-align: left;
-    height: calc(100vh - 148px);
+    //height: calc(100vh - 148px);
     position: fixed;
     width: 16.7%;
   }
@@ -85,12 +85,10 @@
 }
 
 
-// @media screen and (orientation:portrait) { 
-
-//   #ui-overview-subscription {
-//     .vertical-menu {
-//       height: 63vh;
-//     }
-//   }
-
-// }
+@media screen and (orientation:portrait) { 
+  #ui-overview-subscription {
+    .vertical-menu {
+      height: 63vh;
+    }
+  }
+}

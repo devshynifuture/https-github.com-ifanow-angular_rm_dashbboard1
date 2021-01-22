@@ -622,7 +622,7 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
   saveAnalysis() {
     if (this.tab == 0) {
-      if (this.plannerManual > 20000 || this.plannerNeedData.length > 2000) {
+      if ((this.plannerManual && this.plannerManual.length > 20000) || (this.plannerNeedData && this.plannerNeedData.length > 2000)) {
         this.eventService.openSnackBar('Do not write planner note more than 2000 character', 'Dismiss')
       } else {
         if (this.showError || this.showErrorRetirement || this.showErrorExpectancy || this.expectancy.invalid || this.mainDependent.invalid || this.retirementAgeControl.invalid) {

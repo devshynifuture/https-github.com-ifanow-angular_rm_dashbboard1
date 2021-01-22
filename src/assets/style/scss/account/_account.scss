@@ -156,7 +156,7 @@ ul.mf-import-second-point{
 #ui-assets-account {
   .vertical-menu {
     width: 16.70vw;
-    height: calc(100vh - 147px);
+   height: 100vh;
     display: block !important;
     text-align: left;
     position: fixed;
@@ -661,7 +661,7 @@ ul.mf-import-second-point{
 
   #ui-assets-account,
   #ui-liabilities,
-  #ui-insurance #ui-profile-plan,
+  #ui-insurance,
   #ui-overview-subscription,
   #ui-documents-overview,
   #ui-overview-profile,
@@ -889,8 +889,6 @@ ul.mf-import-second-point{
 
   
   #ui-liabilities,
-  #ui-insurance,
-  #ui-profile-plan,
   #investmentPlan,
   #ui-overview-subscription,
   #ui-documents-overview,
@@ -987,9 +985,9 @@ ul.mf-import-second-point{
 @media(max-width:860px) {
 
   
-  #ui-liabilities,
-  #ui-insurance,
-  #ui-profile-plan,
+ 
+  
+  
   #investmentPlan,
   #ui-overview-subscription,
   #ui-documents-overview,
@@ -1045,9 +1043,8 @@ ul.mf-import-second-point{
 
 @media(max-width:782px) {
 
-  #ui-liabilities,
-  #ui-insurance,
-  #ui-profile-plan,
+    
+  
   #investmentPlan,
   #ui-overview-subscription,
   #ui-documents-overview,
@@ -1119,10 +1116,16 @@ ul.mf-import-second-point{
 
 
 
-// @media screen and (orientation:portrait) { 
+@media screen and (orientation:portrait) { 
+  #ui-assets-account .vertical-menu {
+    width: auto;
+    height: calc(100vh - 147px);
+    background: #F5F7F7 ;
+  }
 
-//   #ui-assets-account .vertical-menu {
-//     width: auto;
-//     height: auto;
-//   }
-// }
+  .profileOverview-2 .vertical-menu {
+    height: calc(100vh - 410px);
+  }
+
+
+}

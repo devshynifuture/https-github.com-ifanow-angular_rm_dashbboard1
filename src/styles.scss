@@ -2209,3 +2209,13 @@ a.docFileName:hover {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
 }
+
+
+@media screen  and (orientation:portrait) { 
+  #ui-insurance .vertical-menu {
+    height: calc(100vh - 410px);
+  }
+  .table-scroll {
+    max-height: 580px;
+  }
+}

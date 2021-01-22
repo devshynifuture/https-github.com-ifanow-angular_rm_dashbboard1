@@ -1,7 +1,7 @@
 <div id="ui-insurance" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
 
     <div class="row">
-        <div class="col-md-12 col-lg-2 p-0 tabViewLiabilities pt-8 pb-20">
+        <div class="col-md-2 col-lg-2 p-0 pt-8 pb-20">
 
             <div class="vertical-menu bg-grey lter">
                 <ul class="d-block " *ngIf="showLifeInsurance">
@@ -59,25 +59,11 @@
 
         </div>
 
-        <div class="col-md-12 deskLiabilities text-right">
-            <mat-form-field>
-                <mat-select [(ngModel)]="selectedInsuranceName" class="form-control">
-                    <mat-option (click)="getInsuranceData(1)" value="LIFE INSURANCE">LIFE INSURANCE</mat-option>
-                    <mat-option value="item.name" (click)="getInsuranceTypeData(1,item.id)"
-                        *ngFor="let item of lifeInsuranceList" value="item.id">{{item.name}}
-                    </mat-option>
-                    <mat-option value="GENERAL INSURANCE" (click)="getInsuranceTypeData(2,0)">GENERAL INSURANCE
-                    </mat-option>
-                    <mat-option (click)="getInsuranceTypeData(2,item.id)" *ngFor="let item of generalLifeInsuranceList"
-                        value="item.name">{{item.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+
         <!-- <div *ngIf="dataSource==undefined ">
         <mat-spinner class="loader" [diameter]="30"></mat-spinner>
     </div> -->
-        <div class="col-md-12 col-lg-10  p-0 min-height pt-28">
+        <div class="col-md-10 col-lg-10 p-0 min-height pt-28">
             <div>
                 <div class="wrapper-8">
 
