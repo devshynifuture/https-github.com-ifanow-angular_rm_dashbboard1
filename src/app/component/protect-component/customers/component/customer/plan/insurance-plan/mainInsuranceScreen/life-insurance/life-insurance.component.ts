@@ -214,6 +214,7 @@ export class LifeInsuranceComponent implements OnInit {
   clickedRecommend = false;
   recommendationsId: any;
   notes: any;
+  changesInNeedManual: boolean;
 
 
   constructor(private subInjectService: SubscriptionInject,
@@ -1110,12 +1111,22 @@ export class LifeInsuranceComponent implements OnInit {
     if (data) {
       this.insuranceDetails = data
       this.notes = this.insuranceDetails.needAnalysis.plannerNotes ? this.innerHtmlText(this.insuranceDetails.needAnalysis.plannerNotes) : null;
-      if (!this.insuranceDetails.graph) {
-        if (this.plannerObj.additionalLifeIns) {
-          this.insuranceDetails.graph = Math.round((this.insuranceDetails.actual / this.plannerObj.additionalLifeIns) * 100);
-        } else {
-          this.insuranceDetails.graph = 0;
-        }
+      // if (!this.insuranceDetails.graph) {
+      //   if (this.plannerObj.additionalLifeIns) {
+      //     if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 1) {
+      //       this.insuranceDetails.graph = Math.round(100 - (this.plannerObj.additionalLifeIns / this.insuranceDetails.actual));
+      //     } else {
+      //       this.insuranceDetails.graph = Math.round((this.insuranceDetails.actual / this.insuranceDetails.advice) * 100);
+      //     }
+      //   } else {
+      //     this.insuranceDetails.graph = 0;
+      //   }
+      // }
+      if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 1) {
+        this.insuranceDetails.graph = Math.round(100 - (this.plannerObj.additionalLifeIns / this.insuranceDetails.actualAmount));
+      }
+      if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 2) {
+        this.insuranceDetails.graph = Math.round((this.insuranceDetails.actualAmount / this.insuranceDetails.adviceAmount) * 100);
       }
     }
 
@@ -1150,7 +1161,21 @@ export class LifeInsuranceComponent implements OnInit {
     singleData[0].adviceAmount = this.insuranceDetails ? (this.insuranceDetails.advice ? this.insuranceDetails.advice : this.plannerObj.additionalLifeIns) : this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : 0;
     if (singleData[0].insuranceDetails && singleData[0].insuranceDetails.needAnalysis) {
       singleData[0].insuranceDetails.advice = singleData[0].adviceAmount
+      // singleData[0].insuranceDetails.actual = this.plannerObj.GrossLifeinsurance ? this.plannerObj.GrossLifeinsurance : singleData[0].insuranceDetails.actual;
+      // this.insuranceDetails.actual = singleData[0].insuranceDetails.actual;
       singleData[0].insuranceDetails.needAnalysis.adviceAmount = singleData[0].adviceAmount
+    }
+    if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 1) {
+      this.insuranceDetails.actualAmount = this.plannerObj.GrossLifeinsurance ? this.plannerObj.GrossLifeinsurance : singleData[0].insuranceDetails.actual;
+      this.insuranceDetails.adviceAmount = this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : singleData[0].insuranceDetails.advice;
+    } else if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 2) {
+      let actualAmount = this.insuranceDetails.actual ? this.insuranceDetails.actual : 0;
+      let adviceAmount = this.insuranceDetails.advice ? this.insuranceDetails.advice : 0;
+      this.insuranceDetails.adviceAmount = adviceAmount - actualAmount;
+      this.insuranceDetails.actualAmount = adviceAmount;
+    } else {
+      this.insuranceDetails.adviceAmount = this.insuranceDetails.advice;
+      this.insuranceDetails.actualAmount = this.insuranceDetails.actual;
     }
     this.ipService.setAllInsuranceData(this.allInsuranceData);
 

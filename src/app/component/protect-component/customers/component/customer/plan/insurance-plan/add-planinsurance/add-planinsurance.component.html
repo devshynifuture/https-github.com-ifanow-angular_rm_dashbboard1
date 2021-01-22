@@ -582,7 +582,7 @@
                         <div class="col-md-11 p-0">
                             Planner notes
                         </div>
-                        <div class="mt-16" *ngIf="storeDataNeed != ''">
+                        <div class="mt-16">
                             <app-froala (modelChange)="saveDataNeed($event)" [(model)]="storeDataNeed"></app-froala>
                         </div>
                     </div>
@@ -634,7 +634,7 @@
                         <div class="col-md-11 p-0">
                             Planner notes
                         </div>
-                        <div class="mt-16" *ngIf="storeData != ''">
+                        <div class="mt-16">
                             <app-froala (modelChange)="saveData($event)" [(model)]="storeData"></app-froala>
                         </div>
                     </div>
