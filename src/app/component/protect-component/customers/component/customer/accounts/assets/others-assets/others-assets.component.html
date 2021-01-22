@@ -37,83 +37,83 @@
 
         </ng-container>
         <ng-container matColumnDef="owner">
-          <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-25 "> Owner</th>
-          <td mat-cell *matCellDef="let element" class="br w-25 ">
+          <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br  "> Owner</th>
+          <td mat-cell *matCellDef="let element" class="br   ">
             <div class="bar"></div>
             <div *ngFor="let owner of element.ownerList; let i = index">
               <span *ngIf="i == 0">{{owner.name}}</span>
             </div>
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right pr-20 w-25 f-600 "> Total</td>
+          <td mat-footer-cell *matFooterCellDef class="br text-right pr-20   f-600 "> Total</td>
         </ng-container>
         <ng-container matColumnDef="type">
-          <th mat-sort-header="typeId" mat-header-cell *matHeaderCellDef class="br text-right w-20 "> Asset name
+          <th mat-sort-header="typeId" mat-header-cell *matHeaderCellDef class="br text-right  "> Asset name
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-20 ">
+          <td mat-cell *matCellDef="let element" class="br  ">
             <div class="bar">
               {{element.assetName}}
             </div>
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right w-20 "></td>
+          <td mat-footer-cell *matFooterCellDef class="br text-right  "></td>
         </ng-container>
         <ng-container matColumnDef="value">
-          <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow"> Current value
+          <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
+            Current value
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br amt text-right">
             <div class="bar" *ngIf="element.currentValueAsOnToday == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.currentValueAsOnToday != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.currentValueAsOnToday" appFormatNumber>{{element.currentValueAsOnToday }}</span>
             </div>
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right w-15 amt p-8 f-600">
+          <td mat-footer-cell *matFooterCellDef class="br text-right amt p-8 f-600">
             <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue" appFormatNumber>{{totalCurrentValue}}</span>
             </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="pvalue">
           <th mat-sort-header="purchaseAmt" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+            class="br  right-hc text-right hide-arrow">
             Purchase value
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar" *ngIf="element.purchaseAmt == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.purchaseAmt != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.purchaseAmt" appFormatNumber>{{element.purchaseAmt}}</span></div>
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right w-15 amt p-8 f-600">
+          <td mat-footer-cell *matFooterCellDef class="br text-right  amt p-8 f-600">
             <div *ngIf="sumOfpurchasedValue != 0">{{isLoading ? ' ' : '₹'}}<span [value]="sumOfpurchasedValue"
                 appFormatNumber>{{sumOfpurchasedValue}}</span></div>
           </td>
         </ng-container>
         <ng-container matColumnDef="pDate">
           <th mat-sort-header="purchaseDate" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+            class="br right-hc text-right hide-arrow">
             Date of purchase
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br amt text-right">
             <div class="bar" *ngIf="!element.purchaseDate"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.purchaseDate">{{element.purchaseDate | date:'dd/MM/yyyy'}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="rate">
-          <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br w-15 right-hc text-right hide-arrow">
+          <th mat-sort-header="rate" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
             Growth rate
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar">{{element.growthRate}}<span *ngIf="!isLoading">%</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="desc">
-          <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br w-25 "> Description
+          <th mat-sort-header="description" mat-header-cell *matHeaderCellDef class="br  w-20 "> Description
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-25 ">
+          <td mat-cell *matCellDef="let element" class="br   ">
             <div class="bar" *ngIf="!element.description"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.description">{{element.description}}</div>
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right w-25 "></td>
+          <td mat-footer-cell *matFooterCellDef class="br text-right   "></td>
         </ng-container>
         <ng-container matColumnDef="status">
           <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Status</th>
