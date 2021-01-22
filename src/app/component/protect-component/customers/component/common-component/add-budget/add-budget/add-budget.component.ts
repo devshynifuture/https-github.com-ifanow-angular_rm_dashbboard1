@@ -157,7 +157,7 @@ export class AddBudgetComponent implements OnInit {
         familyMemberId: this.familyMemberId,
         repeatFrequency: this.recuring.controls.repeatFrequency.value,
         amount: this.recuring.controls.amount.value,
-        paymentModeId: this.recuring.controls.paymentModeId.value ? this.recuring.controls.paymentModeId.value : null,
+        paymentModeId: this.recuring.controls.paymentModeId.value ? this.recuring.controls.paymentModeId.value : '0',
         startsFrom: this.recuring.controls.startsFrom.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
         numberOfYearOrNumberOfTime: (this.recuring.controls.numberOfYearOrNumberOfTime.value == undefined) ? null : this.recuring.controls.numberOfYearOrNumberOfTime.value,
@@ -204,7 +204,7 @@ export class AddBudgetComponent implements OnInit {
         startsFrom: this.budget.controls.expenseDoneOn.value,
         amount: this.budget.controls.amount.value,
         time: this.budget.controls.timeInMilliSec.value,
-        paymentModeId: this.budget.controls.paymentModeId.value ? this.budget.controls.paymentModeId.value : null,
+        paymentModeId: this.budget.controls.paymentModeId.value ? this.budget.controls.paymentModeId.value : '0',
         BudgetCategoryId: this.budget.controls.category.value,
         description: this.budget.controls.description.value,
         id: this.budget.controls.id.value
@@ -214,6 +214,7 @@ export class AddBudgetComponent implements OnInit {
           data => this.addBudgetRes(data)
         );
       } else {
+
         //edit call
         this.planService.editBudget(obj).subscribe(
           data => this.editBudgetRes(data)
