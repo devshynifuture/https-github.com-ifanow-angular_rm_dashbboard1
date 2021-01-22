@@ -931,19 +931,21 @@ button.primary-sm {
 }
 
 
- @media screen and (orientation:portrait) {
-  // @media screen and (min-width: 768px) and (max-width: 991px) {
-  #tabviewJs {
-    transform: rotate(-90deg);
-    transform-origin: 49% 66%
-}
-.loginBox_adv .h-100vh{
-  height: auto ;
-}
-#ui-overview-subscription .vertical-menu {
-  height: 63vh;
-}
+//  @media screen and (orientation:portrait) {
+//    #tabviewJs {
+//     transform: rotate(-90deg);
+//     transform-origin: 49% 66%
+// }
+// .loginBox_adv .h-100vh{
+//   height: auto ;
+// }
+// #ui-overview-subscription .vertical-menu {
+//   height: 63vh;
+// }
 
+// .width-220 {
+//   width: 175px;
+//   height: auto; 
+// }
 
-
-}
+// }
