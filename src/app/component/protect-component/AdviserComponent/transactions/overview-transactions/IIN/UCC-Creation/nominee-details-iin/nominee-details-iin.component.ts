@@ -68,7 +68,7 @@ export class NomineeDetailsIinComponent implements OnInit {
 
   @Input()
   set data(data) {
-    if (JSON.parse(localStorage.getItem('nominee' + data.clientData.clientId))) {
+    if (JSON.parse(localStorage.getItem('nominee' + data.clientData.clientId)) && data.draft == true) {
       this.inputData = JSON.parse(localStorage.getItem('nominee' + data.clientData.clientId));
       console.log('local storage', this.inputData)
     }

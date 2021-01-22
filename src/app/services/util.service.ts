@@ -13,6 +13,7 @@ import { quotationTemplate } from './quotationTemplate';
 import { debounceTime } from 'rxjs/operators';
 import { AppConstants } from './app-constants';
 import { apiConfig } from '../config/main-config';
+import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root',
@@ -836,6 +837,95 @@ export class UtilService {
     }
     // secondLine = secondLine.substr(secondLine.indexOf(' '), 79)
   };
+
+  static checkEmailListUpdation(originalEmailList, editedEmailList) {
+    let emailListJson = [];
+    if (originalEmailList.length == 0) {
+      emailListJson = editedEmailList.value;
+    } else {
+      originalEmailList.forEach(singleEmail => {
+        editedEmailList.value.forEach(secondEmail => {
+          if (singleEmail.id === secondEmail.id) {
+            if ((singleEmail.email != secondEmail.emailAddress || singleEmail.defaultFlag != secondEmail.markAsPrimary)) {
+              singleEmail['isUpdate'] = 1;
+              singleEmail['isActive'] = 1;
+              singleEmail['email'] = secondEmail.emailAddress;
+              singleEmail['defaultFlag'] = secondEmail.markAsPrimary
+              emailListJson.push(singleEmail);
+            } else {
+              emailListJson.push(singleEmail);
+            }
+          }
+          if (secondEmail.id == undefined) {
+            emailListJson.push({
+              email: secondEmail.emailAddress,
+              userId: singleEmail.userId,
+              defaultFlag: secondEmail.markAsPrimary
+            });
+          }
+          // if (editedEmailList.value.some(element => element.id && element.id != singleEmail.id)) {
+          //   emailListJson.push({
+          //     email: singleEmail.email,
+          //     userId: singleEmail.userId,
+          //     isUpdate: 1,
+          //     isActive: 0,
+          //     defaultFlag: singleEmail.markAsPrimary ? singleEmail.markAsPrimary : singleEmail.defaultFlag
+          //   });
+          //   emailListJson[0].defaultFlag = true;
+          // }
+        });
+      })
+    }
+    emailListJson = UtilService.getUniqueListBy(emailListJson, 'id')
+    return emailListJson;
+  }
+
+  static checkMobileListUpdation(originalMobileList, editedMobileList) {
+    let mobileListJson = []
+    if (originalMobileList.length == 0) {
+      mobileListJson = editedMobileList.value;
+    } else {
+      originalMobileList.forEach(singleMobile => {
+        editedMobileList.value.forEach(secondMobile => {
+          if (singleMobile.id == secondMobile.id && singleMobile.mobileNo != secondMobile.number) {
+            singleMobile['isUpdate'] = 1;
+            singleMobile['isActive'] = 1;
+            singleMobile['mobileNo'] = secondMobile.number;
+            singleMobile['isdCodeId'] = secondMobile.code
+            mobileListJson.push(singleMobile);
+          } else if (secondMobile.id == undefined) {
+            singleMobile['defaultFlag'] = true;
+            mobileListJson.push({
+              mobileNo: secondMobile.number,
+              isdCodeId: secondMobile.code,
+              defaultFlag: true,
+              userId: singleMobile.userId
+            });
+          }
+          else if ((singleMobile.id == secondMobile.id && singleMobile.mobileNo == secondMobile.number)) {
+            mobileListJson.push(singleMobile);
+          }
+          else if (editedMobileList.value.some(element => element.id != singleMobile.id)) {
+            mobileListJson.push({
+              mobileNo: secondMobile.number,
+              isdCodeId: secondMobile.code,
+              defaultFlag: true,
+              userId: singleMobile.userId,
+              isUpdate: 1,
+              isActive: 0
+            });
+            mobileListJson[0].defaultFlag = true;
+          }
+        });
+      })
+    }
+    mobileListJson = UtilService.getUniqueListBy(mobileListJson, 'id')
+    return mobileListJson;
+  }
+
+  static getUniqueListBy(arr, key) {
+    return [...new Map(arr.map(item => [item[key], item])).values()];
+  }
 
   isEmptyObj(obj) {
     for (const key in obj) {

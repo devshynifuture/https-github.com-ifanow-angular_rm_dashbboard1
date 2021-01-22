@@ -4,6 +4,7 @@ import { LeftsidebarComponent } from './leftsidebar.component';
 import { SubscriptionGuard } from '../../../guards/subscription.guard';
 import { RoleGuard } from 'src/app/auth-service/role.guard';
 import { BackOfficeGuard } from '../../protect-component/AdviserComponent/backOffice/back-office.guard';
+import { RestrictedUserComponent } from './restricted-user/restricted-user.component';
 
 
 const routes: Routes = [
@@ -97,6 +98,10 @@ const routes: Routes = [
       {
         path: 'refers',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Refer&Earn/refer-earn/refer-earn.module').then(m => m.ReferEarnModule)
+      },
+      {
+        path: 'restricted',
+        component: RestrictedUserComponent
       }
     ]
   }

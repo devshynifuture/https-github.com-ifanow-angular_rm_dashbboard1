@@ -1,22 +1,22 @@
-import {Title} from '@angular/platform-browser';
-import {Subscription} from 'rxjs';
-import {EmailDataStorageService} from './../../../email-data-storage.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from './../../../../../../../Data-service/event.service';
-import {ComposeEmailComponent} from './../../compose-email/compose-email.component';
-import {ConfirmDialogComponent} from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatDialog, MatPaginator} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
+import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { EmailDataStorageService } from './../../../email-data-storage.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from './../../../../../../../Data-service/event.service';
+import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
+import { ConfirmDialogComponent } from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog, MatPaginator } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
-import {EmailServiceService} from './../../../email-service.service';
-import {ExtractedGmailDataI, GmailInboxResponseI, MessageListArray,} from '../../email.interface';
-import {EmailUtilService} from 'src/app/services/email-util.service';
-import {UtilService} from '../../../../../../../services/util.service';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {RoleService} from 'src/app/auth-service/role.service';
+import { EmailServiceService } from './../../../email-service.service';
+import { ExtractedGmailDataI, GmailInboxResponseI, MessageListArray, } from '../../email.interface';
+import { EmailUtilService } from 'src/app/services/email-util.service';
+import { UtilService } from '../../../../../../../services/util.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { RoleService } from 'src/app/auth-service/role.service';
 
 @Component({
   selector: 'app-email-listing',
@@ -93,7 +93,7 @@ export class EmailListingComponent implements OnInit {
   location = '';
   secondInit = false;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
     this.advisorEmail = AuthService.getUserInfo().userName;
@@ -104,8 +104,8 @@ export class EmailListingComponent implements OnInit {
     this.isLoading = true;
     let location;
     location = this.router.url.split('/')[
-    this.router.url.split('/').length - 1
-      ];
+      this.router.url.split('/').length - 1
+    ];
 
     console.log('this is router url:', this.router.url);
     if (this.router.url.split('/').includes('admin')) {
@@ -181,9 +181,8 @@ export class EmailListingComponent implements OnInit {
             localStorage.removeItem('successStoringToken');
           }
           this.isLoading = false;
-          this.router.navigate(['google-connect'], {relativeTo: this.activatedRoute,});
+          this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute, });
         } else {
-          // this.paginatorLength = response.threadsTotal;
           this.getRightSideNavListCount(location);
         }
       },
@@ -328,7 +327,6 @@ export class EmailListingComponent implements OnInit {
   }
 
   fetchGmailData(location) {
-    // this.canHitGmailApi = res;
     if (this.emailDataStorageService.canHitGmailApi()) {
       this.isLoading = true;
       this.getGmailList(location.toUpperCase(), '');
@@ -345,7 +343,7 @@ export class EmailListingComponent implements OnInit {
         if (unreadCount > 0) {
           this.titleService.setTitle(`MyPlanner - Inbox (${unreadCount})`);
           this.emailDataStorageService.storeUnReadCount(unreadCount);
-          this.navCountObj = {...this.emailDataStorageService.navCountObj};
+          this.navCountObj = { ...this.emailDataStorageService.navCountObj };
           this.navCountObj.unreadCount = unreadCount;
           this.emailDataStorageService.storeNavCount(this.navCountObj);
         } else {
@@ -362,7 +360,7 @@ export class EmailListingComponent implements OnInit {
     if (this.selectedThreadsArray.length !== 0) {
       this.selectedThreadsArray.forEach((selectedThread) => {
         const {
-          idsOfThread: {id},
+          idsOfThread: { id },
         } = selectedThread;
         ids.push(id);
       });
@@ -427,7 +425,7 @@ export class EmailListingComponent implements OnInit {
 
     const fragmentData = {
       flag: 'composeEmail',
-      data: {dataToSend: dataObj, choice: 'draft'},
+      data: { dataToSend: dataObj, choice: 'draft' },
       id: 1,
       state: 'open35',
       componentName: ComposeEmailComponent,
@@ -443,9 +441,9 @@ export class EmailListingComponent implements OnInit {
         }
       });
 
-    this.emailService.sendNextData({dataObj, threadIdsArray, gmailThread});
+    this.emailService.sendNextData({ dataObj, threadIdsArray, gmailThread });
     this.emailService.openComposeEmail(
-      {dataObj, threadIdsArray, gmailThread},
+      { dataObj, threadIdsArray, gmailThread },
       ComposeEmailComponent,
       'draft'
     );
@@ -455,11 +453,10 @@ export class EmailListingComponent implements OnInit {
   // move single thread to trash
   moveThreadToTrash(element) {
     const {
-      idsOfThread: {id},
+      idsOfThread: { id },
     } = element;
     const ids: string[] = [];
     ids.push(id);
-    // {"ids":["abc","xyz"],"userId":2727,"emailId":"gaurav@futurewise.co.in"}
     this.threadsToTrashService(ids);
   }
 
@@ -468,7 +465,7 @@ export class EmailListingComponent implements OnInit {
     const ids: string[] = [];
     this.selectedThreadsArray.forEach((selectedThread) => {
       const {
-        idsOfThread: {id},
+        idsOfThread: { id },
       } = selectedThread;
       ids.push(id);
     });
@@ -575,10 +572,8 @@ export class EmailListingComponent implements OnInit {
           this.resultSizeEstimate = responseData.resultSizeEstimate;
           const tempArray1 = [];
 
-          // const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
 
-          // const { gmailThreads, nextPageToken } = parsedResponseData;
-          const {gmailThreads, nextPageToken} = responseData;
+          const { gmailThreads, nextPageToken } = responseData;
 
           this.nextPageToken = nextPageToken;
           this.gmailThreads = gmailThreads;
@@ -586,9 +581,6 @@ export class EmailListingComponent implements OnInit {
           let isUnReadCount = 0;
           console.log('this is response data::::', responseData);
           gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
-            // thread.messages.map((message) => {
-            //   message.payload.body.data = btoa(message.payload.body.data);
-            // });
 
             let parsedData: any, // object containing array of decoded parts and headers
               idsOfThread: any, // Object of historyId and Id of thread
@@ -634,7 +626,7 @@ export class EmailListingComponent implements OnInit {
             );
 
             dateIdsSnippetsOfMessages.forEach((element, index) => {
-              const {internalDate} = element;
+              const { internalDate } = element;
               messageDates.push(internalDate);
             });
 
@@ -670,12 +662,12 @@ export class EmailListingComponent implements OnInit {
               messageCount: messageCountInAThread,
               labelIdsfromMessages,
               emailers: `${typeof extractSubjectFromHeaders.headerFromArray[0] ===
-              'string'
+                'string'
                 ? extractSubjectFromHeaders.headerFromArray[0]
                   .split('<')[0]
                   .trim()
                 : ''
-              }`,
+                }`,
               subjectMessage: {
                 subject: extractSubjectFromHeaders.headerSubjectArray[0],
                 message: dateIdsSnippetsOfMessages[0].snippet,
@@ -686,18 +678,17 @@ export class EmailListingComponent implements OnInit {
               hasAttachment:
                 attachmentArrayObjects.length !== 0
                   ? attachmentArrayObjects[0].filename !== ''
-                  ? true
-                  : false
+                    ? true
+                    : false
                   : false,
             };
 
-            // tempArray.push(Obj);
             tempArray1.push(Obj1);
           });
           if (this.location === 'inbox') {
             this.emailDataStorageService.storeUnReadCount(isUnReadCount);
             this.unreadCount = isUnReadCount;
-            this.navCountObj = {...this.emailDataStorageService.navCountObj};
+            this.navCountObj = { ...this.emailDataStorageService.navCountObj };
             this.navCountObj.unreadCount = this.unreadCount;
             this.emailDataStorageService.storeNavCount(this.navCountObj);
             if (this.unreadCount && this.unreadCount > 0) {
@@ -706,7 +697,6 @@ export class EmailListingComponent implements OnInit {
           }
 
           this.messageListArray = tempArray1;
-          // this.messageDetailArray = tempArray;
 
           this.isLoading = false;
           if (!this.isCustomerEmail) {
@@ -875,14 +865,14 @@ export class EmailListingComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1
-    }`; //
+      }`; //
   }
 
   // routing to view page`
   gotoEmailView(dataObj: any): void {
     dataObj.isRead = true;
     this.emailService.sendNextData(dataObj);
-    this.router.navigate(['view'], {relativeTo: this.activatedRoute});
+    this.router.navigate(['view'], { relativeTo: this.activatedRoute });
     this.emailDataStorageService.storeUnReadCount(this.unreadCount -= 1);
   }
 
@@ -906,7 +896,7 @@ export class EmailListingComponent implements OnInit {
     const ids = [];
     selectedArray.forEach((item) => {
       const {
-        idsOfThread: {id},
+        idsOfThread: { id },
       } = item;
       ids.push(id);
     });

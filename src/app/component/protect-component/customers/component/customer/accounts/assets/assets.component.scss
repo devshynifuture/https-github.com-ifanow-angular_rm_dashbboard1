@@ -557,3 +557,11 @@ mat-drawer-content {
 .marLeft {
   margin-left: 16.7% !important;
 }
+
+
+@media screen and (orientation:portrait) {
+  .sidenav-container {
+    height: auto;
+   }
+}
+

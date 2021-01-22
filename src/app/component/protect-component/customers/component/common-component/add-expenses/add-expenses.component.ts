@@ -1,17 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PlanService} from '../../customer/plan/plan.service';
-import {ConstantsService} from '../../../../../../constants/constants.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {DatePipe} from '@angular/common';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
-import {MatDialog} from '@angular/material';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {CustomerService} from '../../customer/customer.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../customer/plan/plan.service';
+import { ConstantsService } from '../../../../../../constants/constants.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { MatDialog } from '@angular/material';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { CustomerService } from '../../customer/customer.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -57,7 +57,7 @@ export class AddExpensesComponent implements OnInit {
   ownerNameToSend: any;
 
   constructor(private custumService: CustomerService, private enumService: EnumServiceService, private dialog: MatDialog, private peopleService: PeopleService, private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private planService: PlanService, private constantService: ConstantsService, private datePipe: DatePipe) {
+    private planService: PlanService, private constantService: ConstantsService, private datePipe: DatePipe) {
   }
 
   @Input()
@@ -130,7 +130,7 @@ export class AddExpensesComponent implements OnInit {
       id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? null : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + ''],
       familyMemberId: [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: false,
       bankAcNo: [(data == undefined) ? '' : (data.linkedBankAccountNumber ? data.linkedBankAccountNumber : ''),],
@@ -161,7 +161,7 @@ export class AddExpensesComponent implements OnInit {
       id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + ''],
       familyMemberId: [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
       bankAcNo: [(data == undefined) ? '' : (data.linkedBankAccountNumber ? data.linkedBankAccountNumber : ''),],
@@ -201,7 +201,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.expenseCategoryId == (this.recuring.controls.category.value) && this.familyMemberId == element.familyMemberId) {
           isCheck = true;
-          this.recuring.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.recuring.get('ownerName').setErrors(null);
@@ -213,7 +213,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.expenseCategoryId == (this.expenses.controls.category.value) && this.familyMemberId == element.familyMemberId) {
           isCheck = true;
-          this.expenses.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
@@ -225,7 +225,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.budgetCategoryId == (this.recuring.controls.category.value) && this.familyMemberId == element.familyMemberId) {
           isCheck = true;
-          this.recuring.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.recuring.get('ownerName').setErrors(null);
@@ -237,7 +237,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.budgetCategoryId == (this.expenses.controls.category.value) && this.familyMemberId == element.familyMemberId) {
           isCheck = true;
-          this.expenses.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
@@ -259,7 +259,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.expenseCategoryId == (this.recuring.controls.category.value) && this.familyMemberId == element.familyMemberId) {
           isCheck = true;
-          this.recuring.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.recuring.get('ownerName').setErrors(null);
@@ -271,7 +271,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.expenseCategoryId == (this.expenses.controls.category.value) && selected.id == element.familyMemberId) {
           isCheck = true;
-          this.expenses.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
@@ -283,7 +283,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.budgetCategoryId == (this.recuring.controls.category.value) && selected.id == element.familyMemberId) {
           isCheck = true;
-          this.recuring.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.recuring.get('ownerName').setErrors(null);
@@ -295,7 +295,7 @@ export class AddExpensesComponent implements OnInit {
       List.forEach(element => {
         if (element.budgetCategoryId == (this.expenses.controls.category.value) && selected.id == element.familyMemberId) {
           isCheck = true;
-          this.expenses.get('ownerName').setErrors({max: 'cannot add same category'});
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
             this.expenses.get('ownerName').setErrors(null);
@@ -333,7 +333,7 @@ export class AddExpensesComponent implements OnInit {
     if (this.recuring.get('continueTill').value == '3' || this.recuring.get('continueTill').value == '4') {
       this.recuring.get('numberOfYearOrNumberOfTime').setValidators([Validators.required]);
       this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
-      this.recuring.controls.numberOfYearOrNumberOfTime.setErrors({required: true});
+      this.recuring.controls.numberOfYearOrNumberOfTime.setErrors({ required: true });
     } else {
       this.recuring.get('numberOfYearOrNumberOfTime').setValidators(null);
       this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
@@ -354,7 +354,7 @@ export class AddExpensesComponent implements OnInit {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: {bankList: this.bankList, userInfo: true, ownerList: this.ownerNameToSend ? this.ownerNameToSend : ''}
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.ownerNameToSend ? this.ownerNameToSend : '' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -414,7 +414,7 @@ export class AddExpensesComponent implements OnInit {
         familyMemberId: this.familyMemberId,
         repeatFrequency: this.recuring.controls.repeatFrequency.value,
         amount: this.recuring.controls.amount.value,
-        paymentModeId: this.recuring.controls.paymentModeId.value,
+        paymentModeId: this.recuring.controls.paymentModeId.value ? this.recuring.controls.paymentModeId.value : '0',
         startsFrom: this.datePipe.transform(this.recuring.controls.startsFrom.value, 'yyyy-MM-dd'),
         budgetCategoryId: this.recuring.controls.category.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
@@ -521,7 +521,7 @@ export class AddExpensesComponent implements OnInit {
         time: this.expenses.controls.timeInMilliSec.value,
         timeInString: this.expenses.controls.timeInMilliSec.value,
         startsFrom: this.datePipe.transform(this.expenses.controls.expenseDoneOn.value, 'yyyy-MM-dd'),
-        paymentModeId: this.expenses.controls.paymentModeId.value,
+        paymentModeId: this.expenses.controls.paymentModeId.value ? this.expenses.controls.paymentModeId.value : '0',
         expenseCategoryId: this.expenses.controls.category.value,
         budgetCategoryId: this.expenses.controls.category.value,
         description: this.expenses.controls.description.value,
@@ -575,7 +575,7 @@ export class AddExpensesComponent implements OnInit {
       flag: 'added',
       state: 'close',
       data,
-      isAdded : true,
+      isAdded: true,
       refreshRequired: true,
       value: 'addBudget'
     });
@@ -588,7 +588,7 @@ export class AddExpensesComponent implements OnInit {
       flag: 'added',
       state: 'close',
       data,
-      isAdded : false,
+      isAdded: false,
       refreshRequired: true,
       value: 'editBudget'
     });
@@ -598,7 +598,7 @@ export class AddExpensesComponent implements OnInit {
     this.barButtonOptions.active = false;
     this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({
-      isAdded : true,
+      isAdded: true,
       flag: 'added',
       state: 'close',
       data,
@@ -614,13 +614,13 @@ export class AddExpensesComponent implements OnInit {
       flag: 'added',
       state: 'close',
       data,
-      isAdded : false,
+      isAdded: false,
       refreshRequired: true,
       value: 'editExpense'
     });
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

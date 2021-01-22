@@ -60,7 +60,7 @@
                             </mat-form-field>
                         </div>
 
-                        <p class="m-0">Consent option <img src="/assets/images/svg/info.svg"></p>
+                        <!-- <p class="m-0">Consent option <img src="/assets/images/svg/info.svg"></p>
                         <mat-radio-group aria-label="Select an option" formControlName="consent">
                             <div class="row">
                                 <div class="col-md-12 p-0">
@@ -74,7 +74,7 @@
                                         on this advice is
                                         possible only after your client
                                         gives explicit consent via email.</p>
-                                    <!-- <mat-checkbox class="ml-44">Create a linked task</mat-checkbox> -->
+                                    <mat-checkbox class="ml-44">Create a linked task</mat-checkbox>
                                 </div>
 
                                 <div class="col-md-12 p-0">
@@ -87,7 +87,7 @@
 
                             </div>
 
-                        </mat-radio-group>
+                        </mat-radio-group> -->
 
 
                     </div>
@@ -109,7 +109,8 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue'">Implementation date</p>
+                        <p class="m-0 text-black pb-4" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue'">
+                            Implementation date</p>
                         <div class="form-group" *ngIf="healthInsurance.get('selectAdvice').value != 'Continue'">
                             <mat-form-field class="ba-date">
                                 <input [min]="todayDate" #implementationDate

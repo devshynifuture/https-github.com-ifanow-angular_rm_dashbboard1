@@ -312,6 +312,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     }
     let countValue = AdviceUtilsService.selectSingleCheckbox(Object.assign([], tableData));
     this.getFlagCount(tableFlag, countValue)
+    this.selectedAssetId = [...new Map(this.selectedAssetId.map(item => [item, item])).values()];
     console.log(this.selectedAssetId)
   }
 

@@ -620,23 +620,25 @@ export class ExpensesComponent implements OnInit {
     return filterArray
   }
   getExpenseGraphValueNew(data) {
-    this.basicAmountPercent = data.Basic ? data.Basic.categoryWisePercentage : 0
-    this.billsAndUtilities = data.Bills_Utilities ? data.Bills_Utilities.categoryWisePercentage : 0;
-    this.educationAmount = data.Education ? data.Education.categoryWisePercentage : 0;
-    this.entertainmentAmount = data.Entertainment ? data.Entertainment.categoryWisePercentage : 0;
-    this.housingAmount = data.Housing ? data.Housing.categoryWisePercentage : 0;
-    this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous.categoryWisePercentage : 0;
-    this.transportAmount = data.Transport ? data.Transport.categoryWisePercentage : 0;
-    this.rdAmountPercent = data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
-    this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
-    this.commitedInvestment = data.committedInvestment ? data.committedInvestment.categoryWisePercentage : 0
-    this.expenditure = data.committedExpenditure ? data.committedExpenditure.categoryWisePercentage : 0
-    this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
-    this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
-    // this.miscellaneousAmount = data.Billes_&_Utilies;
-    // this.spent = data.total ? data.total : 0;
-    if (this.tab == 'Transactions' && this.dataSource.data.length > 0) {
-      this.cashFlow('piechartExpense')
+    if (data) {
+      this.basicAmountPercent = data.Basic ? data.Basic.categoryWisePercentage : 0
+      this.billsAndUtilities = data.Bills_Utilities ? data.Bills_Utilities.categoryWisePercentage : 0;
+      this.educationAmount = data.Education ? data.Education.categoryWisePercentage : 0;
+      this.entertainmentAmount = data.Entertainment ? data.Entertainment.categoryWisePercentage : 0;
+      this.housingAmount = data.Housing ? data.Housing.categoryWisePercentage : 0;
+      this.miscellaneousAmount = data.Miscellaneous ? data.Miscellaneous.categoryWisePercentage : 0;
+      this.transportAmount = data.Transport ? data.Transport.categoryWisePercentage : 0;
+      this.rdAmountPercent = data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
+      this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
+      this.commitedInvestment = data.committedInvestment ? data.committedInvestment.categoryWisePercentage : 0
+      this.expenditure = data.committedExpenditure ? data.committedExpenditure.categoryWisePercentage : 0
+      this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
+      this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
+      // this.miscellaneousAmount = data.Billes_&_Utilies;
+      // this.spent = data.total ? data.total : 0;
+      if (this.tab == 'Transactions' && this.dataSource.data.length > 0) {
+        this.cashFlow('piechartExpense')
+      }
     }
   }
   getBudgetGraphValues() {
@@ -683,11 +685,13 @@ export class ExpensesComponent implements OnInit {
       var firstDay = new Date(date.getFullYear() - 1, 0, 1);
       var lastDay = new Date(date.getFullYear() - 1, 11, 31);
     } else if (val == '7') {
-      var firstDay = new Date(date.getFullYear(), 3, 1);
-      var lastDay = new Date(date.getFullYear() + 1, 2, 31);
+      let year = date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear();
+      var firstDay = new Date(year, 3, 1);
+      var lastDay = new Date(year + 1, 2, 31);
     } else if (val == '8') {
-      var firstDay = new Date(date.getFullYear() - 1, 3, 1);
-      var lastDay = new Date(date.getFullYear(), 2, 31);
+      let year = date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear();
+      var firstDay = new Date(year - 1, 3, 1);
+      var lastDay = new Date(year, 2, 31);
     }
 
     this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
