@@ -178,3 +178,15 @@
         position: fixed;
       }
     }
+
+
+    @media screen  and (orientation:portrait) { 
+      .documentSideBox {
+        height: auto;}
+
+        .document-side-menu {
+          .vertical-menu {
+            height: calc(100vh - 410px);
+          }
+        }
+    }

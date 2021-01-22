@@ -76,7 +76,7 @@
 
 #ui-liabilities {
     .vertical-menu {
-      height: calc(100vh - 126px);
+      height: 100vh;
       position: fixed;
       width: 16.7%;
     }
@@ -129,4 +129,16 @@ max-height: 600px;
     overflow: auto !important;
     max-height: 600px;
     }
+}
+
+
+@media screen and (orientation:portrait) { 
+
+#ui-liabilities {
+    .vertical-menu {
+        height: calc(100vh - 410px);
+      position: fixed;
+      width: 16.7%;
+    }
+  }
 }
