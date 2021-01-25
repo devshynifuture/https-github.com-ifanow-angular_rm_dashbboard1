@@ -84,6 +84,7 @@ export class LeadsClientsComponent implements OnInit {
     this.peopleService.updateClientStatus(obj).subscribe(
       data => {
         console.log(data);
+        sessionStorage.removeItem('clientList');
         this.enumDataService.searchClientList();
         this.enumDataService.searchClientAndFamilyMember();
         this.router.navigate(['/admin/people/clients']);

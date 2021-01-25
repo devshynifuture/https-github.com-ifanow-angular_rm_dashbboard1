@@ -38,7 +38,7 @@ export class AssetAllocationPieChartComponent implements OnInit {
         enabled: false
       }
     },
-     {
+    {
       name: 'Fixed income',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[2],
@@ -72,7 +72,7 @@ export class AssetAllocationPieChartComponent implements OnInit {
   clientData: any;
   advisorId: any;
   hasError: boolean = false;
-  constructor(private customerService:CustomerService,private eventService:EventService) { }
+  constructor(private customerService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();

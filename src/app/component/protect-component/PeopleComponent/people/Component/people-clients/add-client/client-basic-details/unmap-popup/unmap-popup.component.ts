@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from 'src/app/common/link-bank/link-bank.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-unmap-popup',
@@ -12,7 +12,8 @@ import { ValidatorType } from 'src/app/services/util.service';
 export class UnmapPopupComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<UnmapPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private fb: FormBuilder,
+    private utilService: UtilService) { }
   unmapForm: FormGroup;
   validatorType = ValidatorType;
 
@@ -31,6 +32,10 @@ export class UnmapPopupComponent implements OnInit {
       const obj = this.unmapForm.value;
       this.dialogRef.close(obj)
     }
+  }
+
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
   }
 
   cancel() {

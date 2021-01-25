@@ -89,11 +89,12 @@ export class MutualFundComponent implements OnInit {
       this.mfService.changeViewMode(this.viewMode);
       return;
     }
-    if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled) {
-      this.viewMode = 'Summary';
-      this.mfService.changeViewMode(this.viewMode);
-      return;
-    } if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled) {
+    // if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled) {
+    //   this.viewMode = 'Summary';
+    //   this.mfService.changeViewMode(this.viewMode);
+    //   return;
+    // }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled) {
       this.viewMode = 'All Transactions';
       this.mfService.changeViewMode(this.viewMode);
       return;

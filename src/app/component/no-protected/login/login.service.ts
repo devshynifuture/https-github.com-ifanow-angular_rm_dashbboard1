@@ -95,7 +95,7 @@ export class LoginService {
         authService.setUserInfo(userData);
         userData.id = userData.clientId;
         authService.setClientData(userData);
-        this.roleService.constructClientDataSource(rolesData);
+        this.roleService.constructAdminDataSource(rolesData);
         const url = this.roleService.goToValidClientSideUrl();
         router.navigate([url]);
       });

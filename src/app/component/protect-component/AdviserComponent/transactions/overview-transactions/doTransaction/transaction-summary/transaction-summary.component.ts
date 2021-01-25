@@ -208,7 +208,8 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
-    this.bankDetails = data;
+    if(data){
+          this.bankDetails = data;
     console.log('bank == ', this.bankDetails);
     this.getMandateDetails();
     this.bankDetails.forEach(element => {
@@ -217,8 +218,7 @@ export class TransactionSummaryComponent implements OnInit {
         element.selected = true;
       }
     });
-
-    this.bankDetails.forEach(element => {
+        this.bankDetails.forEach(element => {
       element.selected = false;
     });
     // this.bankDetails[0].selected = true
@@ -226,7 +226,9 @@ export class TransactionSummaryComponent implements OnInit {
     if (this.bankDetails.length > 1) {
       this.showBankEdit = true;
     }
-
+    }else{
+        this.eventService.openSnackBar('No bank details found', 'Dismiss');
+    }
   }
 
   selectBank(bank) {

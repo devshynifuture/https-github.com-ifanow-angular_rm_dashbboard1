@@ -342,7 +342,7 @@ export class SupportUpperPrudentComponent implements OnInit {
         dataTable.push({
           name: item.schemeName,
           nav: item.nav,
-          schemeName: '',
+          schemeName: (this.isMapped == true) ? item.mutualFundSchemeName : '',
           schemeCode: item.schemeCode,
           amfiCode: item.amfiCode,
           navTwo: '',
@@ -352,19 +352,21 @@ export class SupportUpperPrudentComponent implements OnInit {
           isMapped: this.isMapped,
           id: item.id,
           transactionDate: item.transactionDate,
-          isSchemeSelected: false
+          isSchemeSelected: false,
+          mutualFundSchemeMasterId: (this.isMapped == true) ? item.mutualFundSchemeMasterId : '',
         });
-        if (this.isMapped == true) {
-          dataTable.forEach(element => {
-            element.schemeName = item.mutualFundSchemeName
-            element.mutualFundSchemeMasterId = item.mutualFundSchemeMasterId
+        // if (this.isMapped == true) {
+        //   dataTable.forEach(element => {
+        //     element.schemeName = 
+        //     element.mutualFundSchemeMasterId = item.mutualFundSchemeMasterId
 
-          });
-        }
+        //   });
+        // }
       });
       console.log("this is some data::::::", dataTable);
       this.dataTable = dataTable;
       this.dataSource.data = dataTable;
+      this.schemeControl.setValue('');
       if (this.isMapped == true) {
         this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'map'];
 
