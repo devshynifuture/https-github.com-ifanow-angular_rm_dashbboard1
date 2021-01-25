@@ -21,7 +21,6 @@ p {
 
 #piechartMutualFund {
   height: 405px;
-  width: 350px;
 }
 
 .highcharts-data-table table {
@@ -1337,7 +1336,7 @@ mat-drawer-content {
   top: 172px;
 }
 
- 
+
 
 @media(max-width:670px) {
   .desktop-none {
@@ -1382,7 +1381,7 @@ mat-drawer-content {
 }
 
 
-.summary-left-data-height{
+.summary-left-data-height {
   height: calc(100vh - 277px);
   overflow: auto;
 }
@@ -1392,13 +1391,14 @@ mat-drawer-content {
   height: 50px;
   overflow: hidden;
   border-radius: 50%;
+
   img {
     max-width: 100%;
   }
 }
 
 
-@media screen and (orientation:portrait) { 
+@media screen and (orientation:portrait) {
   .sidenav-container {
     height: auto;
   }
