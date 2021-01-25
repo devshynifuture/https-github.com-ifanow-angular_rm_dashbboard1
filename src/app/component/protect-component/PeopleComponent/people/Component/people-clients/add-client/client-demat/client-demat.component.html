@@ -78,11 +78,11 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="col-md-2 col-2 pr-0 pt-12">
+      <div class="col-md-2 col-2 pr-0 pt-8">
         <i *ngIf=" pointIndex+1==dematForm.value.getCoOwnerName.length && pointIndex<2" class=" material-icons
-            f-20 c-p" (click)="addNewCoOwner(undefined)">add</i>
+            text-primitive c-p" (click)="addNewCoOwner(undefined)">add</i>
         <i *ngIf="dematForm.value.getCoOwnerName.length>1" class=" material-icons
-            f-20 c-p" (click)="removeCoOwner(pointIndex)">remove</i>
+          text-primitive c-p" (click)="removeCoOwner(pointIndex)">remove</i>
       </div>
 
     </div>
@@ -210,9 +210,9 @@
         </div>
       </div>
       <div class="col-md-2 col-2 pr-0 pt-12">
-        <i *ngIf="dematForm.value.getNomineeName.length < 3" class="material-icons f-20 c-p pr-16"
+        <i *ngIf="dematForm.value.getNomineeName.length < 3" class="material-icons text-primitive c-p pr-16"
           (click)="addNewNominee(undefined)">add</i>
-        <i *ngIf="dematForm.value.getNomineeName.length > 1" class="material-icons f-20 c-p ml-10"
+        <i *ngIf="dematForm.value.getNomineeName.length > 1" class="material-icons text-primitive c-p ml-10"
           (click)="removeNewNominee(pointIndex)">remove</i>
       </div>
 
