@@ -377,7 +377,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       issuePrice: [data.issuePrice, [Validators.required]],
       units: [data.units, [Validators.required]],
       rates: [data.rates, [Validators.required]],
-      tenure: [data.tenure, [Validators.required]],
+      tenure: [8, [Validators.required]],
       bondNumber: [data.bondNumber],
       userBankMappingId: [!data ? '' : data.userBankMappingId],
       linkedBankAccount: [!data ? '' : data.userBankMappingId],

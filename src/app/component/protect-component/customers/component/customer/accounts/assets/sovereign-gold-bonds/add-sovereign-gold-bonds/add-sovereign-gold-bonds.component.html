@@ -397,7 +397,9 @@
         <div class="col-md-2 p-0">
           <div class="pt-8">
             <i class="material-icons text-primitive c-p f-20 float-left" (click)="addTransaction(null)">add</i>
-            <i class="material-icons text-primitive c-p f-20 pl-10 " (click)="removeTransaction(i)">remove</i>
+            <i class="material-icons text-primitive c-p f-20 pl-10 "
+              *ngIf="goldBondForm.value.sovereignGoldTransactionList.length > 1"
+              (click)="removeTransaction(i)">remove</i>
           </div>
         </div>
       </div>
