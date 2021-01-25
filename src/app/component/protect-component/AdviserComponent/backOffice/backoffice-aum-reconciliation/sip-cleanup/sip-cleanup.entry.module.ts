@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecordDetailsComponent } from './record-details/record-details.component';
+import { SipCleanupTransactionComponent } from './sip-cleanup-transaction/sip-cleanup-transaction.component';
 
 const componentList = [
-    RecordDetailsComponent
+    RecordDetailsComponent, SipCleanupTransactionComponent
 
 ]
 
