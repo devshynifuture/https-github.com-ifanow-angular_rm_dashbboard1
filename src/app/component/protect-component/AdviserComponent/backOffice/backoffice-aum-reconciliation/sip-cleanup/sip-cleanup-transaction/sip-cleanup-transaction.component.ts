@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { BackOfficeService } from '../../../back-office.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-sip-cleanup-transaction',
@@ -22,7 +23,9 @@ export class SipCleanupTransactionComponent implements OnInit {
   sendObj: { showAllTransactionType: number; showHistoricTransaction: number; sipId: any; };
   statusData: any;
   dataSource2: any[];
-  constructor(private backOfficeService: BackOfficeService, private eventService: EventService) { }
+  constructor(private backOfficeService: BackOfficeService,
+    private subInjectService: SubscriptionInject,
+    private eventService: EventService) { }
 
   ngOnInit() {
     this.statusData = []
@@ -62,7 +65,7 @@ export class SipCleanupTransactionComponent implements OnInit {
     }
     this.backOfficeService.getSipCleanupTransaction(this.sendObj).subscribe(
       (res) => {
-        this.isLoading = false;
+        // this.isLoading = false;
         if (res) {
           console.log("this is backoffice sip cleanup data", res);
           this.dataSource2 = res;
@@ -77,6 +80,9 @@ export class SipCleanupTransactionComponent implements OnInit {
         this.dataSource2 = [];
       }
     );
+  }
+  dialogClose() {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' })
   }
 }
 interface PeriodicElement1 {
