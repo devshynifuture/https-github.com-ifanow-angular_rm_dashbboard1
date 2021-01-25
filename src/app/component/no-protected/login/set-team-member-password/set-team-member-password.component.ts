@@ -36,7 +36,7 @@ export class SetTeamMemberPasswordComponent implements OnInit {
   newPasswordLength = 0;
   hide1 = true;
   hide2 = true;
-  userData: any;
+  userData: any = {};
   passwordStregth = {
     upperCase: false,
     lowerCase: false,
@@ -62,7 +62,8 @@ export class SetTeamMemberPasswordComponent implements OnInit {
       data => {
         this.userData = data;
       }, err => {
-        this.eventService.openSnackBar('Something went wrong');
+        this.eventService.openSnackBarNoDuration(err, "Dismiss");
+        this.router.navigate(['/login']);
       }
     );
   }

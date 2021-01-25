@@ -18,6 +18,8 @@ import { Observable, Subscription } from 'rxjs';
 import { RoleService } from '../../../auth-service/role.service';
 import { MfServiceService } from '../../protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { CustomerOverviewService } from '../../protect-component/customers/component/customer/customer-overview/customer-overview.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -69,6 +71,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     public roleService: RoleService,
     public MfServiceService: MfServiceService,
     private reconService: ReconciliationService,
+    private enumService: EnumServiceService,
     private customerOverview: CustomerOverviewService) {
     /*constructor(private router: Router, protected eventService: EventService, protected subinject: SubscriptionInject,
       protected dynamicComponentService: DynamicComponentService, private route: ActivatedRoute,
@@ -218,10 +221,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
             return;
           } else {
             this.auth.setClientData(data);
-            this.myControl.setValue(singleClientData.displayName);
+            this.myControl.setValue(data.displayName);
             this.ngZone.run(() => {
-              const url = this.roleService.goToValidClientSideUrl();
-              this.router.navigate([url], { state: { ...data } });
+              this.roleService.getClientRoleDetails(data.roleId, (rolesData) => {
+                this.roleService.constructClientDataSource(rolesData);
+                const url = this.roleService.goToValidClientSideUrl();
+                this.router.navigate([url], { state: { ...data } });
+              });
             });
           }
         },
@@ -232,10 +238,19 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     } else {
       this.auth.setClientData(singleClientData);
       this.myControl.setValue(singleClientData.displayName);
-      this.ngZone.run(() => {
+      const clientRoles = this.enumService.getClientRole();
+      if (clientRoles && clientRoles.some(element => element.id === singleClientData.roleId)) {
+        this.ngZone.run(() => {
+          this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
+            this.roleService.constructClientDataSource(rolesData);
+            const url = this.roleService.goToValidClientSideUrl();
+            this.router.navigate([url], { state: { ...singleClientData } });
+          });
+        });
+      } else {
         const url = this.roleService.goToValidClientSideUrl();
         this.router.navigate([url], { state: { ...singleClientData } });
-      });
+      }
     }
   }
 

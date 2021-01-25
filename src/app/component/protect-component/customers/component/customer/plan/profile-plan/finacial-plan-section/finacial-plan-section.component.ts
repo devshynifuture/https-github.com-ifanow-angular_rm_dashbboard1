@@ -48,6 +48,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { CrmNotesComponent } from 'src/app/component/protect-component/AdviserComponent/Activities/crm-notes/crm-notes.component';
 import { OverviewRiskProfileComponent } from '../../../customer-overview/overview-profile/overview-risk-profile/overview-risk-profile.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { OthersAssetsComponent } from '../../../accounts/assets/others-assets/others-assets.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -81,6 +82,7 @@ import { RoleService } from 'src/app/auth-service/role.service';
     SsySchemeComponent,
     NscSchemeComponent,
     PPFSchemeComponent,
+    OthersAssetsComponent,
     LifeInsuranceComponent,
     MutualFundsCapitalComponent,
     MfCapitalDetailedComponent,
@@ -824,6 +826,9 @@ export class FinacialPlanSectionComponent implements OnInit {
           break;
         case 'PO MIS':
           factory = this.resolver.resolveComponentFactory(PoMisSchemeComponent);
+          break;
+        case 'other':
+          factory = this.resolver.resolveComponentFactory(OthersAssetsComponent);
           break;
         case 'Life insurance':
           factory = this.resolver.resolveComponentFactory(LifeInsuranceComponent);

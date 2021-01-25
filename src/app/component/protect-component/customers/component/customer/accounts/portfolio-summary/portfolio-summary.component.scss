@@ -19,9 +19,9 @@ p {
   display: none;
 }
 
-#piechartMutualFund {
+.piechartMutualFund {
   height: 405px;
-  width: 350px;
+  width: 313px;
 }
 
 .highcharts-data-table table {
@@ -1403,7 +1403,6 @@ mat-drawer-content {
 
 
 @media screen and (orientation:portrait) {
-
   .sidenav-container {
     height: auto;
   }

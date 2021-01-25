@@ -92,7 +92,8 @@ export class SetNewPasswordComponent implements OnInit {
           this.eventService.openSnackBar(`Your username is ${res.userName}`, "Dismiss")
         }
       }, err => {
-        this.eventService.openSnackBar("Link has been expired", "Dimiss")
+        this.eventService.openSnackBarNoDuration("Link has been expired", "Dimiss")
+        this.router.navigate(['/login'])
       }
     )
   }

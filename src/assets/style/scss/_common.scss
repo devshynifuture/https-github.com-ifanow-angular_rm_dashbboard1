@@ -859,6 +859,10 @@ button.primary-sm {
   flex-wrap: nowrap !important;
 }
 
+.plan-profile-full-height{
+  height: calc(100vh - 120px);
+}
+
 @media(max-width:1200px) {
   .pl-15-1200 {
     padding-left: 15px !important;
@@ -931,11 +935,10 @@ button.primary-sm {
 }
 
 
- @media screen and (orientation:portrait) {
-  // @media screen and (min-width: 768px) and (max-width: 991px) {
-  #tabviewJs {
+ @media screen  and (orientation:portrait) {
+   #tabviewJs {
     transform: rotate(-90deg);
-    transform-origin: 49% 66%
+    transform-origin: 49% 66%;
 }
 .loginBox_adv .h-100vh{
   height: auto ;
@@ -944,6 +947,29 @@ button.primary-sm {
   height: 63vh;
 }
 
+.width-220 {
+  width: 175px;
+  height: auto; 
+}
+
+.plan-profile-full-height {
+  height: calc(100vh - 410px);
+}
+
 
 
 }
+
+
+@media(max-width:767px) {
+
+  #tabviewJs {
+    transform: none;
+    transform-origin: center;
+    width: auto !important;
+    height: auto !important;
+}
+.loginBox_adv .h-100vh {
+  height: 100vh;
+}
+ }

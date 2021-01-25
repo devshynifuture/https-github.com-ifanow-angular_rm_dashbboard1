@@ -384,7 +384,10 @@
                                 <th mat-header-cell *matHeaderCellDef class="br text-left">Milestone type </th>
                                 <td mat-cell *matCellDef="let element" class="br text-left">
                                     <div class="bar">{{!loaderFn.loading? "" : ""}}<span>
-                                            {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId == 2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth creation':(element.milestoneTypeId == 4)?'New business':(element.milestoneTypeId == 5)?'Others':'Medical emergency'}}
+                                            {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId ==
+                                            2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth
+                                            creation':(element.milestoneTypeId == 4)?'New
+                                            business':(element.milestoneTypeId == 5)?'Others':'Medical emergency'}}
                                         </span></div>
                                 </td>
                             </ng-container>
@@ -738,7 +741,7 @@
 <body>
     <table cellpadding="0" cellspacing="0" border="0"
         style="width: 95%; font-family: 'Roboto', sans-serif; margin: 0px auto;"
-        align="center; page-break-before: always;">
+        align="center; page-break-before: auto;">
 
 
         <tr>
@@ -978,7 +981,7 @@
 
         <tr>
             <td>
-                <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: always;">
+                <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: auto;">
                     <tr *ngIf="selectedGoal.goalType ==1">
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;">
@@ -1051,7 +1054,10 @@
                                         {{(element.onRetirementOrDemise == 1)?'Post retirement':'Demise'}}</td>
                                     <td
                                         style="padding: 8px; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                        {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId == 2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth creation':(element.milestoneTypeId == 4)?'New business':(element.milestoneTypeId == 5)?'Others':'Medical emergency'}}
+                                        {{(element.milestoneTypeId == 1)?'Philanthrophy':(element.milestoneTypeId ==
+                                        2)?'Legacy':(element.milestoneTypeId == 3)?'Wealth
+                                        creation':(element.milestoneTypeId == 4)?'New business':(element.milestoneTypeId
+                                        == 5)?'Others':'Medical emergency'}}
                                     </td>
                                     <td
                                         style="padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; text-align: right;">

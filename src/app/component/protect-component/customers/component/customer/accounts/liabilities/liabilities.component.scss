@@ -76,7 +76,7 @@
 
 #ui-liabilities {
     .vertical-menu {
-      height: calc(100vh - 126px);
+      height: 100vh;
       position: fixed;
       width: 16.7%;
     }
@@ -112,9 +112,7 @@ overflow: auto !important;
 max-height: 600px;
 }
 
-.deskLiabilities {
-    display: none;
-}
+ 
 
 
 @media screen and (min-width: 768px) and (max-width: 991px) { 
@@ -122,18 +120,25 @@ max-height: 600px;
         display: none;
     }
 
-    .deskLiabilities {
-        display: block;
-        margin-top: 20px;
-    }
+     
 
-    .deskLiabilities .mat-form-field {
-        width: 300px;
-    }
+   
 
     .table-scroll-liability {
         height: auto;
     overflow: auto !important;
     max-height: 600px;
     }
+}
+
+
+@media screen and (orientation:portrait) { 
+
+#ui-liabilities {
+    .vertical-menu {
+        height: calc(100vh - 410px);
+      position: fixed;
+      width: 16.7%;
+    }
+  }
 }

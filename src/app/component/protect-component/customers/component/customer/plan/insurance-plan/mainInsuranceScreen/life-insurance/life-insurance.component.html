@@ -1,7 +1,8 @@
 <div class="row pb-12 insuFixedHeader pt-28" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="col-md-8 p-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
         <h3 class="m-0" *ngIf="!isLoadingPlan">{{getData ? getData.heading : ''}} -
-            {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : (inputData.owners[0]? inputData.owners[0]?.holderName : null)) : ''}}
+            {{inputData ? (inputData.owners.length > 1 ? (inputData.owners.length +' members') : (inputData.owners[0]?
+            inputData.owners[0]?.holderName : null)) : ''}}
         </h3>
         <div class="relClass  m-0" [hidden]="!isLoadingPlan">
             <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
@@ -25,27 +26,27 @@
         <div class="col-width-69 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
             <div class="row pt-28" *ngIf="inputData?.insuranceType == 1">
                 <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">ACTUAL</p>
+                    <p class="f-12 m-0 text-primitive">COVERAGE</p>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
                             <h3 class="m-0  ">
                                 <span [hidden]="isLoadingPlan">&#8377;</span>
-                                <span appFormatNumber [value]="insuranceDetails?.actual"></span>
+                                <span appFormatNumber [value]="insuranceDetails?.actualAmount"></span>
                             </h3>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">ADVICE</p>
+                    <p class="f-12 m-0 text-primitive">ADDITIONAL REQUIRED</p>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
                             <h3 class="m-0" *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                    [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
+                                    [value]="insuranceDetails?.adviceAmount ? insuranceDetails?.adviceAmount : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
                             </h3>
                             <h3 class="m-0" *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
                                 <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                    [value]="insuranceDetails?.advice"></span>
+                                    [value]="insuranceDetails?.adviceAmount"></span>
                             </h3>
                         </div>
                     </div>
@@ -95,7 +96,8 @@
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
                             <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null">
                                 <div class="bar">
-                                    {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
+                                    {{element?.insurance?.policyName ? element?.insurance?.policyName :
+                                    element?.insurance?.insurerName}}
                                 </div>
                             </td>
                         </ng-container>
@@ -127,8 +129,8 @@
                             <th mat-header-cell *matHeaderCellDef> Status</th>
                             <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement=null">
                                 <div class="bar d-flex align-items-center justify-content-between">
-                                    <span
-                                        *ngIf="!isLoadingPlan">{{element?.insurance?.isRecommend ? 'Recommended' : '-'}}
+                                    <span *ngIf="!isLoadingPlan">{{element?.insurance?.isRecommend ? 'Recommended' :
+                                        '-'}}
                                     </span>
                                     <span class="material-icons" *ngIf="!isLoadingPlan && element.expanded">
                                         keyboard_arrow_up
@@ -165,10 +167,12 @@
                                 <div class="example-element-detail" *ngIf="clicked"
                                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                     <div class="example-element-description">
+                                        <span *ngIf="inputData?.insuranceType == 1">{{element?.insurance?.suggestion ?
+                                            element?.insurance?.suggestion : 'No suggestions found'}}</span>
                                         <span
-                                            *ngIf="inputData?.insuranceType == 1">{{element?.insurance?.suggestion ? element?.insurance?.suggestion : 'No suggestions found'}}</span>
-                                        <span
-                                            *ngIf="inputData?.insuranceType != 1">{{element?.adviceDetails?.advice_description ? element?.adviceDetails?.advice_description : 'No suggestions found'}}</span>
+                                            *ngIf="inputData?.insuranceType != 1">{{element?.adviceDetails?.advice_description
+                                            ? element?.adviceDetails?.advice_description : 'No suggestions
+                                            found'}}</span>
                                     </div>
                                 </div>
                             </td>
@@ -202,7 +206,8 @@
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
                             <td mat-cell *matCellDef="let element" class="w-25 bb-1">
                                 <div class="bar">
-                                    {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
+                                    {{element?.insurance?.policyName ? element?.insurance?.policyName :
+                                    element?.insurance?.insurerName}}
                                 </div>
 
                             </td>
@@ -213,9 +218,10 @@
                             <th mat-header-cell class="w-20 text-right" *matHeaderCellDef> Sum assured </th>
                             <td mat-cell *matCellDef="let element" class="text-right w-20 amt bb-1">
                                 <div class="bar">
-                                    {{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span
-                                        appFormatNumber>
-                                        {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }}
+                                    {{!isLoadingPlan || element?.insurance?.sumAssured ||
+                                    element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
+                                        {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured :
+                                        element?.insurance?.sumInsuredIdv }}
                                     </span></div>
                         </ng-container>
 
@@ -344,7 +350,8 @@
                                 <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null"
                                     class="w-25 bl bb-1">
                                     <div class="bar">
-                                        {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
+                                        {{element?.insurance?.policyName ? element?.insurance?.policyName :
+                                        element?.insurance?.insurerName}}
                                     </div>
 
                                 </td>
@@ -356,9 +363,10 @@
                                 <td mat-cell *matCellDef="let element" (click)="isClick = false;expandedElement2=null"
                                     class="text-right   w-20 amt bb-1">
                                     <div class="bar">
-                                        {{!isLoadingPlan || element?.insurance?.sumAssured || element?.insurance?.sumInsuredIdv? "₹" : ""}}<span
-                                            appFormatNumber>
-                                            {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }}
+                                        {{!isLoadingPlan || element?.insurance?.sumAssured ||
+                                        element?.insurance?.sumInsuredIdv? "₹" : ""}}<span appFormatNumber>
+                                            {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured :
+                                            element?.insurance?.sumInsuredIdv }}
                                         </span></div>
                             </ng-container>
 
@@ -457,18 +465,24 @@
                                                     <th>Advice</th>
                                                 </tr>
                                                 <tr>
-                                                    <td>{{element?.childAsset?.policyName ? element?.childAsset?.policyName : element?.childAsset?.insurerName}}
+                                                    <td>{{element?.childAsset?.policyName ?
+                                                        element?.childAsset?.policyName :
+                                                        element?.childAsset?.insurerName}}
                                                     </td>
                                                     <td class="text-right">
-                                                        {{!isLoadingPlan || element?.childAsset?.sumAssured || element?.childAsset?.sumInsuredIdv? "₹" : ""}}<span
+                                                        {{!isLoadingPlan || element?.childAsset?.sumAssured ||
+                                                        element?.childAsset?.sumInsuredIdv? "₹" : ""}}<span
                                                             appFormatNumber>
-                                                            {{element?.childAsset?.sumAssured ? element?.childAsset?.sumAssured : element?.childAsset?.sumInsuredIdv }}
+                                                            {{element?.childAsset?.sumAssured ?
+                                                            element?.childAsset?.sumAssured :
+                                                            element?.childAsset?.sumInsuredIdv }}
                                                         </span></td>
                                                     <td class="text-right">
-                                                        {{!isLoadingPlan || element?.childAsset?.premiumAmount ? "₹" : ""}}<span
-                                                            appFormatNumber>
+                                                        {{!isLoadingPlan || element?.childAsset?.premiumAmount ? "₹" :
+                                                        ""}}<span appFormatNumber>
                                                             {{element?.childAsset?.premiumAmount}} </span></td>
-                                                    <td> {{isLoadingPlan ? '' : (element.advice ? element.advice : '-')}}
+                                                    <td> {{isLoadingPlan ? '' : (element.advice ? element.advice :
+                                                        '-')}}
                                                     </td>
                                                 </tr>
                                             </table>
@@ -543,7 +557,9 @@
                                                     outstanding
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    {{element.total_loan_outstanding ? '₹' : ''}}<span>{{element.total_loan_outstanding ? formatNumber(element.total_loan_outstanding,0) :'-'}}</span>
+                                                    {{element.total_loan_outstanding ? '₹' :
+                                                    ''}}<span>{{element.total_loan_outstanding ?
+                                                        formatNumber(element.total_loan_outstanding,0) :'-'}}</span>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="consider">
@@ -592,7 +608,9 @@
                                     <div class="col-md-1">2.1</div>
                                     <div class="col-md-6 p-0">Life Insurance Premiums</div>
                                     <div class="col-md-3 text-right">
-                                        {{plannerObj.lifeInsurancePremiums ? '₹' : ''}}<span>{{plannerObj.lifeInsurancePremiums ? formatNumber(plannerObj.lifeInsurancePremiums,0) :'-'}}</span>
+                                        {{plannerObj.lifeInsurancePremiums ? '₹' :
+                                        ''}}<span>{{plannerObj.lifeInsurancePremiums ?
+                                            formatNumber(plannerObj.lifeInsurancePremiums,0) :'-'}}</span>
                                     </div>
                                     <div class="col-md-2 text-center"> - </div>
                                 </div>
@@ -600,7 +618,8 @@
                                     <div class="col-md-1">2.2</div>
                                     <div class="col-md-6 p-0"> Living expenses</div>
                                     <div class="col-md-3 text-right">
-                                        {{plannerObj.livingExpense ? '₹' : ''}}<span>{{ plannerObj.livingExpense ? formatNumber(plannerObj.livingExpense,0) : '-'}}</span>
+                                        {{plannerObj.livingExpense ? '₹' : ''}}<span>{{ plannerObj.livingExpense ?
+                                            formatNumber(plannerObj.livingExpense,0) : '-'}}</span>
                                     </div>
                                     <div class="col-md-2 text-center"> - </div>
                                 </div>
@@ -631,7 +650,8 @@
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Annual amount
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    {{element.amount ? '₹' : ''}}<span></span>{{element.amount ? formatNumber(element.amount,0) : '-'}}
+                                                    {{element.amount ? '₹' : ''}}<span></span>{{element.amount ?
+                                                    formatNumber(element.amount,0) : '-'}}
                                                 </td>
                                             </ng-container>
 
@@ -706,7 +726,8 @@
                                                     amount(PV) </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
                                                     {{element.goalFV ? '₹' : ''}}
-                                                    <span>{{element.goalFV ? formatNumber(element.goalFV,0) : '-'}}</span>
+                                                    <span>{{element.goalFV ? formatNumber(element.goalFV,0) :
+                                                        '-'}}</span>
                                                 </td>
                                             </ng-container>
 
@@ -795,7 +816,8 @@
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Annual income
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    {{element.amount ? '₹' : ''}}<span></span>{{element.amount ? formatNumber(element.amount,0) : '-'}}
+                                                    {{element.amount ? '₹' : ''}}<span></span>{{element.amount ?
+                                                    formatNumber(element.amount,0) : '-'}}
                                                 </td>
                                             </ng-container>
 
@@ -886,7 +908,8 @@
                                                 <th class="text-right" mat-header-cell *matHeaderCellDef> Total amount
                                                 </th>
                                                 <td class="text-right" mat-cell *matCellDef="let element">
-                                                    {{element.currentValue ? '₹' : ''}}<span>{{element.currentValue ? formatNumber(element.currentValue,0) : '-'}}</span>
+                                                    {{element.currentValue ? '₹' : ''}}<span>{{element.currentValue ?
+                                                        formatNumber(element.currentValue,0) : '-'}}</span>
                                                 </td>
                                             </ng-container>
 
@@ -961,8 +984,8 @@
 
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center justify-content-around" *ngIf="!isLoadingPlan"
-                    [ngClass]="{' ': inputData?.insuranceType != 1,' ': inputData?.insuranceType == 1}">
+                <div class="d-flex mt-20 align-items-center justify-content-around" *ngIf="!isLoadingPlan">
+                    <!-- [ngClass]="{' ': inputData?.insuranceType != 1,' ': inputData?.insuranceType == 1}" build issue -->
 
                     <button mat-stroked-button class="btn140 text-primary br-2" (click)="needAnalysis(null)">
                         <img src="/assets/images/svg/insuranceBtn-icon.svg"> Needs analysis
@@ -1038,7 +1061,8 @@
                         <td>
                             <h3 style="margin: 0px; font-size: 18px;">
                                 {{getData ? getData.heading : ''}} -
-                                {{inputData ? (inputData.owners.length > 1 ?  (inputData.owners.length +' members') : inputData.owners[0]?.holderName) : ''}}
+                                {{inputData ? (inputData.owners.length > 1 ? (inputData.owners.length +' members') :
+                                inputData.owners[0]?.holderName) : ''}}
                             </h3>
                         </td>
                     </tr>
@@ -1060,26 +1084,26 @@
                                 <tr>
                                     <td>
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
-                                            ACTUAL </p>
+                                            COVERAGE </p>
                                         <h5 style="font-size: 18px; margin: 0px;">
                                             Rs. <span appFormatNumber
-                                                [value]="inputData?.insuranceType == 1 ? insuranceDetails?.actual : '0'"></span>
+                                                [value]="inputData?.insuranceType == 1 ? insuranceDetails?.actualAmount : '0'"></span>
                                         </h5>
                                     </td>
 
 
                                     <td>
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
-                                            ADVICE </p>
+                                            ADDITIONAL REQUIRED </p>
                                         <h5 style="font-size: 18px; margin: 0px;"
                                             *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                             <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                                [value]="insuranceDetails?.advice ? insuranceDetails?.advice : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
+                                                [value]="insuranceDetails?.adviceAmount ? insuranceDetails?.adviceAmount : plannerObj.additionalLifeIns ? plannerObj.additionalLifeIns : 0"></span>
                                         </h5>
                                         <h5 style="font-size: 18px; margin: 0px;"
                                             *ngIf="!isLoadingPlan && inputData?.insuranceType != 1">
                                             <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber
-                                                [value]="insuranceDetails?.advice"></span>
+                                                [value]="insuranceDetails?.adviceAmount"></span>
                                         </h5>
                                     </td>
                                 </tr>
@@ -1147,7 +1171,8 @@
                                 <tr *ngFor="let element of dataSouce3">
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
-                                        {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
+                                        {{element?.insurance?.policyName ? element?.insurance?.policyName :
+                                        element?.insurance?.insurerName}}
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1160,8 +1185,8 @@
                                             {{element?.insurance?.premiumAmount}} </span>
                                     </td>
                                     <td style="padding: 8px; text-align: left; border-top: 1px solid #dee5e7;">
-                                        <span
-                                            *ngIf="!isLoadingPlan">{{element?.insurance?.suggestion ? 'Recommended' : '-'}}
+                                        <span *ngIf="!isLoadingPlan">{{element?.insurance?.suggestion ? 'Recommended' :
+                                            '-'}}
                                         </span>
                                     </td>
                                 </tr>
@@ -1205,12 +1230,14 @@
                                 <tr *ngFor="let element of dataSource1">
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
-                                        {{element?.insurance?.policyName ? element?.insurance?.policyName : element?.insurance?.insurerName}}
+                                        {{element?.insurance?.policyName ? element?.insurance?.policyName :
+                                        element?.insurance?.insurerName}}
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; text-align: right;">
                                         ₹ <span appFormatNumber>
-                                            {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured : element?.insurance?.sumInsuredIdv }}
+                                            {{element?.insurance?.sumAssured ? element?.insurance?.sumAssured :
+                                            element?.insurance?.sumInsuredIdv }}
                                         </span>
                                     </td>
                                     <td
@@ -1309,7 +1336,8 @@
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                                     {{element.total_loan_outstanding ? '₹' :''}}
-                                                    <span>{{element.total_loan_outstanding ? formatNumber(element.total_loan_outstanding,0) :'-'}}</span>
+                                                    <span>{{element.total_loan_outstanding ?
+                                                        formatNumber(element.total_loan_outstanding,0) :'-'}}</span>
                                                 </td>
                                                 <td
                                                     style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
@@ -1373,7 +1401,8 @@
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    {{element.amount ? '₹' : ''}}<span>{{element.amount ? formatNumber(element.amount,0) : '-'}}</span>
+                                                    {{element.amount ? '₹' : ''}}<span>{{element.amount ?
+                                                        formatNumber(element.amount,0) : '-'}}</span>
                                                 </td>
                                                 <td
                                                     style="padding: 8px; text-align: right;  border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
@@ -1677,7 +1706,8 @@
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                                     {{element.currentValue ? '₹' : ''}}
                                                     <span appFormatNumber>
-                                                        {{element.currentValue ? formatNumber(element.currentValue,0) : '-'}}
+                                                        {{element.currentValue ? formatNumber(element.currentValue,0) :
+                                                        '-'}}
                                                     </span>
                                                 </td>
                                                 <td

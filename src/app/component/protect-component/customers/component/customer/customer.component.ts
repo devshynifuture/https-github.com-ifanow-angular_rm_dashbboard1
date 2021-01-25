@@ -245,6 +245,52 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     }
   }
 
+
+  goToValidAssetUrl() {
+    let url;
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.enabled) {
+      url = '/customer/detail/account/assets/mutual'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.stocks.enabled) {
+      url = '/customer/detail/account/assets/stock'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.fixedIncome.enabled) {
+      url = '/customer/detail/account/assets/fix'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.realEstate.enabled) {
+      url = '/customer/detail/account/assets/real'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.retirementAccounts.enabled) {
+      url = '/customer/detail/account/assets/retire'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.smallSavingSchemes.enabled) {
+      url = '/customer/detail/account/assets/small'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.cashAndBanks.enabled) {
+      url = '/customer/detail/account/assets/cash_bank'
+      this.router.navigate([url])
+      return
+    }
+    if (this.roleService.portfolioPermission.subModule.assets.subModule.commodities.enabled) {
+      url = '/customer/detail/account/assets/commodities'
+      this.router.navigate([url])
+      return
+    }
+    this.router.navigate(['/customer/detail/account/assets/others'])
+  }
+
   goToPlanValidUrl() {
     let url;
     if (this.roleService.planPermission.subModule.profile.enabled) {
@@ -266,6 +312,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       this.router.navigate([url])
       return
     }
+    this.goToValidAssetUrl();
     if (this.roleService.portfolioPermission.subModule.liabilities.enabled) {
       url = '/customer/detail/account/liabilities'
       this.router.navigate([url])
