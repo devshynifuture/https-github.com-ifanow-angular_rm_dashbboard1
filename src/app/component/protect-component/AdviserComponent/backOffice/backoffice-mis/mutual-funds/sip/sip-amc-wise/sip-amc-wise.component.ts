@@ -495,7 +495,7 @@ export class SipAmcWiseComponent implements OnInit {
             index: index1 + 1,
             name: element.investorName,
             schemeName: element.schemeName,
-            folio: element.folioNumber,
+            folio: this.casFolioNumber(element),
             registeredDate: new Date(element.registeredDate),
             fromDate: new Date(element.from_date),
             toDate: new Date(element.to_date),
@@ -513,7 +513,23 @@ export class SipAmcWiseComponent implements OnInit {
         break;
     }
   }
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+          element.folioNumber = 'CAS-' + element.folioNumber;
+        }
 
+      });
+    } else if (!Array.isArray(data)) {
+      if (data && data.rtMasterId == 6 && !data.folioNumber.includes("CAS")) {
+        data.folioNumber = 'CAS-' + data.folioNumber;
+      }
+      data = data ? data.folioNumber : [];
+    }
+
+    return data;
+  }
   excelInitAmcList() {
     let sipAmountTotal = 0;
     let sumWeightInPercTotal = 0;
@@ -623,6 +639,7 @@ export class SipAmcWiseComponent implements OnInit {
         data => {
           this.isLoadingApplicant = false;
           if (data) {
+            data = this.casFolioNumber(data)
             data.forEach(o => {
               o.isEdit = false;
             });
@@ -782,7 +799,7 @@ export class SipAmcWiseComponent implements OnInit {
         field1: index1 + 1,
         field2: element.name,
         field3: element.schemeName,
-        field4: element.folio,
+        field4: this.casFolioNumber(element),
         field5: new Date(element.registeredDate),
         field6: new Date(element.fromDate),
         field7: new Date(element.toDate),

@@ -131,10 +131,11 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="folio">
-                        <th class="br" mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef sticky> Folio
+                        <th class="br w-15" mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef sticky>
+                            Folio
                             Number
                         </th>
-                        <td class="br text-left" mat-cell *matCellDef="let element">
+                        <td class="br text-left w-15" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
                                 {{(isLoading) ? '':element.folioNumber}}
                             </div>

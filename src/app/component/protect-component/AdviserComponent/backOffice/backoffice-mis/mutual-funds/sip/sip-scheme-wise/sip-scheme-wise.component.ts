@@ -449,7 +449,7 @@ export class SipSchemeWiseComponent implements OnInit {
           this.arrayOfExcelData[this.selectedCategory].subCatList[index].schemeList.push({
             name: element.investorName,
             schemeName: element.schemeName,
-            folio: element.folioNumber,
+            folio: this.casFolioNumber(element),
             registeredDate: new Date(element.registeredDate),
             fromDate: new Date(element.from_date),
             toDate: new Date(element.to_date),
@@ -507,6 +507,7 @@ export class SipSchemeWiseComponent implements OnInit {
         data => {
           this.isLoadingSubCategory = false;
           if (data) {
+            data = this.casFolioNumber(data);
             console.log('this is  scheme Data data::', data);
             data.forEach(o => {
               o.isEdit = false;
@@ -533,7 +534,23 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     }
   }
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+          element.folioNumber = 'CAS-' + element.folioNumber;
+        }
 
+      });
+    } else if (!Array.isArray(data)) {
+      if (data && data.rtMasterId == 6 && !data.folioNumber.includes("CAS")) {
+        data.folioNumber = 'CAS-' + data.folioNumber;
+      }
+      data = data ? data.folioNumber : [];
+    }
+
+    return data;
+  }
   excelInitClientList() {
     let data = {};
     let sumAmtTotal = 0;
