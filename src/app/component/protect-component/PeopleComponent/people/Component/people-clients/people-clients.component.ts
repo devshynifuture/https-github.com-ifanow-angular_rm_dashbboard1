@@ -250,12 +250,12 @@ export class PeopleClientsComponent implements OnInit {
     this.auth.setClientData(singleClientData);
     if (this.enumService.getClientRole() && this.enumService.getClientRole().some(element => element.id === singleClientData.roleId)) {
       this.ngZone.run(() => {
-        this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
-          this.roleService.constructClientDataSource(rolesData);
-          const url = this.roleService.goToValidClientSideUrl();
-          this.authService.setClientData(singleClientData);
-          this.router.navigate([url], { state: { ...singleClientData } });
-        });
+        // this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
+        //   this.roleService.constructClientDataSource(rolesData);
+        const url = this.roleService.goToValidClientSideUrl();
+        this.authService.setClientData(singleClientData);
+        this.router.navigate([url], { state: { ...singleClientData } });
+        // });
       });
     } else {
       const url = this.roleService.goToValidClientSideUrl();

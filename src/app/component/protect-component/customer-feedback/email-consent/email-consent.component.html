@@ -22,7 +22,8 @@
 
     <div class="wrapper-40 mob-email-consents">
         <p class="mb-10" *ngIf="!isLoading">Dear {{clientData ? clientData.name : ''}}</p>
-        <p class="mb-10" *ngIf="!isLoading">The information provided below requires your consent so that we can proceed further and do the
+        <p class="mb-10" *ngIf="!isLoading">The information provided below requires your consent so that we can proceed
+            further and do the
             needful from
             our end. </p>
         <p class="mb-10" *ngIf="!isLoading">Please review it carefully and click on the OK button below to give your
@@ -358,7 +359,7 @@
 </div>
 <!-- -------------------- pdf ---------------------------- -->
 
-<div id="templateEmail" class="">
+<div id="templateEmail" class="hide">
     <html>
     <meta charset="UTF-8">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
