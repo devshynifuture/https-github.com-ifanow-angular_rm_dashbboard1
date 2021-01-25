@@ -471,7 +471,7 @@ export class SipTransactionComponent implements OnInit {
       this.bankDetails = value;
     } else {
       this.showSchemeSpinner = false
-      this.eventService.openSnackBar('Bank detail not found', 'Dismiss');
+      //this.eventService.openSnackBar('Bank detail not found', 'Dismiss');
     }
   }
 
@@ -505,7 +505,7 @@ export class SipTransactionComponent implements OnInit {
   getMandateDetailsRes(data) {
     if (data) {
       this.mandateDetails = this.processTransaction.filterActiveMandateData(data);
-
+      this.showSchemeSpinner = false
       if (!this.mandateDetails || this.mandateDetails.length == 0) {
         if (this.getDataSummary.defaultClient.aggregatorType == 1 && this.inputData.isAdvisorSection) {
           /* this.mandateDetails = this.processTransaction.filterRejectedMandateData(data);
