@@ -376,7 +376,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       amountInvested: [data.amountInvested, [Validators.required]],
       issuePrice: [data.issuePrice, [Validators.required]],
       units: [data.units, [Validators.required]],
-      rates: [data.rates, [Validators.required]],
+      rates: [2.5, [Validators.required]],
       tenure: [8, [Validators.required]],
       bondNumber: [data.bondNumber],
       userBankMappingId: [!data ? '' : data.userBankMappingId],
@@ -394,6 +394,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
         transactionDate: [''],
         unit: [''],
         amount: [''],
+        type: ['redemption']
       })]),
       // ownerPercent: [data.ownerPerc, [Validators.required]],
 
@@ -514,6 +515,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       transactionDate: [!data ? '' : data.transactionDate],
       unit: [!data ? '' : data.unit],
       amount: [!data ? '' : data.amount],
+      type: [!data ? 'redemption' : data.amount]
     }));
   }
 
@@ -529,12 +531,18 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     this.goldBondForm.get("issuePrice").setValue(price[0].retailPrice);
   }
 
+  calUnits() {
+    let unit = this.goldBondForm.value.amountInvested / this.goldBondForm.value.issuePrice;
+
+    this.goldBondForm.get("units").setValue(unit.toFixed(2));
+  }
+
   saveFormData() {
     let bondObj = {
       "clientId": this.goldBondForm.value.clientId,
       "advisorId": this.goldBondForm.value.advisorId,
       "bondNameAndSeries": this.goldBondForm.value.bond,
-      "investmentOrIssueDate": this.datePipe.transform(this.goldBondForm.value.issueDate.value, 'yyyy-MM-dd'),
+      "investmentOrIssueDate": this.datePipe.transform(this.goldBondForm.value.issueDate, 'yyyy-MM-dd'),
       "investmentAmount": this.goldBondForm.value.amountInvested,
       "unitsInGram": this.goldBondForm.value.units,
       // "interestAmountYearly": (this.goldBondForm.value.amountInvested / 100) * this.goldBondForm.value.rates, //chetan said no needed in request
@@ -546,7 +554,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       "linkedDematAccount": this.goldBondForm.value.linkedDematAccount,
       "description": this.goldBondForm.value.description,
       "ownerList": this.goldBondForm.value.getCoOwnerNamebond,
-      "sovereignGoldTransactionList": this.goldBondForm.value.bond,
+      "sovereignGoldTransactionList": this.goldBondForm.value.sovereignGoldTransactionList,
       "nomineeList": this.goldBondForm.value.getNomineeName,
       "id": this.goldBondForm.value.id,
     }
@@ -561,6 +569,12 @@ export class AddSovereignGoldBondsComponent implements OnInit {
           this.removeNewNominee(index);
         }
       });
+      bondObj.sovereignGoldTransactionList.forEach((element, index) => {
+        if (element.transactionDate == '') {
+          this.removeTransaction(index);
+        }
+      });
+      bondObj.sovereignGoldTransactionList = this.goldBondForm.value.sovereignGoldTransactionList;
       bondObj.nomineeList = this.goldBondForm.value.getNomineeName;
       bondObj['ownerList'] = this.goldBondForm.value.getCoOwnerName;
       bondObj['nomineeList'] = this.goldBondForm.value.getNomineeName;
@@ -584,6 +598,21 @@ export class AddSovereignGoldBondsComponent implements OnInit {
         );
       }
     }
+  }
+
+  tranValidation(i) {
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('type').setValidators([Validators.required]);
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('type').updateValueAndValidity();
+
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('transactionDate').setValidators([Validators.required]);
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('transactionDate').updateValueAndValidity();
+
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('unit').setValidators([Validators.required]);
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('unit').updateValueAndValidity();
+
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('amount').setValidators([Validators.required]);
+    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('amount').updateValueAndValidity();
+    // this.goldBondForm.updateValueAndValidity();
   }
   addSovereignGoldBondRes(data) {
     console.log(data);

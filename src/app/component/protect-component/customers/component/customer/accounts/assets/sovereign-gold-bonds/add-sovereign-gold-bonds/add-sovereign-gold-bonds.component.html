@@ -115,8 +115,9 @@
     <div class="col-md-5 pr-0 iconRupess">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-            type="text" class="form-control rupess br-0 " formControlName="amountInvested">
+          <input autocomplete="off" (focusout)="calUnits()" matInput appInputValueValidation
+            [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0 "
+            formControlName="amountInvested">
           <mat-error class="f-12">
             This field is required
           </mat-error>
@@ -218,15 +219,15 @@
               [inputValidator]="validatorType.NUMBER_ONLY" class="form-control br-0 " formControlName="bondNumber">
             <!-- <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
             <mat-hint align="end" class="f-12">{{location.value.length}}/20</mat-hint> -->
+            <mat-error class="f-12">
+              This field is required
+            </mat-error>
           </mat-form-field>
-          <mat-error class="f-12" *ngIf='getFormControl().bond.touched && getFormControl().bond.invalid'>
-            This field is required
-          </mat-error>
         </div>
       </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-44">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-8">Linked demat account</h5>
       </div>
@@ -249,7 +250,7 @@
       </div>
     </div>
 
-    <div class="row pt-32">
+    <div class="row pt-44">
       <div class="col-md-5 pr-0 text-right">
         <h5 class="m-0 pt-8">Linked bank account</h5>
       </div>
@@ -334,67 +335,91 @@
 
       </div>
     </div>
-    <div formArrayName="sovereignGoldTransactionList">
-      <div class="row  add-liabilities">
-        <div class="col-md-3 pl-0">
-          <label class="f-14"> Transaction date</label>
-        </div>
-        <div class="col-md-3 pl-0">
-          <label class="f-14"> Units</label>
-        </div>
-        <div class="col-md-3 pl-0">
-          <label class="f-14 ws-nowrap">Amount</label>
+    <div formArrayName="sovereignGoldTransactionList" class="pt-44 add-liabilities"
+      style="width: 90%; margin: 0px auto; margin-left: 10%; ">
+      <div class="row">
+        <div class="col-md-10 p-0">
+          <div class="row">
+            <div class="col-md-3 pl-0">
+              <label class="f-14"> Transaction type</label>
+            </div>
+            <div class="col-md-3 pl-0">
+              <label class="f-14"> Transaction date</label>
+            </div>
+            <div class="col-md-3 pl-0">
+              <label class="f-14"> Units</label>
+            </div>
+            <div class="col-md-3 pl-0">
+              <label class="f-14 ws-nowrap">Amount</label>
+            </div>
+          </div>
         </div>
       </div>
       <div class="pb-28 row"
-        *ngFor="let singleTransForm of goldBondForm.controls['sovereignGoldTransactionList'].controls;index as i">
-        <div class="col-md-3 pl-0">
-          <div class="form-group mb-0">
-            <mat-form-field class="ba-date">
-              <input class="form-control b-0 br-0" (click)="picker2.open()" [min]="minDate" [max]="maxDate" matInput
-                formControlName="transactionDate" [matDatepicker]="picker2" readonly>
-              <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker2"></mat-datepicker-toggle>
-              <mat-datepicker #picker2></mat-datepicker>
-              <mat-error>
-                This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="col-md-3 pl-0">
+        *ngFor="let singleTransForm of goldBondForm.controls['sovereignGoldTransactionList'].controls;let goldindex = index"
+        [formGroupName]="goldindex">
+        <div class="col-md-10 p-0">
+          <div class="row">
+            <div class="col-md-3 pl-0">
+              <div class="form-group mb-0">
+                <mat-select matInput formControlName="type" class="form-control br-0">
+                  <mat-option value='' disabled>Select type</mat-option>
+                  <mat-option value="redemption">
+                    <span>Redemption</span>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+            <div class="col-md-3 pl-0">
+              <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                  <input class="form-control b-0 br-0" (click)="picker2.open()" (dateChange)="tranValidation(goldindex)"
+                    matInput formControlName="transactionDate" [matDatepicker]="picker2" readonly>
+                  <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker #picker2></mat-datepicker>
+                  <mat-error>
+                    This field is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 pl-0">
 
-          <div class="form-group mb-0">
-            <mat-form-field>
-              <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                autocomplete="off" formControlName="unit" maxlength="10" #partPayment class="form-control rupess br-0">
-              <mat-error>
-                This field is required
-              </mat-error>
-              <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
-                Should be less than 150000
-              </mat-error>
-              <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="col-md-3 pl-0">
+              <div class="form-group mb-0">
+                <mat-form-field>
+                  <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                    autocomplete="off" formControlName="unit" maxlength="10" #partPayment
+                    class="form-control rupess br-0">
+                  <mat-error>
+                    This field is required
+                  </mat-error>
+                  <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
+                    Should be less than 150000
+                  </mat-error>
+                  <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-3 pl-0">
 
-          <div class="form-group mb-0 iconRupess">
-            <mat-form-field>
-              <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                autocomplete="off" formControlName="amount" maxlength="10" #partPayment
-                class="form-control rupess br-0">
-              <mat-error>
-                This field is required
-              </mat-error>
-              <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
-                Should be less than 150000
-              </mat-error>
-              <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
-            </mat-form-field>
+              <div class="form-group mb-0 iconRupess">
+                <mat-form-field>
+                  <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                    autocomplete="off" formControlName="amount" maxlength="10" #partPayment
+                    class="form-control rupess br-0">
+                  <mat-error>
+                    This field is required
+                  </mat-error>
+                  <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
+                    Should be less than 150000
+                  </mat-error>
+                  <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
+                </mat-form-field>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-md-2 p-0">
+        <div class="col-md-1 p-0">
           <div class="pt-8">
             <i class="material-icons text-primitive c-p f-20 float-left" (click)="addTransaction(null)">add</i>
             <i class="material-icons text-primitive c-p f-20 pl-10 "
