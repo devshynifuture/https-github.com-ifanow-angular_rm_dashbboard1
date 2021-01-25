@@ -75,6 +75,9 @@ export class RunSipMappingMasterComponent implements OnInit {
       }
     );
   }
+  calculate(value) {
+    this.percentage = (value.isKeepCount / value.totalSip) * 100
+  }
   refreshWizard(value) {
     this.isLoading = true;
     let data = {
@@ -86,10 +89,10 @@ export class RunSipMappingMasterComponent implements OnInit {
         this.wizardList.forEach(element => {
           if (res.id == element.id) {
             element = res
-            if (element.processedCount == 0) {
+            if (element.isKeepCount == 0) {
               this.percentage = 0
             } else {
-              this.percentage = (element.totalSip / element.processedCount) * 100
+              this.percentage = (element.isKeepCount / element.totalSip) * 100
             }
           }
         });
@@ -117,10 +120,10 @@ export class RunSipMappingMasterComponent implements OnInit {
         this.isLoading = false;
         this.wizardList = []
         this.wizardList.push(res)
-        if (res.processedCount == 0) {
+        if (res.isKeepCount == 0) {
           this.percentage = 0
         } else {
-          this.percentage = (res.totalSip / res.processedCount) * 100
+          this.percentage = (res.isKeepCount / res.totalSip) * 100
         }
         this.showWizard = true
         this.hideCount = true

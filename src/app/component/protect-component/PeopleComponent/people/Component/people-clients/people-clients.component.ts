@@ -17,6 +17,8 @@ import { debounceTime, startWith } from 'rxjs/operators';
 import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
 import { ExcelClientListService } from 'src/app/services/excel-client-list.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { element } from 'protractor';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-people-clients',
@@ -50,6 +52,8 @@ export class PeopleClientsComponent implements OnInit {
     private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelClientListService,
     public roleService: RoleService,
     private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, private enumDataService: EnumDataService,
+    private enumService: EnumServiceService,
+    private auth: AuthService
   ) {
     this.clientInfo = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
@@ -243,14 +247,20 @@ export class PeopleClientsComponent implements OnInit {
 
   selectClient(singleClientData) {
     console.log(singleClientData);
-    this.ngZone.run(() => {
-      this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
-        this.roleService.constructClientDataSource(rolesData);
-        const url = this.roleService.goToValidClientSideUrl();
-        this.authService.setClientData(singleClientData);
-        this.router.navigate([url], { state: { ...singleClientData } });
+    this.auth.setClientData(singleClientData);
+    if (this.enumService.getClientRole() && this.enumService.getClientRole().some(element => element.id === singleClientData.roleId)) {
+      this.ngZone.run(() => {
+        this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
+          this.roleService.constructClientDataSource(rolesData);
+          const url = this.roleService.goToValidClientSideUrl();
+          this.authService.setClientData(singleClientData);
+          this.router.navigate([url], { state: { ...singleClientData } });
+        });
       });
-    });
+    } else {
+      const url = this.roleService.goToValidClientSideUrl();
+      this.router.navigate([url], { state: { ...singleClientData } });
+    }
   }
 
 
