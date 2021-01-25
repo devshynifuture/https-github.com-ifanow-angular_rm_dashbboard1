@@ -241,11 +241,11 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       const clientRoles = this.enumService.getClientRole();
       if (clientRoles && clientRoles.some(element => element.id === singleClientData.roleId)) {
         this.ngZone.run(() => {
-          this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
-            this.roleService.constructClientDataSource(rolesData);
-            const url = this.roleService.goToValidClientSideUrl();
-            this.router.navigate([url], { state: { ...singleClientData } });
-          });
+          // this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
+          //   this.roleService.constructClientDataSource(rolesData);
+          const url = this.roleService.goToValidClientSideUrl();
+          this.router.navigate([url], { state: { ...singleClientData } });
+          // });
         });
       } else {
         const url = this.roleService.goToValidClientSideUrl();
