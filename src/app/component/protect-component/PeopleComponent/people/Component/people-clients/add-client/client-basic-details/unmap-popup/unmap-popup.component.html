@@ -54,7 +54,8 @@
                 </label>
                 <div class="form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
-                        <input matInput #pan formControlName="pan" class="form-control" type="text">
+                        <input matInput #pan (input)="toUpperCase(unmapForm.get('pan'),$event)" formControlName="pan"
+                            class="form-control" type="text">
                         <mat-error *ngIf="unmapForm.get('pan').errors?.required">This field is required
                         </mat-error>
                         <mat-error *ngIf="unmapForm.get('pan').errors?.pattern">Pan invalid
