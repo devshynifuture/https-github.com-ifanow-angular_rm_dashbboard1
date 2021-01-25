@@ -42,6 +42,7 @@ export class EmailConsentComponent implements OnInit {
   toEmail: any;
   clientId: any;
   storedData: any;
+  isLoadingClient = false;
   constructor(private peopleService: PeopleService, private subscription: SubscriptionService, private cd: ChangeDetectorRef, private ngZone: NgZone, private utilService: UtilService, private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
     // this.clientData = AuthService.getClientData();
     this.getOrgData = AuthService.getOrgDetails();
@@ -77,7 +78,7 @@ export class EmailConsentComponent implements OnInit {
     this.activateRoute.queryParams.subscribe(
       params => {
         this.isLoading = true;
-        this.getConsentDetails(params.gropID);
+        this.getConsentDetails(params.groupId);
         this.paramData = params;
         console.log(params)
       }
@@ -141,6 +142,7 @@ export class EmailConsentComponent implements OnInit {
     };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       data => {
+        this.isLoadingClient = true;
         this.clientData = data;
         this.dataSource.data = this.storedData;
         this.ngZone.run(() => {
@@ -200,7 +202,10 @@ export class EmailConsentComponent implements OnInit {
     if (data && data[val]) {
       this.clientId = data[val].clientId
       console.log('dddddddddddddddddddddddddddddddddddddddddddddd', this.clientId);
-      this.getClientData(this.clientId);
+      if (!this.isLoadingClient) {
+        this.getClientData(this.clientId);
+        this.isLoadingClient = true;
+      }
     }
     if (data[val] && data[val].insuredMembers && data[val].hasOwnProperty("insuredMembers") &&
       data[val].insuredMembers.length > 0) {
@@ -270,7 +275,8 @@ export class EmailConsentComponent implements OnInit {
             }
           } else {
             if (element.stringObject.FICT) {
-              element.stringObject.REAL = element.stringObject.FICT
+              element.stringObject.REAL = element.stringObject.FICT;
+              this.getClientIdFun(element.stringObject, 'REAL')
             }
           }
           let obj =
@@ -278,7 +284,7 @@ export class EmailConsentComponent implements OnInit {
             id: element.id,
             acceptedOrDeclined: element.acceptedOrDeclined,
             adviceId: element.adviceId,
-            adviceUuid: this.paramData.gropID,
+            adviceUuid: this.paramData.groupId,
             actionPerformed: this.datePipe.transform(new Date(element.actionPerformed), 'yyyy-MM-dd'),
             advice: {
               "id": element.adviceId,
@@ -299,7 +305,15 @@ export class EmailConsentComponent implements OnInit {
     )
 
   }
-
+  getClientIdFun(data, val) {
+    if (data && data[val]) {
+      this.clientId = data[val].clientId
+      console.log('dddddddddddddddddddddddddddddddddddddddddddddd', this.clientId);
+      if (!this.isLoadingClient) {
+        this.getClientData(this.clientId);
+      }
+    }
+  }
   save() {
     this.cusService.updateAssetConsent(this.consentData).subscribe(
       data => {

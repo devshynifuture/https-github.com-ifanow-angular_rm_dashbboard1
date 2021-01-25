@@ -445,7 +445,7 @@ export class ClientWiseComponent implements OnInit {
       newarr.push({
         field1: element.index,
         field2: element.name,
-        field3: element.folioNumber,
+        field3: this.casFolioNumber(element),
         // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         field4: element.totalAum,
         // field5: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
@@ -569,7 +569,7 @@ export class ClientWiseComponent implements OnInit {
           ].schemeList[index].schemeFolioList.push({
             index: index1 + 1,
             name: element.schemeName,
-            folioNumber: element.folioNumber,
+            folioNumber: this.casFolioNumber(element),
             // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             totalAum: element.totalAum,
             // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
@@ -678,7 +678,23 @@ export class ClientWiseComponent implements OnInit {
       }
     }
   }
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+          element.folioNumber = 'CAS-' + element.folioNumber;
+        }
 
+      });
+    } else if (!Array.isArray(data)) {
+      if (data && data.rtMasterId == 6 && !data.folioNumber.includes("CAS")) {
+        data.folioNumber = 'CAS-' + data.folioNumber;
+      }
+      data = data ? data.folioNumber : [];
+    }
+
+    return data;
+  }
   getFolio(
     schemeData,
     index,
@@ -715,6 +731,7 @@ export class ClientWiseComponent implements OnInit {
           this.isLoadingFolio = false;
           console.log("folio data>::::", data);
           if (data) {
+            data = this.casFolioNumber(data);
             schemeData.folioList = data;
             this.scheme2List = data;
             // this.initializeExcelData();
