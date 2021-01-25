@@ -120,11 +120,11 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="col-md-2 col-2 pr-0 pt-12">
+      <div class="col-md-2 col-2 pr-0 pt-8">
         <i *ngIf=" pointIndex+1==bankForm.value.getNomineeName.length && pointIndex<2" class=" material-icons
-                    f-20 c-p" (click)="addNewNominee(undefined)">add</i>
+        text-primitive c-p" (click)="addNewNominee(undefined)">add</i>
         <i *ngIf=" bankForm.value.getNomineeName.length>1" class=" material-icons
-                    f-20 c-p" (click)="removeNewNominee(pointIndex)">remove</i>
+                    text-primitive c-p" (click)="removeNewNominee(pointIndex)">remove</i>
       </div>
 
     </div>
