@@ -334,6 +334,18 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_OTHERS_ASSETS, data);
   }
 
+  addSovereignGoldBond(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SOVEREIGN_GOLD_BOND, data);
+  }
+
+  editSovereignGoldBond(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SOVEREIGN_GOLD_BOND, data);
+  }
+
+  getSovereignGoldBondIssuePrice() {
+    return this.http.getCall(apiConfig.MAIN_URL + appConfig.GET_SOVEREIGN_GOLD_BOND_ISSUE_PRICE);
+  }
+
   addPPFScheme(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PPF_SCHEME, data);
   }

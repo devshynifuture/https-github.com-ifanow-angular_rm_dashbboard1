@@ -14,9 +14,27 @@
         <img src="assets/images/svg/download-bordered.svg">
       </a>
       <mat-menu #menu5="matMenu">
-        <button (click)="pdf('Others assets')" mat-menu-item>PDF</button>
+        <button (click)="pdf(null,'Others assets')" mat-menu-item>PDF</button>
         <button (click)="Excel('Others assets')" mat-menu-item>XLS</button>
       </mat-menu>
+
+      <!-- <button mat-stroked-button [matMenuTriggerFor]="filterRecurring" class="btn-default addon ml-8 mr-8 v-middle"><i
+          class="material-icons">filter_list</i>FILTER
+      </button>
+      <mat-menu #filterRecurring>
+        <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
+          (click)="filterFixedIncome(null, 'All', dataList)">
+          All
+        </button>
+        <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''"
+          (click)="filterFixedIncome('statusId', 'LIVE', dataList)">
+          STATUS - LIVE
+        </button>
+        <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+          (click)="filterFixedIncome('statusId', 'MATURED', dataList)">
+          STATUS - MATURED
+        </button>
+      </mat-menu> -->
 
       <button mat-stroked-button class="btn-primary ml-10 addon v-middle" (click)="open('othersAsset','')"> ADD
         NEW
@@ -119,7 +137,12 @@
           <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Status</th>
           <td *matCellDef="let element" class="br   text-primary" mat-cell>
             <div class="bar">
-              {{isLoading ? '' : 'LIVE' }}
+              <div *ngIf="!element.statusId">
+                {{isLoading ? '' : 'LIVE' }}
+              </div>
+              <div *ngIf="element.statusId">
+                {{isLoading ? '' : element.statusId}}
+              </div>
             </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
