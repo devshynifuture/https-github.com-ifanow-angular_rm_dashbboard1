@@ -37,7 +37,7 @@ export class AddOthersAssetComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  maxDate: Date = new Date();
+  currentDate: Date = new Date();
   validatorType = ValidatorType;
   othersAssetForm: any;
   ownerData: any;
@@ -73,6 +73,10 @@ export class AddOthersAssetComponent implements OnInit {
   flag: any;
   ownerName: any;
   callMethod: any;
+  minBalDate: Date = new Date();
+  minPurchaseDate: Date = new Date();
+  maxMaturityDate: Date = new Date();
+  futureConMaxDate: Date = new Date();
   adviceShowHeaderFooter = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   private unSubcrip2: Subscription;
@@ -103,6 +107,10 @@ export class AddOthersAssetComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.minBalDate.setFullYear(this.minBalDate.getFullYear() - 20);
+    this.minPurchaseDate.setFullYear(this.minPurchaseDate.getFullYear() - 30);
+    this.maxMaturityDate.setFullYear(this.maxMaturityDate.getFullYear() + 50);
+    this.futureConMaxDate = this.maxMaturityDate;
     if (this.data && this.data.flag) {
       this.adviceShowHeaderFooter = false;
     } else {
@@ -122,6 +130,39 @@ export class AddOthersAssetComponent implements OnInit {
     console.log(this.bankList, "this.bankList");
 
     this.getListFamilyMem();
+  }
+  AsOnDate: any;
+  getAsOnDate() {
+    if (this.othersAssetForm.value.currentValueAsonDate) {
+      let d = this.othersAssetForm.value.currentValueAsonDate;
+      this.AsOnDate = new Date(this.datePipe.transform(d, 'yyyy-MM-dd'));
+    }
+  }
+
+  restrictFrom100(event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = 100;
+    }
+  }
+
+  setValidation() {
+    if (this.othersAssetForm.value.purchaseAmt) {
+      this.othersAssetForm.get('purchaseDate').setValidators([Validators.required]);
+      this.othersAssetForm.get('purchaseDate').updateValueAndValidity();
+    }
+    else {
+      this.othersAssetForm.get('purchaseDate').setValidators(null);
+      this.othersAssetForm.get('purchaseDate').updateValueAndValidity();
+      this.othersAssetForm.get('purchaseDate').setValue("");
+
+    }
+  }
+
+  getmaturityDate() {
+    if (this.othersAssetForm.value.maturityDate) {
+      let d = this.othersAssetForm.value.maturityDate;
+      this.futureConMaxDate = new Date(this.datePipe.transform(d, 'yyyy-MM-dd'));
+    }
   }
 
   nomineesList() {
@@ -570,6 +611,12 @@ export class AddOthersAssetComponent implements OnInit {
 
         this.othersAssetForm.get('maturityDate').setValidators([Validators.required]);
         this.othersAssetForm.get('maturityDate').updateValueAndValidity();
+
+        if (this.othersAssetForm.get('hasRecurringContribution').value) {
+          this.othersAssetForm.get('endDate').setValidators([Validators.required]);
+          this.othersAssetForm.get('endDate').updateValueAndValidity();
+        }
+
       }
       else {
         this.othersAssetForm.get('maturityValue').setValidators(null);
@@ -577,6 +624,10 @@ export class AddOthersAssetComponent implements OnInit {
 
         this.othersAssetForm.get('maturityDate').setValidators(null);
         this.othersAssetForm.get('maturityDate').updateValueAndValidity();
+
+        this.othersAssetForm.get('endDate').setValidators(null);
+        this.othersAssetForm.get('endDate').updateValueAndValidity();
+
       }
 
 
@@ -586,10 +637,10 @@ export class AddOthersAssetComponent implements OnInit {
 
         this.othersAssetForm.get('approxAmount').setValidators([Validators.required]);
         this.othersAssetForm.get('approxAmount').updateValueAndValidity();
-
-        this.othersAssetForm.get('endDate').setValidators([Validators.required]);
-        this.othersAssetForm.get('endDate').updateValueAndValidity();
-
+        if (this.othersAssetForm.get('hasMaturity').value) {
+          this.othersAssetForm.get('endDate').setValidators([Validators.required]);
+          this.othersAssetForm.get('endDate').updateValueAndValidity();
+        }
       }
       else {
         this.othersAssetForm.get('recurringContributionFrequency').setValidators(null);

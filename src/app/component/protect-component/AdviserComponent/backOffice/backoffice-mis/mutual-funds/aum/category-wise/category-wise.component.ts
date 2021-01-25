@@ -465,6 +465,7 @@ export class CategoryWiseComponent implements OnInit {
     } else {
       this.removeValuesFromExcel('applicant', index);
     }
+    schemeData.clientList = this.casFolioNumber(schemeData.clientList)
   }
 
   aumReport() {
@@ -566,7 +567,7 @@ export class CategoryWiseComponent implements OnInit {
               name: element.name,
               // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
               balanceUnit: element.balanceUnit,
-              folioNumber: element.folioNumber,
+              folioNumber: this.casFolioNumber(element),
               // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
               totalAum: element.totalAum,
               weightInPerc: element.weightInPercentage,
@@ -588,7 +589,23 @@ export class CategoryWiseComponent implements OnInit {
       applicantList: false
     }, this.categoryWiseTotalArr);
   }
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+          element.folioNumber = 'CAS-' + element.folioNumber;
+        }
 
+      });
+    } else if (!Array.isArray(data)) {
+      if (data && data.rtMasterId == 6 && !data.folioNumber.includes("CAS")) {
+        data.folioNumber = 'CAS-' + data.folioNumber;
+      }
+      data = data ? data.folioNumber : [];
+    }
+
+    return data;
+  }
   subCategoryWiseExcelSheet(index) {
     const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
@@ -622,7 +639,7 @@ export class CategoryWiseComponent implements OnInit {
         field1: element.name,
         // field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
         field2: element.balanceUnit,
-        field3: element.folioNumber,
+        field3: this.casFolioNumber(element),
         // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         field4: element.totalAum,
         field5: element.weightInPerc,

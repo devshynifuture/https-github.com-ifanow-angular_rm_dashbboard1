@@ -284,6 +284,9 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   saveSuggestedFamilyMember(index, clientData) {
+    if (clientData.isLoading) {
+      return;
+    }
     if (clientData.clientType == 3 || clientData.clientType == 4) {
       this.rows.controls[index].get('gender').setValidators(null);
     }

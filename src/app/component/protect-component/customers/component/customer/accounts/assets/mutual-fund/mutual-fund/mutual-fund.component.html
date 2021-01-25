@@ -10,9 +10,7 @@
           <button
             *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.overviewReport.enabled"
             mat-menu-item (click)="changeViewMode('Overview Report')">Overview Report</button>
-          <button
-            *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.enabled"
-            mat-menu-item (click)="changeViewMode('Summary')">Summary</button>
+          <button mat-menu-item (click)="changeViewMode('Summary')">Summary</button>
           <button
             *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.enabled"
             mat-menu-item (click)="changeViewMode('All Transactions')">All Transactions</button>

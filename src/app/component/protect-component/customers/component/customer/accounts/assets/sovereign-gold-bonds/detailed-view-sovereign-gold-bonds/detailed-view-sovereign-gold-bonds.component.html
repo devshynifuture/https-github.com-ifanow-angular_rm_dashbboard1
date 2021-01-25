@@ -33,11 +33,11 @@
         </div>
         <div class="row bb p-8 b-l br">
           <div class="col-md-8 text-left f-14 roboto p-0">
-            Invested amount
+            Amount invested
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.amountInvested ? '₹':''}}<span
-              appFormatNumber>{{data.amountInvested ? data.amountInvested:'-'}}</span>
+            {{data.amountInvested ? '₹':''}}<span appFormatNumber>{{data.amountInvested ?
+              data.amountInvested:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -80,7 +80,7 @@
             {{data.yearlyPayout ? '₹':''}}<span appFormatNumber>{{data.yearlyPayout ? data.yearlyPayout:'-'}}</span>
           </div>
         </div>
-        <div class="row bb p-8 b-l br">
+        <!-- <div class="row bb p-8 b-l br">
           <div class="col-md-8 text-left f-14 roboto p-0">
             Pay-out received till date
           </div>
@@ -88,14 +88,22 @@
             {{data.payOutTillDate ? '₹':''}}<span
               appFormatNumber>{{data.payOutTillDate ? data.payOutTillDate:'-'}}</span>
           </div>
-        </div>
+        </div> -->
         <div class="row bb p-8 b-l br">
           <div class="col-md-8 text-left f-14 roboto p-0">
             Current value
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.currentValueAsOnToday ? '₹':''}}<span
-              appFormatNumber>{{data.currentValueAsOnToday ? data.currentValueAsOnToday:'-'}}</span>
+            {{data.currentValueAsOnToday ? '₹':''}}<span appFormatNumber>{{data.currentValueAsOnToday ?
+              data.currentValueAsOnToday:'-'}}</span>
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            XIRR (as on date)
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.issueDate | date:'dd/MM/yyyy'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">

@@ -195,7 +195,7 @@ export class AddArnRiaCredentialsComponent implements OnInit {
       this.onlineTransact.addBSECredentilas(obj).subscribe(
         data => this.addBSECredentilasRes(data), error => {
           this.barButtonOptions.active = false;
-          this.eventService.showErrorMessage(error);
+          this.eventService.openSnackBarNoDuration(error, 'Dismiss');
         }
       );
     }
