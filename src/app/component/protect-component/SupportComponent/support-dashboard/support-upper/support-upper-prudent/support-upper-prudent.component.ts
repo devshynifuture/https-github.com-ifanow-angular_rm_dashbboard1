@@ -366,6 +366,7 @@ export class SupportUpperPrudentComponent implements OnInit {
       console.log("this is some data::::::", dataTable);
       this.dataTable = dataTable;
       this.dataSource.data = dataTable;
+      this.schemeControl.setValue('');
       if (this.isMapped == true) {
         this.displayedColumns = ['name', 'schemeName', 'schemeCode', 'amficode', 'map'];
 
