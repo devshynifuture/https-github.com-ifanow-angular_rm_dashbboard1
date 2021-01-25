@@ -306,10 +306,11 @@ export class SipTransactionComponent implements OnInit {
     if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
     }
-    /*if (this.platformType == 1) {
+    if (this.platformType == 1) {
       this.getMandateDetails();
-    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
-    }*/
+      }
+    // } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
+    // }
     // this.getMandateDetails();
     this.oldDefaultData = data;
 
@@ -392,7 +393,7 @@ export class SipTransactionComponent implements OnInit {
     this.getFrequency();
     Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
     // Object.assign(this.transactionSummary, { schemeName: this.schemeName });
-    this.getMandateDetails()
+   // this.getMandateDetails()
   }
 
   setMinAmount() {
@@ -469,6 +470,7 @@ export class SipTransactionComponent implements OnInit {
     if (value) {
       this.bankDetails = value;
     } else {
+      this.showSchemeSpinner = false
       this.eventService.openSnackBar('Bank detail not found', 'Dismiss');
     }
   }
@@ -493,6 +495,7 @@ export class SipTransactionComponent implements OnInit {
 
   handleMandateFailure() {
     this.showSpinnerMandate = false;
+    this.showSchemeSpinner = false
     this.mandateDetails = [];
     this.selectedMandate = undefined;
     this.eventService.openSnackBar('No mandate found', 'Dismiss');
@@ -512,6 +515,7 @@ export class SipTransactionComponent implements OnInit {
           this.showSpinnerMandate = false;
           return;
         } else {
+          this.showSpinnerMandate = false;
           this.handleMandateFailure();
           return;
         }
