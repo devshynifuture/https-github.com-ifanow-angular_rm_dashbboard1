@@ -358,7 +358,7 @@ export class SupportUpperNjComponent implements OnInit {
     } else {
       this.displayedColumns = ['name', 'nav', 'schemeName', 'schemeCode', 'amficode', 'navTwo', 'navDate', 'njCount', 'map'];
     }
-
+    this.schemeControl.setValue('');
     this.isLoading = true;
     let data = {
       rtMasterId: 5,
@@ -376,7 +376,7 @@ export class SupportUpperNjComponent implements OnInit {
         dataTable.push({
           name: item.schemeName,
           nav: item.nav,
-          schemeName: '',
+          schemeName: (this.isMapped == true) ? item.mutualFundSchemeName : '',
           schemeCode: item.schemeCode,
           amfiCode: item.amfiCode,
           navTwo: '',
@@ -385,14 +385,15 @@ export class SupportUpperNjComponent implements OnInit {
           map: '',
           id: item.id,
           transactionDate: item.transactionDate,
-          isSchemeSelected: false
+          isSchemeSelected: false,
+          mutualFundSchemeMasterId: (this.isMapped == true) ? item.mutualFundSchemeMasterId : '',
         });
-        if (this.isMapped == true) {
-          dataTable.forEach(element => {
-            element.schemeName = item.mutualFundSchemeName
-            element.mutualFundSchemeMasterId = item.mutualFundSchemeMasterId
-          });
-        }
+        // if (this.isMapped == true) {
+        //   dataTable.forEach(element => {
+        //     element.schemeName = item.mutualFundSchemeName
+        //     element.mutualFundSchemeMasterId = item.mutualFundSchemeMasterId
+        //   });
+        // }
       });
       console.log("this is some data::::::", dataTable);
       this.dataTable = dataTable;

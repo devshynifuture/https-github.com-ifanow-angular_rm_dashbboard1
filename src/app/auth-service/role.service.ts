@@ -24,7 +24,8 @@ export class RoleService {
         this.constructAdminDataSource(advisorRoleData);
       }
       if (AuthService.getUserInfo()) {
-        (!AuthService.getClientData()) ? this.getRoleDetails(AuthService.getUserInfo().roleId, undefined) : this.getClientRoleDetails(AuthService.getClientData().roleId, undefined);
+        this.getRoleDetails(AuthService.getUserInfo().roleId, undefined)
+        // (!AuthService.getClientData()) ? this.getRoleDetails(AuthService.getUserInfo().roleId, undefined) : this.getClientRoleDetails(AuthService.getClientData().roleId, undefined);
       }
     }
   }

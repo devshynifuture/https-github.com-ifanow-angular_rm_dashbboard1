@@ -27,12 +27,12 @@
         </div>
         <div class="col-md-1 d-flex align-items-center justify-content-center">
             <i *ngIf="i==getEmailAddressFormList.length-1 && i!=2" (click)="addEmail(null)"
-                class="material-icons c-p f-20">
+                class="material-icons c-p text-primitive">
                 add </i>
 
             <i *ngIf="getEmailAddressFormList.length!=1"
                 (click)="emailForm.get('id').value==undefined?removeEmail(i):deleteEmail(i,emailForm)"
-                class="material-icons c-p f-20">
+                class="material-icons c-p text-primitive">
                 remove </i>
 
         </div>
