@@ -46,7 +46,15 @@
           </td>
           <td mat-footer-cell *matFooterCellDef class="br text-right pr-20 w-25 f-600 "> Total</td>
         </ng-container>
-
+        <ng-container matColumnDef="units">
+          <th mat-sort-header="unitsC" mat-header-cell *matHeaderCellDef class="br w-15 right-hc text-right hide-arrow">
+            Units (grams)
+          </th>
+          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="element.units">{{element.units}}</div>
+          </td>
+          <td *matFooterCellDef mat-footer-cell class=" "></td>
+        </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
             class="br w-15 right-hc text-right hide-arrow"> Current value
@@ -89,7 +97,7 @@
         <ng-container matColumnDef="issueDate">
           <th mat-sort-header="issueDate" mat-header-cell *matHeaderCellDef
             class="br w-15 right-hc text-right hide-arrow">
-            Start date
+            Investment date
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
             <div class="bar" *ngIf="!element.issueDate"><span *ngIf="!isLoading">-</span></div>
@@ -122,10 +130,21 @@
         </ng-container>
         <ng-container matColumnDef="bondseries">
           <th mat-sort-header="purchaseAmt" mat-header-cell *matHeaderCellDef class="br w-25">
-            Bond Series
+            Bond name & series
           </th>
           <td mat-cell *matCellDef="let element" class="br w-25">
             <div class="bar" *ngIf="element.bond">{{element.bond}}</div>
+          </td>
+          <td *matFooterCellDef mat-footer-cell class=" "></td>
+        </ng-container>
+        <ng-container matColumnDef="xirrDate">
+          <th mat-sort-header="xirrDate" mat-header-cell *matHeaderCellDef
+            class="br w-15 right-hc text-right hide-arrow">
+            XXIR (as on date)
+          </th>
+          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+            <div class="bar" *ngIf="!element.issueDate"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.issueDate">{{element.issueDate | date:'dd/MM/yyyy'}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -133,7 +152,10 @@
           <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Status</th>
           <td *matCellDef="let element" class="br   text-primary" mat-cell>
             <div class="bar">
-              {{isLoading ? '' : 'LIVE' }}
+              <span *ngIf="element.status == 1">{{isLoading ? '' : 'LIVE' }}</span>
+              <span *ngIf="element.status == 2">{{isLoading ? '' : 'Mature' }}</span>
+              <span *ngIf="element.status == 3">{{isLoading ? '' : 'Partially withdrawn' }}</span>
+              <span *ngIf="element.status == 4">{{isLoading ? '' : 'Redeemed' }}</span>
             </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
