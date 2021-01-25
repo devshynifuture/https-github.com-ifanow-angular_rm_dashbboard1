@@ -24,6 +24,8 @@ p {
   width: 313px;
 }
 
+
+
 .highcharts-data-table table {
   font-family: Verdana, sans-serif;
   border-collapse: collapse;
@@ -427,9 +429,10 @@ p {
 
 .piechartMutualFund {
   height: 330px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  svg {
+    width: 320px !important;
+  }
 }
 
 .highcharts-data-table table {

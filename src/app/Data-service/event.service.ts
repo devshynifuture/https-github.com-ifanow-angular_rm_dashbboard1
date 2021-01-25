@@ -77,21 +77,21 @@ export class EventService {
   }
 
   openSnackBarWithCustomDismissBtn(message: string, action: string = null, actionCallback = null, duration = 2000) {
-    const snackBbarref = this.snackBar.open(message, action, {
+    const snackBarRef = this.snackBar.open(message, action, {
       duration,
       panelClass: ['app-bottom-snackbar']
     });
     if (actionCallback) {
-      snackBbarref.onAction().subscribe(actionCallback);
+      snackBarRef.onAction().subscribe(actionCallback);
     }
   }
 
   openSnackBarNoDuration(message: string, action: string = null, actionCallback = null) {
-    const snackBbarref = this.snackBar.open(message, action, {
+    const snackBarRef = this.snackBar.open(message, action, {
       panelClass: ['app-bottom-snackbar']
     });
     if (actionCallback) {
-      snackBbarref.onAction().subscribe(actionCallback);
+      snackBarRef.onAction().subscribe(actionCallback);
     }
   }
 

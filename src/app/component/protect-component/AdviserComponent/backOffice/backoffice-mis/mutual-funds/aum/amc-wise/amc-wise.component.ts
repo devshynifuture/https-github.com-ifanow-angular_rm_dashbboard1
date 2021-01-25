@@ -229,7 +229,7 @@ export class AmcWiseComponent implements OnInit {
         field1: element.name,
         // field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
         field2: element.balanceUnit,
-        field3: element.folioNumber,
+        field3: this.casFolioNumber(element),
         // field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         field4: element.totalAum,
         field5: element.weightInPerc
@@ -312,7 +312,7 @@ export class AmcWiseComponent implements OnInit {
             name: element.investorName,
             // balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
             balanceUnit: element.balanceUnit,
-            folioNumber: element.folioNumber,
+            folioNumber: this.casFolioNumber(element),
             // totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             totalAum: element.totalAum,
             weightInPerc: element.weightInPercentage
@@ -326,6 +326,23 @@ export class AmcWiseComponent implements OnInit {
     }
   }
 
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+          element.folioNumber = 'CAS-' + element.folioNumber;
+        }
+
+      });
+    } else if (!Array.isArray(data)) {
+      if (data && data.rtMasterId == 6 && !data.folioNumber.includes("CAS")) {
+        data.folioNumber = 'CAS-' + data.folioNumber;
+      }
+      data = data ? data.folioNumber : [];
+    }
+
+    return data;
+  }
   excelInitAmcList() {
     let sumAumTotal = 0;
     let sumWeightInPercTotal = 0;
@@ -423,6 +440,7 @@ export class AmcWiseComponent implements OnInit {
         data => {
           if (data) {
             this.isLoadingApplicant = false;
+            data = this.casFolioNumber(data);
             schemeData.applicantList = data;
             this.applicationList = data;
             this.appendingOfValuesInExcel(data, index, 'applicant');
