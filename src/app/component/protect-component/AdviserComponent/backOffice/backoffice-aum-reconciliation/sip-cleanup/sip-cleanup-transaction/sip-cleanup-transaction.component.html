@@ -1,0 +1,201 @@
+<div class="popup-header-fix w-60">
+    <div class="row bb-1">
+        <div class="col-lg-8 p-0">
+            <h4 class="mb-0 wrapper-20 pr-0"> SIP clean up transactions </h4>
+        </div>
+        <div class="col-lg-4 text-right">
+            <div class="wrapper-12">
+                <!-- (click)="Close(false)" removed for prod build -->
+                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose()"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row pt-90">
+    <div class="col-lg-6">
+        <p class="m-0 f-12 text-primitive roboto">SCHEME NAME</p>
+        <h4 class="f-14 mb-24">{{ data.schemeName }}</h4>
+
+        <p class="m-0 f-12 text-primitive roboto">FOLIO NUMBER</p>
+        <h4 class="f-14 ">{{ data.folioNumber }}
+            <button *ngIf="data.unMapped == false" mat-stroked-button
+                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs c-p" (click)="unmappedFolio(data)">
+                Unmap Folio
+            </button>
+            <button [disabled]="data.unMapped" *ngIf="data.unMapped == true" mat-stroked-button
+                class="bg-primary text-white mr-12 h-22 mb-24 btn-xs">
+                Unmapped
+            </button>
+        </h4>
+        <span *ngIf="tableEntriesType == 1">
+            <p class="m-0 f-12 text-primitive roboto">INVESTOR</p>
+            <h4 class="f-14 mb-24">{{ data.investorName }}</h4>
+        </span>
+
+    </div>
+
+    <!-- <div class="col-lg-6">
+        <p class="mb-4 f-12 text-primitive roboto">STATUS</p>
+
+        <div class=" overflow-hidden back-office-table mb-24">
+            <table mat-table [dataSource]="statusData" id="table-low" class=" ">
+
+                <ng-container matColumnDef="unitOne">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Units (IFANOW) </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.unitOne}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="unitsRta">
+                    <th class="br" mat-header-cell *matHeaderCellDef> units (RTA) </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.unitsRta}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="difference">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Difference </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.difference}} </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div> -->
+</div>
+
+
+<div class="row">
+    <div class="col-lg-6" *ngIf="tableEntriesType==1">
+        <button class="ba-black" mat-stroked-button *ngIf="shouldShowMultipleDelete"
+            (click)="deleteSingleOrMultipleTransaction()">Delete selected</button>
+        <!-- <span class="text-primitive ml-12 f-14" *ngIf="shouldShowSelectedBalanceUnit"> Selected units: {{ selectedFolioUnits }}
+        </span> -->
+        <div class="mt-20">
+            <span class="text-primitive ml-12 f-14" *ngIf="shouldShowMultipleDelete"> Selected units:
+                {{ selectedFolioUnits }}
+            </span>
+            <span class="text-primitive ml-12 mb-20 f-14 float-right" *ngIf="shouldShowSelectedFilteredUnits"> Filtered
+                units: {{ selectedFolioUnitsFiltered }}
+            </span>
+        </div>
+    </div>
+
+    <div class="col-lg-6" *ngIf="tableEntriesType==2">
+        <!-- <mat-checkbox>Show All Transactions</mat-checkbox> -->
+    </div>
+    <div class="col-lg-6 full-end">
+        <div *ngIf="tableEntriesType == 1" class="w-100 mr-12">
+            <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <!-- <mat-label>Filter</mat-label> -->
+                    <mat-select placeholder="Filter" [formControl]="filterTransactionListTab1" multiple
+                        class="form-control">
+                        <mat-option *ngFor="let item of filterList" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <!-- <div *ngIf="tableEntriesType == 2" class="w-100 mb-20">
+            <mat-form-field appearance="standard" float="never" class="form-group pr-3 mb-0">
+                <mat-label>Filter</mat-label>
+                <mat-select [formControl]="filterTransactionListTab2" multiple class="form-control">
+                  <mat-option *ngFor="let item of filterList" [value]="item">{{item}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <mat-checkbox [checked]="transactionType" class="example-margin ml-2" (change)="selectAllTransaction($event)">
+            Show all transaction type</mat-checkbox>
+    </div>
+    <div class="col-md-7">
+        <mat-checkbox [checked]="historicalTransaction" class="example-margin ml-2"
+            (change)="selectHistoricalTransaction($event)">Show all historical transactions</mat-checkbox>
+    </div>
+</div>
+<div class="row pb-100">
+    <div class="col-lg-12 overflow-hidden back-office-table">
+        <div *ngIf="dataSource2 && !isLoading">
+
+            <table mat-table [dataSource]="dataSource2" class="mt-8" id="tbs">
+                <!-- transaction Type Column -->
+                <ng-container matColumnDef="srNo">
+                    <th class="br" mat-header-cell *matHeaderCellDef>
+                    </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.srNo}} </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="transactionType">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Transaction type </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.fwTransactionType}} <span *ngIf="element.rt === 6"> (CAS)</span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Date </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.transactionDate | date: 'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="amount">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.amount}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="nav">
+                    <th class="br" mat-header-cell *matHeaderCellDef> NAV </th>
+                    <td class="br" mat-cell *matCellDef="let element">
+                        <div class="bar"> {{element.nav}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="units">
+                    <th class="br" mat-header-cell *matHeaderCellDef> Units </th>
+                    <td class="br" mat-cell *matCellDef=" let element">
+                        <div class="bar"> {{element.unit}} </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            </table>
+            <div class="col-md-12 b-a p-0" *ngIf="dataSource2.data === null">
+                <h5 class="p-44 text-center">
+                    No Data Found
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 p-48 d-flex align-items-center justify-content-center">
+        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
+    </div>
+</div>
+
+
+
+
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-lg-4">
+            <!-- (click)="Close(false)" removed for prod build -->
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose()">Cancel</h5>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="mainLoader">
+    <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+</div>

@@ -248,6 +248,7 @@ export class SipApplicantWiseComponent implements OnInit {
       this.backoffice.sipApplicantFolioList(obj).subscribe(
         data => {
           if (data) {
+            data = this.casFolioNumber(data)
             this.isLoadingApplicant = false;
             data.forEach(element => {
               element.name = applicantData.name;
@@ -344,7 +345,7 @@ export class SipApplicantWiseComponent implements OnInit {
         field1: index1 + 1,
         field2: element.name,
         field3: element.schemeName,
-        field4: element.folio,
+        field4: this.casFolioNumber(element),
         field5: new Date(element.registeredDate),
         field6: new Date(element.fromDate),
         field7: new Date(element.toDate),
@@ -396,7 +397,7 @@ export class SipApplicantWiseComponent implements OnInit {
             index: index1 + 1,
             name: element.name,
             schemeName: element.schemeName,
-            folio: element.folioNumber,
+            folio: this.casFolioNumber(element),
             registeredDate: new Date(element.registeredDate),
             fromDate: new Date(element.from_date),
             toDate: new Date(element.to_date),
@@ -415,7 +416,23 @@ export class SipApplicantWiseComponent implements OnInit {
         break;
     }
   }
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+          element.folioNumber = 'CAS-' + element.folioNumber;
+        }
 
+      });
+    } else if (!Array.isArray(data)) {
+      if (data && data.rtMasterId == 6 && !data.folioNumber.includes("CAS")) {
+        data.folioNumber = 'CAS-' + data.folioNumber;
+      }
+      data = data ? data.folioNumber : [];
+    }
+
+    return data;
+  }
   removeValuesFromExcel(whichList, index) {
 
     switch (whichList) {

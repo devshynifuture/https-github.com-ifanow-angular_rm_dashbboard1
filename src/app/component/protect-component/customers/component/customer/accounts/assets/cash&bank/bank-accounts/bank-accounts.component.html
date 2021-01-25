@@ -53,10 +53,9 @@
             </div>
             <div class="col-md-2 pr-0 d-flex align-items-center">
                 <i *ngIf="bankAccounts.value.getCoOwnerName.length < 3"
-                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                    class="material-icons text-primitive c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
                 <i *ngIf="bankAccounts.value.getCoOwnerName.length > 1"
-                    class="material-icons text-primitive f-20 c-p pl-10 pt-8"
-                    (click)="removeCoOwner(pointIndex)">remove</i>
+                    class="material-icons text-primitive c-p pl-10 pt-8" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
         </div>
@@ -97,7 +96,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="col-md-2 p-0 pt-8 d-flex">
+        <div class="col-md-2 pr-0 pt-8 d-flex">
             <!-- prod build -->
             <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
         </div>

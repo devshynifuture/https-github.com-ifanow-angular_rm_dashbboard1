@@ -190,7 +190,23 @@ export class SipClientWiseComponent implements OnInit {
       element.showCategory = true;
     });
   }
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(element => {
+        if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+          element.folioNumber = 'CAS-' + element.folioNumber;
+        }
 
+      });
+    } else if (!Array.isArray(data)) {
+      if (data && data.rtMasterId == 6 && !data.folioNumber.includes("CAS")) {
+        data.folioNumber = 'CAS-' + data.folioNumber;
+      }
+      data = data ? data.folioNumber : [];
+    }
+
+    return data;
+  }
   changeCeasedDateDialog(data, parentObj) {
     const dialogRef = this.dialog.open(DateChangeDialogComponent, {
       width: '300px',
@@ -360,7 +376,7 @@ export class SipClientWiseComponent implements OnInit {
             index: index1 + 1,
             name: element.investorName,
             schemeName: element.schemeName,
-            folio: element.folioNumber,
+            folio: this.casFolioNumber(element),
             registeredDate: new Date(element.registeredDate),
             fromDate: new Date(element.from_date),
             toDate: new Date(element.to_date),
@@ -438,6 +454,7 @@ export class SipClientWiseComponent implements OnInit {
         data => {
           this.isLoadingApplicant = false;
           if (data) {
+            data = this.casFolioNumber(data);
             data.forEach(o => {
               o.showSubCategory = true;
               o.isEdit = false;
