@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { RunSipMappingMasterComponent } from './run-sip-mapping-master/run-sip-mapping-master.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDeploymentsComponent } from './add-deployments/add-deployments.component';
+import { SipCleanupTransactionComponent } from './sip-cleanup-transaction/sip-cleanup-transaction.component';
 
 @Component({
   selector: "app-sip-cleanup",
@@ -33,8 +34,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     // "symbol",
     "tra",
     "action",
-
-    // "menu",
+    "menu",
   ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -376,6 +376,23 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       state: "open35",
       data,
       componentName: RecordDetailsComponent,
+    };
+    const rightSideDataSub = this.subInjectService
+      .changeNewRightSliderState(fragmentData)
+      .subscribe((sideBarData) => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      });
+  }
+  openTransactionDeatils(data) {
+    const fragmentData = {
+      id: 1,
+      state: "open",
+      data,
+      componentName: SipCleanupTransactionComponent,
     };
     const rightSideDataSub = this.subInjectService
       .changeNewRightSliderState(fragmentData)

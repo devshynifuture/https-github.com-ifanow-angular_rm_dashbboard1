@@ -208,7 +208,10 @@ export class BackOfficeService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WISE_CLIENTNAME_GET, httpParams);
   }
-
+  getSipCleanupTransaction(data) {
+    const httpParams = new HttpParams().set('showAllTransactionType', data.showAllTransactionType).set('showHistoricTransaction', data.showHistoricTransaction).set('sipId', data.sipId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_CLEANUP_TRANSACTION_GET, httpParams);
+  }
   Scheme_Wise_Investor_Get(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('schemeId', data.schemeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.Scheme_Wise_Investor_Get, httpParams);
