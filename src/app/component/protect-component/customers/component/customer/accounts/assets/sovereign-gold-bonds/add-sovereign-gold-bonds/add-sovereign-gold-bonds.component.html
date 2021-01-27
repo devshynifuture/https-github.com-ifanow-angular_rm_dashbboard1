@@ -335,97 +335,109 @@
 
       </div>
     </div>
-    <div formArrayName="sovereignGoldTransactionList" class="pt-44 add-liabilities"
-      style="width: 90%; margin: 0px auto; margin-left: 10%; ">
-      <div class="row">
-        <div class="col-md-10 p-0">
-          <div class="row">
-            <div class="col-md-3 pl-0">
-              <label class="f-14"> Transaction type</label>
+
+  </div>
+  <div class="row pt-40 justify-content-md-center ">
+    <div class="col-md-9 bt-grey text-center">
+      <button *ngIf="goldBondForm.value.sovereignGoldTransactionList.length <= 0" (click)="addTransaction(null)"
+        mat-stroked-button class="btn-dark-black addon mt-16"><i class="material-icons">add</i>ADD
+        TRANSACTIONS</button>
+      <p *ngIf="goldBondForm.value.sovereignGoldTransactionList.length <= 0" class="f-12 text-primitive mt-12 ">
+        Adding transactions is optional but highly <br> recommended to get better reports
+        <span class="text-primary c-p"
+          matTooltip="You can add partial transaction history too. E.g. if your A/c commenced in 2012, you can specify balance as on, say 31/03/2017 and enter transactions after 31/03/2017.">
+          More info </span>
+      </p>
+    </div>
+  </div>
+  <div *ngIf="goldBondForm.value.sovereignGoldTransactionList.length > 0" formArrayName="sovereignGoldTransactionList"
+    class="pt-44 add-liabilities" style="width: 90%; margin: 0px auto; margin-left: 10%; ">
+    <div class="row">
+      <div class="col-md-10 p-0">
+        <div class="row">
+          <div class="col-md-3 pl-0">
+            <label class="f-14"> Transaction type</label>
+          </div>
+          <div class="col-md-3 pl-0">
+            <label class="f-14"> Transaction date</label>
+          </div>
+          <div class="col-md-3 pl-0">
+            <label class="f-14"> Units</label>
+          </div>
+          <div class="col-md-3 pl-0">
+            <label class="f-14 ws-nowrap">Amount</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pb-28 row"
+      *ngFor="let singleTransForm of goldBondForm.controls['sovereignGoldTransactionList'].controls;let goldindex = index"
+      [formGroupName]="goldindex">
+      <div class="col-md-10 p-0">
+        <div class="row">
+          <div class="col-md-3 pl-0">
+            <div class="form-group mb-0">
+              <mat-select matInput formControlName="type" class="form-control br-0">
+                <mat-option value='' disabled>Select type</mat-option>
+                <mat-option value="redemption">
+                  <span>Redemption</span>
+                </mat-option>
+              </mat-select>
             </div>
-            <div class="col-md-3 pl-0">
-              <label class="f-14"> Transaction date</label>
+          </div>
+          <div class="col-md-3 pl-0">
+            <div class="form-group mb-0">
+              <mat-form-field class="ba-date">
+                <input class="form-control b-0 br-0" (click)="picker2.open()" (dateChange)="tranValidation(goldindex)"
+                  matInput formControlName="transactionDate" [matDatepicker]="picker2" readonly>
+                <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-error>
+                  This field is required
+                </mat-error>
+              </mat-form-field>
             </div>
-            <div class="col-md-3 pl-0">
-              <label class="f-14"> Units</label>
+          </div>
+          <div class="col-md-3 pl-0">
+
+            <div class="form-group mb-0">
+              <mat-form-field>
+                <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  autocomplete="off" formControlName="unit" maxlength="10" #partPayment
+                  class="form-control rupess br-0">
+                <mat-error>
+                  This field is required
+                </mat-error>
+                <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
+                  Should be less than 150000
+                </mat-error>
+                <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
+              </mat-form-field>
             </div>
-            <div class="col-md-3 pl-0">
-              <label class="f-14 ws-nowrap">Amount</label>
+          </div>
+          <div class="col-md-3 pl-0">
+
+            <div class="form-group mb-0 iconRupess">
+              <mat-form-field>
+                <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  autocomplete="off" formControlName="amount" maxlength="10" #partPayment
+                  class="form-control rupess br-0">
+                <mat-error>
+                  This field is required
+                </mat-error>
+                <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
+                  Should be less than 150000
+                </mat-error>
+                <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
+              </mat-form-field>
             </div>
           </div>
         </div>
       </div>
-      <div class="pb-28 row"
-        *ngFor="let singleTransForm of goldBondForm.controls['sovereignGoldTransactionList'].controls;let goldindex = index"
-        [formGroupName]="goldindex">
-        <div class="col-md-10 p-0">
-          <div class="row">
-            <div class="col-md-3 pl-0">
-              <div class="form-group mb-0">
-                <mat-select matInput formControlName="type" class="form-control br-0">
-                  <mat-option value='' disabled>Select type</mat-option>
-                  <mat-option value="redemption">
-                    <span>Redemption</span>
-                  </mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <div class="col-md-3 pl-0">
-              <div class="form-group mb-0">
-                <mat-form-field class="ba-date">
-                  <input class="form-control b-0 br-0" (click)="picker2.open()" (dateChange)="tranValidation(goldindex)"
-                    matInput formControlName="transactionDate" [matDatepicker]="picker2" readonly>
-                  <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker2"></mat-datepicker-toggle>
-                  <mat-datepicker #picker2></mat-datepicker>
-                  <mat-error>
-                    This field is required
-                  </mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-md-3 pl-0">
-
-              <div class="form-group mb-0">
-                <mat-form-field>
-                  <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                    autocomplete="off" formControlName="unit" maxlength="10" #partPayment
-                    class="form-control rupess br-0">
-                  <mat-error>
-                    This field is required
-                  </mat-error>
-                  <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
-                    Should be less than 150000
-                  </mat-error>
-                  <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-md-3 pl-0">
-
-              <div class="form-group mb-0 iconRupess">
-                <mat-form-field>
-                  <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                    autocomplete="off" formControlName="amount" maxlength="10" #partPayment
-                    class="form-control rupess br-0">
-                  <mat-error>
-                    This field is required
-                  </mat-error>
-                  <!-- <mat-error *ngIf="singleTransForm.controls['amount'].hasError('max')" class="f-12">
-                    Should be less than 150000
-                  </mat-error>
-                  <mat-hint align="end" class="f-12">{{partPayment.value.length}}/10</mat-hint> -->
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-1 p-0">
-          <div class="pt-8">
-            <i class="material-icons text-primitive c-p f-20 float-left" (click)="addTransaction(null)">add</i>
-            <i class="material-icons text-primitive c-p f-20 pl-10 "
-              *ngIf="goldBondForm.value.sovereignGoldTransactionList.length > 1"
-              (click)="removeTransaction(goldindex)">remove</i>
-          </div>
+      <div class="col-md-1 p-0">
+        <div class="pt-8">
+          <i class="material-icons text-primitive c-p f-20 float-left" (click)="addTransaction(null)">add</i>
+          <i class="material-icons text-primitive c-p f-20 pl-10 " (click)="removeTransaction(goldindex)">remove</i>
         </div>
       </div>
     </div>

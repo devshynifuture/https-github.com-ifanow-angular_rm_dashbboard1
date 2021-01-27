@@ -390,12 +390,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
         familyMemberId: [0],
         id: [0]
       })]),
-      sovereignGoldTransactionList: this.fb.array([this.fb.group({
-        transactionDate: [''],
-        unit: [''],
-        amount: [''],
-        type: ['redemption']
-      })]),
+      sovereignGoldTransactionList: this.fb.array([]),
       // ownerPercent: [data.ownerPerc, [Validators.required]],
 
     });
@@ -438,6 +433,16 @@ export class AddSovereignGoldBondsComponent implements OnInit {
           this.getNominee.removeAt(0);
           data.nomineeList.forEach(element => {
             this.addNewNominee(element);
+          });
+        }
+      }
+      /***nominee***/
+
+      /***nominee***/
+      if (data.sovereignGoldTransactionList) {
+        if (data.sovereignGoldTransactionList.length > 0) {
+          data.sovereignGoldTransactionList.forEach(element => {
+            this.addTransaction(element);
           });
         }
       }
@@ -512,10 +517,10 @@ export class AddSovereignGoldBondsComponent implements OnInit {
 
   addTransaction(data) {
     this.getTransaction.push(this.fb.group({
-      transactionDate: [!data ? '' : data.transactionDate],
-      unit: [!data ? '' : data.unit],
-      amount: [!data ? '' : data.amount],
-      type: [!data ? 'redemption' : data.amount]
+      transactionDate: [!data ? '' : data.transactionDate, [Validators.required]],
+      unit: [!data ? '' : data.unit, [Validators.required]],
+      amount: [!data ? '' : data.amount, [Validators.required]],
+      type: [!data ? 'redemption' : data.amount, [Validators.required]]
     }));
   }
 
