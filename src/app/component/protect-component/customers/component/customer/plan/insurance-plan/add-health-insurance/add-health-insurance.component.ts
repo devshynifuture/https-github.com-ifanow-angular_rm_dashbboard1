@@ -160,7 +160,7 @@ export class AddHealthInsuranceComponent implements OnInit {
   },
   {
     value: '7',
-    logo: '/assets/images/svg/Fireinsurance.svg',
+    logo: '/assets/images/svg/Travel.svg',
     header: 'Add Travel Insurance',
     smallHeading: 'travel insurance',
     insuranceType: 8,
@@ -168,7 +168,7 @@ export class AddHealthInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
   }, {
     value: '8',
-    logo: '/assets/images/svg/Fireinsurance.svg',
+    logo: '/assets/images/svg/Motor.svg',
     header: 'Add Motor Insurance',
     smallHeading: 'motor insurance',
     insuranceType: 4,
