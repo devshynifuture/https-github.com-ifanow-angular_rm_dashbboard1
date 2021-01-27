@@ -73,7 +73,7 @@
                 <th class="b-a" mat-header-cell *matHeaderCellDef> NJ NAV </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
-                        {{(isLoading) ? '':element.nav}}
+                        {{(isLoading) ? '':element.njNav}}
                     </div>
                 </td>
             </ng-container>
@@ -88,8 +88,8 @@
                     <div *ngIf="isMapped != true">
                         <mat-form-field appearance="standard" floatLabel="never">
                             <input class="form-control" matInput placeholder="Search"
-                                (focus)="showSuggestionsBasedOnSchemeName(element)" aria-label="State"
-                                [matAutocomplete]="auto" [formControl]="schemeControl">
+                                (input)="showSuggestionsBasedOnSchemeName(element,$event.target.value)"
+                                aria-label="State" [matAutocomplete]="auto" [formControl]="schemeControl">
                             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                                 <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
                                 <ng-container *ngIf="!isLoadingForDropDown">
