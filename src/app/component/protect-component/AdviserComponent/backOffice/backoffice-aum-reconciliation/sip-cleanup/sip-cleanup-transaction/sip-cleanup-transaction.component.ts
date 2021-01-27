@@ -65,7 +65,7 @@ export class SipCleanupTransactionComponent implements OnInit {
     }
     this.backOfficeService.getSipCleanupTransaction(this.sendObj).subscribe(
       (res) => {
-        // this.isLoading = false;
+        this.isLoading = false;
         if (res) {
           console.log("this is backoffice sip cleanup data", res);
           this.dataSource2 = res;

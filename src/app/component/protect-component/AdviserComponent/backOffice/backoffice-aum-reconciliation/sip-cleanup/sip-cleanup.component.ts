@@ -128,6 +128,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initPoint();
+    this.isLoading = true;
   }
 
   initPoint() {

@@ -168,10 +168,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PPF, httpParams);
   }
 
-  getGoldBondsData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PPF, httpParams);
-  }
+
 
   getSmallSavingSchemeNSCData(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
@@ -336,6 +333,11 @@ export class CustomerService {
 
   addSovereignGoldBond(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SOVEREIGN_GOLD_BOND, data);
+  }
+
+  getGoldBondsData(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SOVEREIGN_GOLD_BOND, httpParams);
   }
 
   editSovereignGoldBond(data) {
