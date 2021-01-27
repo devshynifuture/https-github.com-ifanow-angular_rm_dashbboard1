@@ -203,7 +203,7 @@ export class AllInsurancelistComponent implements OnInit {
         } else if (element.insuranceType == 9) {
           element.value = '5';
           element.header = 'Add Home insurance'
-          element.heading = 'Home insurance'
+          element.heading = 'Householders'
           element.logo = '/assets/images/svg/Hsmall.svg'
         } else if (element.insuranceType == 7) {
           element.value = '4';
@@ -214,12 +214,12 @@ export class AllInsurancelistComponent implements OnInit {
           element.value = '7';
           element.header = 'Add Travel insurance'
           element.heading = 'Travel insurance'
-          element.logo = '/assets/images/svg/PAsmall.svg'
+          element.logo = '/assets/images/svg/TravelSmall.svg'
         } else if (element.insuranceType == 4) {
           element.value = '8';
           element.header = 'Add Motor insurance'
           element.heading = 'Motor insurance'
-          element.logo = '/assets/images/svg/PAsmall.svg'
+          element.logo = '/assets/images/svg/MotorSmall.svg'
         }
       });
       console.log(this.dataSource)
@@ -372,7 +372,7 @@ export class AllInsurancelistComponent implements OnInit {
     );
   }
 
-  openAddgoals(){}
+  openAddgoals() { }
 
   opencurrentpolicies(data) {
     this.isLoading = true;

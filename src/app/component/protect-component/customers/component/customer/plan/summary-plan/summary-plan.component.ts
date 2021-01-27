@@ -619,7 +619,7 @@ export class SummaryPlanComponent implements OnInit {
                                 this.object = {
                                     'insuranceName': 'Motor insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/PAsmall.svg'
+                                    'img': '/assets/images/svg/MotorSmall.svg'
                                 }
                                 break;
                             case 'personalAccident':
@@ -633,7 +633,7 @@ export class SummaryPlanComponent implements OnInit {
                                 this.object = {
                                     'insuranceName': 'Travel insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/PAsmall.svg'
+                                    'img': '/assets/images/svg/TravelSmall.svg'
                                 }
                                 break;
                             default:

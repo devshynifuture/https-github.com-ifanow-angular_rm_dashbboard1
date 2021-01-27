@@ -1184,12 +1184,12 @@ export class FinacialPlanSectionComponent implements OnInit {
           element.value = '7';
           element.header = 'Add Travel insurance'
           element.heading = 'Travel insurance'
-          element.logo = '/assets/images/svg/PAsmall.svg'
+          element.logo = '/assets/images/svg/TravelSmall.svg'
         } else if (element.insuranceType == 4) {
           element.value = '8';
           element.header = 'Add Motor insurance'
           element.heading = 'Motor insurance'
-          element.logo = '/assets/images/svg/PAsmall.svg'
+          element.logo = '/assets/images/svg/MotorSmall.svg'
         }
       });
       console.log(this.dataSource)
