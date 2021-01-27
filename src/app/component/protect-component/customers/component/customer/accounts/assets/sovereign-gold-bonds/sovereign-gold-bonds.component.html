@@ -51,7 +51,7 @@
             Units (grams)
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-            <div class="bar" *ngIf="element.units">{{element.units}}</div>
+            <div class="bar" *ngIf="element.unitsInGram">{{element.unitsInGram}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -60,9 +60,9 @@
             class="br w-15 right-hc text-right hide-arrow"> Current value
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-            <div class="bar" *ngIf="element.currentValueAsOnToday == 0"><span *ngIf="!isLoading">-</span></div>
-            <div class="bar" *ngIf="element.currentValueAsOnToday != 0">{{!isLoading ? "₹" : ""}}<span
-                [value]="element.currentValueAsOnToday" appFormatNumber>{{element.currentValueAsOnToday }}</span>
+            <div class="bar" *ngIf="element.currentValue == 0"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.currentValue != 0">{{!isLoading ? "₹" : ""}}<span
+                [value]="element.currentValue" appFormatNumber>{{element.currentValue }}</span>
             </div>
           </td>
           <td mat-footer-cell *matFooterCellDef class="br text-right w-15 amt p-8 f-600">
@@ -76,9 +76,9 @@
             Interest amount
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-            <div class="bar" *ngIf="element.amountInterest == 0"><span *ngIf="!isLoading">-</span></div>
-            <div class="bar" *ngIf="element.amountInterest != 0">{{!isLoading ? "₹" : ""}}<span
-                [value]="element.amountInterest" appFormatNumber>{{element.amountInterest}}</span></div>
+            <div class="bar" *ngIf="element.interestAmountYearly == 0"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.interestAmountYearly != 0">{{!isLoading ? "₹" : ""}}<span
+                [value]="element.interestAmountYearly" appFormatNumber>{{element.interestAmountYearly}}</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -88,9 +88,9 @@
             Invested amount
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-            <div class="bar" *ngIf="element.amountInvested == 0"><span *ngIf="!isLoading">-</span></div>
-            <div class="bar" *ngIf="element.amountInvested != 0">{{!isLoading ? "₹" : ""}}<span
-                [value]="element.amountInvested" appFormatNumber>{{element.amountInvested}}</span></div>
+            <div class="bar" *ngIf="element.investmentAmount == 0"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.investmentAmount != 0">{{!isLoading ? "₹" : ""}}<span
+                [value]="element.investmentAmount" appFormatNumber>{{element.investmentAmount}}</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -100,8 +100,8 @@
             Investment date
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-            <div class="bar" *ngIf="!element.issueDate"><span *ngIf="!isLoading">-</span></div>
-            <div class="bar" *ngIf="element.issueDate">{{element.issueDate | date:'dd/MM/yyyy'}}</div>
+            <div class="bar" *ngIf="!element.investmentAmount"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.investmentAmount">{{element.investmentAmount | date:'dd/MM/yyyy'}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -133,7 +133,7 @@
             Bond name & series
           </th>
           <td mat-cell *matCellDef="let element" class="br w-25">
-            <div class="bar" *ngIf="element.bond">{{element.bond}}</div>
+            <div class="bar" *ngIf="element.bondNameAndSeries">{{element.bondNameAndSeries}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -143,8 +143,9 @@
             XXIR (as on date)
           </th>
           <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
-            <div class="bar" *ngIf="!element.issueDate"><span *ngIf="!isLoading">-</span></div>
-            <div class="bar" *ngIf="element.issueDate">{{element.issueDate | date:'dd/MM/yyyy'}}</div>
+            <div class="bar" *ngIf="element.xirr == 0"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.xirr != 0">{{!isLoading ? "₹" : ""}}<span [value]="element.xirr"
+                appFormatNumber>{{element.xirr}}</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>

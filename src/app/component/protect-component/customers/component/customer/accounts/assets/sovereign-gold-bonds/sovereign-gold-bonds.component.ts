@@ -95,21 +95,23 @@ export class SovereignGoldBondsComponent implements OnInit {
       clientId: this.clientId
     };
     this.datasource3.data = [{}, {}, {}];
-    // this.custmService.getGoldBondsData(obj).subscribe(
-    //   data => {
-    //     console.log(data, "others");
+    this.custmService.getGoldBondsData(obj).subscribe(
+      data => {
+        console.log(data, "others");
 
-    //     this.getGoldBondsDataResponse(data)
-    //   }, (error) => {
-    //     this.eventService.showErrorMessage(error);
-    //     this.datasource3.data = [];
-    //     this.isLoading = false;
-    //   });
-    this.getGoldBondsDataResponse(ELEMENT_DATA3)
+        this.getGoldBondsDataResponse(data)
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+        this.datasource3.data = [];
+        this.isLoading = false;
+      });
+    // this.getGoldBondsDataResponse(ELEMENT_DATA3)
   }
 
 
   getGoldBondsDataResponse(data) {
+    console.log(data, "gold bond");
+
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No Real estate found';
@@ -121,15 +123,15 @@ export class SovereignGoldBondsComponent implements OnInit {
 
       console.log('getRealEstateRes', data);
       this.dataList = data;
-      this.datasource3.data = this.dataList.assetList;
+      this.datasource3.data = this.dataList;
       // data.assetList.forEach(singleAsset => {
       //   singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
       // });
       // this.totalCurrentValue = 0;
       // this.sumOfpurchasedValue = 0;
-      data.assetList.forEach(o => {
-        o.currentValueAsOnToday = (o.currentValueAsOnToday) ? o.currentValueAsOnToday : 0
-        this.totalCurrentValue += o.currentValueAsOnToday;
+      data.forEach(o => {
+        o.currentValue = (o.currentValue) ? o.currentValue : 0
+        this.totalCurrentValue += o.currentValue;
         this.sumOfpurchasedValue += o.purchaseAmt;
       });
       this.datasource3.sort = this.sort;
@@ -300,7 +302,7 @@ const ELEMENT_DATA3 = {
       "issueDate": "2020-01-11",
       "amountInterest": 10000,
       "amountInvested": 10000,
-      "currentValueAsOnToday": 11000,
+      "currentValue": 11000,
       "units": 21,
       "rates": 7,
       "tenure": 9,
