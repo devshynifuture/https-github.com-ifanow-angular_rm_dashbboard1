@@ -215,9 +215,10 @@
                     <div class="col-md-7 col-lg-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input #city class="form-control br-0" formControlName="city" type="text" matInput
-                                    readonly placeholder="City">
+                                <input #city maxlength="30" class="form-control br-0" formControlName="city" type="text"
+                                    matInput placeholder="City">
                                 <mat-error class=" pt-4">This field is required</mat-error>
+                                <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>
@@ -229,9 +230,10 @@
                     <div class="col-md-7 col-lg-5">
                         <div class="form-group">
                             <mat-form-field floatLabel="never" appearance="standard">
-                                <input #state class="form-control br-0" type="text" formControlName="state" matInput
-                                    readonly placeholder="State">
+                                <input #state maxlength="30" class="form-control br-0" type="text"
+                                    formControlName="state" matInput placeholder="State">
                                 <mat-error class=" pt-4">This field is required</mat-error>
+                                <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
                             </mat-form-field>
                         </div>
                     </div>

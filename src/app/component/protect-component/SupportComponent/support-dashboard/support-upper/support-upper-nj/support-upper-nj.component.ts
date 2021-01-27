@@ -136,7 +136,7 @@ export class SupportUpperNjComponent implements OnInit {
           this.apiCallingStack = [];
           this.filteredSchemes = data.njSchemeMasterList;
           console.log("this is what i need::::::::", data);
-          this.checkIfDataNotPresentAndShowError(data);
+          //this.checkIfDataNotPresentAndShowError(data);
           console.log(this.filteredSchemes);
         }
       }, err => {
@@ -165,7 +165,7 @@ export class SupportUpperNjComponent implements OnInit {
         this.apiCallingStack = [];
         this.filteredSchemes = data;
         console.log("this is what i need::::::::", data);
-        this.checkIfDataNotPresentAndShowError(data);
+        //this.checkIfDataNotPresentAndShowError(data);
         console.log(this.filteredSchemes);
       });
   }
@@ -238,14 +238,14 @@ export class SupportUpperNjComponent implements OnInit {
     element.njCount = scheme.njCount;
   }
 
-  showSuggestionsBasedOnSchemeName(element) {
+  showSuggestionsBasedOnSchemeName(element, eve) {
     console.log(element);
     this.isLoadingForDropDown = true;
     this.selectedElement = element;
-    let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
-    this.apiCallingStack.push(threeWords);
-    if (this.apiCallingStack[1] !== threeWords) {
-      this.supportUpperService.getFilteredSchemes({ scheme: threeWords, startLimit: 0, endLimit: 0 })
+    // let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
+    // this.apiCallingStack.push(threeWords);
+    if (eve.length > 3) {
+      this.supportUpperService.getFilteredSchemes({ scheme: eve, startLimit: 0, endLimit: 0 })
         .subscribe(res => {
           this.apiCallingStack = [];
           this.isLoadingForDropDown = false;
@@ -254,6 +254,18 @@ export class SupportUpperNjComponent implements OnInit {
           console.log(res);
           this.checkIfDataNotPresentAndShowError(res);
         });
+    } else {
+      this.filteredSchemes = []
+      element.isSchemeSelected = true;
+      this.selectedSchemeRes = '';
+      console.log('scheme details', '')
+      element.navDate = '';
+      element.amfiCode = '';
+      element.njPrudentCount = ''
+      element.schemeCode = '';
+      element.njCount = '';
+      element.schemeCode = '';
+      element.njCount = '';
     }
   }
   searchSchemeName(element) {
@@ -296,7 +308,7 @@ export class SupportUpperNjComponent implements OnInit {
               }
             });
           } else {
-            this.checkIfDataNotPresentAndShowError(res);
+            //this.checkIfDataNotPresentAndShowError(res);
           }
         });
     }
@@ -375,7 +387,7 @@ export class SupportUpperNjComponent implements OnInit {
         console.log(item);
         dataTable.push({
           name: item.schemeName,
-          nav: item.nav,
+          //nav: item.nav,
           schemeName: (this.isMapped == true) ? item.mutualFundSchemeName : '',
           schemeCode: item.schemeCode,
           amfiCode: item.amfiCode,
@@ -384,6 +396,7 @@ export class SupportUpperNjComponent implements OnInit {
           njCount: '',
           map: '',
           id: item.id,
+          njNav: item.nav,
           transactionDate: item.transactionDate,
           isSchemeSelected: false,
           mutualFundSchemeMasterId: (this.isMapped == true) ? item.mutualFundSchemeMasterId : '',
