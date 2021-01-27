@@ -118,7 +118,7 @@ export class LifeInsuranceComponent implements OnInit {
   }, {
     value: '5',
     logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Householders.svg',
-    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/HIbig.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/Hbig.svg',
     header: 'Add Householders',
     smallHeading: 'householders',
     insuranceType: 9,
@@ -136,8 +136,8 @@ export class LifeInsuranceComponent implements OnInit {
   },
   {
     value: '7',
-    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Travel.svg',
-    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/TravelBig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/Travel.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/TravelBig.svg',
     header: 'Add Travel Insurance',
     smallHeading: 'travel insurance',
     insuranceType: 8,
@@ -145,8 +145,8 @@ export class LifeInsuranceComponent implements OnInit {
     subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
   }, {
     value: '8',
-    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125976/svg_assets/Motor.svg',
-    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125643/svg_assets/MotorBig.svg',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/Motor.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/MotorBig.svg',
     header: 'Add Motor Insurance',
     smallHeading: 'motor insurance',
     insuranceType: 4,
