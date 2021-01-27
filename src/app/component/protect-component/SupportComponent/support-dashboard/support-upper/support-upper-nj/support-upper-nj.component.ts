@@ -266,6 +266,7 @@ export class SupportUpperNjComponent implements OnInit {
       element.njCount = '';
       element.schemeCode = '';
       element.njCount = '';
+      element.nav = ''
     }
   }
   searchSchemeName(element) {

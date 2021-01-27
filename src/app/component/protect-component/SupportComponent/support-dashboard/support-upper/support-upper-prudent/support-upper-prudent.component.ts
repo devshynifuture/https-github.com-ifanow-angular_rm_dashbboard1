@@ -286,6 +286,7 @@ export class SupportUpperPrudentComponent implements OnInit {
       element.njPrudentCount = ''
       element.schemeCode = '';
       element.njCount = '';
+      element.nav = ''
     }
   }
 
