@@ -39,16 +39,18 @@
         </div>
 
         <div
-            class="col-lg-3 col-md-1 hide-on-800 d-flex align-items-center justify-content-end right-fixed tablate-none ng-tns-c1-0">
+            class="col-lg-3 col-md-1 hide-on-800 d-flex align-items-center justify-content-end   tablate-none ng-tns-c1-0">
 
 
             <div *ngIf="userInfo.userType==2 && (organizationData.androidStoreUrl || organizationData.iosStoreUrl)"
                 class="playStorBox2">
-                <img (click)="goToStore(organizationData.androidStoreUrl)" class="c-p"
+                <img title="Google play" (click)="goToStore(organizationData.androidStoreUrl)" class="c-p"
                     *ngIf="organizationData.androidStoreUrl"
-                    src="https://res.cloudinary.com/futurewise/image/upload/v1611734052/logos/google-play_lmvluk.png">
-                <img class="c-p" (click)="goToStore(organizationData.iosStoreUrl)" *ngIf="organizationData.iosStoreUrl"
-                    src="https://res.cloudinary.com/futurewise/image/upload/v1611734052/logos/app-store_bn4s9c.png">
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1611751347/svg_assets/Google_play.svg">
+
+                <img title="App store" class="c-p" (click)="goToStore(organizationData.iosStoreUrl)"
+                    *ngIf="organizationData.iosStoreUrl"
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1611751347/svg_assets/App_store.svg">
             </div>
 
 
