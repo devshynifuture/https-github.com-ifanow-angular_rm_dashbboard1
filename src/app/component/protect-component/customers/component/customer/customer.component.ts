@@ -49,6 +49,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   userInfo: any;
   domainData: any;
   tabValue: number;
+  organizationData: any;
 
   constructor(
     private router: Router,
@@ -120,6 +121,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       this.enumDataService.searchClientList();
       this.enumDataService.searchClientAndFamilyMember();
     }
+    this.organizationData = AuthService.getOrgDetails();
     this.userInfo = AuthService.getUserInfo();
     this.advisorName = AuthService.getUserInfo().name;
     this.role = AuthService.getUserRoleType().roleName;
@@ -165,6 +167,9 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
        );*/
   }
 
+  goToStore(url) {
+    window.location.href = url;
+  }
   activateTab() {
     if (this.router.url.includes('overview')) {
       this.tabValue = 1;
