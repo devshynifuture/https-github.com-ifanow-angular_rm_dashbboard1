@@ -20,13 +20,13 @@ export class FoliosComponent implements OnInit {
   dataSource;
   folioList: any;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  adminAdvisorIds=[];
+  adminAdvisorIds = [];
   clientId: any;
   parentId: any;
 
   constructor(
     private fb: FormBuilder, private backoffice: BackOfficeService,
-    private eventService: EventService,private reconService:ReconciliationService
+    private eventService: EventService, private reconService: ReconciliationService
   ) { }
   isLoading = false;
   searchGroupForm = this.fb.group({
@@ -134,6 +134,7 @@ export class FoliosComponent implements OnInit {
             this.isLoading = false;
             if (data) {
               console.log(data);
+              data = this.casFolioNumber(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -154,6 +155,7 @@ export class FoliosComponent implements OnInit {
             this.isLoading = false;
             if (data) {
               console.log(data);
+              data = this.casFolioNumber(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -182,6 +184,7 @@ export class FoliosComponent implements OnInit {
             this.isLoading = false;
             console.log(data);
             if (data) {
+              data = this.casFolioNumber(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -201,6 +204,7 @@ export class FoliosComponent implements OnInit {
           data => {
             this.isLoading = false;
             if (data) {
+              data = this.casFolioNumber(data);
               this.dataSource.data = data;
               this.dataSource.sort = this.sort;
             } else {
@@ -213,7 +217,15 @@ export class FoliosComponent implements OnInit {
     }
   }
 
+  casFolioNumber(data) {
+    data.forEach(element => {
+      if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+        element.folioNumber = 'CAS-' + element.folioNumber;
+      }
 
+    });
+    return data;
+  }
   exportToExcelSheet(value) {
     if (this.dataSource && this.dataSource.data) {
       let excelData = [];

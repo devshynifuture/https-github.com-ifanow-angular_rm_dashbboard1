@@ -72,6 +72,7 @@ export const appConfig = {
   WBR_FOLIO_PAN_COUNT: 'backoffice/folio/pan/count/get',
   SIP_APPLICANT_LIST: 'backoffice/sip/applicant/list/get',
   SIP_FOLIO_LIST: 'backoffice/sip/applicant/scheme/folio/list/get',
+  SIP_CLEANUP_TRANSACTION_GET: 'backoffice/sip-cleanup/mf-transaction/list/get',
 
   ///////////////////////////// rm dashboard ///////////////////////////////////////////
   RM_DASHBOARD_RM_MASTER_USER_GET: 'rmdashboard/dashboard/rm-master/user/get',
@@ -183,6 +184,7 @@ export const appConfig = {
   EDIT_OTHERS_ASSETS: 'account/asset/other-asset/edit',
   ADD_SOVEREIGN_GOLD_BOND: 'account/asset/sovereign-gold/add',
   EDIT_SOVEREIGN_GOLD_BOND: 'account/asset/sovereign-gold/edit',
+  GET_SOVEREIGN_GOLD_BOND: 'account/asset/sovereign-gold/list/get',
   GET_SOVEREIGN_GOLD_BOND_ISSUE_PRICE: 'account/asset/sovereign-gold-issue-price/get',
   ADD_PPF_SCHEME: 'account/asset/saving-scheme/ppf/add',
   ADD_NSC_SCHEME: 'account/asset/saving-scheme/nsc/add',

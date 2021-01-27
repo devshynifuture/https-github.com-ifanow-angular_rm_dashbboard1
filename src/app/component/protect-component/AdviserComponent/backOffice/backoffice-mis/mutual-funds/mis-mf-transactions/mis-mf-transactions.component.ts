@@ -318,6 +318,7 @@ export class MisMfTransactionsComponent implements OnInit {
         } else {
           console.log('filtered json', res);
           this.isLoading = false
+          res = this.casFolioNumber(res)
           this.mfTransaction.data = res
         }
 
@@ -326,6 +327,15 @@ export class MisMfTransactionsComponent implements OnInit {
         this.isLoading = false
         this.mfTransaction.data = []
       })
+  }
+  casFolioNumber(data) {
+    data.forEach(element => {
+      if (element.rtMasterId == 6 && !element.folioNumber.includes("CAS")) {
+        element.folioNumber = 'CAS-' + element.folioNumber;
+      }
+
+    });
+    return data;
   }
   selectOption(value) {
     this.flag = value
@@ -359,6 +369,7 @@ export class MisMfTransactionsComponent implements OnInit {
         console.log(res);
         if (res) {
           this.isLoading = false
+          res = this.casFolioNumber(res)
           this.mfTransaction = new MatTableDataSource(res)
           this.mfTransaction.sort = this.sort
         } else {
