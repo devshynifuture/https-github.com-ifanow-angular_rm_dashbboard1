@@ -199,14 +199,14 @@ export class EmailConsentComponent implements OnInit {
     // } else {
     //   data[val].displayHolderName = data[val].policyHolderName;
     // }
-    if (data && data[val]) {
-      this.clientId = data[val].clientId
-      console.log('dddddddddddddddddddddddddddddddddddddddddddddd', this.clientId);
-      if (!this.isLoadingClient) {
-        this.getClientData(this.clientId);
-        this.isLoadingClient = true;
-      }
-    }
+    // if (data && data[val]) {
+    //   this.clientId = data[val].clientId
+    //   console.log('dddddddddddddddddddddddddddddddddddddddddddddd', this.clientId);
+    //   if (!this.isLoadingClient) {
+    //     this.getClientData(this.clientId);
+    //     this.isLoadingClient = true;
+    //   }
+    // }
     if (data[val] && data[val].insuredMembers && data[val].hasOwnProperty("insuredMembers") &&
       data[val].insuredMembers.length > 0) {
       data[val].displayHolderName = data[val].insuredMembers[0].name;
@@ -261,6 +261,11 @@ export class EmailConsentComponent implements OnInit {
           this.id = element.advice.adviceToCategoryTypeMasterId;
           if (this.id == 4) {
             if (element.stringObject) {
+              if (!this.isLoadingClient) {
+                this.clientId = element.clientId
+                this.getClientData(this.clientId);
+                this.isLoadingClient = true;
+              }
               if (element.stringObject.FICT && element.stringObject.REAL) {
                 element.name = 'REAL'
                 this.getSumAsssuredAndName(element.stringObject, 'FICT');
@@ -276,7 +281,12 @@ export class EmailConsentComponent implements OnInit {
           } else {
             if (element.stringObject.FICT) {
               element.stringObject.REAL = element.stringObject.FICT;
-              this.getClientIdFun(element.stringObject, 'REAL')
+              if (!this.isLoadingClient) {
+                this.clientId = element.clientId
+                this.getClientData(this.clientId);
+                this.isLoadingClient = true;
+              }
+              // this.getClientIdFun(element.stringObject, 'REAL')
             }
           }
           let obj =
@@ -311,6 +321,7 @@ export class EmailConsentComponent implements OnInit {
       console.log('dddddddddddddddddddddddddddddddddddddddddddddd', this.clientId);
       if (!this.isLoadingClient) {
         this.getClientData(this.clientId);
+        this.isLoadingClient = true;
       }
     }
   }
