@@ -67,6 +67,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   selectedFolioUnitsFiltered: any = 0;
   freezeDate: any;
   isTransactionDeleted: boolean;
+  refreshRequired = false;
 
   constructor(
     private eRef: ElementRef,
@@ -465,6 +466,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           }
 
           this.tableData1 = this.dataSource1.data;
+          this.refreshRequired = true;
           this.sendValueToParent();
           this.eventService.openSnackBar("Unfreezed Folio Successfully", "DISMISS");
         }, err => {
@@ -875,7 +877,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   }
 
   sendValueToParent() {
-    let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
+    let refreshRequired = this.refreshRequired ? true : (Math.round(this.data.difference) === 0) ? true : false;
     if (refreshRequired) {
       this.subscriptionInject.setRefreshRequired()
     }
@@ -894,7 +896,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     if (!this.isTransactionDeleted) {
       this.deletedTransactions = [];
     }
-    let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
+    let refreshRequired = this.refreshRequired ? true : (Math.round(this.data.difference) === 0) ? true : false;
     this.subscriptionInject
       .changeNewRightSliderState({
         state: 'close',
