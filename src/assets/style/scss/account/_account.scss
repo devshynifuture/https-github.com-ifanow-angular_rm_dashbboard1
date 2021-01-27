@@ -1125,5 +1125,11 @@ ul.mf-import-second-point{
     height: calc(100vh - 410px);
   }
 
+  .scrolling_myFeed {
+    height: 510px;
+    overflow-x: scroll;
+  }
+
 
 }
+
