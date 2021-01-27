@@ -128,16 +128,19 @@ export class AddPlaninsuranceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLodingNeedAnalysis = true;
     this.storeData = this.plannerNote;
     this.panelOpenState = false;
     this.getListFamilyMem()
     this.years = this.constantService.yearsMap;
     this.getdataForm(null)
-    if (this.insuranceData && this.insuranceData.needAnalysisSaved && this.insuranceData.hasOwnProperty('needAnalysisSaved')) {
-      this.isLodingNeedAnalysis = false
-    } else {
-      this.getNeedBasedAnalysis(0, 0, 0);
-    }
+    // if (this.insuranceData && this.insuranceData.needAnalysisSaved && this.insuranceData.hasOwnProperty('needAnalysisSaved')) {
+    //   this.isLodingNeedAnalysis = false
+    // } else {
+    //   this.getNeedBasedAnalysis(0, 0, 0);
+    // }
+
+
     //  this.getNeedBasedAnalysis(0,0,0);
 
     // if(!this.insuranceData.needAnalysisSaved){
@@ -516,7 +519,7 @@ export class AddPlaninsuranceComponent implements OnInit {
       });
   }
   getAnalysis() {
-
+    this.isLodingNeedAnalysis = true;
     let obj = {
       id: this.insuranceData.id,
     }
@@ -530,6 +533,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     );
   }
   getLifeInuranceNeedAnalysisRes(data) {
+    this.isLodingNeedAnalysis = false
     console.log('getLifeInuranceNeedAnalysisRes', data)
     data.forEach(element => {
       if (element.needTypeId == 2) {

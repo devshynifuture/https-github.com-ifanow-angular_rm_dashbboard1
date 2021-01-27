@@ -746,6 +746,22 @@ export class LifeInsuranceComponent implements OnInit {
     });
   }
   generatePdf() {
+    //Reference the Table.
+    // this.dataSourceLiability.forEach(ele => {
+    //   var grid = document.getElementById("tableLife");
+
+    //   //Reference the CheckBoxes in Table.
+    //   var checkBoxes = grid.getElementsByTagName("INPUT");
+
+    //   for (var i = 0; i < checkBoxes.length; i++) {
+    //     checkBoxes[i]['checked'] = ele.selected;
+    //     let para = document.getElementById('liabilities');
+    //     para['checked'] = true
+    //   }
+    // });
+
+
+    //Display selected Row data in Alert Box.
     this.fragmentData = {}
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('insuranceTemplate');
