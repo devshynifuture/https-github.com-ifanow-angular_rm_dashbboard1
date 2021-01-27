@@ -169,8 +169,7 @@
                                     <div class="example-element-description">
                                         <span *ngIf="inputData?.insuranceType == 1">{{element?.insurance?.suggestion ?
                                             element?.insurance?.suggestion : 'No suggestions found'}}</span>
-                                        <span
-                                            *ngIf="inputData?.insuranceType != 1">{{element?.adviceDetails?.advice_description
+                                        <span *ngIf="inputData?.insuranceType != 1">{{element?.adviceDetails?.advice_description
                                             ? element?.adviceDetails?.advice_description : 'No suggestions
                                             found'}}</span>
                                     </div>
@@ -984,7 +983,8 @@
 
                     </div>
                 </div>
-                <div class="d-flex mt-20 align-items-center justify-content-around" *ngIf="!isLoadingPlan">
+
+                <div class="d-xl-flex mt-20 align-items-center justify-content-around" *ngIf="!isLoadingPlan">
                     <!-- [ngClass]="{' ': inputData?.insuranceType != 1,' ': inputData?.insuranceType == 1}" build issue -->
 
                     <button mat-stroked-button class="btn140 text-primary br-2" (click)="needAnalysis(null)">
