@@ -281,12 +281,12 @@ export class EmailConsentComponent implements OnInit {
           } else {
             if (element.stringObject.FICT) {
               element.stringObject.REAL = element.stringObject.FICT;
-              if (!this.isLoadingClient) {
-                this.clientId = element.clientId
-                this.getClientData(this.clientId);
-                this.isLoadingClient = true;
-              }
               // this.getClientIdFun(element.stringObject, 'REAL')
+            }
+            if (!this.isLoadingClient) {
+              this.clientId = element.clientId
+              this.getClientData(this.clientId);
+              this.isLoadingClient = true;
             }
           }
           let obj =
