@@ -268,6 +268,8 @@ export class AddQuotationSubscriptionComponent implements OnInit {
           quotationData.documentText = quotationData.documentText.replace('$organization_logo', this.orgDetails.logoUrl);
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
+        } else {
+          this.eventService.openSnackBar("Please add biller organization before proceeding", "Dimiss");
         }
       }
     );
@@ -285,6 +287,8 @@ export class AddQuotationSubscriptionComponent implements OnInit {
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$company_display_name'), 'g'), this.billerInfo.companyDisplayName);
           // quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$biller_profile_address'), 'g'), this.billerInfo.mobileNumber);
           this.openFroala(quotationData, 'openQuotation');
+        } else {
+          this.eventService.openSnackBar("Please add biller profile before proceeding", "Dimiss");
         }
       },
       err => {

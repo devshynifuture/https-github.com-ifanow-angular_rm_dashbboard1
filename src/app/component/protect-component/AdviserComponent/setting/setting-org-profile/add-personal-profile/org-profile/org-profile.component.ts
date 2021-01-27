@@ -180,8 +180,8 @@ export class OrgProfileComponent implements OnInit {
       const pincodeData = (data == undefined) ? data = {} : data[0].PostOffice;
       this.orgProfile.get('city').setValue(pincodeData[0].District);
       this.orgProfile.get('state').setValue(pincodeData[0].State);
-      this.orgProfile.get('city').disable();
-      this.orgProfile.get('state').disable();
+      // this.orgProfile.get('city').disable();
+      // this.orgProfile.get('state').disable();
       let address1 = this.orgProfile.get('address').value;
       let pincodeFlag = address1.includes(`${this.orgProfile.get('pincode').value},`)
       address1 = address1.replace(`${this.orgProfile.get('city').value},`, '')
@@ -203,7 +203,7 @@ export class OrgProfileComponent implements OnInit {
       emailId: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       isdCodeId: [(!data) ? '' : data.isdCodeId, [Validators.required]],
       mobileNo: [(!data) ? '' : data.mobileNumber, [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidatorType.NUMBER_ONLY)]],
-      website: [(!data) ? '' : data.website, [Validators.required]],
+      website: [(!data) ? '' : data.website == '-' ? '' : data.website, [Validators.required]],
       address: [(!data) ? '' : data.billerAddress, [Validators.required]],
       gstTreatment: ['', [Validators.required]],
       country: [(!data) ? '' : data.country, []],
@@ -215,8 +215,8 @@ export class OrgProfileComponent implements OnInit {
 
     this.subscribeToGSTTypeValueChange();
     this.orgProfile.controls.gstTreatment.setValue((!data) ? '' : data.gstTreatmentId);
-    this.orgProfile.get('city').disable();
-    this.orgProfile.get('state').disable();
+    // this.orgProfile.get('city').disable();
+    // this.orgProfile.get('state').disable();
   }
 
   subscribeToGSTTypeValueChange() {
