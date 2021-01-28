@@ -841,6 +841,7 @@ export class UtilService {
   static checkEmailListUpdation(originalEmailList, editedEmailList) {
     let emailListJson = [];
     if (originalEmailList.length == 0) {
+      editedEmailList.value[0].defaultFlag = editedEmailList.value[0].markAsPrimary
       emailListJson = editedEmailList.value;
     } else {
       originalEmailList.forEach(singleEmail => {
