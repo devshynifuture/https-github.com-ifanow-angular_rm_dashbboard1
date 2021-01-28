@@ -797,7 +797,8 @@ export class UtilService {
   }
 
   static removeSpecialCharactersFromString(string) {
-    string = string.replace(/[\/\\#+()$~%.'":*?<>{}]/g, '')
+    string = string.replace(/[\/\\#+()@!^&;|[$~%.'":*?<>_={}-]/g, '')
+    string = string.replace(']', '')
     return string
   }
 
