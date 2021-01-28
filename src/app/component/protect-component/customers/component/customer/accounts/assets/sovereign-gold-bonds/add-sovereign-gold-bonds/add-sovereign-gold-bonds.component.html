@@ -388,8 +388,8 @@
           <div class="col-md-3 pl-0">
             <div class="form-group mb-0">
               <mat-form-field class="ba-date">
-                <input class="form-control b-0 br-0" (click)="picker2.open()" (dateChange)="tranValidation(goldindex)"
-                  matInput formControlName="transactionDate" [matDatepicker]="picker2" readonly>
+                <input class="form-control b-0 br-0" (click)="picker2.open()" matInput formControlName="transactionDate"
+                  [matDatepicker]="picker2" readonly>
                 <mat-datepicker-toggle class="dateIcon" matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
                 <mat-error>

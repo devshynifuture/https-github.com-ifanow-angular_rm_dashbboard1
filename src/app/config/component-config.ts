@@ -186,6 +186,8 @@ export const appConfig = {
   EDIT_SOVEREIGN_GOLD_BOND: 'account/asset/sovereign-gold/edit',
   GET_SOVEREIGN_GOLD_BOND: 'account/asset/sovereign-gold/list/get',
   GET_SOVEREIGN_GOLD_BOND_ISSUE_PRICE: 'account/asset/sovereign-gold-issue-price/get',
+  DELETE_SOVEREIGN_GOLD_BOND_TRANSACTION: 'account/asset/sovereign-gold-transaction/delete',
+  DELETE_SOVEREIGN_GOLD_BOND: 'account/asset/sovereign-gold/delete',
   ADD_PPF_SCHEME: 'account/asset/saving-scheme/ppf/add',
   ADD_NSC_SCHEME: 'account/asset/saving-scheme/nsc/add',
   ADD_SSY_SCHEME: 'account/asset/saving-scheme/ssy/add',

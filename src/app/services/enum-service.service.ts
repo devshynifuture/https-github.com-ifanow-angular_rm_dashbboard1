@@ -92,6 +92,10 @@ export class EnumServiceService {
     return this.proofTypeList;
   }
 
+  bondSeriesList: any;
+  public getbondSeriesList() {
+    return this.bondSeriesList;
+  }
   public addBank(data) {
     this.bankList = data;
     this.bankAC.next([...data]);
