@@ -608,7 +608,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       this.goldBondForm.markAllAsTouched();
       return;
     } else {
-
+      this.barButtonOptions.active = true;
       bondObj.nomineeList.forEach((element, index) => {
         if (element.name == '') {
           this.removeNewNominee(index);
