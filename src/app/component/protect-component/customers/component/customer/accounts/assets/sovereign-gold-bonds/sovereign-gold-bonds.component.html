@@ -154,10 +154,11 @@
           <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Status</th>
           <td *matCellDef="let element" class="br   text-primary" mat-cell>
             <div class="bar">
-              <span *ngIf="element.status == 1">{{isLoading ? '' : 'LIVE' }}</span>
+              {{element.status}}
+              <!-- <span *ngIf="element.status == 1">{{isLoading ? '' : 'LIVE' }}</span>
               <span *ngIf="element.status == 2">{{isLoading ? '' : 'Mature' }}</span>
               <span *ngIf="element.status == 3">{{isLoading ? '' : 'Partially withdrawn' }}</span>
-              <span *ngIf="element.status == 4">{{isLoading ? '' : 'Redeemed' }}</span>
+              <span *ngIf="element.status == 4">{{isLoading ? '' : 'Redeemed' }}</span> -->
             </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
