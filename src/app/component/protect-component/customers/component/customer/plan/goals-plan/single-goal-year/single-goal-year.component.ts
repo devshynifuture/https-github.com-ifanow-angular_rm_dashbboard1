@@ -391,6 +391,8 @@ export class SingleGoalYearComponent implements OnInit {
 
                 this.imgURL = jsonDataObj.imageURL;
                 console.log('image gj*****', this.imgURL)
+                this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+
               });
             }
           });
