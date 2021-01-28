@@ -572,15 +572,14 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       let price = this.bondSeriesList.filter(x => x.seriesName == data);
       this.goldBondForm.get("issuePrice").setValue(price[0].retailPrice);
     }
-    else {
-
-    }
+    this.calUnits();
   }
 
   calUnits() {
-    let unit = this.goldBondForm.value.amountInvested / this.goldBondForm.value.issuePrice;
-
-    this.goldBondForm.get("units").setValue(unit.toFixed(2));
+    if (this.goldBondForm.value.amountInvested && this.goldBondForm.value.issuePrice) {
+      let unit = this.goldBondForm.value.amountInvested / this.goldBondForm.value.issuePrice;
+      this.goldBondForm.get("units").setValue(unit.toFixed(2));
+    }
   }
 
   saveFormData() {
@@ -609,7 +608,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       this.goldBondForm.markAllAsTouched();
       return;
     } else {
-
+      this.barButtonOptions.active = true;
       bondObj.nomineeList.forEach((element, index) => {
         if (element.name == '') {
           this.removeNewNominee(index);
