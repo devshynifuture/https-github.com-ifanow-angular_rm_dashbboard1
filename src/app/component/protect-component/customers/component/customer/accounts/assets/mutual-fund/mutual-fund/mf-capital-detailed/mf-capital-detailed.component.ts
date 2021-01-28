@@ -29,7 +29,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     dataSource1 = new MatTableDataSource([{}, {}, {}]);
     dataSource2 = new MatTableDataSource([{}, {}, {}]);
     dataSource4;
-    isLoading = false;
+    isLoading = true;
     total_stGain = 0;
     total_ltGain = 0;
     total_stLoss = 0;

@@ -126,15 +126,15 @@ export class PersonalInsuranceComponent implements OnInit {
 		insuranceType: 4,
 		heading: 'Motor insurance',
 		subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
-	},{
-        value: '9',
-        logo: '/assets/images/svg/Fireinsurance.svg',
-        header: 'Add Other Insurance',
-        smallHeading: 'other insurance',
-        insuranceType: 11,
-        heading: 'Other insurance',
-        subHeading: 'Select how you’d like to proceed with planning for other insurance policies.'
-      }]
+	}, {
+		value: '9',
+		logo: '/assets/images/svg/Fireinsurance.svg',
+		header: 'Add Other Insurance',
+		smallHeading: 'other insurance',
+		insuranceType: 11,
+		heading: 'Other insurance',
+		subHeading: 'Select how you’d like to proceed with planning for other insurance policies.'
+	}]
 	showRecommendation: boolean;
 	plannerNotes: any;
 	ownerIds = [];
@@ -157,26 +157,26 @@ export class PersonalInsuranceComponent implements OnInit {
 		this.inputData = data.inputData;
 		this.policyFeature = data.displayList.policyFeature;
 		this.addOns = data.displayList.addOns;
-		this.adviceDetails = data.adviceDetails? data.adviceDetails: null;
-        this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
-        this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
-        this.showHeader = data.flag
+		this.adviceDetails = data.adviceDetails ? data.adviceDetails : null;
+		this.adviceName = data.adviceNameObj ? data.adviceNameObj.adviceName : null;
+		this.adviceData = data.adviceStringObj ? data.adviceStringObj : null;
+		this.showHeader = data.flag
 		this.recommendOrNot = data.recommendOrNot;
 		this.getdataForm(data)
 		// this.setInsuranceDataFormField(data);
 		console.log(data);
 	}
-	changeAdviceName(data){
-        this.adviceName = data.adviceName; 
-        this.fakeData = this.insData.data ?this.insData.data : this.fakeData;
-        if(this.adviceName == 'Port policy'){
-            this.insData.data = null   
-        }else{
-            this.insData.data = this.fakeData;
-        }
-        this.adviceName == 'Port policy' ? this.insData.data = null : '';
-        this.getdataForm(this.insData);
-      }
+	changeAdviceName(data) {
+		this.adviceName = data.adviceName;
+		this.fakeData = this.insData.data ? this.insData.data : this.fakeData;
+		if (this.adviceName == 'Port policy') {
+			this.insData.data = null
+		} else {
+			this.insData.data = this.fakeData;
+		}
+		this.adviceName == 'Port policy' ? this.insData.data = null : '';
+		this.getdataForm(this.insData);
+	}
 	get data() {
 		return this.inputData;
 	}
@@ -237,9 +237,7 @@ export class PersonalInsuranceComponent implements OnInit {
 	get insuredMembersForm() {
 		return this.personalAccidentForm.get('InsuredMemberForm') as FormArray;
 	}
-	get planFeatureForm() {
-		return this.personalAccidentForm.get('planFeatureForm') as FormArray;
-	}
+
 	get getCoOwner() {
 		return this.personalAccidentForm.get('getCoOwnerName') as FormArray;
 	}
@@ -365,18 +363,8 @@ export class PersonalInsuranceComponent implements OnInit {
 			data.forEach(item => item.isDisabled = false);
 		}
 	}
-	addNewFeature(data) {
-		this.planFeatureForm.push(this.fb.group({
-			planfeatures: [data ? data.policyFeatureId + '' : ''],
-		}));
-	}
-	removeNewFeature(item) {
-		let finalFeatureList = this.personalAccidentForm.get('planFeatureForm') as FormArray
-		if (finalFeatureList.length > 1) {
-			this.planFeatureForm.removeAt(item);
 
-		}
-	}
+
 	openOptionField() {
 		(this.addMoreFlag) ? this.addMoreFlag = false : this.addMoreFlag = true;
 	}
@@ -465,9 +453,6 @@ export class PersonalInsuranceComponent implements OnInit {
 				clientId: ['', [Validators.required]],
 				userType: ['', [Validators.required]]
 			})]),
-			planFeatureForm: this.fb.array([this.fb.group({
-				planfeatures: [''],
-			})])
 		})
 		// ==============owner-nominee Data ========================\\
 		/***owner***/
@@ -501,14 +486,6 @@ export class PersonalInsuranceComponent implements OnInit {
 				this.insuredMembersForm.removeAt(0);
 				this.dataForEdit.insuredMembers.forEach(element => {
 					this.addTransaction(element);
-				});
-			}
-		}
-		if (this.dataForEdit) {
-			if (this.dataForEdit.policyFeatures && this.dataForEdit.policyFeatures.length > 0) {
-				this.planFeatureForm.removeAt(0);
-				this.dataForEdit.policyFeatures.forEach(element => {
-					this.addNewFeature(element);
 				});
 			}
 		}
@@ -679,18 +656,6 @@ export class PersonalInsuranceComponent implements OnInit {
 			}
 			memberList.push(obj)
 		})
-		let featureList = [];
-		let finalplanFeatureList = this.personalAccidentForm.get('planFeatureForm') as FormArray
-		if (finalplanFeatureList.controls.length > 0)
-			finalplanFeatureList.controls.forEach(element => {
-				if (element.get('planfeatures').value != "") {
-					let obj =
-					{
-						policyFeatureId: element.get('planfeatures').value,
-					}
-					featureList.push(obj)
-				}
-			})
 		this.personalAccidentForm.get('inceptionDate').setErrors(null);
 		if (this.personalAccidentForm.invalid) {
 			this.personalAccidentForm.markAllAsTouched();
@@ -713,13 +678,12 @@ export class PersonalInsuranceComponent implements OnInit {
 				"linkedBankAccount": this.personalAccidentForm.get('bankAccount').value,
 				// "policyNumber": this.personalAccidentForm.get('policyNum').value,
 				"policyInceptionDate": this.datePipe.transform(this.personalAccidentForm.get('inceptionDate').value, 'yyyy-MM-dd'),
-				"policyFeatures": featureList,
 				"insurerName": this.personalAccidentForm.get('insurerName').value,
 				"insuranceSubTypeId": this.insuranceType,
 				"id": (this.id) ? this.id : null,
 				'realOrFictitious': 2,
 				'suggestion': this.plannerNotes,
-                'isRecommend': this.showRecommendation ? 1 : 0,
+				'isRecommend': this.showRecommendation ? 1 : 0,
 				insuredMembers: memberList,
 				nominees: this.personalAccidentForm.value.getNomineeName,
 			}
