@@ -133,11 +133,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       familyfilter: ['all']
     });
 
-    if (document.documentElement.clientWidth <= 768) {
-      this.sidenav.close();
-    } else {
-      this.sidenav.open();
-    }
+    // if (document.documentElement.clientWidth <= 768) {
+    //   this.sidenav.close();
+    // } else {
+    //   this.sidenav.open();
+    // }
 
     this.userData = AuthService.getUserInfo();
     console.log('Portfolio summary userData : ', this.userData);

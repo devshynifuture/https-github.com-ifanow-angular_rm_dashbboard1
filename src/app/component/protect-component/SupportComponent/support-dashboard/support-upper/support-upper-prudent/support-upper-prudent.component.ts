@@ -257,14 +257,14 @@ export class SupportUpperPrudentComponent implements OnInit {
       }
     }
   }
-  showSuggestionsBasedOnSchemeName(element) {
+  showSuggestionsBasedOnSchemeName(element, eve) {
     console.log(element);
     this.selectedElement = element;
     this.isLoadingForDropDown = true;
-    let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
-    this.apiCallingStack.push(threeWords);
-    if (this.apiCallingStack[1] !== threeWords) {
-      this.supportUpperService.getFilteredSchemes({ scheme: threeWords, startLimit: 0, endLimit: 50 })
+    // let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
+    // this.apiCallingStack.push(threeWords);
+    if (eve.length > 3) {
+      this.supportUpperService.getFilteredSchemes({ scheme: eve, startLimit: 0, endLimit: 50 })
         .subscribe(res => {
           this.apiCallingStack = [];
           this.isLoadingForDropDown = false;
@@ -276,6 +276,17 @@ export class SupportUpperPrudentComponent implements OnInit {
             this.errorMsg = '';
           }
         });
+    } else {
+      this.filteredSchemes = []
+      this.selectedSchemeRes = '';
+      element.isSchemeSelected = false;
+      element.navDate = ''
+      element.nav = ''
+      element.amfiCode = ''
+      element.njPrudentCount = ''
+      element.schemeCode = '';
+      element.njCount = '';
+      element.nav = ''
     }
   }
 
@@ -341,7 +352,7 @@ export class SupportUpperPrudentComponent implements OnInit {
       res.njSchemeMasterList.forEach(item => {
         dataTable.push({
           name: item.schemeName,
-          nav: item.nav,
+          //nav: item.nav,
           schemeName: (this.isMapped == true) ? item.mutualFundSchemeName : '',
           schemeCode: item.schemeCode,
           amfiCode: item.amfiCode,
@@ -349,6 +360,7 @@ export class SupportUpperPrudentComponent implements OnInit {
           navDate: '',
           njCount: '',
           map: '',
+          njNav: item.nav,
           isMapped: this.isMapped,
           id: item.id,
           transactionDate: item.transactionDate,

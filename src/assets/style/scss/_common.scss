@@ -956,7 +956,15 @@ button.primary-sm {
   height: calc(100vh - 410px);
 }
 
+.portrait_height {
+  height: 650px;
+    overflow: auto;
+}
 
+.portrait_height_account {
+  height: 510px;
+    overflow: auto;
+}
 
 }
 

@@ -42,7 +42,8 @@
                         EQUITY
                     </h5>
                 </div>
-                <div [ngClass]="{'table-height-capital':isLoading==false && dataSource.data.length>0 }" class="">
+                <!-- [ngClass]="{'table-height-capital':isLoading==false && dataSource.data.length>0 }" -->
+                <div class="">
                     <table #tableEl mat-table [dataSource]="dataSource" id="table-low"
                         class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">

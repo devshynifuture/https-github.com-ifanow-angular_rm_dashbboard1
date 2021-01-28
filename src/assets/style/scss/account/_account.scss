@@ -649,7 +649,7 @@ ul.mf-import-second-point{
 
   .myfeedWrapper {
     width: 88%;
-    margin: 40px;
+//    margin: 40px;
 
     .md-myfeed-ml-0 {
       margin-left: 0px !important;
@@ -762,7 +762,7 @@ ul.mf-import-second-point{
   }
 
   .myfeedWrapper {
-    margin: 42px;
+    //margin: 42px;
 
     .pl-40 {
       padding-left: 20px !important;
@@ -891,9 +891,9 @@ ul.mf-import-second-point{
   #ui-liabilities,
   #investmentPlan,
   #ui-overview-subscription,
-  #ui-documents-overview,
+  #ui-documents-overview
   
-  #ui-activity {
+   {
 
     .vertical-menu {
       width: 20vw !important;
@@ -990,8 +990,7 @@ ul.mf-import-second-point{
   
   #investmentPlan,
   #ui-overview-subscription,
-  #ui-documents-overview,
-  #ui-activity {
+  #ui-documents-overview {
 
     .vertical-menu {
       width: 22vw !important;
@@ -1047,8 +1046,7 @@ ul.mf-import-second-point{
   
   #investmentPlan,
   #ui-overview-subscription,
-  #ui-documents-overview,
-  #ui-activity {
+  #ui-documents-overview {
 
     .vertical-menu {
       width: 23vw !important;
@@ -1119,7 +1117,7 @@ ul.mf-import-second-point{
 @media screen and (orientation:portrait) { 
   #ui-assets-account .vertical-menu {
     width: auto;
-    height: calc(100vh - 147px);
+    height: auto;
     background: #F5F7F7 ;
   }
 
@@ -1127,5 +1125,11 @@ ul.mf-import-second-point{
     height: calc(100vh - 410px);
   }
 
+  .scrolling_myFeed {
+    height: 510px;
+    overflow-x: scroll;
+  }
+
 
 }
+
