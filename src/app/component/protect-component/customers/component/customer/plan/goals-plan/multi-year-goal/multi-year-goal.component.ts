@@ -102,7 +102,7 @@ export class MultiYearGoalComponent implements OnInit {
       "advisorId": this.advisorId,
       "name": this.multiYearGoalForm.get('field4').value,
       "notes": this.multiYearGoalForm.get('field5').value,
-      "imageUrl": this.logoImg,
+      "imageUrl": (this.imgURL) ? this.imgURL : this.logoImg,
       "goalType": this.goalTypeData.goalTypeId,
       "planningFor": this.multiYearGoalForm.get('field1').value.id,
       // "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
