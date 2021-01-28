@@ -1,13 +1,16 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators, FormGroup, FormControl, FormArray} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PlanService} from '../../plan.service';
-import {AppConstants} from 'src/app/services/app-constants';
-import {AppComponent} from 'src/app/app.component';
-import {DatePipe} from '@angular/common';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {OrgSettingServiceService} from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../plan.service';
+import { AppConstants } from 'src/app/services/app-constants';
+import { AppComponent } from 'src/app/app.component';
+import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
+import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -48,6 +51,7 @@ export class SingleGoalYearComponent implements OnInit {
   dateF: number;
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   organizationLogo;
+  imgURL: any;
 
   constructor(
     public authService: AuthService,
@@ -56,6 +60,7 @@ export class SingleGoalYearComponent implements OnInit {
     private fb: FormBuilder,
     private orgSetting: OrgSettingServiceService,
     private planService: PlanService,
+    private utilService: UtilService,
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -108,7 +113,7 @@ export class SingleGoalYearComponent implements OnInit {
       "advisorId": this.advisorId,
       "goalName": this.singleYearGoalForm.get('goalName').value,
       "notes": this.singleYearGoalForm.get('goalDescription').value,
-      "imageUrl": this.logoImg,
+      "imageUrl": (this.imgURL) ? this.imgURL : this.logoImg,
       "goalType": this.goalTypeData.goalTypeId,
       "savingStartDate": this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
     }
@@ -262,7 +267,7 @@ export class SingleGoalYearComponent implements OnInit {
         this.eventService.changeUpperSliderState({
           state: 'close',
           refreshRequired: true,
-          data: {resetSelectedCursor: true}
+          data: { resetSelectedCursor: true }
         });
       },
       error => {
@@ -270,8 +275,11 @@ export class SingleGoalYearComponent implements OnInit {
         this.barButtonOptions.active = false;
       }
     );
-  }
 
+  }
+  imageupload() {
+
+  }
   saveGoal() {
     if (this.singleYearGoalForm.invalid || this.barButtonOptions.active) {
       this.singleYearGoalForm.markAllAsTouched();
@@ -364,6 +372,29 @@ export class SingleGoalYearComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = e => this.logoImg = reader.result;
       reader.readAsDataURL(this.imageData);
+      console.log('shdefgshd rewrshjfg ', reader)
+      setTimeout(() => {
+        this.logoImg = reader.result
+        const tags = this.advisorId + ',advisor_profile_logo,';
+        const file = this.utilService.convertB64toImageFile(reader.result);
+        PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
+          (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+            if (status == 200) {
+              const responseObject = JSON.parse(response);
+              const jsonDataObj = {
+                advisorId: this.advisorId,
+                goalName: this.singleYearGoalForm.get('goalName').value,
+                imageURL: responseObject.secure_url,
+                goalTypeId: this.goalTypeData.goalTypeId,
+              }
+              this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
+
+                this.imgURL = jsonDataObj.imageURL;
+                console.log('image gj*****', this.imgURL)
+              });
+            }
+          });
+      }, 300);
     }
   }
 
