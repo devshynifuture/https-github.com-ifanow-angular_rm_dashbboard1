@@ -6,7 +6,7 @@ import { appConfig } from '../../../../../../config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { OnlineTransactionService } from '../../online-transaction.service';
 import { EventService } from '../../../../../../Data-service/event.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
 import { TransactionRoleService } from '../../transaction-role.service';
@@ -17,12 +17,14 @@ import { TransactionRoleService } from '../../transaction-role.service';
   styleUrls: ['./investor-detail.component.scss']
 })
 export class InvestorDetailComponent implements OnInit {
-
+  displayedColumns: string[] = ['type', 'time', 'status'];
+  docData: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.docData);
   num: any = 0;
+  data: any
   numlimit: any;
   num1: any = 0;
   numlimit1: any;
-  data;
   details: any;
   transactionData: any;
   isLoading = false;
@@ -143,7 +145,9 @@ export class InvestorDetailComponent implements OnInit {
         this.statusData[1].checked = true;
       } else*/
 
+      console.log(resultData, "resultData");
       if (resultData) {
+        this.dataSource.data = resultData;
         resultData.forEach(singleData => {
           if (singleData.documentType == 1) {
             this.isAOFUploaded = true;
@@ -155,6 +159,9 @@ export class InvestorDetailComponent implements OnInit {
           }
         });
       }
+      else {
+        this.dataSource.data = [];
+      }
       if (this.isAOFUploaded && this.isChequeUploaded) {
         this.statusData[1].checked = true;
       }
@@ -162,6 +169,7 @@ export class InvestorDetailComponent implements OnInit {
     }, error => {
       console.error('investor detail form upload data : ', error);
       this.isLoading = false;
+      this.dataSource.data = [];
       // this.eventService.openSnackBar(error, 'discuss');
       this.statusData[1].checked = false;
     });
