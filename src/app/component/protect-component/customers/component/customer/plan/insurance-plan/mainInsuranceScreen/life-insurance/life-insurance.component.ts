@@ -1182,8 +1182,8 @@ export class LifeInsuranceComponent implements OnInit {
       singleData[0].insuranceDetails.needAnalysis.adviceAmount = singleData[0].adviceAmount
     }
     if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 1) {
-      this.insuranceDetails.actualAmount = this.plannerObj.GrossLifeinsurance ? this.plannerObj.GrossLifeinsurance : singleData[0].insuranceDetails.actual;
-      this.insuranceDetails.adviceAmount = this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : singleData[0].insuranceDetails.advice;
+      this.insuranceDetails.actualAmount = this.plannerObj.GrossLifeinsurance ? this.plannerObj.GrossLifeinsurance : singleData[0].insuranceDetails ? singleData[0].insuranceDetails.actual : this.insuranceDetails.actual;
+      this.insuranceDetails.adviceAmount = this.plannerObj.additionalLifeIns ? this.plannerObj.additionalLifeIns : singleData[0].insuranceDetails ? singleData[0].insuranceDetails.advice : this.insuranceDetails.advice;
     } else if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 2) {
       let actualAmount = this.insuranceDetails.actual ? this.insuranceDetails.actual : 0;
       let adviceAmount = this.insuranceDetails.advice ? this.insuranceDetails.advice : 0;

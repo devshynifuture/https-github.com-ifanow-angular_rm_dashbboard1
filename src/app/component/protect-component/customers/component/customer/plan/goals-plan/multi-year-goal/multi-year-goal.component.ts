@@ -9,6 +9,9 @@ import { DatePipe } from '@angular/common';
 import { UtilService } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-multi-year-goal',
@@ -50,6 +53,7 @@ export class MultiYearGoalComponent implements OnInit {
     fullWidth: false,
   };
   organizationLogo;
+  imgURL: any;
   constructor(
     public authService: AuthService,
     private eventService: EventService,
@@ -57,6 +61,8 @@ export class MultiYearGoalComponent implements OnInit {
     private planService: PlanService,
     private datePipe: DatePipe,
     private utilService: UtilService,
+    private orgSetting: OrgSettingServiceService,
+
   ) { }
 
   @Input() goalTypeData: any = {};
@@ -96,7 +102,7 @@ export class MultiYearGoalComponent implements OnInit {
       "advisorId": this.advisorId,
       "name": this.multiYearGoalForm.get('field4').value,
       "notes": this.multiYearGoalForm.get('field5').value,
-      "imageUrl": this.logoImg,
+      "imageUrl": (this.imgURL) ? this.imgURL : this.logoImg,
       "goalType": this.goalTypeData.goalTypeId,
       "planningFor": this.multiYearGoalForm.get('field1').value.id,
       // "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
@@ -296,6 +302,29 @@ export class MultiYearGoalComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = e => this.logoImg = reader.result;
       reader.readAsDataURL(this.imageData);
+      setTimeout(() => {
+        this.logoImg = reader.result
+        const tags = this.advisorId + ',advisor_profile_logo,';
+        const file = this.utilService.convertB64toImageFile(reader.result);
+        PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
+          (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+            if (status == 200) {
+              const responseObject = JSON.parse(response);
+              const jsonDataObj = {
+                advisorId: this.advisorId,
+                goalName: this.multiYearGoalForm.get('field4').value,
+                imageURL: responseObject.secure_url,
+                goalTypeId: this.goalTypeData.goalTypeId,
+              }
+              this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
+
+                this.imgURL = jsonDataObj.imageURL;
+                console.log('image gj*****', this.imgURL)
+                this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+              });
+            }
+          });
+      }, 300);
     }
   }
 

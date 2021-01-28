@@ -355,8 +355,8 @@
                 <button (click)="createFamilyMember()" *ngIf="step==2" class="btn-bottom br-0 text-inherit"
                     mat-button>Next</button>
 
-                <app-progress-button (btnClick)="saveFamilyMembers()" *ngIf="step==3" [options]="barButtonOptions"
-                    class="br-0 text-inherit "></app-progress-button>
+                <app-progress-button [delayTime]="delayTime" (btnClick)="saveFamilyMembers()" *ngIf="step==3"
+                    [options]="barButtonOptions" class="br-0 text-inherit "></app-progress-button>
 
             </div>
         </div>
