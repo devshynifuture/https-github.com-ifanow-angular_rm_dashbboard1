@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="mt-66 borderLineTop" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
+<div class="mt-66 portrait_height_insurance borderLineTop" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
         <div class="col-width-69 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
             <div class="row pt-28" *ngIf="inputData?.insuranceType == 1">
@@ -69,7 +69,7 @@
                 <div class="col-md-12 p-0">
                     <h5 class="roboto f-500">Planner notes</h5>
                     <div class="ba-light p-8" *ngIf="!isLoadingPlan">
-                        <p class="m-0 f-14 l-18" [innerHtml]="notes ">
+                        <p class="m-0 ba-light-p f-14 l-18" [innerHtml]="notes ">
                             <!-- {{(insuranceDetails)? insuranceDetails?.needAnalysis?.plannerNotes:'-'}} -->
                         </p>
                     </div>
@@ -166,12 +166,13 @@
                                 [hidden]="!element.expanded">
                                 <div class="example-element-detail" *ngIf="clicked"
                                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                    <div class="example-element-description">
-                                        <span *ngIf="inputData?.insuranceType == 1">{{element?.insurance?.suggestion ?
-                                            element?.insurance?.suggestion : 'No suggestions found'}}</span>
-                                        <span *ngIf="inputData?.insuranceType != 1">{{element?.adviceDetails?.advice_description
+                                    <div class="example-element-description new-lineText">
+                                        <p class="new-lineText mb-0" *ngIf="inputData?.insuranceType == 1">
+                                            {{element?.insurance?.suggestion ?
+                                            element?.insurance?.suggestion : 'No suggestions found'}}</p>
+                                        <p class="new-lineText mb-0" *ngIf="inputData?.insuranceType != 1">{{element?.adviceDetails?.advice_description
                                             ? element?.adviceDetails?.advice_description : 'No suggestions
-                                            found'}}</span>
+                                            found'}}</p>
                                     </div>
                                 </div>
                             </td>

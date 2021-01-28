@@ -212,20 +212,20 @@ export class AddPlaninsuranceComponent implements OnInit {
           this.mainDependent.setValue(element.name);
         }
       });
-      this.dataSource = this.getFilterData(needSavedData[1], 'liabilities', 'name', 'total_loan_outstanding');
-      this.plannerObj.lifeInsurancePremiums = needSavedData[2.1][0].amount;
-      this.dataSource1 = this.getFilterData(needSavedData[2.2], 'dependantNeeds', 'name', 'amount');
+      this.dataSource = this.getFilterData(needSavedData[1] ? needSavedData[1] : 0, 'liabilities', 'name', 'total_loan_outstanding');
+      this.plannerObj.lifeInsurancePremiums = needSavedData[2.1] ? needSavedData[2.1][0].amount : 0;
+      this.dataSource1 = this.getFilterData(needSavedData[2.2] ? needSavedData[2.2] : 0, 'dependantNeeds', 'name', 'amount');
       this.plannerObj.livingExpense = 0;
       this.dataSource1.forEach(element => {
         if (element.selected) {
           this.plannerObj.livingExpense += (element.amount * element.percent) / 100;
         }
       });
-      this.dataSource3 = this.getFilterData(needSavedData[3], 'goalsMeet', 'goalName', 'goalFV')
-      this.plannerObj.GrossLifeinsurance = needSavedData[4][0].total_amount;
-      this.dataSource4 = this.getFilterData(needSavedData[5], 'incomeSource', 'name', 'amount')
-      this.plannerObj.existingLifeInsurance = needSavedData[6][0].total_amount;
-      this.dataSource2 = this.getFilterData(needSavedData[7], 'existingAsset', 'ownerName', 'currentValue')
+      this.dataSource3 = this.getFilterData(needSavedData[3] ? needSavedData[3] : null, 'goalsMeet', 'goalName', 'goalFV')
+      this.plannerObj.GrossLifeinsurance = needSavedData[4] ? needSavedData[4][0].total_amount : 0;
+      this.dataSource4 = this.getFilterData(needSavedData[5] ? needSavedData[5] : 0, 'incomeSource', 'name', 'amount')
+      this.plannerObj.existingLifeInsurance = needSavedData[6] ? needSavedData[6][0].total_amount : 0;
+      this.dataSource2 = this.getFilterData(needSavedData[7] ? needSavedData[7] : 0, 'existingAsset', 'ownerName', 'currentValue')
       this.plannerObj.additionalLifeIns = needSavedData[8] ? needSavedData[8][0].total_amount : 0;
       this.calculateGrossAndadditional();
     } else {
@@ -481,7 +481,7 @@ export class AddPlaninsuranceComponent implements OnInit {
         if (storeObjName == 'incomeSource') {
           this.plannerObj[storeObjName] += element.currentValueDupl ? element.currentValueDupl : (element.amount ? element.amount : element.annualIncome)
         } else {
-          this.plannerObj[storeObjName] += element.currentValueDupl ? element.currentValueDupl : element.amount
+          this.plannerObj[storeObjName] += element.currentValueDupl ? element.currentValueDupl : element.amount ? element.amount : 0;
         }
       }
     });
