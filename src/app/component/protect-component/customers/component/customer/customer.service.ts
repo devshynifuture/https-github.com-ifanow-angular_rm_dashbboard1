@@ -348,6 +348,15 @@ export class CustomerService {
     return this.http.getCall(apiConfig.MAIN_URL + appConfig.GET_SOVEREIGN_GOLD_BOND_ISSUE_PRICE);
   }
 
+  deleteSovereignGoldBondTransaction(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_SOVEREIGN_GOLD_BOND_TRANSACTION, data);
+  }
+
+  deleteSovereignGoldBond(data) {
+    const httpParams = new HttpParams().set('sovereignGoldId', data.sovereignGoldId);
+    return this.http.putParam(apiConfig.MAIN_URL + appConfig.DELETE_SOVEREIGN_GOLD_BOND, data, httpParams);
+  }
+
   addPPFScheme(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PPF_SCHEME, data);
   }

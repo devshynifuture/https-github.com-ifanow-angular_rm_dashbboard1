@@ -93,6 +93,8 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     this._data = inputData;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    // this.getIssuePrice();
+    this.bondSeriesList = this.enumService.getbondSeriesList();
     this.getGoldBond(inputData);
   }
 
@@ -104,7 +106,8 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     this.unSubcripDemat = this.enumService.getDenatAC().subscribe((data: any) => {
       this.bankDematList = data;
     });
-    this.getIssuePrice();
+    this.bondSeriesList = this.enumService.getbondSeriesList();
+
   }
 
   ngOnDestroy() {
@@ -390,15 +393,14 @@ export class AddSovereignGoldBondsComponent implements OnInit {
         familyMemberId: [0],
         id: [0]
       })]),
-      sovereignGoldTransactionList: this.fb.array([this.fb.group({
-        transactionDate: [''],
-        unit: [''],
-        amount: [''],
-        type: ['redemption']
-      })]),
+      sovereignGoldTransactionList: this.fb.array([]),
       // ownerPercent: [data.ownerPerc, [Validators.required]],
 
     });
+
+    if (data.bondNameAndSeries) {
+      this.getSelectedBondPrice(data.bondNameAndSeries)
+    }
 
     if (data == '') {
       data = {};
@@ -438,6 +440,16 @@ export class AddSovereignGoldBondsComponent implements OnInit {
           this.getNominee.removeAt(0);
           data.nomineeList.forEach(element => {
             this.addNewNominee(element);
+          });
+        }
+      }
+      /***nominee***/
+
+      /***nominee***/
+      if (data.sovereignGoldTransactionList) {
+        if (data.sovereignGoldTransactionList.length > 0) {
+          data.sovereignGoldTransactionList.forEach(element => {
+            this.addTransaction(element);
           });
         }
       }
@@ -493,16 +505,16 @@ export class AddSovereignGoldBondsComponent implements OnInit {
   }
 
   bondSeriesList: any;
-  getIssuePrice() {
-    this.custumService.getSovereignGoldBondIssuePrice().subscribe(
-      data => {
-        this.bondSeriesList = data;
-      }, (error) => {
-        this.barButtonOptions.active = false;
-        this.eventService.showErrorMessage(error);
-      }
-    );
-  }
+  // getIssuePrice() {
+  //   this.custumService.getSovereignGoldBondIssuePrice().subscribe(
+  //     data => {
+  //       this.bondSeriesList = data;
+  //     }, (error) => {
+  //       this.barButtonOptions.active = false;
+  //       this.eventService.showErrorMessage(error);
+  //     }
+  //   );
+  // }
 
   // add transaction
 
@@ -512,23 +524,57 @@ export class AddSovereignGoldBondsComponent implements OnInit {
 
   addTransaction(data) {
     this.getTransaction.push(this.fb.group({
-      transactionDate: [!data ? '' : data.transactionDate],
-      unit: [!data ? '' : data.unit],
-      amount: [!data ? '' : data.amount],
-      type: [!data ? 'redemption' : data.amount]
+      transactionDate: [!data ? '' : new Date(data.transactionDate), [Validators.required]],
+      unit: [!data ? '' : data.unit, [Validators.required]],
+      amount: [!data ? '' : data.amount, [Validators.required]],
+      type: ['redemption', [Validators.required]],
+      isActive: [!data ? 1 : data.isActive],
+      id: [!data ? null : data.id]
+
     }));
   }
 
+
+  removed: any = [];
   removeTransaction(item) {
-    this.getTransaction.removeAt(item);
+    if (this.getTransaction.controls[item].value.id) {
+      // this.transactionForm.controls.ppfTransactionList.controls['isActive'].setValue(0);
+      this.getTransaction.controls[item].value.isActive = 0
+
+      this.removed.push(this.getTransaction.controls[item]);
+      console.log(this.removed, "removed 123");
+      this.goldBondForm.controls.sovereignGoldTransactionList.removeAt(item);
+      // this.outputEvent.emit({removed:this.removed, data:this.getTransaction})
+      // this.transactionForm.controls.transactionFormList.push(this.removed);
+    }
+    else {
+      if (this.getTransaction.controls[item].value.id) {
+        let id = {
+          sovereignGoldTransactionId: this.getTransaction.controls[item].value.id
+        }
+        this.custumService.deleteSovereignGoldBondTransaction(id).subscribe(
+          data => {
+            console.log('delete', data)
+          }
+        )
+      }
+      this.goldBondForm.controls.sovereignGoldTransactionList.removeAt(item)
+      // this.addTransactionList = this.getTransaction.controls.length;
+    }
+    // this.getTransaction.removeAt(item);
   }
 
   // add transaction
 
 
   getSelectedBondPrice(data) {
-    let price = this.bondSeriesList.filter(x => x.seriesName == data);
-    this.goldBondForm.get("issuePrice").setValue(price[0].retailPrice);
+    if (this.bondSeriesList) {
+      let price = this.bondSeriesList.filter(x => x.seriesName == data);
+      this.goldBondForm.get("issuePrice").setValue(price[0].retailPrice);
+    }
+    else {
+
+    }
   }
 
   calUnits() {
@@ -569,12 +615,9 @@ export class AddSovereignGoldBondsComponent implements OnInit {
           this.removeNewNominee(index);
         }
       });
-      bondObj.sovereignGoldTransactionList.forEach((element, index) => {
-        if (element.transactionDate == '') {
-          this.removeTransaction(index);
-        }
+      this.removed.forEach(element => {
+        bondObj.sovereignGoldTransactionList.push(element.value);
       });
-      bondObj.sovereignGoldTransactionList = this.goldBondForm.value.sovereignGoldTransactionList;
       bondObj.nomineeList = this.goldBondForm.value.getNomineeName;
       bondObj['ownerList'] = this.goldBondForm.value.getCoOwnerName;
       bondObj['nomineeList'] = this.goldBondForm.value.getNomineeName;
@@ -600,29 +643,10 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     }
   }
 
-  tranValidation(i) {
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('type').setValidators([Validators.required]);
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('type').updateValueAndValidity();
 
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('transactionDate').setValidators([Validators.required]);
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('transactionDate').updateValueAndValidity();
-
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('unit').setValidators([Validators.required]);
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('unit').updateValueAndValidity();
-
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('amount').setValidators([Validators.required]);
-    this.goldBondForm.controls['sovereignGoldTransactionList'].controls[i].get('amount').updateValueAndValidity();
-    // this.goldBondForm.updateValueAndValidity();
-  }
   addSovereignGoldBondRes(data) {
     console.log(data);
     if (data) {
-      // this.customerOverview.portFolioData = null;
-      // this.customerOverview.assetAllocationChart = null;
-      // this.customerOverview.summaryLeftsidebarData = null;
-      // this.customerOverview.aumGraphdata = null;
-      // this.customerOverview.assetAllocationChart = null;
-      // this.customerOverview.summaryCashFlowData = null;
       console.log(data);
       this.assetValidation.addAssetCount({ type: 'Add', value: 'otherAsset' })
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
@@ -632,19 +656,12 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data });
     }
     this.barButtonOptions.active = false;
-
   }
 
   editSovereignGoldBondRes(data) {
     console.log(data);
     if (data) {
       console.log(data);
-      // this.customerOverview.portFolioData = null;
-      // this.customerOverview.assetAllocationChart = null;
-      // this.customerOverview.summaryLeftsidebarData = null;
-      // this.customerOverview.aumGraphdata = null;
-      // this.customerOverview.assetAllocationChart = null;
-      // this.customerOverview.summaryCashFlowData = null;
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Updated successfully!', 'OK');
     } else {

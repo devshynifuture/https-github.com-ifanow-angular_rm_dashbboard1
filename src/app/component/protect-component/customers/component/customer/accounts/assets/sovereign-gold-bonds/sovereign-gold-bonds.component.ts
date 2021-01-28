@@ -56,6 +56,7 @@ export class SovereignGoldBondsComponent implements OnInit {
     public custmService: CustomerService, public cusService: CustomerService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
+
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef) {
@@ -71,6 +72,9 @@ export class SovereignGoldBondsComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
+    if (!this.enumService.bondSeriesList) {
+      this.getIssuePrice();
+    }
     if (this.assetValidation.goldBondList) {
       this.getGoldBondsDataResponse(this.assetValidation.goldBondList)
     }
@@ -247,9 +251,9 @@ export class SovereignGoldBondsComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         let obj = {
-          "otherAssetId": element.id
+          "sovereignGoldId": element.id
         }
-        this.cusService.deleteOtherAssets(element.id).subscribe(
+        this.cusService.deleteSovereignGoldBond(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
@@ -281,6 +285,17 @@ export class SovereignGoldBondsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
     });
+  }
+
+  bondSeriesList: any;
+  getIssuePrice() {
+    this.cusService.getSovereignGoldBondIssuePrice().subscribe(
+      data => {
+        this.enumService.bondSeriesList = data;
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
   }
 }
 
