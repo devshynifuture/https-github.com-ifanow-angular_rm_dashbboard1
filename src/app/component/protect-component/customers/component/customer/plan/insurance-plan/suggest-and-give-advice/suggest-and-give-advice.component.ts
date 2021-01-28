@@ -1045,7 +1045,7 @@ export class SuggestAndGiveAdviceComponent implements OnInit {
               let finalplanFeatureList = componentRefComponentValues[form].get('planFeatureForm') as FormArray
               if (finalplanFeatureList && finalplanFeatureList.controls.length > 0) {
                 finalplanFeatureList.controls.forEach(element => {
-                  if (element.get('planfeatures').value && element.get('sumInsured').value) {
+                  if (element.get('planfeatures').value || element.get('sumInsured').value) {
                     let obj =
                     {
                       policyFeatureId: element.get('planfeatures').value,
