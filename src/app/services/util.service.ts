@@ -797,7 +797,9 @@ export class UtilService {
   }
 
   static removeSpecialCharactersFromString(string) {
-    string = string.replace(/[\/\\#+()$~%.'":*?<>{}]/g, '')
+    string = string.replace(/[\/\\#+()@!^&;|[$~%.'":*?<>_={}-]/g, '')
+    string = string.replace(/[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g, '')
+    string = string.replace(']', '')
     return string
   }
 
@@ -841,6 +843,10 @@ export class UtilService {
   static checkEmailListUpdation(originalEmailList, editedEmailList) {
     let emailListJson = [];
     if (originalEmailList.length == 0) {
+      editedEmailList.value.forEach(element => {
+        element.defaultFlag = element.markAsPrimary;
+      })
+      // editedEmailList.value[0].defaultFlag = editedEmailList.value[0].markAsPrimary
       emailListJson = editedEmailList.value;
     } else {
       originalEmailList.forEach(singleEmail => {
