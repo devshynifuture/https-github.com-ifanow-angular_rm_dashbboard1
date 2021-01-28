@@ -257,6 +257,7 @@
 
 
  @media screen and (min-width: 1025px) and (max-width: 1400px){
+  
   .fix-sticky {
     position: relative;
     width: auto;
@@ -265,5 +266,31 @@
   .in-btn {
     width: 125px;
   }
+
  
+}
+
+
+@media screen  and (orientation:portrait) { 
+  .btnBox {
+    display: block;
+    margin-top: 0px;
+    .in-btn {
+      margin-bottom: 20px;
+      width: 90%;
+      text-align: center;
+    }
+    .in-btn-two {
+      margin-bottom: 20px;
+      width: 90%;
+      text-align: center;
+    }
+  }
+
+  .imgBoxGoals{
+    margin-bottom: 20px;
+  }
+
+
+
 }
