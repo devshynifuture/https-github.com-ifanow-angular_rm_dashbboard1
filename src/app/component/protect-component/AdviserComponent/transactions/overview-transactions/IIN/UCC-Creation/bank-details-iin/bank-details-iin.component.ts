@@ -25,7 +25,7 @@ export class BankDetailsIINComponent implements OnInit {
   activeDetailsClass = 'first';
   accountTypes: any;
   userData: any;
-
+  isMinor: boolean = false;
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private postalService: PostalService,
     private processTransaction: ProcessTransactionService,
@@ -54,6 +54,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.inputData = data;
     console.log('Data in bank detail : ', data);
     this.clientData = data.clientData;
+    this.isMinor = this.clientData.familyMemberType == 2 ? true : false;
     this.allData = data;
     this.holdingList = data;
     this.doneData = {};
