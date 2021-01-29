@@ -73,6 +73,8 @@ export class LifeInsuranceComponent implements OnInit {
     existingAsset: 0, liabilities: 0, lifeInsurancePremiums: 0, livingExpense: 0, dependantNeeds: 0, goalsMeet: 0, GrossLifeinsurance: 0, incomeSource: 0,
     existingLifeInsurance: 0, additionalLifeIns: 0
   }
+  checkedBox = "https://res.cloudinary.com/futurewise/image/upload/v1611903063/logos/Checkbox_srkq9v.png"
+  uncheckBox = "https://res.cloudinary.com/futurewise/image/upload/v1611903072/logos/Uncheckbox_y4a6yk.png"
   adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, { id: '3', value: 'Port policy' }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }, { id: '6', value: 'Add members' }, { id: '7', value: 'Remove members' }]
   setLogo = [{
     heading: 'Life insurance',
