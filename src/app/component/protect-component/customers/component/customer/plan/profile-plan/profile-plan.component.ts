@@ -22,11 +22,11 @@ export class ProfilePlanComponent implements OnInit {
       this.viewMode = "tab1";
       return;
     }
-    if (this.roleService.planPermission.subModule.profile.subModule.expenses.enabled) {
+    else if (this.roleService.planPermission.subModule.profile.subModule.expenses.enabled) {
       this.viewMode = "tab2";
       return;
     }
-    if (this.roleService.planPermission.subModule.profile.subModule.financialPlan.enabled) {
+    else {
       this.viewMode = "tab6";
       return;
     }

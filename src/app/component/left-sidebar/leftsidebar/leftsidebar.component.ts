@@ -221,11 +221,16 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
             return;
           } else {
             this.auth.setClientData(data);
-            this.myControl.setValue(data.displayName);
+            this.myControl.setValue(singleClientData.displayName);
             this.ngZone.run(() => {
               this.roleService.getClientRoleDetails(data.roleId, (rolesData) => {
                 this.roleService.constructClientDataSource(rolesData);
-                const url = this.roleService.goToValidClientSideUrl();
+                let url;
+                if (this.roleService.overviewPermission.subModules.profile.enabled) {
+                  url = '/customer/detail/overview/profile'
+                } else {
+                  url = this.roleService.goToValidClientSideUrl();
+                }
                 this.router.navigate([url], { state: { ...data } });
               });
             });
