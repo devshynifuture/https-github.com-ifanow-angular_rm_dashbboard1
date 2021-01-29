@@ -36,7 +36,8 @@
             Investor name
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.clientName) ? details.clientName : '-' }}
+            {{ (details.clientName) ? details.clientName : details.firstApplicantName? details.firstApplicantName : '-'
+            }}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -53,6 +54,23 @@
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
             {{ (details.statusString) ? details.statusString : '-'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br" *ngIf="details.iinDeactivationDate">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+            Deactivation date
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{details.iinDeactivationDate | date : 'dd/MM/yyyy'}}<br /> {{details.iinDeactivationDate | date : 'h:mm
+            a'}}
+          </div>
+        </div>
+        <div class="row bb p-8 b-l br" *ngIf="details.iinDeactivationDate">
+          <div class="col-md-4 text-left f-14 roboto p-0">
+            Deactivation reason
+          </div>
+          <div class="col-md-8 text-right f-14 roboto p-0">
+            {{details.iinDeactivationReason}}
           </div>
         </div>
 
@@ -101,6 +119,8 @@
       </table>
     </div>
   </div>
+
+
 </div>
 <div class="p-28 pb-100">
   <div class="row pt-12 ">
@@ -121,7 +141,7 @@
       </div>
     </div>
   </div>
-  <div class="row pt-12 pb-44 text-center">
+  <div class="row pt-12 pb-44 text-center" *ngIf="details.isPendingData">
     <div class="col-md-6">
       <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
         mat-button>
@@ -140,7 +160,7 @@
 
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="details.isPendingData">
     <div class="col-md-9 p-0">
       <h5 class="m-0 f-500 text-black">Status</h5>
     </div>
@@ -156,7 +176,7 @@
   </div>
 
 
-  <div class="mt-20">
+  <div class="mt-20" *ngIf="details.isPendingData">
     <div *ngFor="let singleStep of statusDetails" class="circleGreen ">
       <div class="d-flex">
         <div *ngIf="singleStep.checked == true" class="circle1">
