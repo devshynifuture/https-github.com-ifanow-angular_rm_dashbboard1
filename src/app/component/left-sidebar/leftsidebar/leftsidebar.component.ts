@@ -248,12 +248,22 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         this.ngZone.run(() => {
           // this.roleService.getClientRoleDetails(singleClientData.roleId, (rolesData) => {
           //   this.roleService.constructClientDataSource(rolesData);
-          const url = this.roleService.goToValidClientSideUrl();
+          let url;
+          if (this.roleService.overviewPermission.subModules.profile.enabled) {
+            url = '/customer/detail/overview/profile'
+          } else {
+            url = this.roleService.goToValidClientSideUrl();
+          }
           this.router.navigate([url], { state: { ...singleClientData } });
           // });
         });
       } else {
-        const url = this.roleService.goToValidClientSideUrl();
+        let url;
+        if (this.roleService.overviewPermission.subModules.profile.enabled) {
+          url = '/customer/detail/overview/profile'
+        } else {
+          url = this.roleService.goToValidClientSideUrl();
+        }
         this.router.navigate([url], { state: { ...singleClientData } });
       }
     }
