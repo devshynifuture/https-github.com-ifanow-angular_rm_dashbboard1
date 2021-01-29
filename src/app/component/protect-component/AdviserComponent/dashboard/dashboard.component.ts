@@ -1878,6 +1878,7 @@ export class DashboardComponent implements OnInit {
 
   getKeyMetricsRes(data) {
     this.isKeyMatrix = false;
+    data.mfAum = UtilService.getNumberToWord(data.mfAum);
     data.sipBook = UtilService.getNumberToWord(data.sipBook)
     this.keyMetricJson = data;
     // this.keyMetricJson.mfAum = '';
