@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthService } from '../auth-service/authService';
-import { RoleService } from '../auth-service/role.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
-import { LoginService } from '../component/no-protected/login/login.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {AuthService} from '../auth-service/authService';
+import {RoleService} from '../auth-service/role.service';
+import {catchError, map} from 'rxjs/operators';
+import {of} from 'rxjs';
+import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
+import {LoginService} from '../component/no-protected/login/login.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(private myRoute: Router, private authService: AuthService,
-    private roleService: RoleService, private peopleService: PeopleService, private loginService: LoginService) {
+              private roleService: RoleService, private peopleService: PeopleService, private loginService: LoginService) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -70,20 +70,46 @@ export class AuthGuard implements CanActivate {
           };
           return this.peopleService.getLoginDataFromUUID(obj)
 
-            ./*pipe(*/map((response) => {
-              console.log('AppComponent getRandomStringFromPlanner response: ', response);
+            .pipe(map((userData) => {
+              console.log('AppComponent getRandomStringFromPlanner response: ', userData);
               window.name = undefined;
-              if (response) {
-                this.loginService.handleUserData(this.authService, this.myRoute, response);
-                return true;
-              } else {
+              if (!userData) {
+                this.myRoute.navigate(['/login']);
                 return false;
+              }
+              if (userData.userType == 1 || userData.userType == 8) {
+                this.roleService.getRoleDetails(userData.roleId, (rolesData) => {
+                  this.authService.setToken('authTokenInLoginComponent');
+                  this.authService.setUserInfo(userData);
+                  this.myRoute.navigate(['admin', 'dashboard']);
+                  if (userData.showReferPopup) {
+                    this.loginService.openDialog();
+                  }
+                  return false;
+                });
+
+              } else if (userData.isRmLogin) {
+                this.authService.setToken('authTokenInLoginComponent');
+                this.authService.setUserInfo(userData);
+                this.myRoute.navigate(['support', 'dashboard']);
+                return false;
+              } else {
+                this.roleService.getClientRoleDetails(userData.roleId, (rolesData) => {
+                  this.authService.setToken('authTokenInLoginComponent');
+                  this.authService.setUserInfo(userData);
+                  userData.id = userData.clientId;
+                  this.authService.setClientData(userData);
+                  this.roleService.constructAdminDataSource(rolesData);
+                  const url = this.roleService.goToValidClientSideUrl();
+                  this.myRoute.navigate([url]);
+                  return false;
+                });
               }
             }, catchError(err => {
               this.myRoute.navigate(['/login']);
               console.log('AppComponent getRandomStringFromPlanner err: ', err);
               return of(false);
-            }));
+            })));
         } catch (e) {
           console.error(e);
           this.myRoute.navigate(['/login']);
@@ -94,7 +120,7 @@ export class AuthGuard implements CanActivate {
       }
       if (state && state.url.split('/').includes('invite')) {
         console.log(next, this.myRoute);
-        this.myRoute.navigate(['/login/signup'], { queryParams: { code: next.params ? next.params.param : '' } });
+        this.myRoute.navigate(['/login/signup'], {queryParams: {code: next.params ? next.params.param : ''}});
         return true;
       }
       this.myRoute.navigate(['/login']);
