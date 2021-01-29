@@ -28,7 +28,7 @@
             Bond name & series
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.bond? data.bond:'-'}}
+            {{data.bondNameAndSeries? data.bondNameAndSeries:'-'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -36,8 +36,8 @@
             Amount invested
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.amountInvested ? '₹':''}}<span appFormatNumber>{{data.amountInvested ?
-              data.amountInvested:'-'}}</span>
+            {{data.investmentAmount ? '₹':''}}<span appFormatNumber>{{data.investmentAmount ?
+              data.investmentAmount:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -45,7 +45,7 @@
             Commencement date
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.issueDate | date:'dd/MM/yyyy'}}
+            {{data.investmentOrIssueDate | date:'dd/MM/yyyy'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -53,7 +53,7 @@
             Tenure(in Year)
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.tenure? data.tenure:'-'}}
+            8
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -69,7 +69,7 @@
             Interest rate
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.rate ? '%':''}}<span appFormatNumber>{{data.rate ? data.rate:'-'}}</span>
+            {{data.interestRate ? '%':''}}<span appFormatNumber>{{data.interestRate ? data.interestRate:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -77,7 +77,8 @@
             Half yearly pay-out
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.yearlyPayout ? '₹':''}}<span appFormatNumber>{{data.yearlyPayout ? data.yearlyPayout:'-'}}</span>
+            {{data.interestHalfYearly ? '₹':''}}<span appFormatNumber>{{data.interestHalfYearly ?
+              data.interestHalfYearly:'-'}}</span>
           </div>
         </div>
         <!-- <div class="row bb p-8 b-l br">
@@ -94,8 +95,8 @@
             Current value
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.currentValueAsOnToday ? '₹':''}}<span appFormatNumber>{{data.currentValueAsOnToday ?
-              data.currentValueAsOnToday:'-'}}</span>
+            {{data.currentValue ? '₹':''}}<span appFormatNumber>{{data.currentValue ?
+              data.currentValue:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -103,7 +104,7 @@
             XIRR (as on date)
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.issueDate | date:'dd/MM/yyyy'}}
+            {{data.xirr ? '%':''}}<span appFormatNumber>{{data.xirr ? data.xirr:'-'}}</span>
           </div>
         </div>
         <div class="row bb p-8 b-l br">

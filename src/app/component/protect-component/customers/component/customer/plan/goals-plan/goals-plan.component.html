@@ -514,7 +514,8 @@
                         <div class="row">
                             <div class="col-md-12 p-0">
                                 <div class="b-a relClass">
-                                    <div class="m-0 p-8 text-black f-12 roboto" [hidden]="loaderFn.loading">
+                                    <div class="m-0 p-8 text-black f-14 new-lineText  roboto"
+                                        [hidden]="loaderFn.loading">
                                         {{selectedGoal?.remainingData?.notes}}.
                                     </div>
                                     <div class="bar82 p-8" [ngClass]="{'height82': loaderFn.loading}"
@@ -619,7 +620,7 @@
                             <div class="col-md-12 p-0  skeletonAnimation" appSkeletonLoading
                                 [appSkeletonLoading]="loaderFn.loading">
 
-                                <div class="imgBoxGoals" [hidden]="loaderFn.loading">
+                                <div class="imgBoxGoals overflow-hidden" [hidden]="loaderFn.loading">
                                     <img [src]="selectedGoal.img">
                                 </div>
 
@@ -696,9 +697,6 @@
                                         (click)="openInSideBar(null, 'openPreferences')">
                                         <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button> -->
                                 <!-- </div> -->
-
-
-
 
                             </div>
                         </div>

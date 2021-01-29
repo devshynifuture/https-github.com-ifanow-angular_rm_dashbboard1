@@ -205,6 +205,8 @@ export class ClientAddressComponent implements OnInit {
       this.postalService.getPostalPin(value).subscribe(data => {
         console.log('postal 121221', data);
         this.PinData(data);
+      }, err => {
+        this.isLoading = false;
       });
     }
   }
@@ -237,6 +239,7 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('pinCode').setValue(pincode)
     const addressLine3Value = this.addressForm.get('addressLine3').value;
     this.addressForm.get('addressLine3').setValue(addressLine3Value.replace(pincode, ''));
+    this.addressForm.get('addressLine2').setValue(this.addressForm.get('addressLine2').value.replace(pincode, ''));
     this.getPostalPin(pincode);
   }
 

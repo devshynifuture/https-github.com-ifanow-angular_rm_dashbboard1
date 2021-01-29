@@ -229,7 +229,9 @@
                 <ng-container matColumnDef="accountType">
                     <th *matHeaderCellDef class="br" mat-header-cell> Account type</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar"> {{element.accountType}}</div>
+                        <div *ngFor="let type of accountTypes" [ngSwitch]="element.accountType">
+                            <span *ngSwitchCase="type.id">{{type.name}}</span>
+                        </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="hold">

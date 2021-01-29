@@ -863,6 +863,17 @@ button.primary-sm {
   height: calc(100vh - 120px);
 }
 
+.new-lineText {
+  white-space: pre-line;
+}
+
+.ba-light-p {
+  p{
+    margin-bottom: 0px;
+  }
+}
+
+
 @media(max-width:1200px) {
   .pl-15-1200 {
     padding-left: 15px !important;
@@ -962,9 +973,17 @@ button.primary-sm {
 }
 
 .portrait_height_account {
-  height: 510px;
+    height: 510px;
     overflow: auto;
 }
+
+.portrait_height_insurance {
+  height: 510px;
+  overflow: auto;
+}
+
+ 
+
 
 }
 

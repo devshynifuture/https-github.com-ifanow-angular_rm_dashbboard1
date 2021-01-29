@@ -36,7 +36,7 @@
             Investor name
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{ (details.investorName) ? details.firstHolderName : '-' }}
+            {{ (details.clientName) ? details.clientName : '-' }}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -59,6 +59,48 @@
       </div>
     </div>
   </div>
+  <div class="row pt-48" *ngIf="dataSource.data.length > 0">
+    <div class="col-md-12 investors-transactions p-0">
+      <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation "
+        id="tbs" mat-table matSort>
+        <ng-container matColumnDef="type">
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="docType" sticky>Document type
+          </th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+              <div [ngSwitch]="element.documentType">
+                <span *ngSwitchCase="1">A.O.F</span>
+                <span *ngSwitchCase="4">Bank proof</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="time">
+          <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="uploadTime" sticky>
+            Upload time
+          </th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+              {{element.uploadTime | date : 'MMMM d, y'}} <br /> {{element.uploadTime | date : 'h:mm a'}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status" sticky>
+          <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="docStatus">
+            Status
+          </th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+              <span class="text-success  f-400 c-p">{{element.responseMessage}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
+        <tr (click)="openInvestorDetail(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+      </table>
+    </div>
+  </div>
 </div>
 <div class="p-28 pb-100">
   <div class="row pt-12 ">
@@ -79,19 +121,17 @@
       </div>
     </div>
   </div>
-  <div *ngIf="transactionRoleService.investorsModule.capabilityMap.edit&&(!isAOFUploaded||!isChequeUploaded)&&!isLoading"
-       class="row pt-12 pb-44 text-center">
+  <div class="row pt-12 pb-44 text-center">
     <div class="col-md-6">
-      <button [hidden]="isAOFUploaded" (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
-              mat-button>
+      <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
+        mat-button>
         Upload AOF
         <!-- <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file"> -->
       </button>
     </div>
     <div class="col-md-6">
-      <button [hidden]="isChequeUploaded" *ngIf="details.aggregatorType != 2" (click)="openUploadConfirmBox('CHEQUE',4)"
-              [disabled]="isFileUploading"
-              class="h-40 bg-primary text-white ml-8" mat-button>
+      <button *ngIf="details.aggregatorType != 2" (click)="openUploadConfirmBox('CHEQUE',4)"
+        [disabled]="isFileUploading" class="h-40 bg-primary text-white ml-8" mat-button>
         Upload Cheque
         <!-- <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-5" type="file"> -->
       </button>
@@ -99,6 +139,7 @@
 
 
   </div>
+
   <div class="row">
     <div class="col-md-9 p-0">
       <h5 class="m-0 f-500 text-black">Status</h5>

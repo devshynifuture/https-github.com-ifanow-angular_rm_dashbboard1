@@ -110,9 +110,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="amount">
-                    <th class="br" mat-header-cell *matHeaderCellDef> Amount </th>
-                    <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.amount}} </div>
+                    <th class="br text-right" mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td class="br text-right" mat-cell *matCellDef="let element">
+                        <div class="bar"> ₹ {{element.amount}} </div>
                     </td>
                 </ng-container>
 

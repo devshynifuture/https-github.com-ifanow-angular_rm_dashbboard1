@@ -239,8 +239,9 @@
                                 <div class="col-md-8 p-0">
                                     <div class="form-group">
                                         <mat-form-field>
-                                            <input formControlName="goalDescription" autocomplete="off" matInput
-                                                class="form-control br-0">
+                                            <textarea autocomplete="off" class="form-control br-0" matInput
+                                                formControlName="goalDescription"></textarea>
+
                                             <mat-error class="f-12">This field is required</mat-error>
                                             <mat-hint class="pl-6">Optional</mat-hint>
                                         </mat-form-field>

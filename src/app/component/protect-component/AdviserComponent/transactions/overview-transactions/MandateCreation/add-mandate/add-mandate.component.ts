@@ -68,10 +68,12 @@ export class AddMandateComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
   }
 
+  accountTypes: any = [];
   ngOnInit() {
     this.getdataForm('');
     this.showUploadSection = false;
     this.clientCodeDataShow = false;
+    this.accountTypes = this.enumDataService.getBankAccountTypes();
     // this.nomineesListFM = this.generalDetails.controls.ownerName.valueChanges
     //   .pipe(
     //     startWith(''),

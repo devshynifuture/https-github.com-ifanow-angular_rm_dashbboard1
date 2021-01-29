@@ -43,6 +43,7 @@ export class AddFamilyMemberComponent implements OnInit {
   step = 1;
   clientData: any;
   relationList: any;
+  delayTime = 0.1;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
