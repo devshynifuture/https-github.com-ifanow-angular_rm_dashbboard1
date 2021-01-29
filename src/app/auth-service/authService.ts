@@ -196,7 +196,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.getToken() !== null;
+    return this.getToken() != null && this.getToken() != undefined;
   }
 
   isAdvisor() {
