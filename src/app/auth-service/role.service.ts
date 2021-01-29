@@ -496,7 +496,7 @@ export class RoleService {
   }
 
   setPermissions(moduleId, enabled) {
-    console.log(' moduleId : ', moduleId, ' enabled : ', enabled);
+    // console.log(' moduleId : ', moduleId, ' enabled : ', enabled);
     if (moduleId == 92) {
       this.subscriptionPermission.enabled = enabled;
     } else if (moduleId == 23) {

@@ -163,7 +163,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {
     enableTracing: false,
     onSameUrlNavigation: 'reload',
-    preloadingStrategy: SelectivePreloadingStrategyService  /*preloadingStrategy: PreloadAllModules*/
+    // preloadingStrategy: SelectivePreloadingStrategyService  /*preloadingStrategy: PreloadAllModules*/
   })],
   exports: [RouterModule]
 })

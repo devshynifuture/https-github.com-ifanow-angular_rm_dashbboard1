@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from '../auth-service/authService';
 import {RoleService} from '../auth-service/role.service';
-import {catchError, map, tap} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
 import {LoginService} from '../component/no-protected/login/login.service';
-import {SettingsService} from "../component/protect-component/AdviserComponent/setting/settings.service";
+import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isLoggedIn()) {
       if (!AuthService.getUserInfo()) {
         this.authService.logout();
+        this.myRoute.navigate(['/login']);
         return false;
       }
       // if (state && state.url === '/login') {
