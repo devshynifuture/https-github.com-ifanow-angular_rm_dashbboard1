@@ -48,9 +48,8 @@
 
                     </div>
                 </li> -->
-                <li (click)="viewMode ='tab6'"
-                    *ngIf="roleService.planPermission.subModule.profile.subModule.financialPlan.enabled"
-                    [ngClass]="{'activeColor':viewMode =='tab6'}" class=" c-p">
+                <!-- *ngIf="roleService.planPermission.subModule.profile.subModule.financialPlan.enabled" -->
+                <li (click)="viewMode ='tab6'" [ngClass]="{'activeColor':viewMode =='tab6'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img src="/assets/images/svg/income.svg">
