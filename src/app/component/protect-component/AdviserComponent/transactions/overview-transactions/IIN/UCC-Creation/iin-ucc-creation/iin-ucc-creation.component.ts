@@ -226,7 +226,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
       clientType = value.clientType;
     } else if (value.familyMemberType > 0) {
       clientType = value.familyMemberType;
-      this.isMinor = true;
+
     }
     console.log('selected member : ', value);
     if (clientType == 1) {
@@ -234,6 +234,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
       this.setDefaultTaxStatus();
     } else if (clientType == 2) {
       this.taxStatusList = this.enumService.getMinorTaxList();
+      this.isMinor = true;
       this.generalDetails.get('holdingType').setValue('SI');
       this.setDefaultTaxStatus();
     } else {
