@@ -41,6 +41,12 @@ export class DetailedViewMandateComponent implements OnInit {
   @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
   returnValue: any;
   umrn1: any;
+  accountNumList: any;
+  ifscCodeList: any;
+  ifscCodelist: any;
+  micrNoList: any;
+  auth: string;
+  dubleTick: string;
 
   constructor(private subInjectService: SubscriptionInject,
     private utilService: UtilService,
@@ -55,15 +61,29 @@ export class DetailedViewMandateComponent implements OnInit {
   }
   mandateData(data) {
     this.umrn1 = []
+    this.accountNumList = []
+    this.ifscCodeList = []
+    this.micrNoList = []
+    Object.assign(this.details, { auth: 'BSE Limited' });
+    Object.assign(this.details, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
     var umrnList = data.umrnNo.length
     for (var i = 0; i < umrnList; i++) {
       this.umrn1.push(data.umrnNo.charAt(i))
+    }
+    for (var i = 0; i < data.accountNo.length; i++) {
+      this.accountNumList.push(data.accountNo.charAt(i))
+    }
+    for (var i = 0; i < data.ifscCode.length; i++) {
+      this.ifscCodeList.push(data.ifscCode.charAt(i))
+    }
+    for (var i = 0; i < data.micrNo.length; i++) {
+      this.micrNoList.push(data.micrNo.charAt(i))
     }
     console.log('umrn', this.umrn1)
   }
   download(template, titile) {
     this.fragmentData.isSpinner = true;
-    const para = this.realEstateTemp.nativeElement;
+    const para = document.getElementById(template);
     const obj = {
       htmlInput: para.innerHTML,
       name: titile,
