@@ -4,13 +4,13 @@
         <div class="col-md-6 p-0">
             <h4 class="mb-0 wrapper-20 pr-0">{{flag}} Health insurance </h4>
         </div>
-        <div class="col-md-6 text-right">
-            <div class="wrapper-12">
-                <!-- <button class="btn-dark-black addon mr-8 " mat-button matTooltip="Have lots of policies?You can bulk upload these policies using excel import option">
+        <div class="col-md-6 text-right full-end pr-24">
+
+            <!-- <button class="btn-dark-black addon mr-8 " mat-button matTooltip="Have lots of policies?You can bulk upload these policies using excel import option">
                     <img class="c-p mr-8" src="assets/images/svg/insurance-download-icon.svg"> Import policies
                 </button> -->
-                <i (click)="close(null)" class="material-icons c-p v-middle"> clear</i>
-            </div>
+            <i (click)="close(null)" class="material-icons c-p v-middle"> clear</i>
+
         </div>
     </div>
 </div>
@@ -61,7 +61,7 @@
                 <div class="col-md-2 p-0 d-flex align-items-center">
                     <!-- <i *ngIf="pointIndex==0" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i> -->
                     <i (click)="removeCoOwner(pointIndex)" *ngIf="pointIndex!=0"
-                        class="material-icons text-primitive f-20 c-p pl-10 pt-8">remove</i>
+                        class="material-icons text-primitive c-p pl-10 pt-8">remove</i>
                 </div>
 
             </div>
@@ -554,10 +554,10 @@
                     <div class="col-md-2 p-0 d-flex align-items-center">
                         <i (click)="addNewNominee(undefined)"
                             *ngIf="healthInsuranceForm.value.getNomineeName.length < 3"
-                            class="material-icons text-primitive f-20 c-p float-left">add</i>
+                            class="material-icons text-primitive  c-p float-left">add</i>
                         <i (click)="removeNewNominee(pointIndex)"
                             *ngIf="healthInsuranceForm.value.getNomineeName.length > 1"
-                            class="material-icons text-primitive f-20 c-p pl-10">remove</i>
+                            class="material-icons text-primitive c-p pl-10">remove</i>
                     </div>
 
                 </div>

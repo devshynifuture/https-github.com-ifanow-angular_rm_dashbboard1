@@ -536,8 +536,8 @@
                     [formGroupName]="pointIndex">
                     <div
                         class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
-                        <h5 class="m-0 pt-12">Guardian <span
-                                *ngIf="minorForm.value.getCoOwnerName.length>1">{{pointIndex + 1}}</span></h5>
+                        <h5 class="m-0">Guardian <span *ngIf="minorForm.value.getCoOwnerName.length>1">{{pointIndex +
+                                1}}</span></h5>
 
                     </div>
                     <div class="p-0 mob-pl-10 col-10 col-md-6">
@@ -560,9 +560,9 @@
                     </div>
                     <div class="col-md-2 col-2 pr-0 pt-12">
                         <i *ngIf=" pointIndex+1==minorForm.value.getCoOwnerName.length && pointIndex<2" class=" material-icons
-                        f-20 c-p" (click)="addNewCoOwner(undefined)">add</i>
+                        text-primitive c-p" (click)="addNewCoOwner(undefined)">add</i>
                         <i *ngIf="minorForm.value.getCoOwnerName.length>1" class=" material-icons
-                        f-20 c-p" (click)="removeCoOwner(pointIndex)">remove</i>
+                        text-primitive c-p" (click)="removeCoOwner(pointIndex)">remove</i>
                     </div>
 
                 </div>
