@@ -73,6 +73,7 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
   secondHolderContact: any;
   thirdHolderContact: any;
   logoText = 'Your Logo here';
+  occupation: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     public authService: AuthService,
@@ -187,7 +188,10 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
       this.fatcaDetails.controls.countryOfBirth.setValue(holderData.address.country);
     }
   }
-
+  selecctOccupation(value) {
+    console.log('occupation', value)
+    this.occupation = value.name
+  }
   getFormControl(): any {
     return this.fatcaDetails.controls;
   }
@@ -230,6 +234,7 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
         ...this.firstHolderContact.fatcaDetail,
         commMode: 1,
         confirmationFlag: 1,
+        occupation: this.occupation
       };
       localStorage.setItem('fatca' + (this.data.clientId), JSON.stringify(obj1));
 
