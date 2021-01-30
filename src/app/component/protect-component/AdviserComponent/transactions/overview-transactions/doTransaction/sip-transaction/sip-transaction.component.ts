@@ -109,6 +109,11 @@ export class SipTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
+    this.getDataSummary = this.inputData.transactionData
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
+    if (this.platformType == 1) {
+      this.getMandateDetails();
+    }
     if (data.mutualFundData) {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
@@ -138,6 +143,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { isAdvisorSection: this.inputData.isAdvisorSection });
     Object.assign(this.transactionSummary, { paymentMode: 2 });
     Object.assign(this.transactionSummary, { allEdit: true });
+    Object.assign(this.transactionSummary, { changeDetails: this.inputData.transactionData });
     Object.assign(this.transactionSummary, { multiTransact: false }); // when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
   }
@@ -308,7 +314,7 @@ export class SipTransactionComponent implements OnInit {
     }
     if (this.platformType == 1) {
       this.getMandateDetails();
-      }
+    }
     // } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2') {
     // }
     // this.getMandateDetails();
@@ -393,7 +399,7 @@ export class SipTransactionComponent implements OnInit {
     this.getFrequency();
     Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
     // Object.assign(this.transactionSummary, { schemeName: this.schemeName });
-   // this.getMandateDetails()
+    // this.getMandateDetails()
   }
 
   setMinAmount() {
