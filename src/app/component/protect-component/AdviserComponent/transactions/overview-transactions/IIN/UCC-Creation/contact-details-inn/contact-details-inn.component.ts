@@ -116,9 +116,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
     this.getIsdCodesData();
     const value = {};
-    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
-      this.countryList = responseValue;
-    });
+    this.countryList = this.processTransaction.getCountryCodeList();
     if (this.firstHolderContact) {
       this.setDataForm(this.formId, this.firstHolderContact);
     } else {

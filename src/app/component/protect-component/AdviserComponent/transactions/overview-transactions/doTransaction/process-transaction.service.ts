@@ -459,7 +459,12 @@ export class ProcessTransactionService {
     // if (this.countryCodeList) {
     //   return of(this.countryCodeList);
     // } else {
-    return this.onlineTransactService.getCountryCodeList({});
+    if (!this.countryCodeList) {
+      this.onlineTransactService.getCountryCodeList({}).subscribe(data => {
+        this.countryCodeList = data
+      });
+    }
+    return this.countryCodeList
     // }
   }
 }
