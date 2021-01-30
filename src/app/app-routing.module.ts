@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
-import { ErrorPageComponent } from './component/protect-component/common-component/error-page/error-page.component';
-import { WelcomePageComponent } from './component/protect-component/common-component/welcome-page/welcome-page.component';
-import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
-import { AuthGuard } from './guards/auth.guard';
-import { FormTestComponent } from './test/form-test/form-test.component';
-import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
-import { AdvisorGuard } from './guards/advisor.guard';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {SelectivePreloadingStrategyService} from './services/selective-preloading-strategy.service';
+import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
+import {WelcomePageComponent} from './component/protect-component/common-component/welcome-page/welcome-page.component';
+import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
+import {AuthGuard} from './guards/auth.guard';
+import {FormTestComponent} from './test/form-test/form-test.component';
+import {BackofficeDashboardComponent} from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 
 const routes: Routes = [
   {
@@ -163,7 +162,7 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {
     enableTracing: false,
     onSameUrlNavigation: 'reload',
-    // preloadingStrategy: SelectivePreloadingStrategyService  /*preloadingStrategy: PreloadAllModules*/
+    preloadingStrategy: SelectivePreloadingStrategyService  /*preloadingStrategy: PreloadAllModules*/
   })],
   exports: [RouterModule]
 })
