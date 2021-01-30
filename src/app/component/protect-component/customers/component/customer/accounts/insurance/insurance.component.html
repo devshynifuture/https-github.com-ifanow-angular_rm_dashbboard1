@@ -187,8 +187,8 @@
                                     mat-sort-header="sumAssured"> Sum assured
                                 </th>
                                 <td *matCellDef="let element" class="br text-right" mat-cell>
-                                    <div class="bar">{{!isLoading ? "₹" : ""}}<span
-                                            appFormatNumber>{{element.sumAssured }}</span></div>
+                                    <div class="bar">{{!isLoading ? "₹" : ""}}<span appFormatNumber>{{element.sumAssured
+                                            }}</span></div>
 
                                 </td>
                                 <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
@@ -202,11 +202,13 @@
                                 </th>
                                 <td *matCellDef="let element" class="br text-right" mat-cell>
                                     <div class="bar">
-                                        {{(!isLoading && (element.currentValue != 0 || element.vestedBonus != 0)) ? "₹" : (element.currentValue == 0 || element.vestedBonus == 0) ? "" : ''}}
+                                        {{(!isLoading && (element.currentValue != 0 || element.vestedBonus != 0)) ? "₹"
+                                        : (element.currentValue == 0 || element.vestedBonus == 0) ? "" : ''}}
                                         <!-- <span
                           appFormatNumber>{{(element.currentValue =='Infinity' ? 'N.A' : (element.currentValue == 0 ) ? '-' : element.currentValue)}}</span> -->
-                                        <span *ngIf="!isLoading"
-                                            appFormatNumber>{{(element.vestedBonus) ? element.vestedBonus : (element.currentValue) ? element.currentValue : '-'}}</span>
+                                        <span *ngIf="!isLoading" appFormatNumber>{{(element.vestedBonus) ?
+                                            element.vestedBonus : (element.currentValue) ? element.currentValue :
+                                            '-'}}</span>
                                     </div>
 
                                 </td>
@@ -263,8 +265,8 @@
                                 </th>
                                 <td *matCellDef="let element" class="br text-left" mat-cell>
                                     <div class="bar">
-                                        <span
-                                            *ngIf="!isLoading">{{element.status == 'MATURED' ? '-' : (element.durationRemaining ? element.durationRemaining : '-')}}</span>
+                                        <span *ngIf="!isLoading">{{element.status == 'MATURED' ? '-' :
+                                            (element.durationRemaining ? element.durationRemaining : '-')}}</span>
                                     </div>
                                 </td>
                                 <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -276,7 +278,8 @@
                                 </th>
                                 <td *matCellDef="let element" class="br" mat-cell>
                                     <div *ngIf="!isLoading">
-                                        {{(element.insuranceSubTypeId == 1) ? 'Term' : (element.insuranceSubTypeId == 2) ? 'Traditional' : (element.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
+                                        {{(element.insuranceSubTypeId == 1) ? 'Term' : (element.insuranceSubTypeId == 2)
+                                        ? 'Traditional' : (element.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
                                     </div>
                                     <div *ngIf="isLoading" class="bar">{{''}}</div>
                                 </td>
@@ -381,7 +384,8 @@
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div *ngIf="!isLoading">
-                                            {{((insuranceSubTypeId == 7) ? element.insurerName : (((element.planName) ? element.insurerName + ' - ' + element.planName : element.insurerName)))}}
+                                            {{((insuranceSubTypeId == 7) ? element.insurerName : (((element.planName) ?
+                                            element.insurerName + ' - ' + element.planName : element.insurerName)))}}
                                         </div>
                                         <div *ngIf="isLoading" class="bar">{{''}}</div>
                                     </td>
@@ -392,7 +396,8 @@
                                 <ng-container matColumnDef="sumInsured">
                                     <th *matHeaderCellDef class="br w-10 rightTextHide bb" mat-sort-header="sumAssured">
                                         Sum
-                                        insured{{(insuranceSubTypeId == 8) ? ' (USD)' : ''}}{{(insuranceSubTypeId == 4) ? ' (IDV)' : ''}}
+                                        insured{{(insuranceSubTypeId == 8) ? ' (USD)' : ''}}{{(insuranceSubTypeId == 4)
+                                        ? ' (IDV)' : ''}}
                                     </th>
                                     <td *matCellDef="let element" class="br text-right" mat-cell>
                                         <!-- <div class="bar"><span appFormatNumber>{{element.sumAssured}} </span></div> -->
@@ -440,8 +445,8 @@
                                     </th>
                                     <td *matCellDef="let element" class="br text-left" mat-cell>
                                         <div class="bar">
-                                            <span
-                                                *ngIf="!isLoading">{{element.statusId == 'EXPIRED' ? '-' : (element.durationRemaining ? element.durationRemaining :'-')}}</span>
+                                            <span *ngIf="!isLoading">{{element.statusId == 'EXPIRED' ? '-' :
+                                                (element.durationRemaining ? element.durationRemaining :'-')}}</span>
                                         </div>
                                     </td>
                                     <td *matFooterCellDef class="br p-8 text-left" mat-footer-cell></td>
@@ -453,7 +458,13 @@
                                     </th>
                                     <td *matCellDef="let element" class="br" mat-cell>
                                         <div class="bar">
-                                            {{(element.insuranceSubTypeId == 5) ? ((element.policyFeatureId == 0) ? 'Standard, ' : (element.policyFeatureId == 1) ? 'Top up, ' : (element.policyFeatureId == 2) ? 'Super top up, ' : '' ) : ''}}{{(element.policyType) ? (element.policyType) : element.planName}}{{(insuranceSubTypeId == 8 && element.geographyId) ? ((element.geographyId == 1) ? ' - Worldwide' : (element.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (element.geographyId
+                                            {{(element.insuranceSubTypeId == 5) ? ((element.policyFeatureId == 0) ?
+                                            'Standard, ' : (element.policyFeatureId == 1) ? 'Top up, ' :
+                                            (element.policyFeatureId == 2) ? 'Super top up, ' : '' ) :
+                                            ''}}{{(element.policyType) ? (element.policyType) :
+                                            element.planName}}{{(insuranceSubTypeId == 8 && element.geographyId) ?
+                                            ((element.geographyId == 1) ? ' - Worldwide' : (element.geographyId == 2) ?
+                                            ' - Worldwide excluding USA & Canada' : (element.geographyId
                                             == 3) ? ' - Asia' : '') : ''}}
                                         </div>
                                     </td>
@@ -567,11 +578,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px;padding-top: 12px; font-size: 14px; margin-bottom: 5px;"> <strong>
                                     Report as on:
@@ -674,13 +686,13 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && item.sumAssured ? "₹" : ""}}<span
-                                appFormatNumber>{{(item.sumAssured) ? (item.sumAssured) : 0}}</span>
+                            {{!isLoading && item.sumAssured ? "₹" : ""}}<span appFormatNumber>{{(item.sumAssured) ?
+                                (item.sumAssured) : 0}}</span>
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && item.currentValue ? "₹" : ""}}<span
-                                appFormatNumber>{{(item.currentValue == 'Infinity' ? 0 : item.currentValue)}}</span>
+                            {{!isLoading && item.currentValue ? "₹" : ""}}<span appFormatNumber>{{(item.currentValue ==
+                                'Infinity' ? 0 : item.currentValue)}}</span>
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
@@ -695,11 +707,13 @@
                             {{(item.policyTenure) ? item.policyTenure : '-'}}</td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{item.statusId == 'MATURED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}}
+                            {{item.statusId == 'MATURED' ? '-' : (item.durationRemaining ? item.durationRemaining :
+                            '-')}}
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{(item.insuranceSubTypeId == 1) ? 'Term' : (item.insuranceSubTypeId == 2) ? 'Traditional' : (item.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
+                            {{(item.insuranceSubTypeId == 1) ? 'Term' : (item.insuranceSubTypeId == 2) ? 'Traditional' :
+                            (item.insuranceSubTypeId == 3) ? 'ULIP' : '-'}}
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
@@ -813,11 +827,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px;padding-top: 12px; font-size: 14px; margin-bottom: 5px;"> <strong>
                                     Report as on:
@@ -909,7 +924,8 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            {{((insuranceSubTypeId == 7) ? item.insurerName : (((item.planName) ? item.insurerName + '-' + item.planName : item.insurerName)))}}
+                            {{((insuranceSubTypeId == 7) ? item.insurerName : (((item.planName) ? item.insurerName + '-'
+                            + item.planName : item.insurerName)))}}
                         </td>
                         <td appFormatNumber
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
@@ -926,11 +942,16 @@
                             {{item.policyExpiryDate | date:'dd/MM/yyyy'}}</td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{item.statusId == 'EXPIRED' ? '-' : (item.durationRemaining ? item.durationRemaining : '-')}}
+                            {{item.statusId == 'EXPIRED' ? '-' : (item.durationRemaining ? item.durationRemaining :
+                            '-')}}
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
-                            {{(item.insuranceSubTypeId == 5) ? ((item.policyFeatureId == 0) ? 'Standard, ' : (item.policyFeatureId == 1) ? 'Top up, ' : (item.policyFeatureId == 2) ? 'Super top up, ' : '' ) : ''}}{{(item.policyType) ? (item.policyType) : item.planName}}{{(insuranceSubTypeId == 8 && item.geographyId) ? ((item.geographyId == 1) ? ' - Worldwide' : (item.geographyId == 2) ? ' - Worldwide excluding USA & Canada' : (item.geographyId
+                            {{(item.insuranceSubTypeId == 5) ? ((item.policyFeatureId == 0) ? 'Standard, ' :
+                            (item.policyFeatureId == 1) ? 'Top up, ' : (item.policyFeatureId == 2) ? 'Super top up, ' :
+                            '' ) : ''}}{{(item.policyType) ? (item.policyType) : item.planName}}{{(insuranceSubTypeId ==
+                            8 && item.geographyId) ? ((item.geographyId == 1) ? ' - Worldwide' : (item.geographyId == 2)
+                            ? ' - Worldwide excluding USA & Canada' : (item.geographyId
                             == 3) ? ' - Asia' : '') : ''}}</td>
                         <td appFormatNumber
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;">
