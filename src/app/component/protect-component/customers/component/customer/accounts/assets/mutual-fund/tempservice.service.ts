@@ -101,11 +101,6 @@ export class TempserviceService {
     allData[array].forEach(element => {
       if (folio == '1') {
         if (element.id == mainData[mainDataId]) {
-          if (mainData.schemeName == 'Franklin India Equity Fund - Direct - Growth') {
-            console.log(element.xirr);
-            console.log(element.absoluteReturn);
-
-          }
           obj = {
             xirr: element.xirr,
             absoluteReturn: element.absoluteReturn
@@ -113,11 +108,6 @@ export class TempserviceService {
         }
       } else {
         if (element.id == mainData[mainDataId] && element.balanceUnit > 0) {
-          if (mainData.schemeName == 'Franklin India Equity Fund - Direct - Growth') {
-            console.log(element.xirr);
-            console.log(element.absoluteReturn);
-
-          }
           obj = {
             xirr: element.xirr,
             absoluteReturn: element.absoluteReturn
