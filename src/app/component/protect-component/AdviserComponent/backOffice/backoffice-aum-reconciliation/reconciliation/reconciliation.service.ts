@@ -180,6 +180,9 @@ export class ReconciliationService {
         return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_DELETE_AND_REORDER, data);
     }
 
+    mfListUnfreeze(data) {
+        return this.http.put(apiConfig.MAIN_URL + appConfig.MF_LIST_UNFREEZE, data);
+    }
 
     // common functions
 
