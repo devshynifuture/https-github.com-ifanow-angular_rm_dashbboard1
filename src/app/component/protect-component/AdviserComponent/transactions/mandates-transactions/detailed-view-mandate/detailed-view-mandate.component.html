@@ -347,7 +347,7 @@
                             <span style="padding-right: 8px;">
                                 I/We hereby authorize
                             </span>
-                            <input type="text" name="" style="width: 48%;">
+                            <input type="text" name="" style="width: 48%;" [(ngModel)]="details.auth">
                         </div>
                     </td>
                     <td>
@@ -355,7 +355,7 @@
                             <span style="padding-right: 8px;">
                                 to debit (tick )
                             </span>
-                            <input type="text" name="" style="width: 71%;">
+                            <input type="text" name="" style="width: 71%;" [(ngModel)]="details.dubleTick">
                         </div>
                     </td>
                 </tr>
@@ -374,24 +374,40 @@
             ">
                         <div style="display: flex;">
                             Bank a/c number <div style="display: flex;height: 20px;">
-                                <span style="padding-right: 12px;"> UMRN</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[0]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[1]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[2]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[3]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[4]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[5]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[6]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[7]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[8]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[9]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[10]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[11]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[12]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[13]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[14]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[15]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[16]}}</span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
@@ -434,17 +450,28 @@
                             <span style="padding-right: 8px;"> ifsc</span>
                             <div style="display: flex;height: 20px;">
 
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[0]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[1]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[2]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[3]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[4]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[5]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[6]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[7]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[8]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[9]}}</span>
+                                <span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[10]}}</span>
                             </div>
                         </div>
                     </td>
@@ -455,15 +482,15 @@
                             </span>
                             <div style="display: flex;height: 20px;">
 
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[0]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[1]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[2]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[3]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[4]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[5]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[6]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[7]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[8]}}</span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                             </div>
@@ -488,7 +515,7 @@
                     <td style="
             width: 30%;
             ">
-                        <input type="text" name="" style="width: 95%;" value="₹">
+                        <input type="text" name="" style="width: 95%;" value="₹" [(ngModel)]="details.amount">
                     </td>
 
                 </tr>
@@ -571,7 +598,7 @@
                             <span style="white-space: nowrap;padding-right: 22px;">
                                 Reference 1 (Mandate Reference No.)
                             </span>
-                            <input type="text" name="" style="width: 100%;">
+                            <input type="text" name="" style="width: 100%;" [(ngModel)]="details.uniqueRefNo">
                         </div>
                     </td>
                     <td style="
@@ -598,7 +625,7 @@
                             <span style="white-space: nowrap;padding-right: 8px;">
                                 Reference 2 (Unique Client Code-UCC)
                             </span>
-                            <input type="text" name="" style="width: 100%;">
+                            <input type="text" name="" style="width: 100%;" [(ngModel)]="details.clientCode">
                         </div>
                     </td>
                     <td style="
