@@ -30,7 +30,8 @@ export class TempserviceService {
             if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
               array.push(singleData);
               totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, { schemeName: true });
-              const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
+
+              const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
               totalObj.totalXirr = obj.xirr;
               totalObj.totalAbsoluteReturn = obj.absoluteReturn;
               totalObj.totalBalanceUnit = catObj[key][catObj[key].length - 1].balanceUnit;
@@ -75,7 +76,7 @@ export class TempserviceService {
     return data;
   }
 
-  getAbsAndxirrCategoryWise(mainData, allData, reportType) {
+  getAbsAndxirrCategoryWise(mainData, allData, reportType, folio) {
     let array;
     let mainDataId;
     let obj;
@@ -98,12 +99,32 @@ export class TempserviceService {
       mainDataId = 'subCategoryId';
     }
     allData[array].forEach(element => {
-      if (element.id == mainData[mainDataId]) {
-        obj = {
-          xirr: element.xirr,
-          absoluteReturn: element.absoluteReturn
-        };
+      if (folio == '1') {
+        if (element.id == mainData[mainDataId]) {
+          if (mainData.schemeName == 'Franklin India Equity Fund - Direct - Growth') {
+            console.log(element.xirr);
+            console.log(element.absoluteReturn);
+
+          }
+          obj = {
+            xirr: element.xirr,
+            absoluteReturn: element.absoluteReturn
+          };
+        }
+      } else {
+        if (element.id == mainData[mainDataId] && element.balanceUnit > 0) {
+          if (mainData.schemeName == 'Franklin India Equity Fund - Direct - Growth') {
+            console.log(element.xirr);
+            console.log(element.absoluteReturn);
+
+          }
+          obj = {
+            xirr: element.xirr,
+            absoluteReturn: element.absoluteReturn
+          };
+        }
       }
+
     });
     return obj;
   }
@@ -129,7 +150,7 @@ export class TempserviceService {
           // this.totalObj = this.this.getEachTotalValue(singleData);
           totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues), totalObj, { total: true });
           // totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
-          const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
+          const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
           totalObj.xirr = obj.xirr;
           totalObj.absReturn = obj.absoluteReturn;
           Object.assign(totalObj, { categoryName: key });
@@ -236,7 +257,7 @@ export class TempserviceService {
               filteredData.push(ele);
             });
             totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, false), totalObj, { total: true });
-            const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
+            const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
             totalObj.totalCagr = data.xirr;
             totalObj.trnAbsoluteReturn = data.absoluteReturn;
             totalObj.totalBalanceUnit = singleData.mutualFundTransactions[singleData.mutualFundTransactions.length - 1].balanceUnits
