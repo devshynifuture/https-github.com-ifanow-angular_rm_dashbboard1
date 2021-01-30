@@ -127,9 +127,9 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
     this.setDataForm(this.formId, this.firstHolderContact);
 
 
-    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
-      this.countryList = responseValue;
-    });
+    // this.processTransaction.getCountryCodeList().subscribe(responseValue => {
+    //   this.countryList = responseValue;
+    // });
   }
 
   ngAfterViewInit(): void {

@@ -112,9 +112,9 @@ export class NomineeDetailsIinComponent implements OnInit {
     // if (this.clientData) {
     //   this.getFamilyMembersList(this.clientData, !this.firstHolderNominee);
     // }
-    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
-      this.countryList = responseValue;
-    });
+    // this.processTransaction.getCountryCodeList().subscribe(responseValue => {
+    //   this.countryList = responseValue;
+    // });
   }
 
   close() {
