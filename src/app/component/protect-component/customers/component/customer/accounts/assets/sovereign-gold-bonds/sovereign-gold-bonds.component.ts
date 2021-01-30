@@ -134,6 +134,7 @@ export class SovereignGoldBondsComponent implements OnInit {
       // this.totalCurrentValue = 0;
       // this.sumOfpurchasedValue = 0;
       data.forEach(o => {
+        o.xirr = parseInt(o.xirr);
         o.currentValue = (o.currentValue) ? o.currentValue : 0
         this.totalCurrentValue += o.currentValue;
         this.sumOfpurchasedValue += o.purchaseAmt;
@@ -149,7 +150,22 @@ export class SovereignGoldBondsComponent implements OnInit {
     this.ref.detectChanges();//to refresh the dom when response come
     // this.loaded.emit(this.realEstateTemp.nativeElement);
   }
-
+  formatNumberFun(data, noOfPlaces: number = 0) {
+    if (data) {
+      data = parseFloat(data)
+      if (isNaN(data)) {
+        return data;
+      } else {
+        // console.log(' original ', data);
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
+        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+        return formattedValue;
+      }
+    } else {
+      return '0';
+    }
+    return data;
+  }
   open(value, data) {
     let popupHeaderText = !!data ? 'Edit sovereign gold bonds' : 'Add sovereign gold bonds';
     const fragmentData = {
