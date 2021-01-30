@@ -106,6 +106,10 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.schemeList = []
     this.transactionSummary = {};
     this.inputData = data;
+    console.log('default', this.inputData)
+    this.transactionSummary = this.inputData.transactionData
+    this.getDataSummary = this.inputData.transactionData
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType
     this.transactionType = data.transactionType;
     if (data.mutualFundData) {
       this.schemeName = data.mutualFundData.schemeName
@@ -139,6 +143,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { paymentMode: 1 });
     Object.assign(this.transactionSummary, { allEdit: true });
     Object.assign(this.transactionSummary, { transactType: 'PURCHASE' });
+    Object.assign(this.transactionSummary, { changeDetails: this.inputData.transactionData });
     Object.assign(this.transactionSummary, { isAdvisorSection: this.inputData.isAdvisorSection });
     // when multi transact then disabled edit button in transaction summary
     Object.assign(this.transactionSummary, { multiTransact: false });
@@ -580,18 +585,20 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else {
       this.handleMandateFailure()
     }
-
-
     this.showSpinnerMandate = false;
     if (data.length > 0) {
+      var keepGoing = true;
       data.forEach(element => {
-        if (element.statusString == 'ACCEPTED' || element.statusString == "APPROVED") {
+        if (keepGoing && (element.statusString == 'ACCEPTED' || element.statusString == "APPROVED")) {
           this.acceptedMandate.push(element)
+          this.selectedMandate = element
+          keepGoing = false;
           Object.assign(this.transactionSummary, { showUmrnEdit: true });
           Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
-        }
-        if (this.bankDetails.ifscCode == element.ifscCode) {
-          this.selectedMandate = element
+        } else {
+          if (keepGoing != false && (this.bankDetails.ifscCode == element.ifscCode)) {
+            this.selectedMandate = element
+          }
         }
       });
     }

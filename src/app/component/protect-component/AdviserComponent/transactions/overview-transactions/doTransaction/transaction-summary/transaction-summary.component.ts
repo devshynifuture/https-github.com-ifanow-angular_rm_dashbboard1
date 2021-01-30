@@ -72,7 +72,33 @@ export class TransactionSummaryComponent implements OnInit {
       this.defaultBank = this.transactionSummary.defaultBank
       this.transactionSummary.selectedMandate = this.defaultBank
     }
-    this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
+    this.changeDetails = this.inputData.changeDetails
+    if (this.changeDetails) {
+      this.allData = this.changeDetails;
+      this.changeDetails.euin = this.changeDetails.subBrokerCredList[0];
+      if (this.allData && this.allData.defaultClient && this.changeDetails.defaultClient
+        && this.changeDetails.defaultClient.tpUserCredFamilyMappingId == this.allData.defaultClient.tpUserCredFamilyMappingId) {
+        if (this.changeDetails.euin) {
+          if (this.changeDetails.euin.id == this.allData.euin.id) {
+          } else {
+            this.defaultDetails.emit(this.changeDetails);
+          }
+        } else {
+        }
+      } else {
+        this.defaultDetails.emit(data);
+      }
+      this.clientDataList = this.changeDetails.clientDataList;
+      this.defaultCredential = this.changeDetails.defaultCredential;
+      this.defaultClient = this.changeDetails.defaultClient;
+      this.transactionSummary.defaultClient = this.changeDetails.defaultClient;
+      this.subBrokerCredList = this.changeDetails.subBrokerCredList;
+      this.selectedPlatform = this.defaultCredential.aggregatorType;
+      this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
+      if (this.selectedPlatform == 1) {
+        this.getBankDetails();
+      }
+    }
   }
 
   get data() {
@@ -214,7 +240,8 @@ export class TransactionSummaryComponent implements OnInit {
       this.bankDetails = data;
       console.log('bank == ', this.bankDetails);
       this.transactionSummary.bankDetails = this.bankDetails
-      this.getMandateDetails();
+      if (this.transactionSummary.transactType == 'PURCHASE' || this.transactionSummary.transactType == 'SIP')
+        this.getMandateDetails();
       this.bankDetails.forEach(element => {
         if (element.defaultBankFlag == 'Y') {
           this.defaultBank = element;
@@ -258,6 +285,7 @@ export class TransactionSummaryComponent implements OnInit {
     if (data == undefined) {
       return;
     }
+    console.log('default', data)
     this.changeDetails = data;
     if (this.transactionSummary.allEdit == true && this.changeDetails.noAlert == undefined) {
       if (this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
