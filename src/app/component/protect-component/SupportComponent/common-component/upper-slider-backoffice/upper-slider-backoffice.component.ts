@@ -35,6 +35,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   subAdvisorList: any;
   backofficeApiHitCount: number = 0;
   objForAddRecon: {};
+  unfreezeAll = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -66,7 +67,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   aumList: any;
   mutualFundIds: any[] = [];
   advisorId = AuthService.getAdvisorId();
-
+  showfreeze = false;
   rtId: any;
   didAumReportListGot = false;
   aumListReportValue: any[] = [];
@@ -146,7 +147,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.arnRiaCode = this.data.arnRiaCode;
       this.rtId = this.data.rtId;
       this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN') ? true : false;
-      if(this.isFranklinTab){
+      if (this.isFranklinTab) {
         this.isDeleteAndReorderTabDisabled = true;
       } else {
         this.isDeleteAndReorderTabDisabled = false;
@@ -190,7 +191,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       after_recon: this.data.unmatchedCountAfterRecon
     }];
 
-    if(this.data.unmatchedCountBeforeRecon  === 0 && this.data.unmatchedCountAfterRecon === 0){
+    if (this.data.unmatchedCountBeforeRecon === 0 && this.data.unmatchedCountAfterRecon === 0) {
       this.canExportExcelSheet = 'false';
       this.dataSource1.data = null;
       objArr = null;
@@ -199,8 +200,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
       // this.showCelebrationGif = true;
       this.errorMessage = "All Folios are Matched";
     } else {
-    	console.log(objArr);
-    	this.dataSource.data = objArr;
+      console.log(objArr);
+      this.dataSource.data = objArr;
     }
 
   }
@@ -279,15 +280,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
                         aumDate: element.aumDate
                       }
 
-                      if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&  
-                          element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
-                          element.id === 0) {
-                            //rta
-                            obj.unitsRta = '-';
-                      } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
-                        element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
-                          //ifanow
-                          obj.unitsIfanow = '-';
+                      if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+                        element.mutualFundId !== 0 && element.mutualFundId !== null &&
+                        element.id === 0) {
+                        //rta
+                        obj.unitsRta = '-';
+                      } else if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+                        element.mutualFundId === 0 && element.id !== 0 && element.id !== null) {
+                        //ifanow
+                        obj.unitsIfanow = '-';
                       }
                       arrayValue.push(obj);
                     });
@@ -323,19 +324,19 @@ export class UpperSliderBackofficeComponent implements OnInit {
                         (dateObjDoneOn.getMonth() + 1) + "-" +
                         `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
 
-                        this.objForAddRecon = {
-                          advisorId: this.advisorId,
-                          brokerId: this.brokerId,
-                          totalFolioCount: this.totalCount,
-                          matchedCount: this.totalCount,
-                          aumBalanceDate: res.aumList[0].aumDate,
-                          unmatchedCountBeforeRecon: 0,
-                          unmatchedCountAfterRecon: 0,
-                          transactionDate: res.transactionDate,
-                          rtId: this.data.rtId,
-                          doneOn: doneOnFormatted,
-                          rmId: this.rmId
-                        }
+                      this.objForAddRecon = {
+                        advisorId: this.advisorId,
+                        brokerId: this.brokerId,
+                        totalFolioCount: this.totalCount,
+                        matchedCount: this.totalCount,
+                        aumBalanceDate: res.aumList[0].aumDate,
+                        unmatchedCountBeforeRecon: 0,
+                        unmatchedCountAfterRecon: 0,
+                        transactionDate: res.transactionDate,
+                        rtId: this.data.rtId,
+                        doneOn: doneOnFormatted,
+                        rmId: this.rmId
+                      }
                     }
 
                     // aum date for all object is the same
@@ -352,9 +353,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.errorMessage = "All Folios are Matched";
                     let dateObjDoneOn = new Date();
                     let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
-                        `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
-                        (dateObjDoneOn.getMonth() + 1) + "-" +
-                        `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
+                      `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
+                      (dateObjDoneOn.getMonth() + 1) + "-" +
+                      `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
 
                     this.objForAddRecon = {
                       advisorId: this.advisorId,
@@ -376,6 +377,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
               this.isLoading = false;
               this.dataSource.data = null;
               this.errorMessage = "No Data Found";
+              this.showfreeze = true;
               this.eventService.openSnackBarNoDuration('No Data Found', 'DISMISS');
             } else if (this.aumFileCount === 0) {
               this.isLoading = false;
@@ -775,8 +777,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     this.isFranklinTab = this.getRtName(this.data.rtId) === 'FRANKLIN' ? true : false;
 
-    this.isDeleteAndReorderTabDisabled = this.isFranklinTab ? true: false;
-    
+    this.isDeleteAndReorderTabDisabled = this.isFranklinTab ? true : false;
+
     // creation of excel sheet
     const headerData = [
       { width: 40, key: 'Investor Name' },
@@ -821,28 +823,28 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.folioNumber ? element.folioNumber : '-',
           element.latestTransactionDate ? this.datePipe.transform(element.latestTransactionDate) : '-',
           rtName,
-          element.calculatedUnits || element.calculatedUnits !== 0  ? element.calculatedUnits : '0',
+          element.calculatedUnits || element.calculatedUnits !== 0 ? element.calculatedUnits : '0',
           element.aumUnits || element.aumUnits !== 0 ? element.aumUnits : '0',
           element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
           element.calculatedUnits - element.aumUnits,
           ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
         ];
         // mutialFundId and aumId is not 0
-        if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') && 
-          element.mutualFundId !==0 && element.mutualFundId !== null && 
-          element.id!==0 && element.id !==null){
-          if((Math.abs(element.calculatedUnits - element.aumUnits)) > 0.009){
+        if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+          element.mutualFundId !== 0 && element.mutualFundId !== null &&
+          element.id !== 0 && element.id !== null) {
+          if ((Math.abs(element.calculatedUnits - element.aumUnits)) > 0.009) {
             excelData.push(Object.assign(data));
           }
-        } else if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') &&  
-            element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
-            element.id === 0) {
-              data[8] = '-';
-              excelData.push(Object.assign(data));
-        } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
-          element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
-            data[7] = '-';
-            excelData.push(Object.assign(data));
+        } else if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+          element.mutualFundId !== 0 && element.mutualFundId !== null &&
+          element.id === 0) {
+          data[8] = '-';
+          excelData.push(Object.assign(data));
+        } else if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+          element.mutualFundId === 0 && element.id !== 0 && element.id !== null) {
+          data[7] = '-';
+          excelData.push(Object.assign(data));
         }
       });
       ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
@@ -864,22 +866,22 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.calculatedUnits - element.aumUnits,
             ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ];
-            // mutialFundId and aumId is not 0
-          if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') && 
-            element.mutualFundId !==0 && element.mutualFundId !== null && 
-            element.id!==0 && element.id !==null){
-            if((Math.abs(element.calculatedUnits - element.aumUnits)) > 0.009){
+          // mutialFundId and aumId is not 0
+          if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+            element.mutualFundId !== 0 && element.mutualFundId !== null &&
+            element.id !== 0 && element.id !== null) {
+            if ((Math.abs(element.calculatedUnits - element.aumUnits)) > 0.009) {
               excelData.push(Object.assign(data));
             }
-          } else if(element.hasOwnProperty('mutualFundId')  && element.hasOwnProperty('id') &&  
-              element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
-              element.id === 0) {
-                data[8] = '-';
-                excelData.push(Object.assign(data));
-          } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
-            element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
-              data[7] = '-';
-              excelData.push(Object.assign(data));
+          } else if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+            element.mutualFundId !== 0 && element.mutualFundId !== null &&
+            element.id === 0) {
+            data[8] = '-';
+            excelData.push(Object.assign(data));
+          } else if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+            element.mutualFundId === 0 && element.id !== 0 && element.id !== null) {
+            data[7] = '-';
+            excelData.push(Object.assign(data));
           }
         });
 
@@ -1099,9 +1101,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   openDeleteDialog(event) {
-    if(this.isFranklinTab){
+    if (this.isFranklinTab) {
       if (this.deleteReorderOrDeleteDisabled !== 'delete') {
-  
+
         const dialogData = {
           header: 'DELETE UNMATCHED FOLIOS?',
           body: 'Are you sure you want to delete the unmatched folios?',
@@ -1117,25 +1119,25 @@ export class UpperSliderBackofficeComponent implements OnInit {
           negativeMethod: () => {
             console.log('aborted');
           }
-  
+
         };
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           width: '400px',
           data: dialogData,
           autoFocus: false,
         });
-  
+
         dialogRef.afterClosed().subscribe(result => {
-  
+
         });
-  
+
       } else {
         this.eventService.openSnackBar('You can only delete Unmatched folios or Delete and reorder folios', 'DISMISS');
       }
       this.deleteReorderOrDeleteDisabled = 'deleteReorder';
     } else {
       event.preventDefault();
-      this.eventService.openSnackBar("Cannot Delete Unmatched Folios","DISMISS");  
+      this.eventService.openSnackBar("Cannot Delete Unmatched Folios", "DISMISS");
     }
 
   }
@@ -1154,13 +1156,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     this.reconService.deleteUnfreezeTransaction(data)
       .subscribe(res => {
-        if(res){
+        if (res) {
           this.eventService.openSnackBar("Successfully Deleted", "DISMISS");
         } else {
           this.eventService.openSnackBar("Failed to Delete!", "DISMISS");
         }
       }, err => {
-        this.eventService.openSnackBar("Failed to Delete check errors!","DISMISS");
+        this.eventService.openSnackBar("Failed to Delete check errors!", "DISMISS");
         console.error(err);
       });
   }
@@ -1206,15 +1208,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
               mutualFundTransaction: element.mutualFundTransaction,
               aumDate: element.aumDate
             }
-            if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&  
-                element.mutualFundId !== 0 &&  element.mutualFundId !== null &&
-                element.id === 0) {
-                  //rta
-                  obj.unitsRta = '-';
-            } else if(element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
-              element.mutualFundId === 0 && element.id !== 0 && element.id !==null){
-                //ifanow
-                obj.unitsIfanow = '-';
+            if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+              element.mutualFundId !== 0 && element.mutualFundId !== null &&
+              element.id === 0) {
+              //rta
+              obj.unitsRta = '-';
+            } else if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
+              element.mutualFundId === 0 && element.id !== 0 && element.id !== null) {
+              //ifanow
+              obj.unitsIfanow = '-';
             }
             arrayValue.push(obj);
           });
@@ -1273,6 +1275,78 @@ export class UpperSliderBackofficeComponent implements OnInit {
         console.error(err);
       });
 
+  }
+  unfreezeAllFolio() {
+    this.unfreezeAll = true;
+    if (this.aumReconId !== null) {
+      const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+      let mutualFundIds = [];
+      let aumIds = [];
+      let mfWithoutTrnxIds = [];
+      if (this.data.flag === 'report') {
+        this.reportListWithIsMappedToMinusOne.forEach(element => {
+          if (element.hasOwnProperty('mutualFundTransaction') && element.mutualFundTransaction.length !== 0) {
+            if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+              if (element.mutualFundId !== 0) {
+                mutualFundIds.push(element.mutualFundId);
+              } else {
+                aumIds.push(element.id);
+              }
+            }
+          } else {
+            if (element.mutualFundId && element.mutualFundId !== 0 && element.mutualFundId > 0) {
+              mfWithoutTrnxIds.push(element.mutualFundId)
+            } else {
+              aumIds.push(element.id);
+            }
+          }
+        });
+      } else {
+        this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+          if (element.hasOwnProperty('mutualFundTransaction') && element.mutualFundTransaction.length !== 0) {
+            if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+              if (element.mutualFundId !== 0) {
+                mutualFundIds.push(element.mutualFundId);
+              } else {
+                aumIds.push(element.id);
+              }
+            }
+          } else {
+            if (element.mutualFundId && element.mutualFundId !== 0 && element.mutualFundId > 0) {
+              mfWithoutTrnxIds.push(element.mutualFundId)
+            } else {
+              aumIds.push(element.id);
+            }
+          }
+        });
+      }
+      const data = {
+        ids: mutualFundIds
+      };
+      console.log('this is requestjson for delete and reorder:::: ', data);
+
+      this.reconService.mfListUnfreeze(data)
+        .subscribe(res => {
+          console.log(res);
+          this.eventService.openSnackBar('Unfreeze all folios successfully', 'DISMISS');
+          if (this.unfreezeAll) {
+            this.dataSource1.data.forEach(element => {
+              element['freezeDate'] = null;
+            });
+            this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+              element['freezeDate'] = null;
+            });
+            this.dataSource2.data.forEach(element => {
+              element['freezeDate'] = null;
+            });
+          }
+          this.showfreeze = true;
+        }, err => {
+          console.error(err);
+        });
+    } else {
+      this.eventService.openSnackBarNoDuration("No data found", "DISMISS");
+    }
   }
 
   dialogClose() {
