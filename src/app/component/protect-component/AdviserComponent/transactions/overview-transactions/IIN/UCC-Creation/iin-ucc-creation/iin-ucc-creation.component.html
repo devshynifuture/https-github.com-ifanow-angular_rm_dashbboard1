@@ -1,7 +1,7 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
-      <div class="logoWrap">
+      <div class="logoWrap h-auto">
         <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
         <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
       </div>
@@ -14,8 +14,8 @@
       </p>
     </div>
 
-    <div class="col-md-2 text-right">
-      <i (click)="close()" class="material-icons pt-16 c-p pr-16">
+    <div class="col-md-2 text-right full-center">
+      <i (click)="close()" class="material-icons c-p">
         clear
       </i>
     </div>

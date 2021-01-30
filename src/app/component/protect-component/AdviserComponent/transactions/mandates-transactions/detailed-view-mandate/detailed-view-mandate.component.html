@@ -172,6 +172,12 @@
                             type="file">
                     </button>
                 </div>
+                <!-- <div class="col-md-3 p-0">
+                    <button *ngIf="details.formUploadFlag == 0 && details.status != 0"
+                        (click)="download('template','Mandate')" class="btnConfirm bg-primary text-white" mat-button>
+                        Download mandate form
+                    </button>
+                </div> -->
                 <div *ngIf="mandateFlag" class="col-md-1 p-0 d-flex align-items-center">
                     <mat-spinner class="spinnerClass1 "></mat-spinner>
                 </div>
@@ -209,3 +215,504 @@
         </div>
     </div>
 </div>
+
+
+<!-- <div id="template">
+    <html>
+
+    <head></head>
+
+    <body>
+        <table style="width: 100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <table style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-decoration: underline;font-weight: bold;width: 20%;">NACH/ECS/AUTO
+                                        DEBIT
+                                        MANDATE INSTRUCTION FORM
+                                    </td>
+                                    <td>
+                                        <div style="display: flex;height: 20px;">
+                                            <span style="padding-right: 12px;"> UMRN</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[0]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[1]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[2]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[3]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[4]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[5]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[6]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[7]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[8]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[9]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[10]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[11]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[12]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[13]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[14]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[15]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[16]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[17]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[18]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[19]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[20]}}</span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[21]}}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex;height: 20px;">
+                                            <span style="padding-right: 12px;"> Date</span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%">
+            <tbody>
+                <tr>
+                    <td style="
+            width: 22%;
+            ">
+                        Tick ( )
+                    </td>
+                    <td style="
+            width: 50%;
+            ">
+                        <div style="display: flex;">
+                            <span style="padding-right: 8px;">
+                                Sponsor Bank Code
+                            </span>
+                            <input type="text" name="" style="width: 48%;">
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex;">
+                            <span style="padding-right: 8px;">
+                                Utility Code
+                            </span>
+                            <input type="text" name="" style="width: 71%;">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%;margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td style="
+            width: 22%;
+            ">
+                        CREATE
+                    </td>
+                    <td style="
+            width: 50%;
+            ">
+                        <div style="display: flex;">
+                            <span style="padding-right: 8px;">
+                                I/We hereby authorize
+                            </span>
+                            <input type="text" name="" style="width: 48%;">
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex;">
+                            <span style="padding-right: 8px;">
+                                to debit (tick )
+                            </span>
+                            <input type="text" name="" style="width: 71%;">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%;margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td style="
+            width: 16%;
+            ">
+                        CANCEL
+                    </td>
+                    <td style="
+            width: 50%;
+            ">
+                        <div style="display: flex;">
+                            Bank a/c number <div style="display: flex;height: 20px;">
+                                <span style="padding-right: 12px;"> UMRN</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span><span
+                                    style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%;margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td style="
+            width: 22%;
+            ">
+                        <span style="padding-right: 8px;">
+                            with Bank
+                        </span>
+                        <input type="text" name="" style="width: 48%;">
+                    </td>
+                    <td style="
+            width: 50%;
+            ">
+                        <div style="display: flex;">
+
+                            <span style="padding-right: 8px;"> ifsc</span>
+                            <div style="display: flex;height: 20px;">
+
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex;">
+                            <span style="padding-right: 8px;">
+                                or MICR
+                            </span>
+                            <div style="display: flex;height: 20px;">
+
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%;margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td style="
+            width: 70%;
+            ">
+                        <div style="display: flex;">
+                            <span style="white-space: nowrap;padding-right: 8px;">
+                                an amount of Rupees
+                            </span>
+                            <input type="text" name="" style="width: 100%;">
+                        </div>
+                    </td>
+                    <td style="
+            width: 30%;
+            ">
+                        <input type="text" name="" style="width: 95%;" value="₹">
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <table style="width: 100%;margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td style="
+            width: 70%;
+            align-items: center;
+            justify-content: center;
+            ">
+                        <div style="display: flex;align-items: center;">
+                            <span style="white-space: nowrap;">
+                                FREQUENCY
+                            </span>
+
+
+
+                            <input type="checkbox" name="" style="
+    height: 18px;
+    width: 18px;
+    /* border-radius: 0px; */
+">Mthly
+
+
+                            <input type="checkbox" name="" style="
+    height: 18px;
+    width: 18px;
+">H-Yrly
+
+
+                            <input type="checkbox" name="" style="
+    height: 18px;
+    width: 18px;
+">Yrly
+
+
+                            <input type="checkbox" name="" style="
+    height: 18px;
+    width: 18px;
+">As &amp; when presented
+                        </div>
+                    </td>
+                    <td style="
+            width: 30%;
+            ">
+                        <div style="display: flex;align-items: center;">
+                            <span style="white-space: nowrap;">
+                                DEBIT TYPE
+                            </span>
+
+
+
+                            <input type="checkbox" name="" style="
+    height: 18px;
+    width: 18px;
+">Fixed Amount
+
+
+                            <input type="checkbox" name="" style="
+    height: 18px;
+    width: 18px;
+">Maximum Amount
+                        </div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%;margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td style="
+            width: 60%;
+            ">
+                        <div style="display: flex;">
+                            <span style="white-space: nowrap;padding-right: 22px;">
+                                Reference 1 (Mandate Reference No.)
+                            </span>
+                            <input type="text" name="" style="width: 100%;">
+                        </div>
+                    </td>
+                    <td style="
+            width: 40%;
+            ">
+                        <div style="display: flex;">
+                            <span style="white-space: nowrap;padding-right: 8px;padding-left: 12px;">
+                                Phone No
+                            </span>
+                            <input type="text" name="" style="width: 95%;">
+                        </div>
+                    </td>
+
+                </tr>
+                <tr style="
+    padding-top: 10px;
+    margin-top: 5px;
+">
+                    <td style="
+            width: 60%;
+            padding-top: 5px;
+            ">
+                        <div style="display: flex;">
+                            <span style="white-space: nowrap;padding-right: 8px;">
+                                Reference 2 (Unique Client Code-UCC)
+                            </span>
+                            <input type="text" name="" style="width: 100%;">
+                        </div>
+                    </td>
+                    <td style="
+            width: 40%;
+            padding-top: 5px;
+            ">
+                        <div style="display: flex;">
+                            <span style="white-space: nowrap;padding-right: 8px;padding-left: 16px;">
+                                Email ID
+                            </span>
+                            <input type="text" name="" style="width: 95%;">
+                        </div>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2" style="
+    padding-top: 5px;
+">I agree for the debit of mandate processing charges by the bank whom I am authorizing to debit my account as per
+                        latest schedule of charges of the bank.</td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%;margin-top: 5px;">
+            <tbody>
+                <tr>
+                    <td rowspan="2" style="
+    border: 1px solid rgb(118, 118, 118);
+    padding: 5px;
+">PERIOD
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>From</td>
+                                    <td>
+                                        <div style="display: flex;height: 20px;">
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>To</td>
+                                    <td>
+                                        <div style="display: flex;height: 20px;">
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Or</td>
+                                    <td>
+                                        <div style="display: flex;height: 20px;">
+                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
+                                            <span style="padding-left: 8px;">Until Cancelled</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-left: 18px;padding-bottom: 10px;">
+                                        ___________________________________________</td>
+                                    <td style="padding-left: 18px;padding-bottom: 10px;">
+                                        ___________________________________________</td>
+                                    <td style="padding-left: 18px;padding-bottom: 10px;">
+                                        ___________________________________________</td>
+                                </tr>
+                                <tr>
+                                    <td>1. ___________________________________________</td>
+                                    <td>2. ___________________________________________</td>
+                                    <td>3 .___________________________________________</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                <tr>
+                    <td style="font-size: 13px;">
+                        <span>- This is to confirm that the declaration has been carefully read, understood &amp; made
+                            by me/us. I am authorizing the user entity/ Corporate to debit my account, based on the
+                            instructions as agreed and signed by me.</span><br>
+                        <span>- I have understood that I am authorised to cancel/amend this mandate by appropriately
+                            communicating the cancellation / amendment request to the User entity / Corporate or the
+                            bank where I have authorized the debit.</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+
+    </html>
+</div> -->
