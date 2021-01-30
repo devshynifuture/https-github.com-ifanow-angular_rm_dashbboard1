@@ -151,7 +151,7 @@ export class LoginComponent implements OnInit {
 
   openLoginTestRedirect() {
     const obj = {
-      uniqueString: 'a0e11812-fa31-4526-ac7f-1761763684b8',
+      uniqueString: 'f5300a32-6cd1-4664-af2d-9bb764054185',
       appName: '_self'
     };
     window.name = JSON.stringify(obj);

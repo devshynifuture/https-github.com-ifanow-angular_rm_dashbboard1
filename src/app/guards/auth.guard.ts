@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthService} from '../auth-service/authService';
 import {RoleService} from '../auth-service/role.service';
-import {catchError} from 'rxjs/operators';
+import {catchError, mergeMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {PeopleService} from '../component/protect-component/PeopleComponent/people.service';
 import {LoginService} from '../component/no-protected/login/login.service';
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
       // if (state && state.url === '/login') {
       //   this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
       // }
-      if (state && state.url.split('/').includes('login')) {
+      if (state && state.url.includes('login')) {
         // TODO comment for old login
         if (this.authService.isAdvisor()) {
           this.myRoute.navigate(['admin', 'dashboard']);
@@ -39,14 +39,14 @@ export class AuthGuard implements CanActivate {
           this.myRoute.navigate([url]);
         }
         return false;
-      } else if (state && state.url.split('/').includes('support') && state.url.split('/').includes('dashboard')) {
+      } else if (state && state.url.includes('support') && state.url.includes('dashboard')) {
         if (AuthService.getUserInfo().isRmLogin) {
           return true;
         } else {
           this.myRoute.navigate(['/']);
           return false;
         }
-      } else if (state && state.url.split('/').includes('admin') && !this.authService.isAdvisor()) {
+      } else if (state && state.url.includes('admin') && !this.authService.isAdvisor()) {
         console.log('advisorGuard failed general: ', next, state);
         this.myRoute.navigate(['unauthorized']);
         return false;
@@ -70,7 +70,7 @@ export class AuthGuard implements CanActivate {
           const winNameObj = JSON.parse(winName);
           window.name = undefined;
 
-          return this.handleUuidLatest(winNameObj.uniqueString);
+          return this.handleUuidLatest2(winNameObj.uniqueString);
         } catch (e) {
           console.error(e);
           this.myRoute.navigate(['/login']);
@@ -78,7 +78,7 @@ export class AuthGuard implements CanActivate {
         }
       } else if (next.queryParams && next.queryParams.uniqueString) {
         try {
-          return this.handleUuidLatest(next.queryParams.uniqueString);
+          return this.handleUuidLatest2(next.queryParams.uniqueString);
         } catch (e) {
           console.error(e);
           this.myRoute.navigate(['/login']);
@@ -181,6 +181,79 @@ export class AuthGuard implements CanActivate {
         observer.complete();
       });
     });
+  }
+
+  handleUuidLatest2(uuidString) {
+    const obj = {
+      uuid: uuidString
+    };
+    const output = {
+      userData: null
+    };
+    return this.peopleService.getLoginDataFromUUID(obj).map((userData) => {
+      if (userData) {
+        output.userData = userData;
+        /*this.loginService.handleUserData(this.authService, this.myRoute, userData, (isLoginSuccess) => {
+          if (isLoginSuccess) {
+
+            this.myRoute.navigate(['/login']);
+            return false;
+          } else {
+            return true;
+          }
+        });*/
+      }
+
+      return userData;
+    }, catchError(err => {
+      // this.myRoute.navigate(['/login']);
+      console.error('getLoginDataFromUUID catchError  err: ', err);
+      return of(false);
+    })).pipe(mergeMap((inputValue) => {
+      const userData = output.userData;
+      if (!userData) {
+        this.myRoute.navigate(['/login']);
+        console.log('error in mergeMap: ');
+        return of(false);
+      }
+
+      return this.settingService.getAdvisorOrClientOrTeamMemberRoles({id: userData.roleId}).map((rolesData) => {
+        console.error('AppComponent getAdvisorOrClientOrTeamMemberRoles rolesData: ', rolesData);
+
+
+        if (userData.userType == 1 || userData.userType == 8) {
+          this.authService.setToken('authTokenInLoginComponent');
+          this.authService.setUserInfo(userData);
+          this.myRoute.navigate(['admin', 'dashboard']);
+          if (userData.showReferPopup) {
+            this.loginService.openDialog();
+          }
+        } else {
+          this.authService.setToken('authTokenInLoginComponent');
+          this.authService.setUserInfo(userData);
+          userData.id = userData.clientId;
+          this.authService.setClientData(userData);
+          this.roleService.constructAdminDataSource(rolesData);
+          const url = this.roleService.goToValidClientSideUrl();
+          this.myRoute.navigate([url]);
+        }
+
+        if (rolesData) {
+          AuthService.setAdvisorRolesSettings(rolesData);
+          this.roleService.setDataInAllPermissionData(rolesData);
+          this.roleService.constructAdminDataSource(rolesData);
+        }
+        return false;
+      }, catchError(err => {
+        this.myRoute.navigate(['/login']);
+        console.error('AppComponent getRandomStringFromPlanner err: ', err);
+        return of(false);
+      }));
+    }), catchError(err => {
+      this.myRoute.navigate(['/login']);
+      console.error('pipe catchError  err: ', err);
+      return of(false);
+    }));
   }
 
 // advisorGuard()
