@@ -8,7 +8,7 @@
         <div class="col-md-6 col-sm-12 p-0 bg-white mobileLoginUi flexLogin">
             <div *ngIf="!otpNumber" class="loginBox">
                 <p class="f-16 mb-12 mobileNone">
-                    <img class="advisorLogo" [src]="logoUrl">
+                    <img class="advisorLogo" (click)="openLoginTestRedirect()" [src]="logoUrl">
                 </p>
                 <h1 class="mb-16 mobileNone f-600">Welcome back!</h1>
                 <p class="mb-24 mobileNone f-16">This is a secure system and you will need to provide your login details

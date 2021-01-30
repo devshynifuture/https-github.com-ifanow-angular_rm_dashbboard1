@@ -5,12 +5,31 @@ import {DashboardService} from '../component/protect-component/AdviserComponent/
 
 @Injectable()
 export class AuthService {
-  familyMemberId: any;
 
   constructor(
     private router: Router
   ) {
   }
+
+  get orgData() {
+    return JSON.parse(localStorage.getItem('orgData')) || {};
+  }
+
+  get profilePic() {
+    return localStorage.getItem('profilePic');
+  }
+
+  get clientProfilePic() {
+    return sessionStorage.getItem('clientProfilePic');
+  }
+
+  get appPic() {
+    const orgData = JSON.parse(localStorage.getItem('orgData'));
+    return orgData ? orgData.logoUrl : '';
+  }
+  familyMemberId: any;
+
+  selectedClient: any;
 
   static getAdminStatus() {
     if (this.getUserInfo().hasOwnProperty('isAdmin')) {
@@ -29,7 +48,7 @@ export class AuthService {
   }
 
   static getAdminAdvisorId() {
-    let adminid = this.getUserInfo().adminAdvisorId;
+    const adminid = this.getUserInfo().adminAdvisorId;
     if (adminid > 0) {
       return adminid;
     } else {
@@ -107,17 +126,17 @@ export class AuthService {
   }
 
   static getClientData() {
-    let clientDataString = localStorage.getItem('clientData');
+    const clientDataString = localStorage.getItem('clientData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
 
   static getProfileDetails() {
-    let clientDataString = localStorage.getItem('profileData');
+    const clientDataString = localStorage.getItem('profileData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
 
   static getOrgDetails() {
-    let orgData = localStorage.getItem('orgData');
+    const orgData = localStorage.getItem('orgData');
     return orgData ? JSON.parse(orgData) : undefined;
   }
 
@@ -152,23 +171,6 @@ export class AuthService {
     return advisorDetail ? JSON.parse(advisorDetail) : '';
   }
 
-  get orgData() {
-    return JSON.parse(localStorage.getItem('orgData')) || {};
-  }
-
-  get profilePic() {
-    return localStorage.getItem('profilePic');
-  }
-
-  get clientProfilePic() {
-    return sessionStorage.getItem('clientProfilePic');
-  }
-
-  get appPic() {
-    const orgData = JSON.parse(localStorage.getItem('orgData'));
-    return orgData ? orgData.logoUrl : '';
-  }
-
   static getClientRoles(data) {
     return sessionStorage.getItem('clientRoles');
   }
@@ -187,6 +189,37 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('domainDetails'));
   }
 
+  static setRefreshedOnce(refreshedOnce) {
+    sessionStorage.setItem('refreshedOnce', refreshedOnce);
+  }
+
+  static isRefreshedOnce() {
+    return sessionStorage.getItem('refreshedOnce');
+  }
+
+  static setSubscriptionUpperSliderData(data) {
+    sessionStorage.setItem('subUpperData', JSON.stringify(data));
+  }
+
+  // getSelectedClient(){
+  //   return this.selectedClient;
+  // }
+
+  static getSubscriptionUpperSliderData() {
+    return JSON.parse(sessionStorage.getItem('subUpperData'));
+  }
+
+  static goHome(router: Router) {
+    const userInfo = AuthService.getUserInfo();
+    if (userInfo.userType == 1 || userInfo.userType == 8) {
+      router.navigate(['admin', 'dashboard']);
+    } else if (userInfo.isRmLogin) {
+      router.navigate(['support', 'dashboard']);
+    } else {
+      router.navigate(['customer', 'detail', 'overview', 'myfeed']);
+    }
+  }
+
   setToken(token: string) {
     localStorage.setItem('token', token);
   }
@@ -196,7 +229,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.getToken() !== null;
+    return this.getToken() != null && this.getToken() != undefined;
   }
 
   isAdvisor() {
@@ -205,14 +238,6 @@ export class AuthService {
     } else {
       return false;
     }
-  }
-
-  static setRefreshedOnce(refreshedOnce) {
-    sessionStorage.setItem('refreshedOnce', refreshedOnce);
-  }
-
-  static isRefreshedOnce() {
-    return sessionStorage.getItem('refreshedOnce');
   }
 
   logout() {
@@ -233,9 +258,9 @@ export class AuthService {
     sessionStorage.removeItem('ToDo');
     sessionStorage.clear();
     sessionStorage.removeItem('taskMatrix');
-    sessionStorage.removeItem('todaysTaskList')
-    sessionStorage.removeItem('invalidPopup')
-    DashboardService.clearDashData()
+    sessionStorage.removeItem('todaysTaskList');
+    sessionStorage.removeItem('invalidPopup');
+    DashboardService.clearDashData();
     // this.myRoute.navigate(['login']);
   }
 
@@ -243,35 +268,10 @@ export class AuthService {
     localStorage.setItem('userInfo', JSON.stringify(info));
   }
 
-  selectedClient: any;
-
-  static setSubscriptionUpperSliderData(data) {
-    sessionStorage.setItem('subUpperData', JSON.stringify(data));
-  }
-
   setProfileDetails(profileData) {
     sessionStorage.setItem('profileData', JSON.stringify(profileData));
     localStorage.setItem('profileData', JSON.stringify(profileData));
 
-  }
-
-  // getSelectedClient(){
-  //   return this.selectedClient;
-  // }
-
-  static getSubscriptionUpperSliderData() {
-    return JSON.parse(sessionStorage.getItem('subUpperData'));
-  }
-
-  static goHome(router: Router) {
-    const userInfo = AuthService.getUserInfo();
-    if (userInfo.userType == 1 || userInfo.userType == 8) {
-      router.navigate(['admin', 'dashboard']);
-    } else if (userInfo.isRmLogin) {
-      router.navigate(['support', 'dashboard']);
-    } else {
-      router.navigate(['customer', 'detail', 'overview', 'myfeed']);
-    }
   }
 
   setClientData(clientData) {

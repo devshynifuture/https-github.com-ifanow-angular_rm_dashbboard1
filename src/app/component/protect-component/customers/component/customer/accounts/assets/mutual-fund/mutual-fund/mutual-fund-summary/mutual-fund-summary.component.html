@@ -450,6 +450,8 @@
 
 
 <div #summaryTemplateHeader id="templateHeader" class="hide" *ngIf="showDownload == true">
+    <html>
+    <meta charset="UTF-8">
     <table id="FakeHeaders" cellpadding="0" width="100%" cellspacing="0" border="0"
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: auto;border-collapse: separate;">
@@ -494,8 +496,12 @@
 
         </tr>
     </table>
+
+    </html>
 </div>
 <div #summaryTemplate id="templateSummary" class="hide" *ngIf="showDownload == true">
+    <html>
+    <meta charset="UTF-8">
     <table cellpadding="0" width="100%" cellspacing="0" border="0"
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: auto;border-collapse: separate;">
@@ -768,4 +774,6 @@
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="text-center pt-12"> No data found</h4>
     </div>
+
+    </html>
 </div>
