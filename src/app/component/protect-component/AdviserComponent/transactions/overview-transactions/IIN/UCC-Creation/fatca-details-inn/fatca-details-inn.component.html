@@ -136,7 +136,8 @@
             <mat-form-field appearance="standard" floatLabel="never">
               <mat-select class="form-control" formControlName="occupationCode">
                 <mat-option disabled value=''>Select occupation</mat-option>
-                <mat-option *ngFor="let singleOccupation of occupationFilteredArray" [value]="singleOccupation.code">
+                <mat-option (click)="selecctOccupation(singleOccupation)"
+                  *ngFor="let singleOccupation of occupationFilteredArray" [value]="singleOccupation.code">
                   {{ singleOccupation.name }}
                 </mat-option>
               </mat-select>
