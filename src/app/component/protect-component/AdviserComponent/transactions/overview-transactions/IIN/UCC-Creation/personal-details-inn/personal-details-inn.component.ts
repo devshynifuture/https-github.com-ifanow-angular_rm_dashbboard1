@@ -22,6 +22,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   activeDetailsClass = 'first';
   maxDateForAdultDob = moment().subtract(18, 'years');
   logoText = 'Your Logo here';
+  draft: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -37,7 +38,8 @@ export class PersonalDetailsInnComponent implements OnInit {
   @Input()
 
   set data(data) {
-    if (JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId)) && data.draft == true) {
+    this.draft = data.draft
+    if (JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId)) && this.draft == true) {
       this.inputData = JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId));
       console.log('local storage', this.inputData)
     }
