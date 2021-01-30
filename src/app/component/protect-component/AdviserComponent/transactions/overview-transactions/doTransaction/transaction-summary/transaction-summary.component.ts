@@ -66,7 +66,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.advisorId = AuthService.getAdminAdvisorId();
     this.inputData = data;
     this.transactionSummary = data;
-    this.getDefaultDetails(this.transactionSummary.aggregatorType);
+    // this.getDefaultDetails(this.transactionSummary.aggregatorType);
     if (this.transactionSummary.defaultBank && this.transactionSummary.aggregatorType == 2) {
       this.bankDetails = this.transactionSummary.bankDetails
       this.defaultBank = this.transactionSummary.defaultBank
@@ -81,7 +81,9 @@ export class TransactionSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.transactionSummary = this.inputData;
-    // this.getDefaultDetails(null);
+    if (!this.changeDetails) {
+      this.getDefaultDetails(null);
+    }
   }
 
   openDialog(): void {
@@ -208,26 +210,27 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
-    if(data){
-          this.bankDetails = data;
-    console.log('bank == ', this.bankDetails);
-    this.getMandateDetails();
-    this.bankDetails.forEach(element => {
-      if (element.defaultBankFlag == 'Y') {
-        this.defaultBank = element;
-        element.selected = true;
+    if (data) {
+      this.bankDetails = data;
+      console.log('bank == ', this.bankDetails);
+      this.transactionSummary.bankDetails = this.bankDetails
+      this.getMandateDetails();
+      this.bankDetails.forEach(element => {
+        if (element.defaultBankFlag == 'Y') {
+          this.defaultBank = element;
+          element.selected = true;
+        }
+      });
+      this.bankDetails.forEach(element => {
+        element.selected = false;
+      });
+      // this.bankDetails[0].selected = true
+      this.bankDetailsSend.emit(this.defaultBank);
+      if (this.bankDetails.length > 1) {
+        this.showBankEdit = true;
       }
-    });
-        this.bankDetails.forEach(element => {
-      element.selected = false;
-    });
-    // this.bankDetails[0].selected = true
-    this.bankDetailsSend.emit(this.defaultBank);
-    if (this.bankDetails.length > 1) {
-      this.showBankEdit = true;
-    }
-    }else{
-        this.eventService.openSnackBar('No bank details found', 'Dismiss');
+    } else {
+      this.eventService.openSnackBar('No bank details found', 'Dismiss');
     }
   }
 
