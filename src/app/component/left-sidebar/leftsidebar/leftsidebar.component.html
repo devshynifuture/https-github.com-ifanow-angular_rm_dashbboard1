@@ -331,19 +331,20 @@
       <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none"
         id="right-sidemenu">
         <a class="sidenav-link" mat-list-item>
-          <img class="t-12" src="assets/images/svg/bell.svg">
+          <img class="t-9" src="assets/images/svg/bell.svg">
         </a>
-        <!-- <a class="sidenav-link" mat-list-item>
-          <img class="t-12" src="assets/images/svg/earphone.svg" [matMenuTriggerFor]="popupMenu">
+        <a class="sidenav-link" mat-list-item>
+          <img class="t-10 c-p" src="assets/images/svg/info-black.svg" [matMenuTriggerFor]="popupMenu">
+
           <mat-menu #popupMenu="matMenu" class="minwidth-300">
-            <button *ngIf="showIosAD == true || showMobileAD== true " (click)="openMobilePopup()">
-              mobile app
+            <button *ngIf="showIosAD == true || showMobileAD== true " (click)="openMobilePopup()" mat-menu-item>
+              Mobile app
             </button>
-            <button *ngIf="showDomainAD == true" (click)="domainWhiteLabelling()">
-              domain
+            <button *ngIf="showDomainAD == true" (click)="domainWhiteLabelling()" mat-menu-item>
+              Domain
             </button>
           </mat-menu>
-        </a> -->
+        </a>
         <a class="sidenav-link" mat-list-item>
           <img src="assets/images/svg/earphone.svg" class="c-p" [matMenuTriggerFor]="menu1">
           <mat-menu #menu1="matMenu" class="minwidth-400">
