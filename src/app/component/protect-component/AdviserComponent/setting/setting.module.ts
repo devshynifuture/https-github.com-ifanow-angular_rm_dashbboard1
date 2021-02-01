@@ -21,6 +21,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { UsersComponent } from './setting-user-roles/setting-users-roles/users/users.component';
 import { DomainSettingPopupComponent } from './setting-preference/domain-setting-popup/domain-setting-popup.component';
+import { EmailVerificationPopupComponent } from './setting-preference/email-verification-popup/email-verification-popup.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { DomainSettingPopupComponent } from './setting-preference/domain-setting
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
     ModelPortfolioComponent,
     SettingActivityComponent,
-    DomainSettingPopupComponent],
+    DomainSettingPopupComponent,
+    EmailVerificationPopupComponent],
   exports: [
     UsersComponent
   ],
