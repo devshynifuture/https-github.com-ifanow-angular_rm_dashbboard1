@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
   showTimeRemaing: number;
   resendOtpFlag: any;
   logoUrl: any;
-  isBetaDomain = false;
+  isDevDomain = false;
   isClientWebsite: boolean;
 
   constructor(
@@ -122,10 +122,10 @@ export class LoginComponent implements OnInit {
     this.createForm();
     // }
     const hostName = window.location.hostname;
-    if (hostName.split('.').includes('beta') || hostName.split('.').includes('myplanner')) {
-      this.isBetaDomain = true;
+    if (hostName.includes('dev.ifanow.in')) {
+      this.isDevDomain = true;
     } else {
-      this.isBetaDomain = false;
+      this.isDevDomain = false;
     }
     this.btnProgressData = 'state1';
   }
