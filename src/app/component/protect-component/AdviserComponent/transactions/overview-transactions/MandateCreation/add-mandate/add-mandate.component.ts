@@ -58,6 +58,10 @@ export class AddMandateComponent implements OnInit {
   imageLoader: boolean = false;
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
+  umrn1: any[];
+  accountNumList: any[];
+  ifscCodeList: any[];
+  micrNoList: any[];
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTrasaction: ProcessTransactionService,
@@ -70,6 +74,9 @@ export class AddMandateComponent implements OnInit {
 
   accountTypes: any = [];
   ngOnInit() {
+    this.selectedMandate = {}
+    Object.assign(this.selectedMandate, { auth: 'BSE Limited' });
+    Object.assign(this.selectedMandate, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
     this.getdataForm('');
     this.showUploadSection = false;
     this.clientCodeDataShow = false;
@@ -339,10 +346,40 @@ export class AddMandateComponent implements OnInit {
     this.dataSource = [];
     this.selectedBank = bank;
     this.selectedMandate = bank;
+    this.mandateData(this.selectedMandate)
     this.dataSource.push(bank);
     this.showMandateTable = true;
   }
-
+  mandateData(data) {
+    this.umrn1 = []
+    this.accountNumList = []
+    this.ifscCodeList = []
+    this.micrNoList = []
+    if (data.umrnNo) {
+      var umrnList = data.umrnNo.length
+      for (var i = 0; i < umrnList; i++) {
+        this.umrn1.push(data.umrnNo.charAt(i))
+      }
+    }
+    if (data.accountNo) {
+      for (var i = 0; i < data.accountNo.length; i++) {
+        this.accountNumList.push(data.accountNo.charAt(i))
+      }
+    }
+    if (data.ifscCode) {
+      for (var i = 0; i < data.ifscCode.length; i++) {
+        this.ifscCodeList.push(data.ifscCode.charAt(i))
+      }
+    }
+    if (data.micrNo) {
+      for (var i = 0; i < data.micrNo.length; i++) {
+        this.micrNoList.push(data.micrNo.charAt(i))
+      }
+    }
+    // var d = new Date();
+    // var n = d.getMonth();
+    // console.log('umrn', this.umrn1)
+  }
   createMandates() {
     if (!this.selectedMandate) {
       this.selectedMandate = {};
