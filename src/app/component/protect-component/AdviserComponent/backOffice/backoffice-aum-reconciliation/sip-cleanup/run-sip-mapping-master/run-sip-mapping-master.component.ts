@@ -58,7 +58,7 @@ export class RunSipMappingMasterComponent implements OnInit {
         this.isLoading = false;
         if (res) {
           this.wizardList = []
-          if (res.length > 1) {
+          if (res.length >= 1) {
             this.wizardList = res
           }
           this.showWizard = true
