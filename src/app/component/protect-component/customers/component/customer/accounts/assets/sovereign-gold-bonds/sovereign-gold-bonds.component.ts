@@ -152,7 +152,11 @@ export class SovereignGoldBondsComponent implements OnInit {
       // this.totalCurrentValue = 0;
       // this.sumOfpurchasedValue = 0;
       data.forEach(o => {
-        o.xirr = parseInt(o.xirr);
+        o.xirr = o.xirr.toString();
+        var res = o.xirr.replace("e+", "");
+        res = Number(res).toFixed(2);
+        console.log(res);
+        o.xirr = res;
         o.currentValue = (o.currentValue) ? o.currentValue : 0
         this.totalCurrentValue += o.currentValue;
         this.sumOfpurchasedValue += o.purchaseAmt;

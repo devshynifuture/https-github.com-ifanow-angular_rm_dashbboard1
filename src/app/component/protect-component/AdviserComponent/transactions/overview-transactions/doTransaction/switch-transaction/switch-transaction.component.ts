@@ -514,10 +514,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switch() {
-    if (this.barButtonOptions.active) {
-      return;
-    }
-    this.barButtonOptions.active = true;
+
     if (this.mutualFundData) {
       this.switchTransaction.controls.investmentAccountSelection.setValue(this.folioNumber)
     }
@@ -535,7 +532,10 @@ export class SwitchTransactionComponent implements OnInit {
       this.switchTransaction.get('switchType').markAsTouched();
       return;
     } else {
-
+      if (this.barButtonOptions.active) {
+        return;
+      }
+      this.barButtonOptions.active = true;
       const obj = {
 
         productDbId: this.schemeDetails.id,

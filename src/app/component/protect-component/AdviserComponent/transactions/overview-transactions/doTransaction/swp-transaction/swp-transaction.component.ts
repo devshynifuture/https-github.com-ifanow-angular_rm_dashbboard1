@@ -476,10 +476,7 @@ export class SwpTransactionComponent implements OnInit {
 
   // getSingleTransactionJson() {}
   swp() {
-    if (this.barButtonOptions.active) {
-      return;
-    }
-    this.barButtonOptions.active = true;
+
     if (this.swpTransaction.get('investmentAccountSelection').invalid) {
       this.swpTransaction.get('investmentAccountSelection').markAsTouched();
       return;
@@ -496,6 +493,10 @@ export class SwpTransactionComponent implements OnInit {
       this.swpTransaction.get('installment').markAsTouched();
       return;
     } else {
+      if (this.barButtonOptions.active) {
+        return;
+      }
+      this.barButtonOptions.active = true;
       const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
       const tenure = this.swpTransaction.controls.tenure.value;
       const noOfInstallments = this.swpTransaction.controls.installment.value;
