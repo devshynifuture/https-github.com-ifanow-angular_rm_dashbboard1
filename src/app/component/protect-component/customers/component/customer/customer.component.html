@@ -18,7 +18,7 @@
             </div>
 
         </div>
-        <div class="col-lg-7 col-md-9">
+        <div class="col-lg-8 col-md-9">
             <nav mat-tab-nav-bar>
                 <a (click)="goToValidOverviewUrl();tabValue=1" [ngClass]="{'successBorder': tabValue==1}"
                     *ngIf="roleService.overviewPermission.enabled" routerLinkActive="successBorder"
@@ -39,9 +39,7 @@
         </div>
 
         <div
-            class="col-lg-3 col-md-1 hide-on-800 d-flex align-items-center justify-content-end   tablate-none ng-tns-c1-0">
-
-
+            class="col-lg-2 col-md-1 hide-on-800 d-flex align-items-center justify-content-end   tablate-none ng-tns-c1-0">
             <div *ngIf="userInfo.userType==2 && (organizationData.androidStoreUrl || organizationData.iosStoreUrl)"
                 class="playStorBox2">
                 <img title="Google play" (click)="goToStore(organizationData.androidStoreUrl)" class="c-p"
