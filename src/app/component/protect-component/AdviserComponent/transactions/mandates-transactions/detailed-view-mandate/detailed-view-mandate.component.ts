@@ -79,6 +79,8 @@ export class DetailedViewMandateComponent implements OnInit {
     for (var i = 0; i < data.micrNo.length; i++) {
       this.micrNoList.push(data.micrNo.charAt(i))
     }
+    var d = new Date();
+    var n = d.getMonth();
     console.log('umrn', this.umrn1)
   }
   download(template, titile) {
