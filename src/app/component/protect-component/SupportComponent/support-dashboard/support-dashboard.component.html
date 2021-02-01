@@ -393,12 +393,12 @@
                 </div> -->
 
                 <h4 class="f-16 f-600 mt-32">Scheme mapping</h4>
-                <div class="d-flex justify-content-between">
+                <div class="row align-items-left">
 
-                    <div class="mappingBox" (click)="openUpperSlider('all-rta')">
+                    <!-- <div class="mappingBox" (click)="openUpperSlider('all-rta')">
                         <p class="f-12 text-primitive mb-0">ALL RTA</p>
                         <h3 class="f-20 m-0">7</h3>
-                    </div>
+                    </div> -->
 
 
                     <div class="mappingBox" (click)="openUpperSlider('nj')">
@@ -407,7 +407,7 @@
                     </div>
 
 
-                    <div class="mappingBox" (click)="openUpperSlider('prudent')">
+                    <div class="mappingBox ml-12" (click)="openUpperSlider('prudent')">
                         <p class="f-12 text-primitive mb-0">PRUDENT</p>
                         <h3 class="f-20 m-0">{{(prudentCount)?prudentCount:0}}</h3>
                     </div>

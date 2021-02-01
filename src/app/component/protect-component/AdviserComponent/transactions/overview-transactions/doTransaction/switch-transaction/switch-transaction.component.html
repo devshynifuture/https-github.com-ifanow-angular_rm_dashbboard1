@@ -277,8 +277,8 @@
 
       </div>
       <div class="col-md-4 bg-grey lter p-0">
-        <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (defaultDetails)='getDefaultDetails($event)'
-          (folioChange)='onFolioChange($event)' [data]="transactionSummary">
+        <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (folioChange)='onFolioChange($event)'
+          [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>
