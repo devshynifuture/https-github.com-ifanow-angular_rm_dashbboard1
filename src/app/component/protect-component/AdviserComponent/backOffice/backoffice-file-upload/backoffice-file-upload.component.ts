@@ -187,6 +187,8 @@ export class BackofficeFileUploadComponent implements OnInit {
             this.fileSize = '';
             this.filter.status = '';
             this.filter.rt = '';
+            this.selectedFileType = '';
+            this.arnRiaId = '';
             this.setFilter();
             // this.successFileUpload(this.selectedFileType, this.targetFile.target.files[0].name);
           }
