@@ -120,7 +120,7 @@ export class LoginComponent implements OnInit {
 
     this.getLogoUrl();
     this.createForm();
-    // }
+    // }B E7R8T9
     const hostName = window.location.hostname;
     if (hostName.includes('dev.ifanow.in')) {
       this.isDevDomain = true;
