@@ -1329,9 +1329,25 @@
                                             <tr *ngFor="let element of dataSourceLiability">
                                                 <td
                                                     style="padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
-                                                    <img *ngIf="element.selected" src="{{checkedBox}}">
-                                                    <img *ngIf="!element.selected" src="{{uncheckBox}}">
-                                                    {{element.name}}
+
+                                                    <table style="width: 100%;">
+                                                        <tr>
+                                                            <td style="width: 20px;">
+                                                                <img *ngIf="element.selected" src="{{checkedBox}}">
+                                                                <img *ngIf="!element.selected" src="{{uncheckBox}}">
+                                                            </td>
+                                                            <td>
+                                                                {{element.name}}
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+
+
+
+
+
+
                                                 </td>
                                                 <td
                                                     style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">

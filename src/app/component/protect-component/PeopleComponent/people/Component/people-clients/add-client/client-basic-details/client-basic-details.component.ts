@@ -1,29 +1,29 @@
-import { Component, EventEmitter, Input, OnInit, Output, AfterViewInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DatePipe } from '@angular/common';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { EnumDataService } from 'src/app/services/enum-data.service';
-import { individualJson, nonIndividualJson } from './client&leadJson';
-import { relationListFilterOnID } from './relationypeMethods';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatDialog } from '@angular/material';
-import { UnmapPopupComponent } from './unmap-popup/unmap-popup.component';
-import { MoveFamilymemberToClientComponent } from './move-familymember-to-client/move-familymember-to-client.component';
-import { DashboardService } from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
-import { RoleService } from 'src/app/auth-service/role.service';
-import { LeadsClientsComponent } from '../../../people-leads/leads-clients/leads-clients.component';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { RoutingState } from 'src/app/services/routing-state.service';
-import { CustomerOverviewService } from 'src/app/component/protect-component/customers/component/customer/customer-overview/customer-overview.service';
-import { Subscription, Observable } from 'rxjs';
-import { startWith, debounceTime } from 'rxjs/operators';
+import {Component, EventEmitter, Input, OnInit, Output, AfterViewInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EnumDataService} from 'src/app/services/enum-data.service';
+import {individualJson, nonIndividualJson} from './client&leadJson';
+import {relationListFilterOnID} from './relationypeMethods';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatDialog} from '@angular/material';
+import {UnmapPopupComponent} from './unmap-popup/unmap-popup.component';
+import {MoveFamilymemberToClientComponent} from './move-familymember-to-client/move-familymember-to-client.component';
+import {DashboardService} from 'src/app/component/protect-component/AdviserComponent/dashboard/dashboard.service';
+import {RoleService} from 'src/app/auth-service/role.service';
+import {LeadsClientsComponent} from '../../../people-leads/leads-clients/leads-clients.component';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {RoutingState} from 'src/app/services/routing-state.service';
+import {CustomerOverviewService} from 'src/app/component/protect-component/customers/component/customer/customer-overview/customer-overview.service';
+import {Subscription, Observable} from 'rxjs';
+import {startWith, debounceTime} from 'rxjs/operators';
 
 const moment = require('moment');
 
@@ -38,11 +38,13 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   mobileEditedData: any;
   emailEditedData: any[];
   deletedEmailData = [];
+
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
       this.eventService.openSnackBar("Please add pan before converting it to client", "Dimiss");
     }
   }
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & CLOSE',
@@ -108,17 +110,18 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   unmapFmData: any;
   usernameOutputSubscription: Subscription;
   usernameOutputObservable: Observable<any> = new Observable<any>();
+
   // advisorId;
 
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
-    private subInjectService: SubscriptionInject, private peopleService: PeopleService,
-    private eventService: EventService, private datePipe: DatePipe,
-    private utilService: UtilService, public enumDataService: EnumDataService,
-    private cusService: CustomerService, private dialog: MatDialog,
-    public roleService: RoleService,
-    private MfServiceService: MfServiceService,
-    public routingStateService: RoutingState,
-    private customerOverview: CustomerOverviewService) {
+              private subInjectService: SubscriptionInject, private peopleService: PeopleService,
+              private eventService: EventService, private datePipe: DatePipe,
+              private utilService: UtilService, public enumDataService: EnumDataService,
+              private cusService: CustomerService, private dialog: MatDialog,
+              public roleService: RoleService,
+              private MfServiceService: MfServiceService,
+              public routingStateService: RoutingState,
+              private customerOverview: CustomerOverviewService) {
   }
 
   @Input() set data(data) {
@@ -136,7 +139,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.familyMemberType = data.familyMemberType == 4 ? {
           name: 'Sole proprietorship',
           value: '4'
-        } : { name: 'Non individual', value: '3' };
+        } : {name: 'Non individual', value: '3'};
         this.hideDematTab.emit(true);
         this.createNonIndividualForm(data);
         return;
@@ -145,7 +148,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       this.basicDetailsData = data;
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 3 || this.basicDetailsData.relationshipId == 6 || this.basicDetailsData.relationshipId == 7) {
         (data.relationshipId == 6 || data.relationshipId == 2) ? data.genderId = 1 : data.genderId = 2;
-        this.familyMemberType = { name: 'Individual', value: '1' };
+        this.familyMemberType = {name: 'Individual', value: '1'};
         this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
         this.invTypeCategory = '1';
         this.hideDematTab.emit(true);
@@ -155,14 +158,14 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
         if (this.basicDetailsData.age > 18) {
           (data.relationshipId != 10) ? (data.relationshipId == 4) ? data.genderId = 1 : data.genderId = 2 : '';
-          this.familyMemberType = { name: 'Individual', value: '1' };
+          this.familyMemberType = {name: 'Individual', value: '1'};
           this.invTypeCategory = '1';
           this.hideDematTab.emit(true);
           this.invTaxStatusList = this.enumService.getIndividualTaxList();
           this.createIndividualForm(this.basicDetailsData);
         } else {
           (data.relationshipId == 4) ? data.genderId = 1 : data.genderId = 2;
-          this.familyMemberType = { name: 'Minor', value: '2' };
+          this.familyMemberType = {name: 'Minor', value: '2'};
           this.invTypeCategory = '2';
           this.createMinorForm(this.basicDetailsData);
           this.invTaxStatusList = this.enumService.getMinorTaxList();
@@ -171,13 +174,13 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       } else {
         this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
         if (this.basicDetailsData.age > 18) {
-          this.familyMemberType = { name: 'Individual', value: '1' };
+          this.familyMemberType = {name: 'Individual', value: '1'};
           this.invTypeCategory = '1';
           this.hideDematTab.emit(true);
           this.invTaxStatusList = this.enumService.getIndividualTaxList();
           this.createIndividualForm(this.basicDetailsData);
         } else {
-          this.familyMemberType = { name: 'Minor', value: '2' };
+          this.familyMemberType = {name: 'Minor', value: '2'};
           this.invTypeCategory = '2';
           this.createMinorForm(this.basicDetailsData);
           this.invTaxStatusList = this.enumService.getMinorTaxList();
@@ -228,7 +231,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         } : (this.basicDetailsData.clientType == 3) ? {
           name: 'Non-individual',
           value: '3'
-        } : { name: 'Sole proprietorship', value: '4' };
+        } : {name: 'Sole proprietorship', value: '4'};
       } else {
         this.clientTypeList = (this.basicDetailsData.clientType == 1) ? {
           name: 'Individual',
@@ -236,7 +239,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         } : (this.basicDetailsData.clientType == 3) ? {
           name: 'Non-individual',
           value: '3'
-        } : { name: 'Sole proprietorship', value: '4' };
+        } : {name: 'Sole proprietorship', value: '4'};
       }
       // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
@@ -256,24 +259,25 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
 
   relationshipTypeMethod(gender, age) {
     this.relationList = [
-      { name: 'Wife', value: 3 },
-      { name: 'Husband', value: 2 },
-      { name: 'Father', value: 6 },
-      { name: 'Mother', value: 7 },
-      { name: 'Son', value: 4 },
-      { name: 'Daughter', value: 5 },
-      { name: 'Brother', value: 8 },
-      { name: 'Sister', value: 9 },
-      { name: 'Others', value: 10 },
-      { name: 'Daughter_In_Law', value: 11 },
-      { name: 'Sister_In_Law', value: 12 },
-      { name: 'Grandmother', value: 13 },
-      { name: 'Grandfather', value: 14 },
-      { name: 'Niece', value: 15 },
-      { name: 'Nephew', value: 16 },
+      {name: 'Wife', value: 3},
+      {name: 'Husband', value: 2},
+      {name: 'Father', value: 6},
+      {name: 'Mother', value: 7},
+      {name: 'Son', value: 4},
+      {name: 'Daughter', value: 5},
+      {name: 'Brother', value: 8},
+      {name: 'Sister', value: 9},
+      {name: 'Others', value: 10},
+      {name: 'Daughter_In_Law', value: 11},
+      {name: 'Sister_In_Law', value: 12},
+      {name: 'Grandmother', value: 13},
+      {name: 'Grandfather', value: 14},
+      {name: 'Niece', value: 15},
+      {name: 'Nephew', value: 16},
     ];
     // }
   }
+
   keyInfoCapability: any = {};
 
   ngOnInit() {
@@ -363,7 +367,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.addNewCoOwner(element);
       });
     }
-    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.minorForm };
+    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.minorForm};
     this.minorForm.valueChanges.subscribe(data => {
       if (this.valueChangeFlag) {
 
@@ -586,8 +590,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
               defaultFlag: true,
             })
           });
-        }
-        else {
+        } else {
           this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
           if (this.tempBasicData.mobileList.length == 0) {
             this.mobileEditedData.forEach(element => {
@@ -774,6 +777,9 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   saveNextFamilyMember(flag) {
     let mobileList = [];
     if (this.mobileData) {
+      if (!this.tempBasicData.mobileList) {
+        this.tempBasicData.mobileList = [];
+      }
       this.mobileEditedData = UtilService.checkMobileListUpdation(this.tempBasicData.mobileList, this.mobileData)
       if (this.tempBasicData.mobileList.length == 0) {
         this.mobileEditedData.forEach(element => {
@@ -837,8 +843,12 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     }
     let count = 0;
     let emailList = [];
+
     if (this.emailData.length == 1) {
       this.emailData.controls[0].get('markAsPrimary').setValue(true);
+    }
+    if (!this.basicDetailsData.emailList) {
+      this.tempBasicData.emailList = [];
     }
     if (this.basicDetailsData.emailList.length == 0) {
       this.emailData.controls.forEach(element => {
@@ -851,7 +861,6 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         });
       });
     }
-
 
 
     if (this.emailData.valid && this.basicDetailsData.emailList.length > 0) {
@@ -1089,7 +1098,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.unmapFamilyMember('FAMILY MEMBER');
       }
     } else {
-      obj = { showField: false };
+      obj = {showField: false};
       const dialogRef = this.dialog.open(UnmapPopupComponent, {
         data: obj
       });
@@ -1143,7 +1152,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   openMoveFamilymemberToClient(flag, fieldFlag) {
     const fragmentData = {
       flag: flag,
-      data: { value: this.basicDetailsData, flag: flag, fieldFlag: fieldFlag },
+      data: {value: this.basicDetailsData, flag: flag, fieldFlag: fieldFlag},
       id: 1,
       state: 'open50',
       componentName: MoveFamilymemberToClientComponent,
@@ -1183,24 +1192,24 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     }
     this.usernameOutputSubscription = this.usernameOutputObservable.pipe(startWith(''),
       debounceTime(700)).subscribe(
-        data => {
-          this.userNameLoader = true;
-          this.peopleService.checkValidUsername(obj).subscribe(data => {
-            this.userNameLoader = false;
-            if (data) {
+      data => {
+        this.userNameLoader = true;
+        this.peopleService.checkValidUsername(obj).subscribe(data => {
+          this.userNameLoader = false;
+          if (data) {
 
-            }
-          }), err => {
-            this.userNameLoader = false;
-            if (userName.length > 0)
-              if (this.basicDetailsData.clientType == 1) {
-                this.basicDetails.get('username').setErrors({ invalid: true });
-              } else {
-                this.nonIndividualForm.get('username').setErrors({ invalid: true });
-              }
           }
+        }), err => {
+          this.userNameLoader = false;
+          if (userName.length > 0)
+            if (this.basicDetailsData.clientType == 1) {
+              this.basicDetails.get('username').setErrors({invalid: true});
+            } else {
+              this.nonIndividualForm.get('username').setErrors({invalid: true});
+            }
         }
-      );
+      }
+    );
   }
 
 

@@ -43,6 +43,7 @@ export class SovereignGoldBondsComponent implements OnInit {
   noData: string;
   fileUploadData: any;
   file: any;
+  fragmentData = { isSpinner: false };
   isLoadingUpload: boolean = false;
   clientData: any;
   myFiles: any;
@@ -59,7 +60,8 @@ export class SovereignGoldBondsComponent implements OnInit {
 
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef) {
+    private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef,
+    private utils: UtilService) {
 
 
   }
@@ -88,9 +90,25 @@ export class SovereignGoldBondsComponent implements OnInit {
     this.excel.generateExcel(rows, tableTitle);
   }
 
-  pdf(tableTitle) {
+  // pdf(tableTitle) {
+  //   let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   this.pdfGen.generatePdf(rows, tableTitle);
+  // }
+  pdf(template, tableTitle) {
     let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    return obj;
+    //this.pdfGen.generatePdf(rows, tableTitle);
   }
   getGoldBondsData() {
     this.isLoading = true;
