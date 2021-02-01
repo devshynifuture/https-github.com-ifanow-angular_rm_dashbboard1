@@ -33,7 +33,8 @@
         </button>
       </mat-menu>
       <button [matMenuTriggerFor]="Menu" class="btn-default addon ml-12 mr-12 v-middle" mat-stroked-button><i
-          class="material-icons">filter_list</i>{{(selectedString == 1)?'PENDING':(selectedString == 2)?'INVESTMENT READY':'FILTER2'}}
+          class="material-icons">filter_list</i>{{(selectedString == 1)?'PENDING':(selectedString == 2)?'INVESTMENT
+        READY':'FILTER2'}}
       </button>
       <mat-menu #Menu>
         <button mat-menu-item (click)="filter(1)">
@@ -123,7 +124,9 @@
             </th>
             <td *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
-                {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ? 'ANYONE OR SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ? 'JOINT' : '-'}}
+                {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ? 'ANYONE OR
+                SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ?
+                'JOINT' : '-'}}
               </div>
             </td>
           </ng-container>

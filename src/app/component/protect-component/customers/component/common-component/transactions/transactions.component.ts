@@ -24,7 +24,7 @@ export class TransactionsComponent implements OnInit {
   transactionTypeList = [];
   advisorId = AuthService.getAdvisorId();
   clientId = AuthService.getClientId();
-  parentId=AuthService.getParentId();
+  parentId = AuthService.getParentId();
   investorName: any;
   isLoading = false;
   mfList: any;
@@ -51,10 +51,11 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.mfService.getadvisorList()
-    .subscribe(res => {
-      this.adminAdvisorIds = res;
-    });
+      .subscribe(res => {
+        this.adminAdvisorIds = res;
+      });
     console.log("this is data what we got::", this.data);
+    this.data.mutualFundTransactions = this.casFolioNumber(this.data.mutualFundTransactions)
     this.currentValue = this.data.currentValue;
     this.profitOrLossValue = this.data.unrealizedGain;
     // this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
@@ -62,11 +63,24 @@ export class TransactionsComponent implements OnInit {
     this.xirrValue = this.data.xirr;
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
-    this.nav=this.data.nav;
+    this.nav = this.data.nav;
     this.initPoint();
     this.getTransactionTypeList()
   }
+  casFolioNumber(data) {
+    if (data && data.length > 0) {
+      data.forEach(ele => {
+        if (ele.rtTypeId == 6 && !ele.fwTransactionType.includes("CAS")) {
+          ele.fwTransactionType = ele.fwTransactionType + '(CAS)'
+        }
+        if (ele.rtTypeId == 14 && !ele.fwTransactionType.includes("*")) {
+          ele.fwTransactionType = ele.fwTransactionType + '*'
+        }
 
+      });
+    }
+    return data;
+  }
   getTransactionTypeList() {
     this.cusService.getTransactionTypeData({})
       .subscribe(res => {
@@ -119,7 +133,7 @@ export class TransactionsComponent implements OnInit {
             //  mutualfund get call  
             this.isLoading = true;
             this.dataSource = new MatTableDataSource([{}, {}, {}]);
-            this.cusService.getMutualFund({ parentId:this.parentId ? this.parentId : this.advisorId,advisorId: this.adminAdvisorIds , clientId: this.clientId })
+            this.cusService.getMutualFund({ parentId: this.parentId ? this.parentId : this.advisorId, advisorId: this.adminAdvisorIds, clientId: this.clientId })
               .subscribe(res => {
                 if (res) {
                   this.isLoading = false;
@@ -135,23 +149,23 @@ export class TransactionsComponent implements OnInit {
     );
   }
   getTransactionDataBasedOnMf(res) {
-    let setDataForMf=res;
+    let setDataForMf = res;
     this.isLoading = false;
     let filterData = this.mfService.doFiltering(res);
     this.mfList = filterData.mutualFundList;
     this.mfList = this.mfList.find((item: any) =>
       (item.id == this.data.id)
     );
-    this.data=this.mfList;
+    this.data = this.mfList;
     this.dataSource.data = this.mfList.mutualFundTransactions
     this.currentValue = this.mfList.currentValue;
     this.profitOrLossValue = this.currentValue - this.mfList.amountInvested;
-    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
-    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
+    this.currentValue = this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
+    this.profitOrLossValue = this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
     this.xirrValue = this.mfList.xirr;
     this.investorName = this.mfList.ownerName;
     this.folioNumber = this.mfList.folioNumber;
-    this.nav=this.mfList.nav;
+    this.nav = this.mfList.nav;
     setDataForMf = this.mfService.doFiltering(setDataForMf)
     this.mfService.setDataForMfGet(setDataForMf);
     this.changeInput.emit(true);
@@ -209,7 +223,7 @@ export class TransactionsComponent implements OnInit {
             if (res) {
               this.isLoading = true;
               this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
-              this.cusService.getMutualFund({ parentId:this.parentId ? this.parentId : this.advisorId,advisorId: this.adminAdvisorIds, clientId: this.clientId  })
+              this.cusService.getMutualFund({ parentId: this.parentId ? this.parentId : this.advisorId, advisorId: this.adminAdvisorIds, clientId: this.clientId })
                 .subscribe(res => {
                   if (res) {
                     this.getTransactionDataBasedOnMf(res);

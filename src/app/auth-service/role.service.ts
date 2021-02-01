@@ -1,9 +1,9 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { Injectable } from '@angular/core/src/metadata/*';
-import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
-import { UtilService } from '../services/util.service';
-import { AuthService } from './authService';
-import { BehaviorSubject } from 'rxjs';
+import {Router, ActivatedRoute} from '@angular/router';
+import {Injectable} from '@angular/core/src/metadata/*';
+import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
+import {UtilService} from '../services/util.service';
+import {AuthService} from './authService';
+import {BehaviorSubject} from 'rxjs';
 
 
 @Injectable({
@@ -17,6 +17,7 @@ export class RoleService {
     private utilService: UtilService,
     private authService: AuthService
   ) {
+
     if (authService.isLoggedIn()) {
       const advisorRoleData = AuthService.getAdvisorRoles();
       if (advisorRoleData && advisorRoleData != undefined) {
@@ -194,8 +195,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: { add: true, edit: true, delete: true, download: true },
-      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
+      clientsCapability: {add: true, edit: true, delete: true, download: true},
+      leadsCapability: {add: true, edit: true, delete: true, download: true, convertToclient: true}
     }
   };
   backofficePermission = {
@@ -219,8 +220,8 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: { add: true, download: true, edit: true, delete: true },
-      fileuploadsCapability: { download: true, add: true, edit: true, delete: true }
+      misCapability: {add: true, download: true, edit: true, delete: true},
+      fileuploadsCapability: {download: true, add: true, edit: true, delete: true}
     }
   };
   dashboardPermission = {
@@ -251,7 +252,7 @@ export class RoleService {
       taskCapabilityList: [],
       calendarCapabilityList: [],
       emailCapabilityList: [],
-      taskCapabilityObj: { add: true, edit: true, delete: true }
+      taskCapabilityObj: {add: true, edit: true, delete: true}
     }
   };
   overviewPermission = {
@@ -272,7 +273,7 @@ export class RoleService {
             capabilityList: {} as any
           }
         },
-        profileCapabilityObj: { add: true, edit: true, delete: true }
+        profileCapabilityObj: {add: true, edit: true, delete: true}
       },
       documents: {
         enabled: true,
@@ -381,13 +382,18 @@ export class RoleService {
 
   allPermissionData = new BehaviorSubject<any>({});
 
+  setDataInAllPermissionData(permissionData) {
+    this.allPermissionData.next(permissionData);
+  }
+
   getAllPermissionData() {
     return this.allPermissionData.asObservable();
   }
 
-  getRoleDetails(roleId, callbackMethod: (args: any) => void) {
+  getRoleDetails(roleId, callbackMethod: (args: any) => void,
+                 failureMethod?: (args: any) => void ) {
     // const observable = new Observable();
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
       if (callbackMethod) {
         callbackMethod(res);
@@ -398,17 +404,17 @@ export class RoleService {
         this.constructAdminDataSource(res);
       }
     }, err => {
-      if (callbackMethod) {
-        callbackMethod(err);
+      if (failureMethod) {
+        failureMethod(err);
       }
       console.log('roleService getRoleDetails err : ', err);
     });
     return;
   }
 
-  getClientRoleDetails(roleId, callbackMethod: (args: any) => void) {
+  getClientRoleDetails(roleId, callbackMethod: (args: any) => void,failureMethod?: (args: any) => void) {
     // const observable = new Observable();
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
       if (callbackMethod) {
         callbackMethod(res);
@@ -419,8 +425,8 @@ export class RoleService {
         this.constructClientDataSource(res);
       }
     }, err => {
-      if (callbackMethod) {
-        callbackMethod(err);
+      if (failureMethod) {
+        failureMethod(err);
       }
       console.log('roleService getRoleDetails err : ', err);
     });
@@ -474,6 +480,7 @@ export class RoleService {
     clientDatasource.overview ? this.setOverviewPermissions(clientDatasource.overview.subModule) : '';
     clientDatasource.plan ? this.setPlanPermission(clientDatasource.plan.subModule) : this.planPermission.enabled = false;
   }
+
   setClientPermissions(moduleId, enabled) {
     if (moduleId == 66) {
       this.activityPermission.enabled = enabled;
@@ -489,7 +496,7 @@ export class RoleService {
   }
 
   setPermissions(moduleId, enabled) {
-    console.log(' moduleId : ', moduleId, ' enabled : ', enabled);
+    // console.log(' moduleId : ', moduleId, ' enabled : ', enabled);
     if (moduleId == 92) {
       this.subscriptionPermission.enabled = enabled;
     } else if (moduleId == 23) {
@@ -794,8 +801,7 @@ export class RoleService {
         return url = '/customer/detail/overview/subscription/settings';
       }
 
-    }
-    else if (this.portfolioPermission.enabled) {
+    } else if (this.portfolioPermission.enabled) {
       // return url = "/customer/detail/account";
       if (this.portfolioPermission.subModule.portfolioDashboard.enabled) {
         return url = "/customer/detail/account/summary"
@@ -834,19 +840,16 @@ export class RoleService {
       if (this.portfolioPermission.subModule.insurance.enabled) {
         return url = "/customer/detail/account/insurance"
       }
-    }
-    else if (this.planPermission.enabled) {
+    } else if (this.planPermission.enabled) {
       if (this.planPermission.subModule.profile.enabled) {
         return url = "/customer/detail/plan/profile"
       }
       if (this.planPermission.subModule.goals.enabled) {
         return url = "/customer/detail/plan/goals"
       }
-    }
-    else if (this.activityPermission.enabled) {
+    } else if (this.activityPermission.enabled) {
       return url = "/customer/detail/activity";
-    }
-    else {
+    } else {
       if (this.transactionPermission.subModule.transactionsModule.enabled) {
         return url = '/customer/detail/transact/list'
       }

@@ -116,9 +116,7 @@ export class ContactDetailsInnComponent implements OnInit {
 
     this.getIsdCodesData();
     const value = {};
-    this.processTransaction.getCountryCodeList().subscribe(responseValue => {
-      this.countryList = responseValue;
-    });
+    this.countryList = this.processTransaction.getCountryCodeList();
     if (this.firstHolderContact) {
       this.setDataForm(this.formId, this.firstHolderContact);
     } else {
@@ -203,9 +201,9 @@ export class ContactDetailsInnComponent implements OnInit {
     if (!address) {
       address = {};
     } else {
-      data.address.address1 = UtilService.removeSpecialCharactersFromString(data.address.address1);
-      data.address.address2 = UtilService.removeSpecialCharactersFromString(data.address.address2);;
-      data.address.address3 = UtilService.removeSpecialCharactersFromString(data.address.address3);;
+      data.address.address1 = data.address.address1 ? UtilService.removeSpecialCharactersFromString(data.address.address1) : '';
+      data.address.address2 = data.address.address2 ? UtilService.removeSpecialCharactersFromString(data.address.address2) : '';
+      data.address.address3 = data.address.address3 ? UtilService.removeSpecialCharactersFromString(data.address.address3) : '';
       const { firstLine, secondLine, thirdLine } = UtilService.formatAddressInThreeLine(data.address.address1, data.address.address2, data.address.address3);
       data.address.address1 = firstLine;
       data.address.address2 = secondLine;

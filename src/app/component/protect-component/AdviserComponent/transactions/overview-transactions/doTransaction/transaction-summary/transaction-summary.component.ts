@@ -66,13 +66,39 @@ export class TransactionSummaryComponent implements OnInit {
     this.advisorId = AuthService.getAdminAdvisorId();
     this.inputData = data;
     this.transactionSummary = data;
-    this.getDefaultDetails(this.transactionSummary.aggregatorType);
+    // this.getDefaultDetails(this.transactionSummary.aggregatorType);
     if (this.transactionSummary.defaultBank && this.transactionSummary.aggregatorType == 2) {
       this.bankDetails = this.transactionSummary.bankDetails
       this.defaultBank = this.transactionSummary.defaultBank
       this.transactionSummary.selectedMandate = this.defaultBank
     }
-    this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
+    this.changeDetails = this.inputData.changeDetails
+    if (this.changeDetails) {
+      this.allData = this.changeDetails;
+      this.changeDetails.euin = this.changeDetails.subBrokerCredList[0];
+      if (this.allData && this.allData.defaultClient && this.changeDetails.defaultClient
+        && this.changeDetails.defaultClient.tpUserCredFamilyMappingId == this.allData.defaultClient.tpUserCredFamilyMappingId) {
+        if (this.changeDetails.euin) {
+          if (this.changeDetails.euin.id == this.allData.euin.id) {
+          } else {
+            this.defaultDetails.emit(this.changeDetails);
+          }
+        } else {
+        }
+      } else {
+        this.defaultDetails.emit(data);
+      }
+      this.clientDataList = this.changeDetails.clientDataList;
+      this.defaultCredential = this.changeDetails.defaultCredential;
+      this.defaultClient = this.changeDetails.defaultClient;
+      this.transactionSummary.defaultClient = this.changeDetails.defaultClient;
+      this.subBrokerCredList = this.changeDetails.subBrokerCredList;
+      this.selectedPlatform = this.defaultCredential.aggregatorType;
+      this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
+      if (this.selectedPlatform == 1) {
+        this.getBankDetails();
+      }
+    }
   }
 
   get data() {
@@ -81,7 +107,9 @@ export class TransactionSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.transactionSummary = this.inputData;
-    // this.getDefaultDetails(null);
+    if (!this.changeDetails) {
+      this.getDefaultDetails(null);
+    }
   }
 
   openDialog(): void {
@@ -208,26 +236,28 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
-    if(data){
-          this.bankDetails = data;
-    console.log('bank == ', this.bankDetails);
-    this.getMandateDetails();
-    this.bankDetails.forEach(element => {
-      if (element.defaultBankFlag == 'Y') {
-        this.defaultBank = element;
-        element.selected = true;
+    if (data) {
+      this.bankDetails = data;
+      console.log('bank == ', this.bankDetails);
+      this.transactionSummary.bankDetails = this.bankDetails
+      if (this.transactionSummary.transactType == 'PURCHASE' || this.transactionSummary.transactType == 'SIP')
+        this.getMandateDetails();
+      this.bankDetails.forEach(element => {
+        if (element.defaultBankFlag == 'Y') {
+          this.defaultBank = element;
+          element.selected = true;
+        }
+      });
+      this.bankDetails.forEach(element => {
+        element.selected = false;
+      });
+      // this.bankDetails[0].selected = true
+      this.bankDetailsSend.emit(this.defaultBank);
+      if (this.bankDetails.length > 1) {
+        this.showBankEdit = true;
       }
-    });
-        this.bankDetails.forEach(element => {
-      element.selected = false;
-    });
-    // this.bankDetails[0].selected = true
-    this.bankDetailsSend.emit(this.defaultBank);
-    if (this.bankDetails.length > 1) {
-      this.showBankEdit = true;
-    }
-    }else{
-        this.eventService.openSnackBar('No bank details found', 'Dismiss');
+    } else {
+      this.eventService.openSnackBar('No bank details found', 'Dismiss');
     }
   }
 
@@ -255,6 +285,7 @@ export class TransactionSummaryComponent implements OnInit {
     if (data == undefined) {
       return;
     }
+    console.log('default', data)
     this.changeDetails = data;
     if (this.transactionSummary.allEdit == true && this.changeDetails.noAlert == undefined) {
       if (this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {

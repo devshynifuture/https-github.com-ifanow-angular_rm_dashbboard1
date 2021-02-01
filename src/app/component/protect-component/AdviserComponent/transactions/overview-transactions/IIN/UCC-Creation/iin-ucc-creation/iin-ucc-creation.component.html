@@ -1,7 +1,7 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
-      <div class="logoWrap">
+      <div class="logoWrap h-auto">
         <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
         <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
       </div>
@@ -14,8 +14,8 @@
       </p>
     </div>
 
-    <div class="col-md-2 text-right">
-      <i (click)="close()" class="material-icons pt-16 c-p pr-16">
+    <div class="col-md-2 text-right full-center">
+      <i (click)="close()" class="material-icons c-p">
         clear
       </i>
     </div>
@@ -28,7 +28,8 @@
     <div class="col-md-12 text-center">
       <h4 class="f-18 f-600">{{greeting}}!</h4>
       <p class="f-16 mt-20 l-21">Over the next few steps we will help you become investment ready.
-        <br> This smooth and easy process needs you to have the following things handy...</p>
+        <br> This smooth and easy process needs you to have the following things handy...
+      </p>
     </div>
   </div>
 
@@ -82,8 +83,8 @@
           <mat-select class="form-control" formControlName="holdingType">
             <mat-option disabled value=''>Select holding nature</mat-option>
             <mat-option value="SI">Single</mat-option>
-            <mat-option value="JO">Joint</mat-option>
-            <mat-option value="AS">Anyone or survivor</mat-option>
+            <mat-option *ngIf="!isMinor" value="JO">Joint</mat-option>
+            <mat-option *ngIf="!isMinor" value="AS">Anyone or survivor</mat-option>
           </mat-select>
           <mat-error class="f-12">This field is required</mat-error>
         </mat-form-field>

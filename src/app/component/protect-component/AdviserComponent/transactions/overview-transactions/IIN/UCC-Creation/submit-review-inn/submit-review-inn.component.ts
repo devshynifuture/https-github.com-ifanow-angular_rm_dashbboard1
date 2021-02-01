@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { OnlineTransactionService } from '../../../../online-transaction.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -20,11 +20,30 @@ import { ConfirmUploadComponent } from '../../../../investors-transactions/inves
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
+  returnValue: any;
+  getOrgData: any;
+  selectedBroker: any;
+  firstHolder: any;
+  bankDetailList: any;
+  nominee: any;
 
-  constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
+  @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
+  thirdHolder: any;
+  secondHolder: any;
+  dataSource: any;
+
+  constructor(private onlineTransact: OnlineTransactionService,
+    private fb: FormBuilder,
     public authService: AuthService,
-    private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
+    private eventService: EventService,
+    private utilService: UtilService,
+    public dialog: MatDialog,
+    private peopleService: PeopleService) {
+    this.getOrgData = AuthService.getOrgDetails();
+    console.log('companay details', this.getOrgData)
+
   }
+  fragmentData = { isSpinner: false };
 
   get data() {
     return this.inputData;
@@ -36,6 +55,11 @@ export class SubmitReviewInnComponent implements OnInit {
     this.doneData = {};
     this.inputData = data;
     console.log('submit and review component inputData : ', this.inputData);
+    this.firstHolder = this.inputData.holderList[0]
+    this.secondHolder = this.inputData.secondHolder
+    this.thirdHolder = this.inputData.thirdHolder
+    this.bankDetailList = this.inputData.bankDetailList[0]
+    this.nominee = this.inputData.nomineeList[0]
     this.allData = { ...data };
     this.clientData = this.clientData;
     this.doneData.nominee = true;
@@ -108,6 +132,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedBroker = ''
     this.changedValue = '';
     this.advisorId = AuthService.getAdvisorId();
     this.getBSECredentials();
@@ -129,12 +154,56 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   getBSECredentialsRes(data) {
+    this.getBSESubBrokerCredentials();
     this.isLoading = false;
-    console.log('getBSECredentialsRes', data);
     this.brokerCredentials = data;
-    if (this.brokerCredentials) {
-      this.brokerCredentials.forEach(singleCred => {
-        if (singleCred.defaultLogin == 1) {
+    console.log('getBSECredentialsRes', data);
+  }
+  getBSESubBrokerCredentials() {
+    const obj = {
+      advisorId: this.advisorId,
+      onlyBrokerCred: true
+    };
+    this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
+      data => this.getBSESubBrokerCredentialsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.isLoading = false;
+      }
+    );
+  }
+
+  getBSESubBrokerCredentialsRes(data) {
+    this.isLoading = false;
+    if (data == undefined || data.length == 0) {
+    } else {
+      this.brokerCredentials.forEach(function (ad) {
+        const subBrokerMatch = data.find(function (tm) {
+          return ad.id == tm.tpUserCredentialId;
+        });
+        if (subBrokerMatch && subBrokerMatch.euin) {
+          ad.euin = subBrokerMatch.euin;
+          ad.tp_nse_subbroker_mapping_id = subBrokerMatch.tpUserCredentialId;
+          ad.subBrokerCode = subBrokerMatch.subBrokerCode;
+          ad.tpSubBrokerCredentialId = subBrokerMatch.id;
+        }
+      });
+      this.dataSource = this.brokerCredentials;
+      console.log('this data', this.dataSource)
+
+      if (this.brokerCredentials) {
+        this.brokerCredentials.forEach(singleCred => {
+          if (singleCred.defaultLogin == 1) {
+            if (singleCred.aggregatorType == 1) {
+              this.dataSourceNse.push(singleCred);
+            } else {
+              this.dataSourceBse.push(singleCred);
+            }
+            singleCred.selected = true;
+            this.selectedCount = this.selectedCount + 1;
+          }
+        });
+        if (this.selectedCount == 0 && this.brokerCredentials.length > 0) {
+          const singleCred = this.brokerCredentials[0];
           if (singleCred.aggregatorType == 1) {
             this.dataSourceNse.push(singleCred);
           } else {
@@ -143,23 +212,11 @@ export class SubmitReviewInnComponent implements OnInit {
           singleCred.selected = true;
           this.selectedCount = this.selectedCount + 1;
         }
-      });
-      if (this.selectedCount == 0 && this.brokerCredentials.length > 0) {
-        const singleCred = this.brokerCredentials[0];
-        if (singleCred.aggregatorType == 1) {
-          this.dataSourceNse.push(singleCred);
-        } else {
-          this.dataSourceBse.push(singleCred);
-        }
-        singleCred.selected = true;
-        this.selectedCount = this.selectedCount + 1;
       }
+      console.log('nse', this.nse);
+      console.log('bse', this.bse);
     }
-    // this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
-    console.log('nse', this.nse);
-    console.log('bse', this.bse);
   }
-
   getdataForm(data) {
 
     this.reviewSubmit = this.fb.group({
@@ -188,7 +245,21 @@ export class SubmitReviewInnComponent implements OnInit {
       }
     );
   }
-
+  download(template, tableTitle) {
+    this.fragmentData.isSpinner = true;
+    const para = this.realEstateTemp.nativeElement;
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: tableTitle,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+  }
   getFormControl(): any {
     return this.reviewSubmit.controls;
   }
@@ -202,6 +273,7 @@ export class SubmitReviewInnComponent implements OnInit {
 
   submit(singleBrokerCred) {
     // this.doneData = true;
+    this.selectedBroker = singleBrokerCred
     this.toSendObjHolderList = [];
     this.toSendObjBankList = [];
     this.toSendObjNomineeList = [];

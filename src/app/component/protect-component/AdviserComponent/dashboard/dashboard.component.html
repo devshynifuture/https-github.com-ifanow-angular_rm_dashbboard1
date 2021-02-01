@@ -44,7 +44,7 @@
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
               <h3 class="mb-0 roboto f-400 text-black mt-8">
-                <span *ngIf="!keyMatrixFlag">{{(mfAumValue) ? mfAumValue : '0'}}</span>
+                <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
               </h3>
             </div>
           </div>
@@ -417,9 +417,9 @@
               <div class="row">
                 <div class="col-md-9 p-0">
                   <h5 *ngIf="!singleMember.shortName" class="m-0 ellipsisClass roboto f-400">
-                    {{singleMember.displayName}}
+                    {{singleMember.name}}
                   </h5>
-                  <h5 *ngIf="singleMember.shortName" matTooltip="{{singleMember.displayName}}"
+                  <h5 *ngIf="singleMember.shortName" matTooltip="{{singleMember.name}}"
                     class="m-0 ellipsisClass roboto f-400 c-p">
                     {{singleMember.shortName}}
                   </h5>
@@ -427,11 +427,11 @@
                     Group head
                   </h5>
                   <h5 *ngIf="singleMember.userType==3" class="mb-4 roboto f-400 f-12 text-custom">
-                    {{singleMember.displayName}}
+                    {{singleMember.name}}
                   </h5>
                 </div>
                 <div class="col-md-3 p-0">
-                  <button *ngIf="singleMember.isAnniversaryOrBirthDay === 'anniversary'" mat-stroked-button
+                  <button *ngIf="singleMember.birthDayOrAnniversary==2" mat-stroked-button
                     class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
                   </button>
                 </div>
@@ -453,14 +453,14 @@
                     </span>
                   </h5>
                   <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12"
-                    *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'">
-                    {{singleMember.dateOfBirth | date:'dd/MM/yyyy'}}
+                    *ngIf="singleMember.birthDayOrAnniversary === 1">
+                    {{singleMember.dateToShow | date:'dd/MM/yyyy'}}
                   </p>
                   <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12"
-                    *ngIf="singleMember.isAnniversaryOrBirthDay === 'anniversary'">
-                    {{ singleMember.anniversaryDate | date: 'dd/MM/yyyy' }}
+                    *ngIf="singleMember.birthDayOrAnniversary === 2">
+                    {{ singleMember.dateToShow | date: 'dd/MM/yyyy' }}
                   </p>
-                  <p *ngIf="singleMember.isAnniversaryOrBirthDay === 'birthday'"
+                  <p *ngIf="singleMember.birthDayOrAnniversary === 1"
                     class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
                     {{singleMember.age}} years
                   </p>

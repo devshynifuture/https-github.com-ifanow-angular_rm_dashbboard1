@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { EventService } from '../../../../../../Data-service/event.service';
-import {TransactionRoleService} from "../../transaction-role.service";
+import { TransactionRoleService } from "../../transaction-role.service";
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-detailed-view-mandate',
@@ -36,16 +37,67 @@ export class DetailedViewMandateComponent implements OnInit {
   mandateFlag: boolean;
   showChequeStatus: boolean;
   showMandateStatus: boolean;
+  fragmentData = { isSpinner: false };
+  @ViewChild('realEstateTemp', { static: false }) realEstateTemp: ElementRef;
+  returnValue: any;
+  umrn1: any;
+  accountNumList: any;
+  ifscCodeList: any;
+  ifscCodelist: any;
+  micrNoList: any;
+  auth: string;
+  dubleTick: string;
 
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService
+  constructor(private subInjectService: SubscriptionInject,
+    private utilService: UtilService,
+    private eventService: EventService
     , public transactionRoleService: TransactionRoleService) {
   }
 
   ngOnInit() {
     this.details = this.data;
+    this.mandateData(this.details)
     this.getDataStatus(this.details);
   }
-
+  mandateData(data) {
+    this.umrn1 = []
+    this.accountNumList = []
+    this.ifscCodeList = []
+    this.micrNoList = []
+    Object.assign(this.details, { auth: 'BSE Limited' });
+    Object.assign(this.details, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
+    var umrnList = data.umrnNo.length
+    for (var i = 0; i < umrnList; i++) {
+      this.umrn1.push(data.umrnNo.charAt(i))
+    }
+    for (var i = 0; i < data.accountNo.length; i++) {
+      this.accountNumList.push(data.accountNo.charAt(i))
+    }
+    for (var i = 0; i < data.ifscCode.length; i++) {
+      this.ifscCodeList.push(data.ifscCode.charAt(i))
+    }
+    for (var i = 0; i < data.micrNo.length; i++) {
+      this.micrNoList.push(data.micrNo.charAt(i))
+    }
+    var d = new Date();
+    var n = d.getMonth();
+    console.log('umrn', this.umrn1)
+  }
+  download(template, titile) {
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: titile,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, titile, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+  }
   getDataStatus(data) {
     this.isLoading = true;
     this.statusDetails = this.statusData;

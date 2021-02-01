@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { AuthService } from '../../../auth-service/authService';
-import { Router } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
-import { RoleService } from "../../../auth-service/role.service";
-import { ReferAndEarnPopupsComponent } from './refer-and-earn-popups/refer-and-earn-popups.component';
-import { MatDialog } from '@angular/material';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {AuthService} from '../../../auth-service/authService';
+import {Router} from '@angular/router';
+import {HttpParams} from '@angular/common/http';
+import {RoleService} from "../../../auth-service/role.service";
+import {ReferAndEarnPopupsComponent} from './refer-and-earn-popups/refer-and-earn-popups.component';
+import {MatDialog} from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpService, private roleService: RoleService, public dialog: MatDialog, ) {
+  constructor(private http: HttpService, private roleService: RoleService, public dialog: MatDialog,) {
   }
 
   generateOtp(data) {
@@ -69,8 +69,11 @@ export class LoginService {
     return this.http.getExternal(url);
   }
 
-  handleUserData(authService: AuthService, router: Router, userData) {
+  handleUserData(authService: AuthService, router: Router, userData, callbackMethod?: (args: any) => void) {
     if (!userData) {
+      if (callbackMethod) {
+        callbackMethod(false);
+      }
       return;
     }
 
@@ -83,12 +86,22 @@ export class LoginService {
         if (userData.showReferPopup) {
           this.openDialog();
         }
+        if (callbackMethod) {
+          callbackMethod(true);
+        }
+      }, (error) => {
+        if (callbackMethod) {
+          callbackMethod(false);
+        }
       });
 
     } else if (userData.isRmLogin) {
       authService.setToken('authTokenInLoginComponent');
       authService.setUserInfo(userData);
       router.navigate(['support', 'dashboard']);
+      if (callbackMethod) {
+        callbackMethod(true);
+      }
     } else {
       this.roleService.getClientRoleDetails(userData.roleId, (rolesData) => {
         authService.setToken('authTokenInLoginComponent');
@@ -98,6 +111,13 @@ export class LoginService {
         this.roleService.constructAdminDataSource(rolesData);
         const url = this.roleService.goToValidClientSideUrl();
         router.navigate([url]);
+        if (callbackMethod) {
+          callbackMethod(true);
+        }
+      }, (error) => {
+        if (callbackMethod) {
+          callbackMethod(false);
+        }
       });
     }
     // when changing routers, make changes to authservice gohome() method
@@ -113,8 +133,8 @@ export class LoginService {
 
   openDialog() {
     const dialogRef = this.dialog.open(ReferAndEarnPopupsComponent, {
-      width: '40%',
-    }
+        width: '40%',
+      }
     );
 
     dialogRef.afterClosed().subscribe(result => {

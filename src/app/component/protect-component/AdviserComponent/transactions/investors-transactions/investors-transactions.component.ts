@@ -387,9 +387,10 @@ export class InvestorsTransactionsComponent implements OnInit {
   }
 
   openInvestorDetail(data) {
-    if (this.isLoading || !this.isPendingData || !this.isAdvisorSection) {
+    if (this.isLoading || !this.isAdvisorSection) {
       return;
     }
+    data['isPendingData'] = this.isPendingData;
     const fragmentData = {
       flag: 'investorDetail',
       data,

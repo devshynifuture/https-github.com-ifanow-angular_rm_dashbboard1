@@ -1307,137 +1307,142 @@ export class DashboardComponent implements OnInit {
     let arr = [];
     if (data && data.length > 0) {
       data.forEach(element => {
-        if (!!element.birthDayOrAnniversary && element.birthDayOrAnniversary) {
-          let shortName,
-            daysToGo;
-          if (element.displayName.length > 15) {
-            shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
-          }
-          if (!!element.dateOfBirth && element.dateOfBirth && !!element.anniversaryDate && element.anniversaryDate) {
-            let daysToGoAnniversary;
-            let daysToGoBirthDate;
-            if (element.dateOfBirth && element.dateOfBirth != 0) {
-              daysToGoBirthDate = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
-            }
-            if (element.anniversaryDate && element.anniversaryDate != 0) {
-              daysToGoAnniversary = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
-            }
-            arr.push({
-              displayName: element.displayName,
-              daysToGo,
-              shortName,
-              userType: element.userType,
-              isAnniversaryOrBirthDay: 'birthday',
-              dateOfBirth: element.dateOfBirth,
-            });
-            arr.push({
-              displayName: element.displayName,
-              daysToGo,
-              shortName,
-              userType: element.userType,
-              isAnniversaryOrBirthDay: 'anniversary',
-              anniversaryDate: element.anniversaryDate,
-            });
-          } else if (!!element.dateOfBirth && element.dateOfBirth) {
-            if (element.dateOfBirth && element.dateOfBirth != 0) {
-              daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
-            }
-            arr.push({
-              displayName: element.displayName,
-              daysToGo,
-              shortName,
-              userType: element.userType,
-              isAnniversaryOrBirthDay: 'birthday',
-              dateOfBirth: element.dateOfBirth,
-            });
-
-          } else if (!!element.anniversaryDate && element.anniversaryDate) {
-            if (element.anniversaryDate && element.anniversaryDate != 0) {
-              daysToGo = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
-            }
-            arr.push({
-              displayName: element.displayName,
-              daysToGo,
-              shortName,
-              userType: element.userType,
-              isAnniversaryOrBirthDay: 'anniversary',
-              anniversaryDate: element.anniversaryDate,
-            });
-          }
-        } else {
-          if (!!element.familyMemberList && element.familyMemberList.length > 0) {
-
-            element.familyMemberList.forEach(item => {
-              if (!!item.birthDayOrAnniversary && item.birthDayOrAnniversary) {
-                let shortName,
-                  daysToGo;
-                if (item.displayName.length > 15) {
-                  shortName = item.displayName.substr(0, this.getPosition(item.displayName, ' ', 2));
-                }
-                if (!!item.dateOfBirth && item.dateOfBirth && !!item.anniversaryDate && item.anniversaryDate) {
-                  let daysToGoAnniversary,
-                    daysToGoBirthDate;
-                  if (item.dateOfBirth && item.dateOfBirth != 0) {
-                    daysToGoBirthDate = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
-                  }
-                  if (item.anniversaryDaye && item.anniversaryDate != 0) {
-                    daysToGoAnniversary = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
-                  }
-                  arr.push({
-                    displayName: item.displayName,
-                    daysToGo: daysToGoBirthDate,
-                    shortName,
-                    userType: item.userType,
-                    isAnniversaryOrBirthDay: 'birthday',
-                    dateOfBirth: item.dateOfBirth,
-                  });
-                  arr.push({
-                    displayName: item.displayName,
-                    daysToGo: daysToGoAnniversary,
-                    shortName,
-                    userType: item.userType,
-                    isAnniversaryOrBirthDay: 'anniversary',
-                    anniversaryDate: item.anniversaryDate,
-                  });
-                } else if (!!item.dateOfBirth && item.dateOfBirth) {
-                  if (item.dateOfBirth && item.dateOfBirth != 0) {
-                    daysToGo = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
-                  }
-                  arr.push({
-                    displayName: item.displayName,
-                    daysToGo,
-                    shortName,
-                    userType: item.userType,
-                    isAnniversaryOrBirthDay: 'birthday',
-                    dateOfBirth: item.dateOfBirth,
-                  });
-
-                } else if (!!item.anniversaryDate && item.anniversaryDate) {
-                  if (item.anniversaryDate && item.anniversaryDate != 0) {
-                    daysToGo = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
-                  }
-                  arr.push({
-                    displayName: item.displayName,
-                    daysToGo,
-                    shortName,
-                    userType: item.userType,
-                    isAnniversaryOrBirthDay: 'anniversary',
-                    anniversaryDate: item.anniversaryDate,
-                  });
-                }
-              }
-            });
-          }
+        if (element.displayName.length > 15) {
+          element.shortName = element.name.substr(0, this.getPosition(element.name, ' ', 2));
         }
       });
+      // data.forEach(element => {
+      //   if (!!element.birthDayOrAnniversary && element.birthDayOrAnniversary) {
+      //     let shortName,
+      //       daysToGo;
+      //     if (element.displayName.length > 15) {
+      //       shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
+      //     }
+      //     if (!!element.dateOfBirth && element.dateOfBirth && !!element.anniversaryDate && element.anniversaryDate) {
+      //       let daysToGoAnniversary;
+      //       let daysToGoBirthDate;
+      //       if (element.dateOfBirth && element.dateOfBirth != 0) {
+      //         daysToGoBirthDate = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
+      //       }
+      //       if (element.anniversaryDate && element.anniversaryDate != 0) {
+      //         daysToGoAnniversary = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
+      //       }
+      //       arr.push({
+      //         displayName: element.displayName,
+      //         daysToGo,
+      //         shortName,
+      //         userType: element.userType,
+      //         isAnniversaryOrBirthDay: 'birthday',
+      //         dateOfBirth: element.dateOfBirth,
+      //       });
+      //       arr.push({
+      //         displayName: element.displayName,
+      //         daysToGo,
+      //         shortName,
+      //         userType: element.userType,
+      //         isAnniversaryOrBirthDay: 'anniversary',
+      //         anniversaryDate: element.anniversaryDate,
+      //       });
+      //     } else if (!!element.dateOfBirth && element.dateOfBirth) {
+      //       if (element.dateOfBirth && element.dateOfBirth != 0) {
+      //         daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
+      //       }
+      //       arr.push({
+      //         displayName: element.displayName,
+      //         daysToGo,
+      //         shortName,
+      //         userType: element.userType,
+      //         isAnniversaryOrBirthDay: 'birthday',
+      //         dateOfBirth: element.dateOfBirth,
+      //       });
+
+      //     } else if (!!element.anniversaryDate && element.anniversaryDate) {
+      //       if (element.anniversaryDate && element.anniversaryDate != 0) {
+      //         daysToGo = this.calculateBirthdayOrAnniversary(element.anniversaryDate);
+      //       }
+      //       arr.push({
+      //         displayName: element.displayName,
+      //         daysToGo,
+      //         shortName,
+      //         userType: element.userType,
+      //         isAnniversaryOrBirthDay: 'anniversary',
+      //         anniversaryDate: element.anniversaryDate,
+      //       });
+      //     }
+      //   } else {
+      //     if (!!element.familyMemberList && element.familyMemberList.length > 0) {
+
+      //       element.familyMemberList.forEach(item => {
+      //         if (!!item.birthDayOrAnniversary && item.birthDayOrAnniversary) {
+      //           let shortName,
+      //             daysToGo;
+      //           if (item.displayName.length > 15) {
+      //             shortName = item.displayName.substr(0, this.getPosition(item.displayName, ' ', 2));
+      //           }
+      //           if (!!item.dateOfBirth && item.dateOfBirth && !!item.anniversaryDate && item.anniversaryDate) {
+      //             let daysToGoAnniversary,
+      //               daysToGoBirthDate;
+      //             if (item.dateOfBirth && item.dateOfBirth != 0) {
+      //               daysToGoBirthDate = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
+      //             }
+      //             if (item.anniversaryDaye && item.anniversaryDate != 0) {
+      //               daysToGoAnniversary = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
+      //             }
+      //             arr.push({
+      //               displayName: item.displayName,
+      //               daysToGo: daysToGoBirthDate,
+      //               shortName,
+      //               userType: item.userType,
+      //               isAnniversaryOrBirthDay: 'birthday',
+      //               dateOfBirth: item.dateOfBirth,
+      //             });
+      //             arr.push({
+      //               displayName: item.displayName,
+      //               daysToGo: daysToGoAnniversary,
+      //               shortName,
+      //               userType: item.userType,
+      //               isAnniversaryOrBirthDay: 'anniversary',
+      //               anniversaryDate: item.anniversaryDate,
+      //             });
+      //           } else if (!!item.dateOfBirth && item.dateOfBirth) {
+      //             if (item.dateOfBirth && item.dateOfBirth != 0) {
+      //               daysToGo = this.calculateBirthdayOrAnniversary(item.dateOfBirth);
+      //             }
+      //             arr.push({
+      //               displayName: item.displayName,
+      //               daysToGo,
+      //               shortName,
+      //               userType: item.userType,
+      //               isAnniversaryOrBirthDay: 'birthday',
+      //               dateOfBirth: item.dateOfBirth,
+      //             });
+
+      //           } else if (!!item.anniversaryDate && item.anniversaryDate) {
+      //             if (item.anniversaryDate && item.anniversaryDate != 0) {
+      //               daysToGo = this.calculateBirthdayOrAnniversary(item.anniversaryDate);
+      //             }
+      //             arr.push({
+      //               displayName: item.displayName,
+      //               daysToGo,
+      //               shortName,
+      //               userType: item.userType,
+      //               isAnniversaryOrBirthDay: 'anniversary',
+      //               anniversaryDate: item.anniversaryDate,
+      //             });
+      //           }
+      //         }
+      //       });
+      //     }
+      //   }
+      // });
+      arr = data;
     }
-    this.utils.calculateAgeFromCurrentDate(arr);
     this.birthdayAnniList = arr;
     this.birthdayAnniList = this.birthdayAnniList.sort((a, b) =>
       a['daysToGo'] > b['daysToGo'] ? 1 : (a['daysToGo'] === b['daysToGo'] ? 0 : -1)
     );
 
-    console.log('final list', this.birthdayAnniList);
+    // console.log('final list', this.birthdayAnniList);
   }
   getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
@@ -1878,6 +1883,7 @@ export class DashboardComponent implements OnInit {
 
   getKeyMetricsRes(data) {
     this.isKeyMatrix = false;
+    data.mfAum = UtilService.getNumberToWord(data.mfAum);
     data.sipBook = UtilService.getNumberToWord(data.sipBook)
     this.keyMetricJson = data;
     // this.keyMetricJson.mfAum = '';
