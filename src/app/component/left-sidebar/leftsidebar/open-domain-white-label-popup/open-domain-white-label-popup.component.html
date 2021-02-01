@@ -24,7 +24,8 @@
         <div class="row pt-16">
             <div class="col-md-12 d-flex align-items-center justify-content-end p-0">
                 <button mat-button (click)="close()" class=" text-primitive mr-12 f-400 roboto">CANCEL</button>
-                <button class="btn-primary f-14 ml-12 sendNowBtn f-400 roboto" mat-stroked-button cdkFocusInitial>
+                <button (click)="redirect()" class="btn-primary f-14 ml-12 sendNowBtn f-400 roboto" mat-stroked-button
+                    cdkFocusInitial>
                     REDIRECT
                 </button>
                 <!-- <app-progress-button (btnClick)="sendClientId()" class="br-0 text-inherit  " [options]="barButtonOptions">
