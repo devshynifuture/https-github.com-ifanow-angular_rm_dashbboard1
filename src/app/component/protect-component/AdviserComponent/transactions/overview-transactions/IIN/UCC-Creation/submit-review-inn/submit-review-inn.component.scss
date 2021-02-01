@@ -45,17 +45,20 @@ loaderWrap {
     margin: 0px auto;
     border: solid 1px #008FFF;
     padding: 9px;
-  }
-  
-  .loaderBar {
+}
+
+.loaderBar {
     height: 20px;
     width: 100%;
     border: solid 1px #008FFF;
-  }
-  
-  .loaderBarFill {
+}
+
+.loaderBarFill {
     height: 100%;
     background: #008FFF;
     transition: width 1s;
-  }
-  
+}
+
+.hide {
+    display: none;
+}
