@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
@@ -62,11 +62,20 @@ export class AddMandateComponent implements OnInit {
   accountNumList: any[];
   ifscCodeList: any[];
   micrNoList: any[];
+  fragmentData = { isSpinner: false };
+  returnValue: any;
+  yearArr: any[];
+  MonthArr: any[];
+  dateArr: any[];
+  y: any;
+
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe,
+    private utilService: UtilService,
     public utils: UtilService,
+    private cd: ChangeDetectorRef,
     private onlineTransact: OnlineTransactionService, public eventService: EventService,
     private enumDataService: EnumDataService, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
@@ -75,8 +84,15 @@ export class AddMandateComponent implements OnInit {
   accountTypes: any = [];
   ngOnInit() {
     this.selectedMandate = {}
+    this.umrn1 = []
+    this.accountNumList = []
+    this.ifscCodeList = []
+    this.micrNoList = []
     Object.assign(this.selectedMandate, { auth: 'BSE Limited' });
     Object.assign(this.selectedMandate, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
+    Object.assign(this.selectedMandate, { uniqueRefNo: '' });
+    Object.assign(this.selectedMandate, { clientCode: '' });
+    Object.assign(this.selectedMandate, { amount: '' });
     this.getdataForm('');
     this.showUploadSection = false;
     this.clientCodeDataShow = false;
@@ -97,7 +113,22 @@ export class AddMandateComponent implements OnInit {
     //     }),
     //   );
   }
-
+  download(template, titile) {
+    this.cd.detectChanges();
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: titile,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, titile, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+  }
   searchClientFamilyMember(value) {
     if (value.length <= 2) {
       this.nomineesListFM = undefined
@@ -346,7 +377,9 @@ export class AddMandateComponent implements OnInit {
     this.dataSource = [];
     this.selectedBank = bank;
     this.selectedMandate = bank;
-    this.mandateData(this.selectedMandate)
+    if (this.detailsIIN.aggregatorType == 2) {
+      this.mandateData(this.selectedMandate)
+    }
     this.dataSource.push(bank);
     this.showMandateTable = true;
   }
@@ -355,30 +388,45 @@ export class AddMandateComponent implements OnInit {
     this.accountNumList = []
     this.ifscCodeList = []
     this.micrNoList = []
+    Object.assign(this.selectedMandate, { auth: 'BSE Limited' });
+    Object.assign(this.selectedMandate, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
+
     if (data.umrnNo) {
-      var umrnList = data.umrnNo.length
-      for (var i = 0; i < umrnList; i++) {
+      for (var i = 0; i < 21; i++) {
         this.umrn1.push(data.umrnNo.charAt(i))
       }
     }
     if (data.accountNo) {
-      for (var i = 0; i < data.accountNo.length; i++) {
+      for (var i = 0; i < 16; i++) {
         this.accountNumList.push(data.accountNo.charAt(i))
       }
     }
     if (data.ifscCode) {
-      for (var i = 0; i < data.ifscCode.length; i++) {
+      for (var i = 0; i < 11; i++) {
         this.ifscCodeList.push(data.ifscCode.charAt(i))
       }
     }
     if (data.micrNo) {
-      for (var i = 0; i < data.micrNo.length; i++) {
+      for (var i = 0; i < 9; i++) {
         this.micrNoList.push(data.micrNo.charAt(i))
       }
     }
-    // var d = new Date();
-    // var n = d.getMonth();
-    // console.log('umrn', this.umrn1)
+    var d = new Date(this.generalDetails.controls.fromDate.value);
+    var n = d.getMonth();
+    var dd = d.getDate();
+    this.y = d.getFullYear();
+    this.dateArr = []
+    this.MonthArr = []
+    this.yearArr = []
+    this.dateArr.push(d)
+    this.MonthArr.push(n + 1)
+    for (var i = 0; i < 4; i++) {
+      this.yearArr.push(String(this.y).charAt(i))
+    }
+    console.log('date', this.dateArr)
+    console.log('m', this.MonthArr)
+    console.log('m', this.yearArr)
+
   }
   createMandates() {
     if (!this.selectedMandate) {

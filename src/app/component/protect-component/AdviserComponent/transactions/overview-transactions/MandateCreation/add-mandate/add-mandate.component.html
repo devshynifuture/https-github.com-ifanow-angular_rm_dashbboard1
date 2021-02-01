@@ -265,8 +265,8 @@
             <app-progress-button *ngIf="showUploadSection ==false" (click)="createMandates()"
                 [options]="barButtonOptions" class="br-0 text-inherit ">
             </app-progress-button>
-            <button *ngIf="showUploadSection" (click)="download('template','Mandate')"
-                class="btn-bottom br-0 text-primary" mat-button>Download</button>
+            <button (click)="download('template','Mandate')" class="btn-bottom br-0 text-inherit"
+                mat-button>Download</button>
             <button *ngIf="showUploadSection" (click)="closeRightSlider(true)" class="btn-bottom br-0 text-inherit"
                 mat-button>CLOSE</button>
 
@@ -274,7 +274,7 @@
         </div>
     </div>
 </div>
-<!-- 
+
 <div id="template">
     <html>
 
@@ -293,7 +293,7 @@
                                         MANDATE INSTRUCTION FORM
                                     </td>
                                     <td>
-                                        <div style="display: flex;height: 20px;">
+                                        <div style="display: flex;height: 20px;" *ngIf="umrn1.length >0">
                                             <span style="padding-right: 12px;"> UMRN</span>
                                             <span
                                                 style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[0]}}</span>
@@ -405,8 +405,7 @@
                             <span style="padding-right: 8px;">
                                 I/We hereby authorize
                             </span>
-                            <input type="text" name="" style="width: 48%;"
-                                [(ngModel)]="(selectedMandate)?selectedMandate.auth:''">
+                            <input type="text" name="" style="width: 48%;" [(ngModel)]="selectedMandate.auth">
                         </div>
                     </td>
                     <td>
@@ -414,8 +413,7 @@
                             <span style="padding-right: 8px;">
                                 to debit (tick )
                             </span>
-                            <input type="text" name="" style="width: 71%;"
-                                [(ngModel)]="(selectedMandate)?selectedMandate.dubleTick:''">
+                            <input type="text" name="" style="width: 71%;" [(ngModel)]="selectedMandate.dubleTick">
                         </div>
                     </td>
                 </tr>
@@ -433,7 +431,7 @@
             width: 50%;
             ">
                         <div style="display: flex;">
-                            Bank a/c number <div style="display: flex;height: 20px;">
+                            Bank a/c number <div style="display: flex;height: 20px;" *ngIf="accountNumList.length >0">
                                 <span
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[0]}}</span>
                                 <span
@@ -468,19 +466,6 @@
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[15]}}</span>
                                 <span
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[16]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
 
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span><span
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
@@ -508,7 +493,7 @@
                         <div style="display: flex;">
 
                             <span style="padding-right: 8px;"> ifsc</span>
-                            <div style="display: flex;height: 20px;">
+                            <div style="display: flex;height: 20px;" *ngIf="ifscCodeList.length >0">
 
                                 <span
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[0]}}</span>
@@ -540,7 +525,7 @@
                             <span style="padding-right: 8px;">
                                 or MICR
                             </span>
-                            <div style="display: flex;height: 20px;">
+                            <div style="display: flex;height: 20px;" *ngIf="micrNoList.length >0">
 
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[0]}}</span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[1]}}</span>
@@ -551,8 +536,6 @@
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[6]}}</span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[7]}}</span>
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[8]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                             </div>
                         </div>
                     </td>
@@ -575,7 +558,7 @@
                     <td style="
             width: 30%;
             ">
-                        <input type="text" name="" style="width: 95%;" value="₹" [(ngModel)]="details.amount">
+                        <input type="text" name="" style="width: 95%;" value="₹" [(ngModel)]="selectedMandate.amount">
                     </td>
 
                 </tr>
@@ -658,7 +641,7 @@
                             <span style="white-space: nowrap;padding-right: 22px;">
                                 Reference 1 (Mandate Reference No.)
                             </span>
-                            <input type="text" name="" style="width: 100%;" [(ngModel)]="details.uniqueRefNo">
+                            <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.uniqueRefNo">
                         </div>
                     </td>
                     <td style="
@@ -685,7 +668,7 @@
                             <span style="white-space: nowrap;padding-right: 8px;">
                                 Reference 2 (Unique Client Code-UCC)
                             </span>
-                            <input type="text" name="" style="width: 100%;" [(ngModel)]="details.clientCode">
+                            <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.clientCode">
                         </div>
                     </td>
                     <td style="
@@ -802,4 +785,4 @@
     </body>
 
     </html>
-</div> -->
+</div>
