@@ -491,8 +491,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
   domainWhiteLabelling() {
     const dialogRef = this.dialog.open(OpenDomainWhiteLabelPopupComponent, {
-      width: '600px',
-      height: '350px',
+      width: '650px',
+      // height: '350px',
       data: { reportType: '', selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -507,8 +507,8 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
   openMobilePopup() {
     const dialogRef = this.dialog.open(OpenmobilePopupComponent, {
-      width: '600px',
-      height: '350px',
+      width: '650px',
+      // height: '350px',
       data: { reportType: '', selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
