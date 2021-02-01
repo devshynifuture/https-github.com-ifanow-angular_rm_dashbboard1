@@ -320,6 +320,7 @@ export class SupportUpperNjComponent implements OnInit {
 
   unMapMappedNjScheme(element) {
     this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     let obj = {
       id: element.id,
       mutualFundSchemeMasterId: element.mutualFundSchemeMasterId,
@@ -343,6 +344,7 @@ export class SupportUpperNjComponent implements OnInit {
 
   mapUnmappedNJScheme(element) {
     this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
     let obj = {
       id: this.selectedSchemeRes.id,
       mutualFundSchemeMasterId: element.id,
