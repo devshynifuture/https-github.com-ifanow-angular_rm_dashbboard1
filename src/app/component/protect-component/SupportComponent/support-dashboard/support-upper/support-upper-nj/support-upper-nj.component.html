@@ -80,38 +80,41 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="schemeName">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
-                <td class="b-a matInputClass" mat-cell *matCellDef="let element">
+                <th class="b-a w-20" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
+                <td class="b-a matInputClass w-20" mat-cell *matCellDef="let element">
                     <!-- <input class="form-control" matInput
                         (focus)="getFilteredSchemes()">
                          -->
-                    <div *ngIf="isMapped != true">
-                        <mat-form-field appearance="standard" floatLabel="never">
-                            <input class="form-control" matInput placeholder="Search"
-                                (input)="showSuggestionsBasedOnSchemeName(element,$event.target.value)"
-                                aria-label="State" [matAutocomplete]="auto" [formControl]="schemeControl">
-                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
-                                <ng-container *ngIf="!isLoadingForDropDown">
-                                    <mat-option *ngFor="let scheme of filteredSchemes"
-                                        (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme"
-                                        [matTooltip]="scheme.schemeName" matTooltipPosition="after">
-                                        <span><b>{{scheme.schemeName}}</b> </span>
-                                    </mat-option>
-                                </ng-container>
-                            </mat-autocomplete>
-                        </mat-form-field>
+                    <div class="bar">
+                        <div *ngIf="isMapped != true && !isLoading">
+                            <mat-form-field appearance="standard" floatLabel="never">
+                                <input class="form-control" matInput placeholder="Search"
+                                    (input)="showSuggestionsBasedOnSchemeName(element,$event.target.value)"
+                                    aria-label="State" [matAutocomplete]="auto" [formControl]="schemeControl">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                    <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
+                                    <ng-container *ngIf="!isLoadingForDropDown">
+                                        <mat-option *ngFor="let scheme of filteredSchemes"
+                                            (click)="mapSchemeCodeAndOther(element, scheme)" [value]="scheme"
+                                            [matTooltip]="scheme.schemeName" matTooltipPosition="after">
+                                            <span><b>{{scheme.schemeName}}</b> </span>
+                                        </mat-option>
+                                    </ng-container>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="bar" *ngIf="isMapped == true && !isLoading">
+                            {{(isLoading) ? '':element.schemeName}}
+                        </div>
+                        <br>
+                        <ng-container *ngIf="filteredSchemeError && isMapped != true">
+                            <span class="f-12">
+                                {{errorMsg}}
+                            </span>
+                        </ng-container>
                     </div>
 
-                    <div class="bar" *ngIf="isMapped == true">
-                        {{(isLoading) ? '':element.schemeName}}
-                    </div>
-                    <br>
-                    <ng-container *ngIf="filteredSchemeError && isMapped != true">
-                        <span class="f-12">
-                            {{errorMsg}}
-                        </span>
-                    </ng-container>
                 </td>
             </ng-container>
 
