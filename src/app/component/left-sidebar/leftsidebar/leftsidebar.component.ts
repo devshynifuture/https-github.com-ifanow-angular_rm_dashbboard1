@@ -20,6 +20,9 @@ import { MfServiceService } from '../../protect-component/customers/component/cu
 import { CustomerOverviewService } from '../../protect-component/customers/component/customer/customer-overview/customer-overview.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { element } from 'protractor';
+import { OpenDomainWhiteLabelPopupComponent } from './open-domain-white-label-popup/open-domain-white-label-popup.component';
+import { OpenmobilePopupComponent } from './openmobile-popup/openmobile-popup.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-leftsidebar',
@@ -59,8 +62,14 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   visitedTab = '';
   routedAUMReconTabSubs: Subscription;
   roleData: any;
+  element: any;
+  getOrgData: any;
+  showMobileAD: boolean;
+  showDomainAD: boolean;
+  showIosAD: boolean;
 
   constructor(public authService: AuthService, private _eref: ElementRef,
+    public dialog: MatDialog,
     protected eventService: EventService, protected subinject: SubscriptionInject,
     private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
     protected dynamicComponentService: DynamicComponentService,
@@ -310,6 +319,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       data => {
         AuthService.setOrgDetails(data);
         // this.utilService.loader(-1);
+        this.getOrgData = AuthService.getOrgDetails()
+        console.log('getOrgData', this.getOrgData)
+        if (this.getOrgData.completeWhiteLabel == "NA") {
+          this.showMobileAD = true
+        }
+        this.showDomainAD = (this.getOrgData.androidStoreUrl) ? false : true
+        this.showIosAD = (this.getOrgData.iosStoreUrl) ? false : true
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
@@ -472,6 +488,38 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   goHome() {
     AuthService.goHome(this.router);
+  }
+  domainWhiteLabelling() {
+    const dialogRef = this.dialog.open(OpenDomainWhiteLabelPopupComponent, {
+      width: '600px',
+      height: '350px',
+      data: { reportType: '', selectedElement: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      this.close()
+      console.log('The dialog was closed');
+      this.element = result;
+      console.log('result -==', this.element)
+    });
+  }
+  openMobilePopup() {
+    const dialogRef = this.dialog.open(OpenmobilePopupComponent, {
+      width: '600px',
+      height: '350px',
+      data: { reportType: '', selectedElement: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      this.close()
+      console.log('The dialog was closed');
+      this.element = result;
+      console.log('result -==', this.element)
+    });
   }
 }
 
