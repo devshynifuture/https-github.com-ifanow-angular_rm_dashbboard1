@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
@@ -64,6 +64,10 @@ export class AddMandateComponent implements OnInit {
   micrNoList: any[];
   fragmentData = { isSpinner: false };
   returnValue: any;
+  yearArr: any[];
+  MonthArr: any[];
+  dateArr: any[];
+  y: any;
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -71,6 +75,7 @@ export class AddMandateComponent implements OnInit {
     private custumService: CustomerService, private datePipe: DatePipe,
     private utilService: UtilService,
     public utils: UtilService,
+    private cd: ChangeDetectorRef,
     private onlineTransact: OnlineTransactionService, public eventService: EventService,
     private enumDataService: EnumDataService, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
@@ -109,6 +114,7 @@ export class AddMandateComponent implements OnInit {
     //   );
   }
   download(template, titile) {
+    this.cd.detectChanges();
     this.fragmentData.isSpinner = true;
     const para = document.getElementById(template);
     const obj = {
@@ -371,7 +377,9 @@ export class AddMandateComponent implements OnInit {
     this.dataSource = [];
     this.selectedBank = bank;
     this.selectedMandate = bank;
-    this.mandateData(this.selectedMandate)
+    if (this.detailsIIN.aggregatorType == 2) {
+      this.mandateData(this.selectedMandate)
+    }
     this.dataSource.push(bank);
     this.showMandateTable = true;
   }
@@ -382,6 +390,7 @@ export class AddMandateComponent implements OnInit {
     this.micrNoList = []
     Object.assign(this.selectedMandate, { auth: 'BSE Limited' });
     Object.assign(this.selectedMandate, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
+
     if (data.umrnNo) {
       for (var i = 0; i < 21; i++) {
         this.umrn1.push(data.umrnNo.charAt(i))
@@ -402,9 +411,22 @@ export class AddMandateComponent implements OnInit {
         this.micrNoList.push(data.micrNo.charAt(i))
       }
     }
-    // var d = new Date();
-    // var n = d.getMonth();
-    // console.log('umrn', this.umrn1)
+    var d = new Date(this.generalDetails.controls.fromDate.value);
+    var n = d.getMonth();
+    var dd = d.getDate();
+    this.y = d.getFullYear();
+    this.dateArr = []
+    this.MonthArr = []
+    this.yearArr = []
+    this.dateArr.push(d)
+    this.MonthArr.push(n + 1)
+    for (var i = 0; i < 4; i++) {
+      this.yearArr.push(String(this.y).charAt(i))
+    }
+    console.log('date', this.dateArr)
+    console.log('m', this.MonthArr)
+    console.log('m', this.yearArr)
+
   }
   createMandates() {
     if (!this.selectedMandate) {
