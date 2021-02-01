@@ -305,7 +305,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       if (this.showIosAD == false && this.showMobileAD == false) {
         this.openMobilePopup()
       }
-    }, 30000);
+    }, 300000);
   }
 
   ngOnDestroy() {
@@ -326,10 +326,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         this.getOrgData = AuthService.getOrgDetails()
         console.log('getOrgData', this.getOrgData)
         if (this.getOrgData.completeWhiteLabel == "NA") {
-          this.showMobileAD = true
+          this.showDomainAD = true
         }
-        this.showDomainAD = (this.getOrgData.androidStoreUrl) ? false : true
-        this.showIosAD = (this.getOrgData.iosStoreUrl) ? false : true
+        this.showMobileAD = (this.getOrgData.androidStoreUrl) ? true : false
+        this.showIosAD = (this.getOrgData.iosStoreUrl) ? true : false
+        console.log('this.showDomainAD', this.showDomainAD)
+        console.log('this.showIosAD', this.showIosAD)
+        console.log('this.showMobileAD', this.showMobileAD)
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');

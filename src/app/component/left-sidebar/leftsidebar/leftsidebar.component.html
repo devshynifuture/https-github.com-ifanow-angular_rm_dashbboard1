@@ -333,14 +333,15 @@
         <a class="sidenav-link" mat-list-item>
           <img class="t-9" src="assets/images/svg/bell.svg">
         </a>
-        <a class="sidenav-link" mat-list-item>
+        <a class="sidenav-link" mat-list-item
+          *ngIf="!enumDataService.PRODUCTION && (showIosAD == false && showMobileAD == false) || (showDomainAD ==true)">
           <img class="t-10 c-p" src="assets/images/svg/info-black.svg" [matMenuTriggerFor]="popupMenu">
 
           <mat-menu #popupMenu="matMenu" class="minwidth-300">
-            <button *ngIf="showIosAD == true || showMobileAD== true " (click)="openMobilePopup()" mat-menu-item>
+            <button *ngIf="showIosAD == false && showMobileAD == false" (click)="openMobilePopup()" mat-menu-item>
               Mobile app
             </button>
-            <button *ngIf="showDomainAD == true" (click)="domainWhiteLabelling()" mat-menu-item>
+            <button *ngIf="showDomainAD ==true" (click)="domainWhiteLabelling()" mat-menu-item>
               Domain
             </button>
           </mat-menu>
