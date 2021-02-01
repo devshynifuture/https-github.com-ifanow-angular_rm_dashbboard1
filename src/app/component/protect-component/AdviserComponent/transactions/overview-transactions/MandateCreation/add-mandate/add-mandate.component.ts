@@ -62,10 +62,14 @@ export class AddMandateComponent implements OnInit {
   accountNumList: any[];
   ifscCodeList: any[];
   micrNoList: any[];
+  fragmentData = { isSpinner: false };
+  returnValue: any;
+
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTrasaction: ProcessTransactionService,
     private custumService: CustomerService, private datePipe: DatePipe,
+    private utilService: UtilService,
     public utils: UtilService,
     private onlineTransact: OnlineTransactionService, public eventService: EventService,
     private enumDataService: EnumDataService, private peopleService: PeopleService) {
@@ -75,8 +79,15 @@ export class AddMandateComponent implements OnInit {
   accountTypes: any = [];
   ngOnInit() {
     this.selectedMandate = {}
+    this.umrn1 = []
+    this.accountNumList = []
+    this.ifscCodeList = []
+    this.micrNoList = []
     Object.assign(this.selectedMandate, { auth: 'BSE Limited' });
     Object.assign(this.selectedMandate, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
+    Object.assign(this.selectedMandate, { uniqueRefNo: '' });
+    Object.assign(this.selectedMandate, { clientCode: '' });
+    Object.assign(this.selectedMandate, { amount: '' });
     this.getdataForm('');
     this.showUploadSection = false;
     this.clientCodeDataShow = false;
@@ -97,7 +108,21 @@ export class AddMandateComponent implements OnInit {
     //     }),
     //   );
   }
-
+  download(template, titile) {
+    this.fragmentData.isSpinner = true;
+    const para = document.getElementById(template);
+    const obj = {
+      htmlInput: para.innerHTML,
+      name: titile,
+      landscape: true,
+      key: '',
+      svg: ''
+    };
+    let header = null
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, titile, false, this.fragmentData, '', '', true);
+    console.log('return value ====', this.returnValue);
+    return obj;
+  }
   searchClientFamilyMember(value) {
     if (value.length <= 2) {
       this.nomineesListFM = undefined
@@ -355,24 +380,25 @@ export class AddMandateComponent implements OnInit {
     this.accountNumList = []
     this.ifscCodeList = []
     this.micrNoList = []
+    Object.assign(this.selectedMandate, { auth: 'BSE Limited' });
+    Object.assign(this.selectedMandate, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
     if (data.umrnNo) {
-      var umrnList = data.umrnNo.length
-      for (var i = 0; i < umrnList; i++) {
+      for (var i = 0; i < 21; i++) {
         this.umrn1.push(data.umrnNo.charAt(i))
       }
     }
     if (data.accountNo) {
-      for (var i = 0; i < data.accountNo.length; i++) {
+      for (var i = 0; i < 16; i++) {
         this.accountNumList.push(data.accountNo.charAt(i))
       }
     }
     if (data.ifscCode) {
-      for (var i = 0; i < data.ifscCode.length; i++) {
+      for (var i = 0; i < 11; i++) {
         this.ifscCodeList.push(data.ifscCode.charAt(i))
       }
     }
     if (data.micrNo) {
-      for (var i = 0; i < data.micrNo.length; i++) {
+      for (var i = 0; i < 9; i++) {
         this.micrNoList.push(data.micrNo.charAt(i))
       }
     }
