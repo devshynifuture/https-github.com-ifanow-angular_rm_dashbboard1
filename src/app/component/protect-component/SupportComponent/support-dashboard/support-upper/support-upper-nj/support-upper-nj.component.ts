@@ -319,6 +319,7 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   unMapMappedNjScheme(element) {
+    this.isLoading = true;
     let obj = {
       id: element.id,
       mutualFundSchemeMasterId: element.mutualFundSchemeMasterId,
@@ -327,6 +328,7 @@ export class SupportUpperNjComponent implements OnInit {
     console.log(obj);
     this.supportUpperService.postUnmapUnmappedNjPrudentScheme(obj)
       .subscribe(res => {
+        this.isLoading = false;
         if (res) {
           console.log(res);
           element.isMapped = false;
@@ -340,6 +342,7 @@ export class SupportUpperNjComponent implements OnInit {
   }
 
   mapUnmappedNJScheme(element) {
+    this.isLoading = true;
     let obj = {
       id: this.selectedSchemeRes.id,
       mutualFundSchemeMasterId: element.id,
@@ -350,6 +353,7 @@ export class SupportUpperNjComponent implements OnInit {
 
     this.supportUpperService.postMapUnmappedNjPrudentScheme(obj)
       .subscribe(res => {
+        this.isLoading = false;
         if (res) {
           console.log(res);
           element.isMapped = true;

@@ -37,7 +37,7 @@ export class AssetsComponent implements OnInit {
     { name: 'Cash & Bank', viewmode: 'tab7', count: 0, link: '/customer/detail/account/assets/cash_bank', tabName: 'cashAndBank' },
     { name: 'Commodities', viewmode: 'tab8', count: 0, link: '/customer/detail/account/assets/commodities', tabName: 'commodities' },
     { name: 'Other assets', viewmode: 'tab9', count: 0, link: '/customer/detail/account/assets/others', tabName: 'otherAsset' },
-    { name: 'Sovereign gold bonds ', viewmode: 'tab10', count: 0, link: '/customer/detail/account/assets/sgb', tabName: 'sovereignGoldBond' },
+    // { name: 'Sovereign gold bonds ', viewmode: 'tab10', count: 0, link: '/customer/detail/account/assets/sgb', tabName: 'sovereignGoldBond' },
 
     // { name: 'Gold bonds', viewmode: 'tab10', count: 0, link: './sgb', tabName: 'goldBonds' }
   ];
@@ -209,9 +209,9 @@ export class AssetsComponent implements OnInit {
       if (data.value == 'otherAsset') {
         this.assetSideBarData[8].count = this.assetSideBarData[8].count + 1;
       }
-      if (data.value == 'sovereignGoldBond') {
-        this.assetSideBarData[9].count = this.assetSideBarData[9].count + 1;
-      }
+      // if (data.value == 'sovereignGoldBond') {
+      //   this.assetSideBarData[9].count = this.assetSideBarData[9].count + 1;
+      // }
     } else {
       if (data.value == 'STOCKS') {
         this.assetSideBarData[1].count = this.assetSideBarData[1].count - 1;
@@ -240,9 +240,9 @@ export class AssetsComponent implements OnInit {
       if (data.value == 'otherAsset') {
         this.assetSideBarData[8].count = this.assetSideBarData[8].count - 1;
       }
-      if (data.value == 'sovereignGoldBond') {
-        this.assetSideBarData[9].count = this.assetSideBarData[9].count - 1;
-      }
+      // if (data.value == 'sovereignGoldBond') {
+      //   this.assetSideBarData[9].count = this.assetSideBarData[9].count - 1;
+      // }
     }
   }
 
@@ -299,7 +299,7 @@ export class AssetsComponent implements OnInit {
       commodities,
       mutual_fund,
       otherAsset,
-      sovereignGoldBond
+      // sovereignGoldBond
     } = data;
     // this.assetSideBarData[0].count = mutual_fund;
     // this.assetSideBarData[1].count = STOCKS;
@@ -338,9 +338,9 @@ export class AssetsComponent implements OnInit {
       if (element.tabName == 'otherAsset') {
         element.count = otherAsset
       }
-      if (element.tabName == 'sovereignGoldBond') {
-        element.count = sovereignGoldBond ? sovereignGoldBond : 0;
-      }
+      // if (element.tabName == 'sovereignGoldBond') {
+      //   element.count = sovereignGoldBond ? sovereignGoldBond : 0;
+      // }
     })
   }
   clickable(value) {
