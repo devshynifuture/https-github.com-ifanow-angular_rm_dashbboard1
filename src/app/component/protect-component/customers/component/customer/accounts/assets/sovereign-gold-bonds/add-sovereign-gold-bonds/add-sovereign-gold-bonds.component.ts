@@ -571,7 +571,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     if (this.bondSeriesList) {
       let price = this.bondSeriesList.filter(x => x.seriesName == data);
       this.goldBondForm.get("issuePrice").setValue(price[0].retailPrice);
-      this.goldBondForm.get("issueDate").setValue(price[0].issueDate);
+      this.goldBondForm.get("issueDate").setValue(new Date(price[0].issueDate));
     }
     this.calUnits();
   }
