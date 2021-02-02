@@ -19,6 +19,9 @@ import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscriptio
 import { OrgProfileComponent } from '../setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 import { FeviconUrlComponent } from './fevicon-url/fevicon-url.component';
 import { EmailVerificationPopupComponent } from './email-verification-popup/email-verification-popup.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { join } from 'path';
 
 @Component({
   selector: 'app-setting-preference',
@@ -32,6 +35,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     private eventService: EventService,
     public dialog: MatDialog,
     private fb: FormBuilder,
+    public route: ActivatedRoute,
+    private router: Router,
     private peopleService: PeopleService, private settingsService: SettingsService) {
 
     this.advisorId = AuthService.getAdvisorId();
