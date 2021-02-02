@@ -42,9 +42,10 @@ export class OpenmobilePopupComponent implements OnInit {
           this.close()
           this.callBack = null;
         }
-        this.close()
       }, err => {
+        this.close()
         this.callBack = null;
+        this.eventService.openSnackBar(err, 'Dismiss');
         console.error(err);
       });
   }
