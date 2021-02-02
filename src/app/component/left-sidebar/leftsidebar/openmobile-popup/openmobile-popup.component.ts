@@ -36,11 +36,13 @@ export class OpenmobilePopupComponent implements OnInit {
         if (res) {
           console.log(res);
           this.callBack = res;
-          this.dialogRef.close()
+          this.close()
           this.eventService.openSnackBarNoDuration('Request forwarded Successfully', 'Dismiss');
         } else {
+          this.close()
           this.callBack = null;
         }
+        this.close()
       }, err => {
         this.callBack = null;
         console.error(err);
