@@ -265,8 +265,8 @@
             <app-progress-button *ngIf="showUploadSection ==false" (click)="createMandates()"
                 [options]="barButtonOptions" class="br-0 text-inherit ">
             </app-progress-button>
-            <button (click)="download('template','Mandate')" class="btn-bottom br-0 text-inherit ml-16"
-                mat-button>Download</button>
+            <button *ngIf="showMandateTable == true" (click)="download('template','Mandate')"
+                class="btn-bottom br-0 text-inherit ml-16" mat-button>Download</button>
             <button *ngIf="showUploadSection" (click)="closeRightSlider(true)" class="btn-bottom br-0 text-inherit"
                 mat-button>CLOSE</button>
 
