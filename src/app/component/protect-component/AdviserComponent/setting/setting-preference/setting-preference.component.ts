@@ -26,6 +26,7 @@ import { EmailVerificationPopupComponent } from './email-verification-popup/emai
   styleUrls: ['./setting-preference.component.scss']
 })
 export class SettingPreferenceComponent implements OnInit, OnDestroy {
+  getVerifiedList: any;
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -129,9 +130,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   getEmailListRes(data) {
+    this.getVerifiedList = []
     if (data && data.length > 0) {
       this.emailList = data;
-    } else {
+      this.getVerifiedList.filter(element => element.emailVerificationStatus == 1);
+    } else if (this.getVerifiedList.length == 0) {
       const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
         width: '650px',
         data: { reportType: '', selectedElement: '' }
