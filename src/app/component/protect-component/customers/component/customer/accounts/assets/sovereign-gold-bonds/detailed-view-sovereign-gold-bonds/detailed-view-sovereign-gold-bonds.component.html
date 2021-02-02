@@ -1,7 +1,7 @@
 <div class="popup-header-fix-35">
   <div class="row bb-1">
     <div class="col-md-10 p-0">
-      <h4 class="mb-0 wrapper-20">NPS - Detailed view</h4>
+      <h4 class="mb-0 wrapper-20">Sovereign gold bonds - Detailed view</h4>
     </div>
     <div class="col-md-2 text-left">
       <div class="wrapper-12">
@@ -69,7 +69,7 @@
             Interest rate
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.interestRate ? '%':''}}<span appFormatNumber>{{data.interestRate ? data.interestRate:'-'}}</span>
+            <span appFormatNumber>{{data.interestRate ? data.interestRate:'-'}}</span> {{data.interestRate ? '%':''}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -104,12 +104,12 @@
             XIRR (as on date)
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.xirr ? '%':''}}<span appFormatNumber>{{data.xirr ? data.xirr:'-'}}</span>
+            <span>{{data.xirr ? data.xirr:'-'}}</span>{{data.xirr ? '%':''}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
           <div class="col-md-8 text-left f-14 roboto p-0">
-            Maturity amount
+            Maturity value
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
             {{data.maturityValue ? '₹':''}}<span appFormatNumber>{{data.maturityValue ? data.maturityValue:'-'}}</span>
@@ -145,7 +145,7 @@
             {{data.description ? data.description:'-'}}
           </div>
         </div>
-        <div class="row bb p-8 b-l br">
+        <div class="row bb p-8 b-l br" *ngIf="!noDoc">
           <div *ngIf="!noDoc" class="col-md-8 text-left f-14 roboto p-0">
             Document
           </div>
@@ -195,6 +195,42 @@
         </div>
       </div>
 
+      <h4 class="mt-32 mb-10">Transaction details</h4>
+      <div class="insurance-ui bt">
+        <div *ngFor="let item of data.sovereignGoldTransactionList ; let i = index">
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Transaction type{{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0">
+              {{'Redemption' }}
+            </div>
+          </div>
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Transaction date{{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0">
+              <span>{{(item.transactionDate) ? (item.transactionDate | date : 'dd/MM/yyyy') : '-'}}</span>
+            </div>
+          </div>
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Units {{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0"><span>{{(item.unit) ? item.unit : '-'}}</span>
+            </div>
+          </div>
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Amount {{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0">
+              {{(item.amount) ? '₹' : ''}}<span appFormatNumber>{{(item.amount) ? item.amount : '-'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
