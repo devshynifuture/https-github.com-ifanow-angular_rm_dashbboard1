@@ -72,6 +72,7 @@ export class EmailOnlyComponent implements OnInit {
   };
   emailLists: any;
   element: any;
+  getVerifiedList: any;
 
   @Input() set data(inputData) {
     this.emailTemplateGroup = this.fb.group({
@@ -158,7 +159,7 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.emailLists = []
+    this.getVerifiedList = []
     // this.getEmailTemplate();
     //this.getAllEmails();
     this.getEmailList()
@@ -180,10 +181,13 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   getEmailListRes(data) {
+    this.getVerifiedList = []
     if (data && data.length > 0) {
       this.emailLists = data;
       this._inputData.fromEmail = data[0].emailAddress;
-    } else {
+      this.getVerifiedList = this.emailLists.filter(element => element.emailVerificationStatus == 1);
+    }
+    if (this.getVerifiedList.length == 0) {
       this.emailLists = []
       const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
         width: '650px',
@@ -192,6 +196,8 @@ export class EmailOnlyComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result == undefined) {
           return
+        } else {
+          this.close(false)
         }
         this.close(false)
         console.log('The dialog was closed');
