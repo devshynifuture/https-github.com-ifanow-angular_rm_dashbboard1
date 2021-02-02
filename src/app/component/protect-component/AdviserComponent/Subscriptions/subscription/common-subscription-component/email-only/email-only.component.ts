@@ -158,6 +158,7 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.emailLists = []
     // this.getEmailTemplate();
     //this.getAllEmails();
     this.getEmailList()
