@@ -196,36 +196,38 @@
       </div>
 
       <h4 class="mt-32 mb-10">Transaction details</h4>
-      <div *ngFor="let item of data.sovereignGoldTransactionList ; let i = index">
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Transaction type{{i + 1}}
+      <div class="insurance-ui bt">
+        <div *ngFor="let item of data.sovereignGoldTransactionList ; let i = index">
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Transaction type{{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0">
+              {{'Redemption' }}
+            </div>
           </div>
-          <div class="col-md-4  text-right f-14 roboto p-0">
-            {{'Redemption' }}
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Transaction date{{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0">
+              <span>{{(item.transactionDate) ? (item.transactionDate | date : 'dd/MM/yyyy') : '-'}}</span>
+            </div>
           </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Transaction date{{i + 1}}
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Units {{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0"><span>{{(item.unit) ? item.unit : '-'}}</span>
+            </div>
           </div>
-          <div class="col-md-4  text-right f-14 roboto p-0">
-            <span>{{(item.transactionDate) ? (item.transactionDate | date : 'dd/MM/yyyy') : '-'}}</span>
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Units {{i + 1}}
-          </div>
-          <div class="col-md-4  text-right f-14 roboto p-0"><span>{{(item.unit) ? item.unit : '-'}}</span>
-          </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-          <div class="col-md-8 text-left f-14 roboto p-0">
-            Amount {{i + 1}}
-          </div>
-          <div class="col-md-4  text-right f-14 roboto p-0">
-            {{(item.amount) ? '₹' : ''}}<span appFormatNumber>{{(item.amount) ? item.amount : '-'}}</span>
+          <div class="row bb p-8 b-l br">
+            <div class="col-md-8 text-left f-14 roboto p-0">
+              Amount {{i + 1}}
+            </div>
+            <div class="col-md-4  text-right f-14 roboto p-0">
+              {{(item.amount) ? '₹' : ''}}<span appFormatNumber>{{(item.amount) ? item.amount : '-'}}</span>
+            </div>
           </div>
         </div>
       </div>
