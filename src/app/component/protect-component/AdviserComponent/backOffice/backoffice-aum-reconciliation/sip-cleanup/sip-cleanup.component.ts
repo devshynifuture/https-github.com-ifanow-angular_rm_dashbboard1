@@ -133,7 +133,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
 
   initPoint() {
     this.filterForm = this.fb.group({
-      activeCeased: [-1],
+      activeCeased: [1],
       markUnmark: [0],
       brokerCode: [-1],
     });

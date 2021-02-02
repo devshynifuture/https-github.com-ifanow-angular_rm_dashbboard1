@@ -508,11 +508,11 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   redeem() {
-    if (this.barButtonOptions.active) {
-      return;
-    }
-    this.barButtonOptions.active = true;
     if (this.validateSingleTransaction()) {
+      if (this.barButtonOptions.active) {
+        return;
+      }
+      this.barButtonOptions.active = true;
       const obj = this.getSingleTransactionJson();
       if (this.multiTransact == true) {
         this.AddMultiTransaction();

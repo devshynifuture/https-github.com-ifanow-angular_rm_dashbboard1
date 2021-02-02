@@ -257,7 +257,7 @@
         <div class="col-md-2">
             <h5 (click)="closeRightSlider(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
-        <div class="col-md-10 right text-right">
+        <div class="col-md-10 full-end">
             <!--      <h6>{{errorMsg}}</h6>-->
             <!-- (click)="createMandate()" removed for prod build -->
             <!-- <button (click)="createMandates()" class="btn-bottom br-0 text-inherit" mat-button>SAVE</button> -->
@@ -265,7 +265,7 @@
             <app-progress-button *ngIf="showUploadSection ==false" (click)="createMandates()"
                 [options]="barButtonOptions" class="br-0 text-inherit ">
             </app-progress-button>
-            <button (click)="download('template','Mandate')" class="btn-bottom br-0 text-inherit"
+            <button (click)="download('template','Mandate')" class="btn-bottom br-0 text-inherit ml-16"
                 mat-button>Download</button>
             <button *ngIf="showUploadSection" (click)="closeRightSlider(true)" class="btn-bottom br-0 text-inherit"
                 mat-button>CLOSE</button>
@@ -275,7 +275,7 @@
     </div>
 </div>
 
-<div id="template">
+<div id="template" class="hide">
     <html>
 
     <head></head>
@@ -292,13 +292,60 @@
                                         DEBIT
                                         MANDATE INSTRUCTION FORM
                                     </td>
-                                    <td>
-                                        <div style="display: flex;height: 20px;" *ngIf="umrn1.length >0">
-                                            <span style="padding-right: 12px;"> UMRN</span>
+                                    <td style="width: 4%;">UMRN</td>
+                                    <td style="width: 50%;">
+                                        <table style="width: 100%;border-collapse: collapse;">
+                                            <tr>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[1]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[2]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[3]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[4]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[5]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[6]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[7]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[8]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[9]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[10]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[11]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[12]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[13]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[14]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[15]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[16]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[17]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[18]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[19]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[20]}}</td>
+                                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;">
+                                                    {{umrn1[21]}}</td>
+                                            </tr>
+                                        </table>
+                                        <!-- <div style="display: flex;height: 20px;" >
+                                          
                                             <span
-                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[0]}}</span>
+                                                >{{umrn1[0]}}</span>
                                             <span
-                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[1]}}</span>
+                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                                             <span
                                                 style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[2]}}</span>
                                             <span
@@ -339,7 +386,7 @@
                                                 style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[20]}}</span>
                                             <span
                                                 style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{umrn1[21]}}</span>
-                                        </div>
+                                        </div> -->
                                     </td>
                                     <td>
                                         <div style="display: flex;height: 20px;">
@@ -365,27 +412,24 @@
             <tbody>
                 <tr>
                     <td style="
-            width: 22%;
+            width: 11%;
             ">
-                        Tick ( )
+                        Tick (<img
+                            src="https://res.cloudinary.com/futurewise/image/upload/v1612176431/logos/right_weq5al.svg"
+                            style="width: 10px;">)
                     </td>
+                    <td style="width: 8%;font-size: 13px;"> Sponsor Bank Code</td>
                     <td style="
-            width: 50%;
+            width: 30%;
             ">
-                        <div style="display: flex;">
-                            <span style="padding-right: 8px;">
-                                Sponsor Bank Code
-                            </span>
-                            <input type="text" name="" style="width: 48%;">
-                        </div>
+
+
+                        <input type="text" name="" style="width: 95%;">
+
                     </td>
-                    <td>
-                        <div style="display: flex;">
-                            <span style="padding-right: 8px;">
-                                Utility Code
-                            </span>
-                            <input type="text" name="" style="width: 71%;">
-                        </div>
+                    <td style="width: 7%;font-size: 13px;"> Utility Code</td>
+                    <td style="width: 30%;">
+                        <input type="text" name="" style="width: 95%;">
                     </td>
                 </tr>
             </tbody>
@@ -394,27 +438,27 @@
             <tbody>
                 <tr>
                     <td style="
-            width: 22%;
+            width: 11%;
             ">
                         CREATE
                     </td>
+                    <td style="width: 9%;font-size: 13px;"> I/We hereby authorize</td>
                     <td style="
-            width: 50%;
+            width: 28%;
             ">
-                        <div style="display: flex;">
-                            <span style="padding-right: 8px;">
-                                I/We hereby authorize
-                            </span>
-                            <input type="text" name="" style="width: 48%;" [(ngModel)]="selectedMandate.auth">
-                        </div>
+
+
+                        <input type="text" name="" style="width: 95%;" [(ngModel)]="selectedMandate.auth">
+
                     </td>
-                    <td>
-                        <div style="display: flex;">
-                            <span style="padding-right: 8px;">
-                                to debit (tick )
-                            </span>
-                            <input type="text" name="" style="width: 71%;" [(ngModel)]="selectedMandate.dubleTick">
-                        </div>
+                    <td style="width: 8%;font-size: 13px;"> to debit (tick <img
+                            src="https://res.cloudinary.com/futurewise/image/upload/v1612176431/logos/right_weq5al.svg"
+                            style="width: 10px;">
+                        )</td>
+                    <td style="width: 30%;">
+
+                        <input type="text" name="" style="width: 95%;" [(ngModel)]="selectedMandate.dubleTick">
+
                     </td>
                 </tr>
             </tbody>
@@ -423,15 +467,71 @@
             <tbody>
                 <tr>
                     <td style="
-            width: 16%;
+            width: 8.5%;
             ">
                         CANCEL
                     </td>
+                    <td style="width: 6%;font-size: 13px;"> Bank a/c number</td>
                     <td style="
             width: 50%;
             ">
-                        <div style="display: flex;">
-                            Bank a/c number <div style="display: flex;height: 20px;" *ngIf="accountNumList.length >0">
+                        <table style="width: 100%;border-collapse: collapse;">
+                            <tr *ngIf="accountNumList.length >0">
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[0]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[1]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[2]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[3]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[4]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[5]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[6]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[7]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[8]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[9]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[10]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[11]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[12]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[13]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[14]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[15]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align:center;font-size:13px;">
+                                    {{accountNumList[16]}}</td>
+                            </tr>
+                        </table>
+                        <!-- <div style="display: flex;">
+                            <div style="display: flex;height: 20px;" *ngIf="accountNumList.length >0">
                                 <span
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{accountNumList[0]}}</span>
                                 <span
@@ -470,7 +570,7 @@
                                 <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span><span
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                             </div>
-                        </div>
+                        </div> -->
                     </td>
 
                 </tr>
@@ -480,19 +580,46 @@
             <tbody>
                 <tr>
                     <td style="
-            width: 22%;
-            ">
-                        <span style="padding-right: 8px;">
-                            with Bank
-                        </span>
-                        <input type="text" name="" style="width: 48%;">
-                    </td>
-                    <td style="
-            width: 50%;
-            ">
-                        <div style="display: flex;">
+            width: 13%;
+            "> with Bank
 
-                            <span style="padding-right: 8px;"> ifsc</span>
+
+                    </td>
+                    <td style="width: 30%;"> <input type="text" name="" style="width: 95%;"></td>
+                    <td style="width:4%">ifsc</td>
+                    <td style="
+            width: 30%;
+            ">
+                        <table style="width: 95%;border-collapse: collapse;">
+                            <tr *ngIf="ifscCodeList.length >0">
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[0]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[1]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[2]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[3]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[4]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[5]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[6]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[7]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[8]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width:10px;text-align: center;">
+                                    {{ifscCodeList[9]}}</td>
+                                <td style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;">
+                                    {{ifscCodeList[10]}}</td>
+
+                            </tr>
+                        </table>
+                        <!-- <div style="display: flex;">
+
+                           
                             <div style="display: flex;height: 20px;" *ngIf="ifscCodeList.length >0">
 
                                 <span
@@ -518,26 +645,56 @@
                                 <span
                                     style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{ifscCodeList[10]}}</span>
                             </div>
-                        </div>
+                        </div> -->
                     </td>
-                    <td>
-                        <div style="display: flex;">
-                            <span style="padding-right: 8px;">
-                                or MICR
-                            </span>
+                    <td style="width: 5%;font-size: 13px;"> or MICR</td>
+                    <td style="width: 30%;">
+                        <table style="width: 95%;border-collapse: collapse;">
+                            <tr>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[0]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[1]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[2]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[3]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[4]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[5]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[6]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[7]}}</td>
+                                <td
+                                    style="border: 1px solid rgb(118, 118, 118);width: 10px;text-align: center;font-size: 12px;">
+                                    {{micrNoList[8]}}</td>
+                            </tr>
+                        </table>
+                        <!-- <div style="display: flex;">
+                          
                             <div style="display: flex;height: 20px;" *ngIf="micrNoList.length >0">
 
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[0]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[1]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[2]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[3]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[4]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[5]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[6]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[7]}}</span>
-                                <span style="border: 1px solid rgb(118, 118, 118);width: 20px;">{{micrNoList[8]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[0]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[1]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[2]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[3]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[4]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[5]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[6]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[7]}}</span>
+                                <span style="border: 1px solid rgb(118, 118, 118);width: 10px;">{{micrNoList[8]}}</span>
                             </div>
-                        </div>
+                        </div> -->
                     </td>
                 </tr>
             </tbody>
@@ -546,17 +703,16 @@
             <tbody>
                 <tr>
                     <td style="
-            width: 70%;
-            ">
-                        <div style="display: flex;">
-                            <span style="white-space: nowrap;padding-right: 8px;">
-                                an amount of Rupees
-                            </span>
-                            <input type="text" name="" style="width: 100%;">
-                        </div>
+            width: 11%;
+            "> an amount of Rupees
                     </td>
+                    <td style="width: 50%;">
+                        <input type="text" name="" style="width: 95%;">
+                    </td>
+
+
                     <td style="
-            width: 30%;
+            width: 25%;
             ">
                         <input type="text" name="" style="width: 95%;" value="₹" [(ngModel)]="selectedMandate.amount">
                     </td>
@@ -568,63 +724,43 @@
         <table style="width: 100%;margin-top: 5px;">
             <tbody>
                 <tr>
-                    <td style="
-            width: 70%;
-            align-items: center;
-            justify-content: center;
-            ">
+                    <td style="width: 5%;">
+                        FREQUENCY
+
+                    </td>
+                    <td style="width: 40%;">
                         <div style="display: flex;align-items: center;">
-                            <span style="white-space: nowrap;">
-                                FREQUENCY
-                            </span>
 
 
 
-                            <input type="checkbox" name="" style="
-    height: 18px;
-    width: 18px;
-    /* border-radius: 0px; */
-">Mthly
+
+                            <input type="checkbox" name="" style="padding: 15px;">Mthly
 
 
-                            <input type="checkbox" name="" style="
-    height: 18px;
-    width: 18px;
-">H-Yrly
+                            <input type="checkbox" name="" style="padding: 15px;">H-Yrly
 
 
-                            <input type="checkbox" name="" style="
-    height: 18px;
-    width: 18px;
-">Yrly
+                            <input type="checkbox" name="" style="padding: 15px;">Yrly
 
 
-                            <input type="checkbox" name="" style="
-    height: 18px;
-    width: 18px;
-">As &amp; when presented
+                            <input type="checkbox" name="" style="padding: 15px;">As &amp; when presented
                         </div>
                     </td>
                     <td style="
-            width: 30%;
-            ">
+            width: 7%;
+            "> DEBIT TYPE
+
+                    </td>
+                    <td style="width:30%;">
                         <div style="display: flex;align-items: center;">
-                            <span style="white-space: nowrap;">
-                                DEBIT TYPE
-                            </span>
 
 
 
-                            <input type="checkbox" name="" style="
-    height: 18px;
-    width: 18px;
-">Fixed Amount
+
+                            <input type="checkbox" name="" style="padding: 15px;">Fixed Amount
 
 
-                            <input type="checkbox" name="" style="
-    height: 18px;
-    width: 18px;
-">Maximum Amount
+                            <input type="checkbox" name="" style="padding: 15px;">Maximum Amount
                         </div>
                     </td>
 
@@ -634,58 +770,51 @@
         <table style="width: 100%;margin-top: 5px;">
             <tbody>
                 <tr>
-                    <td style="
-            width: 60%;
+                    <td style="width: 22%;
+            
             ">
-                        <div style="display: flex;">
-                            <span style="white-space: nowrap;padding-right: 22px;">
-                                Reference 1 (Mandate Reference No.)
-                            </span>
-                            <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.uniqueRefNo">
-                        </div>
-                    </td>
-                    <td style="
-            width: 40%;
-            ">
-                        <div style="display: flex;">
-                            <span style="white-space: nowrap;padding-right: 8px;padding-left: 12px;">
-                                Phone No
-                            </span>
-                            <input type="text" name="" style="width: 95%;">
-                        </div>
-                    </td>
+                        Reference 1 (Mandate Reference No.)
 
+                    </td>
+                    <td style="width: 35%;">
+                        <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.uniqueRefNo">
+                    </td>
+                    <td style="
+            width: 7%;text-align: center;
+            ">Phone No
+
+                    </td>
+                    <td style="width: 35%;">
+                        <input type="text" name="" style="width: 100%;">
+                    </td>
                 </tr>
                 <tr style="
     padding-top: 10px;
     margin-top: 5px;
 ">
                     <td style="
-            width: 60%;
-            padding-top: 5px;
+            
+            padding-top: 5px;width: 22%;
             ">
-                        <div style="display: flex;">
-                            <span style="white-space: nowrap;padding-right: 8px;">
-                                Reference 2 (Unique Client Code-UCC)
-                            </span>
-                            <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.clientCode">
-                        </div>
+                        Reference 2 (Unique Client Code-UCC)
+
+                    </td>
+                    <td style="width: 35%;">
+                        <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.clientCode">
                     </td>
                     <td style="
-            width: 40%;
-            padding-top: 5px;
-            ">
-                        <div style="display: flex;">
-                            <span style="white-space: nowrap;padding-right: 8px;padding-left: 16px;">
-                                Email ID
-                            </span>
-                            <input type="text" name="" style="width: 95%;">
-                        </div>
+           
+            padding-top: 5px;width: 7%;text-align: center;
+            "> Email ID
+
+                    </td>
+                    <td style="width: 35%;">
+                        <input type="text" name="" style="width: 100%;">
                     </td>
 
                 </tr>
                 <tr>
-                    <td colspan="2" style="
+                    <td colspan="4" style="
     padding-top: 5px;
 ">I agree for the debit of mandate processing charges by the bank whom I am authorizing to debit my account as per
                         latest schedule of charges of the bank.</td>
@@ -695,16 +824,19 @@
         <table style="width: 100%;margin-top: 5px;">
             <tbody>
                 <tr>
-                    <td rowspan="2" style="
+                    <td style="
     border: 1px solid rgb(118, 118, 118);
-    padding: 5px;
-">PERIOD
-                        <table>
+    padding: 5px;width: 40%;
+">
+                        <table style="width: 300px;">
                             <tbody>
                                 <tr>
-                                    <td>From</td>
-                                    <td>
-                                        <div style="display: flex;height: 20px;">
+                                    <td>PERIOD</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 5%;">From</td>
+                                    <td style="width: 95%;">
+                                        <!-- <div style="display: flex;height: 20px;">
                                             <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                                             <span
                                                 style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
@@ -713,40 +845,93 @@
                                                 style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
                                             <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                                             <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                        </div>
+                                        </div> -->
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{(dateArr.length == 2)?dateArr[0]:0}}
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{(dateArr.length == 2)?dateArr[0]:dateArr[1]}}
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{(MonthArr.length == 2)?MonthArr[0]:0}}
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{(MonthArr.length == 2)?MonthArr[0]:MonthArr[1]}}
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{yeararr[0]}}
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{yeararr[1]}}
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{yeararr[2]}}
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    {{yeararr[3]}}
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>To</td>
-                                    <td>
-                                        <div style="display: flex;height: 20px;">
-                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                            <span
-                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
-                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                            <span
-                                                style="border: 1px solid rgb(118, 118, 118);width: 20px;margin-right: 10px;"></span>
-                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                            <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
-                                        </div>
+                                    <td style="width: 5%;">To</td>
+                                    <td style="width: 95%;">
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                </td>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Or</td>
-                                    <td>
-                                        <div style="display: flex;height: 20px;">
+                                    <td style="width: 5%;">Or</td>
+                                    <td style="width: 90%;">
+                                        <!-- <div style="display: flex;height: 20px;">
                                             <span style="border: 1px solid rgb(118, 118, 118);width: 20px;"></span>
                                             <span style="padding-left: 8px;">Until Cancelled</span>
-                                        </div>
+                                        </div> -->
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                </td>
+                                                <td>Until
+                                                    Cancelled</td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        <table style="width: 100%;">
+
+                    <td style="width: 40%;">
+                        <table style="width: 80%;">
                             <tbody>
                                 <tr>
                                     <td style="padding-left: 18px;padding-bottom: 10px;">

@@ -265,192 +265,206 @@
         </td>
       </tr>
       <tr>
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Broker/Agent Code ARN: <span></span>
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Broker/Agent Code ARN: <span></span>
         </td>
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;white-space: nowrap;">
+        <td
+          style="border-right: 1px solid #000;padding: 4px;font-size: 14px;white-space: nowrap;padding-left:5px;padding-right:5px;">
           {{selectedBroker.brokerCode}}</td>
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;width: 18%;white-space: nowrap;">SUB-BROKER
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;width: 18%;white-space: nowrap;">SUB-BROKER
         </td>
         <td style="border-right: 1px solid #000;padding: 4px;width: 15%;">{{selectedBroker.subBrokerCode}}</td>
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;width: 18%;">EUIN</td>
-        <td style="width: 15%"> {{selectedBroker.euin}}</td>
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;width: 18%;">EUIN</td>
+        <td style="width: 15%;font-size: 14px;"> {{selectedBroker.euin}}</td>
       </tr>
       <tr>
-        <td style="color: #000;font-weight: bold;border-top: 1px solid #000;padding: 4px;font-size: 13px;" colspan="6">
+        <td style="color: #000;font-weight: bold;border-top: 1px solid #000;padding: 4px;font-size: 14px;" colspan="6">
           Unit Folder Information</td>
       </tr>
       <tr>
         <td
-          style="color: #000;font-weight: bold;border-top: 1px solid #000;border-right: 1px solid #000;padding: 4px;font-size: 13px;white-space: nowrap;">
+          style="color: #000;font-weight: bold;border-top: 1px solid #000;border-right: 1px solid #000;padding: 4px;font-size: 14px;white-space: nowrap;">
           Name of the First Applicant : <span></span></td>
-        <td style="color: #000;border-top: 1px solid #000;padding: 4px;font-size: 13px;" colspan="5">
+        <td style="color: #000;border-top: 1px solid #000;padding: 4px;font-size: 14px;" colspan="5">
           {{firstHolder.clientName}}</td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td style="padding: 4px;font-size: 13px;border-right: 1px solid #000;" colspan="2">PAN Number : <span>
+        <td style="padding: 4px;font-size: 14px;border-right: 1px solid #000;" colspan="2">PAN Number : <span>
             {{firstHolder.panNumber}}</span> </td>
 
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;" colspan="2">KYC : <span></span></td>
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;" colspan="2">KYC : <span></span></td>
 
-        <td style="padding: 4px;font-size: 13px;">Name of Guardian: <span></span></td>
-        <td colspan="2" style="padding: 4px;font-size: 13px;" colspan=" 2">Date Of Birth :
-          <span>{{firstHolder.dateOfBirth  | date: 'dd/MM/yyyy'}}</span></td>
+        <!-- <td style="padding: 4px;font-size: 14px;">Name of Guardian: <span></span></td> -->
+        <td colspan="2" style="padding: 4px;font-size: 14px;" colspan=" 2">Date Of Birth :
+          <span>{{firstHolder.dateOfBirth | date: 'dd/MM/yyyy'}}</span>
+        </td>
 
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="4" style="padding: 4px;font-size: 13px;">Name of Guardian: <span></span></td>
-        <td colspan="2" style="padding: 4px;font-size: 13px;">PAN: <span></span></td>
+        <td colspan="4" style="padding: 4px;font-size: 14px;">Name of Guardian: <span></span></td>
+        <td colspan="2" style="padding: 4px;font-size: 14px;border-left:1px solid #000;">PAN: <span></span></td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="padding: 4px;font-size: 13px;"> <strong> Contact Address:</strong> <span>B 81 JAI DURGA
+        <td colspan="6" style="padding: 4px;font-size: 14px;"> <strong> Contact Address:</strong> <span>B 81 JAI DURGA
             CHS
             {{firstHolder.address.address1}}</span> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="padding: 4px;font-size: 13px;"> {{firstHolder.address.address2}}, </td>
+        <td colspan="6" style="padding: 4px;font-size: 14px;"> {{firstHolder.address.address2}}, </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="padding: 4px;font-size: 13px;"> {{firstHolder.address.address2}} </td>
+        <td colspan="6" style="padding: 4px;font-size: 14px;"> {{firstHolder.address.address2}} </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">City:
-          <span>{{firstHolder.address.city}}</span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Pincode:
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">City:
+          <span>{{firstHolder.address.city}}</span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Pincode:
           <span>{{firstHolder.address.pinCode}}</span>
         </td>
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;white-space: nowrap;">State:
-          <span>{{firstHolder.address.state}}</span> </td>
-        <td colspan="2" style="padding: 4px;font-size: 13px;">Country: {{firstHolder.address.country}} </td>
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;white-space: nowrap;">State:
+          <span>{{firstHolder.address.state}}</span>
+        </td>
+        <td colspan="2" style="padding: 4px;font-size: 14px;">Country: {{firstHolder.address.country}} </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Tel.(Off): <span></span></td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Tel.(Res): <span></span></td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;white-space: nowrap;">Email:
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Tel.(Off): <span></span></td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Tel.(Res): <span></span></td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;white-space: nowrap;">Email:
           {{firstHolder.email}} </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Fax(Off): <span></span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Fax(Res): <span></span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Mobile:
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Fax(Off): <span></span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Fax(Res): <span></span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Mobile:
           {{firstHolder.mobileNo}}</td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Mode of Holding:
+        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Mode of Holding:
           {{firstHolder.holdingType}} </td>
-        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;white-space: nowrap;">
+        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;white-space: nowrap;">
           Occupation:
           {{inputData.occupation}} </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td style="border-right: 1px solid #000;font-weight: bold;padding: 4px;font-size: 13px;white-space: nowrap;">
+        <td style="border-right: 1px solid #000;font-weight: bold;padding: 4px;font-size: 14px;white-space: nowrap;">
           Name
           of the Second Applicant : <span></span> </td>
         <td colspan="5" style="border-right: 1px solid #000;"> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">PAN Number :
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">PAN Number :
           <span>{{(secondHolder)?secondHolder.pan:'-'}}</span>
         </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> KYC :
-          <span>{{(secondHolder)?secondHolder.KYC:'-'}}</span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Date Of Birth :
-          <span>{{(secondHolder)?(secondHolder.dateOfBirth  | date: 'dd/MM/yyyy') :'-'}}</span>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> KYC :
+          <span>{{(secondHolder)?secondHolder.KYC:'-'}}</span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Date Of Birth :
+          <span>{{(secondHolder)?(secondHolder.dateOfBirth | date: 'dd/MM/yyyy') :'-'}}</span>
         </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td style="border-right: 1px solid #000;font-weight: bold;padding: 4px;font-size: 13px;white-space: nowrap;">
+        <td style="border-right: 1px solid #000;font-weight: bold;padding: 4px;font-size: 14px;white-space: nowrap;">
           Name
           of the Third Applicant : </td>
         <td colspan="5" style="border-right: 1px solid #000;"> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">PAN Number :
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">PAN Number :
           <span>{{(thirdHolder)?thirdHolder.pan:'-'}}</span>
         </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> KYC :
-          <span>{{(thirdHolder)?thirdHolder.KYC:'-'}}</span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Date Of Birth
-          :{{(thirdHolder)?(thirdHolder.dateOfBirth  | date: 'dd/MM/yyyy'):'-'}}
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> KYC :
+          <span>{{(thirdHolder)?thirdHolder.KYC:'-'}}</span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Date Of Birth
+          :{{(thirdHolder)?(thirdHolder.dateOfBirth | date: 'dd/MM/yyyy'):'-'}}
           <span></span>
         </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="padding: 4px;font-size: 13px;"> Other Details of Sole / 1st Applicant </td>
+        <td colspan="6" style="padding: 4px;font-size: 14px;"> Other Details of Sole / 1st Applicant </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="padding: 4px;font-size: 13px;"> Overseas Address(In case of NRI Investor): <span></span>
+        <td colspan="6" style="padding: 4px;font-size: 14px;"> Overseas Address(In case of NRI Investor): <span></span>
         </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">City: <span></span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Pincode: <span></span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Country: <span></span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">City: <span></span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Pincode: <span></span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Country: <span></span> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="border-right: 1px solid #000;font-weight:bold;padding: 4px;font-size: 13px;">Bank Mandate
+        <td colspan="6" style="border-right: 1px solid #000;font-weight:bold;padding: 4px;font-size: 14px;">Bank Mandate
           Details </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Name of Bank:
-          <span>{{bankDetailList.bankName}} </span> </td>
-        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;white-space: nowrap;">Branch:
-          <span>{{bankDetailList.branchName}}</span> </td>
+        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Name of Bank:
+          <span>{{bankDetailList.bankName}} </span>
+        </td>
+        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;white-space: nowrap;">Branch:
+          <span>{{bankDetailList.branchName}}</span>
+        </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">A/C No.:
-          <span>{{bankDetailList.accountNumber}}</span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> A/C Type:
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">A/C No.:
+          <span>{{bankDetailList.accountNumber}}</span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> A/C Type:
           <span>{{bankDetailList.accountType}}</span>
         </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> IFSC Code:
-          <span>{{bankDetailList.ifscCode}}</span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> IFSC Code:
+          <span>{{bankDetailList.ifscCode}}</span>
+        </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> <strong> Bank
+        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> <strong> Bank
             Address:</strong> <span> {{bankDetailList.address.address1}},
             {{bankDetailList.address.address2}},</span> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">City: <span>
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">City: <span>
             {{bankDetailList.address.city}}</span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Pincode: <span>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Pincode: <span>
             {{bankDetailList.address.pinCode}}</span>
         </td>
-        <td style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">State: <span>
+        <td style="border-right: 1px solid #000;padding: 4px;font-size: 14px;white-space: nowrap;">State: <span>
             {{bankDetailList.address.state}}</span> </td>
-        <td colspan="2" style="padding: 4px;font-size: 13px;">Country: {{bankDetailList.address.country}} </td>
+        <td colspan="2" style="padding: 4px;font-size: 14px;">Country: {{bankDetailList.address.country}} </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> <strong> Nomination
+        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> <strong> Nomination
             Details</strong> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="4" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Nominee Name:
-          <span>{{nominee.name}} </span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">Relationship:
+        <td colspan="4" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Nominee Name:
+          <span>{{nominee.name}} </span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Relationship:
           <span>{{nominee.relationShip}}</span>
         </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Guardian Name(If Nominee is
+        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Guardian Name(If Nominee is
           Minor): <span></span> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> <strong> Nominee Address:
+        <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> <strong> Nominee Address:
           </strong> <span>
             {{nominee.address.address1}},{{nominee.address.address2}},{{nominee.address.address3}}
           </span> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;">City:
-          <span>{{nominee.address.city}}</span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Pincode:
-          <span>{{nominee.address.pinCode}}</span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Country:
-          <span>{{nominee.address.country}}</span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">City:
+          <span>{{nominee.address.city}}</span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Pincode:
+          <span>{{nominee.address.pinCode}}</span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Country:
+          <span>{{nominee.address.country}}</span>
+        </td>
       </tr>
       <tr style="border-top: 1px solid #000;padding: 4px;">
-        <td colspan="6" style="border-right: 1px solid #000;font-size: 13px;"> Declaration and Signature <br> I/We
+        <td colspan="6" style="border-right: 1px solid #000;font-size: 14px;"> Declaration and Signature <br> I/We
           confirm
           that details provided by me/us are true and correct. The ARN holder has disclosed to me/us all the commission
           (In the form of trail
@@ -459,8 +473,8 @@
           is being recommended to me/us </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Date : <span></span> </td>
-        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> Place : <span></span> </td>
+        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Date : <span></span> </td>
+        <td colspan="3" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Place : <span></span> </td>
       </tr>
       <tr style="border-top: 1px solid #000;height: 20px;">
         <td colspan="2" style="border-right: 1px solid #000;"> </td>
@@ -468,12 +482,15 @@
         <td colspan="2" style="border-right: 1px solid #000;"> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> 1st applicant Signature :
-          <span></span></td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> 2nd applicant Signature :
-          <span></span> </td>
-        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 13px;"> 3rd applicant Signature :
-          <span></span> </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> 1st applicant Signature :
+          <span></span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> 2nd applicant Signature :
+          <span></span>
+        </td>
+        <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> 3rd applicant Signature :
+          <span></span>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -939,7 +956,7 @@
   <table>
     <tbody>
       <tr>
-        <td style="font-size: 13px;">
+        <td style="font-size: 14px;">
           <span>- This is to confirm that the declaration has been carefully read, understood &amp; made by me/us. I am
             authorizing the user entity/ Corporate to debit my account, based on the instructions as agreed and signed
             by me.</span><br>
