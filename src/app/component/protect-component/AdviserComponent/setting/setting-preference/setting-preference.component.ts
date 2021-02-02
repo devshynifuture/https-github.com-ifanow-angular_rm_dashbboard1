@@ -40,7 +40,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     private router: Router,
     private peopleService: PeopleService, private settingsService: SettingsService) {
     const navigation = this.router.getCurrentNavigation().extras.state;
-    console.log(navigation)
+    var temp = this.route.params
+    console.log(temp)
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId();
   }

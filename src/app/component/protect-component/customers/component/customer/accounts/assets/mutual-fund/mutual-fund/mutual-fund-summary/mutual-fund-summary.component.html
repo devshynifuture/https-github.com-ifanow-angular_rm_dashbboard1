@@ -8,7 +8,8 @@
 
 
             <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="summarydownload"
-                *ngIf="!fragmentData.isSpinner && summary.data.length > 0 && mfSummaryCapability.Download">
+                *ngIf="!fragmentData.isSpinner && summary.data.length > 0">
+                <!-- && mfSummaryCapability.Download -->
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
             <mat-menu #summarydownload="matMenu">

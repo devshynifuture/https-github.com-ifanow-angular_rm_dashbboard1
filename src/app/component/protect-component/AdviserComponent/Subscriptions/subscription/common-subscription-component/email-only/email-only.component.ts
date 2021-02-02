@@ -171,7 +171,7 @@ export class EmailOnlyComponent implements OnInit {
         verify: true
       }
     };
-    this.router.navigate(['admin', 'setting', 'preference'], {
+    this.router.navigate(['admin', 'setting', 'preference' + 3], {
       state: {
         verify: true
       }
