@@ -18,7 +18,7 @@ export class EmailVerificationPopupComponent implements OnInit {
     this.dialogRef.close()
   }
   redirect() {
-    this.dialogRef.close()
+    this.dialogRef.close('data')
     this.router.navigate(['admin', 'setting', 'preference']);
   }
 }

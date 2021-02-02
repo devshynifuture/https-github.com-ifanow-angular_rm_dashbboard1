@@ -189,7 +189,6 @@ export class EmailOnlyComponent implements OnInit {
     }
     if (this.getVerifiedList.length == 0) {
       this.emailLists = []
-      this.close(false)
       const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
         width: '650px',
         data: { reportType: '', selectedElement: '' }
@@ -197,6 +196,8 @@ export class EmailOnlyComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result == undefined) {
           return
+        } else {
+          this.close(false)
         }
         this.close(false)
         console.log('The dialog was closed');
