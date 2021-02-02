@@ -19,6 +19,9 @@ import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscriptio
 import { OrgProfileComponent } from '../setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 import { FeviconUrlComponent } from './fevicon-url/fevicon-url.component';
 import { EmailVerificationPopupComponent } from './email-verification-popup/email-verification-popup.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { join } from 'path';
 
 @Component({
   selector: 'app-setting-preference',
@@ -26,11 +29,14 @@ import { EmailVerificationPopupComponent } from './email-verification-popup/emai
   styleUrls: ['./setting-preference.component.scss']
 })
 export class SettingPreferenceComponent implements OnInit, OnDestroy {
+  getVerifiedList: any;
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private eventService: EventService,
     public dialog: MatDialog,
     private fb: FormBuilder,
+    public route: ActivatedRoute,
+    private router: Router,
     private peopleService: PeopleService, private settingsService: SettingsService) {
 
     this.advisorId = AuthService.getAdvisorId();
@@ -129,9 +135,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
 
   getEmailListRes(data) {
+    this.getVerifiedList = []
     if (data && data.length > 0) {
       this.emailList = data;
-    } else {
+      this.getVerifiedList.filter(element => element.emailVerificationStatus == 1);
+    } else if (this.getVerifiedList.length == 0) {
       const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
         width: '650px',
         data: { reportType: '', selectedElement: '' }

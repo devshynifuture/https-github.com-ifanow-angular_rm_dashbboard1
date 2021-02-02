@@ -10,19 +10,21 @@
       <div class="p-0 d-flex align-items-center justify-content-center mt-8">
         <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
       </div>
-      <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+      <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner ">
         <img src="assets/images/svg/download-bordered.svg">
       </a>
       <mat-menu #menu5="matMenu">
-        <button (click)="pdf('template','Sovereign gold bonds')" mat-menu-item>PDF</button>
+        <button (click)="pdf('tempSgb','Sovereign gold bonds')" mat-menu-item>PDF</button>
         <button (click)="Excel('Sovereign gold bonds')" mat-menu-item>XLS</button>
       </mat-menu>
+      <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
       <button mat-stroked-button class="btn-primary ml-10 addon v-middle" (click)="open('othersAsset','')"> ADD
         NEW
       </button>
 
     </div>
+
   </div>
   <div class="mt-8 p-0 col-md-12 real-estate">
     <div class="overflow-hidden new-border-table" [ngClass]="{'table-scroll':isLoading==false }">
@@ -37,20 +39,20 @@
 
         </ng-container>
         <ng-container matColumnDef="owner">
-          <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-25 "> Owner</th>
-          <td mat-cell *matCellDef="let element" class="br w-25 ">
+          <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-25"> Owner</th>
+          <td mat-cell *matCellDef="let element" class="br w-25">
             <div class="bar"></div>
             <div *ngFor="let owner of element.ownerList; let i = index">
               <span *ngIf="i == 0">{{owner.name}}</span>
             </div>
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right pr-20 w-25 f-600 "> Total</td>
+          <td mat-footer-cell *matFooterCellDef class="br text-right pr-20 f-600 "> Total</td>
         </ng-container>
         <ng-container matColumnDef="units">
-          <th mat-sort-header="unitsC" mat-header-cell *matHeaderCellDef class="br w-15 right-hc text-right hide-arrow">
+          <th mat-sort-header="unitsC" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
             Units (grams)
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar">
               <span *ngIf="element.unitsInGram && !isLoading">{{element.unitsInGram}}</span></div>
           </td>
@@ -58,25 +60,26 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow"> Current value
+            class="br  right-hc text-right hide-arrow"> Current value
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br amt text-right">
             <div class="bar" *ngIf="element.currentValue == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.currentValue != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.currentValue" appFormatNumber>{{element.currentValue }}</span>
             </div>
           </td>
-          <td mat-footer-cell *matFooterCellDef class="br text-right w-15 amt p-8 f-600">
-            <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue" appFormatNumber>{{totalCurrentValue}}</span>
+          <td mat-footer-cell *matFooterCellDef class="br bl text-right  amt p-8 f-600">
+            <div>{{isLoading ? ' ' : '₹'}}<span appFormatNumber
+                [value]="totalCurrentValue ? totalCurrentValue : '-'"></span>
             </div>
           </td>
         </ng-container>
         <ng-container matColumnDef="interest">
           <th mat-sort-header="interestdAmt" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+            class="brv w-12  right-hc text-right hide-arrow">
             Interest amount
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
             <div class="bar" *ngIf="element.interestAmountYearly == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.interestAmountYearly != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.interestAmountYearly" appFormatNumber>{{element.interestAmountYearly}}</span></div>
@@ -85,10 +88,10 @@
         </ng-container>
         <ng-container matColumnDef="amountInvested">
           <th mat-sort-header="investedAmt" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+            class="br w-12 right-hc text-right hide-arrow">
             Invested amount
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
             <div class="bar" *ngIf="element.investmentAmount == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.investmentAmount != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.investmentAmount" appFormatNumber>{{element.investmentAmount}}</span></div>
@@ -96,11 +99,10 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="issueDate">
-          <th mat-sort-header="issueDate" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+          <th mat-sort-header="issueDate" mat-header-cell *matHeaderCellDef class="br  right-hc text-right hide-arrow">
             Investment date
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br amt text-right">
             <div class="bar" *ngIf="!element.investmentOrIssueDate"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.investmentOrIssueDate">{{element.investmentOrIssueDate | date:'dd/MM/yyyy'}}
             </div>
@@ -109,10 +111,10 @@
         </ng-container>
         <ng-container matColumnDef="mvalue">
           <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+            class="br right-hc text-right hide-arrow">
             Maturity value
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar" *ngIf="element.maturityValue == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.maturityValue != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.maturityValue" appFormatNumber>{{element.maturityValue}}</span></div>
@@ -121,10 +123,10 @@
         </ng-container>
         <ng-container matColumnDef="mdate">
           <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+            class="br  right-hc text-right hide-arrow">
             Maturity date
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar" *ngIf="!element.maturityDate"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.maturityDate">{{element.maturityDate | date:'dd/MM/yyyy'}}</div>
           </td>
@@ -144,10 +146,10 @@
         </ng-container>
         <ng-container matColumnDef="xirrDate">
           <th mat-sort-header="xirrDate" mat-header-cell *matHeaderCellDef
-            class="br w-15 right-hc text-right hide-arrow">
+            class="br w-12 right-hc text-right hide-arrow">
             XXIR (as on date)
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-15 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
             <div class="bar" *ngIf="element.xirr == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.xirr != 0"><span>{{element.xirr}}</span>{{!isLoading
               ? "%" : ""}}</div>
@@ -382,8 +384,8 @@
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0; ">
-              <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue"
-                  appFormatNumber>{{totalCurrentValue}}</span>
+              <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalCurrentValue ? totalCurrentValue :'-'"
+                  appFormatNumber></span>
               </div>
             </td>
             <td

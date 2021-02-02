@@ -24,7 +24,7 @@
             <div class="col-md-2 col-lg-1 pr-0 d-flex align-items-center justify-content-end">
                 <p class="m-0 text-black roboto f-400">From</p>
             </div>
-            <div class="col-md-9 col-lg-9 pr-0">
+            <div class="col-md-8 col-lg-9 pr-0">
                 <!-- <p *ngIf="this.emailData" class="m-0 text-black"> -->
                 <!-- {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p> -->
                 <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
@@ -32,6 +32,9 @@
                     <mat-option *ngFor="let verifiedEmail of emailLists" [value]="verifiedEmail.emailAddress">
                         {{verifiedEmail.emailAddress}}</mat-option>
                 </mat-select>
+            </div>
+            <div class="col-md-2 p-0 d-flex align-items-center" *ngIf="getVerifiedList.length == 0">
+                <i class="material-icons text-primitive f-20 c-p float-left" (click)="redirect()">add</i>
             </div>
         </div>
     </div>

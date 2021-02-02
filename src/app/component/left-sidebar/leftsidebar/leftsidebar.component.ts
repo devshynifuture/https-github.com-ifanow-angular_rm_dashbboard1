@@ -301,11 +301,16 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.getOrgProfiles();
     this.getPersonalProfiles();
     this.roleData = AuthService.getUserRoleType()
-    setTimeout(() => {
-      if (this.showIosAD == false && this.showMobileAD == false) {
-        this.openMobilePopup()
-      }
-    }, 3000000);
+      ;
+    var waitTime = 30 * 60 * 1000; // = 30min.
+    //console.log('enum', this.enumDataService.PRODUCTION)
+    if (!this.enumDataService.PRODUCTION) {
+      setTimeout(function () {
+        if (this.showIosAD == false && this.showMobileAD == false) {
+          this.openMobilePopup()
+        }
+      }, waitTime);
+    }
   }
 
   ngOnDestroy() {

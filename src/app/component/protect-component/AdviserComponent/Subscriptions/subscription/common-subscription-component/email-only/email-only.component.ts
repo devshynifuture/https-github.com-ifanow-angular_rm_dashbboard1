@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
 import { apiConfig } from 'src/app/config/main-config';
 import { EmailVerificationPopupComponent } from '../../../../setting/setting-preference/email-verification-popup/email-verification-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-only',
@@ -71,6 +72,7 @@ export class EmailOnlyComponent implements OnInit {
   };
   emailLists: any;
   element: any;
+  getVerifiedList: any;
 
   @Input() set data(inputData) {
     this.emailTemplateGroup = this.fb.group({
@@ -150,17 +152,22 @@ export class EmailOnlyComponent implements OnInit {
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
     private fb: FormBuilder, private peopleService: PeopleService, private datePipe: DatePipe
-    , public dialog: MatDialog, private utilservice: UtilService) {
+    , public dialog: MatDialog, private utilservice: UtilService,
+    private router: Router) {
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId();
   }
 
   ngOnInit() {
+    this.getVerifiedList = []
     // this.getEmailTemplate();
     //this.getAllEmails();
     this.getEmailList()
   }
-
+  redirect() {
+    this.close(false)
+    this.router.navigate(['admin', 'setting', 'preference']);
+  }
   getEmailList() {
     let obj = {
       advisorId: this.advisorId
@@ -174,10 +181,14 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   getEmailListRes(data) {
+    this.getVerifiedList = []
     if (data && data.length > 0) {
       this.emailLists = data;
       this._inputData.fromEmail = data[0].emailAddress;
-    } else {
+      this.getVerifiedList = this.emailLists.filter(element => element.emailVerificationStatus == 1);
+    }
+    if (this.getVerifiedList.length == 0) {
+      this.emailLists = []
       const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
         width: '650px',
         data: { reportType: '', selectedElement: '' }
@@ -185,6 +196,8 @@ export class EmailOnlyComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result == undefined) {
           return
+        } else {
+          this.close(false)
         }
         this.close(false)
         console.log('The dialog was closed');

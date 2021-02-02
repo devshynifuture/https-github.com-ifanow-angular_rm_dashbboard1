@@ -133,9 +133,8 @@
     <div class="col-md-5 pr-0 iconRupess">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input autocomplete="off" readonly matInput appInputValueValidation
-            [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0 "
-            formControlName="issuePrice">
+          <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+            type="text" class="form-control rupess br-0 " formControlName="issuePrice">
           <mat-error class="f-12">
             This field is required
           </mat-error>
