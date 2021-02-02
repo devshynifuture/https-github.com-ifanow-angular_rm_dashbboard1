@@ -168,13 +168,14 @@ export class EmailOnlyComponent implements OnInit {
     this.close(false)
     const navigationExtras: NavigationExtras = {
       state: {
-        transd: 'TRANS001',
-        workQueue: false,
-        services: 10,
-        code: '003'
+        verify: true
       }
     };
-    this.router.navigate(['admin', 'setting', 'preference'], navigationExtras);
+    this.router.navigate(['admin', 'setting', 'preference'], {
+      state: {
+        verify: true
+      }
+    });
   }
   getEmailList() {
     let obj = {

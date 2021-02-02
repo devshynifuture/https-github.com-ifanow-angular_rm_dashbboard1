@@ -39,7 +39,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private router: Router,
     private peopleService: PeopleService, private settingsService: SettingsService) {
-    const navigation = this.router.getCurrentNavigation();
+    const navigation = this.router.getCurrentNavigation().extras.state;
+    console.log(navigation)
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId();
   }
@@ -115,7 +116,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.name = history.state;
-    if (this.name.navigationId == 4) {
+    if (this.name && this.name.Domain == true) {
+      this.changeView('tab7')
+    }
+    if (this.name && !this.name.Domain) {
       this.changeView('tab4')
     }
     console.log(this.name)
