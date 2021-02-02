@@ -15,6 +15,7 @@ import { DatePipe } from '@angular/common';
 import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
 import { apiConfig } from 'src/app/config/main-config';
 import { EmailVerificationPopupComponent } from '../../../../setting/setting-preference/email-verification-popup/email-verification-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-only',
@@ -150,7 +151,8 @@ export class EmailOnlyComponent implements OnInit {
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
     private fb: FormBuilder, private peopleService: PeopleService, private datePipe: DatePipe
-    , public dialog: MatDialog, private utilservice: UtilService) {
+    , public dialog: MatDialog, private utilservice: UtilService,
+    private router: Router) {
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId();
   }
@@ -160,7 +162,9 @@ export class EmailOnlyComponent implements OnInit {
     //this.getAllEmails();
     this.getEmailList()
   }
-
+  redirect() {
+    this.router.navigate(['admin', 'setting', 'preference']);
+  }
   getEmailList() {
     let obj = {
       advisorId: this.advisorId

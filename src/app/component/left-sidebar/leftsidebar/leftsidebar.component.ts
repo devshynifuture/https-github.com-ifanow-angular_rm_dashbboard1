@@ -303,12 +303,13 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.roleData = AuthService.getUserRoleType()
       ;
     var waitTime = 30 * 60 * 1000; // = 30min.
-
-    setTimeout(function () {
-      if (this.showIosAD == false && this.showMobileAD == false) {
-        this.openMobilePopup()
-      }
-    }, waitTime);
+    if (!this.enumDataService.PRODUCTION) {
+      setTimeout(function () {
+        if (this.showIosAD == false && this.showMobileAD == false) {
+          this.openMobilePopup()
+        }
+      }, waitTime);
+    }
   }
 
   ngOnDestroy() {
