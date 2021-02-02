@@ -210,7 +210,7 @@ export class TempserviceService {
             //     }
             //   });
             // }
-
+            singleData.avgNav = singleData.avgNav == '-Infinity' ? '0' : singleData.avgNav == 'Infinity' ? '0' : singleData.avgNav;
             obj = {
               schemeName: singleData.schemeName,
               nav: this.mutualFundRoundAndFormat(singleData.nav, 4),
