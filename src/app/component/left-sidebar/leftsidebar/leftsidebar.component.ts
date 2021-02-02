@@ -303,6 +303,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.roleData = AuthService.getUserRoleType()
       ;
     var waitTime = 30 * 60 * 1000; // = 30min.
+    //console.log('enum', this.enumDataService.PRODUCTION)
     if (!this.enumDataService.PRODUCTION) {
       setTimeout(function () {
         if (this.showIosAD == false && this.showMobileAD == false) {
