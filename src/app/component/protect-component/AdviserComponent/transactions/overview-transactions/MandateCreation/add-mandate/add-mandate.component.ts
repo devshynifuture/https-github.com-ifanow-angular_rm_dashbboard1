@@ -88,6 +88,9 @@ export class AddMandateComponent implements OnInit {
     this.accountNumList = []
     this.ifscCodeList = []
     this.micrNoList = []
+    this.dateArr = []
+    this.MonthArr = []
+    this.yearArr = []
     Object.assign(this.selectedMandate, { auth: 'BSE Limited' });
     Object.assign(this.selectedMandate, { dubleTick: 'SB/CA/CC/SB-NRO/Other' });
     Object.assign(this.selectedMandate, { uniqueRefNo: '' });

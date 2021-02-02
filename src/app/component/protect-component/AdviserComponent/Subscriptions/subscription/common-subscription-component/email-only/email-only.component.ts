@@ -14,6 +14,7 @@ import { element } from 'protractor';
 import { DatePipe } from '@angular/common';
 import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
 import { apiConfig } from 'src/app/config/main-config';
+import { EmailVerificationPopupComponent } from '../../../../setting/setting-preference/email-verification-popup/email-verification-popup.component';
 
 @Component({
   selector: 'app-email-only',
@@ -69,6 +70,7 @@ export class EmailOnlyComponent implements OnInit {
     // }
   };
   emailLists: any;
+  element: any;
 
   @Input() set data(inputData) {
     this.emailTemplateGroup = this.fb.group({
@@ -175,6 +177,20 @@ export class EmailOnlyComponent implements OnInit {
     if (data && data.length > 0) {
       this.emailLists = data;
       this._inputData.fromEmail = data[0].emailAddress;
+    } else {
+      const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
+        width: '650px',
+        data: { reportType: '', selectedElement: '' }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return
+        }
+        this.close(false)
+        console.log('The dialog was closed');
+        this.element = result;
+        console.log('result -==', this.element)
+      });
     }
     console.log('getEmailList', data)
   }
@@ -529,7 +545,7 @@ export class EmailOnlyComponent implements OnInit {
     const obj = {
       data: data.documentText,
       cancelButton: () => {
-        this.utilservice.htmlToPdf('', data.documentText, 'document', '',data.documentText,'','',false);
+        this.utilservice.htmlToPdf('', data.documentText, 'document', '', data.documentText, '', '', false);
         dialogRef.close();
       }
     };

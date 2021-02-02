@@ -854,7 +854,7 @@
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{(dateArr.length == 2)?dateArr[0]:dateArr[1]}}
+                                                    {{(dateArr.length == 2)?dateArr[0]:(dateArr[1])?dateArr[1]:''}}
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
@@ -862,23 +862,23 @@
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{(MonthArr.length == 2)?MonthArr[0]:MonthArr[1]}}
+                                                    {{(MonthArr.length == 2)?MonthArr[0]:(MonthArr[1]?MonthArr[1]:'')}}
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{yeararr[0]}}
+                                                    {{(yearArr[0]?yearArr[0]:'')}}
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{yeararr[1]}}
+                                                    {{(yearArr[1]?yearArr[1]:'')}}
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{yeararr[2]}}
+                                                    {{(yearArr[2]?yearArr[2]:'')}}
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{yeararr[3]}}
+                                                    {{(yearArr[3]?yearArr[3]:'')}}
                                                 </td>
                                             </tr>
                                         </table>

@@ -18,6 +18,7 @@ import { SettingsService } from '../settings.service';
 import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscription/common-subscription-component/preference-email-invoice/preference-email-invoice.component';
 import { OrgProfileComponent } from '../setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 import { FeviconUrlComponent } from './fevicon-url/fevicon-url.component';
+import { EmailVerificationPopupComponent } from './email-verification-popup/email-verification-popup.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -115,7 +116,37 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.addAppearanceFormListener();
     this.getDoaminList();
   }
+  getEmailList() {
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.peopleService.getEmailList(obj).subscribe(
+      data => this.getEmailListRes(data),
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    );
+  }
 
+  getEmailListRes(data) {
+    if (data && data.length > 0) {
+      this.emailList = data;
+    } else {
+      const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
+        width: '650px',
+        data: { reportType: '', selectedElement: '' }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return
+        }
+        console.log('The dialog was closed');
+        this.element = result;
+        console.log('result -==', this.element)
+      });
+    }
+    console.log('getEmailList', data)
+  }
   getdataForm(data) {
     this.domainS = this.fb.group({
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
@@ -677,9 +708,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         this.getOrgProfiles();
         break;
 
-      // case 'tab8':
-      //   this.getPortfolio();
-      //   break;
+      case 'tab10':
+        this.getEmailList();
+        break;
 
       case 'tab9':
         this.getAppearance();
@@ -834,8 +865,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
             dialogRef.close();
             this.getEmailTemplate();
           }, err => {
-          this.eventService.openSnackBar(err, "Dimiss");
-        }
+            this.eventService.openSnackBar(err, "Dimiss");
+          }
         );
       },
       negativeMethod: () => {

@@ -305,7 +305,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       if (this.showIosAD == false && this.showMobileAD == false) {
         this.openMobilePopup()
       }
-    }, 300000);
+    }, 3000000);
   }
 
   ngOnDestroy() {
@@ -406,6 +406,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
           AuthService.setUserRoleType(data.role || {});
           this.role = AuthService.getUserRoleType().roleName;
           this.roleObj = data.role || {};
+          console.log('role', this.roleObj)
         } else {
           AuthService.setProfilePic('/assets/images/svg/comment-icon.svg');
         }
@@ -499,7 +500,6 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   domainWhiteLabelling() {
     const dialogRef = this.dialog.open(OpenDomainWhiteLabelPopupComponent, {
       width: '650px',
-      // height: '350px',
       data: { reportType: '', selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
