@@ -143,6 +143,7 @@ import { AddSovereignGoldBondsComponent } from './component/protect-component/cu
 import { DetailedViewSovereignGoldBondsComponent } from './component/protect-component/customers/component/customer/accounts/assets/sovereign-gold-bonds/detailed-view-sovereign-gold-bonds/detailed-view-sovereign-gold-bonds.component';
 import { OpenmobilePopupComponent } from './component/left-sidebar/leftsidebar/openmobile-popup/openmobile-popup.component';
 import { OpenDomainWhiteLabelPopupComponent } from './component/left-sidebar/leftsidebar/open-domain-white-label-popup/open-domain-white-label-popup.component';
+import { EmailVerificationPopupComponent } from './component/protect-component/AdviserComponent/setting/setting-preference/email-verification-popup/email-verification-popup.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -318,7 +319,8 @@ export const componentList = [
   DialogDetailedViewInsPlanningComponent,
   AddDeploymentsComponent,
   OpenmobilePopupComponent,
-  OpenDomainWhiteLabelPopupComponent
+  OpenDomainWhiteLabelPopupComponent,
+  EmailVerificationPopupComponent
   // ComposeEmailComponent
 ];
 
