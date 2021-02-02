@@ -66,6 +66,7 @@ export class SupportUpperNjComponent implements OnInit {
   selectedSchemeRes;
   schemeControlSubs: Subscription;
   searchSchemeControlSubs: Subscription;
+  storedVal: string;
 
   constructor(
     private supportUpperService: SupportUpperService,
@@ -87,7 +88,7 @@ export class SupportUpperNjComponent implements OnInit {
       .pipe(
         debounceTime(500),
         tap(() => {
-          this.errorMsg = "";
+          // this.errorMsg = "";
           this.filteredSchemes = [];
           this.isLoadingForDropDown = true;
           this.schemeControl.patchValue(null, { emitEvent: false });
@@ -140,8 +141,8 @@ export class SupportUpperNjComponent implements OnInit {
           console.log(this.filteredSchemes);
         }
       }, err => {
-        this.filteredSchemeError = true;
-        this.errorMsg = 'No data Found';
+        //this.filteredSchemeError = true;
+        // this.errorMsg = 'No data Found';
         console.error(err);
       });
 
@@ -149,9 +150,11 @@ export class SupportUpperNjComponent implements OnInit {
       .pipe(
         debounceTime(500),
         tap(() => {
-          this.errorMsg = "";
+          // this.errorMsg = "";
           this.filteredSchemes = [];
-          this.isLoadingForDropDown = true;
+          if (this.schemeControl.value && this.schemeControl.hasOwnProperty('value') && this.schemeControl.value.length > 2) {
+            this.isLoadingForDropDown = true;
+          }
         }),
         switchMap(value => this.getFilteredSchemesList(value)
           .pipe(
@@ -193,12 +196,14 @@ export class SupportUpperNjComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
     //this.closeRightSlider('');
   }
-  checkIfDataNotPresentAndShowError(data) {
+  checkIfDataNotPresentAndShowError(data, element) {
     if (data && data.length > 0) {
-      this.filteredSchemeError = false;
+      element.filteredSchemeError = false;
+      element.errorMsg = '';
     } else {
-      this.filteredSchemeError = true;
-      this.errorMsg = 'No data Found';
+      element.filteredSchemeError = true;
+      element.errorMsg = 'No data Found';
+      // this.errorMsg = 'No data Found';
     }
   }
 
@@ -208,15 +213,26 @@ export class SupportUpperNjComponent implements OnInit {
 
   getFilteredSchemesList(value) {
 
-    this.logValue('clicked frmo value changed')
-    if (value === '') {
-      let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
-      this.apiCallingStack.push(threeWords);
-      if (this.apiCallingStack[1] !== threeWords) {
-        return this.supportUpperService.getFilteredSchemes({ scheme: threeWords, startLimit: 0, endLimit: 50 });
+    // this.logValue('clicked frmo value changed')
+    // if (value === '') {
+    //   let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
+    //   this.apiCallingStack.push(threeWords);
+    //   if (this.apiCallingStack[1] !== threeWords) {
+    //     return this.supportUpperService.getFilteredSchemes({ scheme: threeWords, startLimit: 0, endLimit: 50 });
+    //   }
+    // } else {
+    //   return this.supportUpperService.getFilteredSchemes({ scheme: value, startLimit: 0, endLimit: 50 });
+    // }
+
+
+
+    if (value !== '' && (typeof value === 'string')) {
+      if (value.length > 2) {
+        if (this.storedVal != value) {
+          this.storedVal = value;
+          return this.supportUpperService.getFilteredSchemes({ scheme: value, startLimit: 0, endLimit: 50 })
+        }
       }
-    } else {
-      return this.supportUpperService.getFilteredSchemes({ scheme: value, startLimit: 0, endLimit: 50 });
     }
   }
 
@@ -240,19 +256,22 @@ export class SupportUpperNjComponent implements OnInit {
 
   showSuggestionsBasedOnSchemeName(element, eve) {
     console.log(element);
-    this.isLoadingForDropDown = true;
+    this.isLoadingForDropDown = false;
     this.selectedElement = element;
     // let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
     // this.apiCallingStack.push(threeWords);
-    if (eve.length > 3) {
-      this.supportUpperService.getFilteredSchemes({ scheme: eve, startLimit: 0, endLimit: 0 })
+    if (eve.length > 2) {
+      this.isLoadingForDropDown = true;
+      this.supportUpperService.getFilteredSchemes({ scheme: eve, startLimit: 0, endLimit: 50 })
         .subscribe(res => {
           this.apiCallingStack = [];
           this.isLoadingForDropDown = false;
           this.filteredSchemes = [];
           this.filteredSchemes = res;
           console.log(res);
-          this.checkIfDataNotPresentAndShowError(res);
+          this.checkIfDataNotPresentAndShowError(res, element);
+        }, error => {
+          this.checkIfDataNotPresentAndShowError(null, element);
         });
     } else {
       this.filteredSchemes = []

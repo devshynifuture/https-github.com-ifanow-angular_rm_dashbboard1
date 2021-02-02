@@ -40,6 +40,7 @@ export class SupportUpperPrudentComponent implements OnInit {
   totalPrudentCount = null;
   pageEvent: PageEvent;
   startLimit = 0;
+  storedVal: string;
 
   constructor(
     public supportUpperService: SupportUpperService,
@@ -56,9 +57,11 @@ export class SupportUpperPrudentComponent implements OnInit {
       .pipe(
         debounceTime(500),
         tap(() => {
-          this.errorMsg = "";
+          // this.errorMsg = "";
           this.filteredSchemes = [];
-          this.isLoadingForDropDown = true;
+          if (this.schemeControl.value && this.schemeControl.hasOwnProperty('value') && this.schemeControl.value.length > 2) {
+            this.isLoadingForDropDown = true;
+          }
         }),
         switchMap(value => this.getFilteredSchemesList(value)
           .pipe(
@@ -74,7 +77,7 @@ export class SupportUpperPrudentComponent implements OnInit {
       .pipe(
         debounceTime(500),
         tap(() => {
-          this.errorMsg = "";
+          //this.errorMsg = "";
           this.filteredSchemes = [];
           this.isLoadingForDropDown = true;
           this.schemeControl.patchValue(null, { emitEvent: false });
@@ -137,9 +140,9 @@ export class SupportUpperPrudentComponent implements OnInit {
     this.filteredSchemes = data;
     console.log("this is what i need::::::::", data);
     if (data && data.length > 0) {
-      this.errorMsg = 'No Data Found';
+      //this.errorMsg = 'No Data Found';
     } else {
-      this.errorMsg = '';
+      //this.errorMsg = '';
     }
     console.log(this.filteredSchemes);
   }
@@ -259,37 +262,58 @@ export class SupportUpperPrudentComponent implements OnInit {
   }
   showSuggestionsBasedOnSchemeName(element, eve) {
     console.log(element);
+    this.isLoadingForDropDown = false;
     this.selectedElement = element;
-    this.isLoadingForDropDown = true;
     // let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
     // this.apiCallingStack.push(threeWords);
-    if (eve.length > 3) {
+    if (eve.length > 2) {
+      this.isLoadingForDropDown = true;
       this.supportUpperService.getFilteredSchemes({ scheme: eve, startLimit: 0, endLimit: 50 })
         .subscribe(res => {
           this.apiCallingStack = [];
           this.isLoadingForDropDown = false;
+          this.filteredSchemes = [];
           this.filteredSchemes = res;
           console.log(res);
-          if (this.supportUpperService.checkIfDataNotPresentAndShowError(res)) {
-            this.errorMsg = 'No Data Found';
-          } else {
-            this.errorMsg = '';
-          }
+          this.checkIfDataNotPresentAndShowError(res, element);
+        }, error => {
+          this.checkIfDataNotPresentAndShowError(null, element);
         });
     } else {
+      // this.filteredSchemes = []
+      // this.selectedSchemeRes = '';
+      // element.isSchemeSelected = false;
+      // element.navDate = ''
+      // element.nav = ''
+      // element.amfiCode = ''
+      // element.njPrudentCount = ''
+      // element.schemeCode = '';
+      // element.njCount = '';
+      // element.nav = ''
       this.filteredSchemes = []
+      element.isSchemeSelected = true;
       this.selectedSchemeRes = '';
-      element.isSchemeSelected = false;
-      element.navDate = ''
-      element.nav = ''
-      element.amfiCode = ''
+      console.log('scheme details', '')
+      element.navDate = '';
+      element.amfiCode = '';
       element.njPrudentCount = ''
+      element.schemeCode = '';
+      element.njCount = '';
       element.schemeCode = '';
       element.njCount = '';
       element.nav = ''
     }
   }
-
+  checkIfDataNotPresentAndShowError(data, element) {
+    if (data && data.length > 0) {
+      element.filteredSchemeError = false;
+      element.errorMsg = '';
+    } else {
+      element.filteredSchemeError = true;
+      element.errorMsg = 'No data Found';
+      // this.errorMsg = 'No data Found';
+    }
+  }
   mapSchemeCodeAndOther(element, scheme) {
     console.log(element);
     this.supportUpperService.getSchemesDetails({ id: scheme.id })
@@ -307,17 +331,27 @@ export class SupportUpperPrudentComponent implements OnInit {
   }
 
   getFilteredSchemesList(value) {
-    if (value === '') {
-      if (this.selectedElement) {
-        let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
-        if (this.apiCallingStack[1] !== threeWords) {
-          return this.supportUpperService.getFilteredSchemes({ scheme: threeWords, startLimit: 0, endLimit: 50 });
+
+    // this.logValue('clicked frmo value changed')
+    // if (value === '') {
+    //   let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(this.selectedElement);
+    //   this.apiCallingStack.push(threeWords);
+    //   if (this.apiCallingStack[1] !== threeWords) {
+    //     return this.supportUpperService.getFilteredSchemes({ scheme: threeWords, startLimit: 0, endLimit: 50 });
+    //   }
+    // } else {
+    //   return this.supportUpperService.getFilteredSchemes({ scheme: value, startLimit: 0, endLimit: 50 });
+    // }
+
+
+
+    if (value !== '' && (typeof value === 'string')) {
+      if (value.length > 2) {
+        if (this.storedVal != value) {
+          this.storedVal = value;
+          return this.supportUpperService.getFilteredSchemes({ scheme: value, startLimit: 0, endLimit: 50 })
         }
-      } else {
-        return this.supportUpperService.getFilteredSchemes({ scheme: value, startLimit: 0, endLimit: 50 });
       }
-    } else {
-      return this.supportUpperService.getFilteredSchemes({ scheme: value, startLimit: 0, endLimit: 50 });
     }
   }
 

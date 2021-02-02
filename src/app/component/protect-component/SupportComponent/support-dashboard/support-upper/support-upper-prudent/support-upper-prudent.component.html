@@ -101,9 +101,9 @@
                         {{(isLoading) ? '':element.schemeName}}
                     </div>
                     <br>
-                    <ng-container *ngIf="filteredSchemeError">
+                    <ng-container *ngIf="element.filteredSchemeError && isMapped != true">
                         <span class="f-12">
-                            {{errorMsg}}
+                            {{element.errorMsg}}
                         </span>
                     </ng-container>
                 </td>

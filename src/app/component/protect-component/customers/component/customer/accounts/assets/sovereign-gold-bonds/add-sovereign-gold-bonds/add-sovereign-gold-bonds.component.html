@@ -186,8 +186,9 @@
     <div class="col-md-5 pr-0">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-            type="text" class="form-control br-0 " formControlName="tenure">
+          <input autocomplete="off" readonly matInput appInputValueValidation
+            [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control br-0 "
+            formControlName="tenure">
           <mat-error class="f-12">
             This field is required
           </mat-error>
