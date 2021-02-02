@@ -210,7 +210,14 @@ export class BackofficeFileUploadComponent implements OnInit {
             const responseObject = JSON.parse(response);
             this.numlimit = 99;
             this.addbarWidth(90);
-            this.successFileUpload(this.selectedFileType, this.targetFile.target.files[0].name);
+            this.fileName = '';
+            this.fileSize = '';
+            this.filter.status = '';
+            this.filter.rt = '';
+            this.selectedFileType = '';
+            this.arnRiaId = '';
+            this.setFilter();
+            // this.successFileUpload(this.selectedFileType, this.targetFile.target.files[0].name);
           }
 
         });
