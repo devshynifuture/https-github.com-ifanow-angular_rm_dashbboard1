@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
 import { apiConfig } from 'src/app/config/main-config';
 import { EmailVerificationPopupComponent } from '../../../../setting/setting-preference/email-verification-popup/email-verification-popup.component';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-email-only',
@@ -166,7 +166,16 @@ export class EmailOnlyComponent implements OnInit {
   }
   redirect() {
     this.close(false)
-    this.router.navigate(['admin', 'setting', 'preference']);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        verify: true
+      }
+    };
+    this.router.navigate(['admin', 'setting', 'preference' + 3], {
+      state: {
+        verify: true
+      }
+    });
   }
   getEmailList() {
     let obj = {

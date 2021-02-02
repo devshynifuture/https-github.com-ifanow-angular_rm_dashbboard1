@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-open-domain-white-label-popup',
@@ -20,6 +20,11 @@ export class OpenDomainWhiteLabelPopupComponent implements OnInit {
   }
   redirect() {
     this.dialogRef.close()
-    this.router.navigate(['admin', 'setting', 'preference']);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        Domain: true
+      }
+    };
+    this.router.navigate(['admin', 'setting', 'preference'], navigationExtras);
   }
 }
