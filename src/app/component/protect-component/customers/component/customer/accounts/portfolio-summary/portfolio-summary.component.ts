@@ -107,13 +107,15 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   finalTotal: number;
   cashflowFlag: boolean;
-  letsideBarLoader: boolean;
-  summaryFlag: boolean;
+  letsideBarLoader: boolean = true;
+  summaryFlag: boolean = true;
   allBanks: any[] = [];
   families: any[] = [];
   cashFlowDescNaming: any[] = [];
   assetAllocationRes: boolean;
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  mfSummaryChartLoader: boolean = true;
+  totalSummaryFlag: boolean;
   constructor(
     public eventService: EventService,
     private cusService: CustomerService,
@@ -147,7 +149,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.initializePieChart();
     this.initializePortfolioChart();
     !this.customerOverview.summaryLeftsidebarData ? this.calculateTotalSummaryValues() : this.calculateTotalSummaryValuesRes(this.customerOverview.summaryLeftsidebarData);
-    !this.customerOverview.aumGraphdata ? this.getAumGraphData() : this.getAumGraphDataResponse(this.customerOverview.aumGraphdata);
     !this.customerOverview.assetAllocationChart ? this.getAssetAllocationSummary() : this.getAssetAllocationSummaryResponse(this.customerOverview.assetAllocationChart);
     !this.customerOverview.summaryCashFlowData ? this.getCashFlowList() : this.getCashFlowListResponse(this.customerOverview.summaryCashFlowData);
     // this.getAssetAllocationSummary();
@@ -288,7 +289,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   calculateTotalSummaryValues() {
-    this.letsideBarLoader = true;
+    this.totalSummaryFlag = true;
     console.log(new Date(this.asOnDate).getTime());
     const obj = {
       advisorId: this.advisorId,
@@ -300,10 +301,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.calculateTotalSummaryValuesRes(data);
       },
       err => {
-        this.letsideBarLoader = false;
+        this.totalSummaryFlag = false;
         this.finalTotal = 0;
         this.liabilityTotal = 0;
         this.totalAssetsWithoutLiability = 0;
+        this.loaderFunc();
       }
     );
     // this.getSummaryList(obj);
@@ -312,7 +314,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   calculateTotalSummaryValuesRes(data) {
     this.customerOverview.summaryLeftsidebarData = data;
     if (data && data.length > 0) {
-      this.letsideBarLoader = false;
+      this.totalSummaryFlag = false;
       console.log(data);
       this.totalAssets = 0;
       this.summaryTotalValue = Object.assign([], data);
@@ -354,10 +356,18 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.Others = this.Others[0];
       const tempSummaryTotalValue: any = {};
 
-      this.letsideBarLoader = false;
+      this.totalSummaryFlag = false;
       this.summaryMap = tempSummaryTotalValue;
+      if (this.totalAssetsWithoutLiability > 0) {
+        !this.customerOverview.aumGraphdata ? this.getAumGraphData() : this.getAumGraphDataResponse(this.customerOverview.aumGraphdata);
+      } else {
+        this.summaryFlag = false;
+        this.graphList = []
+      }
       // this.pieChart('piechartMutualFund', this.summaryTotalValue);
     }
+    this.totalSummaryFlag = false;
+    this.loaderFunc();
   }
 
   getAssetAllocationSummary() {
@@ -366,6 +376,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       clientId: this.clientId,
       targetDate: this.asOnDate
     };
+    this.mfSummaryChartLoader = true;
     this.tabsLoaded.portfolioData.isLoading = true;
     this.cusService.getAssetAllocationSummary(obj).subscribe(
       res => {
@@ -374,7 +385,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       err => {
         this.hasError = true;
         this.assetAllocationRes = false;
+        this.mfSummaryChartLoader = false;
         this.tabsLoaded.portfolioData.isLoading = false;
+        this.loaderFunc();
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
@@ -457,9 +470,19 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.chartData = chartData;
         this.assetAllocationPieChartDataMgnt(this.chartData);
       }
-    }
+    } this.mfSummaryChartLoader = false;
+
     this.tabsLoaded.portfolioData.isLoading = false;
     this.tabsLoaded.portfolioData.dataLoaded = true;
+    this.loaderFunc();
+  }
+
+  loaderFunc() {
+    if (!this.summaryFlag && !this.cashflowFlag && !this.totalSummaryFlag && !this.mfSummaryChartLoader) {
+      this.letsideBarLoader = false;
+    } else {
+      this.letsideBarLoader = true;
+    }
   }
 
   sorting(data, filterId) {
@@ -488,6 +511,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       },
       err => {
         this.finalTotal = 0;
+        this.summaryFlag = false;
+        this.loaderFunc();
       }
     );
   }
@@ -495,7 +520,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   getAumGraphDataResponse(data) {
     this.customerOverview.aumGraphdata = data;
     if (data) {
-      this.summaryFlag = false;
       this.graphList = [];
       let sortedDateList = [];
       sortedDateList = data;
@@ -507,8 +531,16 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.graphList.push([singleData.targetDate, Math.round(singleData.currentValue)]);
       }
       this.setPortfolioGraphData(this.graphList);
+      this.loaderFunc();
     } else {
-      this.graphList = []
+      if (this.totalAssetsWithoutLiability > 0) {
+        this.summaryFlag = true;
+        this.getAumGraphData();
+      } else {
+        this.summaryFlag = false;
+        this.graphList = [];
+        this.loaderFunc();
+      }
     }
   }
 
@@ -529,6 +561,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       type: 'area',
       data: this.graphList
     }, true, true);
+    this.summaryFlag = false;
   }
 
   getCashFlowList() {
@@ -544,8 +577,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.getCashFlowListResponse(data);
       },
       err => {
+        this.cashflowFlag = false;
         this.cashFlowViewDataSource = [];
         this.noCashflowData = true;
+        this.loaderFunc();
       }
     );
   }
@@ -562,6 +597,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.expenseList = [];
     this.createFilterList();
     this.sortDataUsingFlowType(data);
+    this.loaderFunc();
   }
 
   sortDataUsingFlowType(ObjectArray) {
