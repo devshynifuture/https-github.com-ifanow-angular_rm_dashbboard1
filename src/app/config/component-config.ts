@@ -941,6 +941,7 @@ export const appConfig = {
   RESET_PASSWORD: 'setting/reset/password',
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
   GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
+  ADD_CALL_BACK_MOB:'advisor-callback-detail/add',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
