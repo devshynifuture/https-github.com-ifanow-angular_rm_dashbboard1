@@ -163,6 +163,7 @@ export class EmailOnlyComponent implements OnInit {
     this.getEmailList()
   }
   redirect() {
+    this.close(false)
     this.router.navigate(['admin', 'setting', 'preference']);
   }
   getEmailList() {
