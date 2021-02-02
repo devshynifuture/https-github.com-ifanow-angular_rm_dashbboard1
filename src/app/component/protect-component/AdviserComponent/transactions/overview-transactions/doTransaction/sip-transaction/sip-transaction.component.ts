@@ -863,11 +863,11 @@ export class SipTransactionComponent implements OnInit {
   }
 
   sip() {
-    if (this.barButtonOptions.active) {
-      return;
-    }
-    this.barButtonOptions.active = true;
     if (this.validateSingleTransaction()) {
+      if (this.barButtonOptions.active) {
+        return;
+      }
+      this.barButtonOptions.active = true;
       const obj = this.getSingleTransactionJson();
 
       if (this.multiTransact == true) {

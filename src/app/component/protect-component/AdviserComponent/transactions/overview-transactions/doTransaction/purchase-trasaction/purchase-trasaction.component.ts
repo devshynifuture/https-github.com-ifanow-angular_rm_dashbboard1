@@ -775,12 +775,11 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   purchase() {
-    if (this.barButtonOptions.active) {
-      return;
-    }
-    this.barButtonOptions.active = true;
-
     if (this.validateSinglePurchase()) {
+      if (this.barButtonOptions.active) {
+        return;
+      }
+      this.barButtonOptions.active = true;
       const obj = this.getSingleTransactionJson();
       if (this.multiTransact == true) {
         this.AddMultiTransaction();

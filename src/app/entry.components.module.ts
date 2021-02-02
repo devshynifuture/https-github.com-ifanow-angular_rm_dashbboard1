@@ -141,6 +141,8 @@ import { DialogDetailedViewInsPlanningComponent } from './component/protect-comp
 import { AddDeploymentsComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/sip-cleanup/add-deployments/add-deployments.component';
 import { AddSovereignGoldBondsComponent } from './component/protect-component/customers/component/customer/accounts/assets/sovereign-gold-bonds/add-sovereign-gold-bonds/add-sovereign-gold-bonds.component';
 import { DetailedViewSovereignGoldBondsComponent } from './component/protect-component/customers/component/customer/accounts/assets/sovereign-gold-bonds/detailed-view-sovereign-gold-bonds/detailed-view-sovereign-gold-bonds.component';
+import { OpenmobilePopupComponent } from './component/left-sidebar/leftsidebar/openmobile-popup/openmobile-popup.component';
+import { OpenDomainWhiteLabelPopupComponent } from './component/left-sidebar/leftsidebar/open-domain-white-label-popup/open-domain-white-label-popup.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -314,7 +316,9 @@ export const componentList = [
   DetailedViewOthersAssetComponent,
   SaveFinPlanSectionComponent,
   DialogDetailedViewInsPlanningComponent,
-  AddDeploymentsComponent
+  AddDeploymentsComponent,
+  OpenmobilePopupComponent,
+  OpenDomainWhiteLabelPopupComponent
   // ComposeEmailComponent
 ];
 
