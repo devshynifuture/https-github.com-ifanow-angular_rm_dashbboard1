@@ -680,7 +680,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     if (data.length > 0) {
       firstIndexTotalCurrentValue = data[0].currentValue;
       lastIndexTotalCurrentValue = data[data.length - 1].currentValue;
-      secondLastIndexTotalCurrentValue = data[data.length - 2].currentValue;
+      secondLastIndexTotalCurrentValue = data.length > 1 ? data[data.length - 2].currentValue : 0;
       this.nightyDayData = {
         value: lastIndexTotalCurrentValue - firstIndexTotalCurrentValue,
         flag: (Math.sign(lastIndexTotalCurrentValue - firstIndexTotalCurrentValue) == -1) ? false : true
