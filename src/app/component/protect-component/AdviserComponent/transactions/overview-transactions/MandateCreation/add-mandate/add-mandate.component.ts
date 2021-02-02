@@ -422,7 +422,7 @@ export class AddMandateComponent implements OnInit {
     this.dateArr = []
     this.MonthArr = []
     this.yearArr = []
-    this.dateArr.push(d)
+    this.dateArr.push(dd)
     this.MonthArr.push(n + 1)
     for (var i = 0; i < 4; i++) {
       this.yearArr.push(String(this.y).charAt(i))
