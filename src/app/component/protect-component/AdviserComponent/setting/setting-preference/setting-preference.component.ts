@@ -19,6 +19,9 @@ import { PreferenceEmailInvoiceComponent } from '../../Subscriptions/subscriptio
 import { OrgProfileComponent } from '../setting-org-profile/add-personal-profile/org-profile/org-profile.component';
 import { FeviconUrlComponent } from './fevicon-url/fevicon-url.component';
 import { EmailVerificationPopupComponent } from './email-verification-popup/email-verification-popup.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { join } from 'path';
 
 @Component({
   selector: 'app-setting-preference',
@@ -27,13 +30,16 @@ import { EmailVerificationPopupComponent } from './email-verification-popup/emai
 })
 export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getVerifiedList: any;
+  name: any;
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private eventService: EventService,
     public dialog: MatDialog,
     private fb: FormBuilder,
+    public route: ActivatedRoute,
+    private router: Router,
     private peopleService: PeopleService, private settingsService: SettingsService) {
-
+    const navigation = this.router.getCurrentNavigation();
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId();
   }
@@ -108,6 +114,11 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit() {
+    this.name = history.state;
+    if (this.name.navigationId == 4) {
+      this.changeView('tab4')
+    }
+    console.log(this.name)
     this.getPortfolio();
     this.getdataForm('');
     this.emailList = [];

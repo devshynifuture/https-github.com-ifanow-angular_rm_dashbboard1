@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
 import { apiConfig } from 'src/app/config/main-config';
 import { EmailVerificationPopupComponent } from '../../../../setting/setting-preference/email-verification-popup/email-verification-popup.component';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-email-only',
@@ -166,7 +166,15 @@ export class EmailOnlyComponent implements OnInit {
   }
   redirect() {
     this.close(false)
-    this.router.navigate(['admin', 'setting', 'preference']);
+    const navigationExtras: NavigationExtras = {
+      state: {
+        transd: 'TRANS001',
+        workQueue: false,
+        services: 10,
+        code: '003'
+      }
+    };
+    this.router.navigate(['admin', 'setting', 'preference'], navigationExtras);
   }
   getEmailList() {
     let obj = {
@@ -196,6 +204,8 @@ export class EmailOnlyComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result == undefined) {
           return
+        } else {
+          this.close(false)
         }
         this.close(false)
         console.log('The dialog was closed');

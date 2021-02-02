@@ -3,10 +3,10 @@
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20"> Add mandate </h4>
         </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i (click)="closeRightSlider(false)" class="material-icons c-p pt-8 v-middle"> clear</i>
-            </div>
+        <div class="col-md-4 full-end pr-24">
+
+            <i (click)="closeRightSlider(false)" class="material-icons c-p"> clear</i>
+
         </div>
     </div>
 </div>
@@ -265,8 +265,8 @@
             <app-progress-button *ngIf="showUploadSection ==false" (click)="createMandates()"
                 [options]="barButtonOptions" class="br-0 text-inherit ">
             </app-progress-button>
-            <button (click)="download('template','Mandate')" class="btn-bottom br-0 text-inherit ml-16"
-                mat-button>Download</button>
+            <button *ngIf="showMandateTable == true" (click)="download('template','Mandate')"
+                class="btn-bottom br-0 text-inherit ml-16" mat-button>Download</button>
             <button *ngIf="showUploadSection" (click)="closeRightSlider(true)" class="btn-bottom br-0 text-inherit"
                 mat-button>CLOSE</button>
 
@@ -275,7 +275,7 @@
     </div>
 </div>
 
-<div id="template" class="hide">
+<div id="template">
     <html>
 
     <head></head>
@@ -420,16 +420,16 @@
                     </td>
                     <td style="width: 8%;font-size: 13px;"> Sponsor Bank Code</td>
                     <td style="
-            width: 30%;
+            width: 30%;border:1px solid rgb(118, 118, 118)
             ">
 
 
-                        <input type="text" name="" style="width: 95%;">
+                        <!-- <input type="text" name="" style="width: 95%;"> -->
 
                     </td>
-                    <td style="width: 7%;font-size: 13px;"> Utility Code</td>
-                    <td style="width: 30%;">
-                        <input type="text" name="" style="width: 95%;">
+                    <td style="width: 7%;font-size: 13px;text-align: center;"> Utility Code</td>
+                    <td style="width: 30%;border:1px solid rgb(118, 118, 118)">
+                        <span style="width: 100%;padding-left: 4px;" value=""></span>
                     </td>
                 </tr>
             </tbody>
@@ -444,21 +444,17 @@
                     </td>
                     <td style="width: 9%;font-size: 13px;"> I/We hereby authorize</td>
                     <td style="
-            width: 28%;
+            width: 30%;border:1px solid rgb(118, 118, 118);
             ">
-
-
-                        <input type="text" name="" style="width: 95%;" [(ngModel)]="selectedMandate.auth">
+                        <span style="width: 100%;padding-left: 4px;" value="">{{selectedMandate.auth}}</span>
 
                     </td>
-                    <td style="width: 8%;font-size: 13px;"> to debit (tick <img
+                    <td style="width: 8%;font-size: 13px;text-align: center;"> to debit (tick <img
                             src="https://res.cloudinary.com/futurewise/image/upload/v1612176431/logos/right_weq5al.svg"
                             style="width: 10px;">
                         )</td>
-                    <td style="width: 30%;">
-
-                        <input type="text" name="" style="width: 95%;" [(ngModel)]="selectedMandate.dubleTick">
-
+                    <td style="width: 30%; border:1px solid rgb(118, 118, 118);">
+                        <span style="width: 100%;padding-left: 4px;" value="">{{selectedMandate.dubleTick}}</span>
                     </td>
                 </tr>
             </tbody>
@@ -585,8 +581,12 @@
 
 
                     </td>
-                    <td style="width: 30%;"> <input type="text" name="" style="width: 95%;"></td>
-                    <td style="width:4%">ifsc</td>
+                    <td style="width: 30%;border:1px solid rgb(118, 118, 118)">
+
+
+                        <!-- <input type="text" name="" style="width: 95%;"> -->
+                    </td>
+                    <td style="width:4%;text-align: center;">ifsc</td>
                     <td style="
             width: 30%;
             ">
@@ -706,15 +706,13 @@
             width: 11%;
             "> an amount of Rupees
                     </td>
-                    <td style="width: 50%;">
-                        <input type="text" name="" style="width: 95%;">
+                    <td style="width: 50%;border:1px solid rgb(118, 118, 118)">
+                        <span style="width: 95%;padding-left: 4px;" value=""></span>
                     </td>
 
 
-                    <td style="
-            width: 25%;
-            ">
-                        <input type="text" name="" style="width: 95%;" value="₹" [(ngModel)]="selectedMandate.amount">
+                    <td style=" width: 25%;border:1px solid rgb(118, 118, 118);"><span
+                            style="width: 95%;padding-left: 4px;" value="">{{selectedMandate.amount}}</span>
                     </td>
 
                 </tr>
@@ -776,17 +774,20 @@
                         Reference 1 (Mandate Reference No.)
 
                     </td>
-                    <td style="width: 35%;">
-                        <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.uniqueRefNo">
+                    <td style="width: 35%;border:1px solid rgb(118, 118, 118)">
+                        <span style="width: 100%;padding-left: 4px;" value="">{{selectedMandate.uniqueRefNo}}</span>
                     </td>
                     <td style="
             width: 7%;text-align: center;
             ">Phone No
 
                     </td>
-                    <td style="width: 35%;">
-                        <input type="text" name="" style="width: 100%;">
+                    <td style="width: 35%;border:1px solid rgb(118, 118, 118)">
+                        <span style="width: 100%;padding-left: 4px;" value=""></span>
                     </td>
+                </tr>
+                <tr>
+                    <td style="height: 10px;"></td>
                 </tr>
                 <tr style="
     padding-top: 10px;
@@ -799,8 +800,8 @@
                         Reference 2 (Unique Client Code-UCC)
 
                     </td>
-                    <td style="width: 35%;">
-                        <input type="text" name="" style="width: 100%;" [(ngModel)]="selectedMandate.clientCode">
+                    <td style="width: 35%;border:1px solid rgb(118, 118, 118)">
+                        <span style="width: 100%;padding-left: 4px;" value="">{{selectedMandate.clientCode}}</span>
                     </td>
                     <td style="
            
@@ -808,8 +809,8 @@
             "> Email ID
 
                     </td>
-                    <td style="width: 35%;">
-                        <input type="text" name="" style="width: 100%;">
+                    <td style="width: 35%;border:1px solid rgb(118, 118, 118)">
+                        <span style="width: 100%;padding-left: 4px;" value=""></span>
                     </td>
 
                 </tr>
@@ -849,35 +850,37 @@
                                         <table style="width: 100%;">
                                             <tr>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                     {{(dateArr.length == 2)?dateArr[0]:0}}
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{(dateArr.length == 2)?dateArr[0]:(dateArr[1])?dateArr[1]:''}}
+                                                    {{(dateArr.length ==
+                                                    2)?dateArr[0]:(dateArr[1])?dateArr[1]:dateArr[0]}}
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                     {{(MonthArr.length == 2)?MonthArr[0]:0}}
                                                 </td>
                                                 <td
                                                     style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
-                                                    {{(MonthArr.length == 2)?MonthArr[0]:(MonthArr[1]?MonthArr[1]:'')}}
+                                                    {{(MonthArr.length ==
+                                                    2)?MonthArr[0]:(MonthArr[1]?MonthArr[1]:MonthArr[0])}}
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                     {{(yearArr[0]?yearArr[0]:'')}}
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                     {{(yearArr[1]?yearArr[1]:'')}}
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                     {{(yearArr[2]?yearArr[2]:'')}}
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                     {{(yearArr[3]?yearArr[3]:'')}}
                                                 </td>
                                             </tr>
@@ -890,19 +893,19 @@
                                         <table style="width: 100%;">
                                             <tr>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                 </td>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                 </td>
                                             </tr>
                                         </table>
@@ -918,7 +921,7 @@
                                         <table style="width:100%">
                                             <tr>
                                                 <td
-                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;">
+                                                    style="border: 1px solid rgb(118, 118, 118);height:20px;width:20px;text-align: center;">
                                                 </td>
                                                 <td>Until
                                                     Cancelled</td>
