@@ -1373,7 +1373,9 @@ export class MutualFundOverviewComponent implements OnInit {
       advisorId: this.advisorId,
       fromEmail: this.clientDetails.advisorData.email,
       toEmail: this.clientData.email,
-      svg: this.svg
+      svg: this.svg,
+      mfBulkEmailRequestId: this.mfBulkEmailRequestId,
+
     };
     this.UtilService.bulkHtmlToPdf(obj);
     // this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, 'showPieChart', this.svg)

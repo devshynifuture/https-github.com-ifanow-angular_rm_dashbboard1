@@ -1827,7 +1827,8 @@ export class MutualFundUnrealizedTranComponent {
         clientId: this.clientId,
         advisorId: this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,
-        toEmail: this.clientData.email
+        toEmail: this.clientData.email,
+        mfBulkEmailRequestId: this.mfBulkEmailRequestId,
         // fromEmail: 'devshyni@futurewise.co.in',
         // toEmail: 'devshyni@futurewise.co.in'
       };

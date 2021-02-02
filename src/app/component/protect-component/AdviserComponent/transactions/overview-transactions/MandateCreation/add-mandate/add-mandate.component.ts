@@ -381,6 +381,8 @@ export class AddMandateComponent implements OnInit {
     this.dataSource = [];
     this.selectedBank = bank;
     this.selectedMandate = bank;
+    Object.assign(this.selectedMandate, { mobileNumber: this.familyMemberData.mobileList[0].mobileNo });
+    Object.assign(this.selectedMandate, { email: this.familyMemberData.emailList[0].email });
     if (this.detailsIIN.aggregatorType == 2) {
       this.mandateData(this.selectedMandate)
     }
