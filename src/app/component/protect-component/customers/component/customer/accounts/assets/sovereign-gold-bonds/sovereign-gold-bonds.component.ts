@@ -85,10 +85,10 @@ export class SovereignGoldBondsComponent implements OnInit {
     }
   }
 
-  Excel(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle);
-  }
+  // Excel(tableTitle) {
+  //   let rows = this.tableEl._elementRef.nativeElement.rows;
+  //   this.excel.generateExcel(rows, tableTitle);
+  // }
 
   // pdf(tableTitle) {
   //   let rows = this.tableEl._elementRef.nativeElement.rows;
@@ -109,6 +109,14 @@ export class SovereignGoldBondsComponent implements OnInit {
     this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    const rows = this.tableEl._elementRef.nativeElement.rows;
+    const data = this.excel.generateExcel(rows, tableTitle);
+    if (data) {
+      this.fragmentData.isSpinner = false;
+    }
   }
   getGoldBondsData() {
     this.isLoading = true;

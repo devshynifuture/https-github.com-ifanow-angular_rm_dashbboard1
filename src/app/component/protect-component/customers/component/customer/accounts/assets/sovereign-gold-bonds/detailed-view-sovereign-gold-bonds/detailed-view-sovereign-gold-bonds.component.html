@@ -120,7 +120,7 @@
             Bond number
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            {{data.bondNumber? data.bondNumber:'-'}}
+            {{data.bondNumber == 'null' ? '-' : data.bondNumber? data.bondNumber:'-'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -142,7 +142,7 @@
             Description
           </div>
           <div class="col-md-6 text-right f-14 roboto p-0">
-            {{data.description ? data.description:'-'}}
+            {{data.description == 'null' ? '-' : data.description ? data.description:'-'}}
           </div>
         </div>
         <div class="row bb p-8 b-l br" *ngIf="!noDoc">
@@ -195,8 +195,8 @@
         </div>
       </div>
 
-      <h4 class="mt-32 mb-10">Transaction details</h4>
-      <div class="insurance-ui bt">
+      <h4 class="mt-32 mb-10" *ngIf="data.sovereignGoldTransactionList.length > 0">Transaction details</h4>
+      <div class="insurance-ui bt" *ngIf="data.sovereignGoldTransactionList.length > 0">
         <div *ngFor="let item of data.sovereignGoldTransactionList ; let i = index">
           <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
