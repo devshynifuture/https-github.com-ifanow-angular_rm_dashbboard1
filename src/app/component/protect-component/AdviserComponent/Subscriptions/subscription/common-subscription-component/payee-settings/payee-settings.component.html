@@ -4,15 +4,16 @@
         <h4 class="mb-0 wrapper-20 text-left" *ngIf="inputData.data">Edit payee</h4>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-16 pr-16 c-p" (click)="Close('close')"> clear</i></div>
+        <i class="material-icons pt-16 pr-16 c-p" (click)="Close('close')"> clear</i>
+    </div>
 </div>
 <div [formGroup]="payeeSettingsForm" class="justify-content-center" id="ui-payee-setting">
     <div class="row">
         <div class="col-md-6 pr-0">
             <h5 class="m-0">Customer name</h5>
         </div>
-        <div class="col-md-6">
-            <mat-form-field appearance="standard" floatLabel="never" class="w-100">
+        <div class="col-md-6 remove-top">
+            <mat-form-field appearance="standard" floatLabel="never" class="w-100 ">
                 <mat-select formControlName="customerName" class="form-control br-0">
                     <mat-option disabled value=''>Search family members</mat-option>
                     <mat-option [disabled]="f.disableFlag" *ngFor="let f of family" [value]="f.name"

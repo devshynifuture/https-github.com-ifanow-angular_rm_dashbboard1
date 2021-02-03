@@ -55,13 +55,14 @@
         </mat-paginator>
     </div>
 </div>
+
 <div class="row pt-16">
-    <div class="col-md-12 back-office-table">
+    <div class="col-md-12 back-office-header-stricky">
         <table id="table-low" class="mt-8 skeletonAnimation" mat-table [dataSource]="dataSource" appSkeletonLoading
             [appSkeletonLoading]="isLoading">
             <!-- Position Column -->
             <ng-container matColumnDef="name">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> NJ name </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> NJ name </th>
                 <td mat-cell class="b-a" *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '':element.name}}
@@ -71,7 +72,7 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="nav">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> NJ NAV </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> NJ NAV </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '':element.njNav}}
@@ -81,7 +82,7 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="schemeName">
-                <th class="b-a w-20" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
+                <th class="b-a sticky w-20" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
                 <td class="b-a matInputClass w-20" mat-cell *matCellDef="let element">
                     <!-- <input class="form-control" matInput
                         (focus)="getFilteredSchemes()">
@@ -121,7 +122,7 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="schemeCode">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme code </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> Scheme code </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '':element.schemeCode}}
@@ -130,7 +131,7 @@
             </ng-container>
 
             <ng-container matColumnDef="amficode">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> AMFI code </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> AMFI code </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '':element.amfiCode}}
@@ -140,7 +141,7 @@
 
 
             <ng-container matColumnDef="navTwo">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> NAV </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> NAV </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '':element.nav}}
@@ -149,7 +150,7 @@
             </ng-container>
 
             <ng-container matColumnDef="navDate">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> NAV date </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> NAV date </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '': element.navDate == ''?'':(element.navDate | date: 'dd/MM/yyyy')}}
@@ -158,7 +159,7 @@
             </ng-container>
 
             <ng-container matColumnDef="njCount">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> NJ count </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> NJ count </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '': element.njPrudentCount}}
@@ -167,7 +168,7 @@
             </ng-container>
 
             <ng-container matColumnDef="map">
-                <th class="b-a" mat-header-cell *matHeaderCellDef> {{isMapped!= false ? 'Unmap':'Map'}} </th>
+                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> {{isMapped!= false ? 'Unmap':'Map'}} </th>
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         <button *ngIf="isMapped == true && !isLoading" class="btn-primary btn-Map" mat-stroked-button
@@ -184,7 +185,7 @@
                 </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         <div class="row" *ngIf="dataSource.data.length === 0">

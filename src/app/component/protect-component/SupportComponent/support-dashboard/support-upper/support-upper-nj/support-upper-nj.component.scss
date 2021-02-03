@@ -28,3 +28,8 @@
 ::ng-deep .paginationCLass .mat-paginator-container {
   min-height: auto;
 }
+
+.back-office-header-stricky {
+  overflow-y: auto!important;
+  height: calc(100vh - 185px);
+}
