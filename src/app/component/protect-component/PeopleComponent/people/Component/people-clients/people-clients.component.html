@@ -40,6 +40,7 @@
             <!--  -->
             <table #tableEl matSort #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs"
                 appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+
                 <ng-container matColumnDef="position">
                     <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br sticky w-20"> Group head
                         name

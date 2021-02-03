@@ -24,3 +24,10 @@
 .pt-11 {
   padding-top: 11px !important;
 }
+
+
+
+.back-office-header-stricky {
+  overflow-y: auto!important;
+  height: calc(100vh - 185px);
+}
