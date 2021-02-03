@@ -482,7 +482,10 @@ export class MfCapitalDetailedComponent implements OnInit {
                                         ele.purchasePriceRate = ele.purchasePrice;
                                         ele.purchaseAmt = ele.amount
                                     }
-
+                                    if (category == 'EQUITY' && ele.days <= 365) {
+                                        ele.purchasePriceRate = ele.purchasePrice;
+                                        ele.purchaseAmt = ele.amount
+                                    }
 
                                     if (ind == 0) {
                                         ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
@@ -573,11 +576,10 @@ export class MfCapitalDetailedComponent implements OnInit {
         } else {
             gainLossBasedOnGrandfathering = 'gainOrLossAmount'
         }
-        // if (category == 'EQUITY') {
-        //     gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
-        // } else {
-        //     gainLossBasedOnGrandfathering = 'gainOrLossAmount'
-        // }
+        if (category == 'EQUITY' && data.days <= 365) {
+            data.purchasePriceRate = data.purchasePrice;
+            data.purchaseAmt = data.amount
+        }
         if (data.days < days) {
             stGain = ((data[gainLossBasedOnGrandfathering] >= 0) ? (data[gainLossBasedOnGrandfathering]) : 0)
             stLoss = ((data[gainLossBasedOnGrandfathering] < 0) ? (data[gainLossBasedOnGrandfathering]) : 0)
