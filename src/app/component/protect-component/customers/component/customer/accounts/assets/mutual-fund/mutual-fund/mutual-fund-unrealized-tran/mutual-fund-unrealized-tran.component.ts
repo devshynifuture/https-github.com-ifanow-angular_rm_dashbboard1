@@ -118,7 +118,7 @@ export class MutualFundUnrealizedTranComponent {
   isSpinner = false;
   customDataHolder = [];
   @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate: ElementRef;
+  @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate;
   @ViewChild('unrealizedTranTemplateHeader', { static: false }) unrealizedTranTemplateHeader;
   @ViewChild('allTranTemplateHeader', { static: false }) allTranTemplateHeader;
   rightFilterData: any = { reportType: '' };
