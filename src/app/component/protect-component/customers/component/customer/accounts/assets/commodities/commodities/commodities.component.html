@@ -661,13 +661,13 @@
 
                     </tr>
                     <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
-                        *ngFor="let element of otherCommodityList.data ;index as i">
+                        *ngFor="let element of dummyOtherDataList ;index as i">
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-left: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             {{i + 1}}</td>
-                        <td
+                        <td *ngFor="let owner of element.ownerList; let i=index"
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            <span>{{element.ownerList[0].name}}</span></td>
+                            <span *ngIf="i==0">{{owner.name}}</span></td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
