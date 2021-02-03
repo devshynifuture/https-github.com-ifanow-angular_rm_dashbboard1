@@ -191,7 +191,7 @@ export class OrgSettingServiceService {
   }
 
   resetTeamMemberPassword(data) {
-    return this.http.putEncoded(apiConfig.MAIN_URL + appConfig.RESET_TEAM_MEMBER_PASSWORD, data);
+    return this.http.putEncoded(apiConfig.USER + appConfig.RESET_TEAM_MEMBER_PASSWORD, data);
   }
 
 }
