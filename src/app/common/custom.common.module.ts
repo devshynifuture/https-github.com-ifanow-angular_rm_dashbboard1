@@ -15,6 +15,7 @@ import { RealEstatePropertyComponent } from './real-estate-property/real-estate-
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { CredentialsErrorPopupComponent } from './credentials-error-popup/credentials-error-popup.component';
 import { AccountAndBillingComponent } from '../component/protect-component/AdviserComponent/account-and-billing/account-and-billing/account-and-billing.component';
+import { ChangeClientPasswordComponent } from '../component/protect-component/customers/component/customer/customer-overview/overview-profile/change-client-password/change-client-password.component';
 
 // import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
 // import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
@@ -30,7 +31,8 @@ import { AccountAndBillingComponent } from '../component/protect-component/Advis
     CalendarScheduleComponent,
     DashEvent,
     CredentialsErrorPopupComponent,
-    AccountAndBillingComponent
+    AccountAndBillingComponent,
+    ChangeClientPasswordComponent
   ],
   imports: [
     MaterialModule,
@@ -50,9 +52,10 @@ import { AccountAndBillingComponent } from '../component/protect-component/Advis
     EmailDomainAutoSuggestComponent,
     GoogleConnectComponent,
     CalendarScheduleComponent,
-    DashEvent
+    DashEvent,
+    ChangeClientPasswordComponent
   ],
-  entryComponents: [LinkBankComponent, RealEstatePropertyComponent, DashEvent, CredentialsErrorPopupComponent]
+  entryComponents: [LinkBankComponent, RealEstatePropertyComponent, DashEvent, CredentialsErrorPopupComponent, ChangeClientPasswordComponent]
 })
 export class CustomCommonModule {
 }

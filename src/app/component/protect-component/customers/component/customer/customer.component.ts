@@ -208,7 +208,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   }
 
   openChangePassword(value, data) {
-
+    data['clientFlag'] = true;
     const fragmentData = {
       flag: value,
       data,

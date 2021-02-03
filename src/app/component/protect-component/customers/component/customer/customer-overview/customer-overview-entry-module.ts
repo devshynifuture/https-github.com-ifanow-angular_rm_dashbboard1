@@ -22,8 +22,7 @@ export const componentList = [
   ViewActivityComponent,
   DocumentNewFolderComponent,
   MergeClientFamilyMemberComponent,
-  UpdateClientProfileComponent,
-  ChangeClientPasswordComponent
+  UpdateClientProfileComponent
 ];
 
 @NgModule({

@@ -190,4 +190,8 @@ export class OrgSettingServiceService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_EMAIL, data);
   }
 
+  resetTeamMemberPassword(data) {
+    return this.http.putEncoded(apiConfig.MAIN_URL + appConfig.RESET_TEAM_MEMBER_PASSWORD, data);
+  }
+
 }

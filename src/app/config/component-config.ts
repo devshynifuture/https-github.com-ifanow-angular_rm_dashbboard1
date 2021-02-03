@@ -941,7 +941,7 @@ export const appConfig = {
   RESET_PASSWORD: 'setting/reset/password',
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
   GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
-  ADD_CALL_BACK_MOB:'advisor-callback-detail/add',
+  ADD_CALL_BACK_MOB: 'advisor-callback-detail/add',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
@@ -1003,6 +1003,7 @@ export const appConfig = {
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
   GET_CLIENT_OR_ADVISOR_ROLES: 'setting/users-roles/role/module-loader/get',
   GET_DOMAIN_DATA: 'setting/organisation/domain/data/get',
+  RESET_TEAM_MEMBER_PASSWORD: 'user/advisor/reset/password',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
 
