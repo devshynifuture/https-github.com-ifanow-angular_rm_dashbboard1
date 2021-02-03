@@ -12,13 +12,14 @@ import { FileUploadServiceService } from '../../file-upload-service.service';
   styleUrls: ['./detailed-view-sovereign-gold-bonds.component.scss']
 })
 export class DetailedViewSovereignGoldBondsComponent implements OnInit {
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   data: any;
   schemeList: any = [];
   isLoading = false;
 
   dataSource: any = new MatTableDataSource();
   @ViewChild('epfListTable', { static: false }) holdingsTableSort: MatSort;
-  displayedColumns = ['name', 'nav', 'units', 'amount', 'value'];
+  // displayedColumns = ['name', 'nav', 'units', 'amount', 'value'];
   name: any;
   bankList: any = [];
   clientFamilybankList: any = [];
@@ -34,7 +35,7 @@ export class DetailedViewSovereignGoldBondsComponent implements OnInit {
     this.bankList = this.enumService.getBank();
     this.clientFamilybankList = this.enumService.getclientFamilybankList();
     console.log(this.bankList, "bank", this.clientFamilybankList);
-
+    this.dataSource = this.data.sovereignGoldTransactionList;
     this.getGlobalList();
     this.isLoadingUpload = true;
     this.fileUpload.getAssetsDoc(this.data).then((data) => {

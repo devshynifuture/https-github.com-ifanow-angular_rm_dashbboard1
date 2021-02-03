@@ -32,8 +32,8 @@ export class TempserviceService {
               totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, { schemeName: true });
 
               const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
-              totalObj.totalXirr = obj.xirr;
-              totalObj.totalAbsoluteReturn = obj.absoluteReturn;
+              totalObj.totalXirr = obj ? obj.xirr : 0;
+              totalObj.totalAbsoluteReturn = obj ? obj.absoluteReturn : 0;
               totalObj.totalBalanceUnit = catObj[key][catObj[key].length - 1].balanceUnit;
             } else {
               if (filteredArray.length > 0 && array.length == 0) {
