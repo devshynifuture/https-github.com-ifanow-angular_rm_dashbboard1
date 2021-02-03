@@ -402,9 +402,9 @@
 
             <div class="form-group mb-0">
               <mat-form-field>
-                <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                  autocomplete="off" formControlName="unit" maxlength="10" #partPayment
-                  class="form-control rupess br-0">
+                <input matInput type="text" (keyup)="validationOnUnitValue($event.target.value)" appInputValueValidation
+                  [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off" formControlName="unit" maxlength="10"
+                  #partPayment class="form-control rupess br-0">
                 <mat-error>
                   This field is required
                 </mat-error>
@@ -434,12 +434,16 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-1 p-0">
         <div class="pt-8">
           <i class="material-icons text-primitive c-p f-20 float-left" (click)="addTransaction(null)">add</i>
           <i class="material-icons text-primitive c-p f-20 pl-10 " (click)="removeTransaction(goldindex)">remove</i>
         </div>
       </div>
+    </div>
+    <div>
+      <span class="f-12" style="color:#f44336;font: weight 500;">{{error}}</span>
     </div>
   </div>
 

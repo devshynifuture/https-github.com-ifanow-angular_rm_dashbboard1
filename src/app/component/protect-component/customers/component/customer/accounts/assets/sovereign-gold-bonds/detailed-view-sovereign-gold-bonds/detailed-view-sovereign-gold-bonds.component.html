@@ -69,7 +69,7 @@
             Interest rate
           </div>
           <div class="col-md-4 text-right f-14 roboto p-0">
-            <span appFormatNumber>{{data.interestRate ? data.interestRate:'-'}}</span> {{data.interestRate ? '%':''}}
+            <span>{{data.interestRate ? data.interestRate:'-'}}</span> {{data.interestRate ? '%':''}}
           </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -195,7 +195,7 @@
         </div>
       </div>
 
-      <h4 class="mt-32 mb-10" *ngIf="data.sovereignGoldTransactionList.length > 0">Transaction details</h4>
+      <!-- <h4 class="mt-32 mb-10" *ngIf="data.sovereignGoldTransactionList.length > 0">Transaction details</h4>
       <div class="insurance-ui bt" *ngIf="data.sovereignGoldTransactionList.length > 0">
         <div *ngFor="let item of data.sovereignGoldTransactionList ; let i = index">
           <div class="row bb p-8 b-l br">
@@ -229,6 +229,46 @@
               {{(item.amount) ? '₹' : ''}}<span appFormatNumber>{{(item.amount) ? item.amount : '-'}}</span>
             </div>
           </div>
+        </div>
+      </div> -->
+      <div class="row mt-32 mb-10" *ngIf="data.sovereignGoldTransactionList.length > 0">
+        <div class="col-md-12 stock-transactions-details-view">
+          <h5 class="m-0 f-500 roboto pb-10">Transactions </h5>
+          <table mat-table [dataSource]="dataSource" id="table-low">
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> Transaction type </th>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div>
+                  <span>Redemption</span>
+                </div>
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> Transaction date </th>
+              <td mat-cell *matCellDef="let element" class="br">
+                {{element.transactionDate ? (element.transactionDate | date : 'dd/MM/yyyy') : '-'}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Units </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{(element.unit) ? element.unit : '-'}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let element"> {{(element.amount) ? '₹' : ''}}<span
+                  appFormatNumber>{{(element.amount) ? element.amount : '-'}}</span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
         </div>
       </div>
     </div>

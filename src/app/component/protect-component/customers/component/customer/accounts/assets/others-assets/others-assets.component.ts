@@ -186,7 +186,16 @@ export class OthersAssetsComponent implements OnInit {
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value);
   // }
   // // datasource3 = ELEMENT_DATA3;
+  getStatusId(data) {
+    data.forEach(obj => {
 
+      if (obj.maturityDate && new Date(obj.maturityDate) < new Date()) {
+        obj.status = 'MATURED';
+      } else {
+        obj.status = 'LIVE';
+      }
+    });
+  }
   getOthersAssets() {
     this.isLoading = true;
     const obj = {
@@ -221,6 +230,7 @@ export class OthersAssetsComponent implements OnInit {
 
       console.log('getRealEstateRes', data);
       this.dataList = data;
+      this.getStatusId(data);
       this.datasource3.data = this.dataList;
       // data.assetList.forEach(singleAsset => {
       //   singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);

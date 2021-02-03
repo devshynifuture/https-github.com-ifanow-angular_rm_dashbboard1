@@ -80,6 +80,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
   private unSubcripDemat: Subscription;
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  error: {};
   constructor(public custumService: CustomerService, private enumDataService: EnumDataService, private datePipe: DatePipe, public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private assetValidation: AssetValidationService,
     private fb: FormBuilder, public custmService: CustomerService,
@@ -582,7 +583,22 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       this.goldBondForm.get("units").setValue(unit.toFixed(2));
     }
   }
+  validationOnUnitValue(value) {
+    let sumOfUnit = 0;
+    let finalMemberList = this.goldBondForm.get('sovereignGoldTransactionList') as FormArray;
+    finalMemberList.controls.forEach(element => {
+      sumOfUnit += parseInt(element.get('unit').value ? element.get('unit').value : 0);
+    });
+    if (this.goldBondForm.value.units) {
+      if (sumOfUnit > parseInt(this.goldBondForm.value.units)) {
+        this.error = 'Unit cannot be greater than alloted units'
+      } else {
+        this.error = null;
+      }
+    }
 
+    console.log(sumOfUnit)
+  }
   saveFormData() {
     let bondObj = {
       "clientId": this.goldBondForm.value.clientId,
@@ -604,7 +620,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       "nomineeList": this.goldBondForm.value.getNomineeName,
       "id": this.goldBondForm.value.id,
     }
-    if (this.goldBondForm.invalid) {
+    if (this.goldBondForm.invalid && this.error) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       this.goldBondForm.markAllAsTouched();
       return;
