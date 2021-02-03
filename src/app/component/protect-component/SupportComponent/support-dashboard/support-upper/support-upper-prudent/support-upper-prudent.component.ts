@@ -73,51 +73,51 @@ export class SupportUpperPrudentComponent implements OnInit {
       )
       .subscribe(data => this.onResponseHandlerAfterSearchingSchemes(data));
 
-    this.searchSchemeControlSubs = this.searchSchemeControl.valueChanges
-      .pipe(
-        debounceTime(500),
-        tap(() => {
-          //this.errorMsg = "";
-          this.filteredSchemes = [];
-          this.isLoadingForDropDown = true;
-          this.schemeControl.patchValue(null, { emitEvent: false });
-        }),
-        switchMap(value => this.searchSchemeNjPrudent(value)
-          .pipe(
-            finalize(() => {
-              this.isLoadingForDropDown = false
-            }),
-          )
-        )
-      ).subscribe(data => {
-        this.isLoading = false;
-        this.isLoadingForDropDown = false;
-        if (data) {
-          let dataTable: any[] = [];
-          this.apiCallingStack = [];
-          this.prudentList = data;
-          data.forEach(item => {
-            dataTable.push({
-              name: item.schemeName,
-              nav: item.nav,
-              schemeName: '',
-              schemeCode: '',
-              amficode: '',
-              navTwo: '',
-              navDate: '',
-              njCount: '',
-              map: '',
-              id: item.id,
-              transactionDate: item.transactionDate
-            });
-          });
-          console.log("this is some data::::::", dataTable);
-          this.dataTable = dataTable;
-          this.dataSource.data = dataTable;
-          console.log(data);
-          this.onResponseHandlerAfterSearchingSchemes(data)
-        }
-      });
+    // this.searchSchemeControlSubs = this.searchSchemeControl.valueChanges
+    //   .pipe(
+    //     debounceTime(500),
+    //     tap(() => {
+    //       //this.errorMsg = "";
+    //       this.filteredSchemes = [];
+    //       this.isLoadingForDropDown = true;
+    //       this.schemeControl.patchValue(null, { emitEvent: false });
+    //     }),
+    //     switchMap(value => this.searchSchemeNjPrudent(value)
+    //       .pipe(
+    //         finalize(() => {
+    //           this.isLoadingForDropDown = false
+    //         }),
+    //       )
+    //     )
+    //   ).subscribe(data => {
+    //     this.isLoading = false;
+    //     this.isLoadingForDropDown = false;
+    //     if (data) {
+    //       let dataTable: any[] = [];
+    //       this.apiCallingStack = [];
+    //       this.prudentList = data;
+    //       data.forEach(item => {
+    //         dataTable.push({
+    //           name: item.schemeName,
+    //           nav: item.nav,
+    //           schemeName: '',
+    //           schemeCode: '',
+    //           amficode: '',
+    //           navTwo: '',
+    //           navDate: '',
+    //           njCount: '',
+    //           map: '',
+    //           id: item.id,
+    //           transactionDate: item.transactionDate
+    //         });
+    //       });
+    //       console.log("this is some data::::::", dataTable);
+    //       this.dataTable = dataTable;
+    //       this.dataSource.data = dataTable;
+    //       console.log(data);
+    //       this.onResponseHandlerAfterSearchingSchemes(data)
+    //     }
+    //   });
   }
 
   searchSchemeNjPrudent(value) {
@@ -302,6 +302,65 @@ export class SupportUpperPrudentComponent implements OnInit {
       element.schemeCode = '';
       element.njCount = '';
       element.nav = ''
+    }
+  }
+  showSuggestionsBasedOnMainSearch(eve) {
+    this.isLoadingForDropDown = false;
+    // let threeWords = this.supportUpperService.getThreeWordsOfSchemeName(element);
+    // this.apiCallingStack.push(threeWords);
+    if (eve.length > 2) {
+      this.isLoadingForDropDown = true;
+      this.supportUpperService.getSearchSchemeList({ rtMasterId: 4, schemeName: eve, startLimit: 0, endLimit: 50, isMapped: this.isMapped })
+        .subscribe(data => {
+          this.isLoading = false;
+          this.isLoadingForDropDown = false;
+          if (data) {
+            let dataTable: any[] = [];
+            this.apiCallingStack = [];
+            // this.njSchemeMasterList = data;
+            if (data.njSchemeMasterList.length > 0) {
+              data.njSchemeMasterList.forEach(item => {
+                dataTable.push({
+                  name: item.schemeName,
+                  nav: item.nav,
+                  schemeName: '',
+                  schemeCode: '',
+                  amficode: '',
+                  navTwo: '',
+                  navDate: '',
+                  njCount: '',
+                  map: '',
+                  id: item.id,
+                  transactionDate: item.transactionDate
+                });
+              });
+            }
+            console.log("this is some data::::::", dataTable);
+            this.dataTable = dataTable;
+            this.dataSource.data = dataTable;
+            console.log(data);
+            this.apiCallingStack = [];
+            this.filteredSchemes = data.njSchemeMasterList;
+            console.log("this is what i need::::::::", data);
+            //this.checkIfDataNotPresentAndShowError(data);
+            this.checkIfDataNotPresentAndShowErrorMainSearch(null);
+            console.log(this.filteredSchemes);
+          }
+        }, error => {
+          this.checkIfDataNotPresentAndShowErrorMainSearch(null);
+        });
+    } else if (eve == "") {
+      this.getMappedUnmappedPrudentList();
+    }
+  }
+  checkIfDataNotPresentAndShowErrorMainSearch(data) {
+    if (data && data.length > 0) {
+      this.filteredSchemeError = false;
+      this.errorMsg = '';
+    } else {
+      this.filteredSchemeError = true;
+      this.errorMsg = 'No data Found';
+      // this.errorMsg = 'No data Found';
     }
   }
   checkIfDataNotPresentAndShowError(data, element) {
