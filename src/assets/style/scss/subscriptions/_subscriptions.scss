@@ -7,6 +7,20 @@
   }
 }
 
+.plan-right-slider {
+  .mat-checkbox {
+    position: relative;
+    top: -5px;
+  }
+}
+
+.create-sub-checkbox {
+  .mat-checkbox {
+    position: relative;
+    top: -3px;
+  }
+}
+
 #ui-appcustomhtml p {
   width: 100%;
   padding-top: 15px;
