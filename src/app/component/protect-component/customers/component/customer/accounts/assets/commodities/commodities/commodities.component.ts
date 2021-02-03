@@ -28,7 +28,7 @@ import { CustomerOverviewService } from '../../../../customer-overview/customer-
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
   @ViewChild('tableEl', { static: false }) tableEl;
-
+  dummyOtherDataList=[];
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
