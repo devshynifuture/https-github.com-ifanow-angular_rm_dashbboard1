@@ -107,7 +107,8 @@ export class TempserviceService {
           };
         }
       } else {
-        if (element.id == mainData[mainDataId] && element.balanceUnit > 0) {
+        let balanceUnit = element.balanceUnit ? element.balanceUnit : element.balanceUnits;
+        if (element.id == mainData[mainDataId] && balanceUnit > 0) {
           obj = {
             xirr: element.xirr,
             absoluteReturn: element.absoluteReturn

@@ -1141,7 +1141,7 @@ export class LifeInsuranceComponent implements OnInit {
       //   }
       // }
       if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 1) {
-        this.insuranceDetails.graph = Math.round(100 - (this.plannerObj.additionalLifeIns / this.insuranceDetails.actualAmount));
+        this.insuranceDetails.graph = Math.round(100 - ((this.plannerObj.additionalLifeIns / this.insuranceDetails.actualAmount) * 100));
       }
       if (this.insuranceDetails && this.insuranceDetails.needAnalysis.needTypeId == 2) {
         this.insuranceDetails.graph = Math.round((this.insuranceDetails.actualAmount / this.insuranceDetails.adviceAmount) * 100);
