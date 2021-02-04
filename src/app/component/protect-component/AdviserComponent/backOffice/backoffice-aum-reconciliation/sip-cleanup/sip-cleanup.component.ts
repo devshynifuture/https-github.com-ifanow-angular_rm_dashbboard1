@@ -3,7 +3,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { EventService } from "./../../../../../../Data-service/event.service";
 import { BackOfficeService } from "src/app/component/protect-component/AdviserComponent/backOffice/back-office.service";
 import { AuthService } from "./../../../../../../auth-service/authService";
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import { UtilService } from "src/app/services/util.service";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
 import { SubscriptionInject } from "../../../Subscriptions/subscription-inject.service";
@@ -48,7 +48,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   pageEvent: PageEvent;
   currentPageIndex: any = 1;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-
+  @ViewChild('folio', { static: true }) folio: ElementRef;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -192,9 +192,9 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
 
     const obj = {
       advisorId: this.advisorId,
-      arnRiaDetailsId: -1,
-      markedStatus: 0,
-      activeStatus: -1,
+      arnRiaDetailsId: this.filterForm.get("brokerCode").value,
+      markedStatus: this.filterForm.get("markUnmark").value,
+      activeStatus: this.filterForm.get("activeCeased").value,
       pageNumber: 1,
       limit: 200,
       folioNumber: folioNumber
@@ -243,6 +243,10 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
         pageNumber,
         limit: 200
       };
+    }
+
+    if (this.folio.nativeElement.value != '') {
+      data['folioNumber'] = this.folio.nativeElement.value;
     }
 
     this.isLoading = true;
