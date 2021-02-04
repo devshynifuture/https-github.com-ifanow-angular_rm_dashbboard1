@@ -1,25 +1,25 @@
 /// <reference lib="webworker" />
 
 // import {MfServiceService} from './mf-service.service';
-import {TempserviceService} from './tempservice.service';
+import { TempserviceService } from './tempservice.service';
 
 // importScripts('tempservice.service.ts');                 /* imports just "foo.js" */
 
-addEventListener('message', ({data}) => {
+addEventListener('message', ({ data }) => {
   const response = `worker response to ${data}`;
   // console.log(`addEventListener got message:`, data);
   const mfService = new TempserviceService();
   const mutualFundList = data.mutualFundList;
-  const totalValue = mfService.getFinalTotalValue(mutualFundList);
+  const totalValue = mfService.getFinalTotalValue(mutualFundList, data.showFolio);
   const customDataSourceData = mfService.subCatArrayForSummary(mutualFundList, data.type, data.mutualFund, data.showFolio);
   const customDataHolder = [];
   customDataSourceData.forEach(element => {
-    customDataHolder.push({...element});
+    customDataHolder.push({ ...element });
     element.balanceUnitOrg = element.balanceUnit;
     element.sipAmountInt = element.sipAmount;
-    if(element.currentValue == 0){
+    if (element.currentValue == 0) {
       element.withdrawalsTillToday = mfService.mutualFundRoundAndFormat(element.redemption, 0);
-    }else{
+    } else {
       element.withdrawalsTillToday = mfService.mutualFundRoundAndFormat(element.withdrawalsTillToday, 0);
     }
     element.ownerName = mfService.convertInTitleCase(element.ownerName);
@@ -54,7 +54,7 @@ addEventListener('message', ({data}) => {
   });
 
 
-  const output = {customDataSourceData, totalValue, customDataHolder};
+  const output = { customDataSourceData, totalValue, customDataHolder };
   // console.log('Mutual fund script output: ', output);
   postMessage(output);
   // postMessage(response);
