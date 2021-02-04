@@ -577,8 +577,7 @@ export class MfCapitalDetailedComponent implements OnInit {
             gainLossBasedOnGrandfathering = 'gainOrLossAmount'
         }
         if (category == 'EQUITY' && data.days <= 365) {
-            data.purchasePriceRate = data.purchasePrice;
-            data.purchaseAmt = data.amount
+            gainLossBasedOnGrandfathering = 'gainOrLossAmount'
         }
         if (data.days < days) {
             stGain = ((data[gainLossBasedOnGrandfathering] >= 0) ? (data[gainLossBasedOnGrandfathering]) : 0)
