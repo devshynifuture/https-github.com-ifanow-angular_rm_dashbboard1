@@ -192,7 +192,7 @@ export class EmailAdviceComponent implements OnInit {
         //   adviceToCategoryTypeMasterId: this.getData[0].adviceToCategoryTypeMasterId,
         //   adviceId : this.getData[0].id
         // }
-        this.route.navigate(['/cus/email-consent'], { queryParams: { groupId: this.groupId } });
+        // this.route.navigate(['/cus/email-consent'], { queryParams: { groupId: this.groupId } });
         // this.route.navigate(['/cus/email-consent'], { queryParams: { gropID: 'abe26153-d112-410e-8ee1-5268a8911b4a', } });
 
         this.close(true)
