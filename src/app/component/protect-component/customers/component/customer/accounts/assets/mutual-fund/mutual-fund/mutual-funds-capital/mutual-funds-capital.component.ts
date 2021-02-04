@@ -651,7 +651,7 @@ export class MutualFundsCapitalComponent implements OnInit {
             } else {
                 gainLossBasedOnGrandfathering = 'gainOrLossAmount'
             }
-            if (category == 'EQUITY' && element.days.days <= 365) {
+            if (category == 'EQUITY' && element.days <= 365) {
                 gainLossBasedOnGrandfathering = 'gainOrLossAmount'
             }
             // if (category == 'EQUITY') {
