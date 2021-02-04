@@ -9,13 +9,14 @@ import { RecordDetailsComponent } from "./record-details/record-details.componen
 import { SubscriptionInject } from "../../../Subscriptions/subscription-inject.service";
 import { MatTableDataSource, MatSort, PageEvent, MatPaginator } from "@angular/material";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 import { element } from 'protractor';
 import { DatePipe } from '@angular/common';
 import { RunSipMappingMasterComponent } from './run-sip-mapping-master/run-sip-mapping-master.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDeploymentsComponent } from './add-deployments/add-deployments.component';
 import { SipCleanupTransactionComponent } from './sip-cleanup-transaction/sip-cleanup-transaction.component';
+import { startWith, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: "app-sip-cleanup",
@@ -71,6 +72,8 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
   filterSub2: Subscription = null;
   brokerList = [];
   filterSearchForm: FormControl;
+  folioOutputSubscription: Subscription;
+  folioOutputObservable: Observable<any> = new Observable<any>();
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -185,6 +188,40 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     // }
   }
 
+  searchFolio(folioNumber) {
+
+    const obj = {
+      advisorId: this.advisorId,
+      arnRiaDetailsId: -1,
+      markedStatus: 0,
+      activeStatus: -1,
+      pageNumber: 1,
+      limit: 200,
+      folioNumber: folioNumber
+    };
+    this.isLoading = true;
+    this.dataSource.data = ELEMENT_DATA;
+    if (this.folioOutputSubscription && !this.folioOutputSubscription.closed) {
+      this.folioOutputSubscription.unsubscribe();
+    }
+    this.folioOutputSubscription = this.folioOutputObservable.pipe(startWith(''),
+      debounceTime(700)).subscribe(
+        data => {
+          this.backOfficeService.getSipCleanUpListData(obj).subscribe(
+            (res) => {
+              this.isLoading = false;
+              this.getSipCleanUpListDataRes(res);
+            },
+            (err) => {
+              this.dataSource.data = null;
+              this.dataSource.filteredData = []
+              this.tableData = null;
+              console.error(err)
+            }
+          );
+        });
+  }
+
   getSipCleanUpList(byFilter, pageNumber) {
     let data;
     if (byFilter) {
@@ -212,22 +249,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     this.backOfficeService.getSipCleanUpListData(data).subscribe(
       (res) => {
         this.isLoading = false;
-        if (res) {
-          console.log("this is backoffice sip cleanup data", res);
-          this.totalSipCount = res[0].totalSipCount;
-          res.map(element => {
-            element.registeredDate = this.datePipe.transform(element.registeredDate, 'dd/MM/yy');
-            element.from_date = this.datePipe.transform(element.from_date, 'dd/MM/yy')
-            element.to_date = this.datePipe.transform(element.to_date, 'dd/MM/yy')
-          })
-          this.dataSource.data = res;
-          this.tableData = res;
-        } else {
-          // this.eventService.openSnackBar("No Data Found!", "DISMISS");
-          this.dataSource.data = null;
-          this.dataSource.filteredData = []
-          this.tableData = null;
-        }
+        this.getSipCleanUpListDataRes(res);
       },
       (err) => {
         this.dataSource.data = null;
@@ -237,6 +259,26 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+  getSipCleanUpListDataRes(res) {
+    if (res) {
+      console.log("this is backoffice sip cleanup data", res);
+      this.totalSipCount = res[0].totalSipCount;
+      res.map(element => {
+        element.registeredDate = this.datePipe.transform(element.registeredDate, 'dd/MM/yy');
+        element.from_date = this.datePipe.transform(element.from_date, 'dd/MM/yy')
+        element.to_date = this.datePipe.transform(element.to_date, 'dd/MM/yy')
+      })
+      this.dataSource.data = res;
+      this.tableData = res;
+    } else {
+      // this.eventService.openSnackBar("No Data Found!", "DISMISS");
+      this.dataSource.data = null;
+      this.dataSource.filteredData = []
+      this.tableData = null;
+    }
+  }
+
 
   onPaginationChange(event) {
     const { pageIndex } = event;
