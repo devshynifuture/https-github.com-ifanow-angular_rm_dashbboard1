@@ -452,7 +452,6 @@ export class TempserviceService {
         } else {
           withdrawals += (data.withdrawalsTillToday) ? data.withdrawalsTillToday : 0;
         }
-        console.log('foliooooooooooo' + data.folioNumber + 'sip AMounttttttttttttttttttttttttttttttttttttttt', data.sipAmount);
         sip += (data.sipAmount) ? data.sipAmount : 0;
         netGain += (data.gainOrLossAmount) ? data.gainOrLossAmount : 0;
         marketValue += (data.marketValue) ? data.marketValue : 0;
