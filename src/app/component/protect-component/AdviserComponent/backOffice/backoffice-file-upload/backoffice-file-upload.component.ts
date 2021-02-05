@@ -189,8 +189,9 @@ export class BackofficeFileUploadComponent implements OnInit {
             this.filter.rt = '';
             this.selectedFileType = '';
             this.arnRiaId = '';
-            this.setFilter();
-            // this.successFileUpload(this.selectedFileType, this.targetFile.target.files[0].name);
+            setTimeout(() => {
+              this.setFilter();
+            }, 1000);
           }
 
         });
@@ -216,8 +217,9 @@ export class BackofficeFileUploadComponent implements OnInit {
             this.filter.rt = '';
             this.selectedFileType = '';
             this.arnRiaId = '';
-            this.setFilter();
-            // this.successFileUpload(this.selectedFileType, this.targetFile.target.files[0].name);
+            setTimeout(() => {
+              this.setFilter();
+            }, 1000);
           }
 
         });
