@@ -197,6 +197,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   }
   loadAllGoals(flag) {
+    this.isLoading = true;
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};
@@ -210,6 +211,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       } else {
         this.allGoals = [];
       }
+      this.isLoading = false;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
