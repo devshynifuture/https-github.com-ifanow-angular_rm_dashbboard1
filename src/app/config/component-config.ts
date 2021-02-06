@@ -850,6 +850,7 @@ export const appConfig = {
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',
+  CHECK_WHITE_LABEL_AND_UPDATE: 'setting/white-label/check',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
