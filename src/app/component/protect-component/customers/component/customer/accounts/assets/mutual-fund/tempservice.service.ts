@@ -87,6 +87,7 @@ export class TempserviceService {
       array = 'mutualFundCategoryMastersList';
       mainDataId = 'categoryId';
     } else if (reportType == 'ownerName') {
+
       // array = 'family_member_list';
       // mainDataId = 'familyMemberId';
       array = 'schemeWise';
@@ -142,6 +143,7 @@ export class TempserviceService {
           totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues, folio), totalObj, { total: true });
           // totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
           const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
+          console.log(obj);
           totalObj.xirr = obj.xirr;
           totalObj.absReturn = obj.absoluteReturn;
           Object.assign(totalObj, { categoryName: key });
