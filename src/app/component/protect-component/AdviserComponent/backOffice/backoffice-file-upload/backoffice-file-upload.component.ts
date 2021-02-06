@@ -83,6 +83,12 @@ export class BackofficeFileUploadComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.reconService.getBackOfficeFileUploadFileType({}).subscribe((data) => {
       console.log('thisis filetype data', data);
+      if (data[0].category == 'Transaction Files') {
+        data[0].value.push(data[4].value[0])
+        //delete data[4]
+        data.splice(4, 1);
+
+      }
       this.fileType = data;
     });
     this.reconService.getBackOfficeFilter({}).subscribe((data) => {
