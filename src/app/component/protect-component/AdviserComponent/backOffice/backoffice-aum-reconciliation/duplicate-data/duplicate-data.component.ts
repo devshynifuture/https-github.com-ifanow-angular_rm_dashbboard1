@@ -1,11 +1,16 @@
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from './../../../Subscriptions/subscription-inject.service';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource, MatSort} from '@angular/material';
-import {ReconciliationDetailsViewComponent} from 'src/app/component/protect-component/SupportComponent/common-component/reconciliation-details-view/reconciliation-details-view.component';
-import {UtilService} from 'src/app/services/util.service';
-import {ReconciliationService} from '../reconciliation/reconciliation.service';
-import {EventService} from '../../../../../../Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSort } from '@angular/material';
+import { ReconciliationDetailsViewComponent } from 'src/app/component/protect-component/SupportComponent/common-component/reconciliation-details-view/reconciliation-details-view.component';
+import { UtilService } from 'src/app/services/util.service';
+import { ReconciliationService } from '../reconciliation/reconciliation.service';
+import { EventService } from '../../../../../../Data-service/event.service';
+import { Validators, FormBuilder } from '@angular/forms';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ActiityService } from 'src/app/component/protect-component/customers/component/customer/customer-activity/actiity.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-duplicate-data',
@@ -18,20 +23,27 @@ export class DuplicateDataComponent implements OnInit {
   mutualFundTransactions: any;
   adminAdvisorIds: any[] = [];
   aumDate: any;
-
+  selectBrokerForm = this.fb.group({
+    selectBrokerId: [, Validators.required],
+    selectRtList: [, Validators.required]
+  });
+  brokerList: any;
+  rtList: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private reconService: ReconciliationService,
-    private eventService: EventService
+    private eventService: EventService,
+    private fb: FormBuilder,
+    private activityService: ActiityService,
+    private cusService: CustomerService
   ) {
   }
 
   advisorId = AuthService.getAdvisorId();
 
   parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
-
+  dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
   displayedColumns: string[] = ['arnRia', 'name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
-  dataSource;
   isLoading: boolean = false;
   aumList: [] = [];
   duplicateDataList: DuplicateI[] = [];
@@ -39,10 +51,74 @@ export class DuplicateDataComponent implements OnInit {
   rtaList = [];
 
   ngOnInit() {
-    this.getRtaList();
-    this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
+    //this.getRtAndArn();
+    this.getRtaList();    // this.dataSource = new MatTableDataSource<DuplicateI>(ELEMENT_DATA);
   }
 
+  getRtAndArn() {
+    this.isLoading = true;
+    // const rtType = this.reconService.getRTListValues({}).pipe(
+    //   catchError(error => of(null))
+    // );
+    // const arnRiaList = this.reconService.getBrokerListValues({ advisorId: this.advisorId }).pipe(
+    //   catchError(error => of(null))
+    // );
+
+    const obj2 = {
+      advisorId: AuthService.getAdvisorId(),
+    };
+    let obj = {}
+    const rtType = this.reconService.getRTListValues(obj).pipe(
+      catchError(error => of(''))
+    );
+    const arnRiaList = this.reconService.getBrokerListValues(obj2).pipe(
+      catchError(error => of(''))
+    );
+    forkJoin(rtType, arnRiaList).subscribe(result => {
+      if (result[0] && result[1]) {
+      }
+
+    }, (error) => {
+      this.eventService.openSnackBar(error, 'Dismiss');
+    });
+    // const rtType = this.reconService.getRTListValues({})
+    // const arnRiaList = this.reconService.getBrokerListValues({ advisorId: this.advisorId })
+    // forkJoin(rtType, arnRiaList).subscribe(result => {
+    //   let res = result[0];
+    //   if (res && res.length !== 0) {
+    //     res.forEach(element => {
+    //       if (element.name !== 'SUNDARAM' && element.name !== 'PRUDENT' && element.name !== 'NJ_NEW' && element.name !== 'NJ') {
+    //         this.rtaList.push({
+    //           name: element.name == 'FRANKLIN_TEMPLETON' ? 'FRANKLIN' : element.name,
+    //           value: element.id,
+    //           type: 'rta'
+    //         });
+    //       }
+    //     });
+    //     this.rtList = res;
+    //     this.selectBrokerForm.get('selectRtList').patchValue(this.rtList[0].name, { emitEvent: false });
+    //     this.teamMemberListGet()
+    //   } else {
+    //     this.eventService.openSnackBar('Error In Fetching RTA List', 'Dismiss');
+    //   }
+    //   if (result[1]) {
+    //     this.brokerList = result[1];
+    //     this.selectBrokerForm.get('selectBrokerId').patchValue(this.brokerList[0].id, { emitEvent: false });
+    //   }
+    // }, err => {
+    //   console.error(err)
+    // })
+  }
+  getBrokerList() {
+    this.reconService.getBrokerListValues({ advisorId: this.advisorId })
+      .subscribe(res => {
+        if (res) {
+          console.log("this is broker list must be called 1 time ", res);
+          this.brokerList = res;
+          this.selectBrokerForm.get('selectBrokerId').patchValue(this.brokerList[0].id, { emitEvent: false });
+        }
+      });
+  }
   getRtaList() {
     this.isLoading = true;
     this.reconService.getRTListValues({})
@@ -57,7 +133,10 @@ export class DuplicateDataComponent implements OnInit {
               });
             }
           });
+          this.rtList = res;
+          this.selectBrokerForm.get('selectRtList').patchValue(this.rtList[0].id, { emitEvent: false });
 
+          this.getBrokerList()
           this.teamMemberListGet()
         } else {
           this.eventService.openSnackBar('Error In Fetching RTA List', 'Dismiss');
@@ -66,7 +145,7 @@ export class DuplicateDataComponent implements OnInit {
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           data.forEach(element => {
@@ -80,8 +159,8 @@ export class DuplicateDataComponent implements OnInit {
       });
   }
 
-  getRtNameFromRtId(id){
-    return this.rtaList.find(c=> c.id === id).name;
+  getRtNameFromRtId(id) {
+    return this.rtaList.find(c => c.id === id).name;
   }
 
   openReconciliationDetails(value, data, tableType) {
@@ -104,7 +183,7 @@ export class DuplicateDataComponent implements OnInit {
     const fragmentData = {
       flag: value,
       data: {
-        ...data, 
+        ...data,
         dataForDuplicateTransactionCall: {
           advisorIds: [...this.adminAdvisorIds],
           isParent,
@@ -115,8 +194,8 @@ export class DuplicateDataComponent implements OnInit {
         freezeDate: data.freezeDate,
         fromAllFolioOrDuplicateTab: 2,
         arnRiaCode: data.arnRiaNumber,
-        tableType, 
-        brokerId: this.brokerId, 
+        tableType,
+        brokerId: this.brokerId,
         tableData
       },
       id: 1,
@@ -144,12 +223,14 @@ export class DuplicateDataComponent implements OnInit {
     const data = {
       advisorIds: [...this.adminAdvisorIds],
       parentId: this.parentId,
-      isParent: (this.parentId === this.advisorId) ? true : false
+      isParent: (this.parentId === this.advisorId) ? true : false,
+      // rtMasterId: this.selectBrokerForm.get('selectRtList').value,
+      // arnId: this.selectBrokerForm.get('selectBrokerId').value
     };
     this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         if (res) {
-          
+
           res.forEach(item => {
             this.aumDate = item.aumDate;
             this.brokerId = item.brokerId;
@@ -194,7 +275,7 @@ export interface DuplicateI {
 }
 
 export const ELEMENT_DATA: DuplicateI[] = [
-  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate:''},
-  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate:''},
-  {arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate:''},
+  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate: '' },
+  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate: '' },
+  { arnRia: '', name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '', date: '', mutualFundId: '', freezeDate: '' },
 ];

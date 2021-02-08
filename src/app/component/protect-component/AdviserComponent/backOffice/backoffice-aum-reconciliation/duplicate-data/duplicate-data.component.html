@@ -5,6 +5,36 @@
         </h4>
     </div>
 </div>
+<!-- <div class="row pb-10 d-flex justify-content-end align-items-end">
+    <div class="col-md-12 pr-0">
+        <div class="row justify-content-right" [formGroup]="selectBrokerForm">
+            <div class="col-lg-6 col-md-2"></div>
+            <div class="col-lg-2 col-md-4">
+                <mat-select class="b-a w-200 mr-10 text-left form-control" formControlName="selectRtList"
+                    placeholder="Select option">
+                    <mat-option>
+                        Select Option
+                    </mat-option>
+                    <mat-option *ngFor="let rt of rtList" [value]="rt.id">
+                        {{ rt.name }}
+                    </mat-option>
+                </mat-select>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <mat-select class="b-a w-200 mr-10 text-left form-control" formControlName="selectBrokerId"
+                    placeholder="Select broker">
+                    <mat-option>
+                        Select Option
+                    </mat-option>
+                    <mat-option *ngFor="let broker of brokerList" [value]="broker.id">
+                        {{ broker.brokerCode }}
+                    </mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+    </div>
+</div> -->
 <div class="row">
     <div class="col-lg-12 ">
         <div [ngClass]="{'table-scroll':isLoading==false }" class="ox-hide duplicate-data responsive-table-port">

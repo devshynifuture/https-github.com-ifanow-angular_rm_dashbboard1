@@ -16,6 +16,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { AuthService } from './../../../../../../../../../../auth-service/authService';
 import { SubscriptionInject } from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mf-import-cas-file',
@@ -64,7 +65,7 @@ export class MfImportCasFileComponent implements OnInit {
   dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   displayedColumns3: string[] = ['position', 'weight'];
   dataSource3 = new MatTableDataSource(ELEMENT_DATA3);
-  displayedColumns5: string[] = ['position', 'name', 'weight'];
+  displayedColumns5: string[] = ['position', 'name', 'weight', 'icons'];
   dataSource5 = new MatTableDataSource(ELEMENT_DATA5);
   currentTabValue = 1;
   pastUploadedCasFile = false;
@@ -373,7 +374,44 @@ export class MfImportCasFileComponent implements OnInit {
       })
   }
 
+  deleteModal(value, element) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const obj = {
+          id: element.id
+        }
+        this.cusService.deleteCasFile(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('Deleted successfully', 'Dismiss');
+            this.getStatusOfPastFileUpload();
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
   mapInvestor(item, choice, element) {
     let data = [];
     switch (choice) {

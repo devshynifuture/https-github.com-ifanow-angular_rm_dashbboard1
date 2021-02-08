@@ -305,7 +305,7 @@ export const appConfig = {
   ADD_NOTES_ACTIVITY: 'activity/note/add',
   EDIT_NOTES_ACTIVITY: 'activity/note/edit',
   DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
-
+  DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
