@@ -879,7 +879,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     emailList = emailList.sort(function (a, b) {
       return b.defaultFlag - a.defaultFlag;
     });
-    if (this.fieldFlag != 'familyMember' && count == 0) {
+    if (this.basicDetailsData.familyMemberType != 2 && count == 0) {
       this.eventService.openSnackBar('Please mark one email as a primary', 'Dimiss');
       return;
     }
