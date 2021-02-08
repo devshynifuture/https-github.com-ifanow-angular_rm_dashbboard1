@@ -2,8 +2,8 @@ import { Subscription } from 'rxjs';
 import { EventService } from './../../../../../../Data-service/event.service';
 import { SupportUpperService } from './../support-upper.service';
 import { SubscriptionInject } from './../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, PageEvent } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, PageEvent, MatPaginator } from '@angular/material';
 import { switchMap, finalize, debounceTime, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AnyCnameRecord } from 'dns';
@@ -46,6 +46,8 @@ export class SupportUpperPrudentComponent implements OnInit {
     public supportUpperService: SupportUpperService,
     private eventService: EventService
   ) { }
+
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -153,6 +155,8 @@ export class SupportUpperPrudentComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.schemeControl.setValue('');
+    this.startLimit = 0;
+    this.paginator.pageIndex = 0;
     this.getMappedUnmappedPrudentList();
   }
 

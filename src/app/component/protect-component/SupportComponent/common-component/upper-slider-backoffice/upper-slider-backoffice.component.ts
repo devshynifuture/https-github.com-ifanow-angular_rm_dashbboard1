@@ -835,6 +835,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.id !== 0 && element.id !== null) {
           if ((Math.abs(element.calculatedUnits - element.aumUnits)) > 0.009) {
             excelData.push(Object.assign(data));
+          } else if (element.calculatedUnits && element.aumUnits && element.isMapped == -1) {
+            excelData.push(Object.assign(data));
           }
         } else if (element.hasOwnProperty('mutualFundId') && element.hasOwnProperty('id') &&
           element.mutualFundId !== 0 && element.mutualFundId !== null &&

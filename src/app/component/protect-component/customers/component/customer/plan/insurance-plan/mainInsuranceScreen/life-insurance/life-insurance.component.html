@@ -25,8 +25,8 @@
     <div class="row">
         <div class="col-width-69 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
             <div class="row pt-28" *ngIf="inputData?.insuranceType == 1">
-                <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">COVERAGE</p>
+                <div class="col-md-4 p-0">
+                    <p class="f-12 m-0 text-primitive">TOTAL COVERAGE REQUIRED</p>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
                             <h3 class="m-0  ">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 p-0">
-                    <p class="f-12 m-0 text-primitive">ADDITIONAL REQUIRED</p>
+                    <p class="f-12 m-0 text-primitive">ADDITIONAL REQUIREMENT</p>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height24': isLoadingPlan}">
                             <h3 class="m-0" *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 insurance-progress">
+                <div class="col-md-5 insurance-progress">
                     <p class="f-12 m-0">STATUS</p>
                     <mat-progress-bar mode="determinate" [value]="insuranceDetails ? insuranceDetails?.graph : '0'"
                         class="h-30 bg-primary ">
@@ -1085,7 +1085,7 @@
                                 <tr>
                                     <td>
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
-                                            COVERAGE </p>
+                                            TOTAL COVERAGE REQUIRED </p>
                                         <h5 style="font-size: 18px; margin: 0px;">
                                             Rs. <span appFormatNumber
                                                 [value]="inputData?.insuranceType == 1 ? insuranceDetails?.actualAmount : '0'"></span>
@@ -1095,7 +1095,7 @@
 
                                     <td>
                                         <p style="color: #83959D; margin: 0px 0px 5px 0px; font-size: 16px;">
-                                            ADDITIONAL REQUIRED </p>
+                                            ADDITIONAL REQUIREMENT </p>
                                         <h5 style="font-size: 18px; margin: 0px;"
                                             *ngIf="!isLoadingPlan && inputData?.insuranceType == 1">
                                             <span [hidden]="isLoadingPlan">&#8377;</span><span appFormatNumber

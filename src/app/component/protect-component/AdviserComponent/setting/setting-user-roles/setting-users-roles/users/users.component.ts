@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { ReplaceUserComponent } from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
+import { ChangeClientPasswordComponent } from 'src/app/component/protect-component/customers/component/customer/customer-overview/overview-profile/change-client-password/change-client-password.component';
 
 @Component({
   selector: 'app-users',
@@ -28,6 +29,7 @@ export class UsersComponent implements OnInit {
     private settingsService: SettingsService,
     private eventService: EventService,
     private dialog: MatDialog,
+    protected subinject: SubscriptionInject
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -207,6 +209,30 @@ export class UsersComponent implements OnInit {
       data: dialogData,
       autoFocus: false,
     });
+  }
+
+  resetPassword(value, data) {
+    data['clientFlag'] = false;
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: ChangeClientPasswordComponent,
+
+    };
+    const rightSideDataSub = this.subinject.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
   }
 
   loader(countAdder) {

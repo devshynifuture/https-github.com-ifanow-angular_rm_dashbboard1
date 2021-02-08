@@ -82,8 +82,8 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="schemeName">
-                <th class="b-a sticky w-20" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
-                <td class="b-a matInputClass w-20" mat-cell *matCellDef="let element">
+                <th class="b-a sticky w-30" mat-header-cell *matHeaderCellDef> Search corresponding scheme name </th>
+                <td class="b-a matInputClass w-30" mat-cell *matCellDef="let element">
                     <!-- <input class="form-control" matInput
                         (focus)="getFilteredSchemes()">
                          -->
@@ -141,8 +141,8 @@
 
 
             <ng-container matColumnDef="navTwo">
-                <th class="b-a sticky" mat-header-cell *matHeaderCellDef> NAV </th>
-                <td class="b-a" mat-cell *matCellDef="let element">
+                <th class="b-a sticky w-6" mat-header-cell *matHeaderCellDef> NAV </th>
+                <td class="b-a w-6" mat-cell *matCellDef="let element">
                     <div class="bar">
                         {{(isLoading) ? '':element.nav}}
                     </div>

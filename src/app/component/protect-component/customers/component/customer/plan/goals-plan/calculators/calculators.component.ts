@@ -11,6 +11,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { AppConstants } from 'src/app/services/app-constants';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-calculators',
@@ -72,7 +74,8 @@ export class CalculatorsComponent implements OnInit {
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private planService: PlanService,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private dialog: MatDialog,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -219,8 +222,41 @@ export class CalculatorsComponent implements OnInit {
       }]
     });
   }
+  Unfreezed() {
+    const dialogData = {
+      header: 'UNFREEZE GOAL',
+      body: 'You have frozen the calculations for additional savings required. Allocating an asset will unfreeze the calculations. Are you sure you want to unfreeze?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UNFREEZE',
+      positiveMethod: () => {
+        let obj = {
+          lumpSumAmountDebt: this.data.remainingData.lumpSumAmountDebt,
+          lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
+          id: this.data.remainingData.id,
+          goalType: this.data.goalType,
+          freezed: false,
+        }
+        this.planService.freezCalculation(obj).subscribe(res => {
+          //this.allocateOtherAssetService.refreshAssetList.next();
+          //this.loadAllAssets();
+          this.eventService.openSnackBar("Goal unfreeze successfully");
+          dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   saveEMIToGoal() {
-    if (this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
+    if (this.data.remainingData.freezed == true) {
+      this.Unfreezed()
+    } else if (this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.incomeFG.markAllAsTouched();
       this.loanFG.markAllAsTouched();
     } else {
@@ -379,7 +415,6 @@ export class CalculatorsComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss");
     })
   }
-
   saveDelayToGoal() {
     if (this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.delayFG.markAllAsTouched();

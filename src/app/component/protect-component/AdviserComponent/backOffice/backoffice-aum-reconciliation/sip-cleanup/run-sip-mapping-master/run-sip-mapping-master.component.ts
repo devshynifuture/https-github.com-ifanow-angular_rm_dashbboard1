@@ -86,13 +86,17 @@ export class RunSipMappingMasterComponent implements OnInit {
     this.backOfficeService.refreshWizard(data).subscribe(
       (res) => {
         this.isLoading = false;
-        this.wizardList.forEach(element => {
-          if (res.id == element.id) {
-            element = res
-            if (element.isKeepCount == 0) {
+        this.wizardList.forEach(ele => {
+          if (res.id == ele.id) {
+            ele.processedCount = res.processedCount
+            ele.isKeepCount = res.isKeepCount
+            ele.ignoredCount = res.ignoredCount
+            ele.status = res.status
+            ele.lastUpdated = res.lastUpdated
+            if (ele.isKeepCount == 0) {
               this.percentage = 0
             } else {
-              this.percentage = (element.isKeepCount / element.totalSip) * 100
+              this.percentage = (ele.isKeepCount / ele.totalSip) * 100
             }
           }
         });

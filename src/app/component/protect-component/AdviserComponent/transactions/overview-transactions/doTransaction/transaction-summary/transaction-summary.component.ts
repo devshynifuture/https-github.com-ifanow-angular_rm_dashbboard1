@@ -110,6 +110,7 @@ export class TransactionSummaryComponent implements OnInit {
     if (!this.changeDetails) {
       this.getDefaultDetails(null);
     }
+    this.getBankDetails()
   }
 
   openDialog(): void {
@@ -314,9 +315,7 @@ export class TransactionSummaryComponent implements OnInit {
     this.transactionSummary.defaultClient = data.defaultClient;
     this.subBrokerCredList = data.subBrokerCredList;
     this.selectedPlatform = this.defaultCredential.aggregatorType;
-    if (this.selectedPlatform == 1) {
-      this.getBankDetails();
-    }
+    this.getBankDetails();
   }
 
   alertModal(value, data) {

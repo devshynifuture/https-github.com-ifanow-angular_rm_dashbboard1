@@ -850,6 +850,7 @@ export const appConfig = {
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',
+  CHECK_WHITE_LABEL_AND_UPDATE: 'setting/white-label/check',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -1003,6 +1004,7 @@ export const appConfig = {
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
   GET_CLIENT_OR_ADVISOR_ROLES: 'setting/users-roles/role/module-loader/get',
   GET_DOMAIN_DATA: 'setting/organisation/domain/data/get',
+  RESET_TEAM_MEMBER_PASSWORD: 'user/advisor/reset/password',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
 

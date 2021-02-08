@@ -8,6 +8,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Input } from '@angular/core';
+import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-change-client-password',
@@ -37,25 +38,38 @@ export class ChangeClientPasswordComponent implements OnInit {
   hide3 = true;
   formPlaceHolder;
   validatorType = ValidatorType;
+  flag: boolean;
 
 
   constructor(private subInjectService: SubscriptionInject,
     private loginService: LoginService,
     private event: EventService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private orgSettingService: OrgSettingServiceService) {
     this.formPlaceHolder = AppConstants.formPlaceHolders;
-    this.userData = AuthService.getClientData();
+    // this.userData = AuthService.getClientData();
   }
 
   ngOnInit() {
+    if (this.flag) {
+      this.setNewPasswordForm = this.fb.group({
+        oldPassword: ['', [Validators.required]],
+        newPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
+        confirmPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
+      });
+    }
+    else {
+      this.setNewPasswordForm = this.fb.group({
+        // oldPassword: ['', [Validators.required]],
+        newPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
+        confirmPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
+      });
+    }
   }
 
   @Input() set data(data) {
-    this.setNewPasswordForm = this.fb.group({
-      oldPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
-      confirmPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
-    });
+    this.userData = data;
+    this.flag = data.clientFlag;
   }
 
   newPasswordLength = 0;
@@ -80,6 +94,28 @@ export class ChangeClientPasswordComponent implements OnInit {
       this.loginService.resetPasswordPostLoggedIn(obj).subscribe(data => {
         this.barButtonOptions.active = false;
         this.event.openSnackBar(data, "Dismiss");
+        this.Close();
+      }, err => {
+        this.event.showErrorMessage(err);
+        this.barButtonOptions.active = false;
+      });
+    }
+  }
+
+  setTeamMemberPassword() {
+    if (this.setNewPasswordForm.invalid) {
+      this.setNewPasswordForm.markAllAsTouched();
+      return;
+    } else {
+      this.barButtonOptions.active = true;
+      const obj = {
+        password: this.setNewPasswordForm.controls.confirmPassword.value,
+        // newPassword: this.setNewPasswordForm.controls.confirmPassword.value,
+        advisorId: this.userData.advisorId
+      };
+      this.orgSettingService.resetTeamMemberPassword(obj).subscribe(data => {
+        this.barButtonOptions.active = false;
+        this.event.openSnackBar("Password reset sucessfully", "Dismiss");
         this.Close();
       }, err => {
         this.event.showErrorMessage(err);

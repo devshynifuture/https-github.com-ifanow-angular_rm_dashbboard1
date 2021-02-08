@@ -2,9 +2,9 @@ import { Subscription } from 'rxjs';
 import { EventService } from './../../../../../../Data-service/event.service';
 import { UtilService } from './../../../../../../services/util.service';
 import { SupportUpperService } from './../support-upper.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatTableDataSource, PageEvent } from '@angular/material';
+import { MatTableDataSource, PageEvent, MatPaginator } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 // import { Observable } from 'rxjs';
@@ -73,6 +73,7 @@ export class SupportUpperNjComponent implements OnInit {
     private eventService: EventService
   ) { }
 
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   schemeControl: FormControl = new FormControl();
   searchSchemeControl: FormControl = new FormControl();
   filteredSchemes: any[] = [];
@@ -528,6 +529,8 @@ export class SupportUpperNjComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.filteredSchemes = [];
     this.schemeControl.setValue('');
+    this.startLimit = 0;
+    this.paginator.pageIndex = 0;
     this.getMappedUnmappedNjSchemes();
   }
 

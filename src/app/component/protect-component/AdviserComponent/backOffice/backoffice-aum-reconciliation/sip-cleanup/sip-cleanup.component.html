@@ -35,8 +35,8 @@
             </div>
             <div class="col-md-4 search-folio pr-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput autocomplete="off" class="form-control" placeholder="Search folio"
-                        (keyup)="applyFilter($event)">
+                    <input matInput autocomplete="off" #folio class="form-control" placeholder="Search folio"
+                        (input)="searchFolio(folio.value)">
                 </mat-form-field>
             </div>
         </div>

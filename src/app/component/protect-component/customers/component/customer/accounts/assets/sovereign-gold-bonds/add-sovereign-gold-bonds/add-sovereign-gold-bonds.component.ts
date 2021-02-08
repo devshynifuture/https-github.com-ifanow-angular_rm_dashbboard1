@@ -605,6 +605,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       "advisorId": this.goldBondForm.value.advisorId,
       "bondNameAndSeries": this.goldBondForm.value.bond,
       "investmentOrIssueDate": this.datePipe.transform(this.goldBondForm.value.issueDate, 'yyyy-MM-dd'),
+      "issuePrice": this.goldBondForm.value.issuePrice,
       "investmentAmount": this.goldBondForm.value.amountInvested,
       "unitsInGram": this.goldBondForm.value.units,
       // "interestAmountYearly": (this.goldBondForm.value.amountInvested / 100) * this.goldBondForm.value.rates, //chetan said no needed in request
