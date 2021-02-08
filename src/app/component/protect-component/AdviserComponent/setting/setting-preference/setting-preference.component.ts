@@ -169,7 +169,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getdataForm(data) {
     this.domainS = this.fb.group({
       normalLable: [(!data) ? '' : data.emailId, [Validators.required]],
-      whiteLable: [(!data) ? '' : data.emailId, [Validators.required, Validators.pattern(this.validatorType.DOMAIN)]],
+      whiteLable: [(!data) ? '' : data.emailId, [Validators.pattern(this.validatorType.DOMAIN)]],
       brandVisible: [(!data) ? '' : data.emailId, [Validators.required]],
       feviconUrl: []
     });
