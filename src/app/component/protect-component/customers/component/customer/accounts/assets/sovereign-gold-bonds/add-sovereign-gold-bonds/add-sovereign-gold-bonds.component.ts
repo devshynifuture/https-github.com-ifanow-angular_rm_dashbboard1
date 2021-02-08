@@ -375,7 +375,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      bond: [data.bondNameAndSeries, [Validators.required]],
+      bond: [data.bondNameAndSeries ? data.bondNameAndSeries : '', [Validators.required]],
       issueDate: [new Date(data.investmentOrIssueDate), [Validators.required]],
       amountInvested: [data.investmentAmount, [Validators.required]],
       issuePrice: [data.issuePrice, [Validators.required]],
