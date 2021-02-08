@@ -117,7 +117,7 @@
       <p class="m-0 pt-12 roboto f-400">After a while, come back to the MF section > Click on Add New > Import CAS > On
         the first screen on the top right, you will see a button titled “View status of past uploads”.
 
-      <p class="m-0 pt-12 roboto f-400">Click there to see the staus and follow the instructions given there.</p>
+        <p class="m-0 pt-12 roboto f-400">Click there to see the staus and follow the instructions given there.</p>
     </div>
   </div>
 
@@ -197,6 +197,18 @@
           </td>
         </ng-container>
 
+        <ng-container matColumnDef="icons">
+          <th *matHeaderCellDef class="t-2 br" mat-header-cell></th>
+          <td *matCellDef="let element" class="t-2 mat-menu-trigger text-center c-p br" mat-cell
+            [matMenuTriggerFor]="menu4">
+            <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
+
+            <mat-menu #menu4="matMenu">
+              <button (click)="deleteModal('CAS',element)" mat-menu-item>Delete</button>
+            </mat-menu>
+          </td>
+          <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
       </table>

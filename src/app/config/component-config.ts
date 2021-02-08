@@ -305,7 +305,7 @@ export const appConfig = {
   ADD_NOTES_ACTIVITY: 'activity/note/add',
   EDIT_NOTES_ACTIVITY: 'activity/note/edit',
   DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
-
+  DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -941,7 +941,7 @@ export const appConfig = {
   RESET_PASSWORD: 'setting/reset/password',
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
   GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
-  ADD_CALL_BACK_MOB:'advisor-callback-detail/add',
+  ADD_CALL_BACK_MOB: 'advisor-callback-detail/add',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',

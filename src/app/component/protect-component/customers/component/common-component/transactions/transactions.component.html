@@ -126,7 +126,7 @@
               <td *matCellDef="let element" class="menus-list" mat-cell class="text-center w-1">
                 <div *ngIf="!isLoading">
                   <div [matTooltip]="'For Edit and Delete Operations, Mutual Fund need to be of type Manual'"
-                    [matTooltipDisabled]="element.rtTypeId === 14" matTooltipPosition="below">
+                    [matTooltipDisabled]="element.rtTypeId !== 14" matTooltipPosition="below">
                     <button mat-icon-button [disabled]="element.rtTypeId !== 14" [matMenuTriggerFor]="menu"
                       aria-label="Example icon-button with a menu">
                       <mat-icon>more_vert</mat-icon>
