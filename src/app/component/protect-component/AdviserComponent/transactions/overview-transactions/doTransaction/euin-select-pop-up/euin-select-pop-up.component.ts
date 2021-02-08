@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from '../../../../Activities/calendar/calendar.component';
+
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -10,14 +10,14 @@ import { FormBuilder } from '@angular/forms';
 })
 export class EuinSelectPopUpComponent implements OnInit {
   dataCount: number;
-  displayedColumns: string[] = ['checkbox', 'no', 'name','bname','ownerName'];
+  displayedColumns: string[] = ['checkbox', 'no', 'name', 'bname', 'ownerName'];
   dataSource = ELEMENT_DATA;
   subBrokerList: any;
   popUP: any;
   euin: any;
   brokerCode: any;
   constructor(public dialogRef: MatDialogRef<EuinSelectPopUpComponent>, private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data) { }
 
 
   isLoading = false

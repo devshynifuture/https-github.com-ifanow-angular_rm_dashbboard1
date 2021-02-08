@@ -5,11 +5,6 @@ import { UtilService } from 'src/app/services/util.service';
 import { ConfirmationTransactionComponent } from './confirmation-transaction/confirmation-transaction.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { PersonalDetailsInnComponent } from '../IIN/UCC-Creation/personal-details-inn/personal-details-inn.component';
-import { ContactDetailsInnComponent } from '../IIN/UCC-Creation/contact-details-inn/contact-details-inn.component';
-import { BankDetailsIINComponent } from '../IIN/UCC-Creation/bank-details-iin/bank-details-iin.component';
-import { NomineeDetailsIinComponent } from '../IIN/UCC-Creation/nominee-details-iin/nominee-details-iin.component';
-import { FatcaDetailsInnComponent } from '../IIN/UCC-Creation/fatca-details-inn/fatca-details-inn.component';
 import { OnlineTransactionService } from '../../online-transaction.service';
 
 @Injectable({
@@ -38,70 +33,70 @@ export class ProcessTransactionService {
 
   }
 
-  openPersonal(data) {
-    const temp = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: PersonalDetailsInnComponent,
-      state: 'open'
-    };
+  // openPersonal(data) {
+  //   const temp = {
+  //     flag: 'app-upper-customer',
+  //     id: 1,
+  //     data,
+  //     direction: 'top',
+  //     componentName: PersonalDetailsInnComponent,
+  //     state: 'open'
+  //   };
 
-    return this.eventService.changeUpperSliderState(temp);
-  }
+  //   return this.eventService.changeUpperSliderState(temp);
+  // }
 
-  openContact(data) {
-    const temp = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: ContactDetailsInnComponent,
-      state: 'open'
-    };
+  // openContact(data) {
+  //   const temp = {
+  //     flag: 'app-upper-customer',
+  //     id: 1,
+  //     data,
+  //     direction: 'top',
+  //     componentName: ContactDetailsInnComponent,
+  //     state: 'open'
+  //   };
 
-    return this.eventService.changeUpperSliderState(temp);
-  }
+  //   return this.eventService.changeUpperSliderState(temp);
+  // }
 
-  openBank(data) {
-    const temp = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: BankDetailsIINComponent,
-      state: 'open'
-    };
+  // openBank(data) {
+  //   const temp = {
+  //     flag: 'app-upper-customer',
+  //     id: 1,
+  //     data,
+  //     direction: 'top',
+  //     componentName: BankDetailsIINComponent,
+  //     state: 'open'
+  //   };
 
-    return this.eventService.changeUpperSliderState(temp);
-  }
+  //   return this.eventService.changeUpperSliderState(temp);
+  // }
 
-  openNominee(data) {
-    const temp = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: NomineeDetailsIinComponent,
-      state: 'open'
-    };
+  // openNominee(data) {
+  //   const temp = {
+  //     flag: 'app-upper-customer',
+  //     id: 1,
+  //     data,
+  //     direction: 'top',
+  //     componentName: NomineeDetailsIinComponent,
+  //     state: 'open'
+  //   };
 
-    return this.eventService.changeUpperSliderState(temp);
-  }
+  //   return this.eventService.changeUpperSliderState(temp);
+  // }
 
-  openFataca(data) {
-    const temp = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data,
-      direction: 'top',
-      componentName: FatcaDetailsInnComponent,
-      state: 'open'
-    };
+  // openFataca(data) {
+  //   const temp = {
+  //     flag: 'app-upper-customer',
+  //     id: 1,
+  //     data,
+  //     direction: 'top',
+  //     componentName: FatcaDetailsInnComponent,
+  //     state: 'open'
+  //   };
 
-    return this.eventService.changeUpperSliderState(temp);
-  }
+  //   return this.eventService.changeUpperSliderState(temp);
+  // }
 
   selectionList() {
     this.schemeSelection = [{

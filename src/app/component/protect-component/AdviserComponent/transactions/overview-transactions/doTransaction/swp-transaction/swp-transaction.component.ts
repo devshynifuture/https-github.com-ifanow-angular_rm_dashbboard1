@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -26,6 +28,8 @@ export class SwpTransactionComponent implements OnInit {
   mutualFundData: any;
   folioNumber: any;
   mfDefault: any;
+  element: any;
+  platformType: any;
 
   get data() {
     return this.inputData;
@@ -46,7 +50,6 @@ export class SwpTransactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  dataSource: any;
   ownerData: any;
   swpTransaction: any;
   inputData: any;
@@ -65,8 +68,11 @@ export class SwpTransactionComponent implements OnInit {
   getDataSummary: any;
   swpFrequency: any;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    public processTransaction: ProcessTransactionService, private fb: FormBuilder,
+  constructor(private subInjectService: SubscriptionInject,
+    private onlineTransact: OnlineTransactionService,
+    public processTransaction: ProcessTransactionService,
+    private fb: FormBuilder,
+    public dialog: MatDialog,
     private eventService: EventService) {
   }
 
@@ -81,6 +87,7 @@ export class SwpTransactionComponent implements OnInit {
   currentValue: number;
   multiTransact = false;
   childTransactions = [];
+  dataSource = new MatTableDataSource(this.childTransactions);
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   advisorId: any;
   validatorType = ValidatorType;
@@ -95,7 +102,8 @@ export class SwpTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    this.getDataSummary = this.inputData.transactionData
+    this.getDataSummary = this.inputData.transactionData;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (data.mutualFundData) {
       this.folioList = []
       this.schemeName = data.mutualFundData.schemeName
@@ -476,80 +484,108 @@ export class SwpTransactionComponent implements OnInit {
 
   // getSingleTransactionJson() {}
   swp() {
-
-    if (this.swpTransaction.get('investmentAccountSelection').invalid) {
-      this.swpTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
-    } else if (this.swpTransaction.get('date').invalid) {
-      this.swpTransaction.get('date').markAsTouched();
-      return;
-    } else if (this.swpTransaction.get('frequency').invalid) {
-      this.swpTransaction.get('frequency').markAsTouched();
-      return;
-    } else if (this.swpTransaction.get('employeeContry').invalid) {
-      this.swpTransaction.get('employeeContry').markAsTouched();
-      return;
-    } else if ((this.swpTransaction.get('tenure').value) != 3 && this.swpTransaction.get('installment').invalid) {
-      this.swpTransaction.get('installment').markAsTouched();
-      return;
-    } else {
-      if (this.barButtonOptions.active) {
-        return;
-      }
-      this.barButtonOptions.active = true;
-      const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
-      const tenure = this.swpTransaction.controls.tenure.value;
-      const noOfInstallments = this.swpTransaction.controls.installment.value;
-      const orderVal = this.swpTransaction.controls.employeeContry.value;
-      let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
-
-      obj = {
-        ...obj,
-        productDbId: this.schemeDetails.id,
-        clientName: this.selectedFamilyMember,
-        holdingType: this.getDataSummary.defaultClient.holdingType,
-        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-        productCode: this.schemeDetails.schemeCode,
-        isin: this.schemeDetails.isin,
-        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-        clientId: this.getDataSummary.defaultClient.clientId,
-        schemeCd: this.schemeDetails.schemeCode,
-        euin: this.getDataSummary.euin.euin,
-        clientCode: this.getDataSummary.defaultClient.clientCode,
-        orderVal: this.swpTransaction.controls.employeeContry.value,
-        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        orderType: 'SWP',
-        amountType: 'Amount',
-        bseDPTransType: 'PHYSICAL',
-        bankDetailId: null,
-        nsePaymentMode: null,
-        childTransactions: null,
-        isException: true,
-        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-      };
-      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        obj.bankDetailId = this.bankDetails.id;
-        // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
-      }
-      if (this.multiTransact == true) {
-        this.AddMultiTransaction();
-        obj.childTransactions = this.childTransactions;
-      }
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => {
-          this.isSuccessfulTransaction = true;
-          this.swpBSERes(data);
-        }, (error) => {
-          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
-          this.barButtonOptions.active = false;
+    if (this.multiTransact == true) {
+      const dialogRef = this.dialog.open(MultiTransactionPopupComponent, {
+        width: '750px',
+        data: { childTransactions: this.childTransactions, dataSource: this.dataSource.data }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return;
         }
-      );
-    }
+        this.element = result;
+        if (this.element == true) {
+          let obj
+          obj = this.childTransactions[this.childTransactions.length - 1]
+          obj.childTransactions = []
+          const myArray = this.childTransactions
+          const list = [];
+          myArray.forEach(val => list.push(Object.assign({}, val)));
+          this.childTransactions.forEach(singleTranJson => {
+            this.removeUnnecessaryDataFromJson(singleTranJson);
+          })
+          obj.childTransactions = list
+          this.onlineTransact.transactionBSE(obj).subscribe(
+            data => {
+              this.swpBSERes(data);
+              this.isSuccessfulTransaction = true;
+            }, (error) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+            }
+          );
+        }
+      });
+    } else {
+      if (this.swpTransaction.get('investmentAccountSelection').invalid) {
+        this.swpTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
+      } else if (this.swpTransaction.get('date').invalid) {
+        this.swpTransaction.get('date').markAsTouched();
+        return;
+      } else if (this.swpTransaction.get('frequency').invalid) {
+        this.swpTransaction.get('frequency').markAsTouched();
+        return;
+      } else if (this.swpTransaction.get('employeeContry').invalid) {
+        this.swpTransaction.get('employeeContry').markAsTouched();
+        return;
+      } else if ((this.swpTransaction.get('tenure').value) != 3 && this.swpTransaction.get('installment').invalid) {
+        this.swpTransaction.get('installment').markAsTouched();
+        return;
+      } else {
+        if (this.barButtonOptions.active) {
+          return;
+        }
+        this.barButtonOptions.active = true;
+        const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
+        const tenure = this.swpTransaction.controls.tenure.value;
+        const noOfInstallments = this.swpTransaction.controls.installment.value;
+        const orderVal = this.swpTransaction.controls.employeeContry.value;
+        let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
 
+        obj = {
+          ...obj,
+          productDbId: this.schemeDetails.id,
+          clientName: this.selectedFamilyMember,
+          holdingType: this.getDataSummary.defaultClient.holdingType,
+          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+          productCode: this.schemeDetails.schemeCode,
+          isin: this.schemeDetails.isin,
+          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+          tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+          tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+          familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+          adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+          clientId: this.getDataSummary.defaultClient.clientId,
+          schemeCd: this.schemeDetails.schemeCode,
+          euin: this.getDataSummary.euin.euin,
+          clientCode: this.getDataSummary.defaultClient.clientCode,
+          orderVal: this.swpTransaction.controls.employeeContry.value,
+          aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+          orderType: 'SWP',
+          amountType: 'Amount',
+          bseDPTransType: 'PHYSICAL',
+          bankDetailId: null,
+          nsePaymentMode: null,
+          childTransactions: null,
+          isException: true,
+          tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+        };
+        if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+          obj.bankDetailId = this.bankDetails.id;
+          // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
+        }
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => {
+            this.isSuccessfulTransaction = true;
+            this.swpBSERes(data);
+          }, (error) => {
+            this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+            this.barButtonOptions.active = false;
+          }
+        );
+      }
+    }
   }
 
   swpBSERes(data) {
@@ -584,9 +620,6 @@ export class SwpTransactionComponent implements OnInit {
     } else if (this.swpTransaction.get('tenure').invalid) {
       this.swpTransaction.get('tenure').markAsTouched();
       return;
-    } else if (this.swpTransaction.get('installment').invalid) {
-      this.swpTransaction.get('installment').markAsTouched();
-      return;
     } else {
       this.multiTransact = true;
       if (this.scheme != undefined && this.schemeDetails != undefined && this.swpTransaction != undefined) {
@@ -605,6 +638,7 @@ export class SwpTransactionComponent implements OnInit {
         const installment = this.swpTransaction.controls.installment.value;
         obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         this.childTransactions.push(obj);
+        this.dataSource.data = this.childTransactions;
         this.swpTransaction.controls.date.reset();
         this.swpTransaction.controls.employeeContry.reset();
         this.swpTransaction.controls.tenure.reset();
@@ -613,5 +647,15 @@ export class SwpTransactionComponent implements OnInit {
         this.swpTransaction.controls.investmentAccountSelection.reset();
       }
     }
+  }
+  removeUnnecessaryDataFromJson(singleTransactionJson) {
+    singleTransactionJson.childTransactions = null
+    singleTransactionJson.schemeSelection = null;
+    singleTransactionJson.folioSelection = null;
+    singleTransactionJson.modeOfPaymentSelection = null;
+    singleTransactionJson.scheme = null;
+    singleTransactionJson.schemeDetails = null;
+    singleTransactionJson.reInvestmentOpt = null;
+    singleTransactionJson.folioDetails = null;
   }
 }

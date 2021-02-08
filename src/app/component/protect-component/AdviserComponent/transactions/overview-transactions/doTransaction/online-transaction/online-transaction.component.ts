@@ -7,7 +7,6 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {Router} from '@angular/router';
-import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 import {EnumDataService} from 'src/app/services/enum-data.service';
 import {debounceTime, map, startWith} from 'rxjs/operators';
 import {PeopleService} from '../../../../../PeopleComponent/people.service';
@@ -347,28 +346,30 @@ export class OnlineTransactionComponent implements OnInit {
     this.transactionType = undefined;
   }
 
-  openNewCustomerIIN() {
-    this.close();
-    const fragmentData = {
-      flag: 'addNewCustomer',
-      id: 1,
-      direction: 'top',
-      componentName: IinUccCreationComponent,
-      state: 'open'
-    };
-    // this.router.navigate(['/subscription-upper'])
-    AuthService.setSubscriptionUpperSliderData(fragmentData);
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
-        }
-      }
-    );
+  // openNewCustomerIIN() {
+  //   this.close();
+  //   const fragmentData = {
+  //     flag: 'addNewCustomer',
+  //     id: 1,
+  //     direction: 'top',
+  //     componentName: IinUccCreationComponent,
+  //     state: 'open'
+  //   };
+  //   // this.router.navigate(['/subscription-upper'])
+  //   AuthService.setSubscriptionUpperSliderData(fragmentData);
+  //   const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+  //     upperSliderData => {
+  //       if (UtilService.isDialogClose(upperSliderData)) {
+  //         // this.getClientSubscriptionList();
+  //         subscription.unsubscribe();
+  //       }
+  //     }
+  //   );
 
+  // }
+  openNewCustomerIIN(){
+    
   }
-
   saveAndNext() {
     if (this.noMapping) {
       return;

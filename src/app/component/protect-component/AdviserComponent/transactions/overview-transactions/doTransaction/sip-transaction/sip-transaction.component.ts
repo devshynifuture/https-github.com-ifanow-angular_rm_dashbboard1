@@ -12,6 +12,7 @@ import { MathUtilService } from '../../../../../../../services/math-util.service
 import { ConfirmDialogComponent } from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AddMandateComponent } from '../../MandateCreation/add-mandate/add-mandate.component';
+import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
 
 @Component({
   selector: 'app-sip-transaction',
@@ -28,6 +29,7 @@ export class SipTransactionComponent implements OnInit {
   mfDefault: any;
   acceptedMandate: any;
   copyTrasactionSummary: any;
+  element: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -863,30 +865,56 @@ export class SipTransactionComponent implements OnInit {
   }
 
   sip() {
-    if (this.validateSingleTransaction()) {
-      if (this.barButtonOptions.active) {
-        return;
-      }
-      this.barButtonOptions.active = true;
-      const obj = this.getSingleTransactionJson();
-
-      if (this.multiTransact == true) {
-        this.AddMultiTransaction();
-        obj.childTransactions = this.childTransactions;
-        this.childTransactions.forEach(singleTranJson => {
-          this.removeUnnecessaryDataFromJson(singleTranJson);
-        });
-      }
-      this.removeUnnecessaryDataFromJson(obj);
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => {
-          this.isSuccessfulTransaction = true;
-          this.sipBSERes(data);
-        }, (error) => {
-          this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+    if (this.multiTransact == true) {
+      const dialogRef = this.dialog.open(MultiTransactionPopupComponent, {
+        width: '750px',
+        data: { childTransactions: this.childTransactions, dataSource: this.dataSource.data }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return;
         }
-      );
+        this.element = result;
+        if (this.element == true) {
+          let obj
+          obj = this.childTransactions[this.childTransactions.length - 1]
+          obj.childTransactions = []
+          const myArray = this.childTransactions
+          const list = [];
+          myArray.forEach(val => list.push(Object.assign({}, val)));
+          this.childTransactions.forEach(singleTranJson => {
+            this.removeUnnecessaryDataFromJson(singleTranJson);
+          })
+          obj.childTransactions = list
+          this.onlineTransact.transactionBSE(obj).subscribe(
+            data => {
+              this.sipBSERes(data);
+              this.isSuccessfulTransaction = true;
+            }, (error) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+            }
+          );
+        }
+      });
+    } else {
+      if (this.validateSingleTransaction()) {
+        if (this.barButtonOptions.active) {
+          return;
+        }
+        this.barButtonOptions.active = true;
+        const obj = this.getSingleTransactionJson();
+        this.removeUnnecessaryDataFromJson(obj);
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => {
+            this.isSuccessfulTransaction = true;
+            this.sipBSERes(data);
+          }, (error) => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+          }
+        );
+      }
     }
   }
 
@@ -1089,18 +1117,19 @@ export class SipTransactionComponent implements OnInit {
   }
 
   removeUnnecessaryDataFromJson(singleTransactionJson) {
-    singleTransactionJson.schemeSelection = undefined;
-    singleTransactionJson.folioSelection = undefined;
-    singleTransactionJson.modeOfPaymentSelection = undefined;
-    singleTransactionJson.scheme = undefined;
-    singleTransactionJson.schemeDetails = undefined;
-    singleTransactionJson.reInvestmentOpt = undefined;
-    singleTransactionJson.folioDetails = undefined;
-    singleTransactionJson.sipFrequency = undefined;
-    singleTransactionJson.scheme = undefined;
-    singleTransactionJson.schemeDetails = undefined;
-    singleTransactionJson.reInvestmentOpt = undefined;
-    singleTransactionJson.folioDetails = undefined;
-    singleTransactionJson.selectedFreqModel = undefined;
+    singleTransactionJson.childTransactions = null
+    singleTransactionJson.schemeSelection = null;
+    singleTransactionJson.folioSelection = null;
+    singleTransactionJson.modeOfPaymentSelection = null;
+    singleTransactionJson.scheme = null;
+    singleTransactionJson.schemeDetails = null;
+    singleTransactionJson.reInvestmentOpt = null;
+    singleTransactionJson.folioDetails = null;
+    singleTransactionJson.sipFrequency = null;
+    singleTransactionJson.scheme = null;
+    singleTransactionJson.schemeDetails = null;
+    singleTransactionJson.reInvestmentOpt = null;
+    singleTransactionJson.folioDetails = null;
+    singleTransactionJson.selectedFreqModel = null;
   }
 }

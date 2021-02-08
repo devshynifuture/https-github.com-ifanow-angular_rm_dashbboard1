@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ValidatorType } from 'src/app/services/util.service';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -40,7 +42,6 @@ export class SwitchTransactionComponent implements OnInit {
   };
   confirmTrasaction: boolean;
   switchTransaction: any;
-  dataSource: any;
   ownerData: any;
   selectedFamilyMember: any;
   inputData: any;
@@ -63,9 +64,15 @@ export class SwitchTransactionComponent implements OnInit {
   mutualFundData: any;
   mfDefault: any;
   folioNumber: any;
+  element: any;
+  platformType: any;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
+  constructor(private subInjectService: SubscriptionInject,
+    private onlineTransact: OnlineTransactionService,
+    private fb: FormBuilder,
+    private eventService: EventService,
+    public dialog: MatDialog,
+    public processTransaction: ProcessTransactionService) {
   }
 
   folioDetails: any;
@@ -77,6 +84,7 @@ export class SwitchTransactionComponent implements OnInit {
   currentValue: number;
   multiTransact = false;
   childTransactions = [];
+  dataSource = new MatTableDataSource(this.childTransactions);
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
 
   advisorId: any;
@@ -103,7 +111,8 @@ export class SwitchTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    this.getDataSummary = this.inputData.transactionData
+    this.getDataSummary = this.inputData.transactionData;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (data.mutualFundData) {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
@@ -514,80 +523,109 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switch() {
-
-    if (this.mutualFundData) {
-      this.switchTransaction.controls.investmentAccountSelection.setValue(this.folioNumber)
-    }
-    if (this.reInvestmentOpt.length > 1 && this.switchTransaction.controls.reinvest.invalid) {
-      this.switchTransaction.get('reinvest').markAsTouched();
-      // } else if (this.switchTransaction.get('folioSelection').value == 1) {
-      //   if (this.switchTransaction.get('investmentAccountSelection').invalid) {
-      //     this.switchTransaction.get('investmentAccountSelection').markAsTouched();
-      //     return;
-      //   }
-    } else if (this.switchTransaction.get('switchType').value != 3 && this.switchTransaction.get('employeeContry').invalid) {
-      this.switchTransaction.get('employeeContry').markAsTouched();
-      return;
-    } else if (this.switchTransaction.get('switchType').invalid) {
-      this.switchTransaction.get('switchType').markAsTouched();
-      return;
-    } else {
-      if (this.barButtonOptions.active) {
-        return;
-      }
-      this.barButtonOptions.active = true;
-      const obj = {
-
-        productDbId: this.schemeDetails.id,
-        clientName: this.selectedFamilyMember,
-        holdingType: this.getDataSummary.defaultClient.holdingType,
-        toProductDbId: this.schemeDetailsTransfer.id,
-        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-        toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
-        productCode: this.schemeDetails.schemeCode,
-        isin: this.schemeDetails.isin,
-        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-        clientId: this.getDataSummary.defaultClient.clientId,
-        toIsin: this.schemeDetailsTransfer.isin,
-        schemeCd: this.schemeDetails.schemeCode,
-        euin: this.getDataSummary.euin.euin,
-        qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
-        allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
-        orderType: 'SWITCH',
-        buySell: 'SWITCH_OUT',
-        transCode: 'NEW',
-        buySellType: 'FRESH',
-        amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
-        dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
-        clientCode: this.getDataSummary.defaultClient.clientCode,
-        orderVal: this.switchTransaction.controls.employeeContry.value,
-        bseDPTransType: 'PHYSICAL',
-        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        childTransactions: [],
-        isException: true,
-        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-
-      };
-
-      if (this.multiTransact == true) {
-        this.AddMultiTransaction();
-        obj.childTransactions = this.childTransactions;
-      }
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => {
-          this.isSuccessfulTransaction = true;
-
-          this.switchBSERes(data);
-        }, (error) => {
-          this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+    if (this.multiTransact == true) {
+      const dialogRef = this.dialog.open(MultiTransactionPopupComponent, {
+        width: '750px',
+        data: { childTransactions: this.childTransactions, dataSource: this.dataSource.data }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return;
         }
-      );
+        this.element = result;
+        if (this.element == true) {
+          let obj
+          obj = this.childTransactions[this.childTransactions.length - 1]
+          obj.childTransactions = []
+          const myArray = this.childTransactions
+          const list = [];
+          myArray.forEach(val => list.push(Object.assign({}, val)));
+          this.childTransactions.forEach(singleTranJson => {
+            this.removeUnnecessaryDataFromJson(singleTranJson);
+          })
+          obj.childTransactions = list
+          this.onlineTransact.transactionBSE(obj).subscribe(
+            data => {
+              this.switchBSERes(data);
+              this.isSuccessfulTransaction = true;
+            }, (error) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+            }
+          );
+        }
+      });
+    } else {
+      if (this.mutualFundData) {
+        this.switchTransaction.controls.investmentAccountSelection.setValue(this.folioNumber)
+      }
+      if (this.reInvestmentOpt.length > 1 && this.switchTransaction.controls.reinvest.invalid) {
+        this.switchTransaction.get('reinvest').markAsTouched();
+        // } else if (this.switchTransaction.get('folioSelection').value == 1) {
+        //   if (this.switchTransaction.get('investmentAccountSelection').invalid) {
+        //     this.switchTransaction.get('investmentAccountSelection').markAsTouched();
+        //     return;
+        //   }
+      } else if (this.switchTransaction.get('switchType').value != 3 && this.switchTransaction.get('employeeContry').invalid) {
+        this.switchTransaction.get('employeeContry').markAsTouched();
+        return;
+      } else if (this.switchTransaction.get('switchType').invalid) {
+        this.switchTransaction.get('switchType').markAsTouched();
+        return;
+      } else {
+        if (this.barButtonOptions.active) {
+          return;
+        }
+        this.barButtonOptions.active = true;
+        const obj = {
+
+          productDbId: this.schemeDetails.id,
+          clientName: this.selectedFamilyMember,
+          holdingType: this.getDataSummary.defaultClient.holdingType,
+          toProductDbId: this.schemeDetailsTransfer.id,
+          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+          toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
+          productCode: this.schemeDetails.schemeCode,
+          isin: this.schemeDetails.isin,
+          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+          tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+          tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+          familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+          adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+          clientId: this.getDataSummary.defaultClient.clientId,
+          toIsin: this.schemeDetailsTransfer.isin,
+          schemeCd: this.schemeDetails.schemeCode,
+          euin: this.getDataSummary.euin.euin,
+          qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+          allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
+          orderType: 'SWITCH',
+          buySell: 'SWITCH_OUT',
+          transCode: 'NEW',
+          buySellType: 'FRESH',
+          amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
+          dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
+          clientCode: this.getDataSummary.defaultClient.clientCode,
+          orderVal: this.switchTransaction.controls.employeeContry.value,
+          bseDPTransType: 'PHYSICAL',
+          aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+          childTransactions: [],
+          isException: true,
+          tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
+        };
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => {
+            this.isSuccessfulTransaction = true;
+
+            this.switchBSERes(data);
+          }, (error) => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+          }
+        );
+      }
     }
+
   }
 
   switchBSERes(data) {
@@ -607,11 +645,7 @@ export class SwitchTransactionComponent implements OnInit {
     if (this.isEdit != true) {
       this.id++;
     }
-    if (this.reInvestmentOpt.length > 1) {
-      if (this.switchTransaction.get('reinvest').invalid) {
-        this.switchTransaction.get('reinvest').markAsTouched();
-      }
-    } else if (this.switchTransaction.get('schemeSwitch').invalid) {
+    if (this.switchTransaction.get('schemeSwitch').invalid) {
       this.switchTransaction.get('schemeSwitch').markAsTouched();
       return;
     } else if (this.switchTransaction.get('investmentAccountSelection').invalid) {
@@ -666,6 +700,7 @@ export class SwitchTransactionComponent implements OnInit {
           this.isEdit = false;
         } else {
           this.childTransactions.push(obj);
+          this.dataSource.data = this.childTransactions;
         }
         // this.schemeList = [];
         this.showUnits = false;
@@ -676,5 +711,15 @@ export class SwitchTransactionComponent implements OnInit {
         this.switchTransaction.controls.transferIn.reset();
       }
     }
+  }
+  removeUnnecessaryDataFromJson(singleTransactionJson) {
+    singleTransactionJson.childTransactions = null
+    singleTransactionJson.schemeSelection = null;
+    singleTransactionJson.folioSelection = null;
+    singleTransactionJson.modeOfPaymentSelection = null;
+    singleTransactionJson.scheme = null;
+    singleTransactionJson.schemeDetails = null;
+    singleTransactionJson.reInvestmentOpt = null;
+    singleTransactionJson.folioDetails = null;
   }
 }

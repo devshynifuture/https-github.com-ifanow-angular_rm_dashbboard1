@@ -22,7 +22,7 @@
             </div>
         </div>
         <div *ngIf="multiTransact == true && childTransactions.length>0" class="col-md-12 mt-20 all-transactions">
-            <table [dataSource]="childTransactions" id="table-low" mat-table>
+            <table [dataSource]="dataSource" id="table-low" mat-table>
                 <ng-container matColumnDef="no">
                     <th *matHeaderCellDef class="br" mat-header-cell> No</th>
                     <td *matCellDef="let element let i = index;" class="br w-15 " mat-cell>
@@ -275,11 +275,12 @@
 
   <h5 class="mb-0 text-white c-p" (click)="saveAndNext()"> NEXT </h5>
 </div> -->
-        <div class="col-md-8 text-right">
+        <div class="col-md-8 text-right d-flex justify-content-end">
             <!-- commented for prod build -->
-            <!-- <button mat-raised-button class="br-0 text-success f-14" (click)="AddMultiTransaction()">
-SAVE & ADD ANOTHER
-</button> -->
+            <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1 && !mutualFundData"
+                class="br-0 text-primary f-14" mat-button mat-raised-button>
+                SAVE & ADD ANOTHER
+            </button>
             <!-- <button mat-button  class="btn-green text-white ml-12" (click)="swp()">
 SAVE & PROCEED
 </button> -->
