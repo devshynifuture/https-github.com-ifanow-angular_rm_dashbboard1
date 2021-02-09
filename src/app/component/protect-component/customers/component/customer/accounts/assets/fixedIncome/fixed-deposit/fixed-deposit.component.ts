@@ -455,6 +455,7 @@ export class FixedDepositComponent implements OnInit {
       commencementDate: [(!data) ? '' : new Date(data.commencementDate), [Validators.required]],
       interestRate: [(!data) ? '' : data.interestRate, [Validators.required]],
       maturity: [!data.fdEndDateIn ? 1 : data.fdEndDateIn, [Validators.required]],
+      interestType: [data.interestTypeId ? data.interestTypeId : '1'],
       compound: [(!data.interestCompoundingId) ? '' : data.interestCompoundingId],
       ownerPercent: [data.ownerPerc],
       institution: [(!data) ? '' : data.institutionName],
@@ -582,7 +583,8 @@ export class FixedDepositComponent implements OnInit {
         tenureInDay: this.fixedDeposit.controls.tenureD.value,
         fdEndDateIn: this.fixedDeposit.controls.maturity.value,
         nomineeList: this.fixedDeposit.value.getNomineeName,
-        id: this.fixedDeposit.controls.id.value
+        id: this.fixedDeposit.controls.id.value,
+        interestTypeId: this.fixedDeposit.controls.payOpt.value == 1 ? 1 : parseInt(this.fixedDeposit.controls.interestType.value)
         // isEdit: this.fixedDeposit.controls.id.value?true:false
       };
 
