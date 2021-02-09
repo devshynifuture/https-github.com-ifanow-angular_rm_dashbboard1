@@ -631,6 +631,7 @@ export const appConfig = {
   MAP_UNMAP_FOLIO: 'mutual-fund/folio/map/manual',
   UNMAP_MAP_FOLIO: 'mutual-fund/folio/unmap',
   GET_FREQUENCY: 'bse/scheme/sip/view',
+  GET_FREQUENCY_STP: 'bse/scheme/stp/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
   UPLOAD_FILE_IMAGE: 'user/register/image/upload',

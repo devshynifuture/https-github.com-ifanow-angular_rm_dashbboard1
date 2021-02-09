@@ -69,7 +69,7 @@ export class RedemptionTransactionComponent implements OnInit {
   reInvestmentOpt: [];
   schemeDetails: any;
   navOfSelectedScheme: any;
-  transactionSummary: {};
+  transactionSummary: any;
   folioList: any = [];
   folioDetails: any;
   showUnits = false;
@@ -346,6 +346,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
 

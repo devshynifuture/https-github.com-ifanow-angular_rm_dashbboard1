@@ -118,7 +118,9 @@ export class OnlineTransactionService {
   getSipFrequency(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY, data, 1);
   }
-
+  getStpFrequency(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FREQUENCY_STP, data, 1);
+  }
   getNSEAchmandate(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_MANDATE_LIST, data, 1);
   }
