@@ -360,9 +360,9 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = true;
     this.folioList = [];
     this.schemeDetails = null;
-    this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
-    this.getDataSummary.defaultClient = this.transactionSummary.defaultClient
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient
     Object.assign(this.transactionSummary, { schemeName: this.scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
