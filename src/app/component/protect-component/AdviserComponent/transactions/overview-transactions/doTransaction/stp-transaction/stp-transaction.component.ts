@@ -288,9 +288,10 @@ export class StpTransactionComponent implements OnInit {
     this.stpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2));
     this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
     this.showUnits = true;
+    Object.assign(this.transactionSummary, { schemeName: this.scheme.schemeName });
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
-    this.transactionSummary = { ...this.transactionSummary };
+    //this.transactionSummary = { ...this.transactionSummary };
   }
 
   selectedSchemeTransfer(schemeTransfer) {
@@ -328,10 +329,25 @@ export class StpTransactionComponent implements OnInit {
     // if (this.getDataSummary.defaultClient.aggregatorType == 2) {
     //   this.getMandateDetails();
     // }
-    this.getFrequency();
+    if (this.transactionSummary.defaultClient.aggregatorType == 2) {
+      this.getSTPFrequency()
+    } else {
+      this.getFrequency();
+    }
 
   }
-
+  getSTPFrequency() {
+    const obj = {
+      isin: this.schemeDetailsTransfer.isin,
+      aggregatorType: this.transactionSummary.defaultClient.aggregatorType,
+      orderType: 'STP'
+    };
+    this.onlineTransact.getStpFrequency(obj).subscribe(
+      data => this.getSipFrequencyRes(data), (error) => {
+        this.eventService.openSnackBar(error, 'Dismiss');
+      }
+    );
+  }
   reinvest(scheme) {
     this.schemeDetailsTransfer = scheme;
     this.setMinAmount();
@@ -345,11 +361,12 @@ export class StpTransactionComponent implements OnInit {
     this.folioList = [];
     this.schemeDetails = null;
     this.platformType = this.transactionSummary.defaultClient.aggregatorType
-    Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
+    this.getDataSummary.defaultClient = this.transactionSummary.defaultClient
+    Object.assign(this.transactionSummary, { schemeName: this.scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      aggregatorType: this.transactionSummary.defaultClient.aggregatorType,
       orderType: 'STP',
       userAccountType: this.getDataSummary.defaultCredential.accountType,
     };

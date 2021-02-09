@@ -20,6 +20,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { SendyExcelComponent } from './sendy-excel/sendy-excel.component';
 import { ConvertToPaidComponent } from './my-ifas/convert-to-paid/convert-to-paid.component';
 import { RefreshMfComponent } from './my-ifas/refresh-mf/refresh-mf.component';
+import { StockScripComponent } from './stock-scrip/stock-scrip.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RefreshMfComponent } from './my-ifas/refresh-mf/refresh-mf.component';
     SchemeMappingComponent,
     SupportManagementComponent,
     SendyExcelComponent,
+    StockScripComponent,
   ],
   imports: [
     CommonModule,
