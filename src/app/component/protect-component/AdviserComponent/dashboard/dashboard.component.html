@@ -1165,7 +1165,7 @@
         <div class="col-md-3 p-0 text-right">
           <button *ngIf="dataSource5.length > 4" mat-stroked-button
             [routerLink]="['/admin/backoffice-mis/mutual-funds']" routerLinkActive="router-link-active"
-            class="advisor-view-all">View All
+            class="advisor-view-all mb-12">View All
           </button>
         </div>
 
@@ -1204,6 +1204,79 @@
               <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
                   <span>{{element.transactionNature ? element.transactionNature : '-'}}</span>
+                </div>
+
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Details</th>
+              <td mat-cell *matCellDef="let element" class="br">
+
+                <div class="bar">
+                  {{element.transactionDate | date:"dd/MM/yyyy"}}<br>
+                  <span class="text-custom">{{element.amount ? "₹" : ""}}</span><span class="text-custom"
+                    appFormatNumber>{{element.amount }}</span>
+                </div>
+              </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+          </table>
+
+        </div>
+
+      </div>
+
+      <div class="row pt-40 rejections-advisor">
+        <div class="col-md-9 p-0">
+          <h5 class="m-0 f-500 roboto text-black pt-2">Transaction summary</h5>
+        </div>
+        <div class="col-md-3 p-0 text-right">
+          <button *ngIf="dataSource8.length > 0" mat-stroked-button
+            [routerLink]="['/admin/backoffice-mis/mutual-funds']" [queryParams]="{Tab: 1}"
+            routerLinkActive="router-link-active" class="advisor-view-all mb-12">View All
+          </button>
+        </div>
+
+
+        <div *ngIf="dataSource8.length == 0" class="ba-primitive br-4 mt-10 p-18">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
+              <h3 class="f-16 roboto f-600">No transaction found</h3>
+              <p class="f-14">
+                We could not find any transactions to show. Either there is not enough data yet,
+                or you have not provided your RTA details yet.
+              </p>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
+              <img src="assets/images/svg/rejections-and-reversals.svg">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 p-0" *ngIf="dataSource8.length > 0">
+          <table mat-table [dataSource]="dataSource8" id="table-low" class="mt-10"
+            [appSkeletonLoading]="isLoadingTransaction" appSkeletonLoading class="skeletonAnimation">
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme</th>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                  {{element.ownerName}}<br> <span
+                    class="text-custom">{{element.schemeName}}{{element.folioNumber ? " | " + element.folioNumber : ""}}</span>
+                </div>
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> Type</th>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                  <span>{{element.fwTransactionType ? element.fwTransactionType : '-'}}</span>
                 </div>
 
               </td>
