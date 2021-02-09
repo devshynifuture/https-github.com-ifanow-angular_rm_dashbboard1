@@ -451,12 +451,12 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   getSingleTransactionJson() {
-    const allRedeem = (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false;
-    let amountType = (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit';
+    const allUnits = (this.redemptionTransaction.controls.redeemType.value == "3") ? true : false;
+    let amountType = (this.redemptionTransaction.controls.redeemType.value == "1") ? 'Amount' : 'Unit';
 
     let orderVal: any = '0';
     let qty: any = '0';
-    if (allRedeem) {
+    if (allUnits) {
       amountType = 'Unit';
       orderVal = this.folioDetails.balanceUnit + '';
       qty = orderVal;
@@ -487,14 +487,14 @@ export class RedemptionTransactionComponent implements OnInit {
       buySellType: 'FRESH',
       dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
       clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal,
+      orderVal: (this.redemptionTransaction.controls.redeemType.value == "2") ? null : this.redemptionTransaction.controls.employeeContry.value,
       amountType,
       qty,
       schemeCd: this.schemeDetails.schemeCode,
       euin: this.getDataSummary.euin.euin,
       bseDPTransType: 'PHYSICAL',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      allRedeem,
+      allUnits,
       bankDetailId: null,
       nsePaymentMode: null,
       isException: true,

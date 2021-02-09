@@ -936,8 +936,6 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.get('tenure').markAsTouched();
     } else if (this.sipTransaction.get('frequency').invalid) {
       this.sipTransaction.get('frequency').markAsTouched();
-    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && !this.selectedMandate) {
-      this.eventService.openSnackBar('No mandate found. Please change payment mode.');
     } else {
       return true;
     }
