@@ -1278,7 +1278,7 @@ export class MutualFundUnrealizedTranComponent {
       const blob = new Blob([document.getElementById('template').innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
-      saveAs(blob, tableTitle + '.xls');
+      saveAs(blob, this.viewMode + '.xls');
     }, 200);
     // if (data) {
     //   this.fragmentData.isSpinner = false;
