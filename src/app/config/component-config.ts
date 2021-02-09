@@ -81,6 +81,7 @@ export const appConfig = {
   REFRESH_DASHBOARD: 'admin/dashboard/key/metrics/refresh',
   RM_DASHBOARD_MISC_SENDY_FILE_URL_GET: 'misc/sendy-excel/upload-url/get',
   RM_DASHBOARD_POST_AFTER_SENDY_FILE_UPLOAD: 'misc/sendy/subscribe/excel',
+  ADD_SCRIP_STOCK: 'account/asset/ops-team/stock/scrip/add',
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
