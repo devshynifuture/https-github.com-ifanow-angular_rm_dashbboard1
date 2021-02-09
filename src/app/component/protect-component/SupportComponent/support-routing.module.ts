@@ -11,6 +11,7 @@ import { IfaOnboardingComponent } from './ifa-onboarding/ifa-onboarding.componen
 // import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { SupportMiscellaneousComponent } from './support-miscellaneous/support-miscellaneous.component';
 import { SupportManagementComponent } from './support-management/support-management.component';
+import { StockScripComponent } from './stock-scrip/stock-scrip.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'miscellaneous',
         component: SupportMiscellaneousComponent
+      },
+      {
+        path: 'stock-scrip',
+        component: StockScripComponent
       },
       {
         path: '',
