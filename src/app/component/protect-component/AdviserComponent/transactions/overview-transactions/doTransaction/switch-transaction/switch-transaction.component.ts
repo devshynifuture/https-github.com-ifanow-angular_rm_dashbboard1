@@ -49,7 +49,7 @@ export class SwitchTransactionComponent implements OnInit {
   transactionType: any;
   selectScheme = 2;
   navOfSelectedScheme: any;
-  transactionSummary: {};
+  transactionSummary: any;
   schemeDetails: any;
   maiSchemeList: any;
   reInvestmentOpt = [];
@@ -265,6 +265,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.folioList = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {

@@ -66,7 +66,7 @@ export class SipTransactionComponent implements OnInit {
   isViewInitCalled = false;
   transactionType: any;
   schemeDetails: any = {};
-  transactionSummary: {};
+  transactionSummary: any;
   selectScheme = 2;
   schemeList: any;
   existingSchemeList = [];
@@ -176,6 +176,7 @@ export class SipTransactionComponent implements OnInit {
     if (value == '2') {
       this.existingSchemeList = [];
     }
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     this.scheme = undefined;
     this.schemeList = undefined;
     this.schemeDetails = undefined;
@@ -370,6 +371,7 @@ export class SipTransactionComponent implements OnInit {
     this.schemeDetails = undefined;
     this.sipFrequency = [];
     this.onFolioChange(undefined);
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {

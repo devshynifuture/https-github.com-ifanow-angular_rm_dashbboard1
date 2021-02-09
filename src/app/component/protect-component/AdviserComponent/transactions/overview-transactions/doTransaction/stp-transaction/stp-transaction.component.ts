@@ -62,7 +62,7 @@ export class StpTransactionComponent implements OnInit {
   transactionType: any;
   maiSchemeList: any;
   schemeDetails: any;
-  transactionSummary: {};
+  transactionSummary: any;
   showUnits = false;
   reInvestmentOpt = [];
   schemeList: any;
@@ -344,6 +344,7 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = true;
     this.folioList = [];
     this.schemeDetails = null;
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
