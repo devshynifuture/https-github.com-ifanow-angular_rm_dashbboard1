@@ -459,7 +459,7 @@ export class RedemptionTransactionComponent implements OnInit {
     if (allUnits) {
       amountType = 'Unit';
       orderVal = this.folioDetails.balanceUnit + '';
-      qty = orderVal;
+      qty = null;
     } else {
       orderVal = this.redemptionTransaction.controls.employeeContry.value + '';
       if (amountType == 'Amount') {
