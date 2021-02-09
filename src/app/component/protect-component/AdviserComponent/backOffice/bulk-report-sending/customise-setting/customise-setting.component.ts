@@ -45,13 +45,13 @@ export class CustomiseSettingComponent implements OnInit {
     this.hasEndReached = true;
     this.dataSource.data = [{}, {}, {}];
     this.saveSettingMfClients = []
-    this.getMutualFundClient(0)
     this.overviewAll = false
     this.summaryAll = false
     this.transactionAll = false
     this.unrealisedAll = false
     this.capitalGainDetailedAll = false
     this.capitalGainAll = false
+    this.getMutualFundClient(0)
   }
   onWindowScroll(e: any) {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
@@ -147,32 +147,32 @@ export class CustomiseSettingComponent implements OnInit {
     this.dataSource.data = data
 
     this.dataSource.data.forEach(element => {
-      if (element.overview == true) {
+      if (element.overview == true && element.id != 0) {
         this.count++
         if (this.count > 0) {
           this.overviewAll = true
         }
-      } if (element.summary == true) {
+      } if (element.summary == true && element.id != 0) {
         this.countSummary++
         if (this.countSummary > 0) {
           this.summaryAll = true
         }
-      } if (element.allTransaction == true) {
+      } if (element.allTransaction == true && element.id != 0) {
         this.countTrasact++
         if (this.countTrasact > 0) {
           this.transactionAll = true
         }
-      } if (element.unrealizedTransaction == true) {
+      } if (element.unrealizedTransaction == true && element.id != 0) {
         this.countunre++
         if (this.countunre > 0) {
           this.unrealisedAll = true
         }
-      } if (element.capitalGainSummary == true) {
+      } if (element.capitalGainSummary == true && element.id != 0) {
         this.countCap++
         if (this.countCap > 0) {
           this.capitalGainAll = true
         }
-      } if (element.capitalGainDetailed == true) {
+      } if (element.capitalGainDetailed == true && element.id != 0) {
         this.countCapDetail++
         if (this.countCapDetail > 0) {
           this.capitalGainDetailedAll = true
