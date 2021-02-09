@@ -32,6 +32,7 @@ export class DashboardService {
   static dashTaskDashboardCount: any;
   static dashTodaysTaskList: any;
   static dashTodoListData: any;
+  static allTransactions: any;
   constructor(private http: HttpService) {
   }
 
@@ -60,6 +61,7 @@ export class DashboardService {
     DashboardService.dashTaskDashboardCount = null;
     DashboardService.dashTodaysTaskList = null;
     DashboardService.dashTodoListData = null;
+    DashboardService.allTransactions = null;
   }
 
   addNotes(data) {
