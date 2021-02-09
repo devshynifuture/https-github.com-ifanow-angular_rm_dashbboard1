@@ -246,7 +246,7 @@ export class TransactionSummaryComponent implements OnInit {
           this.getMandateDetails();
         }
       this.bankDetails.forEach(element => {
-        if (element.defaultBankFlag == 'Y') {
+        if (element.defaultBankFlag == 'Y' || element.defaultBankFlag == 1) {
           this.defaultBank = element;
           element.selected = true;
         }
