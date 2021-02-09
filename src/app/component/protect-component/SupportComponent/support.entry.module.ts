@@ -25,6 +25,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CustomFilterDatepickerDialogComponent } from './file-ordering-upload/custom-filter-datepicker-dialog.component';
 import { ConvertToPaidComponent } from './my-ifas/convert-to-paid/convert-to-paid.component';
 import { RefreshMfComponent } from './my-ifas/refresh-mf/refresh-mf.component';
+import { AddStockScripComponent } from './stock-scrip/stock-scrip/add-stock-scrip/add-stock-scrip.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 const componentList = [
     AdminDetailsComponent,
@@ -44,7 +46,8 @@ const componentList = [
     FileOrderingSetupComponent,
     CustomFilterDatepickerDialogComponent,
     ConvertToPaidComponent,
-    RefreshMfComponent
+    RefreshMfComponent,
+    AddStockScripComponent
 ]
 
 @NgModule({
@@ -56,6 +59,7 @@ const componentList = [
         ReactiveFormsModule,
         CustomDirectiveModule,
         CommonComponentModule,
+        CustomCommonModule
     ],
     entryComponents: componentList,
     providers: [

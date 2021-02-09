@@ -199,7 +199,7 @@ export class EmailOnlyComponent implements OnInit {
     if (this.getVerifiedList.length == 0) {
       this.emailLists = []
       const dialogRef = this.dialog.open(EmailVerificationPopupComponent, {
-        width: '650px',
+        width: '520px',
         data: { reportType: '', selectedElement: '' }
       });
       dialogRef.afterClosed().subscribe(result => {
