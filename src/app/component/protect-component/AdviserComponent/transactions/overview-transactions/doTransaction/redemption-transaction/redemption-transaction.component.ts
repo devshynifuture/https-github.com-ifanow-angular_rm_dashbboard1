@@ -441,7 +441,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
-    } else if ((this.redemptionTransaction.get('redeemType').value) != '3' &&
+    } else if ((this.redemptionTransaction.get('redeemType').value) == '1' &&
       this.redemptionTransaction.get('employeeContry').invalid) {
       this.redemptionTransaction.get('employeeContry').markAsTouched();
     } else {
@@ -451,15 +451,15 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   getSingleTransactionJson() {
-    const allUnits = (this.redemptionTransaction.controls.redeemType.value == "3") ? true : false;
+    const allRedeem = (this.redemptionTransaction.controls.redeemType.value == "3") ? true : false;
     let amountType = (this.redemptionTransaction.controls.redeemType.value == "1") ? 'Amount' : 'Unit';
 
     let orderVal: any = '0';
     let qty: any = '0';
-    if (allUnits) {
+    if (allRedeem) {
       amountType = 'Unit';
       orderVal = this.folioDetails.balanceUnit + '';
-      qty = null;
+      qty = orderVal;
     } else {
       orderVal = this.redemptionTransaction.controls.employeeContry.value + '';
       if (amountType == 'Amount') {
@@ -487,14 +487,14 @@ export class RedemptionTransactionComponent implements OnInit {
       buySellType: 'FRESH',
       dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
       clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal: (this.redemptionTransaction.controls.redeemType.value == "2") ? null : this.redemptionTransaction.controls.employeeContry.value,
+      orderVal,
       amountType,
       qty,
       schemeCd: this.schemeDetails.schemeCode,
       euin: this.getDataSummary.euin.euin,
       bseDPTransType: 'PHYSICAL',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-      allUnits,
+      allRedeem,
       bankDetailId: null,
       nsePaymentMode: null,
       isException: true,
