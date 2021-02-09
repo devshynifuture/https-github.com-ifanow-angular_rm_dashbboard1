@@ -453,6 +453,11 @@ export class StpTransactionComponent implements OnInit {
     } else {
       this.dateArray(getFrerq.sipDates);
     }
+    if (this.transactionSummary.defaultClient.aggregatorType == 2) {
+      this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.sipMinimumInstallmentAmount
+      this.stpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
+      this.stpTransaction.controls.employeeContry.updateValueAndValidity();
+    }
   }
 
   setMinAmount() {
