@@ -41,7 +41,7 @@
                             <mat-optgroup *ngFor="let group of fileType" [label]="group.category">
                                 <mat-option class="t-u" (click)="fileTypeSelectMF(type);"
                                     *ngFor="let type of group.value" [value]="type.id">
-                                    {{ type.name }}
+                                    {{type.fileTypeId == 7 ? 'NJ (Reversal)' : type.name}}
                                 </mat-option>
                             </mat-optgroup>
                             <!-- <mat-option [value]="lead.id" *ngFor="let lead of leadList">{{lead.name}}</mat-option> -->

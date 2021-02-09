@@ -8,7 +8,8 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -22,9 +23,13 @@ export class RedemptionTransactionComponent implements OnInit {
   folioNumber: any;
   mutualFundData: any;
   mfDefault: any;
+  element: any;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    private fb: FormBuilder, private eventService: EventService,
+  constructor(private subInjectService: SubscriptionInject,
+    private onlineTransact: OnlineTransactionService,
+    private fb: FormBuilder,
+    public dialog: MatDialog,
+    private eventService: EventService,
     public processTransaction: ProcessTransactionService) {
   }
 
@@ -64,7 +69,7 @@ export class RedemptionTransactionComponent implements OnInit {
   reInvestmentOpt: [];
   schemeDetails: any;
   navOfSelectedScheme: any;
-  transactionSummary: {};
+  transactionSummary: any;
   folioList: any = [];
   folioDetails: any;
   showUnits = false;
@@ -94,6 +99,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
     this.getDataSummary = this.inputData.transactionData
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (data.mutualFundData) {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
@@ -340,6 +346,7 @@ export class RedemptionTransactionComponent implements OnInit {
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
 
@@ -508,30 +515,58 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   redeem() {
-    if (this.validateSingleTransaction()) {
-      if (this.barButtonOptions.active) {
-        return;
-      }
-      this.barButtonOptions.active = true;
-      const obj = this.getSingleTransactionJson();
-      if (this.multiTransact == true) {
-        this.AddMultiTransaction();
-        obj.childTransactions = this.childTransactions;
-        this.childTransactions.forEach(singleTranJson => {
-          this.removeUnnecessaryDataFromJson(singleTranJson);
-        });
-      }
-      this.removeUnnecessaryDataFromJson(obj);
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => {
-          this.redeemBSERes(data);
-          this.isSuccessfulTransaction = true;
-
-        }, (error) => {
-          this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+    if (this.multiTransact == true) {
+      const dialogRef = this.dialog.open(MultiTransactionPopupComponent, {
+        width: '750px',
+        data: { childTransactions: this.childTransactions, dataSource: this.dataSource.data }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return;
         }
-      );
+        this.element = result;
+        console.log('result', this.element)
+        if (this.element == true) {
+          let obj
+          obj = this.childTransactions[this.childTransactions.length - 1]
+          obj.childTransactions = []
+          const myArray = this.childTransactions
+          const list = [];
+          myArray.forEach(val => list.push(Object.assign({}, val)));
+          this.childTransactions.forEach(singleTranJson => {
+            this.removeUnnecessaryDataFromJson(singleTranJson);
+          })
+          obj.childTransactions = list
+          this.onlineTransact.transactionBSE(obj).subscribe(
+            data => {
+              this.redeemBSERes(data);
+              this.isSuccessfulTransaction = true;
+            }, (error) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+            }
+          );
+        }
+      });
+    } else {
+      if (this.validateSingleTransaction()) {
+        if (this.barButtonOptions.active) {
+          return;
+        }
+        this.barButtonOptions.active = true;
+        const obj = this.getSingleTransactionJson();
+        this.removeUnnecessaryDataFromJson(obj);
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => {
+            this.redeemBSERes(data);
+            this.isSuccessfulTransaction = true;
+
+          }, (error) => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+          }
+        );
+      }
     }
   }
 
@@ -602,5 +637,6 @@ export class RedemptionTransactionComponent implements OnInit {
     singleTransactionJson.schemeDetails = undefined;
     singleTransactionJson.reInvestmentOpt = undefined;
     singleTransactionJson.folioDetails = undefined;
+    singleTransactionJson.childTransactions = null
   }
 }

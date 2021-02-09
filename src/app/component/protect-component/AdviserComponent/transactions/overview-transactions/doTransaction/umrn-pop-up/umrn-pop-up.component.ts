@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from '../../../../Activities/calendar/calendar.component';
 import { FormBuilder } from '@angular/forms';
 
 
@@ -17,7 +16,7 @@ export class UmrnPopUpComponent implements OnInit {
   popUP: any;
   mandate: any;
   constructor(public dialogRef: MatDialogRef<UmrnPopUpComponent>, private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data) { }
 
 
   isLoading = false

@@ -9,7 +9,8 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -27,11 +28,13 @@ export class PurchaseTrasactionComponent implements OnInit {
   mfDefault: any;
   disabledScheme: boolean = true;
   acceptedMandate: any;
+  element: any;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
     private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private eventService: EventService,
     private utilService: UtilService,
+    public dialog: MatDialog,
     private customerService: CustomerService) {
   }
 
@@ -292,6 +295,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -753,7 +757,6 @@ export class PurchaseTrasactionComponent implements OnInit {
       nsePaymentMode: null,
       bankDetailId: null,
       isException: true,
-      childTransactions: [],
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       schemeName: this.scheme.schemeName,
       amcId: (this.scheme) ? this.scheme.amcId : null,
@@ -775,32 +778,61 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   purchase() {
-    if (this.validateSinglePurchase()) {
-      if (this.barButtonOptions.active) {
-        return;
-      }
-      this.barButtonOptions.active = true;
-      const obj = this.getSingleTransactionJson();
-      if (this.multiTransact == true) {
-        this.AddMultiTransaction();
-        obj.childTransactions = this.childTransactions;
-        this.childTransactions.forEach(singleTranJson => {
-          this.removeUnnecessaryDataFromJson(singleTranJson);
-        });
-      }
-      this.removeUnnecessaryDataFromJson(obj);
-      // console.log('purchase obj: ', obj);
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => {
-          this.purchaseRes(data);
-          this.isSuccessfulTransaction = true;
-        }, (error) => {
-          this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+    if (this.multiTransact == true) {
+      const dialogRef = this.dialog.open(MultiTransactionPopupComponent, {
+        width: '750px',
+        data: { childTransactions: this.childTransactions, dataSource: this.dataSource.data }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return;
         }
-      );
+        this.element = result;
+        console.log('result', this.element)
+        if (this.element == true) {
+          let obj
+          obj = this.childTransactions[this.childTransactions.length - 1]
+          obj.childTransactions = []
+          const myArray = this.childTransactions
+          const list = [];
+          myArray.forEach(val => list.push(Object.assign({}, val)));
+          this.childTransactions.forEach(singleTranJson => {
+            this.removeUnnecessaryDataFromJson(singleTranJson);
+          })
+          obj.childTransactions = list
+          this.onlineTransact.transactionBSE(obj).subscribe(
+            data => {
+              this.purchaseRes(data);
+              this.isSuccessfulTransaction = true;
+            }, (error) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+            }
+          );
+        }
+      });
+    } else {
+      if (this.validateSinglePurchase()) {
+        if (this.barButtonOptions.active) {
+          return;
+        }
+        this.barButtonOptions.active = true;
+        const obj = this.getSingleTransactionJson();
+        this.removeUnnecessaryDataFromJson(obj);
+        console.log('purchase obj: ', JSON.stringify(obj));
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => {
+            this.purchaseRes(data);
+            this.isSuccessfulTransaction = true;
+          }, (error) => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+          }
+        );
 
+      }
     }
+
   }
 
   purchaseRes(data) {
@@ -874,6 +906,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   removeUnnecessaryDataFromJson(singleTransactionJson) {
+    singleTransactionJson.childTransactions = null
     singleTransactionJson.schemeSelection = null;
     singleTransactionJson.folioSelection = null;
     singleTransactionJson.modeOfPaymentSelection = null;
@@ -881,5 +914,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     singleTransactionJson.schemeDetails = null;
     singleTransactionJson.reInvestmentOpt = null;
     singleTransactionJson.folioDetails = null;
+
   }
 }

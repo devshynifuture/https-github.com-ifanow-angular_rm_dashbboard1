@@ -305,7 +305,7 @@ export const appConfig = {
   ADD_NOTES_ACTIVITY: 'activity/note/add',
   EDIT_NOTES_ACTIVITY: 'activity/note/edit',
   DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
-
+  DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
   ////////////////////////////////plan////////////////////////////
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
@@ -850,6 +850,7 @@ export const appConfig = {
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',
+  CHECK_WHITE_LABEL_AND_UPDATE: 'setting/white-label/check',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

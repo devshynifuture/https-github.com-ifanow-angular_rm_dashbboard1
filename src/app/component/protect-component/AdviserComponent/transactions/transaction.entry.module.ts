@@ -46,6 +46,7 @@ import { PeopleEntryModule } from '../../PeopleComponent/people/people-entry-mod
 import { NoCredFoundComponent } from './noCredFound/no-cred-found/no-cred-found.component';
 import { InvestorDetailComponent } from './investors-transactions/investor-detail/investor-detail.component';
 import { MappedUserComponent } from './investors-transactions/investor-detail/mapped-user/mapped-user.component';
+import { MultiTransactionPopupComponent } from './overview-transactions/doTransaction/multi-transaction-popup/multi-transaction-popup.component';
 
 export const componentList = [
   OnlineTransactionComponent,
@@ -89,7 +90,7 @@ export const componentList = [
   MappedUserComponent,
   DetailedViewMandateComponent,
   InvestorDetailComponent,
-
+  MultiTransactionPopupComponent
   // VideoKycComponent
 
 

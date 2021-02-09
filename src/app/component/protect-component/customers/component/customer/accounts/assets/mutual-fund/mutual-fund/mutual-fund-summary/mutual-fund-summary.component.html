@@ -405,11 +405,12 @@
                             </div>
                             <div *ngIf="mfCapability.Delete"
                                 [matTooltip]="'To Delete Mutual Fund It needs to be of type Manual'"
-                                [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
+                                [matTooltipDisabled]="element.rtMasterId === 14 || element.rtMasterId === 6"
+                                matTooltipPosition="below">
 
                                 <button mat-menu-item [disabled]="element.rtMasterId !== 14"
                                     (click)="deleteModal('mutualFund', element)">Delete Mutual
-                                    Fund</button>
+                                    Fund{{element.rtMasterId}}</button>
                             </div>
 
                         </mat-menu>

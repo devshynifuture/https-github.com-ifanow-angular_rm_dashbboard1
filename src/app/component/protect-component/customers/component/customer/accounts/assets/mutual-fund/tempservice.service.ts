@@ -87,6 +87,7 @@ export class TempserviceService {
       array = 'mutualFundCategoryMastersList';
       mainDataId = 'categoryId';
     } else if (reportType == 'ownerName') {
+
       // array = 'family_member_list';
       // mainDataId = 'familyMemberId';
       array = 'schemeWise';
@@ -139,9 +140,10 @@ export class TempserviceService {
       catObj[key].forEach((singleData) => {
         if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
           // this.totalObj = this.this.getEachTotalValue(singleData);
-          totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues), totalObj, { total: true });
+          totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, isSummaryTabValues, folio), totalObj, { total: true });
           // totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
           const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
+          console.log(obj);
           totalObj.xirr = obj.xirr;
           totalObj.absReturn = obj.absoluteReturn;
           Object.assign(totalObj, { categoryName: key });
@@ -247,7 +249,7 @@ export class TempserviceService {
               ele.currentAmount = ele.unit * ele.nav;
               filteredData.push(ele);
             });
-            totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, false), totalObj, { total: true });
+            totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, false, folio), totalObj, { total: true });
             const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
             totalObj.totalCagr = data.xirr;
             totalObj.trnAbsoluteReturn = data.absoluteReturn;
@@ -291,10 +293,10 @@ export class TempserviceService {
     return filterData;
   }
 
-  getFinalTotalValue(data) { // grand total values
+  getFinalTotalValue(data, folio) { // grand total values
     let totalValue: any = {};
     data.forEach(element => {
-      totalValue = this.addTwoObjectValues(this.getEachTotalValue(element, true), totalValue, { total: true });
+      totalValue = this.addTwoObjectValues(this.getEachTotalValue(element, true, folio), totalValue, { total: true });
     });
 
     return totalValue;
@@ -389,7 +391,7 @@ export class TempserviceService {
     return primaryObject;
   }
 
-  getEachTotalValue(data, isSummaryTabValues) { // get total value as per category for transaction
+  getEachTotalValue(data, isSummaryTabValues, folio) { // get total value as per category for transaction
     let currentValue = 0;
     let absReturn = 0;
     let xirr = 0;
@@ -414,47 +416,52 @@ export class TempserviceService {
     let totalCurrentValue = 0;
     if (!isSummaryTabValues) {
       data.mutualFundTransactions.forEach(ele => {
-        totalTransactionAmt += (ele.amount) ? (ele.amount * (ele.effect ? ele.effect : 1)) : 0;
-        totalUnit += (ele.unit) ? (ele.unit * (ele.effect ? ele.effect : 1)) : 0;
-        totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
-        balanceUnit = (ele.balanceUnits) ? ele.balanceUnits : 0;
-        currentValue += (ele.currentValue) ? ele.currentValue : 0;
-        dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
-        dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
-        totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
-        totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
-        absReturn += (ele.absReturn) ? ele.absReturn : 0;
-        netGain += (ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
-          xirr += (ele.xirr) ? ele.xirr : 0;
-        allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
-        totalCagr += (ele.cagr) ? ele.cagr : 0;
-        trnAbsoluteReturn += (ele.absoluteReturn) ? ele.absoluteReturn : 0;
-        totalCurrentValue += (ele.currentAmount) ? ele.currentAmount : 0;
+        if ((folio == '2') ? (ele.balanceUnits > 0 && ele.balanceUnits != 0) : (ele.balanceUnits < 0 || ele.balanceUnits == 0 || ele.balanceUnits > 0)) {
+          totalTransactionAmt += (ele.amount) ? (ele.amount * (ele.effect ? ele.effect : 1)) : 0;
+          totalUnit += (ele.unit) ? (ele.unit * (ele.effect ? ele.effect : 1)) : 0;
+          totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
+          balanceUnit = (ele.balanceUnits) ? ele.balanceUnits : 0;
+          currentValue += (ele.currentValue) ? ele.currentValue : 0;
+          dividendPayout += (ele.dividendPayout) ? ele.dividendPayout : 0;
+          dividendReinvest += (ele.dividendReinvest) ? ele.dividendReinvest : 0;
+          totalAmount += (ele.totalAmount) ? ele.totalAmount : 0;
+          totalGain += (ele.unrealizedGain) ? ele.unrealizedGain : 0;
+          absReturn += (ele.absReturn) ? ele.absReturn : 0;
+          netGain += (ele.gainOrLossAmount) ? ele.gainOrLossAmount : 0,
+            xirr += (ele.xirr) ? ele.xirr : 0;
+          allocationPer += (ele.allocationPercent) ? ele.allocationPercent : 0;
+          totalCagr += (ele.cagr) ? ele.cagr : 0;
+          trnAbsoluteReturn += (ele.absoluteReturn) ? ele.absoluteReturn : 0;
+          totalCurrentValue += (ele.currentAmount) ? ele.currentAmount : 0;
+        }
       });
     } else {
-      totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
-      totalUnit += (data.unit) ? data.unit : 0;
-      totalNav += (data.transactionNav) ? data.transactionNav : 0;
-      balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
-      currentValue += (data.currentValue) ? data.currentValue : 0;
-      dividendPayout += (data.dividendPayout) ? data.dividendPayout : 0;
-      dividendReinvest += (data.dividendReinvest) ? data.dividendReinvest : 0;
-      totalAmount += (data.totalAmount) ? data.totalAmount : 0;
-      totalGain += (data.unrealizedGain) ? data.unrealizedGain : 0;
-      absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
-      xirr += (data.xirr || data.xirr == 0) ? data.xirr : 0;
-      allocationPer += (data.allocatedPercentage == 'NaN') ? 0 : (data.allocatedPercentage) ? data.allocatedPercentage : 0;
-      if (data.currentValue == 0) {
-        withdrawals += (data.redemption) ? data.redemption : 0;
-      } else {
-        withdrawals += (data.withdrawalsTillToday) ? data.withdrawalsTillToday : 0;
+      if ((folio == '2') ? (data.balanceUnit > 0 && data.balanceUnit != 0) : (data.balanceUnit < 0 || data.balanceUnit == 0 || data.balanceUnit > 0)) {
+        totalTransactionAmt += (data.amountInvested) ? data.amountInvested : 0;
+        totalUnit += (data.unit) ? data.unit : 0;
+        totalNav += (data.transactionNav) ? data.transactionNav : 0;
+        balanceUnit += (data.balanceUnit) ? data.balanceUnit : 0;
+        currentValue += (data.currentValue) ? data.currentValue : 0;
+        dividendPayout += (data.dividendPayout) ? data.dividendPayout : 0;
+        dividendReinvest += (data.dividendReinvest) ? data.dividendReinvest : 0;
+        totalAmount += (data.totalAmount) ? data.totalAmount : 0;
+        totalGain += (data.unrealizedGain) ? data.unrealizedGain : 0;
+        absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
+        xirr += (data.xirr || data.xirr == 0) ? data.xirr : 0;
+        allocationPer += (data.allocatedPercentage == 'NaN') ? 0 : (data.allocatedPercentage) ? data.allocatedPercentage : 0;
+        if (data.currentValue == 0) {
+          withdrawals += (data.redemption) ? data.redemption : 0;
+        } else {
+          withdrawals += (data.withdrawalsTillToday) ? data.withdrawalsTillToday : 0;
+        }
+        sip += (data.sipAmount) ? data.sipAmount : 0;
+        netGain += (data.gainOrLossAmount) ? data.gainOrLossAmount : 0;
+        marketValue += (data.marketValue) ? data.marketValue : 0;
+        netInvestment += (data.netInvestment) ? data.netInvestment : 0;
+        redemption += (data.redemption) ? data.redemption : 0;
+        switchIn += (data.switchIn) ? data.switchIn : 0;
       }
-      sip += (data.sipAmount) ? data.sipAmount : 0;
-      netGain += (data.gainOrLossAmount) ? data.gainOrLossAmount : 0;
-      marketValue += (data.marketValue) ? data.marketValue : 0;
-      netInvestment += (data.netInvestment) ? data.netInvestment : 0;
-      redemption += (data.redemption) ? data.redemption : 0;
-      switchIn += (data.switchIn) ? data.switchIn : 0;
+
     }
 
     const obj = {

@@ -4,23 +4,23 @@
 
 // importScripts('tempservice.service.ts');                 /* imports just "foo.js" */
 
-import {TempserviceService} from '../../tempservice.service';
+import { TempserviceService } from '../../tempservice.service';
 // import {UtilService} from '../../../../../../../../../../services/util.service';
 
-addEventListener('message', ({data}) => {
+addEventListener('message', ({ data }) => {
   const response = `worker response to ${data}`;
   // console.log(`addEventListener got message: ${data}`);
   const mfService = new TempserviceService();
 
   const mutualFundList = data.mutualFundList;
   const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type, data.mutualFund, data.showFolio);
-  const totalValue = mfService.getFinalTotalValue(mutualFundList);
+  const totalValue = mfService.getFinalTotalValue(mutualFundList, data.showFolio);
   const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type, data.mutualFund, data.transactionType, data.viewMode, data.showFolio);
   const customDataHolder = [];
   totalValue.grandTotal = mfService.mutualFundRoundAndFormat(totalValue.grandTotal, 2);
-  
+
   customDataSourceData.forEach(element => {
-    customDataHolder.push({...element});
+    customDataHolder.push({ ...element });
     element.ownerName = mfService.convertInTitleCase(element.ownerName);
     if (element.currentAmount && element.amount && !element.gain) {
       element.gain = element.currentAmount - element.amount;
@@ -28,7 +28,7 @@ addEventListener('message', ({data}) => {
 
     } else {
     }
-    element.purchasePrice= mfService.mutualFundRoundAndFormat(element.purchasePrice, 4)
+    element.purchasePrice = mfService.mutualFundRoundAndFormat(element.purchasePrice, 4)
     if (element.totalCurrentValue && element.totalTransactionAmt && !element.totalGain) {
       element.totalGain = (element.totalCurrentValue - element.totalTransactionAmt) - (element.dividendPayout ? element.dividendPayout : 0);
       element.totalGain = mfService.mutualFundRoundAndFormat(element.totalGain, 2);
@@ -59,11 +59,11 @@ addEventListener('message', ({data}) => {
     element.trnAbsoluteReturn = mfService.mutualFundRoundAndFormat(element.trnAbsoluteReturn, 2);
     element.cagr = mfService.mutualFundRoundAndFormat(element.cagr, 2);
     element.totalCagr = mfService.mutualFundRoundAndFormat(element.totalCagr, 2);
-    element.transactionDate =  element.transactionDate ? new Date(element.transactionDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : ''; 
-    
+    element.transactionDate = element.transactionDate ? new Date(element.transactionDate).toISOString().replace(/T.*/, '').split('-').reverse().join('-') : '';
+
   });
 
-  const output = {dataSourceData, customDataSourceData, totalValue, customDataHolder};
+  const output = { dataSourceData, customDataSourceData, totalValue, customDataHolder };
 
 
   // console.log('Mutual fund script output: ', output);

@@ -1159,5 +1159,8 @@ export class CustomerService {
     return this.http.getHttpClient(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA + `?folioNumber=${data.folioNumber}&schemeCode=${data.schemeCode}`);
   }
 
+  deleteCasFile(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CAS_FILE, data);
+  }
 }
 

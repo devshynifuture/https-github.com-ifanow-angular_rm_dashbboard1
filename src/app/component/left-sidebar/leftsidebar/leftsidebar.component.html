@@ -333,10 +333,9 @@
         <!-- <a class="sidenav-link" mat-list-item>
           <img class="t-10" src="assets/images/svg/bell.svg">
         </a> -->
-
         <a class="sidenav-link" mat-list-item
-          *ngIf="roleObj.advisorOrClientRole == 1 && !enumDataService.PRODUCTION && (showIosAD == false && showMobileAD == false) || (showDomainAD ==true)">
-          <img class="  c-p" src="assets/images/svg/bell.svg" [matMenuTriggerFor]="popupMenu">
+          *ngIf="roleObj.advisorOrClientRole == 1 && (showIosAD == false && showMobileAD == false) || (showDomainAD ==true)">
+          <img class="t-10 c-p" src="assets/images/svg/bell.svg" [matMenuTriggerFor]="popupMenu">
 
           <mat-menu #popupMenu="matMenu" class="minwidth-300">
             <button *ngIf="showIosAD == false && showMobileAD == false" (click)="openMobilePopup()" mat-menu-item>

@@ -844,13 +844,13 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     let count = 0;
     let emailList = [];
 
-    if (this.emailData.length == 1) {
+    if (this.emailData && this.emailData.length == 1) {
       this.emailData.controls[0].get('markAsPrimary').setValue(true);
     }
     if (!this.basicDetailsData.emailList) {
       this.tempBasicData.emailList = [];
     }
-    if (this.basicDetailsData.emailList.length == 0) {
+    if (this.emailData && this.basicDetailsData.emailList.length == 0) {
       this.emailData.controls.forEach(element => {
         if (element.get('markAsPrimary').value) {
           count++;
@@ -863,7 +863,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     }
 
 
-    if (this.emailData.valid && this.basicDetailsData.emailList.length > 0) {
+    if (this.emailData && this.emailData.valid && this.basicDetailsData.emailList.length > 0) {
       this.emailEditedData = UtilService.checkEmailListUpdation(this.tempBasicData.emailList, this.emailData)
       emailList = this.emailEditedData;
       if (this.deletedEmailData.length > 0) {
@@ -879,7 +879,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     emailList = emailList.sort(function (a, b) {
       return b.defaultFlag - a.defaultFlag;
     });
-    if (count == 0) {
+    if (this.basicDetailsData.familyMemberType != 2 && count == 0) {
       this.eventService.openSnackBar('Please mark one email as a primary', 'Dimiss');
       return;
     }

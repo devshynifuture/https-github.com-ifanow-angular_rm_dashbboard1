@@ -8,6 +8,8 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
 
 @Component({
   selector: 'app-stp-transaction',
@@ -21,9 +23,14 @@ export class StpTransactionComponent implements OnInit {
   schemeName: any;
   folioNumber: any;
   mfDefault: any;
+  element: any;
+  platformType: any;
 
-  constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-    public processTransaction: ProcessTransactionService, private eventService: EventService,
+  constructor(private subInjectService: SubscriptionInject,
+    private onlineTransact: OnlineTransactionService,
+    public processTransaction: ProcessTransactionService,
+    private eventService: EventService,
+    public dialog: MatDialog,
     private fb: FormBuilder) {
   }
 
@@ -47,7 +54,6 @@ export class StpTransactionComponent implements OnInit {
     // }
   };
   confirmTrasaction: boolean;
-  dataSource: any;
   ownerData: any;
   stpTransaction: any;
   inputData: any;
@@ -56,7 +62,7 @@ export class StpTransactionComponent implements OnInit {
   transactionType: any;
   maiSchemeList: any;
   schemeDetails: any;
-  transactionSummary: {};
+  transactionSummary: any;
   showUnits = false;
   reInvestmentOpt = [];
   schemeList: any;
@@ -82,6 +88,7 @@ export class StpTransactionComponent implements OnInit {
   currentValue: number;
   multiTransact = false;
   childTransactions = [];
+  dataSource = new MatTableDataSource(this.childTransactions);
   displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
@@ -97,7 +104,8 @@ export class StpTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-    this.getDataSummary = this.inputData.transactionData
+    this.getDataSummary = this.inputData.transactionData;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (data.mutualFundData) {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
@@ -336,6 +344,7 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = true;
     this.folioList = [];
     this.schemeDetails = null;
+    this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -558,93 +567,124 @@ export class StpTransactionComponent implements OnInit {
   }
 
   stp() {
-
-    if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
-      this.stpTransaction.get('reinvest').markAsTouched();
-    } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
-      this.stpTransaction.get('investmentAccountSelection').markAsTouched();
-      return;
-    } else if (this.stpTransaction.get('employeeContry').invalid) {
-      this.stpTransaction.get('employeeContry').markAsTouched();
-      return;
-    } else if (this.stpTransaction.get('frequency').invalid) {
-      this.stpTransaction.get('frequency').markAsTouched();
-      return;
-    } else if (this.stpTransaction.get('date').invalid) {
-      this.stpTransaction.get('date').markAsTouched();
-      return;
-    } else if (this.stpTransaction.get('tenure').invalid) {
-      this.stpTransaction.get('tenure').markAsTouched();
-      return;
-    } else if (this.stpTransaction.get('tenure').value != '3' && this.stpTransaction.get('installment').invalid) {
-      this.stpTransaction.get('installment').markAsTouched();
-      return;
-    } else {
-      if (this.barButtonOptions.active) {
-        return;
-      }
-      this.barButtonOptions.active = true;
-      const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))));
-      const tenure = this.stpTransaction.controls.tenure.value;
-      const noOfInstallments = this.stpTransaction.controls.installment.value;
-      let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
-
-      obj = {
-        ...obj,
-        productDbId: this.schemeDetails.id,
-        clientName: this.selectedFamilyMember,
-        holdingType: this.getDataSummary.defaultClient.holdingType,
-        toProductDbId: this.schemeDetailsTransfer.id,
-        mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-        toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
-        productCode: this.schemeDetails.schemeCode,
-        isin: this.schemeDetails.isin,
-        folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-        tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-        tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-        familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-        adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-        clientId: this.getDataSummary.defaultClient.clientId,
-        toIsin: this.schemeDetailsTransfer.isin,
-        schemeCd: this.schemeDetails.schemeCode,
-        euin: this.getDataSummary.euin.euin,
-        orderType: 'STP',
-        buySell: 'PURCHASE',
-        transCode: 'NEW',
-        buySellType: 'FRESH',
-        dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
-        amountType: 'Amount',
-        clientCode: this.getDataSummary.defaultClient.clientCode,
-        orderVal: this.stpTransaction.controls.employeeContry.value,
-        bseDPTransType: 'PHYSICAL',
-        aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-        mandateId: null,
-        bankDetailId: null,
-        nsePaymentMode: null,
-        isException: true,
-        childTransactions: [],
-        tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-
-      };
-      if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-        // obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
-        obj.bankDetailId = this.bankDetails.id;
-        obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
-      }
-      if (this.multiTransact == true) {
-        this.AddMultiTransaction();
-        obj.childTransactions = this.childTransactions;
-      }
-      this.onlineTransact.transactionBSE(obj).subscribe(
-        data => {
-          this.stpBSERes(data);
-          this.isSuccessfulTransaction = true;
-        }, (error) => {
-          this.barButtonOptions.active = false;
-          this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+    if (this.multiTransact == true) {
+      const dialogRef = this.dialog.open(MultiTransactionPopupComponent, {
+        width: '750px',
+        data: { childTransactions: this.childTransactions, dataSource: this.dataSource.data }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return;
         }
-      );
+        this.element = result;
+        if (this.element == true) {
+          let obj
+          obj = this.childTransactions[this.childTransactions.length - 1]
+          obj.childTransactions = []
+          const myArray = this.childTransactions
+          const list = [];
+          myArray.forEach(val => list.push(Object.assign({}, val)));
+          this.childTransactions.forEach(singleTranJson => {
+            this.removeUnnecessaryDataFromJson(singleTranJson);
+          })
+          obj.childTransactions = list
+          this.onlineTransact.transactionBSE(obj).subscribe(
+            data => {
+              this.stpBSERes(data);
+              this.isSuccessfulTransaction = true;
+            }, (error) => {
+              this.barButtonOptions.active = false;
+              this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+            }
+          );
+        }
+      });
     }
+    else {
+      if (this.reInvestmentOpt.length > 1 && this.stpTransaction.get('reinvest').invalid) {
+        this.stpTransaction.get('reinvest').markAsTouched();
+      } else if (this.stpTransaction.get('investmentAccountSelection').invalid) {
+        this.stpTransaction.get('investmentAccountSelection').markAsTouched();
+        return;
+      } else if (this.stpTransaction.get('employeeContry').invalid) {
+        this.stpTransaction.get('employeeContry').markAsTouched();
+        return;
+      } else if (this.stpTransaction.get('frequency').invalid) {
+        this.stpTransaction.get('frequency').markAsTouched();
+        return;
+      } else if (this.stpTransaction.get('date').invalid) {
+        this.stpTransaction.get('date').markAsTouched();
+        return;
+      } else if (this.stpTransaction.get('tenure').invalid) {
+        this.stpTransaction.get('tenure').markAsTouched();
+        return;
+      } else if (this.stpTransaction.get('tenure').value != '3' && this.stpTransaction.get('installment').invalid) {
+        this.stpTransaction.get('installment').markAsTouched();
+        return;
+      } else {
+        if (this.barButtonOptions.active) {
+          return;
+        }
+        this.barButtonOptions.active = true;
+        const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))));
+        const tenure = this.stpTransaction.controls.tenure.value;
+        const noOfInstallments = this.stpTransaction.controls.installment.value;
+        let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
+
+        obj = {
+          ...obj,
+          productDbId: this.schemeDetails.id,
+          clientName: this.selectedFamilyMember,
+          holdingType: this.getDataSummary.defaultClient.holdingType,
+          toProductDbId: this.schemeDetailsTransfer.id,
+          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+          toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
+          productCode: this.schemeDetails.schemeCode,
+          isin: this.schemeDetails.isin,
+          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+          tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+          tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+          familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+          adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+          clientId: this.getDataSummary.defaultClient.clientId,
+          toIsin: this.schemeDetailsTransfer.isin,
+          schemeCd: this.schemeDetails.schemeCode,
+          euin: this.getDataSummary.euin.euin,
+          orderType: 'STP',
+          buySell: 'PURCHASE',
+          transCode: 'NEW',
+          buySellType: 'FRESH',
+          dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
+          amountType: 'Amount',
+          clientCode: this.getDataSummary.defaultClient.clientCode,
+          orderVal: this.stpTransaction.controls.employeeContry.value,
+          bseDPTransType: 'PHYSICAL',
+          aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+          mandateId: null,
+          bankDetailId: null,
+          nsePaymentMode: null,
+          isException: true,
+          childTransactions: [],
+          tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+
+        };
+        if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+          // obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
+          obj.bankDetailId = this.bankDetails.id;
+          obj.nsePaymentMode = (this.stpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
+        }
+        this.onlineTransact.transactionBSE(obj).subscribe(
+          data => {
+            this.stpBSERes(data);
+            this.isSuccessfulTransaction = true;
+          }, (error) => {
+            this.barButtonOptions.active = false;
+            this.eventService.openSnackBar(error, 'Dismiss', null, 60000);
+          }
+        );
+      }
+    }
+
   }
 
   stpBSERes(data) {
@@ -684,9 +724,6 @@ export class StpTransactionComponent implements OnInit {
     } else if (this.stpTransaction.get('tenure').invalid) {
       this.stpTransaction.get('tenure').markAsTouched();
       return;
-    } else if (this.stpTransaction.get('installment').invalid) {
-      this.stpTransaction.get('installment').markAsTouched();
-      return;
     } else {
       this.multiTransact = true;
       if (this.scheme != undefined && this.schemeDetails != undefined && this.stpTransaction != undefined) {
@@ -708,6 +745,7 @@ export class StpTransactionComponent implements OnInit {
         const installment = this.stpTransaction.controls.installment.value;
         obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
         this.childTransactions.push(obj);
+        this.dataSource.data = this.childTransactions;
         this.schemeList = [];
         this.stpTransaction.controls.frequency.reset();
         this.stpTransaction.controls.date.reset();
@@ -717,5 +755,15 @@ export class StpTransactionComponent implements OnInit {
         this.stpTransaction.controls.schemeStp.reset();
       }
     }
+  }
+  removeUnnecessaryDataFromJson(singleTransactionJson) {
+    singleTransactionJson.childTransactions = null
+    singleTransactionJson.schemeSelection = null;
+    singleTransactionJson.folioSelection = null;
+    singleTransactionJson.modeOfPaymentSelection = null;
+    singleTransactionJson.scheme = null;
+    singleTransactionJson.schemeDetails = null;
+    singleTransactionJson.reInvestmentOpt = null;
+    singleTransactionJson.folioDetails = null;
   }
 }

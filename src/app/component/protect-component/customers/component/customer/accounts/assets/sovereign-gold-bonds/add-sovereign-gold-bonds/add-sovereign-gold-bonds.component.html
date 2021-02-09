@@ -68,7 +68,7 @@
         <mat-form-field>
           <mat-select matInput formControlName="bond" (selectionChange)="getSelectedBondPrice($event.value)"
             class="form-control br-0">
-            <mat-option value='' disabled>Select family members</mat-option>
+            <mat-option value='' disabled>Select bond name & series</mat-option>
             <mat-option *ngFor="let b of bondSeriesList" [value]="b.seriesName">
               <span>{{b.seriesName}}</span>
             </mat-option>

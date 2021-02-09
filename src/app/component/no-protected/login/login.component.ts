@@ -1,16 +1,17 @@
-import {HttpParams, HttpHeaders} from '@angular/common/http';
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {LoginService} from './login.service';
-import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
-import {interval} from 'rxjs';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { LoginService } from './login.service';
+import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { interval } from 'rxjs';
+import { OrgSettingServiceService } from '../../protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-login',
@@ -109,7 +110,8 @@ export class LoginComponent implements OnInit {
     public backOfficeService: BackOfficeService,
     public router: Router,
     private authService: AuthService, private eleRef: ElementRef, private loginService: LoginService,
-    private peopleService: PeopleService) {
+    private peopleService: PeopleService,
+    private orgSetting: OrgSettingServiceService) {
   }
 
   ngOnInit() {
@@ -131,7 +133,7 @@ export class LoginComponent implements OnInit {
   }
 
   getLogoUrl() {
-    this.peopleService.getClientLogo({hostName: window.location.hostname})
+    this.peopleService.getClientLogo({ hostName: window.location.hostname })
       .subscribe(res => {
         if (res) {
           localStorage.removeItem('token');
@@ -183,14 +185,14 @@ export class LoginComponent implements OnInit {
           } else {
             this.getOtpBtnOption.active = false;
             // this.eventService.openSnackBar('error found', 'Dismiss');
-            this.userName.setErrors({incorrect: true});
+            this.userName.setErrors({ incorrect: true });
           }
         },
         err => {
           this.getOtpBtnOption.active = false;
           // this.eventService.openSnackBar(err, 'Dismiss')
           if (err == 'Username not found.') {
-            this.userName.setErrors({incorrect: true});
+            this.userName.setErrors({ incorrect: true });
           } else {
             this.eventService.openSnackBar(err, 'Dismiss');
           }
@@ -262,7 +264,7 @@ export class LoginComponent implements OnInit {
       this.loginUsingCredential(obj);
     } else {
       this.verifyFlag = 'Email';
-      const obj = {email: data.email};
+      const obj = { email: data.email };
       this.loginUsingCredential(obj);
     }
   }
@@ -300,9 +302,22 @@ export class LoginComponent implements OnInit {
           userType: this.userData.userType
         };
         this.saveAfterVerifyCredential(obj);
+        if (document.location.hostname !== "beta.my-planner.in" && document.location.hostname !== "localhost" && document.location.hostname !== "dev.ifanow.in") {
+          const obj = {
+            "completeWhiteLabel": document.location.hostname,
+            "advisorId": this.userData.advisorId
+          }
+          this.orgSetting.checkWhiteLabelAndUpdate(obj).subscribe(
+            res => {
+              this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+              this.loginService.handleUserData(this.authService, this.router, this.userData);
+            }
+          )
+        } else {
+          this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+          this.loginService.handleUserData(this.authService, this.router, this.userData);
+        }
 
-        this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
-        this.loginService.handleUserData(this.authService, this.router, this.userData);
       } else if (this.verifyFlag == 'Mobile' && this.otpData.length == 4 && this.otpResponse == otpString) {
         // const obj = {
         //   mobileNo: this.userData.mobileNo,
@@ -328,8 +343,21 @@ export class LoginComponent implements OnInit {
         //     this.barButtonOptions.active = false;
         //   }
         // );
-        this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
-        this.loginService.handleUserData(this.authService, this.router, this.userData);
+        if (document.location.hostname !== "beta.my-planner.in" && document.location.hostname !== "localhost" && document.location.hostname !== "dev.ifanow.in") {
+          const obj = {
+            "completeWhiteLabel": document.location.hostname,
+            "advisorId": this.userData.advisorId
+          }
+          this.orgSetting.checkWhiteLabelAndUpdate(obj).subscribe(
+            res => {
+              this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+              this.loginService.handleUserData(this.authService, this.router, this.userData);
+            }
+          )
+        } else {
+          this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
+          this.loginService.handleUserData(this.authService, this.router, this.userData);
+        }
       } else {
         (this.resendOtpFlag) ? this.eventService.openSnackBar('OTP has expired', 'Dismiss') : this.eventService.openSnackBar('OTP is incorrect', 'Dismiss');
         this.barButtonOptions.active = false;
@@ -403,9 +431,21 @@ export class LoginComponent implements OnInit {
           if (data.forceResetPassword) {
             data.buttonFlag = 'reset';
             this.router.navigate(['/login/setpassword'],
-              {state: {userData: data}});
+              { state: { userData: data } });
           } else {
-            this.loginService.handleUserData(this.authService, this.router, data);
+            if (document.location.hostname !== "beta.my-planner.in" && document.location.hostname !== "localhost" && document.location.hostname !== "dev.ifanow.in") {
+              const obj = {
+                "completeWhiteLabel": document.location.hostname,
+                "advisorId": data.advisorId
+              }
+              this.orgSetting.checkWhiteLabelAndUpdate(obj).subscribe(
+                res => {
+                  this.loginService.handleUserData(this.authService, this.router, data);
+                }
+              )
+            } else {
+              this.loginService.handleUserData(this.authService, this.router, data);
+            }
           }
           // this.authService.setToken(data.token);
         } else {
