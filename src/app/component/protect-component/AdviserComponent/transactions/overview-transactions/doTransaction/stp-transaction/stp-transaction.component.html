@@ -239,7 +239,7 @@
             <mat-form-field>
               <mat-select class="form-control" formControlName="tenure">
                 <mat-option disabled value=''>Select tenure</mat-option>
-                <mat-option value="1">No. of instalments</mat-option>
+                <mat-option value="1">No. of installments</mat-option>
                 <mat-option value="2">No. of years</mat-option>
                 <mat-option *ngIf="getDataSummary && getDataSummary.defaultClient.aggregatorType == 1" value="3">
                   Continue until cancelled
