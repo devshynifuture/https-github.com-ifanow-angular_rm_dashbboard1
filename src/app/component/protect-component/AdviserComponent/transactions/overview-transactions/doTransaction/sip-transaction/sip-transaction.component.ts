@@ -767,7 +767,7 @@ export class SipTransactionComponent implements OnInit {
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,
-        orderType: 'ORDER',
+        orderType: 'SIP',
         userAccountType: this.mfDefault.defaultCredential.accountType,
       };
       this.onlineTransact.getSchemeDetails(obj1).subscribe(
