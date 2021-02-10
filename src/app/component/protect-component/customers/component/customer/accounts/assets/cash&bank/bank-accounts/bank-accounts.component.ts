@@ -350,7 +350,12 @@ export class BankAccountsComponent implements OnInit {
       this.inputs.find(input => !input.ngControl.valid).focus();
       this.bankAccounts.markAllAsTouched();
 
-    } else {
+    }
+    if (this.bankAccounts.controls.accountType.value == 0) {
+      this.eventService.openSnackBar("Please check & save bank details properly", "Dimiss");
+      return;
+    }
+    else {
       this.barButtonOptions.active = true;
       this.nominees = []
       if (this.nomineesList) {

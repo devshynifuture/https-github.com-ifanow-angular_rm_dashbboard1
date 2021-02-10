@@ -30,6 +30,7 @@ export class SwpTransactionComponent implements OnInit {
   mfDefault: any;
   element: any;
   platformType: any;
+  minInstallmentNumber: any;
 
   get data() {
     return this.inputData;
@@ -385,6 +386,8 @@ export class SwpTransactionComponent implements OnInit {
     } else {
       this.dateArray(getFrerq.sipDates);
     }
+    this.minInstallmentNumber = getFrerq.minInstallmentNumber
+    this.swpTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
   }
 
   dateArray(sipDates) {

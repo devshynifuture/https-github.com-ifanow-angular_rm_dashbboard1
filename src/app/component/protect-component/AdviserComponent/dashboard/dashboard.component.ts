@@ -159,6 +159,7 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 
 export class DashboardComponent implements OnInit {
   hours: number;
+  mfData: any;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -1888,7 +1889,8 @@ export class DashboardComponent implements OnInit {
   getKeyMetricsRes(data) {
     this.isKeyMatrix = false;
     data.mfAum = UtilService.getNumberToWord(data.mfAum);
-    data.sipBook = UtilService.getNumberToWord(data.sipBook)
+    data.sipBook = UtilService.getNumberToWord(data.sipBook);
+    delete data['mfAum'];
     this.keyMetricJson = data;
     // this.keyMetricJson.mfAum = '';
     this.loaderFun();
@@ -1926,13 +1928,15 @@ export class DashboardComponent implements OnInit {
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: -1,
-      parentId: this.parentId
+      parentId: this.parentId,
+      // rtId: [1, 2, 3, 4, 5]
     };
     this.backoffice.getMisData(obj).subscribe(
       data => {
         this.mfDataflag = false;
         if (data) {
           DashboardService.dashMisData = data;
+          this.mfData = data;
           this.getMisDataRes(data);
         }
         else {
