@@ -97,8 +97,9 @@
                             {{singleEmailId.emailAddress}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                        <input readonly [matChipInputFor]="chipListEmail"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true"
+                            (matChipInputTokenEnd)="add($event)" [autofocus]="true">
                     </mat-chip-list>
                 </mat-form-field>
             </div>
@@ -123,14 +124,16 @@
             </div>
         </div>
     </div>
-    <div class="pl-28 pb-12">
-        <div class="row pt-24">
-            <div class="col-md-12 pl-0">
-                <div class="form-group mb-0 mt-8">
-                    <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
+    <div class="pe-none">
+        <div class="pl-28 pb-12">
+            <div class="row pt-24">
+                <div class="col-md-12 pl-0">
+                    <div class="form-group mb-0 mt-8">
+                        <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
+                    </div>
+                    <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t"
+                        [innerHTML]="emailBody" style="min-height: 550px;"></div>
                 </div>
-                <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody"
-                    style="min-height: 550px;"></div>
             </div>
         </div>
     </div>
