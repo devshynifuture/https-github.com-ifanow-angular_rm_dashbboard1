@@ -63,6 +63,8 @@ export class ClientWiseComponent implements OnInit {
   scheme1List: any;
   scheme2List: any;
   @Output() changedValue = new EventEmitter();
+  @Input() filterObj;
+  @Output() aumFilter = new EventEmitter();
   selectedScheme: any;
   isLoadingInvestor: boolean;
   investorListArr: any[];
@@ -82,13 +84,30 @@ export class ClientWiseComponent implements OnInit {
   selectedClientName: any;
   selectedInvestorName: any;
   selectedSchemeName: any;
+  aumId: any;
+  viewModeID: any;
 
   constructor(
     public aum: AumComponent,
     private backoffice: BackOfficeService,
     private mfService: MfServiceService,
     public roleService: RoleService
-  ) { }
+  ) {
+
+    this.backoffice.misAumData.subscribe(
+      data => {
+        if (data.value == 'client') {
+          if (data.aumId != 0) {
+            this.aumId = data.aumId,
+              this.viewModeID = data.viewModeID;
+          } else {
+            this.viewModeID = 'All';
+            this.aumId = 0;
+          }
+        }
+      }
+    )
+  }
 
   showLoader = true;
   clientList;
@@ -120,7 +139,22 @@ export class ClientWiseComponent implements OnInit {
       this.viewMode = "All";
       this.arnRiaValue = -1;
     }
+    // if (this.filterObj) {
+    //   this.aumId = this.filterObj.aumId,
+    //     this.viewModeID = this.filterObj.viewModeID;
+    // } else {
+    //   this.viewModeID = 'All';
+    //   this.aumId = 0;
+    // }
     this.getArnRiaList();
+    this.getClientTotalAum();
+  }
+
+
+
+  filterIDWise(id, flagValue) {
+    this.aumId = id;
+    this.viewModeID = flagValue;
     this.getClientTotalAum();
   }
 
@@ -270,6 +304,9 @@ export class ClientWiseComponent implements OnInit {
       arnRiaDetailsId: this.data ? this.data.arnRiaDetailId : -1,
       parentId: this.data ? this.data.parentId : -1,
     };
+    if (this.aum && this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.getAumClientTotalAum(obj).subscribe(
       (data) => this.clientTotalAum(data),
       (err) => {
@@ -296,6 +333,9 @@ export class ClientWiseComponent implements OnInit {
         clientId: clientData.id,
         totalAum: clientData.totalAum,
       };
+      if (this.aum && this.aumId != 0) {
+        obj['rtId'] = this.aumId;
+      }
       this.backoffice.getAumFamilyMember(obj).subscribe(
         (data) => {
           this.isLoadingInvestor = false;
@@ -645,6 +685,9 @@ export class ClientWiseComponent implements OnInit {
         totalAum: investorData.totalAum,
         clientId: investorData.clientId,
       };
+      if (this.aum && this.aumId != 0) {
+        obj['rtId'] = this.aumId;
+      }
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         (data) => {
           this.isLoadingScheme = false;
@@ -726,6 +769,9 @@ export class ClientWiseComponent implements OnInit {
         schemeId: schemeData.mutualFundSchemeMasterId,
         clientId: schemeData.clientId,
       };
+      if (this.aum && this.aumId != 0) {
+        obj['rtId'] = this.aumId;
+      }
       this.backoffice.getAumFamilyMemberSchemeFolio(obj).subscribe(
         (data) => {
           this.isLoadingFolio = false;
@@ -765,6 +811,10 @@ export class ClientWiseComponent implements OnInit {
       arnRiaValue: this.arnRiaValue,
       viewMode: this.viewMode,
     });
+    this.aumFilter.emit({
+      aumId: this.aumId,
+      viewModeID: this.viewModeID
+    })
     this.clientList.forEach((element) => {
       element.show = true;
     });

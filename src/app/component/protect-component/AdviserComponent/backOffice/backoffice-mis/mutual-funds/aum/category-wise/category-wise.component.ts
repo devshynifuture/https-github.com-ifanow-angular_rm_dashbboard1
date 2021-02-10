@@ -23,6 +23,7 @@ export class CategoryWiseComponent implements OnInit {
   totalAumForSubSchemeName: any;
   amcWiseData: any;
   @Input() data;
+  @Input() filterObj;
   isSubCatLoading = false;
 
   arrayOfHeaders: any[][] = [
@@ -81,6 +82,8 @@ export class CategoryWiseComponent implements OnInit {
   ];
   arrayOfExcelData: any[] = [];
   @Output() changedValue = new EventEmitter();
+  @Output() aumFilter = new EventEmitter();
+
   selectedSubCategory: any;
   selectedClientIndex: any;
   totalCurrentValue = 0;
@@ -106,6 +109,8 @@ export class CategoryWiseComponent implements OnInit {
   selectedSubCategoryName: any;
   selectedCategoryName: any;
   isSchemeLoading: boolean;
+  viewModeID: any;
+  aumId: any;
   // categoryTotal: number = 0;
   // subCategoryTotal: number = 0;
   // applicantTotal: number = 0;
@@ -116,7 +121,21 @@ export class CategoryWiseComponent implements OnInit {
     public aum: AumComponent,
     private mfService: MfServiceService,
     public roleService: RoleService
-  ) { }
+  ) {
+    this.backoffice.misAumData.subscribe(
+      data => {
+        if (data.value == 'category') {
+          if (data.aumId != 0) {
+            this.aumId = data.aumId,
+              this.viewModeID = data.viewModeID;
+          } else {
+            this.viewModeID = 'All';
+            this.aumId = 0;
+          }
+        }
+      }
+    )
+  }
 
   selectedCategory;
 
@@ -232,10 +251,19 @@ export class CategoryWiseComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     };
+    if (this.aumId && this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.getTotalByAumScheme(obj).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
       err => this.getFilerrorResponse(err)
     );
+  }
+
+  filterIDWise(id, flagValue) {
+    this.aumId = id;
+    this.viewModeID = flagValue;
+    this.getSubCatSchemeName();
   }
 
   // clientFolioWise() {
@@ -262,6 +290,9 @@ export class CategoryWiseComponent implements OnInit {
       arnRiaDetailId: this.arnRiaValue,
       categoryId: category.id,
       parentId: this.parentId
+    }
+    if (this.aumId && this.aumId != 0) {
+      data['rtId'] = this.aumId;
     }
     category.subCategoryList = [{}, {}, {}];
     this.backoffice.getSubCategoryListMisAUM(data)
@@ -376,6 +407,9 @@ export class CategoryWiseComponent implements OnInit {
       subCategoryId: subCategory.id,
       totalAum: subCategory.totalAum,
     }
+    if (this.aumId && this.aumId != 0) {
+      data['rtId'] = this.aumId;
+    }
     this.isSchemeLoading = true;
     this.backoffice.getSchemeListMisAUM(data)
       .subscribe(res => {
@@ -474,6 +508,10 @@ export class CategoryWiseComponent implements OnInit {
       arnRiaValue: this.arnRiaValue,
       viewMode: this.viewMode
     });
+    this.aumFilter.emit({
+      aumId: this.aumId,
+      viewModeID: this.viewModeID
+    })
     this.category.forEach(element => {
       element.showCategory = true;
     });
