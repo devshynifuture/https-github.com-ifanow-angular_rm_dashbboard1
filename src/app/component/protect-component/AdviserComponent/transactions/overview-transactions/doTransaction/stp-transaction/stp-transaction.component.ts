@@ -460,7 +460,7 @@ export class StpTransactionComponent implements OnInit {
         this.dateArray(getFrerq.stpDates);
       }
     } else {
-      this.dateArray(getFrerq.sipDates);
+      this.dateArray(getFrerq.stpDates);
     }
     if (this.transactionSummary.defaultClient.aggregatorType == 2) {
       this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.minSTPInInstallmentAmount
