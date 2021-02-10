@@ -240,6 +240,9 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
@@ -545,7 +548,7 @@ export class SwpTransactionComponent implements OnInit {
 
         obj = {
           ...obj,
-          productDbId: this.schemeDetails.id,
+          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
           clientName: this.selectedFamilyMember,
           holdingType: this.getDataSummary.defaultClient.holdingType,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,

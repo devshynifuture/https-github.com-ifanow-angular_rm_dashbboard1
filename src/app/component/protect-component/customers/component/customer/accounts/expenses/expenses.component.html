@@ -109,6 +109,7 @@
                                                     <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }}
                                                     </div>
                                                 </td>
+                                                <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                             </ng-container>
                                             <ng-container matColumnDef="expense">
                                                 <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef
@@ -117,6 +118,9 @@
                                                     <div [ngClass]="{'bar': isLoading}">
                                                         {{isLoading ? '' : element.expenseType}}
                                                     </div>
+                                                </td>
+                                                <td *matFooterCellDef class="br pr-8 text-right f-600" mat-footer-cell>
+                                                    <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="date">
@@ -127,6 +131,7 @@
                                                         {{isLoading ? '' : (element.continueTill ? (element.startsFrom | date:'dd/MM/yyyy') : (element.expenseDoneOn | date:'dd/MM/yyyy'))}}
                                                     </div>
                                                 </td>
+                                                <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                             </ng-container>
                                             <ng-container matColumnDef="desc">
                                                 <th mat-sort-header="description" mat-header-cell *matHeaderCellDef
@@ -136,6 +141,7 @@
                                                         {{isLoading ? '' : (element.description ? element.description : '-')}}
                                                     </div>
                                                 </td>
+                                                <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                             </ng-container>
                                             <ng-container matColumnDef="mode">
                                                 <th mat-sort-header="paymentModeId" mat-header-cell *matHeaderCellDef
@@ -146,6 +152,7 @@
                                                     </div>
                                                     <div [ngClass]="{'bar': isLoading}" *ngIf="isLoading">{{''}} </div>
                                                 </td>
+                                                <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                             </ng-container>
                                             <ng-container matColumnDef="amt">
                                                 <th mat-sort-header="amount" class="text-right br right-hcb hide-arrow "
@@ -154,6 +161,13 @@
                                                     <div [ngClass]="{'bar': isLoading}">
                                                         {{!isLoading && element.totalAmount? "₹" : ""}}<span
                                                             appFormatNumber>{{isLoading ? '' : element.totalAmount }}</span>
+                                                    </div>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef
+                                                    class="br f-600 p-8 amt text-right">
+                                                    <div>{{!isLoading && totalTransactionAmount!=0 ? '₹ ' : ''}}<span
+                                                            [value]="totalTransactionAmount ? totalTransactionAmount : '-'"
+                                                            appFormatNumber></span>
                                                     </div>
                                                 </td>
                                             </ng-container>
@@ -165,6 +179,7 @@
                                                         {{isLoading ? '' : element.status}}
                                                     </div>
                                                 </td>
+                                                <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                             </ng-container>
                                             <ng-container matColumnDef="icons">
                                                 <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
@@ -197,9 +212,12 @@
                                                         </mat-menu>
                                                     </div>
                                                 </td>
+                                                <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                            <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true"
+                                                [hidden]="isLoading"></tr>
                                         </table>
 
                                     </div>
@@ -220,6 +238,7 @@
                                                         </div>
 
                                                     </td>
+                                                    <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="expense">
                                                     <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef
@@ -229,6 +248,10 @@
                                                         <div [ngClass]="{'bar': isLoading}">
                                                             {{isLoading ? '' : (element.name ? element.name : '-')}}
                                                         </div>
+                                                    </td>
+                                                    <td *matFooterCellDef class="br pr-8 text-right f-600"
+                                                        mat-footer-cell>
+                                                        <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="date">
@@ -240,6 +263,7 @@
                                                             {{isLoading ? '' : (element.startsFrom ? (element.startsFrom | date:'dd/MM/yyyy') : '-')}}
                                                         </div>
                                                     </td>
+                                                    <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="desc">
                                                     <th mat-sort-header="desc" mat-header-cell *matHeaderCellDef
@@ -249,6 +273,7 @@
                                                             {{isLoading ? '' : (element.description ? element.description : '-')}}
                                                         </div>
                                                     </td>
+                                                    <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="mode">
                                                     <th mat-sort-header="paymentModeId" mat-header-cell
@@ -261,6 +286,7 @@
                                                             {{''}}
                                                         </div>
                                                     </td>
+                                                    <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="amt">
                                                     <th mat-sort-header="monthlyContribution" mat-header-cell
@@ -272,6 +298,13 @@
                                                             {{!isLoading && element.total? "₹" : ""}}<span
                                                                 appFormatNumber
                                                                 *ngIf="!isLoading">{{element.total ? element.total :'-'}}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td mat-footer-cell *matFooterCellDef
+                                                        class="br f-600 p-8 amt text-right">
+                                                        <div>{{!isLoading && totalRecurringAmount!=0 ? '₹ ' : ''}}<span
+                                                                [value]="totalRecurringAmount ? totalRecurringAmount : '-'"
+                                                                appFormatNumber></span>
                                                         </div>
                                                     </td>
                                                 </ng-container>
@@ -299,10 +332,13 @@
                                                             </mat-menu>
                                                         </div>
                                                     </td>
+                                                    <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                                 </ng-container>
                                                 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true">
                                                 </tr>
                                                 <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                                                <tr mat-footer-row *matFooterRowDef="displayedColumns1;sticky: true"
+                                                    [hidden]="isLoading"></tr>
                                             </table>
                                         </div>
                                     </div>
@@ -409,6 +445,7 @@
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     {{isLoadingBudget ? '' : i + 1 }} </div>
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
                                             <th mat-sort-header="expenseType" mat-sort-header="expenseType"
@@ -417,6 +454,9 @@
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     {{isLoadingBudget ? '' : element.expenseType}}
                                                 </div>
+                                            </td>
+                                            <td *matFooterCellDef class="br pr-8 text-right f-600" mat-footer-cell>
+                                                <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="budget">
@@ -430,6 +470,7 @@
                                                         appFormatNumber>{{(isLoadingBudget) ? '' :  (element.totalAmount ? element.totalAmount : '-') }}</span>
                                                 </div>
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
@@ -459,6 +500,7 @@
                                                     <span *ngIf="isLoadingBudget">{{''}}</span>
                                                 </div>
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
                                             <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef
@@ -468,6 +510,12 @@
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     {{!isLoadingBudget && element.spent ? "₹" : ""}}<span
                                                         appFormatNumber>{{isLoadingBudget ? '' : (element.spent ? element.spent  : '-')}}</span>
+                                                </div>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                                <div>{{!isLoading && totalBudgetAmount!=0 ? '₹ ' : ''}}<span
+                                                        [value]="totalBudgetAmount ? totalBudgetAmount : '-'"
+                                                        appFormatNumber></span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -502,9 +550,12 @@
                                                     </mat-menu>
                                                 </div>
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+                                        <tr mat-footer-row *matFooterRowDef="displayedColumns4;sticky: true"
+                                            [hidden]="isLoadingBudget"></tr>
                                     </table>
                                 </div>
 
@@ -524,6 +575,7 @@
                                                     {{isLoadingBudget ? '' : i + 1 }} </div>
 
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
                                             <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef
@@ -532,6 +584,9 @@
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     {{isLoadingBudget ? '' : (element.name ? element.name : '-')}}
                                                 </div>
+                                            </td>
+                                            <td *matFooterCellDef class="br pr-8 text-right f-600" mat-footer-cell>
+                                                <div class="bar"> {{isLoading ? '' : 'Total' }} </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="budget">
@@ -544,6 +599,7 @@
                                                         *ngIf="!isLoadingBudget">{{element.total ? element.total :'-'}}</span>
                                                 </div>
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
@@ -566,6 +622,7 @@
 
                                                 </div>
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
                                             <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef
@@ -575,6 +632,12 @@
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     {{!isLoadingBudget && element.total? "₹" : ""}}<span appFormatNumber
                                                         *ngIf="!isLoadingBudget">{{element.total ? element.total :'-'}}</span>
+                                                </div>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                                <div>{{!isLoading && totalbudegtRecurring!=0 ? '₹ ' : ''}}<span
+                                                        [value]="totalbudegtRecurring ? totalbudegtRecurring : '-'"
+                                                        appFormatNumber></span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -596,9 +659,12 @@
                                                     </mat-menu>
                                                 </div>
                                             </td>
+                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                                         </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns5; sticky: true"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+                                        <tr mat-footer-row *matFooterRowDef="displayedColumns5;sticky: true"
+                                            [hidden]="isLoadingBudget"></tr>
                                     </table>
                                 </div>
 
@@ -760,6 +826,27 @@
                                 appFormatNumber>{{item.totalAmount ? item.totalAmount : '-'}}</span>
                         </td>
                     </tr>
+                    <tr
+                        style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>Total</td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && totalMonthlyIncome ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalMonthlyIncome">
+                            </span>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -844,6 +931,27 @@
                         </td>
 
 
+                    </tr>
+                    <tr
+                        style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>Total</td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && totalMonthlyIncome ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalMonthlyIncome">
+                            </span>
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -934,14 +1042,14 @@
             </td>
         </tr>
 
-        <tr>
+        <tr *ngIf="dataSource4.data.length == 0">
             <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Budget</td>
         </tr>
 
 
-        <tr *ngIf="dataSource.data.length > 0">
+        <tr *ngIf="dataSource4.data.length > 0">
             <td>
                 <table style="width: 100%;">
                     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
@@ -1007,7 +1115,26 @@
 
 
                     </tr>
-
+                    <tr
+                        style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>Total</td>
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && totalBudgetAmount ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalBudgetAmount">
+                            </span>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>
@@ -1023,7 +1150,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr *ngIf="dataSource5.data.length > 0 && dataSource5.data.length > 0">
             <td
                 style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Other commitments</td>
@@ -1094,6 +1221,27 @@
                         </td>
 
 
+                    </tr>
+                    <tr
+                        style="font-weight: 700;border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;">
+                        <td
+                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber>Total</td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                        </td>
+                        <td
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && totalbudegtRecurring ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalbudegtRecurring">
+                            </span>
+                        </td>
                     </tr>
                 </table>
             </td>

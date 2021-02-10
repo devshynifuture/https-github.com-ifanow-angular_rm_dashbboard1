@@ -12,6 +12,9 @@ import { DialogDetailedViewInsPlanningComponent } from '../../customers/componen
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../../AdviserComponent/Subscriptions/subscription.service';
 import { PeopleService } from '../../PeopleComponent/people.service';
+import { SettingsService } from '../../AdviserComponent/setting/settings.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-email-consent',
@@ -43,7 +46,8 @@ export class EmailConsentComponent implements OnInit {
   clientId: any;
   storedData: any;
   isLoadingClient = false;
-  constructor(private peopleService: PeopleService, private subscription: SubscriptionService, private cd: ChangeDetectorRef, private ngZone: NgZone, private utilService: UtilService, private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
+  advisorId: any;
+  constructor(private authService: AuthService, private settingsService: SettingsService, private peopleService: PeopleService, private subscription: SubscriptionService, private cd: ChangeDetectorRef, private ngZone: NgZone, private utilService: UtilService, private dialog: MatDialog, private subInjectService: SubscriptionInject, private cusService: CustomerService, private Location: Location, private eventService: EventService, private activateRoute: ActivatedRoute, private route: Router, private datePipe: DatePipe) {
     // this.clientData = AuthService.getClientData();
     this.getOrgData = AuthService.getOrgDetails();
   }
@@ -73,7 +77,7 @@ export class EmailConsentComponent implements OnInit {
   dataSource = new MatTableDataSource([{}, {}, {}]);
   selectedConsent = [];
   ngOnInit() {
-    this.fromEmail = (this.getOrgData ? this.getOrgData.email : '');
+    // this.fromEmail = (this.getOrgData ? this.getOrgData.email : '');
     this.getGlobalDataInsurance();
     this.activateRoute.queryParams.subscribe(
       params => {
@@ -83,7 +87,6 @@ export class EmailConsentComponent implements OnInit {
         console.log(params)
       }
     )
-    this.emailBody = this.emailBody.replace('$client_name', this.clientData.name);
   }
   getGlobalDataInsurance() {
     const obj = {};
@@ -135,6 +138,40 @@ export class EmailConsentComponent implements OnInit {
       // }, 5000);
     })
 
+  }
+  getClientAndAdvisorData() {
+    const obj = {
+      clientId: this.clientId
+    };
+    const obj2 = {
+      advisorId: this.advisorId,
+    };
+    const clientData = this.peopleService.getClientOrLeadData(obj).pipe(
+      catchError(error => of(null))
+    );
+    const advisorData = this.settingsService.getOrgProfile(obj2).pipe(
+      catchError(error => of(null))
+    );
+    forkJoin(clientData, advisorData).subscribe(result => {
+      this.isLoadingClient = true;
+      if (result[0]) {
+        this.clientData = result[0];
+        this.dataSource.data = this.storedData;
+        this.authService.setClientData(result[0]);
+      }
+      if (result[1]) {
+        this.getOrgData = result[1];
+        AuthService.setOrgDetails(result[1]);
+      }
+      this.ngZone.run(() => {
+        this.isLoading = false;
+        this.cd.detectChanges();
+        // this.utilService.htmlToPdf(null, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true);
+      });
+      console.log('dddddddddddddddddddddddddddddddddd', this.clientData)
+    }, err => {
+      console.error(err);
+    })
   }
   getClientData(clientId) {
     const obj = {
@@ -261,33 +298,37 @@ export class EmailConsentComponent implements OnInit {
           this.id = element.advice.adviceToCategoryTypeMasterId;
           if (this.id == 4) {
             if (element.stringObject) {
-              if (!this.isLoadingClient) {
-                this.clientId = element.clientId
-                this.getClientData(this.clientId);
-                this.isLoadingClient = true;
-              }
               if (element.stringObject.FICT && element.stringObject.REAL) {
                 element.name = 'REAL'
                 this.getSumAsssuredAndName(element.stringObject, 'FICT');
                 this.getSumAsssuredAndName(element.stringObject, 'REAL');
+                this.advisorId = element.stringObject.REAL.advisorId;
               } else if (element.stringObject.FICT) {
                 element.name = 'FICT';
                 this.getSumAsssuredAndName(element.stringObject, 'FICT');
+                this.advisorId = element.stringObject.FICT.advisorId;
               } else {
                 element.name = 'REAL';
                 this.getSumAsssuredAndName(element.stringObject, 'REAL');
+                this.advisorId = element.stringObject.REAL.advisorId;
               }
             }
           } else {
             if (element.stringObject.FICT) {
               element.stringObject.REAL = element.stringObject.FICT;
+              this.advisorId = element.stringObject.REAL.advisorId;
               // this.getClientIdFun(element.stringObject, 'REAL')
             }
-            if (!this.isLoadingClient) {
-              this.clientId = element.clientId
-              this.getClientData(this.clientId);
-              this.isLoadingClient = true;
-            }
+          }
+          // if (!this.isLoadingClient) {
+          //   this.clientId = element.clientId
+          //   this.getClientData(this.clientId);
+          //   this.isLoadingClient = true;
+          // }
+          if (!this.isLoadingClient) {
+            this.clientId = element.clientId
+            this.getClientAndAdvisorData();
+            this.isLoadingClient = true;
           }
           let obj =
           {
@@ -315,6 +356,21 @@ export class EmailConsentComponent implements OnInit {
     )
 
   }
+  getOrgProfiles() {
+    // this.utilService.loader(1)
+    const obj = {
+      advisorId: this.advisorId,
+    };
+    this.settingsService.getOrgProfile(obj).subscribe(
+      data => {
+        this.getOrgData = data;
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        // this.utilService.loader(-1);
+      }
+    );
+  }
   getClientIdFun(data, val) {
     if (data && data[val]) {
       this.clientId = data[val].clientId
@@ -336,7 +392,9 @@ export class EmailConsentComponent implements OnInit {
     )
     const para = document.getElementById('templateEmail');
     console.log(para.innerHTML)
-    this.toEmail = (this.clientData.emailList ? this.clientData.emailList[0].email : '')
+    this.toEmail = (this.clientData.emailList ? this.clientData.emailList[0].email : '');
+    this.fromEmail = (this.getOrgData ? this.getOrgData.email : '');
+    this.emailBody = this.emailBody.replace('$client_name', this.clientData.name);
     const obj = {
       messageBody: this.emailBody,
       emailSubject: 'Email advice request for consent ',
@@ -361,6 +419,7 @@ export class EmailConsentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.Location.back();
+    //this.Location.back();
+    window.close();
   }
 }
