@@ -6,11 +6,11 @@
         <div class="col-md-8 col-10 p-0 mob-pl-15">
             <p class="f-16 mb-0 pt-24 text-center mob-text-left mob-pt-22">Advice consent</p>
         </div>
-        <div class="col-md-2 col-2 text-right">
+        <!-- <div class="col-md-2 col-2 text-right">
             <i (click)="dialogClose()" class="material-icons pt-16 c-p pr-16">
                 clear
             </i>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -352,8 +352,8 @@
         <div class="mt-20">
             <button class="btn-primary btn-height text-uppercase mr-16" *ngIf="!isLoading && dataSource.data.length > 0"
                 (click)="save()">Ok</button>
-            <button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0"
-                class="txt btn-height text-uppercase">Cancel</button>
+            <!-- <button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0"
+                class="txt btn-height text-uppercase">Cancel</button> -->
         </div>
     </div>
 </div>

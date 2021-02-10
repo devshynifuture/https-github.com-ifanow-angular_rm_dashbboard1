@@ -470,7 +470,12 @@
                                                         appFormatNumber>{{(isLoadingBudget) ? '' :  (element.totalAmount ? element.totalAmount : '-') }}</span>
                                                 </div>
                                             </td>
-                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
+                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                                <div>{{!isLoading && totalBudget!=0 ? '₹ ' : ''}}<span
+                                                        [value]="totalBudget ? totalBudget : '-'"
+                                                        appFormatNumber></span>
+                                                </div>
+                                            </td>
                                         </ng-container>
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
@@ -599,7 +604,12 @@
                                                         *ngIf="!isLoadingBudget">{{element.total ? element.total :'-'}}</span>
                                                 </div>
                                             </td>
-                                            <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
+                                            <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
+                                                <div>{{!isLoading && totalbudegtRecurring!=0 ? '₹ ' : ''}}<span
+                                                        [value]="totalbudegtRecurring ? totalbudegtRecurring : '-'"
+                                                        appFormatNumber></span>
+                                                </div>
+                                            </td>
                                         </ng-container>
                                         <ng-container matColumnDef="progress">
                                             <th mat-header-cell *matHeaderCellDef class="br "> Progress </th>
@@ -702,6 +712,8 @@
 <!-- <div #transactionExpens id="templateExpense" class="hide" *ngIf="viewMode == 'Transactions'"> -->
 
 <div #transactionExpens id="templateExpense" class="hide" *ngIf="viewMode == 'Transactions'">
+    <html>
+    <meta charset="UTF-8">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -842,8 +854,8 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && totalMonthlyIncome ? "₹" : ""}}<span appFormatNumber
-                                [value]="totalMonthlyIncome">
+                            {{!isLoading && totalTransactionAmount ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalTransactionAmount">
                             </span>
                         </td>
                     </tr>
@@ -948,8 +960,8 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && totalMonthlyIncome ? "₹" : ""}}<span appFormatNumber
-                                [value]="totalMonthlyIncome">
+                            {{!isLoading && totalRecurringAmount ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalRecurringAmount">
                             </span>
                         </td>
                     </tr>
@@ -973,11 +985,14 @@
 
     </table>
 
+    </html>
 
 </div>
 <!-----------------------------------------BUDGETS AND OTHER COMMITMMENTS------------------------------------->
 
 <div #budgetPdf id="template2" class="hide" *ngIf="viewMode == 'Budget'">
+    <html>
+    <meta charset="UTF-8">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -1123,7 +1138,9 @@
                         <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>Total</td>
                         <td
-                            style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && totalBudget ? "₹" : ""}}<span appFormatNumber [value]="totalBudget">
+                            </span>
                         </td>
                         <td
                             style="padding: 7px 8px; border-left: 1px solid #DADCE0; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
@@ -1229,13 +1246,14 @@
                         </td>
                         <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>Total</td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
-                            appFormatNumber></td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
-                            appFormatNumber></td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            {{!isLoading && totalbudegtRecurring ? "₹" : ""}}<span appFormatNumber
+                                [value]="totalbudegtRecurring">
+                            </span>
                         </td>
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                            appFormatNumber></td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && totalbudegtRecurring ? "₹" : ""}}<span appFormatNumber
@@ -1263,4 +1281,6 @@
             </td>
         </tr> -->
     </table>
+
+    </html>
 </div>

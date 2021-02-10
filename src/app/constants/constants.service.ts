@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core/src/metadata/*';
+import { Injectable } from '@angular/core/src/metadata/*';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class ConstantsService {
       expenseType: 'Basic misc.',
       label: 'Basic'
     },
-     {
+    {
       clientExpenseTypeMasterId: 6,
       expenseType: 'Iron/Laundry',
       label: 'Basic'
@@ -70,7 +70,7 @@ export class ConstantsService {
       expenseType: 'Bills & Utilities misc.',
       label: 'Bills & Utilities'
     },
-     {
+    {
       clientExpenseTypeMasterId: 14,
       expenseType: 'Gas',
       label: 'Bills & Utilities'
@@ -100,7 +100,7 @@ export class ConstantsService {
       expenseType: 'Transport misc.',
       label: 'Transport'
     },
-     {
+    {
       clientExpenseTypeMasterId: 20,
       expenseType: 'Vehicle Maintenance',
       label: 'Transport'
@@ -150,12 +150,12 @@ export class ConstantsService {
       expenseType: 'Housing misc.',
       label: 'Housing'
     },
-      {
+    {
       clientExpenseTypeMasterId: 30,
       expenseType: 'Property Tax',
       label: 'Housing'
     },
-      {
+    {
       clientExpenseTypeMasterId: 31,
       expenseType: 'Maid/Domestic Helper',
       label: 'Housing'
@@ -214,7 +214,7 @@ export class ConstantsService {
       clientExpenseTypeMasterId: 42,
       expenseType: 'Miscellaneous',
       label: 'Miscellaneous'
-    },  
+    },
     {
       clientExpenseTypeMasterId: 43,
       expenseType: 'Professional Fees',
@@ -244,18 +244,23 @@ export class ConstantsService {
       clientExpenseTypeMasterId: 48,
       expenseType: 'Contribution to parents/siblings',
       label: 'Miscellaneous'
-    }   
+    },
+    {
+      clientExpenseTypeMasterId: 49,
+      expenseType: 'Total expenses (aggregate)',
+      label: 'Miscellaneous'
+    }
   ];
-  yearsMap =[{value:'1'},{value:'2'},{value:'3'},{value:'4'},{value:'5'},{value:'6'},{value:'7'},{value:'8'},{value:'9'},{value:'10'},
-  {value:'11'},{value:'12'},{value:'13'},{value:'14'},{value:'15'},{value:'16'},{value:'17'},{value:'18'},{value:'19'},{value:'20'},
-  {value:'21'},{value:'22'},{value:'23'},{value:'24'},{value:'25'},{value:'26'},{value:'27'},{value:'28'},{value:'29'},{value:'30'},
-  {value:'31'},{value:'32'},{value:'33'},{value:'34'},{value:'35'},{value:'36'},{value:'37'},{value:'38'},{value:'39'},{value:'40'},
-  {value:'41'},{value:'42'},{value:'43'},{value:'44'},{value:'45'},{value:'46'},{value:'47'},{value:'48'},{value:'49'},{value:'50'},
-  {value:'51'},{value:'52'},{value:'53'},{value:'54'},{value:'55'},{value:'56'},{value:'57'},{value:'58'},{value:'59'},{value:'60'},
-  {value:'61'},{value:'62'},{value:'63'},{value:'64'},{value:'65'},{value:'66'},{value:'67'},{value:'68'},{value:'69'},{value:'70'},
-  {value:'71'},{value:'72'},{value:'73'},{value:'74'},{value:'75'},{value:'76'},{value:'77'},{value:'78'},{value:'79'},{value:'80'},
-  {value:'81'},{value:'82'},{value:'83'},{value:'84'},{value:'85'},{value:'86'},{value:'87'},{value:'88'},{value:'89'},{value:'90'},
-  {value:'91'},{value:'92'},{value:'93'},{value:'94'},{value:'95'},{value:'96'},{value:'97'},{value:'98'},{value:'99'},{value:'100'},];
+  yearsMap = [{ value: '1' }, { value: '2' }, { value: '3' }, { value: '4' }, { value: '5' }, { value: '6' }, { value: '7' }, { value: '8' }, { value: '9' }, { value: '10' },
+  { value: '11' }, { value: '12' }, { value: '13' }, { value: '14' }, { value: '15' }, { value: '16' }, { value: '17' }, { value: '18' }, { value: '19' }, { value: '20' },
+  { value: '21' }, { value: '22' }, { value: '23' }, { value: '24' }, { value: '25' }, { value: '26' }, { value: '27' }, { value: '28' }, { value: '29' }, { value: '30' },
+  { value: '31' }, { value: '32' }, { value: '33' }, { value: '34' }, { value: '35' }, { value: '36' }, { value: '37' }, { value: '38' }, { value: '39' }, { value: '40' },
+  { value: '41' }, { value: '42' }, { value: '43' }, { value: '44' }, { value: '45' }, { value: '46' }, { value: '47' }, { value: '48' }, { value: '49' }, { value: '50' },
+  { value: '51' }, { value: '52' }, { value: '53' }, { value: '54' }, { value: '55' }, { value: '56' }, { value: '57' }, { value: '58' }, { value: '59' }, { value: '60' },
+  { value: '61' }, { value: '62' }, { value: '63' }, { value: '64' }, { value: '65' }, { value: '66' }, { value: '67' }, { value: '68' }, { value: '69' }, { value: '70' },
+  { value: '71' }, { value: '72' }, { value: '73' }, { value: '74' }, { value: '75' }, { value: '76' }, { value: '77' }, { value: '78' }, { value: '79' }, { value: '80' },
+  { value: '81' }, { value: '82' }, { value: '83' }, { value: '84' }, { value: '85' }, { value: '86' }, { value: '87' }, { value: '88' }, { value: '89' }, { value: '90' },
+  { value: '91' }, { value: '92' }, { value: '93' }, { value: '94' }, { value: '95' }, { value: '96' }, { value: '97' }, { value: '98' }, { value: '99' }, { value: '100' },];
 
 
   expenseJsonMap = {};

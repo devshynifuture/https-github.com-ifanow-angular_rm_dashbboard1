@@ -147,6 +147,8 @@ export class ExpensesComponent implements OnInit {
   totalTransactionAmount: any;
   totalBudgetAmount: any
   totalbudegtRecurring: any;
+  totalBudget: any;
+  totalRecurringAmount:any;
   // periodSelection: any;
 
   constructor(private fileUpload: FileUploadServiceService, private fb: FormBuilder,
@@ -564,9 +566,9 @@ export class ExpensesComponent implements OnInit {
       console.log(finalArray)
       this.dataSource1.data = finalArray;
       this.dataSource1.sort = this.recurringTransactionTabSort;
-      this.calculateTotal(this.dataSource1.data, 'totalAmount', 'totalRecurringAmount')
+      this.calculateTotal(this.dataSource1.data, 'total', 'totalRecurringAmount')
       this.dataSource5.data = this.dataSource1.data;
-      this.calculateTotal(this.dataSource5.data, 'totalAmount', 'totalbudegtRecurring')
+      this.calculateTotal(this.dataSource5.data, 'total', 'totalbudegtRecurring')
       if (finalArray.length > 0) {
         this.getGraphCalculations();
       }
@@ -904,9 +906,10 @@ export class ExpensesComponent implements OnInit {
     this.dataSource4.data = mergeArray;
     this.dataSource4.sort = this.BudgetSort;
     this.calculateTotal(this.dataSource4.data, 'spent', 'totalBudgetAmount')
+    this.calculateTotal(this.dataSource4.data, 'totalAmount', 'totalBudget')
     this.dataSource5.data = this.dataSource1.data;
     this.dataSource5.sort = this.recurringBudgetSort;
-    this.calculateTotal(this.dataSource5.data, 'totalAmount', 'totalbudegtRecurring')
+    this.calculateTotal(this.dataSource5.data, 'total', 'totalbudegtRecurring')
     this.isLoadingBudget = false;
     if (this.allExpnseData) {
       this.getAssetData(this.allExpnseData);
@@ -1206,6 +1209,7 @@ export class ExpensesComponent implements OnInit {
       this.dataSource4.data = data;
       this.dataSource4.sort = this.BudgetSort;
       this.calculateTotal(this.dataSource4.data, 'spent', 'totalBudgetAmount')
+      this.calculateTotal(this.dataSource4.data, 'totalAmount', 'totalBudget')
     }
     this.isLoadingBudget = false;
     console.log('getBudgetRes', data)
@@ -1257,7 +1261,7 @@ export class ExpensesComponent implements OnInit {
       });
       this.dataSource5.data = data;
       this.dataSource5.sort = this.recurringBudgetSort;
-      this.calculateTotal(this.dataSource5.data, 'totalAmount', 'totalbudegtRecurring')
+      this.calculateTotal(this.dataSource5.data, 'total', 'totalbudegtRecurring')
     } else {
       this.noData = 'No data found';
       this.dataSource5.data = [];
@@ -1420,7 +1424,7 @@ export class ExpensesComponent implements OnInit {
             console.log(key, value);
           });
           this.dataSource1.data = finalArray;
-          this.calculateTotal(this.dataSource1.data, 'totalAmount', 'totalRecurringAmount')
+          this.calculateTotal(this.dataSource1.data, 'total', 'totalRecurringAmount')
           this.dataSource1.sort = this.recurringTransactionTabSort;
 
 
@@ -1434,9 +1438,6 @@ export class ExpensesComponent implements OnInit {
         this.isLoading = false;
       }
     );
-  }
-  totalRecurringAmount(data: any[], totalRecurringAmount: any) {
-    throw new Error("Method not implemented.");
   }
   deleteModal(value, data) {
     let deletedId = data.id;

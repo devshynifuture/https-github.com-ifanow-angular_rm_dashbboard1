@@ -401,6 +401,7 @@ export class EmailConsentComponent implements OnInit {
       fromEmail: this.fromEmail,
       toEmail: [{ emailAddress: this.toEmail }, { emailAddress: this.fromEmail }],
       documentList: [{ docText: para.innerHTML, documentName: 'Consent' }],
+      isLandscape: true
     };
     // this.utilService.htmlToPdf(null, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true);
     this.subscription.sendInvoiceEmail(obj).subscribe(
@@ -419,7 +420,6 @@ export class EmailConsentComponent implements OnInit {
   }
 
   dialogClose() {
-    //this.Location.back();
-    window.close();
+   this.Location.back();
   }
 }
