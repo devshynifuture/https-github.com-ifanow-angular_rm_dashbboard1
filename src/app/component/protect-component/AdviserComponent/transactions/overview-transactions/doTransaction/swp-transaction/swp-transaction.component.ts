@@ -84,7 +84,7 @@ export class SwpTransactionComponent implements OnInit {
   folioList = [];
   bankDetails: any;
   showSpinnerFolio = false;
-  currentValue: number;
+  currentValue: any;
   multiTransact = false;
   childTransactions = [];
   dataSource = new MatTableDataSource(this.childTransactions);
@@ -456,8 +456,7 @@ export class SwpTransactionComponent implements OnInit {
         }
       );
       this.navOfSelectedScheme = this.mutualFundData.nav
-      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
-      this.currentValue = Math.round(this.currentValue)
+      this.currentValue = (this.mutualFundData.currentValue)
       this.swpTransaction.controls.currentValue.setValue(this.currentValue);
       this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
       Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
