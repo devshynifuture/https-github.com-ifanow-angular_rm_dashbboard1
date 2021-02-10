@@ -420,6 +420,8 @@ export class EmailConsentComponent implements OnInit {
   }
 
   dialogClose() {
-   this.Location.back();
+    //  this.Location.back();
+    this.route.navigate(['/reponse/thankYou']);
+
   }
 }
