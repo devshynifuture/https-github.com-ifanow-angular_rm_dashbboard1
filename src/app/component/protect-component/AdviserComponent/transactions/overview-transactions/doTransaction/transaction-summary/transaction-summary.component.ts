@@ -290,6 +290,7 @@ export class TransactionSummaryComponent implements OnInit {
     }
     console.log('default', data)
     this.changeDetails = data;
+    this.selectedPlatform = data.defaultClient.aggregatorType
     if (this.transactionSummary.allEdit == true && this.changeDetails.noAlert == undefined) {
       if (this.checkAlert && this.checkAlert != data.defaultClient.tpUserCredFamilyMappingId) {
         this.alertModal(data, null);
