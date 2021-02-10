@@ -162,25 +162,24 @@ export class SupportUpperPrudentComponent implements OnInit {
 
   unMapMappedPrudentScheme(element) {
     let obj = {
-      id: this.selectedSchemeRes.id,
-      mutualFundSchemeMasterId: element.id,
+      id: element.id,
+      mutualFundSchemeMasterId: element.mutualFundSchemeMasterId,
       schemeCode: element.schemeCode
     }
     console.log(obj);
     this.supportUpperService.postUnmapUnmappedNjPrudentScheme(obj)
       .subscribe(res => {
-        if (res) {
-          console.log(res);
-          element.isMapped = false;
-          this.getMappedUnmappedPrudentList()
-        }
+        console.log(res);
+        element.isMapped = false;
+        this.getMappedUnmappedPrudentList()
+        this.eventService.openSnackBar('unmap successfully', 'Dismiss');
       })
   }
 
   mapUnmappedPrudentScheme(element) {
     let obj = {
-      id: element.id,
-      mutualFundSchemeMasterId: element.mutualFundSchemeMasterId,
+      id: this.selectedSchemeRes.id,
+      mutualFundSchemeMasterId: element.id,
       rt_id: 4,
       schemeCode: element.schemeCode
     }
@@ -192,10 +191,10 @@ export class SupportUpperPrudentComponent implements OnInit {
           console.log(res);
           element.isMapped = true;
           this.getMappedUnmappedPrudentList()
-          this.eventService.openSnackBar('umap successfully', 'Dismiss');
+          this.eventService.openSnackBar('map successfully', 'Dismiss');
         } else {
           this.getMappedUnmappedPrudentList()
-          this.eventService.openSnackBar('umap successfully', 'Dismiss');
+          this.eventService.openSnackBar('map successfully', 'Dismiss');
         }
       })
   }

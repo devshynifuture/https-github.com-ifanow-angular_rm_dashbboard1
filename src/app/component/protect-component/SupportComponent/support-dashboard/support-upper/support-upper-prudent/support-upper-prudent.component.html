@@ -165,7 +165,7 @@
                 <td class="b-a" mat-cell *matCellDef="let element">
                     <div class="bar">
                         <button *ngIf="isMapped == true && !isLoading" class="btn-primary btn-Map" mat-stroked-button
-                            (click)="mapUnmappedPrudentScheme(element)">
+                            (click)="unMapMappedPrudentScheme(element)">
                             {{(isLoading) ? '': 'Unmap'}}
                         </button>
                         <button *ngIf="isMapped == false && !isLoading" class="btn-primary btn-Map" mat-stroked-button
