@@ -515,7 +515,7 @@ export class StpTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
-      currentValue: [data.currentValue],
+      currentValue: [(data.currentValue)],
       balanceUnit: [data.balanceUnit],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
@@ -570,7 +570,7 @@ export class StpTransactionComponent implements OnInit {
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
       this.currentValue = Math.round(this.currentValue)
-      this.stpTransaction.controls.currentValue.setValue(this.currentValue);
+      this.stpTransaction.controls.currentValue.setValue(this.mutualFundData.currentValue);
       this.stpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
