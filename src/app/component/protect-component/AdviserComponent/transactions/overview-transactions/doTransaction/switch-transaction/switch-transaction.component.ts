@@ -286,6 +286,9 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.showSpinner = false;
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
@@ -493,7 +496,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.switchTransaction.controls['schemeSwitch'].disable();
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
       this.currentValue = Math.round(this.currentValue)
-      this.switchTransaction.controls.currentValue.setValue(this.currentValue);
+      this.switchTransaction.controls.currentValue.setValue(this.mutualFundData.currentValue);
       this.switchTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       this.showUnits = true;
@@ -581,7 +584,7 @@ export class SwitchTransactionComponent implements OnInit {
         this.barButtonOptions.active = true;
         const obj = {
 
-          productDbId: this.schemeDetails.id,
+          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
           clientName: this.selectedFamilyMember,
           holdingType: this.getDataSummary.defaultClient.holdingType,
           toProductDbId: this.schemeDetailsTransfer.id,

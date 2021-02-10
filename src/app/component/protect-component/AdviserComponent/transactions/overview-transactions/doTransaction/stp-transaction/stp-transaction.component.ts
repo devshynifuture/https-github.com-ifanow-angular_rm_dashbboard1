@@ -379,6 +379,9 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.showSpinner = false;
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
@@ -515,7 +518,7 @@ export class StpTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
-      currentValue: [data.currentValue],
+      currentValue: [(data.currentValue)],
       balanceUnit: [data.balanceUnit],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
@@ -570,7 +573,7 @@ export class StpTransactionComponent implements OnInit {
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
       this.currentValue = Math.round(this.currentValue)
-      this.stpTransaction.controls.currentValue.setValue(this.currentValue);
+      this.stpTransaction.controls.currentValue.setValue(this.mutualFundData.currentValue);
       this.stpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
@@ -661,7 +664,7 @@ export class StpTransactionComponent implements OnInit {
 
         obj = {
           ...obj,
-          productDbId: this.schemeDetails.id,
+          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
           clientName: this.selectedFamilyMember,
           holdingType: this.getDataSummary.defaultClient.holdingType,
           toProductDbId: this.schemeDetailsTransfer.id,
