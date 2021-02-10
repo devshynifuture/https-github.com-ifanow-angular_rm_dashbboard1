@@ -450,12 +450,17 @@ export class StpTransactionComponent implements OnInit {
     this.frequency = getFrerq.frequency;
     // this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
-      this.dateArray(getFrerq.stpDates);
+      if (getFrerq.stpDates == "") {
+        getFrerq.stpDates = '01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31'
+        this.dateArray(getFrerq.stpDates);
+      } else {
+        this.dateArray(getFrerq.stpDates);
+      }
     } else {
       this.dateArray(getFrerq.sipDates);
     }
     if (this.transactionSummary.defaultClient.aggregatorType == 2) {
-      this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.sipMinimumInstallmentAmount
+      this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.minSTPInInstallmentAmount
       this.stpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
       this.stpTransaction.controls.employeeContry.updateValueAndValidity();
     }
