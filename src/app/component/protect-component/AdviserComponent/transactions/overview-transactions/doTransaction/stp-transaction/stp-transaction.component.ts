@@ -449,7 +449,7 @@ export class StpTransactionComponent implements OnInit {
     // this.fre = getFrerq
     this.frequency = getFrerq.frequency;
     // this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
-    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+    if (this.getDataSummary.defaultClient.aggregatorType == 2) {
       this.dateArray(getFrerq.stpDates);
     } else {
       this.dateArray(getFrerq.sipDates);
