@@ -1929,7 +1929,7 @@ export class DashboardComponent implements OnInit {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: -1,
       parentId: this.parentId,
-      // rtId: [1, 2, 3, 4, 5]
+      rtId: [1, 2, 3, 4, 5]
     };
     this.backoffice.getMisData(obj).subscribe(
       data => {
