@@ -1,12 +1,12 @@
 import { Subscription } from 'rxjs';
 import { MisAumDataStorageService } from './mis-aum-data-storage.service';
-import {Component, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {BackOfficeService} from '../../../back-office.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { BackOfficeService } from '../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
-import {FormControl, FormBuilder, FormArray} from '@angular/forms';
-import {ReconciliationService} from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 @Component({
   selector: 'app-aum',
@@ -38,14 +38,17 @@ export class AumComponent implements OnInit {
   isLoadingTopClients = false;
   isLoadingCategory = false;
   clientWithoutMF: number;
-  misDataStoreSubs:Subscription;
+  misDataStoreSubs: Subscription;
   callApiDataSubs: Subscription;
+  viewModeID: any;
+  aumId: any;
+  filterObj: any;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
     private fb: FormBuilder, private reconService: ReconciliationService,
     private misAumDataStorageService: MisAumDataStorageService
-  ) {}
+  ) { }
 
   teamMemberId = 2929;
   arnRiaValue = -1;
@@ -54,17 +57,18 @@ export class AumComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
     this.teamMemberListGet();
-    
 
+    this.aumId = 0;
+    this.viewModeID = 'All'
     // if parentId = 0 arnRiaDetails selection will be disabled
     // if parentId present use it and arn Ria deail selection with advisor Id as 0
   }
-  getDataFromStore(){
-    this.misDataStoreSubs = this.misAumDataStorageService.getAllMisData().subscribe(res=>{
+  getDataFromStore() {
+    this.misDataStoreSubs = this.misAumDataStorageService.getAllMisData().subscribe(res => {
       this.setValuesFromDataStore(res);
     });
-    this.callApiDataSubs = this.misAumDataStorageService.canWeGetDataFromApi().subscribe(res=>{
-      if(res){
+    this.callApiDataSubs = this.misAumDataStorageService.canWeGetDataFromApi().subscribe(res => {
+      if (res) {
         this.getGraphData();
         this.getTotalAum();
         // this.getSubCatScheme();
@@ -76,7 +80,7 @@ export class AumComponent implements OnInit {
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -87,7 +91,7 @@ export class AumComponent implements OnInit {
           if (this.parentId !== 0) {
             this.getArnRiaList();
           } else {
-            if(this.misAumDataStorageService.doDataExist()){
+            if (this.misAumDataStorageService.doDataExist()) {
               this.misAumDataStorageService.callApiData();
             }
           }
@@ -97,7 +101,7 @@ export class AumComponent implements OnInit {
           if (this.parentId !== 0) {
             this.getArnRiaList();
           } else {
-            if(this.misAumDataStorageService.doDataExist()){
+            if (this.misAumDataStorageService.doDataExist()) {
               this.misAumDataStorageService.callApiData();
             }
           }
@@ -108,7 +112,7 @@ export class AumComponent implements OnInit {
         if (this.parentId !== 0) {
           this.getArnRiaList();
         } else {
-          if(this.misAumDataStorageService.doDataExist()){
+          if (this.misAumDataStorageService.doDataExist()) {
             this.misAumDataStorageService.callApiData();
           }
         }
@@ -116,27 +120,27 @@ export class AumComponent implements OnInit {
       });
   }
 
-  setValuesFromDataStore(res){
-    if(res){
+  setValuesFromDataStore(res) {
+    if (res) {
       this.isLoadingTopClients = false;
       this.isLoading = false;
       this.isLoadingCategory = false;
-      if(res.graphData){
+      if (res.graphData) {
         this.aumGraph = res.graphData;
         this.pieChart('pieChartAum', res.graphData);
       }
-      if(res.totalAum){
+      if (res.totalAum) {
         this.clientTotalAum = res.totalAum['clientTotalAum'];
         this.amcTotalAum = res.totalAum['amcTotalAum'];
       }
-      if(res.clientWithoutMf){
+      if (res.clientWithoutMf) {
         this.calculateClientWithoutMf(res.clientWithoutMf);
       }
-      if(res.subCatAum){
+      if (res.subCatAum) {
         this.category = res.subCatAum['category'];
         this.subcategory = res.subCatAum['subcategory'];
       }
-      if(res.misData1){
+      if (res.misData1) {
         this.MiscData1 = res.misData1;
       }
       this.misAumDataStorageService.setCallApiData(false);
@@ -157,8 +161,32 @@ export class AumComponent implements OnInit {
       this.arnRiaValue = -1;
       this.misAumDataStorageService.setArnRiaDetail(item.id);
     }
-    if(this.misAumDataStorageService.doDataExist()){
+    if (this.misAumDataStorageService.doDataExist()) {
       this.misAumDataStorageService.callApiData();
+    }
+  }
+
+  filterIDWise(id, flagValue) {
+    this.viewModeID = flagValue;
+    this.aumId = id;
+    this.MiscData1 = {};
+    this.clientWithoutMF = 0;
+    this.getGraphData();
+    this.getTotalAum();
+    // this.getSubCatScheme();
+    this.getClientWithoutMf();
+    this.getSubCatAum();
+    this.getMisData();
+  }
+
+  aumFilterRes(data) {
+    if (data.aumId && data.aumId != 0) {
+      this.aumId = data.aumId;
+      this.viewModeID = data.viewModeID;
+      this.filterIDWise(this.aumId, this.viewModeID)
+    } else {
+      this.aumId = 0;
+      this.viewModeID = 'All'
     }
   }
 
@@ -178,25 +206,25 @@ export class AumComponent implements OnInit {
         if (data) {
           // this.advisorId = 0;
           this.arnRiaList = data;
-          
+
           const obj = {
             number: 'All',
             id: -1
           };
           this.arnRiaList.unshift(obj);
 
-          if(!this.misAumDataStorageService.isArnRiaValueMinusOne()){
+          if (!this.misAumDataStorageService.isArnRiaValueMinusOne()) {
             this.arnRiaValue = this.misAumDataStorageService.arnRiaValue;
             this.viewMode = this.arnRiaList.find(item => item.id === this.arnRiaValue).number;
           } else {
             this.arnRiaValue = -1;
             this.viewMode = 'All';
           }
-          if(!this.misAumDataStorageService.doDataExist()){
+          if (!this.misAumDataStorageService.doDataExist()) {
             this.misAumDataStorageService.callApiData();
           }
         } else {
-          if(!this.misAumDataStorageService.doDataExist()){
+          if (!this.misAumDataStorageService.doDataExist()) {
             this.misAumDataStorageService.callApiData();
           }
 
@@ -206,7 +234,7 @@ export class AumComponent implements OnInit {
     );
   }
 
-  refreshData(){
+  refreshData() {
     this.misAumDataStorageService.callApiData();
   }
 
@@ -221,7 +249,7 @@ export class AumComponent implements OnInit {
     this.aumComponent = true;
     this.viewMode = value.viewMode;
     this.arnRiaValue = value.arnRiaValue;
-    if(!this.misAumDataStorageService.doDataExist()){
+    if (!this.misAumDataStorageService.doDataExist()) {
       this.misAumDataStorageService.callApiData();
     }
     // setTimeout(() => {
@@ -244,10 +272,15 @@ export class AumComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     };
+    if (this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.getClientTotalAUM(obj).subscribe(
       data => {
         this.getFileResponseDataAum(data);
-        this.misAumDataStorageService.setTotalAumData(data);
+        if (this.aumId == 0) {
+          this.misAumDataStorageService.setTotalAumData(data);
+        }
       },
       err => {
         this.isLoadingTopClients = false;
@@ -265,12 +298,17 @@ export class AumComponent implements OnInit {
       advisorIds: [this.adminAdvisorIds],
       parentId: this.parentId
     };
+    if (this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.getclientWithoutMf(obj).subscribe(
       data => {
         if (data) {
           this.isLoading = false;
           console.log(data);
-          this.misAumDataStorageService.setClientWithoutMfData(data);
+          if (this.aumId == 0) {
+            this.misAumDataStorageService.setClientWithoutMfData(data);
+          }
           this.calculateClientWithoutMf(data);
         } else {
           this.clientWithoutMF = 0;
@@ -284,7 +322,7 @@ export class AumComponent implements OnInit {
     );
   }
 
-  calculateClientWithoutMf(data){
+  calculateClientWithoutMf(data) {
     this.clientWithoutMF = data.countWithoutMF / data.clientCount * 100;
     this.clientWithoutMF = (!this.clientWithoutMF || this.clientWithoutMF == Infinity) ? 0 : this.clientWithoutMF;
     (this.clientWithoutMF > 100) ? this.clientWithoutMF = 100 : this.clientWithoutMF;
@@ -297,11 +335,16 @@ export class AumComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     };
+    if (this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.getMisData(obj).subscribe(
       data => {
         this.getFileResponseDataForMis(data);
-        this.misAumDataStorageService.setMisData1(data);
-      },err => {
+        if (this.aumId == 0) {
+          this.misAumDataStorageService.setMisData1(data);
+        }
+      }, err => {
         this.isLoading = false;
         this.MiscData1 = '';
         this.getFilerrorResponse(err);
@@ -317,11 +360,16 @@ export class AumComponent implements OnInit {
       arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId
     };
+    if (this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.getSubCatAum(obj).subscribe(
       data => {
         this.getFileResponseDataForSub(data);
-        this.misAumDataStorageService.setSubCatAumData(data);
-      },err => {
+        if (this.aumId == 0) {
+          this.misAumDataStorageService.setSubCatAumData(data);
+        }
+      }, err => {
         this.isLoadingCategory = false;
         this.category = [];
         this.subcategory = [];
@@ -347,8 +395,8 @@ export class AumComponent implements OnInit {
     this.isLoading = false;
     if (data) {
       this.MiscData1 = data;
-    }else{
-      this.MiscData1='';
+    } else {
+      this.MiscData1 = '';
     }
   }
 
@@ -380,6 +428,11 @@ export class AumComponent implements OnInit {
       viewMode: this.viewMode,
       totalAumObj: this.MiscData1
     };
+    this.backoffice.addMisAumData({
+      aumId: this.aumId,
+      viewModeID: this.viewModeID,
+      value: value
+    })
   }
 
   getGraphData() {
@@ -389,10 +442,15 @@ export class AumComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     };
+    if (this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
         this.aumGraph = data;
-        this.misAumDataStorageService.setGraphData(data);
+        if (this.aumId == 0) {
+          this.misAumDataStorageService.setGraphData(data);
+        }
         setTimeout(() => {
           this.pieChart('pieChartAum', data);
         }, 1000);

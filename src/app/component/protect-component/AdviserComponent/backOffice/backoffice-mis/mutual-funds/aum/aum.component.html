@@ -12,13 +12,29 @@
                 </div>
                 <!-- *ngIf="parentId !== 0" -->
                 <div class="col-md-4 text-right">
+                    <button [matMenuTriggerFor]="menu1" class="ba-black borderLine br-0 mr-14" mat-stroked-button>
+                        {{viewModeID}}
+                        <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <mat-menu #menu1="matMenu">
+                        <button mat-menu-item (click)="filterIDWise(0,'All')" [value]="0">All</button>
+                        <button mat-menu-item (click)="filterIDWise(1,'KARVY')" [value]="1">KARVY</button>
+                        <button mat-menu-item (click)="filterIDWise(2,'CAMS')" [value]="2">CAMS</button>
+                        <button mat-menu-item (click)="filterIDWise(3,'FRANKLIN TEMPLETON')" [value]="3">FRANKLIN
+                            TEMPLETON</button>
+                        <button mat-menu-item (click)="filterIDWise(4,'PRUDENT')" [value]="4">PRUDENT</button>
+                        <button mat-menu-item (click)="filterIDWise(5,'NJ')" [value]="5">NJ</button>
+                        <button mat-menu-item (click)="filterIDWise(6,'CAS IMPORT')" [value]="6">CAS IMPORT</button>
+                        <button mat-menu-item (click)="filterIDWise(14,'MANUAL')" [value]="14">MANUAL</button>
+                    </mat-menu>
                     <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                         {{viewMode}}
                         <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
                         <div *ngFor="let item of arnRiaList">
-                            <button (click)="changeValueOfArnRia(item)" mat-menu-item [value]="item.value">{{item.number}}</button>
+                            <button (click)="changeValueOfArnRia(item)" mat-menu-item
+                                [value]="item.value">{{item.number}}</button>
                         </div>
                     </mat-menu>
                 </div>
@@ -63,7 +79,8 @@
                                             <!-- *ngIf="MiscData1" -->
                                             <div class="col-md-7 p-0 text-right">
                                                 <h1 class="text-diff f-24 mb-0 pb-8">
-                                                    <span *ngIf="!isLoading && MiscData1" appFormatNumber>{{(MiscData1) ? MiscData1.averageFolioSize : '0'}}
+                                                    <span *ngIf="!isLoading && MiscData1"
+                                                        appFormatNumber>{{(MiscData1) ? MiscData1.averageFolioSize : '0'}}
                                                     </span>
                                                     <span *ngIf="isLoading  ">{{''}}</span>
                                                     <span *ngIf="!isLoading && !MiscData1 ">{{'0'}}</span>
@@ -74,10 +91,12 @@
                                             </div>
                                             <div class="col-md-12 pr-0" *ngIf="!isLoading">
                                                 <div class="pt-20">
-                                                    <mat-progress-bar class="text-diff" mode="determinate" [value]="clientWithoutMF">
+                                                    <mat-progress-bar class="text-diff" mode="determinate"
+                                                        [value]="clientWithoutMF">
                                                     </mat-progress-bar>
                                                     <p class="text-diff f-12 pt-4 mb-0 pb-8">
-                                                        <span>{{clientWithoutMF | number:'1.2-2'}} </span>% Clients without MF
+                                                        <span>{{clientWithoutMF | number:'1.2-2'}} </span>% Clients
+                                                        without MF
                                                     </p>
                                                 </div>
                                             </div>
@@ -104,7 +123,10 @@
                                                         {{(MiscData1) ? MiscData1.foliosLinkedToGoal : 0}}%</h1>
 
                                                     <p class="text-diff f-14 mb-0 pt-12 l-21">
-                                                        Out of {{MiscData1 ?  MiscData1.totalFolioCount : 0}} folios, {{ MiscData1 ? MiscData1.foliosLinkedToGoal :0  }}% ({{MiscData1 ? MiscData1.foliosLinkedToGoalCount : 0}} folios) are currently linked to financial goals of your clients
+                                                        Out of {{MiscData1 ?  MiscData1.totalFolioCount : 0}} folios,
+                                                        {{ MiscData1 ? MiscData1.foliosLinkedToGoal :0  }}%
+                                                        ({{MiscData1 ? MiscData1.foliosLinkedToGoalCount : 0}} folios)
+                                                        are currently linked to financial goals of your clients
                                                     </p>
                                                 </div>
                                             </div>
@@ -174,22 +196,26 @@
                     </div>
                     <div class="col-md-4 col-lg-3 pr-0 ">
                         <div id="mistabs1">
-                            <mat-tab-group class="h-354 bg-white borderLine pt-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingTopClients">
+                            <mat-tab-group class="h-354 bg-white borderLine pt-0 skeletonAnimation" appSkeletonLoading
+                                [appSkeletonLoading]="isLoadingTopClients">
                                 <mat-tab label="Clients">
                                     <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Top Clients </h6>
 
                                     <div class="b-white">
                                         <div *ngFor="let item of clientTotalAum" class="row bb">
                                             <div class="col-md-7 p-0 relClass ">
-                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
+                                                <div
+                                                    [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
                                                     <p *ngIf="!isLoadingTopClients" class="mb-0 f-bold f-13 p-8 ">
                                                         {{(item.name) ? item.name : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
                                                 </div>
                                             </div>
                                             <div class=" relClass col-md-5 text-right p-0 ">
-                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
-                                                    <p *ngIf="!isLoadingTopClients" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                                <div
+                                                    [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
+                                                    <p *ngIf="!isLoadingTopClients"
+                                                        class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                         {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
                                                 </div>
@@ -206,7 +232,8 @@
                                     <div *ngIf="amcTotalAum" class="b-white ">
                                         <div *ngFor="let item of amcTotalAum" class="row bb ">
                                             <div class=" relClass col-md-7 p-0 ">
-                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
+                                                <div
+                                                    [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
                                                     <p *ngIf="!isLoadingTopClients" class="mb-0 f-bold f-13 p-8 ">
                                                         {{(item.schemeName) ? item.schemeName : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
@@ -214,8 +241,10 @@
 
                                             </div>
                                             <div class=" relClass col-md-5 p-0 text-right ">
-                                                <div [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
-                                                    <p *ngIf="!isLoadingTopClients" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                                <div
+                                                    [ngClass]="{'height23': isLoadingTopClients,'bar':isLoadingTopClients}">
+                                                    <p *ngIf="!isLoadingTopClients"
+                                                        class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                         {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                     <p *ngIf="isLoadingTopClients">{{''}}</p>
                                                 </div>
@@ -229,13 +258,15 @@
                             </mat-tab-group>
                         </div>
                         <div class="col-md-12 aumtabs p-0 mt-20 " id="mistabs2">
-                            <mat-tab-group class="h-354 bg-white borderLine skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoadingCategory">
+                            <mat-tab-group class="h-354 bg-white borderLine skeletonAnimation" appSkeletonLoading
+                                [appSkeletonLoading]="isLoadingCategory">
                                 <mat-tab label="Category ">
                                     <h6 class="f-bold bb text-center p-12 mb-0 f-14 ">Category</h6>
                                     <div class="b-white ">
                                         <div *ngFor="let item of category" class="row bb ">
                                             <div class=" col-md-7 p-0 relClass">
-                                                <div [ngClass]="{'height23': isLoadingCategory,'bar':isLoadingCategory}">
+                                                <div
+                                                    [ngClass]="{'height23': isLoadingCategory,'bar':isLoadingCategory}">
                                                     <p *ngIf="!isLoadingCategory" class="mb-0 f-bold f-13 p-8 ">
                                                         {{(item.name) ? item.name : '-'}}
                                                     </p>
@@ -243,8 +274,10 @@
                                                 </div>
                                             </div>
                                             <div class=" col-md-5 text-right p-0 relClass">
-                                                <div [ngClass]="{'height23': isLoadingCategory,'bar':isLoadingCategory}">
-                                                    <p *ngIf="!isLoadingCategory" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                                <div
+                                                    [ngClass]="{'height23': isLoadingCategory,'bar':isLoadingCategory}">
+                                                    <p *ngIf="!isLoadingCategory"
+                                                        class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                         {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                     <p *ngIf="isLoadingCategory">{{''}}</p>
                                                 </div>
@@ -266,7 +299,8 @@
                                                 <p *ngIf="isLoadingCategory">{{''}}</p>
                                             </div>
                                             <div class="bar col-md-5 text-right p-0 ">
-                                                <p *ngIf="!isLoadingCategory" class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
+                                                <p *ngIf="!isLoadingCategory"
+                                                    class="mb-0 f-13 p-4 pr-8 text-custom  pt-8" appFormatNumber>
                                                     {{(item.totalAum) ? item.totalAum : '-'}}</p>
                                                 <p *ngIf="isLoadingCategory">{{''}}</p>
                                             </div>
@@ -286,14 +320,19 @@
 
     </div>
     <div *ngIf="componentWise=='category'">
-        <app-category-wise [data]="objTosend" (changedValue)="display($event)"></app-category-wise>
+        <app-category-wise [data]="objTosend" (aumFilter)="aumFilterRes($event)" [filterObj]="filterObj"
+            (changedValue)="display($event)">
+        </app-category-wise>
     </div>
     <div *ngIf="componentWise=='amc'">
-        <app-amc-wise [data]="objTosend" (changedValue)="display($event)"></app-amc-wise>
+        <app-amc-wise [data]="objTosend" (aumFilter)="aumFilterRes($event)" [filterObj]="filterObj"
+            (changedValue)="display($event)"></app-amc-wise>
     </div>
     <div *ngIf="componentWise=='client'">
-        <app-client-wise [data]="objTosend" (changedValue)="display($event)"></app-client-wise>
+        <app-client-wise [data]="objTosend" (aumFilter)="aumFilterRes($event)" [filterObj]="filterObj"
+            (changedValue)="display($event)"></app-client-wise>
     </div>
     <div *ngIf="componentWise=='applicant'">
-        <app-applicant-wise [data]="objTosend" (changedValue)="display($event)"></app-applicant-wise>
+        <app-applicant-wise [data]="objTosend" (aumFilter)="aumFilterRes($event)" [filterObj]="filterObj"
+            (changedValue)="display($event)"></app-applicant-wise>
     </div>

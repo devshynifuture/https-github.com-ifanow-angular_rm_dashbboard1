@@ -31,6 +31,8 @@ export class ApplicantWiseComponent implements OnInit {
   reverse4 = true;
   reverse5 = true;
   @Output() changedValue = new EventEmitter();
+  @Input() filterObj;
+  @Output() aumFilter = new EventEmitter();
   selectedApplicant: any;
   selectedScheme: any;
   selectedFolio: any;
@@ -51,8 +53,24 @@ export class ApplicantWiseComponent implements OnInit {
   selectedSchemeName: any;
   selectedSubCatName: any;
   selectedSchemeFolioName: any;
+  viewModeID: string;
+  aumId: number;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private mfService: MfServiceService, public roleService: RoleService) {
+
+    this.backoffice.misAumData.subscribe(
+      data => {
+        if (data.value == 'applicant') {
+          if (data.aumId != 0) {
+            this.aumId = data.aumId,
+              this.viewModeID = data.viewModeID;
+          } else {
+            this.viewModeID = 'All';
+            this.aumId = 0;
+          }
+        }
+      }
+    )
   }
 
   applicantName;
@@ -148,10 +166,23 @@ export class ApplicantWiseComponent implements OnInit {
       this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
-
+    // if (this.filterObj) {
+    //   this.aumId = this.filterObj.aumId,
+    //     this.viewModeID = this.filterObj.viewModeID;
+    // } else {
+    //   this.viewModeID = 'All';
+    //   this.aumId = 0;
+    // }
     this.getArnRiaList();
     this.aumApplicantWiseTotalaumApplicantNameGet();
   }
+
+  filterIDWise(id, flagValue) {
+    this.aumId = id;
+    this.viewModeID = flagValue;
+    this.aumApplicantWiseTotalaumApplicantNameGet();
+  }
+
 
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
@@ -234,6 +265,9 @@ export class ApplicantWiseComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     };
+    if (this.aumId && this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.getAumApplicantWiseTotalaumApplicantName(obj).subscribe(
       data => this.applicantNameGet(data),
       err => {
@@ -595,6 +629,9 @@ export class ApplicantWiseComponent implements OnInit {
         clientTotalAum: applicantData.totalAum,
         clientId: this.clientIdToPass
       };
+      if (this.aumId && this.aumId != 0) {
+        obj['rtId'] = this.aumId;
+      }
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data => {
           this.isLoadingCategory = false;
@@ -687,6 +724,9 @@ export class ApplicantWiseComponent implements OnInit {
         categoryTotalAum: catData.totalAum,
         clientId: this.clientIdToPass
       };
+      if (this.aumId && this.aumId != 0) {
+        obj['rtId'] = this.aumId;
+      }
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data => {
           this.isLoadingSubCategory = false;
@@ -760,6 +800,9 @@ export class ApplicantWiseComponent implements OnInit {
         subCategoryTotalAum: subCatData.totalAum,
         clientId: this.clientIdToPass
       };
+      if (this.aumId && this.aumId != 0) {
+        obj['rtId'] = this.aumId;
+      }
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data => {
           this.isLoadingScheme = false;
@@ -830,6 +873,10 @@ export class ApplicantWiseComponent implements OnInit {
       arnRiaValue: this.arnRiaValue,
       viewMode: this.viewMode
     });
+    this.aumFilter.emit({
+      aumId: this.aumId,
+      viewModeID: this.viewModeID
+    })
     this.applicantName.forEach(element => {
       element.show = true;
     });
