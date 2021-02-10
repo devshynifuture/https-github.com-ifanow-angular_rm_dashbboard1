@@ -25,6 +25,7 @@ export class StpTransactionComponent implements OnInit {
   mfDefault: any;
   element: any;
   platformType: any;
+  minInstallmentNumber: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private onlineTransact: OnlineTransactionService,
@@ -458,6 +459,8 @@ export class StpTransactionComponent implements OnInit {
         this.dateArray(getFrerq.stpDates);
       } else {
         this.dateArray(getFrerq.stpDates);
+        this.minInstallmentNumber = getFrerq.minInstallmentNumber
+        this.stpTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
       }
     } else {
       this.dateArray(getFrerq.stpDates);
@@ -466,6 +469,9 @@ export class StpTransactionComponent implements OnInit {
       this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.minSTPInInstallmentAmount
       this.stpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
       this.stpTransaction.controls.employeeContry.updateValueAndValidity();
+      this.minInstallmentNumber = getFrerq.minInstallmentNumber
+      this.stpTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
+
     }
   }
 
