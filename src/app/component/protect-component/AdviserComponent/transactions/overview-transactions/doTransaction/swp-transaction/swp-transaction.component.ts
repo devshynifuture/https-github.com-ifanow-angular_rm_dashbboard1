@@ -63,7 +63,7 @@ export class SwpTransactionComponent implements OnInit {
   showUnits = false;
   showSpinner = false;
   navOfSelectedScheme: any;
-  transactionSummary: {};
+  transactionSummary: any;
   selectedFreqModel: any;
   getDataSummary: any;
   swpFrequency: any;
@@ -84,7 +84,7 @@ export class SwpTransactionComponent implements OnInit {
   folioList = [];
   bankDetails: any;
   showSpinnerFolio = false;
-  currentValue: number;
+  currentValue: any;
   multiTransact = false;
   childTransactions = [];
   dataSource = new MatTableDataSource(this.childTransactions);
@@ -240,6 +240,9 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
@@ -276,6 +279,7 @@ export class SwpTransactionComponent implements OnInit {
     this.schemeDetails = null;
     this.onFolioChange(null);
     this.swpFrequency = [];
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -455,8 +459,7 @@ export class SwpTransactionComponent implements OnInit {
         }
       );
       this.navOfSelectedScheme = this.mutualFundData.nav
-      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
-      this.currentValue = Math.round(this.currentValue)
+      this.currentValue = (this.mutualFundData.currentValue)
       this.swpTransaction.controls.currentValue.setValue(this.currentValue);
       this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
       Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
@@ -545,7 +548,7 @@ export class SwpTransactionComponent implements OnInit {
 
         obj = {
           ...obj,
-          productDbId: this.schemeDetails.id,
+          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
           clientName: this.selectedFamilyMember,
           holdingType: this.getDataSummary.defaultClient.holdingType,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,

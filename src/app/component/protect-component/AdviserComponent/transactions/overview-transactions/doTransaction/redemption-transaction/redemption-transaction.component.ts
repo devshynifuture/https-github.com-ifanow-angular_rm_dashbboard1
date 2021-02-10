@@ -261,13 +261,14 @@ export class RedemptionTransactionComponent implements OnInit {
       this.showUnits = true;
       this.navOfSelectedScheme = this.mutualFundData.nav
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
-      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
-      this.currentValue = Math.round(this.currentValue)
+      this.currentValue = (this.mutualFundData.currentValue)
       Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
       Object.assign(this.transactionSummary, { folioNumber: this.mutualFundData.folioNumber });
       Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });
     }
-    this.getSchemeList()
+    if (!this.mutualFundData) {
+      this.getSchemeList();
+    }
   }
 
   deleteChildTran(element) {
@@ -346,7 +347,8 @@ export class RedemptionTransactionComponent implements OnInit {
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
 
@@ -364,6 +366,9 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     this.redemptionTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.redemptionAmountMinimum)]);
@@ -440,7 +445,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
-    } else if ((this.redemptionTransaction.get('redeemType').value) != '3' &&
+    } else if ((this.redemptionTransaction.get('redeemType').value) == '1' &&
       this.redemptionTransaction.get('employeeContry').invalid) {
       this.redemptionTransaction.get('employeeContry').markAsTouched();
     } else {
@@ -450,8 +455,8 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   getSingleTransactionJson() {
-    const allRedeem = (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false;
-    let amountType = (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit';
+    const allRedeem = (this.redemptionTransaction.controls.redeemType.value == "3") ? true : false;
+    let amountType = (this.redemptionTransaction.controls.redeemType.value == "1") ? 'Amount' : 'Unit';
 
     let orderVal: any = '0';
     let qty: any = '0';
@@ -468,7 +473,7 @@ export class RedemptionTransactionComponent implements OnInit {
       }
     }
     const obj = {
-      productDbId: this.schemeDetails.id,
+      productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
       clientName: this.selectedFamilyMember,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,

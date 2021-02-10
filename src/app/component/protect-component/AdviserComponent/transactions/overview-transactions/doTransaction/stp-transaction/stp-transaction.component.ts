@@ -360,8 +360,9 @@ export class StpTransactionComponent implements OnInit {
     this.showSpinner = true;
     this.folioList = [];
     this.schemeDetails = null;
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
-    this.getDataSummary.defaultClient = this.transactionSummary.defaultClient
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient
     Object.assign(this.transactionSummary, { schemeName: this.scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -378,6 +379,9 @@ export class StpTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.showSpinner = false;
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
@@ -448,13 +452,18 @@ export class StpTransactionComponent implements OnInit {
     // this.fre = getFrerq
     this.frequency = getFrerq.frequency;
     // this.stpTransaction.controls.employeeContry.setValidators([Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
-    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
-      this.dateArray(getFrerq.stpDates);
+    if (this.getDataSummary.defaultClient.aggregatorType == 2) {
+      if (getFrerq.stpDates == "") {
+        getFrerq.stpDates = '01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31'
+        this.dateArray(getFrerq.stpDates);
+      } else {
+        this.dateArray(getFrerq.stpDates);
+      }
     } else {
       this.dateArray(getFrerq.sipDates);
     }
     if (this.transactionSummary.defaultClient.aggregatorType == 2) {
-      this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.sipMinimumInstallmentAmount
+      this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.minSTPInInstallmentAmount
       this.stpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
       this.stpTransaction.controls.employeeContry.updateValueAndValidity();
     }
@@ -509,7 +518,7 @@ export class StpTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
-      currentValue: [data.currentValue],
+      currentValue: [(data.currentValue)],
       balanceUnit: [data.balanceUnit],
       employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
       frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
@@ -564,7 +573,7 @@ export class StpTransactionComponent implements OnInit {
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
       this.currentValue = Math.round(this.currentValue)
-      this.stpTransaction.controls.currentValue.setValue(this.currentValue);
+      this.stpTransaction.controls.currentValue.setValue(this.mutualFundData.currentValue);
       this.stpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
@@ -655,7 +664,7 @@ export class StpTransactionComponent implements OnInit {
 
         obj = {
           ...obj,
-          productDbId: this.schemeDetails.id,
+          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
           clientName: this.selectedFamilyMember,
           holdingType: this.getDataSummary.defaultClient.holdingType,
           toProductDbId: this.schemeDetailsTransfer.id,

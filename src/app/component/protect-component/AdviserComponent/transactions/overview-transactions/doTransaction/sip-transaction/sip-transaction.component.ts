@@ -371,7 +371,8 @@ export class SipTransactionComponent implements OnInit {
     this.schemeDetails = undefined;
     this.sipFrequency = [];
     this.onFolioChange(undefined);
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -388,6 +389,9 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.schemeDetails = data[0];
     this.setMinAmount();
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
@@ -806,7 +810,7 @@ export class SipTransactionComponent implements OnInit {
     obj = {
       ...obj,
       orderVal,
-      productDbId: this.schemeDetails.id,
+      productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
       clientName: this.selectedFamilyMember,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
@@ -935,8 +939,6 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.get('tenure').markAsTouched();
     } else if (this.sipTransaction.get('frequency').invalid) {
       this.sipTransaction.get('frequency').markAsTouched();
-    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && !this.selectedMandate) {
-      this.eventService.openSnackBar('No mandate found. Please change payment mode.');
     } else {
       return true;
     }

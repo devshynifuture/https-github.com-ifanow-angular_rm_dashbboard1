@@ -162,6 +162,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.purchaseTransaction.controls.schemePurchase.reset();
     this.folioList = [];
     this.navOfSelectedScheme = 0;
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
     this.purchaseTransaction.get('employeeContry').setValue('');
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
@@ -295,7 +296,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -312,6 +314,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getSchemeDetailsRes(data) {
+    if (!data) {
+      this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS')
+    }
     this.showSpinner = false;
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
@@ -730,7 +735,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   getSingleTransactionJson() {
     this.selectedMandate = this.transactionSummary.selectedMandate
     const obj = {
-      productDbId: this.schemeDetails.id,
+      productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
       clientName: this.selectedFamilyMember,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       mutualFundSchemeMasterId: (this.scheme) ? this.scheme.mutualFundSchemeMasterId : this.mutualFundData.schemeId,

@@ -650,13 +650,13 @@
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                    <button
+                                    <button [disabled]="!authService.isAdvisor()"
                                         *ngIf="roleService.planPermission.subModule.goals.subModule.allocations.enabled"
                                         mat-stroked-button class="in-btn"
                                         (click)="openInSideBar(null, 'openallocations')">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
 
-                                    <button
+                                    <button [disabled]="!authService.isAdvisor()"
                                         *ngIf="roleService.planPermission.subModule.goals.subModule.mfAllocations.enabled"
                                         mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openMfAllocation')">
@@ -672,7 +672,7 @@
                                         mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
                                         <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
 
-                                    <button
+                                    <button [disabled]="!authService.isAdvisor()"
                                         *ngIf="roleService.planPermission.subModule.goals.subModule.preferences.enabled"
                                         mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openPreferences')">
@@ -682,7 +682,7 @@
                                 </div>
 
                                 <div class="btnBox justify-content-center" [hidden]="loaderFn.loading">
-                                    <button
+                                    <button [disabled]="!authService.isAdvisor()"
                                         *ngIf="roleService.planPermission.subModule.goals.subModule.calculators.enabled"
                                         mat-stroked-button class="in-btn-two"
                                         (click)="openInSideBar(null, 'openCalculators')">
