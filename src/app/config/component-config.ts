@@ -81,6 +81,7 @@ export const appConfig = {
   REFRESH_DASHBOARD: 'admin/dashboard/key/metrics/refresh',
   RM_DASHBOARD_MISC_SENDY_FILE_URL_GET: 'misc/sendy-excel/upload-url/get',
   RM_DASHBOARD_POST_AFTER_SENDY_FILE_UPLOAD: 'misc/sendy/subscribe/excel',
+  ADD_SCRIP_STOCK: 'account/asset/ops-team/stock/scrip/add',
   ///////////////////////////// back office/////////////////////////////////////////////
 
 
@@ -630,6 +631,7 @@ export const appConfig = {
   MAP_UNMAP_FOLIO: 'mutual-fund/folio/map/manual',
   UNMAP_MAP_FOLIO: 'mutual-fund/folio/unmap',
   GET_FREQUENCY: 'bse/scheme/sip/view',
+  GET_FREQUENCY_STP: 'bse/scheme/stp/view',
   SIP_BSE: 'bse/order/create',
   BSE_TRANSACTION: 'bse/order/create',
   UPLOAD_FILE_IMAGE: 'user/register/image/upload',

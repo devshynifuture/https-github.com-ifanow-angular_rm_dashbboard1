@@ -162,6 +162,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.purchaseTransaction.controls.schemePurchase.reset();
     this.folioList = [];
     this.navOfSelectedScheme = 0;
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
     this.purchaseTransaction.get('employeeContry').setValue('');
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
@@ -295,7 +296,8 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -444,7 +446,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     // Object.assign(this.transactionSummary, {mutualFundId: folio.id});
     Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
-    this.transactionSummary = { ...this.transactionSummary };
+    //this.transactionSummary = { ...this.transactionSummary };
   }
 
   enteredAmount(value) {

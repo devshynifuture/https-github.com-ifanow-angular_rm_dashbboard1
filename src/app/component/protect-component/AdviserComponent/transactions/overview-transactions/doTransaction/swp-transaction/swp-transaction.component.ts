@@ -63,7 +63,7 @@ export class SwpTransactionComponent implements OnInit {
   showUnits = false;
   showSpinner = false;
   navOfSelectedScheme: any;
-  transactionSummary: {};
+  transactionSummary: any;
   selectedFreqModel: any;
   getDataSummary: any;
   swpFrequency: any;
@@ -276,6 +276,7 @@ export class SwpTransactionComponent implements OnInit {
     this.schemeDetails = null;
     this.onFolioChange(null);
     this.swpFrequency = [];
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {

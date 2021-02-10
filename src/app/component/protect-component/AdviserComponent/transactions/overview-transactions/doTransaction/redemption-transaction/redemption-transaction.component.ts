@@ -346,7 +346,8 @@ export class RedemptionTransactionComponent implements OnInit {
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
 
@@ -429,7 +430,7 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
-    this.transactionSummary = { ...this.transactionSummary };
+    // this.transactionSummary = { ...this.transactionSummary };
     this.folioDetails = folio;
   }
 
@@ -440,7 +441,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.redemptionTransaction.get('investmentAccountSelection').markAsTouched();
     } else if (this.redemptionTransaction.get('redeemType').invalid) {
       this.redemptionTransaction.get('redeemType').markAsTouched();
-    } else if ((this.redemptionTransaction.get('redeemType').value) != '3' &&
+    } else if ((this.redemptionTransaction.get('redeemType').value) == '1' &&
       this.redemptionTransaction.get('employeeContry').invalid) {
       this.redemptionTransaction.get('employeeContry').markAsTouched();
     } else {
@@ -450,8 +451,8 @@ export class RedemptionTransactionComponent implements OnInit {
   }
 
   getSingleTransactionJson() {
-    const allRedeem = (this.redemptionTransaction.controls.redeemType.value == 3) ? true : false;
-    let amountType = (this.redemptionTransaction.controls.redeemType.value == 1) ? 'Amount' : 'Unit';
+    const allRedeem = (this.redemptionTransaction.controls.redeemType.value == "3") ? true : false;
+    let amountType = (this.redemptionTransaction.controls.redeemType.value == "1") ? 'Amount' : 'Unit';
 
     let orderVal: any = '0';
     let qty: any = '0';

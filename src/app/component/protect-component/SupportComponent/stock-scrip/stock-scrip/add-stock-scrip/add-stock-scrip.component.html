@@ -1,0 +1,133 @@
+<div class="popup-header-fix w-50">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">Add stock scrip</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle" (click)="dialogClose(false)"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pb-100 pt-90" [formGroup]="stockScripForm">
+    <div class="row pt-36">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Scrip name</h5>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                        matInput #scripName type="text" maxlength="50" class="form-control br-0"
+                        formControlName="scripName">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{scripName.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-36">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Bse symbol</h5>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                        matInput #bseSymbol type="text" maxlength="50" class="form-control br-0"
+                        formControlName="bseSymbol">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{bseSymbol.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-36">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Nse symbol</h5>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                        matInput #nseSymbol type="text" maxlength="50" class="form-control br-0"
+                        formControlName="nseSymbol">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{nseSymbol.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-36">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">ISIN</h5>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                        matInput #isin type="text" maxlength="50" class="form-control br-0" formControlName="isin">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{isin.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-36">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">StockCategoryMasterId</h5>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        matInput #stockCategoryMasterId type="text" maxlength="50" class="form-control br-0"
+                        formControlName="stockCategoryMasterId">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{stockCategoryMasterId.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-36">
+        <div class="col-md-5 pr-0 text-right">
+            <h5 class="m-0 pt-12">Nav</h5>
+        </div>
+        <div class="col-md-5 pr-0">
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY_WITH_TWO_DECIMAL" matInput #nav type="text"
+                        maxlength="50" class="form-control br-0" formControlName="nav">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{nav.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="dialogClose(false)">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <app-progress-button (btnClick)="saveScrip()" [options]="barButtonOptions">
+            </app-progress-button>
+        </div>
+    </div>
+</div>

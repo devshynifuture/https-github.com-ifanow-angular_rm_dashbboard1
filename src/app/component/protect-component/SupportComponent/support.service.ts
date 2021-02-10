@@ -198,4 +198,8 @@ export class SupportService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.CONVERT_TO_PAID_DATE, data);
   }
 
+  saveStockScrip(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ADD_SCRIP_STOCK, data);
+  }
+
 }

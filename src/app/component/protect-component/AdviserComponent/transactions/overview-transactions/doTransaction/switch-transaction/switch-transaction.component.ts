@@ -265,7 +265,8 @@ export class SwitchTransactionComponent implements OnInit {
     this.folioList = [];
     this.schemeDetails = null;
     this.onFolioChange(null);
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -597,8 +598,8 @@ export class SwitchTransactionComponent implements OnInit {
           toIsin: this.schemeDetailsTransfer.isin,
           schemeCd: this.schemeDetails.schemeCode,
           euin: this.getDataSummary.euin.euin,
-          qty: (this.switchTransaction.controls.switchType.value == 1) ? 0 : (this.switchTransaction.controls.switchType.value == 3) ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
-          allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
+          qty: (this.switchTransaction.controls.switchType.value == "1") ? 0 : (this.switchTransaction.controls.switchType.value == "3") ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+          allUnits: (this.switchTransaction.controls.switchType.value == "3") ? true : false,
           orderType: 'SWITCH',
           buySell: 'SWITCH_OUT',
           transCode: 'NEW',
@@ -606,7 +607,7 @@ export class SwitchTransactionComponent implements OnInit {
           amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
           dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
           clientCode: this.getDataSummary.defaultClient.clientCode,
-          orderVal: this.switchTransaction.controls.employeeContry.value,
+          orderVal: (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value,
           bseDPTransType: 'PHYSICAL',
           aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
           childTransactions: [],
@@ -669,18 +670,18 @@ export class SwitchTransactionComponent implements OnInit {
           amcId: this.scheme.amcId,
           mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
           productDbId: this.schemeDetails.id,
-          amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
+          amountType: (this.switchTransaction.controls.switchType.value == "1") ? 'Amount' : 'Unit',
           toProductDbId: this.schemeDetailsTransfer.id,
-          qty: (this.switchTransaction.controls.switchType.value == 1) ?
-            0 : (this.switchTransaction.controls.switchType.value == 3) ?
+          qty: (this.switchTransaction.controls.switchType.value == "1") ?
+            0 : (this.switchTransaction.controls.switchType.value == "3") ?
               this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
-          allRedeem: (this.switchTransaction.controls.switchType.value == 3) ? true : false,
+          allUnits: (this.switchTransaction.controls.switchType.value == "3") ? true : false,
           toIsin: this.schemeDetailsTransfer.isin,
           isin: this.schemeDetails.isin,
           folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
           productCode: this.schemeDetails.schemeCode,
           dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-          orderVal: this.switchTransaction.controls.employeeContry.value,
+          orderVal: (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value,
           schemeName: this.scheme.schemeName,
           transferIn: this.switchTransaction.get('transferIn').value,
           switchType: this.switchTransaction.get('switchType').value

@@ -286,7 +286,7 @@ export class DashboardComponent implements OnInit {
   showSummaryBar;
   taskStatusList: any;
   last7DaysLoading = true;
-
+  isLoadingTransaction: boolean;
   advisorId: any;
   dashBoardSummary: {}[];
   isLoadingSubSummary = false;
@@ -338,7 +338,7 @@ export class DashboardComponent implements OnInit {
   dataSource6 = ELEMENT_DATA6;
   displayedColumns7: string[] = ['position', 'name', 'weight', 'symbol', 'match', 'report'];
   dataSource7 = ELEMENT_DATA7;
-
+  dataSource8 = ELEMENT_DATA5;
   sliderConfig = {
     slidesToShow: 1,
     infinite: true,
@@ -596,7 +596,11 @@ export class DashboardComponent implements OnInit {
     else {
       this.getGoalSummaryData(); // summry dashbord
     }
-
+    if (DashboardService.allTransactions) {
+      this.getTransactionResponse(DashboardService.allTransactions);
+    } else {
+      this.getAllTrsanction(); // summry dashbord
+    }
     if (DashboardService.dashMisData) {
       this.getMisDataRes(DashboardService.dashMisData);
     }
@@ -1942,6 +1946,38 @@ export class DashboardComponent implements OnInit {
         console.log('dashboard getMisData err : ', err);
       }
     );
+  }
+  getAllTrsanction() {
+    this.isLoadingTransaction = true;
+    const obj = {
+      parentId: this.parentId,
+      startFlag: 0,
+      endFlag: 5,
+    };
+    this.backoffice.getMfTransactions(obj).subscribe(
+      data => {
+        if (data) {
+          DashboardService.allTransactions = data;
+          this.getTransactionResponse(data);
+        } else {
+          this.isLoadingTransaction = false;
+          this.dataSource8 = [];
+        }
+      },
+      err => {
+        this.isLoadingTransaction = false;
+        this.dataSource5 = [];
+        console.log('dashboard getMisData err : ', err);
+      }
+    );
+  }
+  getTransactionResponse(data) {
+    this.isLoadingTransaction = false;
+    if (data && data.length > 0) {
+      this.dataSource8 = data;
+    } else {
+      this.dataSource8 = [];
+    }
   }
   getMisDataRes(data) {
     this.keyMetricJson.mfAum = data.totalAumRupees;

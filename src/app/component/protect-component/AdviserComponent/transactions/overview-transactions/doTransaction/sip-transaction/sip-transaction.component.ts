@@ -371,7 +371,8 @@ export class SipTransactionComponent implements OnInit {
     this.schemeDetails = undefined;
     this.sipFrequency = [];
     this.onFolioChange(undefined);
-    this.platformType = this.transactionSummary.defaultClient.aggregatorType
+    //this.getDataSummary.defaultClient = this.transactionSummary.defaultClient.aggregatorType
+    //this.platformType = this.transactionSummary.defaultClient.aggregatorType
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -495,7 +496,7 @@ export class SipTransactionComponent implements OnInit {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId
     };
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType })
-    this.transactionSummary = { ...this.transactionSummary };
+    // this.transactionSummary = { ...this.transactionSummary };
     this.onlineTransact.getMandateDetails(obj1).subscribe(
       data => this.getMandateDetailsRes(data), (error) => {
         this.handleMandateFailure();
@@ -543,7 +544,7 @@ export class SipTransactionComponent implements OnInit {
               this.selectedMandate = element
               Object.assign(this.transactionSummary, { defaultBank: element });
               Object.assign(this.transactionSummary, { bankDetails: element });
-              this.transactionSummary = { ...this.transactionSummary };
+              // this.transactionSummary = { ...this.transactionSummary };
             } else {
               if (this.bankDetails.ifscCode == element.ifscCode) {
                 this.selectedMandate = element
@@ -669,7 +670,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
     Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
-    this.transactionSummary = { ...this.transactionSummary };
+    // this.transactionSummary = { ...this.transactionSummary };
   }
 
   reinvest(scheme) {
@@ -935,8 +936,6 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.get('tenure').markAsTouched();
     } else if (this.sipTransaction.get('frequency').invalid) {
       this.sipTransaction.get('frequency').markAsTouched();
-    } else if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && !this.selectedMandate) {
-      this.eventService.openSnackBar('No mandate found. Please change payment mode.');
     } else {
       return true;
     }

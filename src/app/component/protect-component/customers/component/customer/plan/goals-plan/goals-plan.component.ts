@@ -154,13 +154,15 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     private allocateOtherAssetService: AddGoalService,
     private cd: ChangeDetectorRef,
     public loaderFn: LoaderFunction,
-    public roleService: RoleService
+    public roleService: RoleService,
+    public authService: AuthService,
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
+    console.log('isAdvisor', authService.isAdvisor())
   }
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;

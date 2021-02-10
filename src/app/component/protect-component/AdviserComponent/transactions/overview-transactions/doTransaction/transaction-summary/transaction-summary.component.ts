@@ -242,9 +242,11 @@ export class TransactionSummaryComponent implements OnInit {
       console.log('bank == ', this.bankDetails);
       this.transactionSummary.bankDetails = this.bankDetails
       if (this.transactionSummary.transactType == 'PURCHASE' || this.transactionSummary.transactType == 'SIP')
-        this.getMandateDetails();
+        if (this.selectedPlatform == 1) {
+          this.getMandateDetails();
+        }
       this.bankDetails.forEach(element => {
-        if (element.defaultBankFlag == 'Y') {
+        if (element.defaultBankFlag == 'Y' || element.defaultBankFlag == 1) {
           this.defaultBank = element;
           element.selected = true;
         }
