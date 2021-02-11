@@ -655,9 +655,6 @@ export class StpTransactionComponent implements OnInit {
       } else if (this.stpTransaction.get('tenure').invalid) {
         this.stpTransaction.get('tenure').markAsTouched();
         return;
-      } else if (this.stpTransaction.get('tenure').value != '3' && this.stpTransaction.get('installment').invalid) {
-        this.stpTransaction.get('installment').markAsTouched();
-        return;
       } else {
         if (this.barButtonOptions.active) {
           return;
