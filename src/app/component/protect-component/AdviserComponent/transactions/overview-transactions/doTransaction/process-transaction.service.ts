@@ -463,8 +463,8 @@ export class ProcessTransactionService {
       this.onlineTransactService.getCountryCodeList({}).subscribe(data => {
         this.countryCodeList = data
       });
+      return this.countryCodeList
     }
-    return this.countryCodeList
     // }
   }
 }

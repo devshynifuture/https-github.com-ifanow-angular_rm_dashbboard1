@@ -378,6 +378,7 @@ export class ContactDetailsInnComponent implements OnInit {
       }
       // this.sendObj.firstHolder = Object.assign({}, this.list.firstHolder, this.firstHolderContact);
       this.sendObj.holderList = this.obj1;
+      this.sendObj.draft = this.inputData.draft
       localStorage.setItem('contact' + (this.data.clientId), JSON.stringify(this.sendObj));
       this.openBankDetails(this.sendObj);
     }

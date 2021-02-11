@@ -356,10 +356,27 @@
                 class="txt btn-height text-uppercase">Cancel</button> -->
         </div>
     </div>
+
+
+    <div class="row">
+        <div class="col-md-8 d-flex align-items-center justify-content-around m-auto">
+            <div>
+                <h4 class="f-16 f-500 roboto">Thank You!</h4>
+                <p class="roboto">Your consent has been recorded.</p>
+                <p class="roboto">We have also sent an email to you which <br> has the consent copy for record keeping
+                    purpose.</p>
+                <p class="roboto">Feel free to Contact us if you have any questions</p>
+                <button mat-button class="closeBtnConsent text-primary"> CLOSE</button>
+            </div>
+            <img src="assets/images/svg/consent-thank-you.svg">
+        </div>
+
+    </div>
+
 </div>
 <!-- -------------------- pdf ---------------------------- -->
 
-<div id="templateEmail" class="hide">
+<div id="templateEmail">
     <html>
     <meta charset="UTF-8">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
@@ -404,7 +421,7 @@
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Premium amount </th>
                         <th
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Advice </th>
                         <th
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
@@ -489,11 +506,13 @@
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <div class="d-flex align-items-center" *ngIf="!isLoading">
 
-                                <button *ngIf="!isLoading && element.acceptedOrDeclined == 1" class="mr-12"
+                                <button style="border: transparent;"
+                                    *ngIf="!isLoading && element.acceptedOrDeclined == 1" class="mr-12"
                                     [ngStyle]="(element.acceptedOrDeclined==1) ? {'background': '#008FFF', 'color': '#ffffff'} : (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2) ? {'border': '1px solid #008FFF', 'color': '#008FFF'} : {}"
                                     (click)="acceptOrDeclineConsent(element, i, 1)">{{element.acceptedOrDeclined==1 ? 'ACCEPTED' : 'ACCEPT'}}</button>
 
-                                <button *ngIf="!isLoading && element.acceptedOrDeclined == 2"
+                                <button style="border: transparent;"
+                                    *ngIf="!isLoading && element.acceptedOrDeclined == 2"
                                     [ngStyle]="(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1) ? {'border': '1px solid #f16724', 'color': '#f16724'} : (element.acceptedOrDeclined==2) ? {'background': '#f16724', 'color': '#ffffff'} :{}"
                                     (click)="acceptOrDeclineConsent(element,i, 2)">{{element.acceptedOrDeclined == 2 ? 'DECLINED' : 'DECLINE'}}</button>
 
@@ -502,6 +521,7 @@
 
                     </tr>
                 </table>
+
                 <table style="width: 100%;" *ngIf="id==4 && dataSource.data.length > 0">
                     <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
                         <th
@@ -524,7 +544,7 @@
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Policy expiry date </th>
                         <th
-                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: right; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
                             Advice </th>
                         <th
                             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0; border-top: 1px solid #DADCE0;">
@@ -565,11 +585,11 @@
                                 {{element?.stringObject[element.name]?.premiumAmount ? element?.stringObject[element.name]?.premiumAmount : '-'}}</span>
                         </td>
                         <td
-                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+                            style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;  border-bottom: 1px solid #DADCE0;">
                             <span appFormatNumber>
                                 {{element?.stringObject[element.name]?.policyExpiryDate ?  (element?.stringObject[element.name]?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}</span>
                         </td>
-                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
+                        <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; text-align: left; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>
                             <span *ngIf="element">
                                 <span *ngIf="element?.adviceToGenInsurance?.genInsuranceAdviceId==1">Continue</span>
@@ -611,11 +631,13 @@
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
                             <div class="d-flex align-items-center" *ngIf="!isLoading">
 
-                                <button *ngIf="!isLoading && element.acceptedOrDeclined == 1 " class="mr-12"
+                                <button style="border: transparent;"
+                                    *ngIf="!isLoading && element.acceptedOrDeclined == 1 " class="mr-12 "
                                     [ngStyle]="(element.acceptedOrDeclined==1) ? {'background': '#008FFF', 'color': '#ffffff'} : (element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 2) ? {'border': '1px solid #008FFF', 'color': '#008FFF'} : {}"
                                     (click)="acceptOrDeclineConsent(element, i, 1)">{{element.acceptedOrDeclined==1 ? 'ACCEPTED' : 'ACCEPT'}}</button>
 
                                 <button *ngIf="!isLoading && element.acceptedOrDeclined == 2"
+                                    style="border: transparent;"
                                     [ngStyle]="(element.acceptedOrDeclined==0 || element.acceptedOrDeclined == 1) ? {'border': '1px solid #f16724', 'color': '#f16724'} : (element.acceptedOrDeclined==2) ? {'background': '#f16724', 'color': '#ffffff'} :{}"
                                     (click)="acceptOrDeclineConsent(element,i, 2)">{{element.acceptedOrDeclined == 2 ? 'DECLINED' : 'DECLINE'}}</button>
                             </div>
@@ -640,20 +662,7 @@
             </td>
         </tr>
 
-        <!-- <tr>
-            <td>
-                <table style="width: 100%;">
-                    <tr>
-                        <div class="mt-20">
-                            <button class="btn-primary btn-height text-uppercase mr-16"
-                                *ngIf="!isLoading && dataSource.data.length > 0" (click)="save()">Ok</button>
-                            <button (click)="dialogClose()" *ngIf="!isLoading && dataSource.data.length > 0"
-                                class="txt btn-height text-uppercase">Cancel</button>
-                        </div>
-                    </tr>
-                </table>
-            </td>
-        </tr> -->
+
 
 
     </table>

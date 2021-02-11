@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 // import {Router} from '@angular/router';
-import {Router} from '@angular/router';
-import {DashboardService} from '../component/protect-component/AdviserComponent/dashboard/dashboard.service';
+import { Router } from '@angular/router';
+import { DashboardService } from '../component/protect-component/AdviserComponent/dashboard/dashboard.service';
 
 @Injectable()
 export class AuthService {
@@ -76,10 +76,6 @@ export class AuthService {
     }
   }
 
-  static setClientList(data) {
-    sessionStorage.setItem('clientList', JSON.stringify(data));
-  }
-
   static setInvalidCredsTimeZone(data) {
     sessionStorage.setItem('invalidPopup', JSON.stringify(data));
   }
@@ -104,9 +100,6 @@ export class AuthService {
     localStorage.setItem('roleObj', JSON.stringify(roleObj));
   }
 
-  static getClientList() {
-    return JSON.parse(sessionStorage.getItem('clientList'));
-  }
 
   static getInvalidCredsTimeZone() {
     return JSON.parse(sessionStorage.getItem('invalidPopup'));
@@ -254,7 +247,6 @@ export class AuthService {
     localStorage.removeItem('advisorRoles');
     window.name = undefined;
     localStorage.clear();
-    sessionStorage.removeItem('clientList');
     sessionStorage.removeItem('ToDo');
     sessionStorage.clear();
     sessionStorage.removeItem('taskMatrix');
