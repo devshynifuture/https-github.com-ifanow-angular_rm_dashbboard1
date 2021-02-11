@@ -856,7 +856,7 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
+      limit: -1,
       offset: 1,
       familyMemberId: 0,
     };
@@ -866,7 +866,7 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
+      limit: -1,
       offset: 1,
       familyMemberId: 0,
       clientDob: this.clientDob,
@@ -1188,7 +1188,7 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
+      limit:-1,
       offset: 1,
       familyMemberId: 0,
     };
@@ -1239,7 +1239,7 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
+      limit: -1,
       offset: 1,
       familyMemberId: 0,
       clientDob: this.clientDob,
@@ -1314,7 +1314,7 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
+      limit: -1,
       offset: 1,
       familyMemberId: 0,
     };
@@ -1369,7 +1369,7 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
+      limit: -1,
       offset: 1,
       familyMemberId: 0,
     };

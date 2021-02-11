@@ -461,9 +461,9 @@
                                         </ng-container>
                                         <ng-container matColumnDef="budget">
                                             <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
-                                                class="br t-10 text-right w-15"> Budget
+                                                class="br t-10 text-right w-20"> Budget
                                             </th>
-                                            <td mat-cell *matCellDef="let element" class="w-15 br t-10 text-right">
+                                            <td mat-cell *matCellDef="let element" class="w-20 br t-10 text-right">
 
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     {{!isLoadingBudget && element.totalAmount? "₹" : ""}}<span
@@ -471,7 +471,7 @@
                                                 </div>
                                             </td>
                                             <td mat-footer-cell *matFooterCellDef
-                                                class="w-15 br f-600 p-8 amt text-right">
+                                                class="w-20 br f-600 p-8 amt text-right">
                                                 <div>{{!isLoading && totalBudget!=0 ? '₹ ' : ''}}<span
                                                         [value]="totalBudget ? totalBudget : '-'"
                                                         appFormatNumber></span>
@@ -597,16 +597,16 @@
                                         </ng-container>
                                         <ng-container matColumnDef="budget">
                                             <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
-                                                class="br t-10 text-right w-15"> Budget
+                                                class="br t-10 text-right w-20"> Budget
                                             </th>
-                                            <td mat-cell *matCellDef="let element" class="w-15 br t-10 text-right">
+                                            <td mat-cell *matCellDef="let element" class="w-20 br t-10 text-right">
                                                 <div [ngClass]="{'bar': isLoadingBudget}">
                                                     {{!isLoadingBudget && element.total? "₹" : ""}}<span appFormatNumber
                                                         *ngIf="!isLoadingBudget">{{element.total ? element.total :'-'}}</span>
                                                 </div>
                                             </td>
                                             <td mat-footer-cell *matFooterCellDef
-                                                class="w-15 br f-600 p-8 amt text-right">
+                                                class="w-20 br f-600 p-8 amt text-right">
                                                 <div>{{!isLoading && totalbudegtRecurring!=0 ? '₹ ' : ''}}<span
                                                         [value]="totalbudegtRecurring ? totalbudegtRecurring : '-'"
                                                         appFormatNumber></span>
