@@ -505,6 +505,8 @@ export class StpTransactionComponent implements OnInit {
 
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, { Ttype: 1 });
+
   }
 
   getbankDetails(value) {

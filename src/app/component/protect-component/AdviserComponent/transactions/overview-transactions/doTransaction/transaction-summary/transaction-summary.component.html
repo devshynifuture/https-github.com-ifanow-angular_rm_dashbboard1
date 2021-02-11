@@ -66,8 +66,13 @@
           <h5 class="m-0"> <span
               class="f-500">Folio:</span>{{(transactionSummary == undefined) ? '' : transactionSummary.folioNumber}}
           </h5>
-          <h5 class="m-0"><span class="f-500">Amount:</span>
+          <h5 class="m-0" *ngIf="transactionSummary.enteredAmount && transactionSummary.Ttype == 1"><span
+              class="f-500">Amount:</span>
             ₹{{(transactionSummary == undefined) ? '' : transactionSummary.enteredAmount}}/Lumpsum
+          </h5>
+          <h5 class="m-0" *ngIf="transactionSummary.enteredUnits && transactionSummary.Ttype == 2"><span
+              class="f-500">Units:</span>
+            {{(transactionSummary == undefined) ? '' : transactionSummary.enteredUnits}}
           </h5>
         </div>
       </div>

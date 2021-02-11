@@ -454,6 +454,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, { Ttype: 1 });
 
   }
 
