@@ -189,11 +189,6 @@ export class RedemptionTransactionComponent implements OnInit {
     this.redemptionTransaction.controls.schemeRedeem.reset();
   }
 
-  redemptionType(value) {
-
-  }
-
-
   close() {
     this.subInjectService.changeNewRightSliderState({
       state: 'close',
@@ -281,8 +276,15 @@ export class RedemptionTransactionComponent implements OnInit {
     }
   }
 
-  enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+  enteredAmount(value, switchType) {
+    if (switchType == 1) {
+      Object.assign(this.transactionSummary, { enteredAmount: value });
+      Object.assign(this.transactionSummary, { Ttype: switchType });
+    } else {
+      Object.assign(this.transactionSummary, { enteredUnits: value });
+      Object.assign(this.transactionSummary, { Ttype: switchType });
+    }
+
   }
 
   getFormControl(): any {

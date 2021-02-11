@@ -180,7 +180,7 @@
                                 <input #employeeContry (change)="enteredAmount($event.target.value)"
                                     [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
                                     class="form-control rupess" formControlName="employeeContry" matInput maxlength="10"
-                                    placeholder="Enter Amounts/Units" type="text">
+                                    placeholder="Enter Amounts" type="text">
                                 <mat-hint align="start" class="f-12 text-custom">
                                     Min amount:
                                     ₹{{(schemeDetails == undefined) ? '0' : schemeDetails.minimumPurchaseAmount }}

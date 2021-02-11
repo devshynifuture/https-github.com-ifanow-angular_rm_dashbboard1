@@ -130,8 +130,7 @@
                     </div>
                     <div class="col-md-5 p-0">
                         <mat-form-field>
-                            <mat-select (selectionChange)="redemptionType($event)" class="form-control br-0"
-                                formControlName="redeemType">
+                            <mat-select class="form-control br-0" formControlName="redeemType">
                                 <mat-option disabled value=''>Select redemption type</mat-option>
                                 <mat-option value="1">Amount Rs.
                                 </mat-option>
@@ -154,9 +153,11 @@
                     </div>
 
                     <div class="col-md-5 p-0">
-                        <div class="form-group  inputPaddNone iconRupess">
+                        <div class="form-group  inputPaddNone"
+                            [ngClass]="redemptionTransaction.get('redeemType').value == '1' ? 'iconRupess': ''">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input #employeeContry (change)="enteredAmount($event.target.value)"
+                                <input #employeeContry
+                                    (change)="enteredAmount($event.target.value,redemptionTransaction.get('redeemType').value)"
                                     [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
                                     class="form-control rupess" formControlName="employeeContry" matInput maxlength="10"
                                     placeholder="Enter Amounts/Units" type="text">

@@ -244,10 +244,11 @@
             <h5 class="mb-8 pt-28 text-black"> Amounts/Units</h5>
           </div>
 
-          <div class="col-md-5 p-0 iconRupess">
+          <div class="col-md-5 p-0" [ngClass]="switchTransaction.get('switchType').value == '1' ? 'iconRupess': ''">
             <div class="form-group remove-top inputPaddNone">
               <mat-form-field appearance="standard" floatLabel="never">
-                <input #employeeContry (change)="enteredAmount($event.target.value)"
+                <input #employeeContry
+                  (change)="enteredAmount($event.target.value,switchTransaction.get('switchType').value)"
                   [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control br-0 rupess"
                   formControlName="employeeContry" matInput maxlength="10" placeholder="Enter Amounts/Units"
                   type="text">
