@@ -152,11 +152,11 @@ export class AddExpensesComponent implements OnInit {
     this.recuring = this.fb.group({
       timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency + '', [Validators.required]],
+      repeatFrequency: [(data.repeatFrequency == undefined) ? '' : data.repeatFrequency + '', [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime)],
       UntilDate: [(data == undefined) ? '' : new Date((data.UntilDate == undefined) ? data.startsFrom : data.UntilDate)],
-      continueTill: [(data == undefined) ? '' : (data.continueTill + ''), [Validators.required]],
+      continueTill: [(data == undefined) ? '' : (data.continueTill ? data.continueTill + '' : ''), [Validators.required]],
       description: [(data == undefined) ? '' : data.description],
       id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
@@ -204,7 +204,9 @@ export class AddExpensesComponent implements OnInit {
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.recuring.get('ownerName').setErrors(null);
+            if (this.recuring.get('ownerName').value) {
+              this.recuring.get('ownerName').setErrors(null);
+            }
           }
         }
       });
@@ -216,7 +218,9 @@ export class AddExpensesComponent implements OnInit {
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.expenses.get('ownerName').setErrors(null);
+            if (this.expenses.get('ownerName').value) {
+              this.expenses.get('ownerName').setErrors(null);
+            }
           }
         }
       });
@@ -228,7 +232,9 @@ export class AddExpensesComponent implements OnInit {
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.recuring.get('ownerName').setErrors(null);
+            if (this.recuring.get('ownerName').value) {
+              this.recuring.get('ownerName').setErrors(null);
+            }
           }
         }
       });
@@ -240,7 +246,9 @@ export class AddExpensesComponent implements OnInit {
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.expenses.get('ownerName').setErrors(null);
+            if (this.expenses.get('ownerName').value) {
+              this.expenses.get('ownerName').setErrors(null);
+            }
           }
         }
       });
@@ -262,7 +270,9 @@ export class AddExpensesComponent implements OnInit {
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.recuring.get('ownerName').setErrors(null);
+            if (this.recuring.get('ownerName').value) {
+              this.recuring.get('ownerName').setErrors(null);
+            }
           }
         }
       });
@@ -274,7 +284,9 @@ export class AddExpensesComponent implements OnInit {
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.expenses.get('ownerName').setErrors(null);
+            if (this.expenses.get('ownerName').value) {
+              this.expenses.get('ownerName').setErrors(null);
+            }
           }
         }
       });
@@ -286,7 +298,9 @@ export class AddExpensesComponent implements OnInit {
           this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.recuring.get('ownerName').setErrors(null);
+            if (this.recuring.get('ownerName').value) {
+              this.recuring.get('ownerName').setErrors(null);
+            }
           }
         }
       });
@@ -298,7 +312,9 @@ export class AddExpensesComponent implements OnInit {
           this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
         } else {
           if (!isCheck) {
-            this.expenses.get('ownerName').setErrors(null);
+            if (this.expenses.get('ownerName').value) {
+              this.expenses.get('ownerName').setErrors(null);
+            }
           }
         }
       });

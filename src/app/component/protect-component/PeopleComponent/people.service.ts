@@ -15,8 +15,7 @@ export class PeopleService {
     private http: HttpService,
     private authService: AuthService) {
   }
-
-
+  clientList;
   // commmented code which are giving error =>>>>>>>>>>>
 
 
