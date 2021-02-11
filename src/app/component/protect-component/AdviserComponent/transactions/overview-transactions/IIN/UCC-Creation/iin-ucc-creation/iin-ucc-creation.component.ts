@@ -67,11 +67,12 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     } else {
       this.getClients();
     }
-    this.processTransaction.getCountryCodeList().subscribe((responseData) => {
-    }, error => {
-      console.error('country code error : ', error);
+    // this.processTransaction.getCountryCodeList().subscribe((responseData) => {
+    // }, error => {
+    //   console.error('country code error : ', error);
 
-    });
+    // });
+
   }
 
   ngAfterViewInit(): void {

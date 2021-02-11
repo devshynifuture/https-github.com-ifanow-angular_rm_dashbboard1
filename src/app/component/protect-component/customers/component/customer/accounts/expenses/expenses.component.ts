@@ -362,8 +362,9 @@ export class ExpensesComponent implements OnInit {
         this.getAllExpenseResposne(data);
         // this.isLoading = true;
       }, (error) => {
-        this.expenseStorage[this.startDate + '-' + this.endDate] = [];
-        this.expenseStorage[this.startDate + '-' + this.endDate].push([])
+        this.expenseStorage[this.startDate + '-' + this.endDate] = null;
+        // this.expenseStorage[this.startDate + '-' + this.endDate] = [];
+        // this.expenseStorage[this.startDate + '-' + this.endDate].push([])
         this.summaryPlanService.setExpenseData(this.expenseStorage);
         this.dataSource.data = [];
         this.dataSource1.data = [];
@@ -830,7 +831,14 @@ export class ExpensesComponent implements OnInit {
       // }, 300);
     } else {
       if (this.chekToCallApi()) {
-        this.getListFamilyMem()
+        if (this.familyList && this.clientDob) {
+          this.getAllExpense();
+        } else {
+          this.dataSource.data = [{}, {}, {}];
+          this.dataSource1.data = [{}, {}, {}];
+          this.isLoading = true;
+          this.getListFamilyMem();
+        }
       } else {
         this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
       }
@@ -1188,7 +1196,7 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit:-1,
+      limit: -1,
       offset: 0,
       familyMemberId: 0,
     };
