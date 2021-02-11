@@ -517,6 +517,7 @@ export class BankDetailsIINComponent implements OnInit {
       //     this.barButtonOptions.active = false;
       //   }
       // );
+      this.sendObj.draft = this.inputData.draft
       localStorage.setItem('bank' + (this.data.clientId), JSON.stringify(this.sendObj));
       this.openNomineeDetails(this.sendObj);
     }

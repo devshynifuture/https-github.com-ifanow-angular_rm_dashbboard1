@@ -326,6 +326,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     }
 
     this.obj1.holderList = holderList;
+    this.obj1.draft = this.draft
     if (flag == true) {
       localStorage.setItem('holderList' + (this.clientData.clientId), JSON.stringify(this.obj1));
       this.openContactDetails(this.obj1);

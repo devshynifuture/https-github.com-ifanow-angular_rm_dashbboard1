@@ -537,9 +537,6 @@ export class SwpTransactionComponent implements OnInit {
       } else if (this.swpTransaction.get('employeeContry').invalid) {
         this.swpTransaction.get('employeeContry').markAsTouched();
         return;
-      } else if ((this.swpTransaction.get('tenure').value) != 3 && this.swpTransaction.get('installment').invalid) {
-        this.swpTransaction.get('installment').markAsTouched();
-        return;
       } else {
         if (this.barButtonOptions.active) {
           return;
