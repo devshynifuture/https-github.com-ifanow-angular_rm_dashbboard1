@@ -3,6 +3,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { BackOfficeService } from '../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatTableDataSource } from '@angular/material';
+import { offset } from 'highcharts';
 
 @Component({
   selector: 'app-customise-setting',
@@ -121,7 +122,7 @@ export class CustomiseSettingComponent implements OnInit {
         searchName: event
       };
       this.backOffice.getMutualFundClientList(obj).subscribe(
-        data => this.getMutualFundClientListRes(data)
+        data => this.getMutualFundClientListRes(data, offset)
       );
     }
   }
@@ -133,10 +134,10 @@ export class CustomiseSettingComponent implements OnInit {
       offset: offset
     };
     this.backOffice.getMutualFundClientList(obj).subscribe(
-      data => this.getMutualFundClientListRes(data)
+      data => this.getMutualFundClientListRes(data, offset)
     );
   }
-  getMutualFundClientListRes(data) {
+  getMutualFundClientListRes(data, offset) {
     this.isLoading = false
     this.count = 0
     this.countSummary = 0
@@ -144,7 +145,11 @@ export class CustomiseSettingComponent implements OnInit {
     this.countunre = 0
     this.countCap = 0
     this.countCapDetail = 0
-    this.dataSource.data = data
+    if (offset > 0) {
+      this.dataSource.data = this.dataSource.data.concat(data)
+    } else {
+      this.dataSource.data = data
+    }
     if (!data) {
       this.dataSource.data = []
     } else {
