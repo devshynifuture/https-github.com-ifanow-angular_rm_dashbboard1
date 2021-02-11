@@ -63,9 +63,9 @@ export class PeopleClientsComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
 
-    if (AuthService.getClientList()) {
+    if (this.peopleService.clientList) {
       this.hasEndReached = false;
-      this.finalClientList = AuthService.getClientList()
+      this.finalClientList = this.peopleService.clientList;
       this.clientDatasource.data = this.finalClientList;
       this.clientDatasource.sort = this.clientTableSort;
       this.isLoading = false;
@@ -115,7 +115,7 @@ export class PeopleClientsComponent implements OnInit {
           this.clientDatasource.sort = this.clientTableSort;
           this.hasEndReached = false;
           this.infiniteScrollingFlag = false;
-          (offsetValue == 0) ? AuthService.setClientList(data) : '';
+          (offsetValue == 0) ? this.peopleService.clientList = data : '';
         } else {
           this.isLoading = false;
           this.infiniteScrollingFlag = false;
@@ -235,6 +235,7 @@ export class PeopleClientsComponent implements OnInit {
             this.enumDataService.searchClientAndFamilyMember();
             this.cancelFlagService.setCancelFlag(undefined);
             this.finalClientList = [];
+            this.peopleService.clientList = undefined;
             this.getClientList(0);
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
