@@ -144,8 +144,8 @@ export class TempserviceService {
           // totalObj.totalGain = totalObj.totalGain + totalObj.dividendPayout;
           const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
           console.log(obj);
-          totalObj.xirr = obj.xirr;
-          totalObj.absReturn = obj.absoluteReturn;
+          totalObj.xirr = obj ? obj.xirr : 0;
+          totalObj.absReturn = obj ? obj.absoluteReturn : 0;
           Object.assign(totalObj, { categoryName: key });
         }
       });
@@ -251,8 +251,8 @@ export class TempserviceService {
             });
             totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, false, folio), totalObj, { total: true });
             const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
-            totalObj.totalCagr = data.xirr;
-            totalObj.trnAbsoluteReturn = data.absoluteReturn;
+            totalObj.totalCagr =data ? data.xirr : 0 ;
+            totalObj.trnAbsoluteReturn = data ? data.absoluteReturn : 0;
             totalObj.totalBalanceUnit = singleData.mutualFundTransactions[singleData.mutualFundTransactions.length - 1].balanceUnits
             filteredData.push(totalObj);
           } else {
