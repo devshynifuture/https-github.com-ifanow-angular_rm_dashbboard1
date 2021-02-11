@@ -857,7 +857,7 @@ export class ExpensesComponent implements OnInit {
       endDate: this.endDate,
       startDate: this.startDate,
       limit: -1,
-      offset: 1,
+      offset: 0,
       familyMemberId: 0,
     };
     const obj2 = {
@@ -867,7 +867,7 @@ export class ExpensesComponent implements OnInit {
       endDate: this.endDate,
       startDate: this.startDate,
       limit: -1,
-      offset: 1,
+      offset: 0,
       familyMemberId: 0,
       clientDob: this.clientDob,
       fmDobList: JSON.stringify(this.familyList)
@@ -1189,7 +1189,7 @@ export class ExpensesComponent implements OnInit {
       endDate: this.endDate,
       startDate: this.startDate,
       limit:-1,
-      offset: 1,
+      offset: 0,
       familyMemberId: 0,
     };
     this.dataSource4.data = [{}, {}, {}];
@@ -1240,7 +1240,7 @@ export class ExpensesComponent implements OnInit {
       endDate: this.endDate,
       startDate: this.startDate,
       limit: -1,
-      offset: 1,
+      offset: 0,
       familyMemberId: 0,
       clientDob: this.clientDob,
       fmDobList: JSON.stringify(this.familyList)
@@ -1315,7 +1315,7 @@ export class ExpensesComponent implements OnInit {
       endDate: this.endDate,
       startDate: this.startDate,
       limit: -1,
-      offset: 1,
+      offset: 0,
       familyMemberId: 0,
     };
     // this.dataSource1.data = [{}, {}, {}];
@@ -1370,7 +1370,7 @@ export class ExpensesComponent implements OnInit {
       endDate: this.endDate,
       startDate: this.startDate,
       limit: -1,
-      offset: 1,
+      offset: 0,
       familyMemberId: 0,
     };
     this.isLoading = true;
