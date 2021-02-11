@@ -148,7 +148,7 @@ export class ExpensesComponent implements OnInit {
   totalBudgetAmount: any
   totalbudegtRecurring: any;
   totalBudget: any;
-  totalRecurringAmount:any;
+  totalRecurringAmount: any;
   // periodSelection: any;
 
   constructor(private fileUpload: FileUploadServiceService, private fb: FormBuilder,
@@ -808,7 +808,14 @@ export class ExpensesComponent implements OnInit {
     this.isTabLoaded = true;
     if (tab == 'Budget') {
       if (this.chekToCallApiBudget()) {
-        this.getBudgetApis()
+        if (this.familyList && this.clientDob) {
+          this.getBudgetApis()
+        } else {
+          this.dataSource4.data = [{}, {}, {}];
+          this.dataSource5.data = [{}, {}, {}];
+          this.isLoadingBudget = true;
+          this.getListFamilyMem();
+        }
       } else {
         this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
       }
@@ -823,7 +830,7 @@ export class ExpensesComponent implements OnInit {
       // }, 300);
     } else {
       if (this.chekToCallApi()) {
-        this.getAllExpense();
+        this.getListFamilyMem()
       } else {
         this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
       }
@@ -999,11 +1006,21 @@ export class ExpensesComponent implements OnInit {
 
         }
         if (!this.finPlanObj) {
-          if (this.chekToCallApi()) {
-            this.getAllExpense();
+          if (this.tab != 'Budget') {
+            if (this.chekToCallApi()) {
+              this.getAllExpense();
+            } else {
+              this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+            }
           } else {
-            this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+
+            if (this.chekToCallApiBudget()) {
+              this.getBudgetApis()
+            } else {
+              this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
+            }
           }
+
         } else {
           let name = this.finPlanObj.sectionName;
           if (name == 'Expense This month' || name == 'Expense Last month' || name == 'Expense This quarter' || name == 'Expense Last quarter' || name == 'Expense This calender year' || name == 'Expense Last calender year' || name == 'Expense This financial year' || name == 'Expense Last financial year') {
