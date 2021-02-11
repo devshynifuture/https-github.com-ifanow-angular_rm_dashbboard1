@@ -466,7 +466,7 @@ export class SipTransactionComponent implements OnInit {
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
       this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(getFrerq.additionalPurchaseAmount)]);
     }
-    this.minInstallmentNumber = getFrerq.minInstallmentNumber
+    this.minInstallmentNumber = getFrerq.sipMinimumInstallmentNumber
     this.sipTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
     this.dateArray(getFrerq.sipDates);
     this.checkAndHandleMaxInstallmentValidator();

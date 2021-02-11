@@ -386,7 +386,7 @@ export class SwpTransactionComponent implements OnInit {
     } else {
       this.dateArray(getFrerq.sipDates);
     }
-    this.minInstallmentNumber = getFrerq.minInstallmentNumber
+    this.minInstallmentNumber = getFrerq.sipMinimumInstallmentNumber
     this.swpTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
   }
 
