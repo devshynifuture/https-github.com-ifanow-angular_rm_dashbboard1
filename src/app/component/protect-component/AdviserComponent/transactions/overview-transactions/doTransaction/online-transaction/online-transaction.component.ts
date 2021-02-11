@@ -12,6 +12,7 @@ import { debounceTime, map, startWith } from 'rxjs/operators';
 import { PeopleService } from '../../../../../PeopleComponent/people.service';
 import { Observable, of, Subscription } from 'rxjs';
 import { TransactionRoleService } from "../../../transaction-role.service";
+import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 
 @Component({
   selector: 'app-online-trasaction',
