@@ -145,41 +145,43 @@ export class CustomiseSettingComponent implements OnInit {
     this.countCap = 0
     this.countCapDetail = 0
     this.dataSource.data = data
-
-    this.dataSource.data.forEach(element => {
-      if (element.overview == true && element.id != 0) {
-        this.count++
-        if (this.count > 0) {
-          this.overviewAll = true
+    if (!data) {
+      this.dataSource.data = []
+    } else {
+      this.dataSource.data.forEach(element => {
+        if (element.overview == true && element.id != 0) {
+          this.count++
+          if (this.count > 0) {
+            this.overviewAll = true
+          }
+        } if (element.summary == true && element.id != 0) {
+          this.countSummary++
+          if (this.countSummary > 0) {
+            this.summaryAll = true
+          }
+        } if (element.allTransaction == true && element.id != 0) {
+          this.countTrasact++
+          if (this.countTrasact > 0) {
+            this.transactionAll = true
+          }
+        } if (element.unrealizedTransaction == true && element.id != 0) {
+          this.countunre++
+          if (this.countunre > 0) {
+            this.unrealisedAll = true
+          }
+        } if (element.capitalGainSummary == true && element.id != 0) {
+          this.countCap++
+          if (this.countCap > 0) {
+            this.capitalGainAll = true
+          }
+        } if (element.capitalGainDetailed == true && element.id != 0) {
+          this.countCapDetail++
+          if (this.countCapDetail > 0) {
+            this.capitalGainDetailedAll = true
+          }
         }
-      } if (element.summary == true && element.id != 0) {
-        this.countSummary++
-        if (this.countSummary > 0) {
-          this.summaryAll = true
-        }
-      } if (element.allTransaction == true && element.id != 0) {
-        this.countTrasact++
-        if (this.countTrasact > 0) {
-          this.transactionAll = true
-        }
-      } if (element.unrealizedTransaction == true && element.id != 0) {
-        this.countunre++
-        if (this.countunre > 0) {
-          this.unrealisedAll = true
-        }
-      } if (element.capitalGainSummary == true && element.id != 0) {
-        this.countCap++
-        if (this.countCap > 0) {
-          this.capitalGainAll = true
-        }
-      } if (element.capitalGainDetailed == true && element.id != 0) {
-        this.countCapDetail++
-        if (this.countCapDetail > 0) {
-          this.capitalGainDetailedAll = true
-        }
-      }
-    });
-
+      });
+    }
     console.log('dataSource bulk email', data)
     this.infiniteScrollingFlag = false;
     this.hasEndReached = false;
