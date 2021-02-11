@@ -147,6 +147,8 @@ export class ExpensesComponent implements OnInit {
   totalTransactionAmount: any;
   totalBudgetAmount: any
   totalbudegtRecurring: any;
+  totalBudget: any;
+  totalRecurringAmount: any;
   // periodSelection: any;
 
   constructor(private fileUpload: FileUploadServiceService, private fb: FormBuilder,
@@ -564,9 +566,9 @@ export class ExpensesComponent implements OnInit {
       console.log(finalArray)
       this.dataSource1.data = finalArray;
       this.dataSource1.sort = this.recurringTransactionTabSort;
-      this.calculateTotal(this.dataSource1.data, 'totalAmount', 'totalRecurringAmount')
+      this.calculateTotal(this.dataSource1.data, 'total', 'totalRecurringAmount')
       this.dataSource5.data = this.dataSource1.data;
-      this.calculateTotal(this.dataSource5.data, 'totalAmount', 'totalbudegtRecurring')
+      this.calculateTotal(this.dataSource5.data, 'total', 'totalbudegtRecurring')
       if (finalArray.length > 0) {
         this.getGraphCalculations();
       }
@@ -806,7 +808,14 @@ export class ExpensesComponent implements OnInit {
     this.isTabLoaded = true;
     if (tab == 'Budget') {
       if (this.chekToCallApiBudget()) {
-        this.getBudgetApis()
+        if (this.familyList && this.clientDob) {
+          this.getBudgetApis()
+        } else {
+          this.dataSource4.data = [{}, {}, {}];
+          this.dataSource5.data = [{}, {}, {}];
+          this.isLoadingBudget = true;
+          this.getListFamilyMem();
+        }
       } else {
         this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
       }
@@ -821,7 +830,7 @@ export class ExpensesComponent implements OnInit {
       // }, 300);
     } else {
       if (this.chekToCallApi()) {
-        this.getAllExpense();
+        this.getListFamilyMem()
       } else {
         this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
       }
@@ -847,8 +856,8 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
-      offset: 1,
+      limit: -1,
+      offset: 0,
       familyMemberId: 0,
     };
     const obj2 = {
@@ -857,8 +866,8 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
-      offset: 1,
+      limit: -1,
+      offset: 0,
       familyMemberId: 0,
       clientDob: this.clientDob,
       fmDobList: JSON.stringify(this.familyList)
@@ -904,9 +913,10 @@ export class ExpensesComponent implements OnInit {
     this.dataSource4.data = mergeArray;
     this.dataSource4.sort = this.BudgetSort;
     this.calculateTotal(this.dataSource4.data, 'spent', 'totalBudgetAmount')
+    this.calculateTotal(this.dataSource4.data, 'totalAmount', 'totalBudget')
     this.dataSource5.data = this.dataSource1.data;
     this.dataSource5.sort = this.recurringBudgetSort;
-    this.calculateTotal(this.dataSource5.data, 'totalAmount', 'totalbudegtRecurring')
+    this.calculateTotal(this.dataSource5.data, 'total', 'totalbudegtRecurring')
     this.isLoadingBudget = false;
     if (this.allExpnseData) {
       this.getAssetData(this.allExpnseData);
@@ -996,11 +1006,21 @@ export class ExpensesComponent implements OnInit {
 
         }
         if (!this.finPlanObj) {
-          if (this.chekToCallApi()) {
-            this.getAllExpense();
+          if (this.tab != 'Budget') {
+            if (this.chekToCallApi()) {
+              this.getAllExpense();
+            } else {
+              this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+            }
           } else {
-            this.getAllExpenseResposne(this.storedData[this.startDate + '-' + this.endDate][0]);
+
+            if (this.chekToCallApiBudget()) {
+              this.getBudgetApis()
+            } else {
+              this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
+            }
           }
+
         } else {
           let name = this.finPlanObj.sectionName;
           if (name == 'Expense This month' || name == 'Expense Last month' || name == 'Expense This quarter' || name == 'Expense Last quarter' || name == 'Expense This calender year' || name == 'Expense Last calender year' || name == 'Expense This financial year' || name == 'Expense Last financial year') {
@@ -1168,8 +1188,8 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
-      offset: 1,
+      limit:-1,
+      offset: 0,
       familyMemberId: 0,
     };
     this.dataSource4.data = [{}, {}, {}];
@@ -1206,6 +1226,7 @@ export class ExpensesComponent implements OnInit {
       this.dataSource4.data = data;
       this.dataSource4.sort = this.BudgetSort;
       this.calculateTotal(this.dataSource4.data, 'spent', 'totalBudgetAmount')
+      this.calculateTotal(this.dataSource4.data, 'totalAmount', 'totalBudget')
     }
     this.isLoadingBudget = false;
     console.log('getBudgetRes', data)
@@ -1218,8 +1239,8 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
-      offset: 1,
+      limit: -1,
+      offset: 0,
       familyMemberId: 0,
       clientDob: this.clientDob,
       fmDobList: JSON.stringify(this.familyList)
@@ -1257,7 +1278,7 @@ export class ExpensesComponent implements OnInit {
       });
       this.dataSource5.data = data;
       this.dataSource5.sort = this.recurringBudgetSort;
-      this.calculateTotal(this.dataSource5.data, 'totalAmount', 'totalbudegtRecurring')
+      this.calculateTotal(this.dataSource5.data, 'total', 'totalbudegtRecurring')
     } else {
       this.noData = 'No data found';
       this.dataSource5.data = [];
@@ -1293,8 +1314,8 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
-      offset: 1,
+      limit: -1,
+      offset: 0,
       familyMemberId: 0,
     };
     // this.dataSource1.data = [{}, {}, {}];
@@ -1348,8 +1369,8 @@ export class ExpensesComponent implements OnInit {
       allOrSingle: 1,
       endDate: this.endDate,
       startDate: this.startDate,
-      limit: 10,
-      offset: 1,
+      limit: -1,
+      offset: 0,
       familyMemberId: 0,
     };
     this.isLoading = true;
@@ -1420,7 +1441,7 @@ export class ExpensesComponent implements OnInit {
             console.log(key, value);
           });
           this.dataSource1.data = finalArray;
-          this.calculateTotal(this.dataSource1.data, 'totalAmount', 'totalRecurringAmount')
+          this.calculateTotal(this.dataSource1.data, 'total', 'totalRecurringAmount')
           this.dataSource1.sort = this.recurringTransactionTabSort;
 
 
@@ -1434,9 +1455,6 @@ export class ExpensesComponent implements OnInit {
         this.isLoading = false;
       }
     );
-  }
-  totalRecurringAmount(data: any[], totalRecurringAmount: any) {
-    throw new Error("Method not implemented.");
   }
   deleteModal(value, data) {
     let deletedId = data.id;

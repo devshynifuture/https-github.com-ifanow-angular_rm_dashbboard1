@@ -110,6 +110,10 @@ const routes: Routes = [
     loadChildren: () => import('./component/protect-component/customer-feedback/cus-feedback.module').then(m => m.CusFeedbackModule)
   },
   {
+    path: 'reponse',
+    loadChildren: () => import('./component/protect-component/AdviserComponent/Response/response/response.module').then(m => m.ResponseModule)
+  },
+  {
     path: 'marketplace',
     loadChildren: () => import('./component/protect-component/Marketplace/marketplace/marketplace.module').then(m => m.MarketplaceModule)
   },

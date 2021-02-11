@@ -159,7 +159,7 @@
                             Amount</th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
                             <div class="bar d-flex justify-content-end c-p">
-                                {{isLoading ? ' ' : '₹'}} <span
+                                <span
                                     appFormatNumber>{{(isLoading) ? '': (element.amount ? element.amount : '-')}}</span>
                             </div>
                         </td>

@@ -482,6 +482,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.clientList = [];
     this.customerOverview.clearServiceData();
     this.domainData = AuthService.getDomainDetails();
+    this.peopleService.clientList = undefined;
     this.enumDataService.setSearchData(this.clientList);
     this.authService.logout();
     if (this.domainData) {

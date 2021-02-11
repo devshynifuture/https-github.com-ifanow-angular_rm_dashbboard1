@@ -95,9 +95,9 @@ export class TransactionSummaryComponent implements OnInit {
       this.subBrokerCredList = this.changeDetails.subBrokerCredList;
       this.selectedPlatform = this.defaultCredential.aggregatorType;
       this.checkAlert = this.transactionSummary.tpUserCredFamilyMappingId;
-      if (this.selectedPlatform == 1) {
-        this.getBankDetails();
-      }
+      // if (this.selectedPlatform == 1) {
+      //   this.getBankDetails();
+      // }
     }
   }
 
@@ -106,11 +106,11 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getBankDetails()
     this.transactionSummary = this.inputData;
     if (!this.changeDetails) {
       this.getDefaultDetails(null);
     }
-    this.getBankDetails()
   }
 
   openDialog(): void {
@@ -260,7 +260,7 @@ export class TransactionSummaryComponent implements OnInit {
         this.showBankEdit = true;
       }
     } else {
-      this.eventService.openSnackBar('No bank details found', 'Dismiss');
+      this.eventService.openSnackBarNoDuration('No bank details found', 'DISMISS');
     }
   }
 

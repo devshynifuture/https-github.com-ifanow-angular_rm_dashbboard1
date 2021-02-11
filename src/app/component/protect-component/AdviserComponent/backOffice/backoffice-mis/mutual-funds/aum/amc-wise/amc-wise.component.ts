@@ -29,6 +29,8 @@ export class AmcWiseComponent implements OnInit {
   reverse3 = true;
   @Output() changedValue = new EventEmitter();
   @Input() data;
+  @Input() filterObj;
+  @Output() aumFilter = new EventEmitter();
 
   arrayOfExcelData: any[] = [];
   arrayOfHeaders: any[][] = [
@@ -91,9 +93,25 @@ export class AmcWiseComponent implements OnInit {
   arnRiaList = [];
   selectedAmcName: any;
   selectedSchemeName: any;
+  aumId: any;
+  viewModeID: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService,
     public roleService: RoleService) {
+
+    this.backoffice.misAumData.subscribe(
+      data => {
+        if (data.value == 'amc') {
+          if (data.aumId != 0) {
+            this.aumId = data.aumId,
+              this.viewModeID = data.viewModeID;
+          } else {
+            this.viewModeID = 'All';
+            this.aumId = 0;
+          }
+        }
+      }
+    )
   }
 
   ngOnInit() {
@@ -107,7 +125,21 @@ export class AmcWiseComponent implements OnInit {
       this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
+    // if (this.filterObj) {
+    //   this.aumId = this.filterObj.aumId,
+    //     this.viewModeID = this.filterObj.viewModeID;
+    // } else {
+    //   this.viewModeID = 'All';
+    //   this.aumId = 0;
+    // }
     this.getArnRiaList();
+    this.getAmcWiseData();
+  }
+
+
+  filterIDWise(id, flagValue) {
+    this.aumId = id;
+    this.viewModeID = flagValue;
     this.getAmcWiseData();
   }
 
@@ -187,6 +219,10 @@ export class AmcWiseComponent implements OnInit {
       arnRiaValue: this.arnRiaValue,
       viewMode: this.viewMode
     });
+    this.aumFilter.emit({
+      aumId: this.aumId,
+      viewModeID: this.viewModeID
+    })
   }
 
   getAmcWiseData() {
@@ -200,6 +236,9 @@ export class AmcWiseComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     };
+    if (this.aumId && this.aumId != 0) {
+      obj['rtId'] = this.aumId;
+    }
     this.backoffice.amcWiseGet(obj).subscribe(
       data => this.getReponseAmcWiseGet(data),
       err => this.getFilerrorResponse(err)
@@ -436,6 +475,9 @@ export class AmcWiseComponent implements OnInit {
         schemeMasterId: schemeData.id,
         totalAum: schemeData.totalAum
       };
+      if (this.aumId && this.aumId != 0) {
+        obj['rtId'] = this.aumId;
+      }
       this.backoffice.amcWiseApplicantGet(obj).subscribe(
         data => {
           if (data) {

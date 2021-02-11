@@ -30,6 +30,7 @@ export class SipTransactionComponent implements OnInit {
   acceptedMandate: any;
   copyTrasactionSummary: any;
   element: any;
+  minInstallmentNumber: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -157,6 +158,8 @@ export class SipTransactionComponent implements OnInit {
   enteredAmount(value) {
     // this.selectedMandate = this.copyTrasactionSummary.selectedMandate
     Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, { Ttype: 1 });
+
   }
 
   selectExistingOrNew(value) {
@@ -465,6 +468,8 @@ export class SipTransactionComponent implements OnInit {
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
       this.sipTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(getFrerq.additionalPurchaseAmount)]);
     }
+    this.minInstallmentNumber = getFrerq.sipMinimumInstallmentNumber
+    this.sipTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
     this.dateArray(getFrerq.sipDates);
     this.checkAndHandleMaxInstallmentValidator();
 
@@ -767,7 +772,7 @@ export class SipTransactionComponent implements OnInit {
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,
-        orderType: 'ORDER',
+        orderType: 'SIP',
         userAccountType: this.mfDefault.defaultCredential.accountType,
       };
       this.onlineTransact.getSchemeDetails(obj1).subscribe(
@@ -1046,11 +1051,11 @@ export class SipTransactionComponent implements OnInit {
   }
 
   checkAndHandleMaxInstallmentValidator() {
-    if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' && this.selectedMandate &&
+    if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' &&
       !this.sipTransaction.get('date').invalid && !this.sipTransaction.get('frequency').invalid) {
       setTimeout(() => {
         const maxInstallmentNumber = this.calculateMaxInstallmentNumber(new Date(this.sipTransaction.get('date').value).getTime(),
-          this.selectedMandate.toDate, this.sipTransaction.get('frequency').value, this.sipTransaction.get('tenure').value);
+          undefined, this.sipTransaction.get('frequency').value, this.sipTransaction.get('tenure').value);
         this.sipTransaction.controls.installment.setValidators([Validators.required, Validators.max(maxInstallmentNumber)]);
         this.installmentErrorMessage = 'Installment number cannot be greater than ' + MathUtilService.roundOffNumber(maxInstallmentNumber);
         this.sipTransaction.controls.installment.updateValueAndValidity();
@@ -1059,7 +1064,7 @@ export class SipTransactionComponent implements OnInit {
     } else {
       this.sipTransaction.controls.installment.clearValidators();
       this.sipTransaction.controls.installment.clearAsyncValidators();
-      if (this.sipTransaction.controls.tenure == '3') {
+      if (this.sipTransaction.controls.tenure.value == '3') {
 
       } else {
         this.sipTransaction.controls.installment.setValidators([Validators.required]);

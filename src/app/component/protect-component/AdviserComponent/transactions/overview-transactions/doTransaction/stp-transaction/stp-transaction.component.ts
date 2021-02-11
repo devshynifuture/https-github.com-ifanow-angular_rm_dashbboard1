@@ -25,6 +25,7 @@ export class StpTransactionComponent implements OnInit {
   mfDefault: any;
   element: any;
   platformType: any;
+  minInstallmentNumber: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private onlineTransact: OnlineTransactionService,
@@ -458,14 +459,19 @@ export class StpTransactionComponent implements OnInit {
         this.dateArray(getFrerq.stpDates);
       } else {
         this.dateArray(getFrerq.stpDates);
+        this.minInstallmentNumber = getFrerq.minInstallmentNumber
+        this.stpTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
       }
     } else {
-      this.dateArray(getFrerq.sipDates);
+      this.dateArray(getFrerq.stpDates);
     }
     if (this.transactionSummary.defaultClient.aggregatorType == 2) {
       this.schemeDetailsTransfer.minimumPurchaseAmount = getFrerq.minSTPInInstallmentAmount
       this.stpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetailsTransfer.minimumPurchaseAmount)]);
       this.stpTransaction.controls.employeeContry.updateValueAndValidity();
+      this.minInstallmentNumber = getFrerq.minInstallmentNumber
+      this.stpTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
+
     }
   }
 
@@ -499,6 +505,8 @@ export class StpTransactionComponent implements OnInit {
 
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, { Ttype: 1 });
+
   }
 
   getbankDetails(value) {
@@ -648,9 +656,6 @@ export class StpTransactionComponent implements OnInit {
         return;
       } else if (this.stpTransaction.get('tenure').invalid) {
         this.stpTransaction.get('tenure').markAsTouched();
-        return;
-      } else if (this.stpTransaction.get('tenure').value != '3' && this.stpTransaction.get('installment').invalid) {
-        this.stpTransaction.get('installment').markAsTouched();
         return;
       } else {
         if (this.barButtonOptions.active) {

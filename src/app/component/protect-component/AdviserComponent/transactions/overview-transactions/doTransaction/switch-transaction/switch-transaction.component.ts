@@ -431,8 +431,14 @@ export class SwitchTransactionComponent implements OnInit {
     }
   }
 
-  enteredAmount(value) {
-    Object.assign(this.transactionSummary, { enteredAmount: value });
+  enteredAmount(value, switchType) {
+    if (switchType == 2) {
+      Object.assign(this.transactionSummary, { enteredUnits: value });
+      Object.assign(this.transactionSummary, { Ttype: switchType });
+    } else {
+      Object.assign(this.transactionSummary, { enteredAmount: value });
+      Object.assign(this.transactionSummary, { Ttype: switchType });
+    }
   }
 
   getNewSchemesRes(data, inputData) {

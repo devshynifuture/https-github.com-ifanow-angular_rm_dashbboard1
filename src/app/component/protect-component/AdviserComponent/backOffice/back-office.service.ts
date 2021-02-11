@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse, HttpRequest } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
@@ -278,8 +278,7 @@ export class BackOfficeService {
   }
 
   getclientWithoutMf(data) {
-    const httpParams = new HttpParams().set('advisorIds', data.advisorIds).set('parentId', data.parentId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WITHOUT_MF, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_WITHOUT_MF, UtilService.getHttpParam(data));
   }
 
   ceaseSipGet(data) {
@@ -288,8 +287,7 @@ export class BackOfficeService {
   }
 
   aumGraphGet(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.AUM_GRAPH_GET, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.AUM_GRAPH_GET, UtilService.getHttpParam(data));
   }
 
   getArnRiaList(data) {
@@ -406,4 +404,12 @@ export class BackOfficeService {
   searchData(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SEARCH_DATA, data);
   }
+
+  addMisAumData(data) {
+    this.misAum.next(data);
+  }
+  private misAum = new BehaviorSubject<any>({});
+  misAumData = this.misAum.asObservable();
+
+
 }

@@ -306,7 +306,12 @@
                             <mat-error *ngIf="sipTransaction.get('installment').errors?.required" class="f-12 pt-4">
                                 This field is required
                             </mat-error>
-                            <mat-error *ngIf="sipTransaction.get('installment').errors?.max" class="f-12 pt-4">
+                            <mat-hint *ngIf="(sipTransaction.get('tenure').value) == '1'&&platformType==2" align="start"
+                                class="f-12 text-custom">
+                                Min installment:
+                                {{(minInstallmentNumber == undefined) ? '0' : minInstallmentNumber }}
+                            </mat-hint>
+                            <mat-error class="f-12 pt-4">
                                 {{installmentErrorMessage}}
                             </mat-error>
                         </mat-form-field>

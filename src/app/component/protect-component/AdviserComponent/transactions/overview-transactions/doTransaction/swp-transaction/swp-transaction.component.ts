@@ -30,6 +30,7 @@ export class SwpTransactionComponent implements OnInit {
   mfDefault: any;
   element: any;
   platformType: any;
+  minInstallmentNumber: any;
 
   get data() {
     return this.inputData;
@@ -332,6 +333,8 @@ export class SwpTransactionComponent implements OnInit {
 
   enteredAmount(value) {
     Object.assign(this.transactionSummary, { enteredAmount: value });
+    Object.assign(this.transactionSummary, { Ttype: 1 });
+
   }
 
   onFolioChange(folio) {
@@ -385,6 +388,8 @@ export class SwpTransactionComponent implements OnInit {
     } else {
       this.dateArray(getFrerq.sipDates);
     }
+    this.minInstallmentNumber = getFrerq.sipMinimumInstallmentNumber
+    this.swpTransaction.controls.installment.setValidators([Validators.required, Validators.min(this.minInstallmentNumber)]);
   }
 
   dateArray(sipDates) {

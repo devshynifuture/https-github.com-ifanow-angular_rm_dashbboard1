@@ -197,7 +197,7 @@ export class BackofficeFileUploadComponent implements OnInit {
             this.arnRiaId = '';
             setTimeout(() => {
               this.setFilter();
-            }, 1000);
+            }, 2000);
           }
 
         });
@@ -225,7 +225,7 @@ export class BackofficeFileUploadComponent implements OnInit {
             this.arnRiaId = '';
             setTimeout(() => {
               this.setFilter();
-            }, 1000);
+            }, 2000);
           }
 
         });

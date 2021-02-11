@@ -16,7 +16,7 @@
 </div>
 
 <div class="mt-70">
-    <div class="row">
+    <div class="row" *ngIf="dataSource.data.length > 0">
         <div class="col-md-4">
             <div class="form-group">
                 <input class="form-control" placeholder="Start typing to search client" matInput
@@ -30,7 +30,7 @@
         </div> -->
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="dataSource.data.length > 0">
         <div class="col-md-12">
             <div (scroll)="onWindowScroll($event)" class="people-table-scroll">
                 <table #tableEl mat-table [dataSource]="dataSource" class=" skeletonAnimation"
@@ -136,5 +136,9 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div *ngIf="dataSource && dataSource.data.length == 0" class="d-flex flex-column align-items-center w-100 mt-5">
+        <img class="width300" src="assets/images/svg/noDataFound.svg">
+        <h4 class="text-center pt-12">No data found</h4>
     </div>
 </div>
