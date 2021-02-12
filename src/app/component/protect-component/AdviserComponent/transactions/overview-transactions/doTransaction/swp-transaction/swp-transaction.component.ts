@@ -521,6 +521,7 @@ export class SwpTransactionComponent implements OnInit {
       euin: this.getDataSummary.euin.euin,
       clientCode: this.getDataSummary.defaultClient.clientCode,
       orderVal: this.swpTransaction.controls.employeeContry.value,
+      dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'SWP',
       amountType: 'Amount',

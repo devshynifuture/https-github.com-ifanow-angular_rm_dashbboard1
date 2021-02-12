@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, DoCheck } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -52,6 +52,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   selectedTab: number = 0;
   yearsEnd: any[];
   subscriber = new Subscriber();
+  freez: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -67,6 +68,9 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.data.singleOrMulti == 1) {
+      if (this.data.remainingData.freezed == true) {
+        this.freez = true
+      }
       this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
       this.yearsEnd = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 40).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     } else {
@@ -387,10 +391,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       goalType: this.data.goalType,
       freezed: event.checked,
     }
+    if (event.checked == true) {
+      this.freez = true
+    }
     this.planService.freezCalculation(obj).subscribe(res => {
       //this.loadMFData();
       this.eventService.openSnackBar("Goal freezed successfully");
       //dialogRef.close();
+      if (event.checked == true) {
+        this.close()
+      }
     }, err => {
       this.eventService.openSnackBar(err);
     })
