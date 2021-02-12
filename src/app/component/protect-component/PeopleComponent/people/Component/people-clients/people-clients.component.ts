@@ -69,6 +69,24 @@ export class PeopleClientsComponent implements OnInit {
       this.clientDatasource.data = this.finalClientList;
       this.clientDatasource.sort = this.clientTableSort;
       this.isLoading = false;
+      const obj = {
+        advisorId: this.advisorId,
+        status: 1,
+        limit: 50,
+        offset: 0
+      };
+
+      this.peopleService.getClientList(obj).subscribe(
+        data => {
+          (this.finalClientList.length > 0) ? '' : this.isLoading = false;
+          this.isLoading = false;
+          if (data && data.length > 0) {
+            data = this.formatEmailAndMobile(data);
+            this.finalClientList = data;
+            this.peopleService.clientList = data;
+          }
+        }
+      )
     } else {
       this.hasEndReached = true;
       this.clientDatasource.data = [{}, {}, {}];
