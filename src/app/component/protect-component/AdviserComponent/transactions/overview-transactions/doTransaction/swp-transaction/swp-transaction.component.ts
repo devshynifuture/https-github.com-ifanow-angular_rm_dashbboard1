@@ -31,6 +31,8 @@ export class SwpTransactionComponent implements OnInit {
   element: any;
   platformType: any;
   minInstallmentNumber: any;
+  isEdit: any;
+  editedId: any;
 
   get data() {
     return this.inputData;
@@ -118,14 +120,14 @@ export class SwpTransactionComponent implements OnInit {
       this.mutualFundData = data.mutualFundData
     }
     if (this.isViewInitCalled) {
-      this.getdataForm('');
+      this.getdataForm('', false);
     }
   }
 
   ngOnInit() {
     this.transactionSummary = {};
     this.childTransactions = [];
-    this.getdataForm(this.inputData);
+    this.getdataForm(this.inputData, true);
 
     Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
     Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
@@ -144,6 +146,7 @@ export class SwpTransactionComponent implements OnInit {
 
   getDefaultDetails(data) {
     this.getDataSummary = data;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     Object.assign(this.transactionSummary, { aggregatorType: this.getDataSummary.defaultClient.aggregatorType });
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
@@ -162,7 +165,7 @@ export class SwpTransactionComponent implements OnInit {
         this.getSchemeList();
       } else {
         this.mfDefault = newData
-        this.getdataForm(this.inputData)
+        this.getdataForm(this.inputData, true)
       }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
       this.resetForm();
@@ -409,7 +412,11 @@ export class SwpTransactionComponent implements OnInit {
     });
   }
 
-  getdataForm(data) {
+  getdataForm(data, isEdit) {
+    if (isEdit == true) {
+      this.isEdit = isEdit;
+      this.editedId = data.id;
+    }
     if (!data) {
       data = {};
     }
@@ -489,7 +496,50 @@ export class SwpTransactionComponent implements OnInit {
   getFormControl(): any {
     return this.swpTransaction.controls;
   }
+  getSingleTransactionJson() {
+    const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
+    const tenure = this.swpTransaction.controls.tenure.value;
+    const noOfInstallments = this.swpTransaction.controls.installment.value;
+    const orderVal = this.swpTransaction.controls.employeeContry.value;
+    let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
 
+    obj = {
+      ...obj,
+      productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
+      clientName: this.selectedFamilyMember,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      schemeCd: this.schemeDetails.schemeCode,
+      euin: this.getDataSummary.euin.euin,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.swpTransaction.controls.employeeContry.value,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      orderType: 'SWP',
+      amountType: 'Amount',
+      bseDPTransType: 'PHYSICAL',
+      bankDetailId: null,
+      nsePaymentMode: null,
+      childTransactions: null,
+      isException: true,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      scheme: this.scheme,
+      schemeName: this.scheme.schemeName,
+      schemeDetails: this.schemeDetails,
+    };
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      obj.bankDetailId = this.bankDetails.id;
+      // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
+    }
+    return obj
+  }
   // getSingleTransactionJson() {}
   swp() {
     if (this.multiTransact == true) {
@@ -542,40 +592,7 @@ export class SwpTransactionComponent implements OnInit {
           return;
         }
         this.barButtonOptions.active = true;
-        const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
-        const tenure = this.swpTransaction.controls.tenure.value;
-        const noOfInstallments = this.swpTransaction.controls.installment.value;
-        const orderVal = this.swpTransaction.controls.employeeContry.value;
-        let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
-
-        obj = {
-          ...obj,
-          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
-          clientName: this.selectedFamilyMember,
-          holdingType: this.getDataSummary.defaultClient.holdingType,
-          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-          productCode: this.schemeDetails.schemeCode,
-          isin: this.schemeDetails.isin,
-          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-          tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-          tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-          familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-          adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-          clientId: this.getDataSummary.defaultClient.clientId,
-          schemeCd: this.schemeDetails.schemeCode,
-          euin: this.getDataSummary.euin.euin,
-          clientCode: this.getDataSummary.defaultClient.clientCode,
-          orderVal: this.swpTransaction.controls.employeeContry.value,
-          aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-          orderType: 'SWP',
-          amountType: 'Amount',
-          bseDPTransType: 'PHYSICAL',
-          bankDetailId: null,
-          nsePaymentMode: null,
-          childTransactions: null,
-          isException: true,
-          tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-        };
+        let obj = this.getSingleTransactionJson();
         if (this.getDataSummary.defaultClient.aggregatorType == 1) {
           obj.bankDetailId = this.bankDetails.id;
           // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
@@ -628,28 +645,36 @@ export class SwpTransactionComponent implements OnInit {
     } else {
       this.multiTransact = true;
       if (this.scheme != undefined && this.schemeDetails != undefined && this.swpTransaction != undefined) {
-        let obj = {
-          amc: this.scheme.amcId,
-          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-          productCode: this.schemeDetails.schemeCode,
-          dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-          orderVal: this.swpTransaction.controls.employeeContry.value,
-          productDbId: this.schemeDetails.id,
-          frequencyType: this.frequency,
-          startDate: Number(new Date(this.swpTransaction.controls.date.value.replace(/"/g, ''))),
-          schemeName: this.scheme.schemeName,
-        };
-        const tenure = this.swpTransaction.controls.tenure.value;
-        const installment = this.swpTransaction.controls.installment.value;
-        obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
-        this.childTransactions.push(obj);
-        this.dataSource.data = this.childTransactions;
-        this.swpTransaction.controls.date.reset();
-        this.swpTransaction.controls.employeeContry.reset();
-        this.swpTransaction.controls.tenure.reset();
-        this.swpTransaction.controls.frequency.reset();
-        this.swpTransaction.controls.schemeSwp.reset();
-        this.swpTransaction.controls.investmentAccountSelection.reset();
+
+        if (this.isEdit == true) {
+          this.childTransactions.forEach(element => {
+            if (element.id == this.editedId) {
+              element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId;
+              element.id = this.editedId;
+              element.folioNo = this.swpTransaction.get('investmentAccountSelection').value;
+              element.orderVal = this.swpTransaction.get('employeeContry').value;
+              element.schemeName = this.swpTransaction.get('schemeSwp').value;
+              element.productCode = this.schemeDetails.schemeCode
+              element.dividendReinvestmentFlag = this.schemeDetails.dividendReinvestmentFlag
+              element.productDbId = this.schemeDetails.id
+              element.frequencyType = this.frequency
+            }
+          });
+          this.isEdit = false;
+        } else {
+          let obj = this.getSingleTransactionJson();
+          const tenure = this.swpTransaction.controls.tenure.value;
+          const installment = this.swpTransaction.controls.installment.value;
+          obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
+          this.childTransactions.push(obj);
+          this.dataSource.data = this.childTransactions;
+          this.swpTransaction.controls.date.reset();
+          this.swpTransaction.controls.employeeContry.reset();
+          this.swpTransaction.controls.tenure.reset();
+          this.swpTransaction.controls.frequency.reset();
+          this.swpTransaction.controls.schemeSwp.reset();
+          this.swpTransaction.controls.investmentAccountSelection.reset();
+        }
       }
     }
   }
