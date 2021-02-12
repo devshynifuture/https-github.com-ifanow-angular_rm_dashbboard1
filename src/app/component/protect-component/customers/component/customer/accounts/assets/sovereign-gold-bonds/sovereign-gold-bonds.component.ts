@@ -167,7 +167,7 @@ export class SovereignGoldBondsComponent implements OnInit {
         o.xirr = res;
         o.currentValue = (o.currentValue) ? o.currentValue : 0
         this.totalCurrentValue += o.currentValue;
-        this.sumOfpurchasedValue += o.purchaseAmt;
+        this.sumOfpurchasedValue += o.purchaseAmt ? o.purchaseAmt : 0;
       });
       this.datasource3.sort = this.sort;
       // this.totalCurrentValue = this.dataList.totalCurrentValue;
