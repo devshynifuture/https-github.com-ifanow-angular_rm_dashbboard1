@@ -400,7 +400,9 @@ export class CalculatorsComponent implements OnInit {
 
     for (let k in formValue) {
       if (formValue.hasOwnProperty(k)) {
-        jsonObj.yearStepUps.push(formValue[k]);
+        if (formValue[k] != "") {
+          jsonObj.yearStepUps.push(formValue[k]);
+        }
       }
     }
 
