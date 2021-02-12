@@ -66,6 +66,7 @@ export class SwitchTransactionComponent implements OnInit {
   folioNumber: any;
   element: any;
   platformType: any;
+  bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private onlineTransact: OnlineTransactionService,
@@ -284,6 +285,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   getbankDetails(event) {
+    this.bankDetails = event;
   }
 
   getSchemeDetailsRes(data) {
@@ -646,6 +648,9 @@ export class SwitchTransactionComponent implements OnInit {
       orderVal: (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value,
       bseDPTransType: 'PHYSICAL',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      mandateId: undefined,
+      bankDetailId: undefined,
+      nsePaymentMode: undefined,
       childTransactions: [],
       isException: true,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
@@ -653,6 +658,10 @@ export class SwitchTransactionComponent implements OnInit {
       schemeName: this.schemeTransfer.schemeName,
       schemeDetails: this.schemeDetailsTransfer,
     };
+    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+      // obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
+      obj.bankDetailId = this.bankDetails.id;
+    }
     return obj
   }
   AddMultiTransaction() {

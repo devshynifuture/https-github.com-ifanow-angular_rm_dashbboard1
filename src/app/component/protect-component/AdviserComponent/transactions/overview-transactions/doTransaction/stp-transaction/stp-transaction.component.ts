@@ -817,6 +817,7 @@ export class StpTransactionComponent implements OnInit {
           this.stpTransaction.controls.employeeContry.reset();
           this.stpTransaction.controls.investmentAccountSelection.reset();
           this.stpTransaction.controls.schemeStp.reset();
+          this.stpTransaction.controls.transferIn.reset();
         }
       }
     }
