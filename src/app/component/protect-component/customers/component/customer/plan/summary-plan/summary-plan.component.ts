@@ -719,7 +719,7 @@ export class SummaryPlanComponent implements OnInit {
                     this.cashFlowData = '';
                 }
             }, (error) => {
-                this.eventService.showErrorMessage(error);
+                // this.eventService.showErrorMessage(error);
                 this.isLoadingCashFlow = false;
             }
         );
