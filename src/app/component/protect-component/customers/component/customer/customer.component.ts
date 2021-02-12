@@ -355,6 +355,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     this.peopleService.clientList = undefined;
     this.customerOverview.clearServiceData();
     this.domainData = AuthService.getDomainDetails();
+    this.peopleService.clientList = undefined;
     this.authService.logout();
     if (this.domainData) {
       let mainDomain;
