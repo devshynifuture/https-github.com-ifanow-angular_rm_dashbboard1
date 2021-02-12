@@ -794,20 +794,15 @@ export class StpTransactionComponent implements OnInit {
       this.multiTransact = true;
       if (this.scheme != undefined && this.schemeDetails != undefined && this.stpTransaction != undefined) {
         if (this.isEdit == true) {
-          let obj = {
-            amcId: this.scheme.amcId,
-            folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-            productCode: this.schemeDetails.schemeCode,
-            dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-            orderVal: this.stpTransaction.controls.employeeContry.value,
-            bankDetailId: this.bankDetails.id,
-            toIsin: this.schemeDetailsTransfer.isin,
-            schemeName: this.scheme.schemeName,
-            // mandateId: (this.achMandateNSE) ? this.achMandateNSE.id : null,
-            productDbId: this.schemeDetails.id,
-            frequencyType: this.frequency,
-            startDate: Number(UtilService.getEndOfDay(new Date(this.stpTransaction.controls.date.value.replace(/"/g, '')))),
-          };
+          this.childTransactions.forEach(element => {
+            element.id = this.editedId;
+            element.folioNo = this.stpTransaction.get('investmentAccountSelection').value;
+            element.orderVal = this.stpTransaction.get('employeeContry').value;
+            element.schemeName = this.stpTransaction.get('transferIn').value;
+            element.toIsin = this.schemeDetailsTransfer.isin
+            element.productDbId = this.schemeDetails.id
+            element.bankDetailId = this.bankDetails.id
+          })
         } else {
           let obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);

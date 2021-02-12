@@ -489,7 +489,43 @@ export class SwpTransactionComponent implements OnInit {
   getFormControl(): any {
     return this.swpTransaction.controls;
   }
+  getSingleTransactionJson() {
+    const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
+    const tenure = this.swpTransaction.controls.tenure.value;
+    const noOfInstallments = this.swpTransaction.controls.installment.value;
+    const orderVal = this.swpTransaction.controls.employeeContry.value;
+    let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
 
+    obj = {
+      ...obj,
+      productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
+      clientName: this.selectedFamilyMember,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      schemeCd: this.schemeDetails.schemeCode,
+      euin: this.getDataSummary.euin.euin,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: this.swpTransaction.controls.employeeContry.value,
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      orderType: 'SWP',
+      amountType: 'Amount',
+      bseDPTransType: 'PHYSICAL',
+      bankDetailId: null,
+      nsePaymentMode: null,
+      childTransactions: null,
+      isException: true,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+    };
+    return obj
+  }
   // getSingleTransactionJson() {}
   swp() {
     if (this.multiTransact == true) {
@@ -542,40 +578,7 @@ export class SwpTransactionComponent implements OnInit {
           return;
         }
         this.barButtonOptions.active = true;
-        const startDate = Number(UtilService.getEndOfDay(UtilService.getEndOfDay(new Date(this.swpTransaction.controls.date.value.replace(/"/g, '')))));
-        const tenure = this.swpTransaction.controls.tenure.value;
-        const noOfInstallments = this.swpTransaction.controls.installment.value;
-        const orderVal = this.swpTransaction.controls.employeeContry.value;
-        let obj: any = this.processTransaction.calculateInstallmentAndEndDateNew(startDate, this.frequency, tenure, noOfInstallments);
-
-        obj = {
-          ...obj,
-          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
-          clientName: this.selectedFamilyMember,
-          holdingType: this.getDataSummary.defaultClient.holdingType,
-          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-          productCode: this.schemeDetails.schemeCode,
-          isin: this.schemeDetails.isin,
-          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-          tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-          tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-          familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-          adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-          clientId: this.getDataSummary.defaultClient.clientId,
-          schemeCd: this.schemeDetails.schemeCode,
-          euin: this.getDataSummary.euin.euin,
-          clientCode: this.getDataSummary.defaultClient.clientCode,
-          orderVal: this.swpTransaction.controls.employeeContry.value,
-          aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-          orderType: 'SWP',
-          amountType: 'Amount',
-          bseDPTransType: 'PHYSICAL',
-          bankDetailId: null,
-          nsePaymentMode: null,
-          childTransactions: null,
-          isException: true,
-          tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-        };
+        let obj = this.getSingleTransactionJson();
         if (this.getDataSummary.defaultClient.aggregatorType == 1) {
           obj.bankDetailId = this.bankDetails.id;
           // obj.nsePaymentMode = (this.swpTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';

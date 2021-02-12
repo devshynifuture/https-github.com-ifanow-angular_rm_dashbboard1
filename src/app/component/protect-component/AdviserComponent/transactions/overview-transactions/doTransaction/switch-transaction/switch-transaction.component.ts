@@ -149,6 +149,7 @@ export class SwitchTransactionComponent implements OnInit {
 
   getDefaultDetails(data) {
     this.getDataSummary = data;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
     } else if (!this.mutualFundData) {
@@ -588,42 +589,7 @@ export class SwitchTransactionComponent implements OnInit {
           return;
         }
         this.barButtonOptions.active = true;
-        const obj = {
-
-          productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
-          clientName: this.selectedFamilyMember,
-          holdingType: this.getDataSummary.defaultClient.holdingType,
-          toProductDbId: this.schemeDetailsTransfer.id,
-          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-          toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
-          productCode: this.schemeDetails.schemeCode,
-          isin: this.schemeDetails.isin,
-          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-          tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
-          tpSubBrokerCredentialId: this.getDataSummary.euin.id,
-          familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
-          adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
-          clientId: this.getDataSummary.defaultClient.clientId,
-          toIsin: this.schemeDetailsTransfer.isin,
-          schemeCd: this.schemeDetails.schemeCode,
-          euin: this.getDataSummary.euin.euin,
-          qty: (this.switchTransaction.controls.switchType.value == "1") ? 0 : (this.switchTransaction.controls.switchType.value == "3") ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
-          allUnits: (this.switchTransaction.controls.switchType.value == "3") ? true : false,
-          orderType: 'SWITCH',
-          buySell: 'SWITCH_OUT',
-          transCode: 'NEW',
-          buySellType: 'FRESH',
-          amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
-          dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
-          clientCode: this.getDataSummary.defaultClient.clientCode,
-          orderVal: (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value,
-          bseDPTransType: 'PHYSICAL',
-          aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
-          childTransactions: [],
-          isException: true,
-          tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-
-        };
+        let obj = this.getSingleTransactionJson();
         this.onlineTransact.transactionBSE(obj).subscribe(
           data => {
             this.isSuccessfulTransaction = true;
@@ -648,13 +614,50 @@ export class SwitchTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, { allEdit: false });
     }
   }
+  getSingleTransactionJson() {
+    const obj = {
 
+      productDbId: (this.schemeDetails.id) ? this.schemeDetails.id : 999999,
+      clientName: this.selectedFamilyMember,
+      holdingType: this.getDataSummary.defaultClient.holdingType,
+      toProductDbId: this.schemeDetailsTransfer.id,
+      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      toMutualFundSchemeMasterId: this.schemeTransfer.mutualFundSchemeMasterId,
+      productCode: this.schemeDetails.schemeCode,
+      isin: this.schemeDetails.isin,
+      folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
+      tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
+      tpSubBrokerCredentialId: this.getDataSummary.euin.id,
+      familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
+      adminAdvisorId: this.getDataSummary.defaultClient.advisorId,
+      clientId: this.getDataSummary.defaultClient.clientId,
+      toIsin: this.schemeDetailsTransfer.isin,
+      schemeCd: this.schemeDetails.schemeCode,
+      euin: this.getDataSummary.euin.euin,
+      qty: (this.switchTransaction.controls.switchType.value == "1") ? 0 : (this.switchTransaction.controls.switchType.value == "3") ? this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
+      allUnits: (this.switchTransaction.controls.switchType.value == "3") ? true : false,
+      orderType: 'SWITCH',
+      buySell: 'SWITCH_OUT',
+      transCode: 'NEW',
+      buySellType: 'FRESH',
+      amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
+      dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
+      clientCode: this.getDataSummary.defaultClient.clientCode,
+      orderVal: (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value,
+      bseDPTransType: 'PHYSICAL',
+      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      childTransactions: [],
+      isException: true,
+      tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
+      scheme: this.schemeTransfer,
+      schemeName: this.schemeTransfer.schemeName,
+      schemeDetails: this.schemeDetailsTransfer,
+    };
+    return obj
+  }
   AddMultiTransaction() {
     if (this.barButtonOptions.active) {
       return;
-    }
-    if (this.isEdit != true) {
-      this.id++;
     }
     if (this.switchTransaction.get('schemeSwitch').invalid) {
       this.switchTransaction.get('schemeSwitch').markAsTouched();
@@ -674,28 +677,9 @@ export class SwitchTransactionComponent implements OnInit {
     } else {
       this.multiTransact = true;
       if (this.scheme && this.schemeDetails != undefined && this.switchTransaction != undefined) {
-        const obj = {
-          id: this.id,
-          amcId: this.scheme.amcId,
-          mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
-          productDbId: this.schemeDetails.id,
-          amountType: (this.switchTransaction.controls.switchType.value == "1") ? 'Amount' : 'Unit',
-          toProductDbId: this.schemeDetailsTransfer.id,
-          qty: (this.switchTransaction.controls.switchType.value == "1") ?
-            0 : (this.switchTransaction.controls.switchType.value == "3") ?
-              this.schemeDetails.balance_units : this.switchTransaction.controls.employeeContry.value,
-          allUnits: (this.switchTransaction.controls.switchType.value == "3") ? true : false,
-          toIsin: this.schemeDetailsTransfer.isin,
-          isin: this.schemeDetails.isin,
-          folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,
-          productCode: this.schemeDetails.schemeCode,
-          dividendReinvestmentFlag: this.schemeDetails.dividendReinvestmentFlag,
-          orderVal: (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value,
-          schemeName: this.scheme.schemeName,
-          transferIn: this.switchTransaction.get('transferIn').value,
-          switchType: this.switchTransaction.get('switchType').value
-
-        };
+        if (this.isEdit != true) {
+          this.id++;
+        }
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
             if (element.id == this.editedId) {
@@ -710,6 +694,7 @@ export class SwitchTransactionComponent implements OnInit {
           });
           this.isEdit = false;
         } else {
+          let obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
           this.dataSource.data = this.childTransactions;
         }
