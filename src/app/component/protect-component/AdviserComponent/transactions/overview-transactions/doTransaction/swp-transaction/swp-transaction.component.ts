@@ -323,7 +323,7 @@ export class SwpTransactionComponent implements OnInit {
     if (this.folioList.length == 1) {
       this.swpTransaction.controls.investmentAccountSelection.setValue(this.folioList[0].folioNumber);
       this.selectedFolio(this.folioList[0]);
-      if (this.swpTransaction('investmentAccountSelection').valid) {
+      if (this.swpTransaction.controls.investmentAccountSelection.value) {
         Object.assign(this.transactionSummary, { folioNumber: this.folioList[0].folioNumber });
       }
     } else {
