@@ -363,8 +363,15 @@
                         </div>
                     </div>
                     <div class="row b-a" [hidden]="!hasCostOfDelay || loaderFn.loading">
-                        <div class="col-md-6" id="monthly-chart-container-main"></div>
-                        <div class="col-md-6" id="lumpsum-chart-container-main"></div>
+                        <div class="col-md-6"
+                            *ngIf="selectedGoal?.dashboardData?.targetValueOfRequiredFVEquity > 10 && selectedGoal?.dashboardData?.targetValueOfRequiredFVDebt > 10"
+                            id="monthly-chart-container-main"></div>
+                        <div class="col-md-6"
+                            *ngIf="selectedGoal?.dashboardData?.targetValueOfRequiredFVEquity > 10 && selectedGoal?.dashboardData?.targetValueOfRequiredFVDebt > 10"
+                            id="lumpsum-chart-container-main"></div>
+                        <div class="col-md-12"
+                            *ngIf="selectedGoal?.dashboardData?.targetValueOfRequiredFVEquity < 10 && selectedGoal?.dashboardData?.targetValueOfRequiredFVDebt < 10">
+                            Goal requirements are fulfilled</div>
                     </div>
                     <div class="row pt-40" *ngIf="!loaderFn.loading && isRetirementTab">
                         <div class="col-md-12 p-0">

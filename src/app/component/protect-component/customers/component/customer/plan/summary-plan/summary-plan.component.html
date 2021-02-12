@@ -1,10 +1,11 @@
 <div id="ui-plan-summary">
     <div class="row">
 
-        <div class="col-md-2 p-0 bg-white pb-44 skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
+        <div class="col-md-2 p-0 bg-white pb-44 skeletonAnimation" [appSkeletonLoading]="isLoadingCashFlow"
+            appSkeletonLoading>
             <div class="wrapper-16 bb-2 c-p">
-                <p class="m-0 text-black roboto f-400">ANNUAL SURPLUS <span
-                        class="text-primitive f-12">{{ yearToShow }}</span>
+                <p class="m-0 text-black roboto f-400">ANNUAL SURPLUS <span class="text-primitive f-12">{{ yearToShow
+                        }}</span>
                 </p>
                 <div *ngIf="isLoadingCashFlow==false">
                     <h1 *ngIf="!isLoadingCashFlow" class="f-35 m-0 text-black pt-8">
@@ -80,7 +81,8 @@
                     <div class="col-md-9 pr-0">
                         <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
                         <p class="mb-10 f-14 roboto text-custom f-400"> ₹<span appFormatNumber>{{item.amount}}</span> /
-                            <span appFormatNumber>{{item.spent}}</span></p>
+                            <span appFormatNumber>{{item.spent}}</span>
+                        </p>
                     </div>
                     <div class="col-md-3 pl-0 d-flex justify-content-end align-items-end ">
                         <p class="mb-10 f-14 text-success roboto f-400" *ngIf="item.progressPercent <= 100">
@@ -98,7 +100,8 @@
                         <div class="col-md-9 pr-0">
                             <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
                             <p class="mb-10 f-14 roboto text-custom f-400"> <span appFormatNumber>{{item.amount}}</span>
-                                <span appFormatNumber>{{item.spent}}</span></p>
+                                <span appFormatNumber>{{item.spent}}</span>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -181,7 +184,7 @@
                 </div> -->
             </div>
 
-            <div class="bg-grey lter">
+            <div class="bg-grey lter h-full">
                 <div class="row">
                     <div class="col-md-8 mt-16 pr-8">
                         <div class="bg-white p-20">
@@ -193,7 +196,8 @@
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Total goals</p>
                                                 <h1 class="text-primary f-400 roboto" *ngIf="!isLoadingGoals">
-                                                    {{ goalSummaryCountObj?.totalGoals ? goalSummaryCountObj?.totalGoals : 0 }}
+                                                    {{ goalSummaryCountObj?.totalGoals ? goalSummaryCountObj?.totalGoals
+                                                    : 0 }}
                                                 </h1>
                                                 <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
                                                     <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
@@ -210,7 +214,8 @@
                                             <div class="totalGoalsBox">
                                                 <p class="f-14 mb-5 f-400 roboto">Upcoming</p>
                                                 <h1 class="text-primary f-400 roboto" *ngIf="!isLoadingGoals">
-                                                    {{ goalSummaryCountObj?.upcomingGoalsCount ? goalSummaryCountObj?.upcomingGoalsCount : 0 }}
+                                                    {{ goalSummaryCountObj?.upcomingGoalsCount ?
+                                                    goalSummaryCountObj?.upcomingGoalsCount : 0 }}
                                                 </h1>
                                                 <div class="col-md-6 p-0 relClass" *ngIf="isLoadingGoals">
                                                     <div [ngClass]="{'height24': isLoadingGoals}" class="bar">
@@ -348,7 +353,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mt-16  pt-20 skeletonAnimation pl-8"
+                        <div class="col-md-6 mt-16  pt-20 skeletonAnimation pl-0"
                             [appSkeletonLoading]="isLoadingCashFlow" appSkeletonLoading>
                             <div class="bg-white p-20">
                                 <div class="row d-flex align-items-center justify-content-between b-b">
@@ -457,7 +462,8 @@
                                     <div class="col-md-10 pr-0 ">
                                         <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>
                                         <p class="f-14 mb-16 f-600">₹ <span appFormatNumber [shouldRoundOff]="true"
-                                                [value]="item?.amount"></span></p>
+                                                [value]="item.amount?item.amount:0"></span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -674,17 +680,31 @@
                     </div>
                 </div>
                 <div class="b-b pl-12">
-                    <h5 class="roboto mt-16 mb-10 f-500">Financial plan</h5>
-                    <div class="d-xl-flex mb-20">
-                        <img class="c-p" src="assets/images/svg/financial-plan.svg"
-                            (click)="downloadPrevoius(finPlanList)">
-                        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                        <div class="detailsPDF">
-                            <p class="f-12 l-18 f-500 roboto mb-10">
-                                {{finPlanList ? finPlanList.reportName+'.pdf' : 'Financial plan not saved'}}</p>
-                            <p class="f-12 l-18 mb-0">{{fragmentData.size}}</p>
-                            <p class="f-12 l-18 m-0">{{fragmentData.date | date:'dd-MMM-yyyy'}}
-                                <br>{{fragmentData.date | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+                    <h5 class="roboto mt-16 mb-10 f-500">Financial plan <span class="text-left">Summary <img
+                                src="assets/images/svg/info.svg" class="c-p hw-17"
+                                matTooltip="To generate plans's pdf visit financial plan section under profile tab."
+                                [matTooltipPosition]="'right'">
+                        </span></h5>
+                    <div class="mb-20">
+                        <div class="d-flex" *ngIf="finPlanList">
+                            <img class="c-p" *ngIf="finPlanList" src="assets/images/svg/financial-plan.svg"
+                                (click)="downloadPrevoius(finPlanList)">
+
+                            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner" class="ml-28"></mat-spinner>
+                            <div class="detailsPDF">
+                                <p class="f-12 l-18 f-500 roboto mb-10">
+                                    <span *ngIf="finPlanList">{{finPlanList.reportName+'.pdf'}}</span>
+                                </p>
+                                <p class="f-12 l-18 mb-0">{{fragmentData.size}}</p>
+                                <p class="f-12 l-18 m-0">{{fragmentData.date | date:'dd-MMM-yyyy'}}
+                                    <br>{{fragmentData.date | date:'dd/MM/yyyy HH:mm:ss'}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-center" *ngIf="!finPlanList">
+                            <img *ngIf="!finPlanList" src="assets/images/svg/documents-empty-states.svg"
+                                class="c-p "><br>
+                            <p *ngIf="!finPlanList" class="f-14 l-18 pt-8 m-0">Financial plan not saved </p>
                         </div>
                     </div>
 
@@ -847,7 +867,8 @@
                                     <td>
                                         <div style="line-height: 30px; font-size: 12px; background:#007bff; height: 30px;"
                                             [ngStyle]="{'width':singleGoalData && singleGoalData?.percentCompleted > 100 ? 100 : singleGoalData.percentCompleted +'%' }">
-                                            {{singleGoalData && singleGoalData?.percentCompleted ? singleGoalData?.percentCompleted : '-'}}%
+                                            {{singleGoalData && singleGoalData?.percentCompleted ?
+                                            singleGoalData?.percentCompleted : '-'}}%
                                         </div>
 
                                     </td>

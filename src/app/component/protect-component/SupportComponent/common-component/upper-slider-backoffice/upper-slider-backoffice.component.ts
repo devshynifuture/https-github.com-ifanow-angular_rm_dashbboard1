@@ -350,7 +350,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.dataSource.data = objArr;
                     this.eventService.openSnackBar("All folios are Matched", "DISMISS");
                     // this.showCelebrationGif = true;
-                    this.errorMessage = "All Folios are Matched";
+                    this.errorMessage = "All Folios are Matched as on : " + this.datePipe.transform(res.latestAumDate, 'dd-MM-yyyy');
                     let dateObjDoneOn = new Date();
                     let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
                       `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
