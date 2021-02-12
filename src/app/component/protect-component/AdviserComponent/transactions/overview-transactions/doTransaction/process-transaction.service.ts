@@ -144,22 +144,22 @@ export class ProcessTransactionService {
 
   calculateInstallmentAndEndDateNew(startDate, frequencyType, tenure, noOfInstallments) {
     const obj: any = { startDate, frequencyType, tenure, noOfInstallments };
-    if (tenure == 3) {
+    if (tenure == '3') {
       const endDate = new Date();
       endDate.setDate(31);
       endDate.setMonth(11);
       endDate.setFullYear(2099);
       obj.endDate = endDate.getTime();
       obj.perpetualFlag = true;
-    } else if (frequencyType == 'MONTHLY' && tenure == 2) {
+    } else if (frequencyType == 'MONTHLY' && tenure == '2') {
       obj.noOfInstallments = noOfInstallments * 12;
-    } else if (frequencyType == 'QUATERLY' && tenure == 2) {
+    } else if (frequencyType == 'QUATERLY' && tenure == '2') {
       obj.noOfInstallments = noOfInstallments * 4;
-    } else if ((frequencyType == 'WEEKLY' || frequencyType == 'ONCE_IN_A_WEEK') && tenure == 2) {
+    } else if ((frequencyType == 'WEEKLY' || frequencyType == 'ONCE_IN_A_WEEK') && tenure == '2') {
       obj.noOfInstallments = noOfInstallments * 52;
-    } else if (frequencyType == 'YEARLY' && tenure == 2) {
+    } else if (frequencyType == 'YEARLY' && tenure == '2') {
       obj.noOfInstallments = noOfInstallments;
-    } else if (frequencyType == 'BUSINESS_DAY' && tenure == 2) {
+    } else if (frequencyType == 'BUSINESS_DAY' && tenure == '2') {
       obj.noOfInstallments = noOfInstallments * 365;
     } else {
       obj.noOfInstallments = noOfInstallments;
@@ -171,22 +171,22 @@ export class ProcessTransactionService {
   }
 
   calculateInstallmentAndEndDate(obj, tenure, installment) {
-    if (tenure == 3) {
+    if (tenure == '3') {
       const endDate = new Date();
       endDate.setDate(31);
       endDate.setMonth(11);
       endDate.setFullYear(2099);
       obj.endDate = endDate.getTime();
       obj.perpetualFlag = true;
-    } else if (obj.frequencyType == 'MONTHLY' && tenure == 2) {
+    } else if (obj.frequencyType == 'MONTHLY' && tenure == '2') {
       obj.noOfInstallments = installment * 12;
-    } else if (obj.frequencyType == 'QUATERLY' && tenure == 2) {
+    } else if (obj.frequencyType == 'QUATERLY' && tenure == '2') {
       obj.noOfInstallments = installment * 4;
-    } else if ((obj.frequencyType == 'WEEKLY' || obj.frequencyType == 'ONCE_IN_A_WEEK') && tenure == 2) {
+    } else if ((obj.frequencyType == 'WEEKLY' || obj.frequencyType == 'ONCE_IN_A_WEEK') && tenure == '2') {
       obj.noOfInstallments = installment * 52;
-    } else if (obj.frequencyType == 'YEARLY' && tenure == 2) {
+    } else if (obj.frequencyType == 'YEARLY' && tenure == '2') {
       obj.noOfInstallments = installment;
-    } else if (obj.frequencyType == 'BUSINESS_DAY' && tenure == 2) {
+    } else if (obj.frequencyType == 'BUSINESS_DAY' && tenure == '2') {
       obj.noOfInstallments = installment * 365;
     } else {
       obj.noOfInstallments = installment;
