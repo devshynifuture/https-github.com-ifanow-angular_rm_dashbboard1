@@ -462,7 +462,8 @@
                                     <div class="col-md-10 pr-0 ">
                                         <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>
                                         <p class="f-14 mb-16 f-600">₹ <span appFormatNumber [shouldRoundOff]="true"
-                                                [value]="item?.amount"></span></p>
+                                                [value]="item.amount?item.amount:0"></span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
