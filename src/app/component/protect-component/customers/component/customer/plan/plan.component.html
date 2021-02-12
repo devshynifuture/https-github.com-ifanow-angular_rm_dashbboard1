@@ -8,8 +8,7 @@
   </div>
   <div class="col-md-8 p-0">
     <nav mat-align-tabs="center" mat-tab-nav-bar>
-      <a [routerLink]="['/customer/detail/plan/summary']"
-        *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY && roleService.planPermission.subModule.summary.enabled"
+      <a [routerLink]="['/customer/detail/plan/summary']" *ngIf="roleService.planPermission.subModule.summary.enabled"
         mat-tab-link routerLinkActive="active">SUMMARY</a>
       <a [routerLink]="['/customer/detail/plan/profile']" *ngIf="roleService.planPermission.subModule.profile.enabled"
         mat-tab-link routerLinkActive="active">PROFILE</a>

@@ -363,6 +363,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         futureValue: goalSubData.goalFV,
         equity_monthly: this.getSumOfJsonMap(goalSubData.sipAmountEquity) || 0,
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt) || 0,
+        targetValueOfRequiredFVEquity: this.getSumOfJsonMap(goalSubData.targetValueOfRequiredFVEquity),
+        targetValueOfRequiredFVDebt: this.getSumOfJsonMap(goalSubData.targetValueOfRequiredFVDebt),
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity) || 0,
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt) || 0,
         arr_equity_monthly: this.getSumOfJsonMapArr(goalSubData.sipAmountEquity),
@@ -404,6 +406,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         presentValue: goalSubData.presentValue,
         futureValue: goalSubData.futureValue,
         equity_monthly: this.getSumOfJsonMap(goalSubData.sipAmountEquity),
+        targetValueOfRequiredFVEquity: this.getSumOfJsonMap(goalSubData.targetValueOfRequiredFVEquity),
+        targetValueOfRequiredFVDebt: this.getSumOfJsonMap(goalSubData.targetValueOfRequiredFVDebt),
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt),
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity),
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt),
@@ -424,6 +428,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       console.log('sip debt', mapData.dashboardData.debt_monthly)
       console.log('lum equity', mapData.dashboardData.lump_equity)
       console.log('lum debt', mapData.dashboardData.lump_debt)
+      console.log('targetValueOfRequiredFVEquity', mapData.dashboardData.targetValueOfRequiredFVEquity)
       if (mapData.dashboardData.equity_monthly == 0 && mapData.dashboardData.lump_equity != 0) {
         mapData.dashboardData.equity_monthly = 'N/A'
       }
