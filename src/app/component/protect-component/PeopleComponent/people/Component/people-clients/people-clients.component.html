@@ -93,7 +93,7 @@
                         <div class="bar">
                             <span *ngIf="element.loginEnable && !isLoading">
                                 {{element.lastLoginString}} <span
-                                    *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span>
+                                    *ngIf="!isLoading && element.lastLoginString!='Pending'"></span>
                             </span>
                             <span class="text-danger " *ngIf="!element.loginEnable && !isLoading">
                                 {{'Disable'}}
