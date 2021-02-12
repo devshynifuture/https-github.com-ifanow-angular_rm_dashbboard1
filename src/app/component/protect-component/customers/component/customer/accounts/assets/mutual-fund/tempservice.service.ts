@@ -88,10 +88,10 @@ export class TempserviceService {
       mainDataId = 'categoryId';
     } else if (reportType == 'ownerName') {
 
-      // array = 'family_member_list';
-      // mainDataId = 'familyMemberId';
-      array = 'schemeWise';
-      mainDataId = 'schemeId';
+      array = 'family_member_list';
+      mainDataId = 'familyMemberId';
+      // array = 'schemeWise';
+      // mainDataId = 'schemeId';
     } else if (reportType = 'schemeName') {
       array = 'schemeWise';
       mainDataId = 'schemeId';
@@ -251,7 +251,7 @@ export class TempserviceService {
             });
             totalObj = this.addTwoObjectValues(this.getEachTotalValue(singleData, false, folio), totalObj, { total: true });
             const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType, folio);
-            totalObj.totalCagr =data ? data.xirr : 0 ;
+            totalObj.totalCagr = data ? data.xirr : 0;
             totalObj.trnAbsoluteReturn = data ? data.absoluteReturn : 0;
             totalObj.totalBalanceUnit = singleData.mutualFundTransactions[singleData.mutualFundTransactions.length - 1].balanceUnits
             filteredData.push(totalObj);
