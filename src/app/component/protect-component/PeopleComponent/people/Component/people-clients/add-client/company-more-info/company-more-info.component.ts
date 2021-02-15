@@ -38,6 +38,21 @@ export class CompanyMoreInfoComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   formPlaceHolders = AppConstants.formPlaceHolders;
 
   moreInfoForm;
@@ -49,9 +64,10 @@ export class CompanyMoreInfoComponent implements OnInit {
 
   companyIndividualData: any;
   maxDate = new Date();
+  disableBtn: boolean;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-              private peopleService: PeopleService, private eventService: EventService,
-              private datePipe: DatePipe, private utilService: UtilService) {
+    private peopleService: PeopleService, private eventService: EventService,
+    private datePipe: DatePipe, private utilService: UtilService) {
   }
 
   @Input() set data(data) {
@@ -144,7 +160,8 @@ export class CompanyMoreInfoComponent implements OnInit {
         email: emailId
       });
     }
-    (flag == 'Save') ? this.barButtonOptions.active = true : '';
+    (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = false;
+    (flag == 'Next') ? this.barButtonOptions1.active = true : this.disableBtn = false;
     const obj = {
       emailList,
       displayName: this.moreInfoForm.controls.displayName.value,
@@ -172,6 +189,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(
         data => {
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           console.log(data);
           if (data) {
             if (flag == 'Next') {
@@ -188,6 +206,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
         }
       );
     } else {
@@ -195,6 +214,7 @@ export class CompanyMoreInfoComponent implements OnInit {
         data => {
           console.log(data);
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           this.tabDisableFlag.emit(false);
           if (flag == 'Next') {
             this.tabChange.emit(1);

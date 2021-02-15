@@ -84,6 +84,8 @@ export class PeopleClientsComponent implements OnInit {
             data = this.formatEmailAndMobile(data);
             this.finalClientList = data;
             this.peopleService.clientList = data;
+            this.clientDatasource.data = this.finalClientList;
+            this.clientDatasource.sort = this.clientTableSort;
           }
         }
       )

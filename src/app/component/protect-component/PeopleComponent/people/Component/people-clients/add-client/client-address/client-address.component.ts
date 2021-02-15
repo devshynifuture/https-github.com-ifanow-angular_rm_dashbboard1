@@ -40,6 +40,22 @@ export class ClientAddressComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   permanentAddFlag: boolean;
   userMappingIdFlag: boolean;
   disableBtn = false;
@@ -293,6 +309,7 @@ export class ClientAddressComponent implements OnInit {
       return;
     } else {
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
+      (flag == 'Next') ? this.barButtonOptions1.active = true : this.disableBtn = true;
       const obj = {
         address1: UtilService.removeSpecialCharactersFromString(this.addressForm.get('addressLine1').value),
         address2: UtilService.removeSpecialCharactersFromString(this.addressForm.get('addressLine2').value),
@@ -318,6 +335,7 @@ export class ClientAddressComponent implements OnInit {
           this.tabDisableFlag.emit(false);
           this.valueChangeFlag = true
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           if (flag == 'Next') {
             this.saveNextData.emit(true);
             this.tabChange.emit(1);
@@ -328,6 +346,7 @@ export class ClientAddressComponent implements OnInit {
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           this.disableBtn = false;
         }
       );
