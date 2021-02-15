@@ -520,10 +520,15 @@ export class BankDetailsIINComponent implements OnInit {
       // );
       this.sendObj.draft = this.inputData.draft
       localStorage.setItem('bank' + (this.data.clientId), JSON.stringify(this.sendObj));
+      if (!this.sendObj.accountType) {
+        this.sendObj.accountType = 'SB'
+      }
       this.openNomineeDetails(this.sendObj);
     }
   }
-
+  selectAccountType(data) {
+    this.sendObj.accountType = data.bseCode
+  }
   setObj(holder, value) {
     value = {
       ifscCode: holder.ifscCode,
