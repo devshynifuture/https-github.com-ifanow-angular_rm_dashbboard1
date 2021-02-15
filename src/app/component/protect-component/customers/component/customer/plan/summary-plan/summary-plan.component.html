@@ -495,166 +495,7 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <!-- <div class="col-md-8 mt-16 pr-8">
-                        <div class="bg-white p-20">
-                            <h5 class="f-500 mb-20">Ratios</h5>
 
-                            <div class="row">
-                                <div class="col-md-3 pl-0">
-                                    <div class="ratiosGreen">
-                                        <p class="f-14 l-18 mb-8 roboto f-400">Basic <br>liquidity</p>
-                                        <h4 class="text-success m-0">55.8</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 pl-0 pr-8">
-                                    <div class="ratiosOrange">
-                                        <p class="f-14 l-18 mb-8 roboto f-400"> Expanded <br>liquidity</p>
-                                        <h4 class="text-danger m-0">20%</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 pl-8 pr-0">
-                                    <div class="ratiosGreen">
-                                        <p class="f-14 l-18 mb-8 roboto f-400"> Savings <br> ratio </p>
-                                        <h4 class="text-success m-0">63%</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 pr-0">
-                                    <div class="ratiosGreen">
-                                        <p class="f-14 l-18 mb-8 roboto f-400"> Investment <br>ratio</p>
-                                        <h4 class="text-success m-0">82%</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row pt-16">
-                                <div class="col-md-3 pl-0">
-                                    <div class="ratiosGreen">
-                                        <p class="f-14 l-18 mb-8 roboto f-400">Debt <br>asset</p>
-                                        <h4 class="text-success m-0">0%</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 pl-0 pr-8">
-                                    <div class="ratiosGreen">
-                                        <p class="f-14 l-18 mb-8 roboto f-400"> Solvency <br>ratio</p>
-                                        <h4 class="text-success m-0">100%</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 pl-8 pr-0">
-                                    <div class="ratiosGreen">
-                                        <p class="f-14 l-18 mb-8 roboto f-400"> Debt
-                                            <br> service </p>
-                                        <h4 class="text-success m-0">0%</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 pr-0">
-                                    <div class="ratiosGreen">
-                                        <p class="f-14 l-18 mb-8 roboto f-400"> Financial
-                                            <br>investment</p>
-                                        <h4 class="text-success m-0">85%</h4>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingCashFlow"
-                        appSkeletonLoading>
-                        <div class="bg-white p-20">
-                            <div class="row d-flex align-items-center justify-content-between b-b">
-                                <h5 class="f-500 mb-10 roboto f-400"> Cash flows </h5>
-                                <p class="f-14 text-primitive mb-10">{{ yearToShow }}</p>
-                            </div>
-
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Incomes</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
-                                    {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                        [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Expenses</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.expense ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Assets</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Insurance</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 m-0 roboto f-400">Liabilities</p>
-                                <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
-                                <p class="f-14 f-600 m-0">Surplus</p>
-                                <p class="f-14 f-600 m-0" *ngIf="!isLoadingCashFlow">{{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber
-                                        [shouldRoundOff]="true"
-                                        [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span></p>
-                                <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
-                                    <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
-                                        <p class="text-black f-12 m-0 text-right roboto f-400">
-                                            {{''}}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                        </div>
-                    </div> -->
-
-                </div>
 
             </div>
 
@@ -693,68 +534,16 @@
                 </div>
 
 
-                <!-- <div class="">
-                    <div class="wrapper-20 pl-12 pr-12">
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <h5 class="m-0 text-black pb-12">Activity log</h5>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                                    <br>ICICI FD was created manually.</p>
-                                <p class="text-custom m-0 f-13 pt-4 f-300">by Acme Financial Advisors</p>
-                                <p class="m-0 text-black f-12 text-right f-300">04/09/2019 6:00 AM</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wrapper-20 pl-12 pt-12 pr-12 pb-12 bt-1">
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                                    <br>ICICI FD was created manually.</p>
-                                <p class="text-custom m-0 f-13 pt-4 f-300">by Acme Financial Advisors</p>
-                                <p class="m-0 text-black f-12 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wrapper-20 pl-12 pt-12 pb-12 pr-12 bt-1">
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                                    <br>ICICI FD was created manually.</p>
-                                <p class="text-custom m-0 pt-4 f-13 f-300">by Acme Financial Advisors</p>
-                                <p class="m-0 text-black f-12 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wrapper-20 pl-12 pt-12 pb-12 pr-12 bt-1">
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <p class="m-0 f-13 f-300 text-black">Fixed deposit - 980787870909 -
-                                    <br>ICICI FD was created manually.</p>
-                                <p class="text-custom m-0 pt-4 f-300">by Acme Financial Advisors</p>
-                                <p class="m-0 text-black f-12 pb-12 text-right f-300">04/09/2019 6:00 AM</p>
-                            </div>
-                        </div>
-                    </div>
 
-                </div> -->
             </div>
         </div>
 
     </div>
 </div>
 <!-------------------------------pdf-------------------------------->
-<!-- <div #summaryPlan id="planSummary">
-        <div >
-            <h1>{{'helooo'}}{{loopEle}}</h1>
 
-              </div>
-</div> -->
 
-<html #summaryPlan id="planSummary" style="display: none">
+<!-- <html #summaryPlan id="planSummary" style="display: none">
 
 
 <body>
@@ -886,7 +675,6 @@
 
                                 <tr>
                                     <td style="padding: 10px;"> Debt</td>
-                                    <!-- <span style="font-size: 12px;"> 0%</span> -->
                                     <td style="padding: 10px; text-align: right;">
                                         <span appFormatNumber
                                             [value]="singleGoalData && singleGoalData.debt_monthly ? singleGoalData?.debt_monthly : '0'"></span>
@@ -979,7 +767,7 @@
                                     <td
                                         style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
                                         Goal present value</td>
-                                    <!-- <td style="padding: 8px;background: #f5f7f7;">Status</td> -->
+
                                 </tr>
 
                                 <tr *ngFor="let element of singleGoalData.retirementTableValue">
@@ -1005,4 +793,4 @@
     </table>
 </body>
 
-</html>
+</html> -->
