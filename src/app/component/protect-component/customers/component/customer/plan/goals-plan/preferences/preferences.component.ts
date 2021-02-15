@@ -53,6 +53,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   yearsEnd: any[];
   subscriber = new Subscriber();
   freez: boolean = false;
+  savingStartDate: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -71,14 +72,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       if (this.data.remainingData.freezed == true) {
         this.freez = true
       }
-      this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+      console.log((new Date(this.data.remainingData.goalStartDate).getFullYear()));
+      console.log((new Date().getFullYear()) + 1)
+      this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear() - 1)).map((v, idx) => v + idx);
       this.yearsEnd = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 40).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     } else {
-      this.years = Array((new Date(this.data.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+      this.years = Array((new Date(this.data.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear() - 1)).map((v, idx) => v + idx);
       this.yearsEnd = Array((new Date(this.data.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 40).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     }
     if (this.data.goalType == 1) {
-      this.years = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+      this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear() - 1)).map((v, idx) => v + idx);
       this.yearsEnd = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 40).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     }
     this.setForms();
@@ -138,7 +141,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       archiveGoal: [],
       stepUp: [(remainingData.stepUp) ? remainingData.stepUp : 0,]
     })
-
+    this.savingStartDate = this.goalDetailsFG.controls.savingStartDateYear.value
     if (!remainingData.goalEndDate && this.data.singleOrMulti == 2) {
       this.goalDetailsFG.addControl('goalEndDateYear', this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth', this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
@@ -401,6 +404,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       if (event.checked == true) {
         this.close()
       }
+      this.allocateOtherAssetService.refreshObservable.next();
+      this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err);
     })
