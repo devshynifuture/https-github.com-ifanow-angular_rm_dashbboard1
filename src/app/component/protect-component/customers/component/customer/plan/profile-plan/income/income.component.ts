@@ -110,7 +110,6 @@ export class IncomeComponent implements OnInit {
       this.isLoading = true;
       this.dataSource.data = [{}, {}, {}];
     }
-    this.LoadCount++;
     this.summaryPlanService.setIncomeCount(this.LoadCount);
     const obj = {
       advisorId: this.advisorId,
@@ -120,6 +119,7 @@ export class IncomeComponent implements OnInit {
     };
     this.planService.getIncomeData(obj).subscribe(
       data => {
+        this.LoadCount++;
         this.pushArray(data);
         if (!this.incomeId) {
           this.getIncomeListRes(data);

@@ -438,6 +438,7 @@ export class ShowHealthPlanningComponent implements OnInit {
     data.forEach(element => {
       element.insuranceDetails = element.insurance ? element.insurance : element.insuranceDetails;
       element.sumAssured = 0;
+      element.insuranceDetails.sumInsuredIdv = 0;
       if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
         element.insuranceDetails.insuredMembers.forEach(ele => {
           ele.sumAssured += ele.sumInsured;
@@ -571,7 +572,7 @@ export class ShowHealthPlanningComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.isRefreshRequired = true;
-            if(!this.inputData.id){
+            if (!this.inputData.id) {
               this.insuranceIds = [];
               this.inputData.id = sideBarData.data;
               this.insuranceIds.push(this.inputData.id);

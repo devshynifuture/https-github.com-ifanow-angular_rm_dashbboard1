@@ -435,6 +435,9 @@ export class LiabilitiesComponent implements OnInit {
       } else {
         obj.statusId = 'LIVE';
       }
+      if (obj.remainingMonths <= 0) {
+        obj.statusId = 'CLOSED';
+      }
     });
   }
   getLiabiltyRes(data) {
@@ -442,7 +445,6 @@ export class LiabilitiesComponent implements OnInit {
     // this.showLoader = false;
     if (data && data.loans.length > 0) {
       this.filterForliabilities = data.loans;
-      this.checkStatusId(data.loans);
       this.totalLoanAmt = 0;
       this.totalEmi = 0;
       // this.totalLoanAmt = data.totalLoanAmount;
@@ -458,7 +460,7 @@ export class LiabilitiesComponent implements OnInit {
         this.outStandingAmt += element.outstandingAmount
       });
       data.loans.forEach(element => {
-        if (element.remainingMonths || element.remainingMonths != 0) {
+        if (element.remainingMonths > 0) {
           element.months = (element.remainingMonths % 12);
           element.years = ~~(element.remainingMonths / 12)
           console.log('months', element.months);
@@ -468,6 +470,7 @@ export class LiabilitiesComponent implements OnInit {
           element.years = 0
         }
       });
+      this.checkStatusId(data.loans);
       this.dataStore = [];
       this.dataSource.filteredData = [];
       this.home = [];

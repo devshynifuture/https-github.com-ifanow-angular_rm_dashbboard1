@@ -6,6 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ExcelMisService } from '../excel-mis.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-amc-wise',
@@ -95,6 +96,7 @@ export class AmcWiseComponent implements OnInit {
   selectedSchemeName: any;
   aumId: any;
   viewModeID: any;
+  aumIdList: any;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService,
     public roleService: RoleService) {
@@ -102,9 +104,15 @@ export class AmcWiseComponent implements OnInit {
     this.backoffice.misAumData.subscribe(
       data => {
         if (data.value == 'amc') {
-          if (data.aumId != 0) {
+          if (data.aumId.length > 0) {
             this.aumId = data.aumId,
               this.viewModeID = data.viewModeID;
+            this.aumIdList = UtilService.getFilterSelectedAumIDs(this.aumId);
+            this.arnRiaValue = data.arnRiaValue;
+            this.advisorId = AuthService.getAdvisorId();
+            this.clientId = AuthService.getClientId();
+            this.getArnRiaList();
+            this.getAmcWiseData();
           } else {
             this.viewModeID = 'All';
             this.aumId = 0;
@@ -115,8 +123,7 @@ export class AmcWiseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+
     this.parentId = AuthService.getAdminAdvisorId();
     if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
       this.arnRiaValue = this.data.arnRiaValue;
@@ -131,9 +138,16 @@ export class AmcWiseComponent implements OnInit {
     // } else {
     //   this.viewModeID = 'All';
     //   this.aumId = 0;
-    // }
-    this.getArnRiaList();
-    this.getAmcWiseData();
+    // // }
+    // this.getArnRiaList();
+    // this.getAmcWiseData();
+  }
+
+  emitFilterListResponse(res) {
+    if (res) {
+      this.aumIdList = UtilService.getFilterSelectedAumIDs(res);
+      this.getAmcWiseData();
+    }
   }
 
 
@@ -236,8 +250,8 @@ export class AmcWiseComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     };
-    if (this.aumId && this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList && this.aumIdList.length >= 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.amcWiseGet(obj).subscribe(
       data => this.getReponseAmcWiseGet(data),
@@ -259,6 +273,9 @@ export class AmcWiseComponent implements OnInit {
     }
 
   }
+
+
+
 
   applicantWiseExcelReport(schemeIndex, amcIndex) {
     const applicantList = this.arrayOfExcelData[amcIndex].schemeList[schemeIndex].applicantList;
@@ -475,8 +492,8 @@ export class AmcWiseComponent implements OnInit {
         schemeMasterId: schemeData.id,
         totalAum: schemeData.totalAum
       };
-      if (this.aumId && this.aumId != 0) {
-        obj['rtId'] = this.aumId;
+      if (this.aumIdList && this.aumIdList.length >= 0) {
+        obj['rtId'] = this.aumIdList;
       }
       this.backoffice.amcWiseApplicantGet(obj).subscribe(
         data => {

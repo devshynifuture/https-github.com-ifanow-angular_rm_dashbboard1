@@ -92,6 +92,28 @@ export class UtilService {
     return outputArray;
   }
 
+  static getAumFilterList() {
+    return [
+      { name: 'KARVY', value: 1, checked: true },
+      { name: 'CAMS', value: 2, checked: true },
+      { name: 'FRANKLIN TEMPLETON', value: 3, checked: true },
+      { name: 'PRUDENT', value: 4, checked: true },
+      { name: 'NJ', value: 5, checked: true },
+      { name: 'CAS IMPORT', value: 6, checked: true },
+      { name: 'MANUAL', value: 14, checked: true },
+    ]
+  }
+
+  static getFilterSelectedAumIDs(List) {
+    let AumIdList = []
+    List.forEach(element => {
+      if (element.checked) {
+        AumIdList.push(element.value)
+      }
+    })
+    return AumIdList;
+  }
+
   static convertObjectToCustomArray(
     inputObject: object,
     keyNameForOutput: string,

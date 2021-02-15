@@ -663,16 +663,17 @@ export class SummaryPlanComponent implements OnInit {
                 if (data) {
                     let array = [];
                     data.forEach(element => {
-                        if (element.familyMemberId == 0) {
-                            this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
-                        } else {
-                            const obj = {
-                                'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
-                                'id': element.familyMemberId
+                        if (element.dateOfBirth) {
+                            if (element.familyMemberId == 0) {
+                                this.clientDob = this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd');
+                            } else {
+                                const obj = {
+                                    'dob': this.datePipe.transform(new Date(element.dateOfBirth), 'yyyy-MM-dd'),
+                                    'id': element.familyMemberId
+                                }
+                                array.push(obj);
                             }
-                            array.push(obj);
                         }
-
                     });
                     this.familyList = array.map(function (obj, ind) {
                         let val = obj.id;
@@ -705,10 +706,10 @@ export class SummaryPlanComponent implements OnInit {
         };
         this.planService.getCashFlow(obj).subscribe(
             data => {
+                this.isLoadingCashFlow = false;
                 if (data) {
                     console.log(data);
                     this.annualSurplus = 0;
-                    this.isLoadingCashFlow = false;
                     this.cashFlowData = data;
                     this.annualSurplus = this.cashFlowData.income - this.cashFlowData.expense;
                     let total = this.cashFlowData.income + this.cashFlowData.expense;
@@ -718,7 +719,7 @@ export class SummaryPlanComponent implements OnInit {
                     this.cashFlowData = '';
                 }
             }, (error) => {
-                this.eventService.showErrorMessage(error);
+                // this.eventService.showErrorMessage(error);
                 this.isLoadingCashFlow = false;
             }
         );

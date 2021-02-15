@@ -209,7 +209,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
@@ -304,7 +304,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'ORDER',
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
@@ -368,7 +368,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       advisorId: this.getDataSummary.defaultClient.advisorId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     };
@@ -469,12 +469,14 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
+    } else {
+      this.purchaseTransaction.controls.schemePurchase.reset();
+      this.filterSchemeList = new Observable<any[]>();
     }
     if (this.purchaseTransaction.controls.modeOfPaymentSelection.value == '2') {
       this.getMandateDetails();
     }
     this.oldDefaultData = data;
-    //  this.purchaseTransaction.controls.investor.reset();
   }
 
   checkAndResetForm(oldData, newData) {
@@ -534,7 +536,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
@@ -687,7 +689,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,
         orderType: 'ORDER',
-        userAccountType: this.mfDefault.defaultCredential.accountType,
+        userAccountType: this.mfDefault.defaultClient.accountType,
       };
       this.onlineTransact.getSchemeDetails(obj1).subscribe(
         data => this.getSchemeDetailsRes(data), (error) => {

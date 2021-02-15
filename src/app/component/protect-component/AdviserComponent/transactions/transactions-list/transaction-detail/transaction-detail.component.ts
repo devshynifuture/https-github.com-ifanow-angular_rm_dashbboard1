@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {OnlineTransactionService} from '../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {detailStatusObj} from './detailStatus';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { detailStatusObj } from './detailStatus';
 
 @Component({
   selector: 'app-transaction-detail',
@@ -17,7 +17,7 @@ export class TransactionDetailComponent implements OnInit {
   showBankDetail = false;
 
   constructor(private eventService: EventService, private subInjectService: SubscriptionInject,
-              private onlineTransact: OnlineTransactionService) {
+    private onlineTransact: OnlineTransactionService) {
   }
 
   set data(data) {
@@ -69,6 +69,12 @@ export class TransactionDetailComponent implements OnInit {
       responseData => {
         this.isLoading = false;
         this.transactionData = responseData;
+        if (responseData.aggregatorType == 1) {
+          this.transactionData.platformName = 'NSE'
+        } else {
+          this.transactionData.platformName = 'BSE'
+        }
+        this.setPaymentMode()
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );
@@ -92,6 +98,6 @@ export class TransactionDetailComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data: this.transactionData});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.transactionData });
   }
 }

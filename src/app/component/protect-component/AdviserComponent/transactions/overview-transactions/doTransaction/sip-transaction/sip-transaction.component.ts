@@ -317,6 +317,8 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { aggregatorType: this.platformType });
     if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
+    } else {
+      this.sipTransaction.controls.schemeSip.reset();
     }
     if (this.platformType == 1) {
       this.getMandateDetails();
@@ -382,7 +384,7 @@ export class SipTransactionComponent implements OnInit {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'SIP',
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
@@ -624,7 +626,7 @@ export class SipTransactionComponent implements OnInit {
       advisorId: this.getDataSummary.defaultClient.advisorId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
     };
@@ -1119,8 +1121,7 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.reinvest.setValue('');
     this.sipTransaction.controls.employeeContry.reset();
     this.sipTransaction.controls.investmentAccountSelection.setValue('');
-    this.sipTransaction.controls.schemePurchase.reset();
-    this.sipTransaction.controls.schemePurchase.reset();
+    this.sipTransaction.controls.schemeSip.reset();
     this.sipTransaction.controls.frequency.setValue('');
     this.setDefaultTenure();
   }

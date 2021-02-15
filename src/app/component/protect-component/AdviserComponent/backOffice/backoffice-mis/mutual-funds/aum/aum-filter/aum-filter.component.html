@@ -1,0 +1,18 @@
+<button [matMenuTriggerFor]="menu1" class="ba-black borderLine br-0 mr-12" mat-stroked-button>
+    <!-- {{viewModeID}} --> Filter
+    <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
+</button>
+<mat-menu #menu1="matMenu">
+    <mat-checkbox *ngFor="let singleObj of filterList;index as i" (change)="filterIDWise(i)"
+        [checked]="singleObj.checked">
+        {{singleObj.name}}</mat-checkbox>
+    <!-- <button mat-menu-item (click)="filterIDWise(1,'KARVY')" [value]="1">KARVY<mat-checkbox [checked]=""></mat-checkbox></button>
+    <button mat-menu-item (click)="filterIDWise(2,'CAMS')" [value]="2">CAMS<mat-checkbox [checked]=""></mat-checkbox></button>
+    <button mat-menu-item (click)="filterIDWise(3,'FRANKLIN TEMPLETON')" [value]="3">FRANKLIN
+        TEMPLETON<mat-checkbox [checked]=""></mat-checkbox></button>
+    <button mat-menu-item (click)="filterIDWise(4,'PRUDENT')" [value]="4">PRUDENT<mat-checkbox [checked]=""></mat-checkbox></button>
+    <button mat-menu-item (click)="filterIDWise(5,'NJ')" [value]="5">NJ<mat-checkbox [checked]=""></mat-checkbox></button>
+    <button mat-menu-item (click)="filterIDWise(6,'CAS IMPORT')" [value]="6">CAS IMPORT<mat-checkbox [checked]=""></mat-checkbox>
+    </button>
+    <button mat-menu-item (click)="filterIDWise(14,'MANUAL')" [value]="14">MANUAL<mat-checkbox [checked]=""></mat-checkbox></button> -->
+</mat-menu>

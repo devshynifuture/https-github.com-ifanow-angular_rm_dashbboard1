@@ -136,7 +136,10 @@ export class AddNumberComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    if (this.getMobileNumList, length < 3) {
+    if (this.taxstatusId == 1) {
+      data.isdCodeId = 73;
+    }
+    if (this.getMobileNumList.length < 3) {
       if (this.compulsionCount < this.minimumCompulsary) {
         this.compulsionCount++;
         this.getMobileNumList.push(this.fb.group({
@@ -149,9 +152,6 @@ export class AddNumberComponent implements OnInit {
           isActive: [data.isActive]
         }));
       } else {
-        if (this.taxstatusId == 1) {
-          data.isdCodeId = 73;
-        }
         this.getMobileNumList.push(this.fb.group({
           code: [data.isdCodeId],
           number: [data.mobileNo != 0 ? data.mobileNo : '', Validators.pattern(this.validatorType.TEN_DIGITS)],

@@ -1007,6 +1007,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
   getSumAssuredInAll(element) {
     element.sumAssured = 0;
+    element.sumInsuredIdv = 0;
     if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
       element.insuredMembers.forEach(ele => {
         element.sumAssured += ele.sumInsured;
@@ -1073,6 +1074,7 @@ export class LifeInsuranceComponent implements OnInit {
     data.forEach(element => {
       element.insuranceDetails = element.insurance ? element.insurance : element.insuranceDetails;
       element.sumAssured = 0;
+      element.insuranceDetails.sumInsuredIdv = 0;
       if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
         element.insuranceDetails.insuredMembers.forEach(ele => {
           ele.sumAssured += ele.sumInsured;

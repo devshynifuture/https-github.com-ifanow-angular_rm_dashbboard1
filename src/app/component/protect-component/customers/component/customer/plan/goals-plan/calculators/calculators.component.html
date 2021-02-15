@@ -315,7 +315,9 @@
                     <mat-select class="form-control" formControlName="delay3">
                       <mat-option [value]="opt.value" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
                     </mat-select>
-                    <mat-error>This field is required</mat-error>
+                    <mat-hint class="pl-6">Optional</mat-hint>
+
+                    <!-- <mat-error>This field is required</mat-error> -->
                   </mat-form-field>
                 </div>
               </div>
@@ -326,7 +328,9 @@
                     <mat-select class="form-control" formControlName="delay4">
                       <mat-option [value]="opt.value" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
                     </mat-select>
-                    <mat-error>This field is required</mat-error>
+                    <mat-hint class="pl-6">Optional</mat-hint>
+
+                    <!-- <mat-error>This field is required</mat-error> -->
                   </mat-form-field>
                 </div>
               </div>

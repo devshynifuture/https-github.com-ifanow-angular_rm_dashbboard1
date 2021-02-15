@@ -231,7 +231,13 @@ export class OthersAssetsComponent implements OnInit {
       console.log('getRealEstateRes', data);
       this.dataList = data;
       this.getStatusId(data);
+      data.forEach(element => {
+        if (element.ownerList && element.ownerList.length > 0) {
+          element.ownerName = element.ownerList[0].name
+        }
+      });
       this.datasource3.data = this.dataList;
+
       // data.assetList.forEach(singleAsset => {
       //   singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
       // });
@@ -240,7 +246,7 @@ export class OthersAssetsComponent implements OnInit {
       data.forEach(o => {
         o.currentValueAsOnToday = (o.currentValueAsOnToday) ? o.currentValueAsOnToday : 0
         this.totalCurrentValue += o.currentValueAsOnToday;
-        this.sumOfpurchasedValue += o.purchaseAmt;
+        this.sumOfpurchasedValue += o.purchaseAmt ? o.purchaseAmt : 0;
       });
       this.datasource3.sort = this.sort;
       // this.totalCurrentValue = this.dataList.totalCurrentValue;
