@@ -10,22 +10,8 @@
             <div class="row">
                 <div class="col-md-12 pr-0 mb-10">
                     <div class="right text-right">
-                        <button [matMenuTriggerFor]="menu1" class="ba-black borderLine br-0 mr-12" mat-stroked-button>
-                            {{viewModeID}}
-                            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
-                            </mat-icon>
-                        </button>
-                        <mat-menu #menu1="matMenu">
-                            <button mat-menu-item (click)="filterIDWise(0,'All')" [value]="0">All</button>
-                            <button mat-menu-item (click)="filterIDWise(1,'KARVY')" [value]="1">KARVY</button>
-                            <button mat-menu-item (click)="filterIDWise(2,'CAMS')" [value]="2">CAMS</button>
-                            <button mat-menu-item (click)="filterIDWise(3,'FRANKLIN TEMPLETON')" [value]="3">FRANKLIN
-                                TEMPLETON</button>
-                            <button mat-menu-item (click)="filterIDWise(4,'PRUDENT')" [value]="4">PRUDENT</button>
-                            <button mat-menu-item (click)="filterIDWise(5,'NJ')" [value]="5">NJ</button>
-                            <button mat-menu-item (click)="filterIDWise(6,'CAS IMPORT')" [value]="6">CAS IMPORT</button>
-                            <button mat-menu-item (click)="filterIDWise(14,'MANUAL')" [value]="14">MANUAL</button>
-                        </mat-menu>
+                        <app-aum-filter (emitFilterList)="emitFilterListResponse($event)" [filterList]="aumId">
+                        </app-aum-filter>
                         <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                             {{viewMode}}
                             <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down

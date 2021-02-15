@@ -305,7 +305,8 @@
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-              {{!isLoading && element.purchaseAmt? "₹" : ""}}<span appFormatNumber>{{element.purchaseAmt}}</span>
+              {{!isLoading && element.purchaseAmt? "₹" : ""}}<span
+                appFormatNumber>{{element.purchaseAmt ? element.purchaseAmt : '-' }}</span>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
@@ -346,7 +347,7 @@
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-              <span [value]="sumOfpurchasedValue" appFormatNumber></span>
+              <span [value]="sumOfpurchasedValue ? sumOfpurchasedValue : '-'" appFormatNumber></span>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
