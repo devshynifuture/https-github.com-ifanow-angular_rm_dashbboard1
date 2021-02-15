@@ -224,7 +224,7 @@ export class SwpTransactionComponent implements OnInit {
       tpUserCredentialId: this.getDataSummary.defaultClient.tpUserCredentialId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
@@ -290,7 +290,7 @@ export class SwpTransactionComponent implements OnInit {
       mutualFundSchemeMasterId: scheme.mutualFundSchemeMasterId,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       orderType: 'STP',
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
     };
     this.onlineTransact.getSchemeDetails(obj1).subscribe(
       data => this.getSchemeDetailsRes(data), (error) => {
@@ -306,7 +306,7 @@ export class SwpTransactionComponent implements OnInit {
       advisorId: this.getDataSummary.defaultClient.advisorId,
       familyMemberId: this.getDataSummary.defaultClient.familyMemberId,
       clientId: this.getDataSummary.defaultClient.clientId,
-      userAccountType: this.getDataSummary.defaultCredential.accountType,
+      userAccountType: this.getDataSummary.defaultClient.accountType,
       holdingType: this.getDataSummary.defaultClient.holdingType,
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       showOnlyNonZero: true,
@@ -463,7 +463,7 @@ export class SwpTransactionComponent implements OnInit {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,
         orderType: 'ORDER',
-        userAccountType: this.mfDefault.defaultCredential.accountType,
+        userAccountType: this.mfDefault.defaultClient.accountType,
       };
       this.onlineTransact.getSchemeDetails(obj1).subscribe(
         data => this.getSchemeDetailsRes(data), (error) => {
