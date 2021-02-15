@@ -36,6 +36,22 @@ export class ClientMoreInfoComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   moreInfoForm;
   occupationList = [];
   disableBtn = false;
@@ -160,6 +176,7 @@ export class ClientMoreInfoComponent implements OnInit {
         this.moreInfoData.guardianData.birthDate = this.datePipe.transform(this.moreInfoData.guardianData.birthDate, 'dd/MM/yyyy');
       }
       (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
+      (flag == 'Next') ? this.barButtonOptions1.active = true : this.disableBtn = true;
       const obj = {
         adminAdvisorId: AuthService.getAdminId(),
         residentFlag: this.moreInfoData.residentFlag,
@@ -202,6 +219,7 @@ export class ClientMoreInfoComponent implements OnInit {
           this.valueChangeFlag = true
           this.disableBtn = false;
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           console.log(data);
           this.clientData.emit(data);
           if (flag == 'Next') {
@@ -215,6 +233,7 @@ export class ClientMoreInfoComponent implements OnInit {
         err => {
           this.disableBtn = false;
           this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions1.active = false;
           this.barButtonOptions.active = false;
         }
       );
@@ -268,6 +287,7 @@ export class ClientMoreInfoComponent implements OnInit {
         console.log(data);
         this.clientData.emit(data);
         this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
         if (flag == 'Next') {
           this.tabChange.emit(1);
           this.saveNextData.emit(true);
@@ -280,6 +300,7 @@ export class ClientMoreInfoComponent implements OnInit {
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
         this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
         this.disableBtn = false;
       }
     );

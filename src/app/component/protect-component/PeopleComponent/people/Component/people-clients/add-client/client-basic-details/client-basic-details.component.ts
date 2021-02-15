@@ -60,6 +60,22 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     //   fontIcon: 'favorite'
     // }
   };
+
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   minorForm: FormGroup;
   nonIndividualForm: any;
   advisorId;
@@ -651,6 +667,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.eventService.openSnackBar('Please mark one email as a primary', 'Dimiss');
         return;
       }
+      (flag == 'Next') ? this.barButtonOptions1.active = true : this.disableBtn = true;
       (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
       let gardianObj;
       let obj: any = {
@@ -691,6 +708,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
           data => {
             this.disableBtn = false;
             this.barButtonOptions.active = false;
+            this.barButtonOptions1.active = false;
             console.log(data);
             DashboardService.dashKeyMetrics = null;
             data.invCategory = this.invTypeCategory;
@@ -728,6 +746,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
             if (flag == 'Next') {
               this.disableBtn = false;
               this.barButtonOptions.active = false;
+              this.barButtonOptions1.active = false;
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
               this.changeTabAndSendData(data);
@@ -884,7 +903,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       return;
     }
 
-
+    (flag == 'Next') ? this.barButtonOptions1.active = true : this.disableBtn = true;
     (flag == 'close') ? this.barButtonOptions.active = true : this.disableBtn = true;
 
     const obj = {
@@ -937,6 +956,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.valueChangeFlag = true;
         this.disableBtn = false;
         data.invTypeCategory = this.invTypeCategory;
+        this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
         data.categoryTypeflag = 'familyMinor';
         if (flag == 'Next') {
           this.changeTabAndSendData(data);
@@ -949,12 +970,15 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
             this.cusService.unmapFamilyMembers(obj).subscribe(
               data => {
                 this.eventService.openSnackBar('unmapped successfully!', 'Dismiss');
+                this.barButtonOptions.active = false;
+                this.barButtonOptions1.active = false;
                 this.close(data);
               },
               error => this.eventService.showErrorMessage(error)
             );
           } else {
             this.barButtonOptions.active = false;
+            this.barButtonOptions1.active = false;
             this.close(data);
           }
         }
@@ -962,6 +986,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       err => {
         this.disableBtn = false;
         this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );

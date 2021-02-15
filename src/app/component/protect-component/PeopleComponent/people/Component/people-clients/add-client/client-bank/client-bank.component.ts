@@ -38,6 +38,21 @@ export class ClientBankComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   disableBtn: boolean;
   clientName: any;
   accountTypes: any;
@@ -230,6 +245,7 @@ export class ClientBankComponent implements OnInit {
     this.isIfsc = false;
     let address1, address2, pincode, adderessData;
     if (data.address) {
+      data.address = UtilService.removeSpecialCharactersFromString(data.address);
       adderessData = data.address.trim();
       pincode = adderessData.match(/\d/g);
       pincode = pincode.join('');
@@ -305,7 +321,7 @@ export class ClientBankComponent implements OnInit {
         holderList.push(element);
       });
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
-
+      (flag == 'Next') ? this.barButtonOptions1.active = true : this.disableBtn = true;
       const obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
         branchName: this.bankForm.get('branchName').value,
@@ -339,6 +355,7 @@ export class ClientBankComponent implements OnInit {
           this.disableBtn = false;
           this.tabDisableFlag.emit(false);
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           if (flag == 'Next') {
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
@@ -350,6 +367,7 @@ export class ClientBankComponent implements OnInit {
         err => {
           this.disableBtn = false;
           this.eventService.openSnackBar(err, 'Dismiss');
+          this.barButtonOptions1.active = false;
           this.barButtonOptions.active = false;
         }
       );

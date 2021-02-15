@@ -197,6 +197,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.isIfsc = false;
     let address1, address2, pincode, adderessData;
     if (data.address) {
+      data.address = UtilService.removeSpecialCharactersFromString(data.address);
       adderessData = data.address.trim();
       pincode = adderessData.match(/\d/g);
       pincode = pincode.join('');
@@ -519,10 +520,15 @@ export class BankDetailsIINComponent implements OnInit {
       // );
       this.sendObj.draft = this.inputData.draft
       localStorage.setItem('bank' + (this.data.clientId), JSON.stringify(this.sendObj));
+      if (!this.sendObj.accountType) {
+        this.sendObj.accountType = 'SB'
+      }
       this.openNomineeDetails(this.sendObj);
     }
   }
-
+  selectAccountType(data) {
+    this.sendObj.accountType = data.bseCode
+  }
   setObj(holder, value) {
     value = {
       ifscCode: holder.ifscCode,

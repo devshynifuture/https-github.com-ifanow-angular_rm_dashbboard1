@@ -116,7 +116,8 @@
                         <mat-option value="2">Partner</mat-option>
                         <mat-option value="3">Director</mat-option>
                         <mat-option value="4">Manager</mat-option>
-                      <mat-option value="5" *ngIf="companyIndividualData&&companyIndividualData.companyStatus==7">Karta</mat-option>
+                        <mat-option value="5" *ngIf="companyIndividualData&&companyIndividualData.companyStatus==7">
+                            Karta</mat-option>
 
                     </mat-select>
                     <mat-hint class="ml-8">Optional</mat-hint>
@@ -229,15 +230,18 @@
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 w-50 ">
-    <div class="row">
+    <div [ngClass]="{'event-none': barButtonOptions.active || disableBtn}" class="row">
         <div class="col-md-4">
             <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 d-flex align-items-end justify-content-end">
-            <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
+            <!-- <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
                 class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
-            </button>
+            </button> -->
+            <app-progress-button *ngIf="fieldFlag" (btnClick)="saveNext('Next')" [options]="barButtonOptions1"
+                class="br-0 text-inherit ml-12">
+            </app-progress-button>
             <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
               class="br-0 text-inherit mr-12">SAVE & NEXT
           </button> -->

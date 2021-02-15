@@ -176,10 +176,14 @@
                 <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
             </div>
             <div class="col-md-8 d-flex align-items-end justify-content-end">
-                <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')"
+                <!-- <button mat-stroked-button  (click)="saveNext('Next')"
                     class=" br-0 bg-white text-inherit">SAVE &
                     NEXT
-                </button>
+                </button> -->
+
+                <app-progress-button *ngIf="fieldFlag" (btnClick)="saveNext('Next')" class="br-0 text-inherit ml-12"
+                    [options]="barButtonOptions1">
+                </app-progress-button>
                 <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
                     class="br-0 text-inherit mr-12">SAVE & NEXT
                 </button> -->
