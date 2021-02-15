@@ -376,7 +376,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
         isClient: 0
       })]),
       bond: [data.bondNameAndSeries ? data.bondNameAndSeries : '', [Validators.required]],
-      issueDate: [new Date(data.investmentOrIssueDate), [Validators.required]],
+      issueDate: [data.investmentOrIssueDate ? new Date(data.investmentOrIssueDate) : null, [Validators.required]],
       amountInvested: [data.investmentAmount, [Validators.required]],
       issuePrice: [data.issuePrice, [Validators.required]],
       units: [data.unitsInGram, [Validators.required]],
@@ -621,7 +621,9 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       "nomineeList": this.goldBondForm.value.getNomineeName,
       "id": this.goldBondForm.value.id,
     }
-    if (this.goldBondForm.invalid && this.error) {
+    if(this.error){
+      this.goldBondForm.markAllAsTouched();
+    }else if (this.goldBondForm.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       this.goldBondForm.markAllAsTouched();
       return;
