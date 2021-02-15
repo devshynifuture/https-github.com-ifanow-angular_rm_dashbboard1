@@ -124,7 +124,9 @@
               <mat-form-field appearance="standard" floatLabel="never">
                 <mat-select class="form-control" formControlName="accountType">
                   <mat-option disabled value=''>Select payment mode</mat-option>
-                  <mat-option *ngFor="let account of accountTypes" [value]="account.id"> {{account.name}}</mat-option>
+                  <mat-option (click)="selectAccountType(account)" *ngFor="let account of accountTypes"
+                    [value]="account.id">
+                    {{account.name}}</mat-option>
                 </mat-select>
                 <mat-error class="f-12">This field is required</mat-error>
               </mat-form-field>
