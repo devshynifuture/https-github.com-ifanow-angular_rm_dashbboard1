@@ -976,6 +976,14 @@ mat-tab-group[vertical] {
   }
 }
 
+#ui-expenses {
+  table {
+    border-collapse: separate !important;
+    border-top: 1px solid #dee5e7 !important;
+    border-left: 1px solid #dee5e7 !important;
+  }
+}
+
 #ui-assets,
 #ui-income,
 #ui-activity {
@@ -1735,7 +1743,7 @@ textarea {
   }
 }
 
- 
+
 
 @media (max-width: 1142px) {
   #ui-settings-subs .mat-tab-label {
@@ -1747,10 +1755,10 @@ textarea {
 
 
 
-  
 
 
- 
+
+
 
 
 
@@ -2132,7 +2140,7 @@ ngx-slick-carousel>.slick-disabled {
   float: right;
 }
 
- 
+
 
 
 @media (max-width: 1124px) {
@@ -2211,10 +2219,11 @@ a.docFileName:hover {
 }
 
 
-@media screen  and (orientation:portrait) { 
+@media screen and (orientation:portrait) {
   #ui-insurance .vertical-menu {
     height: calc(100vh - 410px);
   }
+
   .table-scroll {
     max-height: 580px;
   }
@@ -2222,10 +2231,10 @@ a.docFileName:hover {
 
 
 .playStorBox2 {
-  
-  img{
-   // width: 120px;
-   height: 35px;
+
+  img {
+    // width: 120px;
+    height: 35px;
     margin-right: 15px;
   }
 }
