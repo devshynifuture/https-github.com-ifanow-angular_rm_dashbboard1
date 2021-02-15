@@ -32,6 +32,7 @@ export class MfServiceService {
   private advisorIdList = new BehaviorSubject('')
   private loading = new BehaviorSubject(Boolean)
   refreshMutualFundData = new BehaviorSubject(null);
+  clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
 
   getPersonalDetails(data) {
     const obj = {
@@ -439,6 +440,7 @@ export class MfServiceService {
       transactionPeriodCheck: dataForFilter.transactionPeriodCheck,
       transactionPeriod: dataForFilter.transactionPeriod,
       transactionType: dataForFilter.transactionType,
+      selectFilter: dataForFilter.selectFilter,
       // setTrueKey:dataForFilter.setTrueKey
     };
     return sendData;
@@ -518,6 +520,7 @@ export class MfServiceService {
       transactionPeriod: (rightSideData) ? rightSideData.transactionPeriod : false,
       transactionPeriodCheck: (rightSideData) ? rightSideData.transactionPeriodCheck : false,
       transactionTypeList: (rightSideData) ? rightSideData.transactionType : [],
+      selectFilter: (rightSideData) ? (rightSideData.selectFilter.length > 0 ? (rightSideData.selectFilter[0].value == 'Current Client' ? this.clientId : 0) : 0) : 0,
       // setTrueKey:rightSideData ? rightSideData.setTrueKey :false
 
     }

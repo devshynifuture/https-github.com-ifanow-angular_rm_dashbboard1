@@ -1629,7 +1629,7 @@ export class MutualFundSummaryComponent implements OnInit {
       fromDate: this.setDefaultFilterData.fromDate,
       toDate: (this.setDefaultFilterData.toDate) ? this.setDefaultFilterData.toDate : this.toDate,
       savedFilterData: this.savedFilterData,
-      selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      selectFilter: this.rightFilterData ? this.setDefaultFilterData.selectFilter : (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList
     };
