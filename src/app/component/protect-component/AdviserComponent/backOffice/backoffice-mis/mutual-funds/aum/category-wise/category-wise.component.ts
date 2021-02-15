@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ExcelMisService } from '../excel-mis.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-category-wise',
@@ -111,6 +112,7 @@ export class CategoryWiseComponent implements OnInit {
   isSchemeLoading: boolean;
   viewModeID: any;
   aumId: any;
+  aumIdList: any;
   // categoryTotal: number = 0;
   // subCategoryTotal: number = 0;
   // applicantTotal: number = 0;
@@ -125,9 +127,13 @@ export class CategoryWiseComponent implements OnInit {
     this.backoffice.misAumData.subscribe(
       data => {
         if (data.value == 'category') {
-          if (data.aumId != 0) {
+          if (data.aumId.length > 0) {
             this.aumId = data.aumId,
               this.viewModeID = data.viewModeID;
+            this.aumIdList = UtilService.getFilterSelectedAumIDs(this.aumId);
+            this.arnRiaValue = data.arnRiaValue;
+            this.getArnRiaList();
+            this.getSubCatSchemeName();
           } else {
             this.viewModeID = 'All';
             this.aumId = 0;
@@ -149,8 +155,7 @@ export class CategoryWiseComponent implements OnInit {
       this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
-    this.getArnRiaList();
-    this.getSubCatSchemeName();
+
     // this.clientFolioWise();
     // this.getSubCatAum();
   }
@@ -251,8 +256,8 @@ export class CategoryWiseComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     };
-    if (this.aumId && this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList && this.aumIdList.length >= 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.getTotalByAumScheme(obj).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
@@ -260,11 +265,13 @@ export class CategoryWiseComponent implements OnInit {
     );
   }
 
-  filterIDWise(id, flagValue) {
-    this.aumId = id;
-    this.viewModeID = flagValue;
-    this.getSubCatSchemeName();
+  emitFilterListResponse(res) {
+    if (res) {
+      this.aumIdList = UtilService.getFilterSelectedAumIDs(res);
+      this.getSubCatSchemeName();
+    }
   }
+
 
   // clientFolioWise() {
   //   const obj = {
@@ -291,8 +298,8 @@ export class CategoryWiseComponent implements OnInit {
       categoryId: category.id,
       parentId: this.parentId
     }
-    if (this.aumId && this.aumId != 0) {
-      data['rtId'] = this.aumId;
+    if (this.aumIdList && this.aumIdList.length >= 0) {
+      data['rtId'] = this.aumIdList;
     }
     category.subCategoryList = [{}, {}, {}];
     this.backoffice.getSubCategoryListMisAUM(data)
@@ -407,8 +414,8 @@ export class CategoryWiseComponent implements OnInit {
       subCategoryId: subCategory.id,
       totalAum: subCategory.totalAum,
     }
-    if (this.aumId && this.aumId != 0) {
-      data['rtId'] = this.aumId;
+    if (this.aumIdList && this.aumIdList.length >= 0) {
+      data['rtId'] = this.aumIdList;
     }
     this.isSchemeLoading = true;
     this.backoffice.getSchemeListMisAUM(data)

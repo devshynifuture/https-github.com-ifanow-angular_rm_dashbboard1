@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
 import { FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-aum',
@@ -43,6 +44,9 @@ export class AumComponent implements OnInit {
   viewModeID: any;
   aumId: any;
   filterObj: any;
+  aumList = [];
+  aumIdList = [];
+  aumIdListEventEmitRes: any;
 
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService,
@@ -57,9 +61,10 @@ export class AumComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
     this.teamMemberListGet();
-
     this.aumId = 0;
     this.viewModeID = 'All'
+    this.aumList = UtilService.getAumFilterList();
+
     // if parentId = 0 arnRiaDetails selection will be disabled
     // if parentId present use it and arn Ria deail selection with advisor Id as 0
   }
@@ -78,6 +83,8 @@ export class AumComponent implements OnInit {
       }
     })
   }
+
+
 
   teamMemberListGet() {
     this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
@@ -169,21 +176,14 @@ export class AumComponent implements OnInit {
   filterIDWise(id, flagValue) {
     this.viewModeID = flagValue;
     this.aumId = id;
-    this.MiscData1 = {};
-    this.clientWithoutMF = 0;
-    this.getGraphData();
-    this.getTotalAum();
-    // this.getSubCatScheme();
-    this.getClientWithoutMf();
-    this.getSubCatAum();
-    this.getMisData();
   }
 
   aumFilterRes(data) {
     if (data.aumId && data.aumId != 0) {
       this.aumId = data.aumId;
       this.viewModeID = data.viewModeID;
-      this.filterIDWise(this.aumId, this.viewModeID)
+      this.emitFilterListResponse(this.aumId);
+      // this.filterIDWise(this.aumId, this.viewModeID)
     } else {
       this.aumId = 0;
       this.viewModeID = 'All'
@@ -272,13 +272,13 @@ export class AumComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     };
-    if (this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList.length > 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.getClientTotalAUM(obj).subscribe(
       data => {
         this.getFileResponseDataAum(data);
-        if (this.aumId == 0) {
+        if (this.aumIdList.length == 7) {
           this.misAumDataStorageService.setTotalAumData(data);
         }
       },
@@ -298,15 +298,15 @@ export class AumComponent implements OnInit {
       advisorIds: [this.adminAdvisorIds],
       parentId: this.parentId
     };
-    if (this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList.length > 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.getclientWithoutMf(obj).subscribe(
       data => {
         if (data) {
           this.isLoading = false;
           console.log(data);
-          if (this.aumId == 0) {
+          if (this.aumIdList.length == 7) {
             this.misAumDataStorageService.setClientWithoutMfData(data);
           }
           this.calculateClientWithoutMf(data);
@@ -335,13 +335,13 @@ export class AumComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     };
-    if (this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList.length > 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.getMisData(obj).subscribe(
       data => {
         this.getFileResponseDataForMis(data);
-        if (this.aumId == 0) {
+        if (this.aumIdList.length == 7) {
           this.misAumDataStorageService.setMisData1(data);
         }
       }, err => {
@@ -360,13 +360,13 @@ export class AumComponent implements OnInit {
       arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId
     };
-    if (this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList.length > 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.getSubCatAum(obj).subscribe(
       data => {
         this.getFileResponseDataForSub(data);
-        if (this.aumId == 0) {
+        if (this.aumIdList.length == 7) {
           this.misAumDataStorageService.setSubCatAumData(data);
         }
       }, err => {
@@ -429,10 +429,26 @@ export class AumComponent implements OnInit {
       totalAumObj: this.MiscData1
     };
     this.backoffice.addMisAumData({
-      aumId: this.aumId,
+      aumId: this.aumList ? this.aumList : this.aumIdListEventEmitRes,
       viewModeID: this.viewModeID,
-      value: value
+      value: value,
+      arnRiaValue: this.arnRiaValue
     })
+  }
+
+  emitFilterListResponse(res) {
+    if (res) {
+      this.aumIdListEventEmitRes = res;
+      this.MiscData1 = {};
+      this.clientWithoutMF = 0;
+      this.aumIdList = UtilService.getFilterSelectedAumIDs(res);
+      this.getGraphData();
+      this.getTotalAum();
+      // this.getSubCatScheme();
+      this.getClientWithoutMf();
+      this.getSubCatAum();
+      this.getMisData();
+    }
   }
 
   getGraphData() {
@@ -442,13 +458,13 @@ export class AumComponent implements OnInit {
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     };
-    if (this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList.length > 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
         this.aumGraph = data;
-        if (this.aumId == 0) {
+        if (this.aumIdList.length == 7) {
           this.misAumDataStorageService.setGraphData(data);
         }
         setTimeout(() => {

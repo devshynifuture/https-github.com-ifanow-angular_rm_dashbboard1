@@ -5,6 +5,7 @@ import { AuthService } from "src/app/auth-service/authService";
 import { ExcelMisService } from "../excel-mis.service";
 import { MfServiceService } from "src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service";
 import { RoleService } from 'src/app/auth-service/role.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: "app-client-wise",
@@ -86,6 +87,7 @@ export class ClientWiseComponent implements OnInit {
   selectedSchemeName: any;
   aumId: any;
   viewModeID: any;
+  aumIdList: any;
 
   constructor(
     public aum: AumComponent,
@@ -97,9 +99,16 @@ export class ClientWiseComponent implements OnInit {
     this.backoffice.misAumData.subscribe(
       data => {
         if (data.value == 'client') {
-          if (data.aumId != 0) {
+          if (data.aumId.length > 0) {
             this.aumId = data.aumId,
               this.viewModeID = data.viewModeID;
+            this.aumIdList = UtilService.getFilterSelectedAumIDs(this.aumId);
+            this.arnRiaValue = data.arnRiaValue;
+            this.advisorId = AuthService.getAdvisorId();
+            this.clientId = AuthService.getClientId();
+            this.getArnRiaList();
+            this.getClientTotalAum();
+
           } else {
             this.viewModeID = 'All';
             this.aumId = 0;
@@ -125,8 +134,7 @@ export class ClientWiseComponent implements OnInit {
   reverse4 = true;
 
   ngOnInit() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
+
     this.parentId = AuthService.getAdminAdvisorId();
     console.log("this is what i m getting :: ", this.data);
     if (
@@ -146,8 +154,15 @@ export class ClientWiseComponent implements OnInit {
     //   this.viewModeID = 'All';
     //   this.aumId = 0;
     // }
-    this.getArnRiaList();
-    this.getClientTotalAum();
+    // this.getArnRiaList();
+    // this.getClientTotalAum();
+  }
+
+  emitFilterListResponse(res) {
+    if (res) {
+      this.aumIdList = UtilService.getFilterSelectedAumIDs(res);
+      this.getClientTotalAum();
+    }
   }
 
 
@@ -304,8 +319,8 @@ export class ClientWiseComponent implements OnInit {
       arnRiaDetailsId: this.data ? this.data.arnRiaDetailId : -1,
       parentId: this.data ? this.data.parentId : -1,
     };
-    if (this.aum && this.aumId != 0) {
-      obj['rtId'] = this.aumId;
+    if (this.aumIdList && this.aumIdList.length >= 0) {
+      obj['rtId'] = this.aumIdList;
     }
     this.backoffice.getAumClientTotalAum(obj).subscribe(
       (data) => this.clientTotalAum(data),
@@ -333,8 +348,8 @@ export class ClientWiseComponent implements OnInit {
         clientId: clientData.id,
         totalAum: clientData.totalAum,
       };
-      if (this.aum && this.aumId != 0) {
-        obj['rtId'] = this.aumId;
+      if (this.aumIdList && this.aumIdList.length >= 0) {
+        obj['rtId'] = this.aumIdList;
       }
       this.backoffice.getAumFamilyMember(obj).subscribe(
         (data) => {
@@ -685,8 +700,8 @@ export class ClientWiseComponent implements OnInit {
         totalAum: investorData.totalAum,
         clientId: investorData.clientId,
       };
-      if (this.aum && this.aumId != 0) {
-        obj['rtId'] = this.aumId;
+      if (this.aumIdList && this.aumIdList.length >= 0) {
+        obj['rtId'] = this.aumIdList;
       }
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         (data) => {
@@ -769,8 +784,8 @@ export class ClientWiseComponent implements OnInit {
         schemeId: schemeData.mutualFundSchemeMasterId,
         clientId: schemeData.clientId,
       };
-      if (this.aum && this.aumId != 0) {
-        obj['rtId'] = this.aumId;
+      if (this.aumIdList && this.aumIdList.length >= 0) {
+        obj['rtId'] = this.aumIdList;
       }
       this.backoffice.getAumFamilyMemberSchemeFolio(obj).subscribe(
         (data) => {

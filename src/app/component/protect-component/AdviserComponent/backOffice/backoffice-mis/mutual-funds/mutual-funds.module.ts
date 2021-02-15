@@ -26,6 +26,7 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { AumFilterComponent } from './aum/aum-filter/aum-filter.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
     SipApplicantWiseComponent,
     AllSipComponent,
     MisMfTransactionsComponent,
-    MisMfSchemesComponent
+    MisMfSchemesComponent,
+    AumFilterComponent
   ],
   imports: [
     CommonModule,
