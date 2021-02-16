@@ -64,6 +64,7 @@ export class AumComponent implements OnInit {
     this.aumId = 0;
     this.viewModeID = 'All'
     this.aumList = UtilService.getAumFilterList();
+    this.aumIdList = UtilService.getFilterSelectedAumIDs(this.aumList);
 
     // if parentId = 0 arnRiaDetails selection will be disabled
     // if parentId present use it and arn Ria deail selection with advisor Id as 0
