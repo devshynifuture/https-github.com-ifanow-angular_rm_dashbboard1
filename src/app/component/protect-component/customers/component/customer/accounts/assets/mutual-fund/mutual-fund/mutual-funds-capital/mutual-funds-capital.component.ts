@@ -77,7 +77,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     capitalGainData: any;
     toDate: Date;
     fromDate: Date;
-    finalValue = { indexGain: 0, indexLoss: 0, ltGain: 0, ltLoss: 0, stGain: 0, stLoss: 0 };
+    finalValue = {};
     GTReinvesment = 0;
     GTdividendPayout = 0;
     GTdividendReinvestment = 0;
@@ -362,7 +362,8 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
             this.categoryData = data;
             let catObj = this.MfServiceService.categoryFilter(this.categoryData, 'category');
-            this.categorisedHybridFund(catObj);
+            this.categorisedHybridFund(catObj);//move hybird to debt and equty based on category
+            this.categoriesLiquidFund(catObj);//move the liquid schemes to debt catgory
             Object.keys(catObj).map(key => {
                 if (catObj[key][0].category != 'DEBT') {
                     let tempData = this.filterCategoryWise(catObj[key], 'EQUITY');
@@ -411,6 +412,29 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.changeInput.emit(false);
 
         }
+    }
+    categoriesLiquidFund(data) {
+        let debtFund = [];
+        Object.keys(data).map(key => {
+            if (data[key][0].category == 'LIQUID') {
+                data[key][0].mutualFund.forEach(element => {
+                    debtFund.push(element);
+                });
+            }
+        });
+        if (debtFund.length > 0) {
+            if (data['DEBT']) {
+                data['DEBT'][0].mutualFund = [...data['DEBT'][0].mutualFund, ...debtFund];
+            } else {
+                if (!data['DEBT']) {
+                    data.DEBT = [];
+                    data.DEBT = data['LIQUID'];
+                    // data.DEBT[0].mutualFund = debtFund
+                }
+            }
+        }
+        delete data['LIQUID'];
+        return data;
     }
     categorisedHybridFund(data) {
         let equityFund = [];
@@ -621,25 +645,29 @@ export class MutualFundsCapitalComponent implements OnInit {
 
             });
 
-
             if (Object.keys(this.finalValue).length != 0) {
-                if (category == 'EQUITY') {
-                    console.log(Object.keys(this.finalValue))
-                    if (this.equityObj) {
-                        this.equityObj.stGain += this.finalValue.stGain
-                        this.equityObj.stLoss += this.finalValue.stLoss
-                        this.equityObj.ltLoss += this.finalValue.ltLoss
-                        this.equityObj.ltLoss += this.finalValue.ltLoss
-                        this.equityObj.indexGain += this.finalValue.indexGain
-                        this.equityObj.indexLoss += this.finalValue.indexLoss
-                    } else {
-                        this.equityObj = this.finalValue
-                    }
-                } else {
-                    this.debtObj = this.finalValue
-                }
-                this.finalValue = { indexGain: 0, indexLoss: 0, ltGain: 0, ltLoss: 0, stGain: 0, stLoss: 0 };
+                (category == 'DEBT') ? this.debtObj = this.finalValue : this.equityObj = this.finalValue;
+                this.finalValue = {};
+
             }
+            // if (Object.keys(this.finalValue).length != 0) { // commenting this because totalget increasing evry time i change the filter and this issue is resolved by categorising liduid category
+            //     if (category == 'EQUITY') {
+            //         console.log(Object.keys(this.finalValue))
+            //         if (this.equityObj) {
+            //             this.equityObj.stGain += this.finalValue.stGain
+            //             this.equityObj.stLoss += this.finalValue.stLoss
+            //             this.equityObj.ltLoss += this.finalValue.ltLoss
+            //             this.equityObj.ltLoss += this.finalValue.ltLoss
+            //             this.equityObj.indexGain += this.finalValue.indexGain
+            //             this.equityObj.indexLoss += this.finalValue.indexLoss
+            //         } else {
+            //             this.equityObj = this.finalValue
+            //         }
+            //     } else {
+            //         this.debtObj = this.finalValue
+            //     }
+            //     this.finalValue = { indexGain: 0, indexLoss: 0, ltGain: 0, ltLoss: 0, stGain: 0, stLoss: 0 };
+            // }
             // if(category!='EQUITY'){
             // this.finalValue = {};
             // }

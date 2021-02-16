@@ -1276,7 +1276,7 @@ export class MutualFundOverviewComponent implements OnInit {
                 this.showSummaryBar = false;
               }
             }
-            this.setDefaultFilterData.selectFilter = this.rightFilterData ? (this.rightFilterData.selectFilter.length > 0 ? (this.rightFilterData.selectFilter[0].value == 'Current Client' ? this.clientId : 0) : null) : null;
+            this.setDefaultFilterData.selectFilter = this.rightFilterData ? ((this.rightFilterData.selectFilter && this.rightFilterData.selectFilter.length > 0) ? (this.rightFilterData.selectFilter[0].value == 'Current Client' ? this.clientId : 0) : null) : null;
             this.MfServiceService.setFilterValues(this.setDefaultFilterData);
             this.MfServiceService.setDataForMfGet(this.rightFilterData.mfData);
             // this.isLoading = false;
