@@ -77,6 +77,8 @@ export class SummaryPlanComponent implements OnInit {
         private cd: ChangeDetectorRef,
         private http: HttpClient
     ) {
+        console.log('org', this.getOrgData)
+        console.log('userInfo', this.userInfo)
     }
 
     @ViewChild(MatPaginator, { static: false }) paginator;
