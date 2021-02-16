@@ -180,8 +180,8 @@
                                 <div class="bl br bb">
                                     <div class="row bb-1 pt-8 pb-8">
                                         <div class="col-md-12">
-                                            <mat-checkbox
-                                                (change)="checkAndLoadPdf($event.checked,'Summmary',null,'Plan / Summmary')">
+                                            <mat-checkbox #planSummary
+                                                (change)="checkAndLoadPdf($event.checked,'Summary',null,'Plan / Summmary',false,planSummary)">
                                                 Plan / Summary
                                             </mat-checkbox>
                                         </div>

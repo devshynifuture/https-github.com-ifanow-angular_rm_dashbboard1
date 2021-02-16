@@ -703,7 +703,9 @@ export class SummaryPlanComponent implements OnInit {
             }
         );
         this.cd.detectChanges();//to refresh the dom when response come
-        this.loaded.emit(this.summaryPlan.nativeElement);
+        setTimeout(() => {
+            this.loaded.emit(this.summaryPlan.nativeElement);
+        }, 500);
     }
 
     getCashflowData() {
