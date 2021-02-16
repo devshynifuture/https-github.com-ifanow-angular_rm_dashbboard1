@@ -38,7 +38,7 @@ import { RoleService } from 'src/app/auth-service/role.service';
   providers: [LoaderFunction]
 })
 export class GoalsPlanComponent implements OnInit, OnDestroy {
-  displayedColumns = ['goalYear', 'goalFv', 'status'];
+  displayedColumns = ['goalYear', 'goalFv', 'status', 'percentage'];
   displayedColumns1 = ['select', 'milestone', 'amount', 'fv', 'icons'];
   clientFamily: any[];
   dataSource = ([{}, {}, {}]);
