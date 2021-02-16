@@ -77,7 +77,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     capitalGainData: any;
     toDate: Date;
     fromDate: Date;
-    finalValue = {};
+    finalValue = { indexGain: 0, indexLoss: 0, ltGain: 0, ltLoss: 0, stGain: 0, stLoss: 0 };
     GTReinvesment = 0;
     GTdividendPayout = 0;
     GTdividendReinvestment = 0;
@@ -623,8 +623,22 @@ export class MutualFundsCapitalComponent implements OnInit {
 
 
             if (Object.keys(this.finalValue).length != 0) {
-                (category == 'DEBT') ? this.debtObj = this.finalValue : this.equityObj = this.finalValue;
-                this.finalValue = {};
+                if (category == 'EQUITY') {
+                    console.log(Object.keys(this.finalValue))
+                    if (this.equityObj) {
+                        this.equityObj.stGain += this.finalValue.stGain
+                        this.equityObj.stLoss += this.finalValue.stLoss
+                        this.equityObj.ltLoss += this.finalValue.ltLoss
+                        this.equityObj.ltLoss += this.finalValue.ltLoss
+                        this.equityObj.indexGain += this.finalValue.indexGain
+                        this.equityObj.indexLoss += this.finalValue.indexLoss
+                    } else {
+                        this.equityObj = this.finalValue
+                    }
+                } else {
+                    this.debtObj = this.finalValue
+                }
+                this.finalValue = { indexGain: 0, indexLoss: 0, ltGain: 0, ltLoss: 0, stGain: 0, stLoss: 0 };
             }
             // if(category!='EQUITY'){
             // this.finalValue = {};
