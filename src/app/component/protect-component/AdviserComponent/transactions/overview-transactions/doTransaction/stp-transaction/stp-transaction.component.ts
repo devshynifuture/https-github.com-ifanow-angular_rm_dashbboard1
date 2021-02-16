@@ -805,6 +805,9 @@ export class StpTransactionComponent implements OnInit {
           })
         } else {
           let obj = this.getSingleTransactionJson();
+          if (this.platformType == 1) {
+            obj.folioNo = obj.folioNo.split('/')[0]
+          }
           this.childTransactions.push(obj);
           const tenure = this.stpTransaction.controls.tenure.value;
           const installment = this.stpTransaction.controls.installment.value;

@@ -667,6 +667,9 @@ export class SwpTransactionComponent implements OnInit {
           const tenure = this.swpTransaction.controls.tenure.value;
           const installment = this.swpTransaction.controls.installment.value;
           obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
+          if (this.platformType == 1) {
+            obj.folioNo = obj.folioNo.split('/')[0]
+          }
           this.childTransactions.push(obj);
           this.dataSource.data = this.childTransactions;
           this.swpTransaction.controls.date.reset();
