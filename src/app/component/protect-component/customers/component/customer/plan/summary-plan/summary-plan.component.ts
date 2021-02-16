@@ -111,6 +111,13 @@ export class SummaryPlanComponent implements OnInit {
         }
         return data
     }
+    generatePdf(data) {
+        this.fragmentData.isSpinner = true;;
+        let para = document.getElementById('planSummary');
+        //const header = this.summaryTemplateHeader.nativeElement.innerHTML
+        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
+
+    }
     getFinPlan() {
         let obj = {
             advisorId: AuthService.getAdvisorId(),
