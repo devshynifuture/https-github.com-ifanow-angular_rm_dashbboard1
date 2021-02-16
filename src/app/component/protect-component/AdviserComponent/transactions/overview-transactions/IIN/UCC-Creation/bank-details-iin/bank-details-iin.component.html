@@ -168,8 +168,9 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address1" matInput maxlength="100"
+              <input class="form-control" #bAdd1 formControlName="address1" matInput maxlength="100"
                 placeholder="Enter Branch address line 1" type="text">
+              <mat-hint align="end">{{bAdd1.value.length}}/100</mat-hint>
               <mat-error class="">This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -181,8 +182,9 @@
           </div>
           <div class="col-md-5 form-group">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address2" matInput maxlength="100"
+              <input class="form-control" #bAdd2 formControlName="address2" matInput maxlength="100"
                 placeholder="Enter Branch address line 2" type="text">
+              <mat-hint align="end">{{bAdd2.value.length}}/100</mat-hint>
               <mat-error class="">This field is required</mat-error>
             </mat-form-field>
           </div>

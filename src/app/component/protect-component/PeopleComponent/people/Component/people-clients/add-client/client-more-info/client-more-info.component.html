@@ -197,9 +197,13 @@
         </div>
         <div *ngIf="fieldFlag=='client' || fieldFlag=='lead'"
             class="col-md-8 d-flex align-items-end justify-content-end">
-            <button mat-stroked-button (click)="saveNext('Next')" class=" br-0 bg-white text-inherit">SAVE &
+            <!-- <button mat-stroked-button (click)="saveNext('Next')" class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
-            </button>
+            </button> -->
+
+            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit ml-12"
+                [options]="barButtonOptions1">
+            </app-progress-button>
             <!-- <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button> -->
             <app-progress-button (btnClick)="saveNext('close')" class="br-0 text-inherit ml-12"
@@ -210,12 +214,15 @@
             </button> -->
         </div>
         <div *ngIf="fieldFlag=='familyMember'" class="col-md-8 d-flex align-items-end justify-content-end">
-            <button mat-stroked-button (click)="saveNextFamilyMember('Next')" class=" br-0 bg-white text-inherit">SAVE &
+            <!-- <button mat-stroked-button (click)="saveNextFamilyMember('Next')" class=" br-0 bg-white text-inherit">SAVE &
                 NEXT
-            </button>
+            </button> -->
             <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE &
                 NEXT
             </button> -->
+            <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit ml-12"
+                [options]="barButtonOptions1">
+            </app-progress-button>
             <app-progress-button (btnClick)="saveNextFamilyMember('close')" class="br-0 text-inherit ml-12"
                 [options]="barButtonOptions">
             </app-progress-button>

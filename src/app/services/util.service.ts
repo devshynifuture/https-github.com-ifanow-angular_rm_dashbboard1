@@ -99,8 +99,8 @@ export class UtilService {
       { name: 'FRANKLIN TEMPLETON', value: 3, checked: true },
       { name: 'PRUDENT', value: 4, checked: true },
       { name: 'NJ', value: 5, checked: true },
-      { name: 'CAS IMPORT', value: 6, checked: true },
-      { name: 'MANUAL', value: 14, checked: true },
+      { name: 'CAS IMPORT', value: 6, checked: false },
+      { name: 'MANUAL', value: 14, checked: false },
     ]
   }
 
@@ -819,6 +819,9 @@ export class UtilService {
   }
 
   static removeSpecialCharactersFromString(string) {
+    if (!string) {
+      string = ''
+    }
     string = string.replace(/[\/\\#+()@!^&;|[$~%.'":*?<>_={}-]/g, '')
     string = string.replace(/[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g, '')
     string = string.replace(']', '')

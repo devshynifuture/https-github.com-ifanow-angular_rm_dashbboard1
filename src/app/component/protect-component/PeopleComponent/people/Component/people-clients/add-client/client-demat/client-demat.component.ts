@@ -44,6 +44,22 @@ export class ClientDematComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE & NEXT',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
   public dialogRef = null;
   private dialogData;
   clientData: any;
@@ -483,6 +499,7 @@ export class ClientDematComponent implements OnInit {
         // }
       }
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;
+      (flag == 'Next') ? this.barButtonOptions1.active = true : this.disableBtn = true;
       const obj = {
         depositoryParticipantName: this.dematForm.get('depositoryPartName').value,
         powerOfAttorneyMasterId: this.dematForm.get('depositoryPartId').value,
@@ -512,6 +529,7 @@ export class ClientDematComponent implements OnInit {
           console.log(data);
           this.disableBtn = false;
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           this.tabDisableFlag.emit(false);
           if (flag == 'Next') {
             this.tabChange.emit(1);
@@ -525,6 +543,7 @@ export class ClientDematComponent implements OnInit {
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
+          this.barButtonOptions1.active = false;
           this.disableBtn = false;
         }
       );

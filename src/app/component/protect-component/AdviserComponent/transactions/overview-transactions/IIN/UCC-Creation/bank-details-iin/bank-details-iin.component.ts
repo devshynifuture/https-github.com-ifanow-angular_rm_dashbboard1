@@ -197,6 +197,7 @@ export class BankDetailsIINComponent implements OnInit {
     this.isIfsc = false;
     let address1, address2, pincode, adderessData;
     if (data.address) {
+      data.address = UtilService.removeSpecialCharactersFromString(data.address);
       adderessData = data.address.trim();
       pincode = adderessData.match(/\d/g);
       pincode = pincode.join('');

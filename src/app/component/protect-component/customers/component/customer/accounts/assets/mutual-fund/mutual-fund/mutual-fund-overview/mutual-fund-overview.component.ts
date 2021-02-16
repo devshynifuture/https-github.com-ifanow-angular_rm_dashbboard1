@@ -446,9 +446,7 @@ export class MutualFundOverviewComponent implements OnInit {
         this.totalValue = data.totalValue;
         this.sendaata.totalValue = this.totalValue;
         this.MfServiceService.setSendData(this.sendaata);
-        if (this.showCashFlow) {
-          this.getCashFlowStatus();
-        }
+        this.getCashFlowStatus();
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
         if (this.showSummaryBar) {
           this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
@@ -765,11 +763,10 @@ export class MutualFundOverviewComponent implements OnInit {
       ];
 
       this.sendaata.dataSource1 = this.datasource1.data;
-
-      this.MfServiceService.setSendData(this.sendaata);
-      if (this.datasource1.data.length == 0) {
-        this.showCashFlow = false;
+      if (this.datasource1.data.length > 0) {
+        this.showCashFlow = this.showHideTable ? (this.showHideTable[2].selected ? true : false) : true;
       }
+      this.MfServiceService.setSendData(this.sendaata);
     } else {
       this.datasource1.data = [];
       if (this.datasource1.data.length == 0) {
@@ -1243,7 +1240,7 @@ export class MutualFundOverviewComponent implements OnInit {
       overviewFilter: (this.saveFilterData) ? this.saveFilterData.overviewFilter : this.setDefaultFilterData.overviewFilter,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
-      selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      selectFilter: this.rightFilterData ? this.setDefaultFilterData.selectFilter : (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
 
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList
@@ -1279,7 +1276,7 @@ export class MutualFundOverviewComponent implements OnInit {
                 this.showSummaryBar = false;
               }
             }
-
+            this.setDefaultFilterData.selectFilter = this.rightFilterData ? (this.rightFilterData.selectFilter.length > 0 ? (this.rightFilterData.selectFilter[0].value == 'Current Client' ? this.clientId : 0) : null) : null;
             this.MfServiceService.setFilterValues(this.setDefaultFilterData);
             this.MfServiceService.setDataForMfGet(this.rightFilterData.mfData);
             // this.isLoading = false;

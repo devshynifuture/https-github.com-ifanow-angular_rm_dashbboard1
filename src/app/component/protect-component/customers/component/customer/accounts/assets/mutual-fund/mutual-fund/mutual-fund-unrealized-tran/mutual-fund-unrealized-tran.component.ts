@@ -1468,7 +1468,7 @@ export class MutualFundUnrealizedTranComponent {
       toDate: this.setDefaultFilterData.toDate,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
-      selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      selectFilter: this.rightFilterData ? this.setDefaultFilterData.selectFilter : (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       transactionTypeList: (this.rightFilterData.transactionType) ? this.rightFilterData.transactionType : this.transactionTypeList,
       // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
     };

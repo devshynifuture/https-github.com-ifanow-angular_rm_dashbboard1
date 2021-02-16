@@ -90,6 +90,7 @@ export class RightFilterDuplicateComponent implements OnInit {
   checkFlag: boolean;
   uncheckFlag = true;
   whichFilter: any;
+  selectFilterObj = [];
   selectUnselctAllFlagFam = true;
   selectUnselctAllFlagAmc = true;
   selectUnselctAllFlagScheme = true;
@@ -107,6 +108,7 @@ export class RightFilterDuplicateComponent implements OnInit {
   parentId: any;
   adminAdvisorIds: string;
   minDate = new Date();
+  isSelectClient: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
@@ -553,6 +555,9 @@ export class RightFilterDuplicateComponent implements OnInit {
           selected: (this._data.selectFilter == 0) ? true : false
         }];
 
+    }
+    if (this.saveFilters[0].selected == true) {
+      this.isSelectClient = true;
     }
 
     if (this._data.filterDataForCapital) {
@@ -1463,6 +1468,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     if (this.saveFilters[0].selected == true || this.saveFilters[1].selected == true) {
       this.saveFilterCall();
     }
+    this.changeSelect('', '');
   }
 
   changeSelect = function (data, i) {
@@ -1583,6 +1589,22 @@ export class RightFilterDuplicateComponent implements OnInit {
         }
       });
       this.reportFormatObj = filter;
+    }
+    if (this.isSelectClient && this.saveFilters != undefined) {
+      this.selectFilterObj = [];
+      this.selectFilterObj.push(this.saveFilters[0]);
+      const list = [];
+      this.selectFilterObj.forEach(val => list.push(Object.assign({}, val)));
+      list[0].selected = true;
+      this.selectFilterObj = list;
+    } else {
+      const filter = [];
+      this.saveFilters.forEach(item => {
+        if (item.selected) {
+          filter.push(item);
+        }
+      });
+      this.selectFilterObj = filter;
     }
     if (this.financialYears != undefined) {
       const filter = [];
@@ -1729,6 +1751,7 @@ export class RightFilterDuplicateComponent implements OnInit {
       transactionPeriodCheck: this.transactionPeriodCheck,
       transactionPeriod: this.transactionPeriod,
       transactionType: this.transactionType,
+      selectFilter: (this.selectFilterObj) ? this.selectFilterObj : this.saveFilters,
       // setTrueKey : this.setAllTrue
     };
     console.log('dataToSend---------->', this.dataToSend);
