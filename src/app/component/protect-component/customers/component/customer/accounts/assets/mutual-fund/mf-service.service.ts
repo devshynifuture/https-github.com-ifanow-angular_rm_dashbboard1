@@ -520,7 +520,7 @@ export class MfServiceService {
       transactionPeriod: (rightSideData) ? rightSideData.transactionPeriod : false,
       transactionPeriodCheck: (rightSideData) ? rightSideData.transactionPeriodCheck : false,
       transactionTypeList: (rightSideData) ? rightSideData.transactionType : [],
-      selectFilter: (rightSideData) ? (rightSideData.selectFilter.length > 0 ? (rightSideData.selectFilter[0].value == 'Current Client' ? this.clientId : 0) : 0) : 0,
+      selectFilter: (rightSideData) ? ((rightSideData.selectFilter && rightSideData.selectFilter.length > 0) ? (rightSideData.selectFilter[0].value == 'Current Client' ? this.clientId : 0) : 0) : 0,
       // setTrueKey:rightSideData ? rightSideData.setTrueKey :false
 
     }

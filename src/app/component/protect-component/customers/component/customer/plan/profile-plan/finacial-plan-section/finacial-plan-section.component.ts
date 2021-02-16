@@ -959,6 +959,7 @@ export class FinacialPlanSectionComponent implements OnInit {
               arr.push({
                 details: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 goalName: !!goalValueObj.goalName ? goalValueObj.goalName : '',
+                goalType: goalValueObj.goalType,
                 value: !!goalValueObj.goalFV ? Math.round(goalValueObj.goalFV) : '',
                 futureValue: goalValueObj.goalFV,
                 month,
@@ -1031,6 +1032,7 @@ export class FinacialPlanSectionComponent implements OnInit {
                 imageUrl: !!goalValueObj.imageUrl ? goalValueObj.imageUrl : '',
                 value: !!goalValueObj.futureValue ? Math.round(goalValueObj.futureValue) : '',
                 year: year,
+                goalType: goalValueObj.goalType,
                 goalFV: UtilService.getNumberToWord(!!goalValueObj.futureValue ? goalValueObj.futureValue : 0),
                 achievedValue: UtilService.getNumberToWord(!!goalValueObj.achievedValue ? goalValueObj.achievedValue : 0),
                 equity_monthly: this.getSumOfJsonMap(goalValueObj.sipAmountEquity) || 0,

@@ -989,7 +989,7 @@
         <tr>
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: auto;">
-                    <tr *ngIf="selectedGoal.goalType ==1">
+                    <tr *ngIf="singleGoalData.goalType ==1">
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;">
                                 Goal year wise details</p>
@@ -1032,7 +1032,7 @@
 
 
 
-        <tr *ngIf="selectedGoal.goalType == 1 && dataSource1.length>0">
+        <tr *ngIf="singleGoalData.goalType == 1 && dataSource1.length>0">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
@@ -1081,7 +1081,7 @@
         </tr>
 
 
-        <tr *ngIf="selectedGoal.goalType ==5 || selectedGoal.goalType ==6">
+        <tr *ngIf="singleGoalData.goalType ==5 || singleGoalData.goalType ==6">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
                     <tr>
