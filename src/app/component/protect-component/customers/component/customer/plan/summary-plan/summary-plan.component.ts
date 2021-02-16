@@ -561,7 +561,10 @@ export class SummaryPlanComponent implements OnInit {
                 console.error(err);
                 // this.eventService.openSnackBar("Something went wrong", "DISMISS")
             })
-
+        this.cd.detectChanges();//to refresh the dom when response come
+        setTimeout(() => {
+            this.loaded.emit(document.getElementById('planSummary'));
+        }, 5000);
     }
 
     getSumOfJsonMap(json: Object = {}) {
@@ -702,10 +705,6 @@ export class SummaryPlanComponent implements OnInit {
                 this.getBudgetApis();
             }
         );
-        this.cd.detectChanges();//to refresh the dom when response come
-        setTimeout(() => {
-            this.loaded.emit(this.summaryPlan.nativeElement);
-        }, 500);
     }
 
     getCashflowData() {
