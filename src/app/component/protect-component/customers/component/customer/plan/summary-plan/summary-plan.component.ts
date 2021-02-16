@@ -2,7 +2,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { AuthService } from './../../../../../../../auth-service/authService';
 import { EventService } from './../../../../../../../Data-service/event.service';
 import { PlanService } from './../plan.service';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { DatePipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
@@ -40,7 +40,8 @@ export class SummaryPlanComponent implements OnInit {
     annualSurplus: any;
     incomePercent: number;
     expensePercent: number;
-    @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
+    @ViewChild('summaryPlan', { static: false }) summaryPlan: ElementRef;
+
     fragmentData = { isSpinner: false, date: null, time: '', size: '' };
     map: any;
     loopEle: number;
@@ -60,6 +61,9 @@ export class SummaryPlanComponent implements OnInit {
     generatePDF: number;
     finPlanList: any;
     id: any;
+    @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+
+    @Input() finPlanObj: any;//finacial plan pdf input
 
     constructor(
         private summaryPlanService: SummaryPlanServiceService,
@@ -698,6 +702,8 @@ export class SummaryPlanComponent implements OnInit {
                 this.getBudgetApis();
             }
         );
+        this.cd.detectChanges();//to refresh the dom when response come
+        this.loaded.emit(this.summaryPlan.nativeElement);
     }
 
     getCashflowData() {

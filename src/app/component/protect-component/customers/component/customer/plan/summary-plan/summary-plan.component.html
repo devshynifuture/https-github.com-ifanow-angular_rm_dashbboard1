@@ -1,4 +1,4 @@
-<div id="ui-plan-summary">
+<div id="ui-plan-summary" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
     <div class="row">
 
         <div class="col-md-2 p-0 bg-white pb-44 skeletonAnimation" [appSkeletonLoading]="isLoadingCashFlow"
