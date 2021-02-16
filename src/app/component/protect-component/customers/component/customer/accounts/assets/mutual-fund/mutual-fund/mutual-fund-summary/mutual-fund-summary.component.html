@@ -375,8 +375,7 @@
 
                 <ng-container matColumnDef="icons">
                     <th *matHeaderCellDef class="" mat-header-cell></th>
-                    <td *matCellDef="let element" [matMenuTriggerFor]="menu3" [ngClass]="{ 'disabledOpacity' :true }"
-                        class="zIndex c-p" mat-cell>
+                    <td [matMenuTriggerFor]="menu3" *matCellDef="let element" class=" c-p" mat-cell>
 
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg" alt="">
                         <mat-menu #menu3="matMenu" class="disabledOpacity">
