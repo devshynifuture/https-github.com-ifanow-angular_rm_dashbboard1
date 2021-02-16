@@ -276,7 +276,8 @@ export class MfCapitalDetailedComponent implements OnInit {
             const list = [];
             myArray.forEach(val => list.push(Object.assign({}, val)));
             let catObj = this.MfServiceService.categoryFilter(list, 'category');
-            this.categorisedHybridFund(catObj);
+            this.categorisedHybridFund(catObj);//move hybird to debt and equty based on category
+            this.categoriesLiquidFund(catObj);//move the liquid schemes to debt catgory
             Object.keys(catObj).map(key => {
                 if (catObj[key][0].category != 'DEBT') {
                     // this.dataSource = new MatTableDataSource(this.getFilterData(catObj[key], 'EQUITY'));
@@ -328,6 +329,29 @@ export class MfCapitalDetailedComponent implements OnInit {
                 toDateYear: this.toDateYear,
             }
         }
+    }
+    categoriesLiquidFund(data) {
+        let debtFund = [];
+        Object.keys(data).map(key => {
+            if (data[key][0].category == 'LIQUID') {
+                data[key][0].mutualFund.forEach(element => {
+                    debtFund.push(element);
+                });
+            }
+        });
+        if (debtFund.length > 0) {
+            if (data['DEBT']) {
+                data['DEBT'][0].mutualFund = [...data['DEBT'][0].mutualFund, ...debtFund];
+            } else {
+                if (!data['DEBT']) {
+                    data.DEBT = [];
+                    data.DEBT = data['LIQUID'];
+                    // data.DEBT[0].mutualFund = debtFund
+                }
+            }
+        }
+        delete data['LIQUID'];
+        return data;
     }
     categorisedHybridFund(data) {
         let equityFund = [];
