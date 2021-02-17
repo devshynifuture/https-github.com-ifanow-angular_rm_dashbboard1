@@ -683,7 +683,7 @@
                                 <!-- <button (click)="openFragment(null)" mat-stroked-button class="btn-primary btnNewEmail">
                                     BEGIN
                                 </button> -->
-                                <app-progress-button (btnClick)="openFragment()" [options]="barButtonOptions"
+                                <app-progress-button (btnClick)="openFragment('Email')" [options]="barButtonOptions"
                                     class="br-0 text-inherit ml-12">
                                 </app-progress-button>
                                 <button class="btn btn-primary mt-10" mat-stroked-button
@@ -824,7 +824,7 @@
 
                                                             <td class="text-left">
                                                                 <div [ngClass]="{'bar': isLoading}">
-                                                                    {{isLoading ? '' : item.status}}
+                                                                    {{isLoading ? '' : item.status==0?'Not sent':'Sent'}}
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -847,11 +847,11 @@
                 </div>
 
                 <div *ngSwitchCase="'tab11'">
-                    <div class="p-20">
+                    <div *ngIf="!showLog" class="p-20">
                         <div class="row ">
                             <div class="col-md-12 p-0 d-flex align-items-center justify-content-between">
                                 <p class="mb-0 f-14">SMS bulk password</p>
-                                <button class="mat-button btn-history bg-primary">
+                                <button (click)="getBulkSmsLogDetails()" class="mat-button btn-history bg-primary">
                                     Previously sent history
                                 </button>
                             </div>
@@ -871,7 +871,8 @@
                                                 and
                                                 proceed</p>
 
-                                            <button mat-button class="btn-primary mt-28 btnNewEmail">
+                                            <button (click)="openFragment('Sms')" mat-button
+                                                class="btn-primary mt-28 btnNewEmail">
                                                 BEGIN
                                             </button>
                                         </div>
@@ -898,6 +899,140 @@
                             </div>
 
 
+                        </div>
+                    </div>
+                    <div *ngIf="showLog">
+                        <div class="row pt-20">
+                            <div class="col-md-1 p-0">
+                                <button mat-button (click)="showLog=false">
+                                    <img src="/assets/images/svg/back-arrow.svg" alt="back icon">
+                                </button>
+                            </div>
+                            <div class="col-md-10 p-0 cat-wise ">
+                                <table class="skeletonAnimation mt-16" appSkeletonLoading
+                                    [appSkeletonLoading]="showBulkSmsLogLoader" id="table-low">
+                                    <thead class="text-dark">
+                                        <tr class="h-40">
+                                            <th class="w-10">Sr. No.</th>
+
+                                            <th class="text-left f-500  ">
+                                                <span>
+                                                    Start Date
+                                                </span>
+                                            </th>
+                                            <th class="f-500">
+                                                <span class="d-flex align-items-center">
+                                                    Sent Count
+                                                </span>
+                                            </th>
+                                            <th class="   f-500">
+                                                Not Sent Count
+                                            </th>
+                                            <th class=" c-p br">
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let item of bulkSmsLog; index as i">
+                                        <tr>
+                                            <td>
+                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                    {{(showBulkSmsLogLoader)?'': i + 1}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                    {{showBulkSmsLogLoader ? '' : item.startTime|dateAgo }}
+                                                </div>
+                                            </td>
+
+                                            <td class=" ">
+                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                    {{(showBulkSmsLogLoader)?'': item.sentCount}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                    {{(showBulkSmsLogLoader)?'': item.notSentCount}}
+                                                </div>
+                                            </td>
+                                            <td class="text-right br">
+                                                <div class="bar pr-28">
+                                                    <i class="material-icons b-a f-14 mt-4 c-p"
+                                                        *ngIf="!item.showInnerTable && !showBulkSmsLogLoader"
+                                                        (click)="item.showInnerTable = true">
+                                                        add
+                                                    </i>
+                                                    <i class="material-icons b-a f-14 mt-4 c-p"
+                                                        *ngIf="item.showInnerTable"
+                                                        (click)="item.showInnerTable = false">
+                                                        remove </i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="border: transparent !important">
+                                            <td colspan="7" class="innerTd one">
+                                                <table *ngIf="item.showInnerTable && item.clients.length > 0"
+                                                    class="skeletonAnimation mt-16 mb-8 table98" appSkeletonLoading
+                                                    [appSkeletonLoading]="showBulkSmsLogLoader" id="table-low">
+                                                    <thead class="bg-light text-dark">
+                                                        <tr class="h-40">
+                                                            <th class="w-10 f-500">Sr No.</th>
+                                                            <th class="w-40 f-500">
+                                                                <span class="d-flex align-items-center">
+                                                                    Client Name
+                                                                </span>
+                                                            </th>
+                                                            <th class="c-p f-500 w-15">
+                                                                <span class="d-flex align-items-center">
+                                                                    Number
+                                                                </span>
+                                                            </th>
+                                                            <th class="c-p f-500 w-15">
+                                                                <span class="d-flex align-items-center">
+                                                                    Status
+                                                                </span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngFor="let item of item.clients; index as indx">
+                                                        <tr>
+                                                            <td>
+                                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                                    {{(showBulkSmsLogLoader)?'':indx + 1}}
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                                    {{showBulkSmsLogLoader ? '' : item.name}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-left">
+                                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                                    {{showBulkSmsLogLoader ? '' : item.email}}
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                <div [ngClass]="{'bar': showBulkSmsLogLoader}">
+                                                                    {{showBulkSmsLogLoader ? '' : item.status==0?'Not sent':'Sent'}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <div class="col-md-12 p-0" *ngIf="!showBulkSmsLogLoader && bulkSmsLog=== undefined">
+                                        <h4 class="d-flex justify-content-center b-a p-44">
+                                            No Data Found
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

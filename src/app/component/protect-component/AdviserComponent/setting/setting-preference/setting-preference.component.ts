@@ -31,6 +31,9 @@ import { join } from 'path';
 export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getVerifiedList: any;
   name: any;
+  bulkSmsLog: any;
+  showBulkSmsLogLoader: boolean;
+  showLog: boolean;
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -778,7 +781,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     });
   }
 
-  openFragment() {
+  openFragment(flag) {
     this.barButtonOptions.active = true;
     const obj = {
       advisorId: this.advisorId,
@@ -790,7 +793,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       const fragmentData = {
         flag: 'Bulk-Email',
         id: 1,
-        data: '',
+        data: flag,
         direction: 'top',
         componentName: BulkEmailReviewSendComponent,
         state: 'open'
@@ -825,6 +828,31 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     //     }
 
     // });
+  }
+
+  getBulkSmsLogDetails() {
+    this.showLog = true;
+    this.showBulkSmsLogLoader = true;
+    const obj = {
+      advisorId: this.advisorId,
+      limit: 20,
+      offset: 0
+    }
+    this.bulkSmsLog = [{}, {}, {}];
+    this.orgSetting.getBulkSmsLog(obj).subscribe(
+      data => {
+        this.showBulkSmsLogLoader = false;
+        if (data) {
+          data.map(o => o.showInnerTable = false);
+          this.bulkSmsLog = data;
+        } else {
+          this.bulkSmsLog = undefined;
+        }
+      }, err => {
+        this.bulkSmsLog = undefined;
+        this.showBulkSmsLogLoader = false;
+      }
+    )
   }
 
   openPopup(value, data) {
