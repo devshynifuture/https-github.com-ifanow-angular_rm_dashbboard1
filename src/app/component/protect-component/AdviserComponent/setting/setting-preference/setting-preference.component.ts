@@ -778,7 +778,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     });
   }
 
-  openFragment() {
+  openFragment(flag) {
     this.barButtonOptions.active = true;
     const obj = {
       advisorId: this.advisorId,
@@ -790,7 +790,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       const fragmentData = {
         flag: 'Bulk-Email',
         id: 1,
-        data: '',
+        data: flag,
         direction: 'top',
         componentName: BulkEmailReviewSendComponent,
         state: 'open'

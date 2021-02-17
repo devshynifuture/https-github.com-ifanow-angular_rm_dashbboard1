@@ -683,7 +683,7 @@
                                 <!-- <button (click)="openFragment(null)" mat-stroked-button class="btn-primary btnNewEmail">
                                     BEGIN
                                 </button> -->
-                                <app-progress-button (btnClick)="openFragment()" [options]="barButtonOptions"
+                                <app-progress-button (btnClick)="openFragment('Email')" [options]="barButtonOptions"
                                     class="br-0 text-inherit ml-12">
                                 </app-progress-button>
                                 <button class="btn btn-primary mt-10" mat-stroked-button
@@ -871,7 +871,8 @@
                                                 and
                                                 proceed</p>
 
-                                            <button mat-button class="btn-primary mt-28 btnNewEmail">
+                                            <button (click)="openFragment('Sms')" mat-button
+                                                class="btn-primary mt-28 btnNewEmail">
                                                 BEGIN
                                             </button>
                                         </div>

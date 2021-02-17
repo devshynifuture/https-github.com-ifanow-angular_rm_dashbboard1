@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="step1Flag">
+<div *ngIf="step1Flag && data=='Email'">
     <!--  (scroll)="on"-->
     <div class="pt-90 pb-100">
         <div class="row">
@@ -142,7 +142,123 @@
     </div>
 </div>
 
-<div class="pt-90 pb-40" *ngIf="step2Flag">
+<div *ngIf="step1Flag && data=='Sms'">
+    <!--  (scroll)="on"-->
+    <div class="pt-90 pb-100">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="d-flex align-items-center">
+                    <div class="numBox">
+                        <span class="">1</span>
+                    </div>
+                    <div class="contBox">
+                        <h5 class="roboto mb-0 f-500">Review client list</h5>
+                    </div>
+                </div>
+
+                <p class="mb-4"> You can select multiple clients and proceed to the next step on the right</p>
+
+                <div class="form-group mb-28">
+                    <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
+                        <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0"
+                            matInput placeholder="Start typing to see client names" [formControl]="searchFC">
+                    </mat-form-field>
+                </div>
+                <div class="mt-16">
+                    <p [ngClass]="{'v-h': selectedClientsCount==0}"
+                        *ngIf="dataSource.data.length!=selectedClientsCount && !isLoading"
+                        class="text-right italicText text-primitive mb-0 f-14">
+                        {{selectedClientsCount}} clients
+                        selected out of {{tempData.length}}
+                    </p>
+                    <p *ngIf="dataSource.data.length==selectedClientsCount && searchFC.value == '' && !isLoading">
+                        All clients selected
+                    </p>
+                    <p [ngClass]="{'v-h': selectedClientsCount==0}"
+                        *ngIf="dataSource.data.length==selectedClientsCount && searchFC.value.length>0 && !isLoading"
+                        class="text-right italicText text-primitive mb-0 f-14">
+                        {{selectedClientsCount}} clients
+                        selected out of {{tempData.length}}
+                    </p>
+                    <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container"
+                        [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
+                        <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
+                            [appSkeletonLoading]="isLoading" #clientTableSort="matSort" #tableEl>
+                            <ng-container matColumnDef="checkbox" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="br">
+                                    <mat-checkbox (change)="selectAll($event)" name="selectAll" *ngIf="!isLoading"
+                                        [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
+                                        [checked]="dataCount == dataSource.data.length">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let element;index as i" class="c-p br">
+                                    <mat-checkbox name="selectedData" [(ngModel)]="element.selected"
+                                        (change)="changeSelect(element,i)" *ngIf="!isLoading && element.email">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="name"> Name</th>
+                                <td *matCellDef="let element" class="c-p br" mat-cell>
+                                    <div class="bar">
+                                        {{element.displayName}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="mobile">
+                                <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="mobile"> Mobile
+                                </th>
+                                <td *matCellDef="let element" class="c-p br" mat-cell>
+                                    <div class="bar">
+                                        {{element.mobile}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <tr *matHeaderRowDef="displayedColumns1; sticky: true" mat-header-row></tr>
+                            <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
+                        </table>
+                        <div class="row relClass" *ngIf="infiniteScrollingFlag">
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center" *ngIf="!isLoading && dataSource === null">
+                        <img class="width200" src="assets/images/svg/noDataFound.svg">
+                        <p class="f-14 f-600 pt-28"> No Data Found </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
+        <div class="col-md-6 d-flex align-items-center">
+            <a class="text-white f-300"> Cancel </a>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-end">
+            <!-- <app-progress-button class="br-0 text-inherit ml-12">
+    </app-progress-button> -->
+            <button (click)="selectedClientListStep()" mat-stroked-button class="btn-primary btnNewEmail">
+                PROCEED
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="pt-90 pb-40" *ngIf="step2Flag && data=='Email'">
 
     <div class="row">
         <div class="col-md-3"></div>
@@ -223,6 +339,66 @@
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end">
             <app-progress-button (btnClick)="sendEmailToclients()" [options]="barButtonOptions"
+                class="br-0 text-inherit ml-12">
+            </app-progress-button>
+        </div>
+    </div>
+
+</div>
+
+<div class="pt-90 pb-40" *ngIf="step2Flag && data=='Sms'">
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="stepThreeBox mt-24">
+                <div class="d-flex align-items-center mb-8">
+                    <div class="numBox">
+                        <span class="">2</span>
+                    </div>
+                    <div class="contBox">
+                        <h5 class="roboto mb-0 f-500">Review SMS and send </h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-1 p-0 d-flex align-items-center">
+                        <h5 class="f-14 mb-0">Mobile</h5>
+                    </div>
+                    <div class="col-md-11 pr-0 eventPadd event-none">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [formControl]="subject" matInput class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-12 p-0">
+                        <form [formGroup]="mailForm">
+                            <app-froala class="event-none" [(model)]="smsBody"></app-froala>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="col-md-3">
+            <p class="mb-0 posP text-primary" *ngIf="!isAllSelected">Email will be sent to {{selectedClientsCount}}
+                <span *ngIf="selectedClientsCount==1">client</span><span *ngIf="selectedClientsCount>1">clients</span>
+            </p>
+            <p *ngIf="isAllSelected" class="mb-0 posP text-primary">
+                Email will be sent to all clients
+            </p>
+        </div>
+    </div>
+
+    <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
+        <div class="col-md-6 d-flex align-items-center">
+            <a (click)="step1Flag=true;step2Flag=false" class="text-white f-300 c-p"> Back </a>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-end">
+            <app-progress-button (btnClick)="sendSmsToclients()" [options]="barButtonOptions1"
                 class="br-0 text-inherit ml-12">
             </app-progress-button>
         </div>
