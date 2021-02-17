@@ -228,7 +228,7 @@
                         <th *matHeaderCellDef class="br w-11" mat-header-cell> Amount</th>
                         <td *matCellDef="let element" class="br" mat-cell>
                             <div class="bar">
-                                {{element.amountType == 'Unit' ? element.orderVal + 'Unit' : '₹' + element.orderVal}}
+                                {{element.amountType == 'Amount' ?  '₹' + element.orderVal: element.orderVal + 'Unit'}}
                             </div>
                         </td>
                     </ng-container>
