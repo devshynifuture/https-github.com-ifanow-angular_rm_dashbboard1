@@ -278,6 +278,8 @@ export class MfCapitalDetailedComponent implements OnInit {
             let catObj = this.MfServiceService.categoryFilter(list, 'category');
             this.categorisedHybridFund(catObj);//move hybird to debt and equty based on category
             this.categoriesLiquidFund(catObj);//move the liquid schemes to debt catgory
+            this.categoriesCommodityFund(catObj);//move the commodity schemes to debt catgory
+            this.categoriesOtherFund(catObj);//move the other schemes to debt catgory
             Object.keys(catObj).map(key => {
                 if (catObj[key][0].category != 'DEBT') {
                     // this.dataSource = new MatTableDataSource(this.getFilterData(catObj[key], 'EQUITY'));
@@ -329,6 +331,60 @@ export class MfCapitalDetailedComponent implements OnInit {
                 toDateYear: this.toDateYear,
             }
         }
+    }
+    categoriesCommodityFund(data) {
+        let debtFund = [];
+        Object.keys(data).map(key => {
+            if (data[key][0].category == 'COMMODITY') {
+                data[key][0].mutualFund.forEach(element => {
+                    if (element.subCategoryName == 'FoFs (Domestic / Overseas ) - Gold') {
+                        debtFund.push(element);
+                    }
+                });
+            }
+        });
+        if (debtFund.length > 0) {
+            if (data['DEBT']) {
+                data['DEBT'][0].mutualFund = [...data['DEBT'][0].mutualFund, ...debtFund];
+            } else {
+                if (!data['DEBT']) {
+                    data.DEBT = [];
+                    data.DEBT = data['COMMODITY'];
+                    // data.DEBT[0].mutualFund = debtFund
+                }
+            }
+        }
+        if (debtFund.length > 0) {
+            delete data['COMMODITY'];
+        }
+        return data;
+    }
+    categoriesOtherFund(data) {
+        let debtFund = [];
+        Object.keys(data).map(key => {
+            if (data[key][0].category == 'OTHER') {
+                data[key][0].mutualFund.forEach(element => {
+                    if (element.subCategoryName == 'FoFs (Overseas)' || element.subCategoryName == 'FoFs (Overseas)') {
+                        debtFund.push(element);
+                    }
+                });
+            }
+        });
+        if (debtFund.length > 0) {
+            if (data['DEBT']) {
+                data['DEBT'][0].mutualFund = [...data['DEBT'][0].mutualFund, ...debtFund];
+            } else {
+                if (!data['DEBT']) {
+                    data.DEBT = [];
+                    data.DEBT = data['OTHER'];
+                    // data.DEBT[0].mutualFund = debtFund
+                }
+            }
+        }
+        if (debtFund.length > 0) {
+            delete data['OTHER'];
+        }
+        return data;
     }
     categoriesLiquidFund(data) {
         let debtFund = [];
