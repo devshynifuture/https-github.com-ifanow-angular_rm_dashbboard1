@@ -22,8 +22,9 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild('clientTableSort', { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
-
+  @Input() data;
   displayedColumns: string[] = ['checkbox', 'name', 'email', 'status'];
+  displayedColumns1: string[] = ['checkbox', 'name', 'mobile'];
   isLoading = false;
   dataCount = 0;
   advisorId: any;
@@ -31,12 +32,28 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   verifiedAccountsList: any = [];
   step1Flag: boolean;
   step2Flag: boolean;
-  subject = new FormControl('Your new money management account is created!');
+  subject = new FormControl();
   selectedFromEmail = new FormControl('');
   isAllSelected = false;
   selectedClientsCount = 0;
 
   barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SEND',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+
+  barButtonOptions1: MatProgressButtonOptions = {
     active: false,
     text: 'SEND',
     buttonColor: 'accent',
@@ -79,6 +96,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
 
   logoText = 'Your Logo here';
+  smsBody = '';
   emailBody = `
   <html>
   <head></head>
@@ -128,6 +146,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.mailForm = this.fb.group({
       mail_body: [''],
     });
+    this.data == 'Email' ? this.subject.setValue('Your new money management account is created!') : this.subject.setValue("IFANOW");
 
     this.searchFC.valueChanges.pipe(
       debounceTime(700),
@@ -185,6 +204,9 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       data.forEach((singleData) => {
         if (singleData.emailList && singleData.emailList.length > 0) {
           singleData.email = singleData.emailList[0].email;
+        }
+        if (singleData.mobileList && singleData.mobileList.length > 0) {
+          singleData.mobile = singleData.mobileList[0].mobileNo;
         }
         singleData.selected = false;
         singleData.ownerName = '';
@@ -451,6 +473,47 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       },
       err => {
         this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+
+  sendSmsToclients() {
+    this.barButtonOptions1.active = true;
+    let arr = [];
+    // if (this.selectedClientArray.length > 0) {
+    //   this.selectedClientArray.forEach(item => {
+    //     if (!arr.includes(item)) {
+    //       arr.push(item);
+    //     }
+    //   })
+    // }
+
+    if (this.clientList.length > 0) {
+      this.clientList.forEach(element => {
+        if (!arr.includes(element)) {
+          arr.push(element);
+        }
+      });
+
+    }
+    const obj = {
+      advisorId: this.advisorId,
+      clientIds: arr
+    };
+    if (this.dataSource.data.length == this.selectedClientsCount && this.searchFC.value == '') {
+      obj['allClient'] = true;
+    }
+
+    console.log(arr);
+    this.orgSetting.sendSmsToClients(obj).subscribe(
+      data => {
+        this.eventService.openSnackBar("Message sent sucessfully", 'Dismiss');
+        this.close(true);
+        this.barButtonOptions1.active = false;
+      },
+      err => {
+        this.barButtonOptions1.active = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
