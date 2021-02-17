@@ -1354,7 +1354,6 @@ export class MutualFundSummaryComponent implements OnInit {
         const myArray = data.customDataSourceData;
         const list = [];
         myArray.forEach(val => list.push(Object.assign({}, val)));
-        this.summary.data = list;
         console.log('Summmary data get here ===', this.summary);
         if (!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain) && !isNaN(this.mfData.total_unrealized_gain)) {
           this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
@@ -1387,6 +1386,7 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.dataSummary.customDataSourceData = data;
         this.ngZone.run(() => {
+          this.summary.data = list;
           this.isLoading = false;
         });
         this.customDataSource.data.array.forEach(element => {

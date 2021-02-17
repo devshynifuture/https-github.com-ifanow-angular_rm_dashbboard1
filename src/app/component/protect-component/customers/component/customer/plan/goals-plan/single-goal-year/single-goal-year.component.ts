@@ -324,7 +324,7 @@ export class SingleGoalYearComponent implements OnInit {
 
     // if goal is retirement
     if (this.goalTypeData.goalTypeId === 1) {
-      this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
+      this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required, Validators.min(this.goalTypeData.validations.maxCostReduction), Validators.max(this.goalTypeData.validations.minCostReduction)]));
       //  this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, [Validators.min(this.singleYearGoalForm.get('age').value)]));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());
