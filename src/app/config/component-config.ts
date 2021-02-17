@@ -850,6 +850,7 @@ export const appConfig = {
   ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
   CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
+  BULK_SMS: 'setting/bulk/welcome-sms/send',
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',
