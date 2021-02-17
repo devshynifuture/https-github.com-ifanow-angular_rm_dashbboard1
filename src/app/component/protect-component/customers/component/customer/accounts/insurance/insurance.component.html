@@ -192,7 +192,8 @@
 
                                 </td>
                                 <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
-                                    <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalSumAssuredLifeIns"
+                                    <div>{{!isLoading  && totalSumAssuredLifeIns? '₹' : ''}}<span
+                                            [value]="totalSumAssuredLifeIns ? totalSumAssuredLifeIns : '-'"
                                             appFormatNumber></span></div>
                                 </td>
                             </ng-container>
@@ -234,7 +235,8 @@
                       <div class="bar"><span>{{totalPremiunAmountLifeIns}}</span></div>
                   </td> -->
                                 <td *matFooterCellDef class="br f-600 p-8 amt text-right" mat-footer-cell>
-                                    <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalPremiunAmountLifeIns"
+                                    <div>{{!isLoading && totalPremiunAmountLifeIns ? '₹' : ''}}<span
+                                            [value]="totalPremiunAmountLifeIns ? totalPremiunAmountLifeIns : '-'"
                                             appFormatNumber></span>
                                     </div>
                                 </td>
@@ -748,18 +750,19 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && totalSumAssuredLifeIns ? "₹" : ""}}<span [value]="totalSumAssuredLifeIns"
-                                appFormatNumber></span>
+                            {{!isLoading && totalSumAssuredLifeIns ? "₹" : ""}}<span
+                                [value]="totalSumAssuredLifeIns ? totalSumAssuredLifeIns : '0'" appFormatNumber></span>
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && totalCurrentValue ? "₹" : ""}}<span [value]="totalCurrentValue"
-                                appFormatNumber></span>
+                            {{!isLoading && totalCurrentValue ? "₹" : ""}}<span
+                                [value]="totalCurrentValue ? totalCurrentValue : '-'" appFormatNumber></span>
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
                             {{!isLoading && totalPremiunAmountLifeIns ? "₹" : ""}}<span
-                                [value]="totalPremiunAmountLifeIns" appFormatNumber></span>
+                                [value]="totalPremiunAmountLifeIns ? totalPremiunAmountLifeIns : '-'"
+                                appFormatNumber></span>
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
