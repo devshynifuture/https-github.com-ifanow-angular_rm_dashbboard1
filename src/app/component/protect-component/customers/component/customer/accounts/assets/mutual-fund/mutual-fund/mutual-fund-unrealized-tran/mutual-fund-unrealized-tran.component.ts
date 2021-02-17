@@ -1271,11 +1271,15 @@ export class MutualFundUnrealizedTranComponent {
       // You should add a fallback so that your program still executes correctly.
     }
   }
-
+  format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+  template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
   Excel(tableTitle) {
     this.showDownload = true;
+    const para = this.unrealizedTranTemplate.nativeElement
+    var ctx = { worksheet: name || 'Worksheet', table: [para.innerHTML] }
+    var a = this.format(this.template, ctx)
     setTimeout(() => {
-      const blob = new Blob([document.getElementById('template').innerHTML], {
+      const blob = new Blob([a], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
       saveAs(blob, this.viewMode + '.xls');
