@@ -143,6 +143,9 @@ export class SingleGoalYearComponent implements OnInit {
         futureDate = new Date(currentDate);
         const data = new Date()
         futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        if (!this.singleYearGoalForm.get('goalMember').value.dateOfBirth) {
+          this.eventService.openSnackBarNoDuration('Client date of birth missing', 'DISMISS')
+        }
         const dOB = new Date(this.singleYearGoalForm.get('goalMember').value.dateOfBirth).toISOString()
         if (this.getLifeExpentancy.parameter) {
           this.dateF = data.setFullYear(new Date(dOB).getFullYear() + this.getLifeExpentancy.parameter)
@@ -321,7 +324,7 @@ export class SingleGoalYearComponent implements OnInit {
 
     // if goal is retirement
     if (this.goalTypeData.goalTypeId === 1) {
-      this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
+      this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required, Validators.min(this.goalTypeData.validations.maxCostReduction), Validators.max(this.goalTypeData.validations.minCostReduction)]));
       //  this.singleYearGoalForm.addControl('lifeExpectancy', new FormControl(70, [Validators.min(this.singleYearGoalForm.get('age').value)]));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());

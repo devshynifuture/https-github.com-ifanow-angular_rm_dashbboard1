@@ -11,6 +11,8 @@ import { Observable, Subscription, Subscriber } from 'rxjs';
 import { Utils } from 'angular-bootstrap-md/lib/free/utils';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AddGoalService } from '../add-goal/add-goal.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-preferences',
@@ -62,8 +64,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private planService: PlanService,
     private preferenceService: PreferencesService,
-    private allocateOtherAssetService: AddGoalService
-
+    private allocateOtherAssetService: AddGoalService,
+    private dialog: MatDialog,
   ) { }
   selected = 0;
 
@@ -152,7 +154,39 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     }
 
   }
-
+  unfreez() {
+    if (this.freez == true) {
+      const dialogData = {
+        header: 'UNFREEZE GOAL',
+        body: 'You have frozen the calculations for additional savings required. Allocating an asset will unfreeze the calculations. Are you sure you want to unfreeze?',
+        body2: 'This cannot be undone.',
+        btnYes: 'CANCEL',
+        btnNo: 'UNFREEZE',
+        positiveMethod: () => {
+          let obj = {
+            lumpSumAmountDebt: this.data.remainingData.lumpSumAmountDebt,
+            lumpSumAmountEquity: this.data.remainingData.lumpSumAmountEquity,
+            id: this.data.remainingData.id,
+            goalType: this.data.goalType,
+            freezed: false,
+          }
+          this.planService.freezCalculation(obj).subscribe(res => {
+            //this.allocateOtherAssetService.refreshAssetList.next();
+            //this.loadAllAssets();
+            this.eventService.openSnackBar("Goal unfreeze successfully");
+            dialogRef.close();
+          }, err => {
+            this.eventService.openSnackBar(err);
+          })
+        }
+      };
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '400px',
+        data: dialogData,
+        autoFocus: false,
+      });
+    }
+  }
   restrictFrom100(event) {
     if (parseInt(event.target.value) > 100) {
       event.target.value = 100;

@@ -46,6 +46,11 @@
                         class=" c-p">
                         Email bulk password
                     </li>
+
+                    <li (click)="changeView('tab11')" [ngClass]="{'b-outline':viewMode =='tab11','':viewMode =='tab11'}"
+                        class=" c-p">
+                        SMS bulk password
+                    </li>
                 </ul>
 
             </div>
@@ -144,7 +149,9 @@
                                             (click)="getEmailVerification()">
                                             <div class="bar d-flex align-items-center"
                                                 [ngClass]="{'text-danger': element.emailVerificationStatus == 3, 'text-warning': element.emailVerificationStatus == 2, 'text-success': element.emailVerificationStatus == 1}">
-                                                {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification pending':(element.emailVerificationStatus == 1)?'Verified':'Verification failed'}}
+                                                {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification
+                                                pending':(element.emailVerificationStatus == 1)?'Verified':'Verification
+                                                failed'}}
                                                 <span class="c-p"
                                                     *ngIf="element.emailVerificationStatus != 1 && !isLoading">
                                                     <mat-icon>refresh</mat-icon>
@@ -838,5 +845,62 @@
                         </div>
                     </div>
                 </div>
+
+                <div *ngSwitchCase="'tab11'">
+                    <div class="p-20">
+                        <div class="row ">
+                            <div class="col-md-12 p-0 d-flex align-items-center justify-content-between">
+                                <p class="mb-0 f-14">SMS bulk password</p>
+                                <button class="mat-button btn-history bg-primary">
+                                    Previously sent history
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-28">
+                            <div class="row">
+                                <div class="col-md-4 pl-0">
+                                    <img class="ml-48 mb-12" src="assets/images/svg/review-client-list.svg">
+                                    <div class="d-flex">
+                                        <div class="numBox">
+                                            <span class="">1</span>
+                                        </div>
+                                        <div class="contBox">
+                                            <h5 class="roboto text-diff f-500">Review client list</h5>
+                                            <p>At first, we’ll show you the list of clients. You can select / deselect
+                                                and
+                                                proceed</p>
+
+                                            <button mat-button class="btn-primary mt-28 btnNewEmail">
+                                                BEGIN
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="col-md-4 pl-0">
+                                    <img class="ml-48 mb-12" src="assets/images/svg/review-email-and-send.svg">
+                                    <div class="d-flex">
+                                        <div class="numBox">
+                                            <span class="">2</span>
+                                        </div>
+                                        <div class="contBox">
+                                            <h5 class="roboto text-diff f-500">Review SMS and send</h5>
+                                            <p> Lastly, we will show you the SMS template. You can review / modify, if
+                                                necessary and hit the send button. </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>

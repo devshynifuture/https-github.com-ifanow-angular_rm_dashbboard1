@@ -256,7 +256,7 @@ export class AddGoalsComponent implements OnInit {
             Q4: 'Notes'
           }
           element.validations = {
-            minAge: 6,
+            minAge: 1,
             maxAge: 120,
             minCost: 10000,
             maxCost: 10000000,
