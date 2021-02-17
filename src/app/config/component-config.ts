@@ -40,6 +40,7 @@ export const appConfig = {
   SEARCH_DATA: '',
   GET_CAT_LIST_MIS_AUM: 'backoffice/sub-category/list/get',
   GET_CAT_SUBCAT_LIST_MIS_AUM: '/backoffice/cat/subcat/get',
+  GET_LOG: 'mutual-fund/report/mf-report/client-log/get',
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
