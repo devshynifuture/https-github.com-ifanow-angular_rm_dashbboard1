@@ -598,7 +598,7 @@ export class SummaryPlanComponent implements OnInit {
                                 this.object = {
                                     'insuranceName': 'Critical illness',
                                     'amount': key,
-                                    'img': '/assets/images/svg/CIsmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/CIsmall.svg'
                                 }
                                 break;
 
@@ -606,7 +606,7 @@ export class SummaryPlanComponent implements OnInit {
                                 this.object = {
                                     'insuranceName': 'Fire insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/FIsmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/FIsmall.svg'
                                 }
                                 break;
 
@@ -614,42 +614,42 @@ export class SummaryPlanComponent implements OnInit {
                                 this.object = {
                                     'insuranceName': 'Health insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/Hsmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543999/Insurance-summary-img/Hsmall.svg'
                                 }
                                 break;
                             case 'homeInsurance':
                                 this.object = {
                                     'insuranceName': 'Home insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/Hsmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543999/Insurance-summary-img/Hsmall.svg'
                                 }
                                 break;
                             case 'life_insurance':
                                 this.object = {
                                     'insuranceName': 'Life insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/LIsmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/LIsmall.svg'
                                 }
                                 break;
                             case 'motorInsurance':
                                 this.object = {
                                     'insuranceName': 'Motor insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/MotorSmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/MotorSmall.svg'
                                 }
                                 break;
                             case 'personalAccident':
                                 this.object = {
                                     'insuranceName': 'Personal accident',
                                     'amount': key,
-                                    'img': '/assets/images/svg/PAsmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543998/Insurance-summary-img/PAsmall.svg'
                                 }
                                 break;
                             case 'travelInsurance':
                                 this.object = {
                                     'insuranceName': 'Travel insurance',
                                     'amount': key,
-                                    'img': '/assets/images/svg/TravelSmall.svg'
+                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/TravelSmall.svg'
                                 }
                                 break;
                             default:
