@@ -143,6 +143,9 @@ export class SingleGoalYearComponent implements OnInit {
         futureDate = new Date(currentDate);
         const data = new Date()
         futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        if (!this.singleYearGoalForm.get('goalMember').value.dateOfBirth) {
+          this.eventService.openSnackBarNoDuration('Client date of birth missing', 'DISMISS')
+        }
         const dOB = new Date(this.singleYearGoalForm.get('goalMember').value.dateOfBirth).toISOString()
         if (this.getLifeExpentancy.parameter) {
           this.dateF = data.setFullYear(new Date(dOB).getFullYear() + this.getLifeExpentancy.parameter)
