@@ -851,6 +851,7 @@ export const appConfig = {
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
   CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
   BULK_SMS: 'setting/bulk/welcome-sms/send',
+  GET_BULK_EMAIL_LOG: 'setting/bulk/welcome-sms/log-list/get',
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',

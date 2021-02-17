@@ -22,6 +22,7 @@ import { EmailVerificationPopupComponent } from './email-verification-popup/emai
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { join } from 'path';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-setting-preference',
@@ -31,6 +32,9 @@ import { join } from 'path';
 export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getVerifiedList: any;
   name: any;
+  bulkSmsLog: any;
+  showBulkSmsLogLoader: boolean;
+  showLog: boolean;
   constructor(public sanitizer: DomSanitizer, private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -38,7 +42,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public route: ActivatedRoute,
     private router: Router,
-    private peopleService: PeopleService, private settingsService: SettingsService) {
+    private peopleService: PeopleService, private settingsService: SettingsService,
+    public enumDataService: EnumDataService) {
     const navigation = this.router.getCurrentNavigation().extras.state;
     var temp = this.route.params
     console.log(temp)
@@ -825,6 +830,31 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     //     }
 
     // });
+  }
+
+  getBulkSmsLogDetails() {
+    this.showLog = true;
+    this.showBulkSmsLogLoader = true;
+    const obj = {
+      advisorId: this.advisorId,
+      limit: 20,
+      offset: 0
+    }
+    this.bulkSmsLog = [{}, {}, {}];
+    this.orgSetting.getBulkSmsLog(obj).subscribe(
+      data => {
+        this.showBulkSmsLogLoader = false;
+        if (data) {
+          data.map(o => o.showInnerTable = false);
+          this.bulkSmsLog = data;
+        } else {
+          this.bulkSmsLog = undefined;
+        }
+      }, err => {
+        this.bulkSmsLog = undefined;
+        this.showBulkSmsLogLoader = false;
+      }
+    )
   }
 
   openPopup(value, data) {
