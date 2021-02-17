@@ -557,7 +557,7 @@ export class ClientWiseComponent implements OnInit {
     let totalAumObj: any = {};
     if (this.data && this.data.totalAumObj) {
       totalAumObj = this.data.totalAumObj;
-      this.clientWiseTotal = ["Total", "", totalAumObj.totalAum, 100];
+      this.clientWiseTotal = ["Total", "", totalAumObj.totalAum ? totalAumObj.totalAum : this.totalCurrentValue, 100];
     }
     console.log("totalAumObj : ", totalAumObj);
     console.log("sumAumTotal : ", sumAumTotal);
@@ -650,21 +650,22 @@ export class ClientWiseComponent implements OnInit {
 
   clientTotalAum(data) {
     this.isLoading = false;
+    this.totalCurrentValue = 0;
     if (data) {
       this.clientList = data;
-      this.excelInitClientList();
       this.clientList.forEach((o) => {
         o.show = true;
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
+      this.excelInitClientList();
       let totalAumObj: any = {};
       if (this.data && this.data.totalAumObj) {
         totalAumObj = this.data.totalAumObj;
         console.log("totalAumObj : ", totalAumObj);
         console.log("sumAumTotal : ", this.totalCurrentValue);
         console.log("sumWeightInPercTotal : ", this.totalWeight);
-        this.totalCurrentValue = totalAumObj.totalAum;
+        this.totalCurrentValue = totalAumObj.totalAum ? totalAumObj.totalAum : this.totalCurrentValue;
         this.totalWeight = 100;
       }
       this.showLoader = false;
