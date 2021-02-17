@@ -47,8 +47,9 @@
                         Email bulk password
                     </li>
 
-                    <li (click)="changeView('tab11')" [ngClass]="{'b-outline':viewMode =='tab11','':viewMode =='tab11'}"
-                        class=" c-p">
+                    <li (click)="changeView('tab11')"
+                        *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY"
+                        [ngClass]="{'b-outline':viewMode =='tab11','':viewMode =='tab11'}" class=" c-p">
                         SMS bulk password
                     </li>
                 </ul>
