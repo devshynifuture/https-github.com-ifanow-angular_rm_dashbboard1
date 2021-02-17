@@ -49,6 +49,7 @@ import { CrmNotesComponent } from 'src/app/component/protect-component/AdviserCo
 import { OverviewRiskProfileComponent } from '../../../customer-overview/overview-profile/overview-risk-profile/overview-risk-profile.component';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { OthersAssetsComponent } from '../../../accounts/assets/others-assets/others-assets.component';
+import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -87,7 +88,8 @@ import { OthersAssetsComponent } from '../../../accounts/assets/others-assets/ot
     MutualFundsCapitalComponent,
     MfCapitalDetailedComponent,
     CrmNotesComponent,
-    OverviewRiskProfileComponent
+    OverviewRiskProfileComponent,
+    SummaryPlanComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -740,6 +742,9 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Home insurance':
         case 'Fire & special perils':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
+          break;
+        case 'Summary':
+          factory = this.resolver.resolveComponentFactory(SummaryPlanComponent);
           break;
         case 'Mutual fund summary':
           factory = this.resolver.resolveComponentFactory(MutualFundSummaryComponent);

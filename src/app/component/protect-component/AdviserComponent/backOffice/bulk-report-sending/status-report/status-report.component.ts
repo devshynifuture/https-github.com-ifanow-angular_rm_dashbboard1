@@ -12,14 +12,16 @@ export class StatusReportComponent implements OnInit {
   inputData: any;
   userInfo: any;
   refreshCount: any;
-
+  displayedColumns: string[] = ['name', 'mfoverview', 'status'];
+  clientDetails = []
+  isLoading: boolean;
   constructor(
-    private subInjectService : SubscriptionInject,
-    private backOfficeService : BackOfficeService,
+    private subInjectService: SubscriptionInject,
+    private backOfficeService: BackOfficeService,
   ) {
     this.userInfo = AuthService.getUserInfo();
-    console.log('info ===',this.userInfo)
-   }
+    console.log('info ===', this.userInfo)
+  }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -31,23 +33,43 @@ export class StatusReportComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.isLoading = false
     this.refresh()
+    this.getLog()
   }
-  refresh(){
+  refresh() {
     const obj = {
       id: this.inputData.id///5125
     };
     this.backOfficeService.refreshCount(obj).subscribe(
       data => {
         console.log('refreshCount ==', data)
-        this.refreshCount= data
+        this.refreshCount = data
         console.log(this.refreshCount)
       }
     );
   }
+  getLog() {
+    this.isLoading = true
+    const obj = {
+      mfBulkEmailRequestId: this.inputData.id///5125
+    };
+    this.backOfficeService.getLog(obj).subscribe(
+      data => {
+        if (data) {
+          console.log('getLog ==', data)
+          this.clientDetails = data
+          console.log('clientDetails', this.clientDetails)
+        } else {
+          this.clientDetails = []
+        }
+        this.isLoading = false
+      }
+    );
+  }
   close() {
-      this.subInjectService.changeNewRightSliderState({
-        state: 'close',
-      });
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+    });
   }
 }

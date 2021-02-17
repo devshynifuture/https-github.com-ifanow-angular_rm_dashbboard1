@@ -2,7 +2,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { AuthService } from './../../../../../../../auth-service/authService';
 import { EventService } from './../../../../../../../Data-service/event.service';
 import { PlanService } from './../plan.service';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { DatePipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
@@ -40,7 +40,8 @@ export class SummaryPlanComponent implements OnInit {
     annualSurplus: any;
     incomePercent: number;
     expensePercent: number;
-    @ViewChild('summaryPlan', { static: false }) summaryTemplateHeader: any;
+    @ViewChild('summaryPlan', { static: false }) summaryPlan: ElementRef;
+
     fragmentData = { isSpinner: false, date: null, time: '', size: '' };
     map: any;
     loopEle: number;
@@ -60,6 +61,9 @@ export class SummaryPlanComponent implements OnInit {
     generatePDF: number;
     finPlanList: any;
     id: any;
+    @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+
+    @Input() finPlanObj: any;//finacial plan pdf input
 
     constructor(
         private summaryPlanService: SummaryPlanServiceService,
@@ -73,6 +77,8 @@ export class SummaryPlanComponent implements OnInit {
         private cd: ChangeDetectorRef,
         private http: HttpClient
     ) {
+        console.log('org', this.getOrgData)
+        console.log('userInfo', this.userInfo)
     }
 
     @ViewChild(MatPaginator, { static: false }) paginator;
@@ -557,7 +563,10 @@ export class SummaryPlanComponent implements OnInit {
                 console.error(err);
                 // this.eventService.openSnackBar("Something went wrong", "DISMISS")
             })
-
+        this.cd.detectChanges();//to refresh the dom when response come
+        setTimeout(() => {
+            this.loaded.emit(document.getElementById('planSummary'));
+        }, 5000);
     }
 
     getSumOfJsonMap(json: Object = {}) {

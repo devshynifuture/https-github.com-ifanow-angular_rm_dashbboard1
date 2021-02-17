@@ -887,6 +887,9 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.isEdit = false;
         } else {
           const obj = this.getSingleTransactionJson();
+          if (this.platformType == 1) {
+            obj.folioNo = obj.folioNo.split('/')[0]
+          }
           this.childTransactions.push(obj);
         }
         if (this.childTransactions.length == 1) {

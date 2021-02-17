@@ -173,6 +173,27 @@
                                 <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
                                     [expandedHeight]="customExpandedHeight">
                                     <mat-panel-title>
+                                        <h5 class="m-0">Summary</h5>
+                                    </mat-panel-title>
+
+                                </mat-expansion-panel-header>
+                                <div class="bl br bb">
+                                    <div class="row bb-1 pt-8 pb-8">
+                                        <div class="col-md-12">
+                                            <mat-checkbox #planSummary
+                                                (change)="checkAndLoadPdf($event.checked,'Summary',null,'Plan / Summmary',false,planSummary)">
+                                                Plan / Summary
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-expansion-panel>
+                            <mat-expansion-panel class="mt-12">
+                                <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                                    [expandedHeight]="customExpandedHeight">
+                                    <mat-panel-title>
                                         <h5 class="m-0">Insurance planning</h5>
                                     </mat-panel-title>
 

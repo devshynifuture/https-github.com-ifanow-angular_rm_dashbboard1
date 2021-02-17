@@ -1011,6 +1011,9 @@ export class SipTransactionComponent implements OnInit {
           this.isEdit = false;
         } else {
           const obj = this.getSingleTransactionJson();
+          if (this.platformType == 1) {
+            obj.folioNo = obj.folioNo.split('/')[0]
+          }
           this.childTransactions.push(obj);
         }
         // Only once required because for same amcId search
