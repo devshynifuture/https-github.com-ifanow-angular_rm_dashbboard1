@@ -145,11 +145,13 @@ export class SingleGoalYearComponent implements OnInit {
         futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
         if (!this.singleYearGoalForm.get('goalMember').value.dateOfBirth) {
           this.eventService.openSnackBarNoDuration('Client date of birth missing', 'DISMISS')
+        } else {
+          const dOB = new Date(this.singleYearGoalForm.get('goalMember').value.dateOfBirth).toISOString()
+          if (this.getLifeExpentancy.parameter) {
+            this.dateF = data.setFullYear(new Date(dOB).getFullYear() + this.getLifeExpentancy.parameter)
+          }
         }
-        const dOB = new Date(this.singleYearGoalForm.get('goalMember').value.dateOfBirth).toISOString()
-        if (this.getLifeExpentancy.parameter) {
-          this.dateF = data.setFullYear(new Date(dOB).getFullYear() + this.getLifeExpentancy.parameter)
-        }
+
         obj['goalEndDate'] = this.datePipe.transform(this.dateF, 'yyyy-MM-dd')
         obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
