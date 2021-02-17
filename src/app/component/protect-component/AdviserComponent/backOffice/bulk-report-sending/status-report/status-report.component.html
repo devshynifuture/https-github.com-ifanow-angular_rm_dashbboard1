@@ -87,10 +87,8 @@
             </table>
         </div>
     </div>
-    <div *ngIf="clientDetails.length  == 0 && !isLoading">
-        <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
-            <span class="pl-10 full-center w-100 f-14">No data found</span>
-        </div>
+    <div class="col-md-12 pl-0 pr-0 pt-20 text-center" *ngIf="clientDetails.length  == 0 && !isLoading">
+        <span class="f-14">No data found</span>
     </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-65">
