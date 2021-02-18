@@ -39,7 +39,7 @@ export class PersonalDetailsInnComponent implements OnInit {
 
   set data(data) {
     this.draft = data.draft
-    if (JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId)) && this.draft == true) {
+    if (JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId)) && data.draft == true) {
       this.inputData = JSON.parse(localStorage.getItem('holderList' + data.clientData.clientId));
       console.log('local storage', this.inputData)
     }
