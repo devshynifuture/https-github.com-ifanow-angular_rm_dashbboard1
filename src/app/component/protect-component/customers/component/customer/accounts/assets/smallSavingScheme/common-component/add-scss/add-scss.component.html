@@ -28,7 +28,7 @@
                                 <!-- || f.familyMemberAge <= 60 -->
                                 <mat-option value='' disabled>Select family members</mat-option>
                                 <mat-option *ngFor="let f of nomineesListFM"
-                                    [disabled]="f.disable || f.familyMemberAge <= 60 " [value]="f.userName">
+                                    [disabled]="f.disable || f.familyMemberAge <= 55 " [value]="f.userName">
                                     <span>{{f.userName}}</span>
                                 </mat-option>
                             </mat-select>

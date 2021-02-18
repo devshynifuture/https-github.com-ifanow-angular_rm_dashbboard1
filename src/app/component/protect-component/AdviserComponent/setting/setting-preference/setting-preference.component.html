@@ -47,9 +47,8 @@
                         Email bulk password
                     </li>
 
-                    <li (click)="changeView('tab11')"
-                        *ngIf="!enumDataService.PRODUCTION  && !enumDataService.MARKET_SUMMARY"
-                        [ngClass]="{'b-outline':viewMode =='tab11','':viewMode =='tab11'}" class=" c-p">
+                    <li (click)="changeView('tab11')" [ngClass]="{'b-outline':viewMode =='tab11','':viewMode =='tab11'}"
+                        class=" c-p">
                         SMS bulk password
                     </li>
                 </ul>
@@ -851,7 +850,15 @@
                     <div *ngIf="!showLog" class="p-20">
                         <div class="row ">
                             <div class="col-md-12 p-0 d-flex align-items-center justify-content-between">
-                                <p class="mb-0 f-14">SMS bulk password</p>
+                                <h5 class="mb-8  text-black">
+                                    Want to send welcome sms to your clients in bulk?
+                                </h5>
+
+                                <!-- <p class="mb-28">Through this module, you can do so easily with a simple, 2 step
+                                    process...</p> -->
+
+                                <p class="mb-0 f-14">Through this module, you can do so easily with a simple, 2 step
+                                    process...</p>
                                 <button (click)="getBulkSmsLogDetails()" class="mat-button btn-history bg-primary">
                                     Previously sent history
                                 </button>
@@ -1010,7 +1017,7 @@
                                                             </td>
                                                             <td class="text-left">
                                                                 <div [ngClass]="{'bar': showBulkSmsLogLoader}">
-                                                                    {{showBulkSmsLogLoader ? '' : item.mobile}}
+                                                                    {{showBulkSmsLogLoader ? '' : item.mobile?item.mobile:'-'}}
                                                                 </div>
                                                             </td>
 
