@@ -36,7 +36,7 @@ export class PreferencesService {
       advisorId: remainingData.advisorId,
       name: goalForm.name,
       notes: goalForm.notes,
-      goalEndDate:gendtDate,
+      goalEndDate: gendtDate,
       goalStartDate: gstartDate,
       //frequency: goalForm.goalEndDateYear - goalForm.goalStartDateYear,
       futureValue: goalForm.goalValue,
@@ -44,10 +44,11 @@ export class PreferencesService {
       isArchived: goalForm.archiveGoal || false,
       isFreezed: goalForm.freezeCalculation || false,
       stepUp: goalForm.stepUp,
-      frequency:goalForm.frequency,
+      frequency: goalForm.frequency,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
       savingStatus: goalForm.savingStatus,
+      goalAdditionDate: this.datePipe.transform(goalForm.goalAdditionDate, 'yyyy-MM-dd')
     }
 
     if (obj.isFreezed) {
@@ -76,7 +77,7 @@ export class PreferencesService {
     let gendtDate = goalForm.goalEndDateYear + '-' + goalForm.goalEndDateMonth + '-01';
     let sStartDate = goalForm.savingStartDateYear + '-' + goalForm.savingStartDateMonth + '-01';
     let sEndtDate = goalForm.savingEndDateYear + '-' + goalForm.savingEndDateMonth + '-01';
-    if(goalForm.goalType == 1){
+    if (goalForm.goalType == 1) {
       let postRetirementDebtAssetAllocation = goalForm.postdebtAllocation
       let postRetirementEquityAssetAllocation = goalForm.postequityAllocation
     }
@@ -90,12 +91,13 @@ export class PreferencesService {
       notes: goalForm.notes,
       archivedValue: (goalForm.archiveGoal ? 1 : 0),
       isFreezed: (goalForm.freezeCalculation ? 1 : 0),
-      savingStatus:goalForm.savingStatus,
+      savingStatus: goalForm.savingStatus,
       savingStartDate: sStartDate,
       savingEndDate: sEndtDate,
       goalStartDate: gstartDate,
-      goalEndDate:gendtDate,
+      goalEndDate: gendtDate,
       savingType: goalForm.savingStatus,
+      goalAdditionDate: this.datePipe.transform(goalForm.goalAdditionDate, 'yyyy/MM/dd')
     }
     switch (oldGoalObj.goalType) {
       case AppConstants.CAR_GOAL:

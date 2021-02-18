@@ -188,6 +188,8 @@ export class TempserviceService {
 
       }
       let catObjLength = catObj[key].length;
+      const emptyTransactioncheck = (item) => item.mutualFundTransactions == 0
+      let emptyTrnOrNot = catObj[key].every(emptyTransactioncheck);
       const isgreatorThanZero = (number) => number.balanceUnit <= 0
       let emptyObjOrNot = catObj[key].every(isgreatorThanZero);
       catObj[key].forEach((singleData) => {
@@ -256,7 +258,7 @@ export class TempserviceService {
             totalObj.totalBalanceUnit = singleData.mutualFundTransactions[singleData.mutualFundTransactions.length - 1].balanceUnits
             filteredData.push(totalObj);
           } else {
-            if (filteredData.length > 0) {
+            if (filteredData.length > 0 && emptyTrnOrNot) {
               if (filteredData[filteredData.length - 1].groupName) {
                 filteredData.pop();
               }

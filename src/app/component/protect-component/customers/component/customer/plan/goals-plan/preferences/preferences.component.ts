@@ -140,6 +140,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       freezeCalculation: [remainingData.freezed],
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
+      goalAdditionDate: [new Date(remainingData.goalAdditionDate), [Validators.required]],
       archiveGoal: [],
       stepUp: [(remainingData.stepUp) ? remainingData.stepUp : 0,]
     })
@@ -236,6 +237,9 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         })
       )
     }
+
+  }
+  setEndDate() {
 
   }
   setInflamationReturns() {

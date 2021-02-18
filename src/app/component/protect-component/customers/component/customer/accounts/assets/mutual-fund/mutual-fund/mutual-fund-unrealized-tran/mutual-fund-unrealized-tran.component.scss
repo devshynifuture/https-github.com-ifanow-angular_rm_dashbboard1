@@ -22,25 +22,11 @@
     }
   }
 }
-::ng-deep .add-new-btn {
-  min-width: 300px !important;
-  .mat-menu-item {
-      height: 105px;
-      line-height: 28px;
-      padding: 0 !important;
-  }
-  .mat-menu-content:not(:empty) {
-      padding-bottom: 0px;
-  }
-}
+
 ::ng-deep .disabledOpacity {
   opacity: 10;
- }
-
-.example-viewport {
-  height: 200px;
-  border: 1px solid black;
 }
+
 
 .zIndex {
   z-index: 0 !important;
@@ -52,11 +38,7 @@
   overflow-y: auto;
 }
 
-.tran-height {
-  height: 100%;
-  max-height: 300px;
-  overflow-y: auto;
-}
+
 ::ng-deep .tran-height-2 {
   height: 100%;
   
@@ -85,25 +67,35 @@
   justify-content: end;
   margin-right: 10px;
 }
+
 ::ng-deep .cdk-virtual-scroll-content-wrapper {
   transform: translateY(0px) !important;
 }
- 
+
+// ::ng-deep .cdk-virtual-scroll-spacer {
+//     height: auto !important;
+// }
+// .zIndex {
+//     z-index: 0 !important;
+// }
 .nonesticky {
   position: relative !important;
 }
 
 .disabled {
-  pointer-events:none;
- }
- .disabledOpacity {
-  opacity:10;
+  pointer-events: none;
+}
+
+.disabledOpacity {
+  opacity: 10;
   z-index: 1000;
- }
- ::ng-deep .cdk-overlay-pane {
+}
+
+::ng-deep .cdk-overlay-pane {
   opacity: 10;
   opacity: 10;
 }
+
 ::ng-deep .mat-menu-panel {
   opacity: 10;
   z-index: 1000;

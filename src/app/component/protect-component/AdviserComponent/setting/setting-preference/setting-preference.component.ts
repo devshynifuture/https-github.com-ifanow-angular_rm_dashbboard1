@@ -22,6 +22,7 @@ import { EmailVerificationPopupComponent } from './email-verification-popup/emai
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { join } from 'path';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-setting-preference',
@@ -41,7 +42,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public route: ActivatedRoute,
     private router: Router,
-    private peopleService: PeopleService, private settingsService: SettingsService) {
+    private peopleService: PeopleService, private settingsService: SettingsService,
+    public enumDataService: EnumDataService) {
     const navigation = this.router.getCurrentNavigation().extras.state;
     var temp = this.route.params
     console.log(temp)
