@@ -97,7 +97,7 @@ export class PreferencesService {
       goalStartDate: gstartDate,
       goalEndDate: gendtDate,
       savingType: goalForm.savingStatus,
-      goalAdditionDate: this.datePipe.transform(goalForm.goalAdditionDate, 'yyyy/MM/dd')
+      goalAdditionDate: this.datePipe.transform(goalForm.goalAdditionDate, 'yyyy-MM-dd')
     }
     switch (oldGoalObj.goalType) {
       case AppConstants.CAR_GOAL:
