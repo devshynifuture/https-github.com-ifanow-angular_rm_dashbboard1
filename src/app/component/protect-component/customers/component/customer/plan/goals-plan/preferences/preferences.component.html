@@ -265,7 +265,28 @@
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
-                            {{data.remainingData.goalAdditionDate | date: 'dd/MM/yyyy'}}
+                            <div class="form-group mb-0 remove-top">
+                                <mat-form-field class="ba-date " appearance="standard" floatLabel="never">
+                                    <input class="form-control br-0 b-0" formControlName="goalAdditionDate"
+                                        (input)="setEndDate($event)" (focus)="picker.open()" matInput
+                                        [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <mat-error>
+                                        This field is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <!-- <div class="form-group">
+                                <mat-form-field class="ba-date">
+                                    <input class="form-control b-0" (click)="picker.open()" (dateChange)="setEndDate()"
+                                        readonly matInput formControlName="goalAdditionDate"
+                                        [value]="data.remainingData.goalAdditionDate" [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div> -->
                         </div>
 
                     </div>
