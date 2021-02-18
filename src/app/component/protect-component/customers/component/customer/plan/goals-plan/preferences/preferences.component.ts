@@ -11,6 +11,7 @@ import { Observable, Subscription, Subscriber } from 'rxjs';
 import { Utils } from 'angular-bootstrap-md/lib/free/utils';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AddGoalService } from '../add-goal/add-goal.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-preferences',
@@ -138,6 +139,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       freezeCalculation: [remainingData.freezed],
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
+      goalAdditionDate: [new Date(remainingData.goalAdditionDate), [Validators.required]],
       archiveGoal: [],
       stepUp: [(remainingData.stepUp) ? remainingData.stepUp : 0,]
     })
@@ -202,6 +204,9 @@ export class PreferencesComponent implements OnInit, OnDestroy {
         })
       )
     }
+
+  }
+  setEndDate() {
 
   }
   setInflamationReturns() {
