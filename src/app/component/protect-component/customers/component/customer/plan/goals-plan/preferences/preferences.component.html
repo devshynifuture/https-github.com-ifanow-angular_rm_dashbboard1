@@ -268,7 +268,7 @@
                             <div class="form-group mb-0 remove-top">
                                 <mat-form-field class="ba-date " appearance="standard" floatLabel="never">
                                     <input class="form-control br-0 b-0" formControlName="goalAdditionDate"
-                                        (input)="setEndDate($event)" (focus)="picker.open()" matInput
+                                        (input)="setEndDate()" (focus)="picker.open()" matInput
                                         [matDatepicker]="picker">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
@@ -541,7 +541,7 @@
                                     <div class="col-md-3 pr-0">
                                         <div class="form-group mb-0">
                                             <mat-form-field class="w-100">
-                                                <input matInput type="text" class="form-control br-0" 
+                                                <input matInput type="text" class="form-control br-0"
                                                 (change)="setOtherBifurcation(bifurcation.get('equityAllocation'), bifurcation.get('debtAllocation'))"
                                                 formControlName="equityAllocation">
                                             </mat-form-field>
@@ -550,7 +550,7 @@
                                     <div class="col-md-3 pr-0">
                                         <div class="form-group mb-0">
                                             <mat-form-field class="w-100">
-                                                <input matInput type="text" class="form-control br-0" 
+                                                <input matInput type="text" class="form-control br-0"
                                                 (change)="setOtherBifurcation(bifurcation.get('equityAllocation'), bifurcation.get('debtAllocation'))"
                                                 formControlName="debtAllocation">
                                             </mat-form-field>
