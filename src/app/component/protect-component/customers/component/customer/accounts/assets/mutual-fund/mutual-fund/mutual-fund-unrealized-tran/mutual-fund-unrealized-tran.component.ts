@@ -1276,7 +1276,7 @@ export class MutualFundUnrealizedTranComponent {
     this.showDownload = true;
     setTimeout(() => {
       const blob = new Blob([document.getElementById('template').innerHTML], {
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+        type: 'application/vnd.ms-excel'
       });
       saveAs(blob, this.viewMode + '.xls');
     }, 200);
@@ -1784,7 +1784,23 @@ export class MutualFundUnrealizedTranComponent {
 
     return number;
   }
+  formatNumber(data, noOfPlaces: number = 0) {
+    if (data) {
+      data = parseFloat(data)
+      if (isNaN(data)) {
+        return data;
+      } else {
+        // console.log(' original ', data);
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
+        // console.log(' original / roundedValue ', data, ' / ', formattedValue);
+        return formattedValue;
+      }
+    } else {
+      return '0';
+    }
 
+    return data;
+  }
   getValues(data, value, isGT) {
     let number;
     if (value == 'transactionDate') {

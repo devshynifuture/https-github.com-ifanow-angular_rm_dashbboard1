@@ -178,6 +178,15 @@ export class OrgSettingServiceService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.CLIENT_SEND_EMAIL, data);
   }
 
+  sendSmsToClients(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.BULK_SMS, data);
+  }
+
+  getBulkSmsLog(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('limit', data.limit).set('offset', data.offset);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_EMAIL_LOG, httpParams);
+  }
+
   enableDisableTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.ENABLE_DISABLE_TEMPLATE, data);
   }

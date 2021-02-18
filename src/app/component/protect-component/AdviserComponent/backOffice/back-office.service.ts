@@ -404,7 +404,9 @@ export class BackOfficeService {
   searchData(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SEARCH_DATA, data);
   }
-
+  getLog(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LOG, data);
+  }
   addMisAumData(data) {
     this.misAum.next(data);
   }

@@ -678,9 +678,21 @@ export class InsuranceComponent implements OnInit {
               element.currentValue = this.totalFundValues
             });
           }
-          this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
-            this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
-          this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
+          if (value == 'ALL') {
+            if (element.status != 'MATURED') {
+              this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue;
+            }
+            if (element.status != 'MATURED' && element.status != 'Reduced paid up' && element.status != 'Fully paid up' && element.status != 'Lapsed') {
+              this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
+            }
+            if (element.status != 'MATURED') {
+              this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
+            }
+          } else {
+            this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+              this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
+            this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
+          }
         });
       } else {
         this.eventService.openSnackBar('No data found', 'Dismiss');
@@ -781,9 +793,15 @@ export class InsuranceComponent implements OnInit {
             element.currentValue = this.totalFundValues
           });
         }
-        this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+        if (element.status != 'MATURED') {
+          this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue;
+        }
+        if (element.status != 'MATURED' && element.status != 'Reduced paid up' && element.status != 'Fully paid up' && element.status != 'Lapsed') {
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
-        this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
+        }
+        if (element.status != 'MATURED') {
+          this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
+        }
       });
     } else {
       this.getCount();
@@ -984,10 +1002,15 @@ export class InsuranceComponent implements OnInit {
             element.currentValue = this.totalFundValues
           });
         }
-
-        this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+        if (element.status != 'MATURED') {
+          this.totalCurrentValue += (this.totalFundValues != 0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue;
+        }
+        if (element.status != 'MATURED' && element.status != 'Reduced paid up' && element.status != 'Fully paid up' && element.status != 'Lapsed') {
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
-        this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
+        }
+        if (element.status != 'MATURED') {
+          this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
+        }
       });
       this.isLoading = false;
 

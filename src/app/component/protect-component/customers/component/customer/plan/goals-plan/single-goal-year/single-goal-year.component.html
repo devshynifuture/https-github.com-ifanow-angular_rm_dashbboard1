@@ -62,6 +62,9 @@
                                         <mat-error class="f-12" *ngIf="singleYearGoalForm.get('age').value==null">This
                                             field is required
                                         </mat-error>
+                                        <mat-error
+                                            *ngIf="singleYearGoalForm.get('age').errors?.min || singleYearGoalForm.get('age').errors?.max">
+                                            Please enter valid value</mat-error>
                                     </div>
                                 </div>
                                 <div class=" col-md-8 pr-0">
@@ -117,6 +120,9 @@
                                                 class="form-control br-0 percentage"
                                                 [disabled]="singleYearGoalForm.value.costReduction">
                                             <mat-error class="f-12">This field is required</mat-error>
+                                            <mat-error
+                                                *ngIf="singleYearGoalForm.get('costReduction').errors?.min || singleYearGoalForm.get('costReduction').errors?.max">
+                                                Please enter valid value</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -126,6 +132,7 @@
                                             [value]="singleYearGoalForm.value.costReduction"
                                             [min]="goalTypeData.validations.maxCostReduction"
                                             [max]="goalTypeData.validations.minCostReduction"></mat-slider>
+
                                     </div>
                                 </div>
                             </div>

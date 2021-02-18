@@ -40,6 +40,7 @@ export const appConfig = {
   SEARCH_DATA: '',
   GET_CAT_LIST_MIS_AUM: 'backoffice/sub-category/list/get',
   GET_CAT_SUBCAT_LIST_MIS_AUM: '/backoffice/cat/subcat/get',
+  GET_LOG: 'mutual-fund/report/mf-report/client-log/get',
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
@@ -849,6 +850,8 @@ export const appConfig = {
   ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
   CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
+  BULK_SMS: 'setting/bulk/welcome-sms/send',
+  GET_BULK_EMAIL_LOG: 'setting/bulk/welcome-sms/log-list/get',
   ENABLE_DISABLE_TEMPLATE: 'setting/disable-or-enable/email-template',
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',
