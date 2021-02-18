@@ -208,6 +208,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         if (singleData.mobileList && singleData.mobileList.length > 0) {
           singleData.mobile = singleData.mobileList[0].mobileNo;
         }
+
+        if (singleData.mobileList && singleData.mobileList.length > 0) {
+          singleData.isdCode = singleData.mobileList[0].isdCodeId;
+        }
         singleData.selected = false;
         singleData.ownerName = '';
         singleData.name = '';
@@ -361,7 +365,12 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       this.selectedClientsCount = 0;
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
-        if (element.selected && element.email) {
+        if (this.data == 'Email' && element.selected && element.email) {
+          this.selectedClientArray.push(element.clientId)
+          this.selectedClientsCount++;
+          this.dataCount++;
+        }
+        if (this.data == 'Sms' && element.selected && element.mobile != 0) {
           this.selectedClientArray.push(element.clientId)
           this.selectedClientsCount++;
           this.dataCount++;

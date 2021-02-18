@@ -918,7 +918,7 @@ export class UtilService {
     } else {
       originalMobileList.forEach(singleMobile => {
         editedMobileList.value.forEach(secondMobile => {
-          if (singleMobile.id == secondMobile.id && singleMobile.mobileNo != secondMobile.number) {
+          if (singleMobile.id == secondMobile.id && (singleMobile.mobileNo != secondMobile.number) || singleMobile.isdCodeId != secondMobile.code) {
             singleMobile['isUpdate'] = 1;
             singleMobile['isActive'] = 1;
             singleMobile['mobileNo'] = secondMobile.number;
@@ -934,6 +934,7 @@ export class UtilService {
             });
           }
           else if ((singleMobile.id == secondMobile.id && singleMobile.mobileNo == secondMobile.number)) {
+            singleMobile['isdCodeId'] = secondMobile.code
             mobileListJson.push(singleMobile);
           }
           else if (editedMobileList.value.some(element => element.id != singleMobile.id)) {
