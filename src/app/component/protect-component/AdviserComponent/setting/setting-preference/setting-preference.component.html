@@ -824,7 +824,8 @@
 
                                                             <td class="text-left">
                                                                 <div [ngClass]="{'bar': isLoading}">
-                                                                    {{isLoading ? '' : item.status==0?'Not sent':'Sent'}}
+                                                                    {{isLoading ? '' : item.status==0?'Not
+                                                                    sent':'Sent'}}
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -849,7 +850,7 @@
                 <div *ngSwitchCase="'tab11'">
                     <div *ngIf="!showLog" class="p-20">
                         <div class="row ">
-                            <div class="col-md-12 p-0 d-flex align-items-center justify-content-between">
+                            <div class="col-md-8 p-0">
                                 <h5 class="mb-8  text-black">
                                     Want to send welcome sms to your clients in bulk?
                                 </h5>
@@ -859,6 +860,9 @@
 
                                 <p class="mb-0 f-14">Through this module, you can do so easily with a simple, 2 step
                                     process...</p>
+
+                            </div>
+                            <div class="col-md-4 p-0 text-right">
                                 <button (click)="getBulkSmsLogDetails()" class="mat-button btn-history bg-primary">
                                     Previously sent history
                                 </button>
@@ -1017,13 +1021,15 @@
                                                             </td>
                                                             <td class="text-left">
                                                                 <div [ngClass]="{'bar': showBulkSmsLogLoader}">
-                                                                    {{showBulkSmsLogLoader ? '' : item.mobile?item.mobile:'-'}}
+                                                                    {{showBulkSmsLogLoader ? '' :
+                                                                    item.mobile?item.mobile:'-'}}
                                                                 </div>
                                                             </td>
 
                                                             <td class="text-left">
                                                                 <div [ngClass]="{'bar': showBulkSmsLogLoader}">
-                                                                    {{showBulkSmsLogLoader ? '' : item.status==0?'Not sent':'Sent'}}
+                                                                    {{showBulkSmsLogLoader ? '' : item.status==0?'Not
+                                                                    sent':'Sent'}}
                                                                 </div>
                                                             </td>
                                                         </tr>
