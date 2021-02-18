@@ -190,7 +190,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      maturityDate: [data.maturityDate],
+      maturityDate: [data ? new Date(data.maturityDate) : null],
       schemeChoice: [(data == undefined) ? '' : data.schemeChoice, [Validators.required]],
       pran: [(data == undefined) ? '' : data.pran],
       // schemeName: [(data == undefined) ? '' : data.schemeName, [Validators.required]],
