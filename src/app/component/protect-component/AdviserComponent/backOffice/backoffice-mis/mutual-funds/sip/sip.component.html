@@ -6,7 +6,7 @@
 <div id="ui-misreport">
     <div class="bg-white pb-36">
         <div *ngIf="sipComponent==true">
-            <div class="row pt-28 pb-16">
+            <div class="row pt-28 pb-16 align-items-center">
                 <div class="col-md-8">
                     <h3 class="mb-0">SIP</h3>
                 </div>
@@ -34,7 +34,8 @@
                                             <div class="col-md-12 p-0">
                                                 <h1 class="  text-diff f-44 f-300 pt-32">
                                                     <span>
-                                                        {{(isLoading) ? '' :((sipCount) && sipCount.totalAmountInWords  ? sipCount.totalAmountInWords : '0')}}
+                                                        {{(isLoading) ? '' :((sipCount) && sipCount.totalAmountInWords ?
+                                                        sipCount.totalAmountInWords : '0')}}
                                                     </span>
                                                 </h1>
                                                 <p class="f-16 pt-4 text-diff" *ngIf="!isLoading">TOTAL SIP BOOK</p>
@@ -51,7 +52,9 @@
                                                 <div class="pl-12">
                                                     <h1 class="relClass f-24 text-diff mb-0 pb-8">
                                                         <span>
-                                                            {{(isLoading) ? '' : ((sipCount && sipCount.hasOwnProperty('totalAmountInWords')) ? sipCount.totalCount : 0)}}
+                                                            {{(isLoading) ? '' : ((sipCount &&
+                                                            sipCount.hasOwnProperty('totalAmountInWords')) ?
+                                                            sipCount.totalCount : 0)}}
                                                         </span>
                                                     </h1>
                                                     <p class="f-12 text-diff mb-0" *ngIf="!isLoading">SIP Count</p>
@@ -61,8 +64,9 @@
                                                 <h1 class="text-diff f-24 mb-0 pb-8">
                                                     <!-- <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">
                                                         {{(sipCount &&  sipCount.hasOwnProperty('avgSipAmount')) ? sipCount.avgSipAmount : 0}}</span> -->
-                                                        <span *ngIf="!isLoading && sipCount" appFormatNumber>{{(sipCount) ? sipCount.avgSipAmount : '0'}}
-                                                        </span>
+                                                    <span *ngIf="!isLoading && sipCount" appFormatNumber>{{(sipCount) ?
+                                                        sipCount.avgSipAmount : '0'}}
+                                                    </span>
                                                     <span *ngIf="isLoading">{{''}}</span>
                                                 </h1>
                                                 <p class="f-12 mb-0 text-diff" *ngIf="!isLoading">Average SIP</p>
@@ -92,12 +96,12 @@
                                             <div class="col-md-12 p-0">
                                                 <div class="text-center">
                                                     <h1 class="text-diff f-300 f-40 mb-4 pt-8">
-                                                        {{sipCount ?  sipCount.sipLinkedToGoalPercent : 0}}%</h1>
+                                                        {{sipCount ? sipCount.sipLinkedToGoalPercent : 0}}%</h1>
 
                                                     <p class="text-diff f-14 mb-0 pt-12 l-21">
-                                                        Out of {{sipCount ?  sipCount.totalCount:0}} SIP,
-                                                        {{sipCount ?  sipCount.sipLinkedToGoalPercent:0}}%
-                                                        ({{sipCount ?  sipCount.sipLinkedToGoalCount : '' }} SIP) are
+                                                        Out of {{sipCount ? sipCount.totalCount:0}} SIP,
+                                                        {{sipCount ? sipCount.sipLinkedToGoalPercent:0}}%
+                                                        ({{sipCount ? sipCount.sipLinkedToGoalCount : '' }} SIP) are
                                                         currently
                                                         linked to
                                                         financial goals of your
@@ -205,7 +209,8 @@
                                                         <p *ngIf="!isLoading"
                                                             class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                             {{item.investorName}}</p>
-                                                        <p *ngIf="!isLoading" class="pl-4"><span appFormatNumber [shouldRoundOff]="true">{{item.amount}}</span></p>
+                                                        <p *ngIf="!isLoading" class="pl-4"><span appFormatNumber
+                                                                [shouldRoundOff]="true">{{item.amount}}</span></p>
                                                         <p *ngIf="isLoading">{{''}}</p>
                                                     </div>
                                                     <div class="col-md-4 bar pl-0 relClass pt-4">
@@ -265,7 +270,8 @@
                                                     <p *ngIf="!isExpiringLoading"
                                                         class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                         {{item.investorName}}</p>
-                                                    <p *ngIf="!isExpiringLoading" class="pl-4"><span appFormatNumber [shouldRoundOff]="true">{{item.amount}}</span></p>
+                                                    <p *ngIf="!isExpiringLoading" class="pl-4"><span appFormatNumber
+                                                            [shouldRoundOff]="true">{{item.amount}}</span></p>
                                                     <p *ngIf="isExpiringLoading">{{''}}</p>
                                                 </div>
                                                 <div class="bar col-md-4 p-0 relClass pt-6">
@@ -312,7 +318,8 @@
                                                     <p *ngIf="!isExpiredLoading"
                                                         class="mb-0 f-13 p-4 pr-8 text-custom  pt-8">
                                                         {{item.investorName}}</p>
-                                                    <p *ngIf="!isExpiredLoading" class="pl-4"><span appFormatNumber [shouldRoundOff]="true">{{item.amount}}</span></p>
+                                                    <p *ngIf="!isExpiredLoading" class="pl-4"><span appFormatNumber
+                                                            [shouldRoundOff]="true">{{item.amount}}</span></p>
                                                     <p *ngIf="isExpiredLoading">{{''}}</p>
                                                 </div>
 

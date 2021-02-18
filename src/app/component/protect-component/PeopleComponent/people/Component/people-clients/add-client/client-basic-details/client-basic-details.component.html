@@ -962,7 +962,7 @@
                 <h5 class="m-0">Company PAN</h5>
             </div>
             <div class="col-md-3 p-0">
-                <div class="form-group">
+                <div class="form-group mb-0">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <input #cpan (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)"
                             [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation class="form-control"
@@ -1003,7 +1003,7 @@
         </div>
       </div> -->
 
-        <div *ngIf="invTypeCategory=='3'" class="row pt-28">
+        <div *ngIf="invTypeCategory=='3'" class="row pt-36">
             <div class="col-md-4 text-right full-end">
                 <h5 class="m-0">GSTIN number</h5>
             </div>

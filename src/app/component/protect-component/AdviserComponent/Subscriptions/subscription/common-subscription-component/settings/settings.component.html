@@ -63,7 +63,11 @@
                                                 <p>CUSTOMER TYPE</p>
                                                 <div class="relClass">
                                                     <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                        <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Individual' : (profileData.customerTypeId == 2)?'Corporate':(profileData.customerTypeId == 3)?'LLP':(profileData.customerTypeId == 4)?'Proprietary':(profileData.customerTypeId
+                                                        <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ?
+                                                            'Individual' : (profileData.customerTypeId ==
+                                                            2)?'Corporate':(profileData.customerTypeId ==
+                                                            3)?'LLP':(profileData.customerTypeId ==
+                                                            4)?'Proprietary':(profileData.customerTypeId
                                                             == 5)?'Partnership':'Others'}}
                                                         </h5>
                                                     </div>
@@ -81,7 +85,10 @@
                                                 <p>GST TREATMENT</p>
                                                 <div class="relClass">
                                                     <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                        <h5>{{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Consumer' : (profileData.gstTreatmentId == 2) ? 'Not registered business' : (profileData.gstTreatmentId == 3) ? 'Overseas' : (profileData.gstTreatmentId
+                                                        <h5>{{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ?
+                                                            'Consumer' : (profileData.gstTreatmentId == 2) ? 'Not
+                                                            registered business' : (profileData.gstTreatmentId == 3) ?
+                                                            'Overseas' : (profileData.gstTreatmentId
                                                             == 4) ? 'Registered Business' : '-'}}
                                                         </h5>
                                                     </div>
@@ -108,7 +115,8 @@
                                                             {{profileData.city}} {{isLoading ? ' ' : ','}}
                                                             <br> {{profileData.state}}
                                                             <br> {{profileData.country}}
-                                                            <br> {{profileData.zipCode}} </h5>
+                                                            <br> {{profileData.zipCode}}
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </div>
@@ -166,7 +174,7 @@
     <div class="row" *ngIf="SettingProfileData.length == 0">
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img [ngClass]="{'width300': !isAdvisor}" class="width200" src="assets/images/svg/no-data-found.svg">
-            <p class="f-22 f-600 pt-28"> No Data Found </p>
+            <p class="f-22 f-600 pt-28 text-black"> No Data Found </p>
             <button (click)="openPayeeSettings({},'Add')" class="btn-primary mt-20 br-0 right text-right addon"
                 *ngIf="isAdvisor && roleService.subscriptionPermission.subModule.clients.subModule.settingsCapabilityList[1].enabledOrDisabled==1"
                 mat-stroked-button>

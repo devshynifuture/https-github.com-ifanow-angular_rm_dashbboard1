@@ -1,5 +1,5 @@
 <div class="popup-header-fix-50">
-    <div class="row bb-1 pt-18 pb-16">
+    <div class="row bb-1 pt-12 pb-12">
         <div class="col-md-10 d-flex align-items-center f-18">
             <span *ngIf="data !== null">
                 <span class="b-primitive p-5 f-14 pr-12 pl-12 d-flex align-items-center br-4 c-p"
@@ -78,7 +78,9 @@
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
-                            {{ (item.categoryName ? item.categoryName  + ' - ' : '') + (item.subCategoryName ? item.subCategoryName  + ' - ' : '') + (item.subSubCategoryName ? item.subSubCategoryName + ' - ' : '')+ item.taskDescription }}
+                            {{ (item.categoryName ? item.categoryName + ' - ' : '') + (item.subCategoryName ?
+                            item.subCategoryName + ' - ' : '') + (item.subSubCategoryName ? item.subSubCategoryName + '
+                            - ' : '')+ item.taskDescription }}
                         </mat-option>
                         <mat-option value="-1" class="d-flex align-items-center">
                             <span class="d-flex align-items-center">
@@ -570,7 +572,7 @@
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <p class="f-14 m-0" *ngIf="!item.editMode">
-                                {{  item.commentMsg }}
+                                {{ item.commentMsg }}
                             </p>
                             <p class="f-14 form-group" *ngIf="item.editMode">
                                 <input type="text" [formControl]="commentTaskFC" class="form-control"
@@ -596,8 +598,8 @@
                                     <div class="col-md-8" *ngIf="item.showReplyText">
                                         <h5 class="f-500 roboto">
                                             {{ replyItem.name }}
-                                            <span
-                                                class="text-primitive f-12">{{ replyItem.commentTime | dateAgo }}</span>
+                                            <span class="text-primitive f-12">{{ replyItem.commentTime | dateAgo
+                                                }}</span>
                                         </h5>
                                         <p class="f-14 m-0" *ngIf="!replyItem.editMode">{{ replyItem.commentMsg }}</p>
                                         <p class="f-14 form-group" *ngIf="replyItem.editMode">
