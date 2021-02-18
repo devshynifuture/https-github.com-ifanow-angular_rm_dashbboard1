@@ -462,7 +462,7 @@ export class ApplicantWiseComponent implements OnInit {
     let totalAumObj: any = {};
     if (this.data && this.data.totalAumObj) {
       totalAumObj = this.data.totalAumObj;
-      this.applicantWiseTotal = ['Total', '', totalAumObj.totalAum, 100];
+      this.applicantWiseTotal = ['Total', '', totalAumObj.totalAum ? totalAumObj.totalAum : this.totalCurrentValue, 100];
     }
 
     console.log('totalAumObj : ', totalAumObj);
@@ -571,22 +571,23 @@ export class ApplicantWiseComponent implements OnInit {
 
   applicantNameGet(data) {
     this.isLoading = false;
+    this.totalCurrentValue = 0;
     if (data) {
       console.log('here we have client id needed::::::::::', data);
       this.applicantName = data;
-      this.excelInitApplicant();
       this.applicantName.forEach(o => {
         o.show = true;
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
+      this.excelInitApplicant();
       let totalAumObj: any = {};
       if (this.data && this.data.totalAumObj) {
         totalAumObj = this.data.totalAumObj;
         console.log('totalAumObj : ', totalAumObj);
         console.log('sumAumTotal : ', this.totalCurrentValue);
         console.log('sumWeightInPercTotal : ', this.totalWeight);
-        this.totalCurrentValue = totalAumObj.totalAum;
+        this.totalCurrentValue = totalAumObj.totalAum ? totalAumObj.totalAum : this.totalCurrentValue;
         this.totalWeight = 100;
       }
     } else {
