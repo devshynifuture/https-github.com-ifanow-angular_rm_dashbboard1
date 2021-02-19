@@ -30,12 +30,14 @@ export class OpenGalleryPlanComponent implements OnInit {
   inputData: any;
   sendToCopy: any;
   individualGoal: boolean;
+  goalIndividualData: any;
   constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,
     private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService,
     private utilService: UtilService, ) {
     this.advisorId = AuthService.getAdvisorId()
     this.sendToCopy = this.dataGet.bank
+    this.goalIndividualData = this.dataGet.animal
   }
 
   ngOnInit() {
@@ -73,7 +75,12 @@ export class OpenGalleryPlanComponent implements OnInit {
               goalTypeId: this.sendToCopy.goalTypeId,
             }
             if (this.individualGoal == true) {
-              this.orgSetting.uploadPlanPhoto(this.dataGet.animal).subscribe((res) => {
+              let obj = {
+                goalType: this.goalIndividualData.goalType,
+                goalId: this.goalIndividualData.goalId,
+                imageUrl: responseObject.secure_url,
+              }
+              this.orgSetting.uploadPlanPhoto(obj).subscribe((res) => {
                 this.anyDetailsChanged = true;
                 this.imgURL = jsonDataObj.imageURL;
                 this.showSpinner = false
