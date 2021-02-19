@@ -1276,7 +1276,7 @@ export class MutualFundUnrealizedTranComponent {
     this.showDownload = true;
     setTimeout(() => {
       const blob = new Blob([document.getElementById('template').innerHTML], {
-        type: 'application/vnd.ms-excel'
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
       saveAs(blob, this.viewMode + '.xls');
     }, 200);
