@@ -80,7 +80,7 @@ export class OpenGalleryPlanComponent implements OnInit {
                 goalId: this.goalIndividualData.goalId,
                 imageUrl: responseObject.secure_url,
               }
-              this.orgSetting.uploadPlanPhoto(obj).subscribe((res) => {
+              this.orgSetting.uploadIndividualGoal(obj).subscribe((res) => {
                 this.anyDetailsChanged = true;
                 this.imgURL = jsonDataObj.imageURL;
                 this.showSpinner = false
@@ -88,7 +88,7 @@ export class OpenGalleryPlanComponent implements OnInit {
                 this.Close(this.anyDetailsChanged);
               });
             } else {
-              this.orgSetting.uploadIndividualGoal(jsonDataObj).subscribe((res) => {
+              this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
                 this.anyDetailsChanged = true;
                 this.imgURL = jsonDataObj.imageURL;
                 this.showSpinner = false
