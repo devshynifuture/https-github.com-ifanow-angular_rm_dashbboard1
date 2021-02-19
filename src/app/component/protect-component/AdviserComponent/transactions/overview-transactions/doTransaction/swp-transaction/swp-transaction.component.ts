@@ -348,7 +348,7 @@ export class SwpTransactionComponent implements OnInit {
     this.folioDetails = folio;
     this.swpTransaction.controls.balanceUnit.setValue((folio.balanceUnit).toFixed(2));
     this.swpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit)).toFixed(2));
-    this.currentValue = this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit);
+    this.currentValue = Math.round(this.processTransaction.calculateCurrentValue(this.navOfSelectedScheme, folio.balanceUnit));
     this.showUnits = true;
     Object.assign(this.transactionSummary, { folioNumber: folio.folioNumber });
     Object.assign(this.transactionSummary, { mutualFundId: folio.id });
