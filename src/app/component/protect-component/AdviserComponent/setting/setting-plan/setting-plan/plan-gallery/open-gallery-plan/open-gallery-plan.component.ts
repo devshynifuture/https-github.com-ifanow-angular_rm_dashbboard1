@@ -29,6 +29,7 @@ export class OpenGalleryPlanComponent implements OnInit {
   anyDetailsChanged: boolean; // check if any details have been updated
   inputData: any;
   sendToCopy: any;
+  individualGoal: boolean;
   constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,
     private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService,
@@ -45,6 +46,9 @@ export class OpenGalleryPlanComponent implements OnInit {
   getPersonalInfo() {
     this.settingsService.getProfileDetails({ id: this.advisorId }).subscribe((res) => {
       this.imgURL = (this.sendToCopy.imageUrl) ? this.sendToCopy.imageUrl : this.sendToCopy;
+      if (!this.sendToCopy.imageUrl || this.dataGet.bank) {
+        this.individualGoal = true
+      }
     });
   }
 
@@ -68,13 +72,24 @@ export class OpenGalleryPlanComponent implements OnInit {
               imageURL: responseObject.secure_url,
               goalTypeId: this.sendToCopy.goalTypeId,
             }
-            this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
-              this.anyDetailsChanged = true;
-              this.imgURL = jsonDataObj.imageURL;
-              this.showSpinner = false
-              this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-              this.Close(this.anyDetailsChanged);
-            });
+            if (this.individualGoal == true) {
+              this.orgSetting.uploadPlanPhoto(this.dataGet.animal).subscribe((res) => {
+                this.anyDetailsChanged = true;
+                this.imgURL = jsonDataObj.imageURL;
+                this.showSpinner = false
+                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+                this.Close(this.anyDetailsChanged);
+              });
+            } else {
+              this.orgSetting.uploadIndividualGoal(jsonDataObj).subscribe((res) => {
+                this.anyDetailsChanged = true;
+                this.imgURL = jsonDataObj.imageURL;
+                this.showSpinner = false
+                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+                this.Close(this.anyDetailsChanged);
+              });
+            }
+
           }
         });
     } else {

@@ -28,6 +28,7 @@ import { Input } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { map } from 'rxjs-compat/operator/map';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { OpenGalleryPlanComponent } from 'src/app/component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
 
 
 
@@ -144,6 +145,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   clientData: any;
   getOrgData: any;
   details: any;
+  defaultGallery: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -838,6 +840,41 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.otherAssetAllocationSubscription.unsubscribe();
     }
     this.subscriber.unsubscribe();
+  }
+  getDefault() {
+    let advisorObj = {
+      advisorId: AuthService.getAdvisorId()
+    }
+    this.plansService.getGoalGlobalData(advisorObj).subscribe(
+      data => this.getGoalGlobalDataRes(data),
+      error => {
+        this.eventService.showErrorMessage(error)
+        this.defaultGallery = undefined;
+      }
+    )
+
+  }
+  getGoalGlobalDataRes(data) {
+    console.log('galary', data)
+    this.defaultGallery = data
+
+  }
+  openGallery(gallery) {
+    let obj = {
+      goalId: this.selectedGoalId,
+      goalType: this.selectedGoal.goalType,
+      imageUrl: gallery
+    }
+    const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
+      width: '470px',
+      height: '280px',
+      data: { bank: gallery, animal: obj }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getDefault()
+      }
+    });
   }
 }
 

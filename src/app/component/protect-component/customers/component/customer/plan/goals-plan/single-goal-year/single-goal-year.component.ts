@@ -80,7 +80,6 @@ export class SingleGoalYearComponent implements OnInit {
       this.getKeyParameter()
     }
     this.setDefaultOwner();
-    this.getDefault()
   }
 
   getKeyParameter() {
@@ -414,35 +413,7 @@ export class SingleGoalYearComponent implements OnInit {
     this.singleYearGoalForm.get('goalMember').setValue(owner);
     this.selectOwnerAndUpdateForm(owner);
   }
-  getDefault() {
-    let advisorObj = {
-      advisorId: this.advisorId
-    }
-    this.planService.getGoalGlobalData(advisorObj).subscribe(
-      data => this.getGoalGlobalDataRes(data),
-      error => {
-        this.eventService.showErrorMessage(error)
-        this.defaultGallery = undefined;
-      }
-    )
 
-  }
-  getGoalGlobalDataRes(data) {
-    console.log('galary', data)
-    this.defaultGallery = data
-  }
-  openGallery(gallery) {
-    const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
-      width: '470px',
-      height: '280px',
-      data: { bank: gallery, animal: '' }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.getDefault()
-      }
-    });
-  }
   goBack() {
     this.output.emit();
   }
