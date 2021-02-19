@@ -77,7 +77,7 @@ export class OpenGalleryPlanComponent implements OnInit {
             if (this.individualGoal == true) {
               let obj = {
                 goalType: this.goalIndividualData.goalType,
-                goalId: this.goalIndividualData.goalId,
+                id: this.goalIndividualData.goalId,
                 imageUrl: responseObject.secure_url,
               }
               this.orgSetting.uploadIndividualGoal(obj).subscribe((res) => {
