@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -9,7 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatInput } from '@angular/material';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { RoleService } from 'src/app/auth-service/role.service';
 
@@ -309,8 +309,16 @@ export class ClientBankComponent implements OnInit {
     console.log(data);
     this.holderList = data;
   }
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   saveNext(flag) {
+    for (let element in this.bankForm.controls) {
+      console.log(element)
+      if (this.bankForm.get(element).invalid) {
+        this.inputs.find(input => !input.ngControl.valid) ? this.inputs.find(input => !input.ngControl.valid).focus() : '';
+        this.bankForm.controls[element].markAsTouched();
+      }
+    }
     if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
       return;

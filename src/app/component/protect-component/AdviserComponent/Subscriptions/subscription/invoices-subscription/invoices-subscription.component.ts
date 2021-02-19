@@ -398,7 +398,7 @@ export class InvoicesSubscriptionComponent implements OnInit, OnDestroy {
 
     const obj = {
       Id: this.advisorId,
-      limit: 10,
+      limit: -1,
       module: 1,
       offset: this.lastFilterDataId,
       fromDate: (this.filterDate.length > 0) ? this.datePipe.transform(this.selectedDateRange.begin, 'yyyy-MM-dd') : null,
@@ -588,7 +588,7 @@ export class InvoicesSubscriptionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // dirty fix for resetting search data
     if (!this.enumDataService.searchData || this.enumDataService.searchData.length == 0) {
-      this.enumDataService.searchClientList();
+      this.enumDataService.searchData = undefined;
     }
   }
 }
