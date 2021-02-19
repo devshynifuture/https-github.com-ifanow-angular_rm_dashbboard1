@@ -305,6 +305,7 @@ export class ClientAddressComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   saveNext(flag) {
+    this.addressForm.markAllAsTouched();
     for (let element in this.addressForm.controls) {
       console.log(element)
       if (this.addressForm.get(element).invalid) {
