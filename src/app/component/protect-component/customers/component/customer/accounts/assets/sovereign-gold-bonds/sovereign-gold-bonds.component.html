@@ -41,15 +41,22 @@
         <ng-container matColumnDef="owner">
           <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-25"> Owner</th>
           <td mat-cell *matCellDef="let element" class="br w-25">
-            <div class="bar"></div>
-            <div *ngFor="let owner of element.ownerList; let i = index">
-              <span *ngIf="i == 0">{{owner.name}}</span>
+            <div class="bar">
+              <div *ngIf="!element.ownerName">
+                <div *ngFor="let owner of element.ownerList; let i = index">
+                  <span *ngIf="i == 0">{{owner.name}}</span>
+                </div>
+              </div>
+              <div *ngIf="element.ownerName">
+                <span>{{element.ownerName}}</span>
+              </div>
             </div>
+
           </td>
           <td mat-footer-cell *matFooterCellDef class="br text-right pr-20 f-600 "> Total</td>
         </ng-container>
         <ng-container matColumnDef="units">
-          <th mat-sort-header="unitsC" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
+          <th mat-sort-header="unitsInGram" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
             Units (grams)
           </th>
           <td mat-cell *matCellDef="let element" class="br  amt text-right">
@@ -59,7 +66,7 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="cvalue">
-          <th mat-sort-header="marketValue" mat-header-cell *matHeaderCellDef
+          <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
             class="br  right-hc text-right hide-arrow"> Current value
           </th>
           <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -75,7 +82,7 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="interest">
-          <th mat-sort-header="interestdAmt" mat-header-cell *matHeaderCellDef
+          <th mat-sort-header="interestAmountYearly" mat-header-cell *matHeaderCellDef
             class="brv w-12  right-hc text-right hide-arrow">
             Interest amount
           </th>
@@ -87,7 +94,7 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="amountInvested">
-          <th mat-sort-header="investedAmt" mat-header-cell *matHeaderCellDef
+          <th mat-sort-header="investmentAmount" mat-header-cell *matHeaderCellDef
             class="br w-12 right-hc text-right hide-arrow">
             Invested amount
           </th>
@@ -99,7 +106,8 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="issueDate">
-          <th mat-sort-header="issueDate" mat-header-cell *matHeaderCellDef class="br  right-hc text-right hide-arrow">
+          <th mat-sort-header="investmentOrIssueDate" mat-header-cell *matHeaderCellDef
+            class="br  right-hc text-right hide-arrow">
             Investment date
           </th>
           <td mat-cell *matCellDef="let element" class="br amt text-right">
@@ -133,7 +141,7 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="bondseries">
-          <th mat-sort-header="purchaseAmt" mat-header-cell *matHeaderCellDef class="br w-25">
+          <th mat-sort-header="bondNameAndSeries" mat-header-cell *matHeaderCellDef class="br w-25">
             Bond name & series
           </th>
           <td mat-cell *matCellDef="let element" class="br w-25">
@@ -145,8 +153,7 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="xirrDate">
-          <th mat-sort-header="xirrDate" mat-header-cell *matHeaderCellDef
-            class="br w-12 right-hc text-right hide-arrow">
+          <th mat-sort-header="xirr" mat-header-cell *matHeaderCellDef class="br w-12 right-hc text-right hide-arrow">
             XIRR (as on date)
           </th>
           <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">

@@ -85,7 +85,7 @@ export class OthersAssetsComponent implements OnInit {
     this.excel.generateExcel(rows, tableTitle);
   }
 
-  fetchData(value, fileName, element, type) {
+  fetchData(value, fileName, element,type) {
     element['subCatTypeId'] = type;
     this.isLoadingUpload = true;
     let obj = {
@@ -103,14 +103,15 @@ export class OthersAssetsComponent implements OnInit {
       data: this.myFiles,
     });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
-    if (this.fileUploadData) {
-      this.file = fileName;
-      this.fileUpload.uploadFile(fileName);
-    }
+    // if (this.fileUploadData) {
+    //   this.file = fileName;
+    //   this.fileUpload.uploadFile(fileName);
+    // }
     setTimeout(() => {
       this.isLoadingUpload = false;
     }, 7000);
   }
+
 
   pdf(template, tableTitle) {
     this.fragmentData.isSpinner = true;
