@@ -165,13 +165,13 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 3 || this.basicDetailsData.relationshipId == 6 || this.basicDetailsData.relationshipId == 7) {
         (data.relationshipId == 6 || data.relationshipId == 2) ? data.genderId = 1 : data.genderId = 2;
         this.familyMemberType = { name: 'Individual', value: '1' };
-        this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
+        // this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
         this.invTypeCategory = '1';
         this.hideDematTab.emit(true);
         this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(this.basicDetailsData);
       } else if (this.basicDetailsData.relationshipId == 4 || this.basicDetailsData.relationshipId == 5) {
-        this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
+        // this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
         if (this.basicDetailsData.familyMemberType == 1) {
           (data.relationshipId != 10) ? (data.relationshipId == 4) ? data.genderId = 1 : data.genderId = 2 : '';
           this.familyMemberType = { name: 'Individual', value: '1' };
@@ -188,7 +188,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
           this.hideDematTab.emit(false);
         }
       } else {
-        this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
+        // this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
         if (this.basicDetailsData.age > 18) {
           this.familyMemberType = { name: 'Individual', value: '1' };
           this.invTypeCategory = '1';
@@ -297,6 +297,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   keyInfoCapability: any = {};
 
   ngOnInit() {
+    this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
     this.advisorId = AuthService.getAdvisorId();
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, 'this.clientRoles 123A');
