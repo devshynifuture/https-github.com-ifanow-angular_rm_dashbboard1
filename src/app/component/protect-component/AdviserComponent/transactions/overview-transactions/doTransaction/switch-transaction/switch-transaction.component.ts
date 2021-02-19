@@ -645,7 +645,7 @@ export class SwitchTransactionComponent implements OnInit {
       amountType: (this.switchTransaction.controls.switchType.value == 1) ? 'Amount' : 'Unit',
       dividendReinvestmentFlag: this.schemeDetailsTransfer.dividendReinvestmentFlag,
       clientCode: this.getDataSummary.defaultClient.clientCode,
-      orderVal: (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value,
+      orderVal: this.switchTransaction.controls.employeeContry.value,
       bseDPTransType: 'PHYSICAL',
       aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
       mandateId: undefined,
