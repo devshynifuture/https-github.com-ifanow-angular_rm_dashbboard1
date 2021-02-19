@@ -17,6 +17,7 @@ import { AssetValidationService } from '../asset-validation.service';
 import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { AddSovereignGoldBondsComponent } from './add-sovereign-gold-bonds/add-sovereign-gold-bonds.component';
 import { DetailedViewSovereignGoldBondsComponent } from './detailed-view-sovereign-gold-bonds/detailed-view-sovereign-gold-bonds.component';
+import { CustomerOverviewService } from '../../../customer-overview/customer-overview.service';
 @Component({
   selector: 'app-sovereign-gold-bonds',
   templateUrl: './sovereign-gold-bonds.component.html',
@@ -51,7 +52,7 @@ export class SovereignGoldBondsComponent implements OnInit {
   getOrgData: any;
   reportDate: Date;
   activeFilter: any = 'All';
-  dataList: any;
+  dataList = { assetList: null, totalCurrentValue: 0 };
   hideFilter: boolean = false;
   constructor(public subInjectService: SubscriptionInject,
     public custmService: CustomerService, public cusService: CustomerService,
@@ -61,7 +62,7 @@ export class SovereignGoldBondsComponent implements OnInit {
     public enumService: EnumServiceService, private assetValidation: AssetValidationService,
     public eventService: EventService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet, private ref: ChangeDetectorRef,
-    private utils: UtilService) {
+    private utils: UtilService, private customerOverview: CustomerOverviewService) {
 
 
   }
@@ -141,7 +142,7 @@ export class SovereignGoldBondsComponent implements OnInit {
 
   getGoldBondsDataResponse(data) {
     console.log(data, "gold bond");
-
+    this.totalCurrentValue = 0;
     this.isLoading = false;
     if (data == undefined) {
       this.noData = 'No Real estate found';
@@ -152,14 +153,17 @@ export class SovereignGoldBondsComponent implements OnInit {
     } else if (data) {
 
       console.log('getRealEstateRes', data);
-      this.dataList = data;
-      this.datasource3.data = this.dataList;
+      this.dataList.assetList = data.assetList ? data.assetList : data;
+      this.datasource3.data = this.dataList.assetList;
       // data.assetList.forEach(singleAsset => {
       //   singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
       // });
       // this.totalCurrentValue = 0;
       // this.sumOfpurchasedValue = 0;
-      data.forEach(o => {
+      this.dataList.assetList.forEach(o => {
+        if (o.ownerList && o.ownerList.length > 0) {
+          o.ownerName = o.ownerList[0].name
+        }
         o.xirr = o.xirr.toString();
         var res = o.xirr.replace("e+", "");
         res = Number(res).toFixed(2);
@@ -169,6 +173,7 @@ export class SovereignGoldBondsComponent implements OnInit {
         this.totalCurrentValue += o.currentValue;
         this.sumOfpurchasedValue += o.purchaseAmt ? o.purchaseAmt : 0;
       });
+      this.dataList.totalCurrentValue = this.totalCurrentValue;
       this.datasource3.sort = this.sort;
       // this.totalCurrentValue = this.dataList.totalCurrentValue;
       // this.sumOfpurchasedValue = this.dataList.sumOfPurchaseValue;
@@ -211,22 +216,20 @@ export class SovereignGoldBondsComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            // if (data) {
-            this.getGoldBondsData();
-            // }
-            // else {
-            //   if (!this.dataList) {
-            //     this.dataList = { assetList: [sideBarData.data] };
-            //     this.dataList['totalCurrentValue'] = sideBarData.data.marketValue;
-            //     this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
-            //   }
-            //   else {
-            //     this.dataList.assetList.push(sideBarData.data)
-            //     this.dataList.totalCurrentValue += sideBarData.data.marketValue;
-            //     this.dataList.sumOfPurchaseValue += sideBarData.data.purchaseValue;
-            //   }
-            //   this.getOthersAssetsRes(this.dataList);
-            // }
+            if (data) {
+              this.getGoldBondsData();
+            }
+            else {
+              if (!this.dataList) {
+                this.dataList = { assetList: [sideBarData.data], totalCurrentValue: 0 };
+                this.dataList['totalCurrentValue'] = sideBarData.data.marketValue;
+                this.dataList['sumOfPurchaseValue'] = sideBarData.data.purchaseValue;
+              }
+              else {
+                this.dataList.assetList.push(sideBarData.data)
+              }
+              this.getGoldBondsDataResponse(this.dataList);
+            }
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }
@@ -287,6 +290,10 @@ export class SovereignGoldBondsComponent implements OnInit {
     }, 7000);
   }
 
+  ngOnDestroy() {
+    this.assetValidation.goldBondList = this.dataList ? this.dataList : null;
+  }
+
   deleteModal(value, element) {
     const dialogData = {
       data: value,
@@ -303,14 +310,26 @@ export class SovereignGoldBondsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'sovereignGoldBond' })
+            this.customerOverview.portFolioData = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
+            this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
+            // this.dataList.totalCurrentValue -= element.currentValue;
+            this.getGoldBondsDataResponse(this.dataList);
+            // this.dataList.sumOfPurchaseValue += element.amountInvested;
+            // this.datasource3.data = this.dataList;
+            // this.getRealEstate();
 
-            this.assetValidation.addAssetCount({ type: 'Delete', value: 'otherAsset' })
+
             // this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             // this.dataList.totalCurrentValue -= element.marketValue;
             // // this.dataList.sumOfPurchaseValue += element.amountInvested;
             // this.getOthersAssetsRes(this.dataList);
             // this.datasource3.data = this.dataList;
-            this.getGoldBondsData();
           },
           error => this.eventService.showErrorMessage(error)
         );
