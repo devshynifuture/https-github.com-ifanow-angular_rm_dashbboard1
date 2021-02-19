@@ -912,6 +912,9 @@ export class FinacialPlanSectionComponent implements OnInit {
       key: 'showPieChart',
     };
     this.sectionName = sectionName
+    if (sectionName == 'Mutual fund overview') {
+
+    }
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
       data => this.uploadFileRes(data, displayName, flag, array)
     );
