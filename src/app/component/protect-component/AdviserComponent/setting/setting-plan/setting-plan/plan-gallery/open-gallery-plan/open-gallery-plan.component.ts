@@ -44,7 +44,7 @@ export class OpenGalleryPlanComponent implements OnInit {
 
   getPersonalInfo() {
     this.settingsService.getProfileDetails({ id: this.advisorId }).subscribe((res) => {
-      this.imgURL = this.sendToCopy.imageUrl;
+      this.imgURL = (this.sendToCopy.imageUrl) ? this.sendToCopy.imageUrl : this.sendToCopy;
     });
   }
 

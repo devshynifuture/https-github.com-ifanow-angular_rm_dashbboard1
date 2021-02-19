@@ -11,6 +11,8 @@ import { OrgSettingServiceService } from 'src/app/component/protect-component/Ad
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 import { UtilService } from 'src/app/services/util.service';
+import { OpenGalleryPlanComponent } from 'src/app/component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -52,6 +54,7 @@ export class SingleGoalYearComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   organizationLogo;
   imgURL: any;
+  defaultGallery: any;
 
   constructor(
     public authService: AuthService,
@@ -61,6 +64,8 @@ export class SingleGoalYearComponent implements OnInit {
     private orgSetting: OrgSettingServiceService,
     private planService: PlanService,
     private utilService: UtilService,
+    private dialog: MatDialog,
+
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -75,6 +80,7 @@ export class SingleGoalYearComponent implements OnInit {
       this.getKeyParameter()
     }
     this.setDefaultOwner();
+    this.getDefault()
   }
 
   getKeyParameter() {
@@ -408,7 +414,35 @@ export class SingleGoalYearComponent implements OnInit {
     this.singleYearGoalForm.get('goalMember').setValue(owner);
     this.selectOwnerAndUpdateForm(owner);
   }
+  getDefault() {
+    let advisorObj = {
+      advisorId: this.advisorId
+    }
+    this.planService.getGoalGlobalData(advisorObj).subscribe(
+      data => this.getGoalGlobalDataRes(data),
+      error => {
+        this.eventService.showErrorMessage(error)
+        this.defaultGallery = undefined;
+      }
+    )
 
+  }
+  getGoalGlobalDataRes(data) {
+    console.log('galary', data)
+    this.defaultGallery = data
+  }
+  openGallery(gallery) {
+    const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
+      width: '470px',
+      height: '280px',
+      data: { bank: gallery, animal: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getDefault()
+      }
+    });
+  }
   goBack() {
     this.output.emit();
   }

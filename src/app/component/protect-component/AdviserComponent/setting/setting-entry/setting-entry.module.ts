@@ -37,7 +37,7 @@ export const componentList = [AddReportingManagerComponent, AddNewRoleComponent,
   AddFranklinTempletionDetailsComponent, AddCamsFundsnetComponent, SettingSchemeDetailsComponent,
   AddModelPortfolioComponent,
   AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent,
-  NewTeamMemberComponent, OpenEmailVerificationComponent, OrgProfileComponent, OpenGalleryPlanComponent,
+  NewTeamMemberComponent, OpenEmailVerificationComponent, OrgProfileComponent,
   TaskTemplateTypeComponent, AddTeamMemberComponent, AddSettingSchemeBasketComponent, BulkEmailReviewSendComponent, FeviconUrlComponent];
 
 @NgModule({
