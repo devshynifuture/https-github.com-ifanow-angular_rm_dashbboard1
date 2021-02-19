@@ -641,6 +641,11 @@
                                 [appSkeletonLoading]="loaderFn.loading">
 
                                 <div class="imgBoxGoals overflow-hidden" [hidden]="loaderFn.loading">
+
+                                    <img src="/assets/images/svg/pencil-action.svg" class="plan-action edit-goal-icon"
+                                        (click)="openGallery(selectedGoal.img)">
+
+
                                     <img [src]="selectedGoal.img">
                                 </div>
 

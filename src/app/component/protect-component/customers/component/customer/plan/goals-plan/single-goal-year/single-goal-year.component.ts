@@ -11,6 +11,8 @@ import { OrgSettingServiceService } from 'src/app/component/protect-component/Ad
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
 import { UtilService } from 'src/app/services/util.service';
+import { OpenGalleryPlanComponent } from 'src/app/component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -52,6 +54,7 @@ export class SingleGoalYearComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   organizationLogo;
   imgURL: any;
+  defaultGallery: any;
 
   constructor(
     public authService: AuthService,
@@ -61,6 +64,8 @@ export class SingleGoalYearComponent implements OnInit {
     private orgSetting: OrgSettingServiceService,
     private planService: PlanService,
     private utilService: UtilService,
+    private dialog: MatDialog,
+
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();

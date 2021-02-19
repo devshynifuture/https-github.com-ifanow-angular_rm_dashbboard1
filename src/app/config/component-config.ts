@@ -826,6 +826,7 @@ export const appConfig = {
   GET_RETURNS: 'plan/config/return-inflation/get',
   GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
+  UPLAOD_INDIVIDUAL_GOAL_IMG: 'goal-planning/image-url/update',
   UPLOAD_KEY_PARAMETER: 'goal-planning/advisor-plan-configuration/add',
   UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
   GET_TASK_TEMPLATE: 'setting/task/template/list/get',

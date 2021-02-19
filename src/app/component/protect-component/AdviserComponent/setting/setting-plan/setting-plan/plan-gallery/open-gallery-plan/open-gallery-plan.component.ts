@@ -29,12 +29,15 @@ export class OpenGalleryPlanComponent implements OnInit {
   anyDetailsChanged: boolean; // check if any details have been updated
   inputData: any;
   sendToCopy: any;
+  individualGoal: boolean;
+  goalIndividualData: any;
   constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,
     private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService,
     private utilService: UtilService, ) {
     this.advisorId = AuthService.getAdvisorId()
     this.sendToCopy = this.dataGet.bank
+    this.goalIndividualData = this.dataGet.animal
   }
 
   ngOnInit() {
@@ -44,7 +47,10 @@ export class OpenGalleryPlanComponent implements OnInit {
 
   getPersonalInfo() {
     this.settingsService.getProfileDetails({ id: this.advisorId }).subscribe((res) => {
-      this.imgURL = this.sendToCopy.imageUrl;
+      this.imgURL = (this.sendToCopy.imageUrl) ? this.sendToCopy.imageUrl : this.sendToCopy;
+      if (!this.sendToCopy.imageUrl || this.dataGet.bank) {
+        this.individualGoal = true
+      }
     });
   }
 
@@ -68,13 +74,29 @@ export class OpenGalleryPlanComponent implements OnInit {
               imageURL: responseObject.secure_url,
               goalTypeId: this.sendToCopy.goalTypeId,
             }
-            this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
-              this.anyDetailsChanged = true;
-              this.imgURL = jsonDataObj.imageURL;
-              this.showSpinner = false
-              this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-              this.Close(this.anyDetailsChanged);
-            });
+            if (this.individualGoal == true) {
+              let obj = {
+                goalType: this.goalIndividualData.goalType,
+                id: this.goalIndividualData.goalId,
+                imageUrl: responseObject.secure_url,
+              }
+              this.orgSetting.uploadIndividualGoal(obj).subscribe((res) => {
+                this.anyDetailsChanged = true;
+                this.imgURL = jsonDataObj.imageURL;
+                this.showSpinner = false
+                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+                this.Close(this.anyDetailsChanged);
+              });
+            } else {
+              this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
+                this.anyDetailsChanged = true;
+                this.imgURL = jsonDataObj.imageURL;
+                this.showSpinner = false
+                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+                this.Close(this.anyDetailsChanged);
+              });
+            }
+
           }
         });
     } else {

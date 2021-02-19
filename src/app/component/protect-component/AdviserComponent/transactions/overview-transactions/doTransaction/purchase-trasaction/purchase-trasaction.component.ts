@@ -807,6 +807,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.childTransactions.forEach(singleTranJson => {
             this.removeUnnecessaryDataFromJson(singleTranJson);
           })
+          this.barButtonOptions.active = true;
           obj.childTransactions = list
           this.onlineTransact.transactionBSE(obj).subscribe(
             data => {
