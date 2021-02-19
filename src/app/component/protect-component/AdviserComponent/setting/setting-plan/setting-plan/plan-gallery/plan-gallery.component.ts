@@ -50,7 +50,7 @@ export class PlanGalleryComponent implements OnInit {
     const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
       width: '470px',
       height: '280px',
-      data: { bank: gallery, animal: '' }
+      data: { bank: gallery, animal: null }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -68,7 +68,7 @@ export class PlanGalleryComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'RESET',
       positiveMethod: () => {
-        this.orgSetting.resetGallery({id:data.id,advisorId:this.advisorId,imageURL:null,goalTypeId:data.goalTypeId}).subscribe(
+        this.orgSetting.resetGallery({ id: data.id, advisorId: this.advisorId, imageURL: null, goalTypeId: data.goalTypeId }).subscribe(
           data => {
             this.eventService.openSnackBar("Image resetted successfully!", "Dismiss");
             this.getDefault()
