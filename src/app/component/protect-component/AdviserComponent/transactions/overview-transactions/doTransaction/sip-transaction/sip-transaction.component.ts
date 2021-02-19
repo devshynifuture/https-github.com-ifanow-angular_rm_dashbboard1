@@ -918,6 +918,7 @@ export class SipTransactionComponent implements OnInit {
         this.barButtonOptions.active = true;
         const obj = this.getSingleTransactionJson();
         this.removeUnnecessaryDataFromJson(obj);
+        this.barButtonOptions.active = true;
         this.onlineTransact.transactionBSE(obj).subscribe(
           data => {
             this.isSuccessfulTransaction = true;

@@ -652,6 +652,7 @@ export class StpTransactionComponent implements OnInit {
             this.removeUnnecessaryDataFromJson(singleTranJson);
           })
           obj.childTransactions = list
+          this.barButtonOptions.active = true;
           this.onlineTransact.transactionBSE(obj).subscribe(
             data => {
               this.stpBSERes(data);
