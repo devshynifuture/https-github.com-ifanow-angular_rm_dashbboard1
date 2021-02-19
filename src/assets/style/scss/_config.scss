@@ -1,12 +1,12 @@
 // Improtant files
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~material-design-icons/iconfont/material-icons.css';
+// @import '~material-design-icons/iconfont/material-icons.css';
 @import '~saturn-datepicker/bundle.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 // some baisc and useful file form project
-
+@import'./assets/style/fonts/matrial-icons';
 @import'./assets/style/scss/variable';
 @import'./assets/style/scss/_color';
 @import'./assets/style/scss/_helper';
