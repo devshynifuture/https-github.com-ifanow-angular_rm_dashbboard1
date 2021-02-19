@@ -558,7 +558,6 @@ export class SwitchTransactionComponent implements OnInit {
             this.removeUnnecessaryDataFromJson(singleTranJson);
           })
           obj.childTransactions = list
-          this.barButtonOptions.active = true;
           this.onlineTransact.transactionBSE(obj).subscribe(
             data => {
               this.switchBSERes(data);
@@ -662,6 +661,7 @@ export class SwitchTransactionComponent implements OnInit {
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       // obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
       obj.bankDetailId = this.bankDetails.id;
+      obj.orderVal = (this.switchTransaction.controls.switchType.value == "2") ? null : this.switchTransaction.controls.employeeContry.value;
     }
     return obj
   }

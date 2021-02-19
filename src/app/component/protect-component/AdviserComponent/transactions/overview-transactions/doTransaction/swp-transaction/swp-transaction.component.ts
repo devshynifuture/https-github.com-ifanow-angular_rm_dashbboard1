@@ -664,6 +664,7 @@ export class SwpTransactionComponent implements OnInit {
           });
           this.isEdit = false;
         } else {
+          this.showUnits = false
           let obj = this.getSingleTransactionJson();
           const tenure = this.swpTransaction.controls.tenure.value;
           const installment = this.swpTransaction.controls.installment.value;
