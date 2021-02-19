@@ -449,7 +449,17 @@ export class MutualFundOverviewComponent implements OnInit {
         this.getCashFlowStatus();
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
         if (this.showSummaryBar) {
-          this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
+          setTimeout(() => {
+            this.pieChart('piechartMutualFund');
+            if (this.finPlanObj) {
+              this.svg = this.chart.getSVG();
+              this.loadsvg.emit(this.svg);
+            }// pie chart data after calculating percentage
+          }, 1000);
+          if (this.finPlanObj) {
+            this.ref.detectChanges();
+            this.loaded.emit(this.mfOverviewTemplate.nativeElement);
+          }
         }
         // this.isLoading = false;
         if (this.router.url.split('?')[0] == '/pdf/overview') {
@@ -964,14 +974,6 @@ export class MutualFundOverviewComponent implements OnInit {
       this.showCashFlow = false;
       this.showSchemeWise = false;
       this.datasource1.data = [];
-    }
-    if (this.chart) {
-      this.svg = this.chart.getSVG();
-    }
-    if (this.finPlanObj) {
-      this.ref.detectChanges();
-      this.loaded.emit(this.mfOverviewTemplate.nativeElement);
-      this.loadsvg.emit(this.svg);
     }
   }
 
