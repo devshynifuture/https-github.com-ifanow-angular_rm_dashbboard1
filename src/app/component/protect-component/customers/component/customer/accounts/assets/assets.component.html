@@ -3,7 +3,7 @@
 <div id="ui-assets-account">
     <mat-sidenav-container class="sidenav-container  " [hasBackdrop]="false">
         <mat-sidenav class="col-md-2 col-lg-2 bg-grey lter overflow-hidden   p-0" #sidenav
-            [mode]="sidenavState ? 'over' : 'side'" role="navigation">
+            [mode]="sidenavState ? 'side' : 'over'" role="navigation">
             <mat-nav-list class="width-220 pt-0" id="d">
 
                 <div class="p-0 pt-8 ">
@@ -40,7 +40,7 @@
                 </div>
 
             </mat-nav-list>
-            <div *ngIf="sidenavState">
+            <div *ngIf="otherThanMf == false">
                 <div class="left-side-clicks" (click)="toggleSideNav()">
                     <i class="material-icons f-30 text-custom">
                         keyboard_arrow_left
@@ -52,10 +52,13 @@
 
         <mat-sidenav-content class="p-0 pt-122 b-a" id="left">
             <!-- marLeft  This class create issue in toggling-->
-            <div *ngIf="sidenavState" [ngClass]="sidenavState ? '': 'd-none'">
-                <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
-                    <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
+            <div *ngIf="otherThanMf == false">
+                <div [ngClass]="sidenavState ? '': 'd-none'">
+                    <div class="leftside-overlay-toggle-button " (click)="toggleSideNav()">
+                        <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
+                    </div>
                 </div>
+
             </div>
 
             <!-- <div class="row">

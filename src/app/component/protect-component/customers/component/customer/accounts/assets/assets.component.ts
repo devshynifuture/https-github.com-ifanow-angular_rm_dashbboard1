@@ -25,6 +25,7 @@ export class AssetsComponent implements OnInit {
   advisorId: any;
   clientId: any;
   unSudcripCounts;
+  otherThanMf = false;
   // sidenavState: boolean = false;
   @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
   assetSideBarData = [
@@ -45,7 +46,7 @@ export class AssetsComponent implements OnInit {
   Settab: any;
   viewMode = 'tab1';
   isOverlayVisible = false;
-
+  callInit: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -96,6 +97,9 @@ export class AssetsComponent implements OnInit {
 
   ngOnInit() {
     // this.viewMode = 'tab2';
+    console.log(this.router.url)
+    this.stateOfPanel.mode = 'side';
+    this.callInit = true;
     this.sidebarListBasedOnRolesSetting();
     this.enumDataService.setBankAccountTypes();
     this.enumDataService.getclientFamilybankList();
@@ -115,10 +119,37 @@ export class AssetsComponent implements OnInit {
 
             // this.toggleSideNav();
           }
+          if (this.callInit && (data == 'Capital Gains' || data == 'Unrealized Transactions')) {
+            this.sidenavState = false;
+            this.stateOfPanel.open();
+          }
         } else {
           this.sidenavState = false;
-          this.stateOfPanel.open();
-
+          this.stateOfPanel.mode = 'side';
+          if (data == 'Summary' || data == 'Overview Report' || data == 'All Transactions') {
+            if (this.stateOfPanel.opened == false) {
+              this.stateOfPanel.close();
+              this.sidenavState = true;
+            } else {
+              this.stateOfPanel.open();
+            }
+          }
+          if (this.callInit && (data == 'Summary' || data == 'Overview Report' || data == 'All Transactions' || data == 'Capital Gains' || data == 'Unrealized Transactions')) {
+            this.sidenavState = false;
+            this.stateOfPanel.open();
+          }
+          if (data == "" && this.router.url == "/customer/detail/account/assets/mutual") {
+            this.stateOfPanel.open();
+          }
+          // if (this.stateOfPanel.opened == false) {
+          //   this.stateOfPanel.close();
+          // } else {
+          //   this.stateOfPanel.open();
+          // }
+          if (this.router.url != "/customer/detail/account/assets/mutual") {
+            this.otherThanMf = true;
+            this.stateOfPanel.open();
+          }
         }
       })
     this.stateOfPanel.open();
@@ -144,6 +175,7 @@ export class AssetsComponent implements OnInit {
         }
       }
     );
+    this.callInit = false;
   }
 
   goToRoute(assetData) {
@@ -248,7 +280,9 @@ export class AssetsComponent implements OnInit {
 
 
   toggleSideNav() {
+    console.log(this.sidenavState);
     this.stateOfPanel.toggle();
+    this.sidenavState = !this.sidenavState;
   }
 
   getValue(data) {
@@ -344,8 +378,16 @@ export class AssetsComponent implements OnInit {
     })
   }
   clickable(value) {
-    this.sidenavState = false;
-    this.stateOfPanel.open();
+    if (value.name == 'Mutual funds') {
+      this.sidenavState = false;
+      this.otherThanMf = false;
+      this.stateOfPanel.open();
+    } else {
+      this.otherThanMf = true;
+      this.sidenavState = true;
+      this.stateOfPanel.open();
+    }
+
   }
   openFragment(value) {
     const fragmentData = {
