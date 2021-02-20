@@ -138,7 +138,7 @@ export class AssetsComponent implements OnInit {
             this.sidenavState = false;
             this.stateOfPanel.open();
           }
-          if (data == "" && this.router.url == "/customer/detail/account/assets/mutual") {
+          if (data == "") {
             this.stateOfPanel.open();
           }
           // if (this.stateOfPanel.opened == false) {
@@ -148,11 +148,13 @@ export class AssetsComponent implements OnInit {
           // }
           if (this.router.url != "/customer/detail/account/assets/mutual") {
             this.otherThanMf = true;
+            this.sidenavState = true;
+            this.stateOfPanel.mode = 'side';
             this.stateOfPanel.open();
           }
         }
       })
-    this.stateOfPanel.open();
+    // this.stateOfPanel.open();
     this.route.queryParams.subscribe((params) => {
       if (params.tab) {
         this.Settab = params.tab;
