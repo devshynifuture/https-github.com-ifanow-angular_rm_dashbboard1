@@ -297,7 +297,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   keyInfoCapability: any = {};
 
   ngOnInit() {
-    this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
+    AuthService.getClientData() ? this.relationList = relationListFilterOnID(AuthService.getClientData().clientType) : '';
     this.advisorId = AuthService.getAdvisorId();
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, 'this.clientRoles 123A');
