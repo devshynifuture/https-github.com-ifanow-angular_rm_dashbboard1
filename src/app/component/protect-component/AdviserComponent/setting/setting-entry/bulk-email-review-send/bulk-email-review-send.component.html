@@ -57,10 +57,10 @@
                         selected out of {{tempData.length}}
                     </p>
                     <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container"
-                        [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
+                        (scroll)="onWindowScroll($event)">
                         <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
                             [appSkeletonLoading]="isLoading" #clientTableSort="matSort" #tableEl>
-                            <ng-container matColumnDef="checkbox" sticky>
+                            <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="br">
                                     <mat-checkbox (change)="selectAll($event)" name="selectAll" *ngIf="!isLoading"
                                         [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
@@ -102,7 +102,7 @@
                             <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                         </table>
-                        <div class="row relClass" *ngIf="infiniteScrollingFlag">
+                        <!-- <div class="row relClass" *ngIf="infiniteScrollingFlag">
                             <div class="col-md-12 p-0">
                                 <div class="bar height24">
                                 </div>
@@ -115,8 +115,8 @@
                                 <div class="bar height24">
                                 </div>
                             </div>
-                        </div>
-                        <div class="full-center">
+                        </div> -->
+                        <div *ngIf="infiniteScrollingFlag" class="full-center">
                             <mat-spinner class="spinnerClass" [diameter]="30"></mat-spinner>
                         </div>
                     </div>
