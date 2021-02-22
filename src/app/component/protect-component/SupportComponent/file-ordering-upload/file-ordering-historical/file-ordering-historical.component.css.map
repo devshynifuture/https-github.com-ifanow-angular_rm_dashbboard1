@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,MAAM,EAAE,eAAe;CACxB;;AAED,AAAA,kBAAkB,CAAC,UAAU,CAAC,EAAE,AAAA,eAAe,CAAC;EAC9C,MAAM,EAAE,eAAe;CACxB;;AAED,AAAA,SAAS,CAAC,kBAAkB,CAAC;EAE3B,QAAQ,EAAE,IAAI;CAKf;;AAPD,AAIE,SAJO,CAAC,kBAAkB,CAI1B,UAAU,CAAC,EAAE,CAAC;EACZ,GAAG,EAAE,IAAI;CACV",
+    "sources": [
+        "file-ordering-historical.component.scss"
+    ],
+    "names": [],
+    "file": "file-ordering-historical.component.css"
+}

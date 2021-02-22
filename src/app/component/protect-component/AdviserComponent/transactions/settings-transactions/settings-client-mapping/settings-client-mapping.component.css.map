@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,cAAc,CAAC,mCAAmC,CAAC,oBAAoB,CAAC;EAC9E,WAAW,EAAE,GAAG;CACnB;;AACD,AAAA,QAAQ,CACR;EACE,cAAc,EAAE,IAAI;CACrB",
+    "sources": [
+        "settings-client-mapping.component.scss"
+    ],
+    "names": [],
+    "file": "settings-client-mapping.component.css"
+}

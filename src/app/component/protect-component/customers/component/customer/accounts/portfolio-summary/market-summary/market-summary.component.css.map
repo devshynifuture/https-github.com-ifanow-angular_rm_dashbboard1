@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAIA,AAAA,WAAW,CAAC;EACR,KAAK,EAAE,OAAO;CACjB;;AAED,AAAA,SAAS,CAAC;EACN,MAAM,EAAE,IAAI;CACf;;AAED,AAAA,oBAAoB,CAAC;EACpB,KAAK,EAAE,KAAK;CACZ",
+    "sources": [
+        "market-summary.component.scss"
+    ],
+    "names": [],
+    "file": "market-summary.component.css"
+}

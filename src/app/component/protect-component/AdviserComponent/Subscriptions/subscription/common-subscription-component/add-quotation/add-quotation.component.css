@@ -1,0 +1,20 @@
+.mat-card {
+  height: 258px;
+  border-radius: 2px;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+img {
+  width: 100%;
+  height: 170px;
+}
+
+.mat-card-content > :first-child,
+.mat-card > :first-child {
+  margin-top: -6px !important;
+}
+/*# sourceMappingURL=add-quotation.component.css.map */

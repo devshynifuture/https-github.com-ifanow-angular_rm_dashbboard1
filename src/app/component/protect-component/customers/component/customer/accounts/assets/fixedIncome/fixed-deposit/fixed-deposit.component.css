@@ -1,0 +1,36 @@
+::ng-deep input.mat-input-element {
+  border: 1px solid rgba(25, 25, 25, 0.32);
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: 1.5em !important;
+}
+
+.classBlue {
+  border: 1px solid #008FFF;
+  color: #008FFF;
+}
+
+.button-height {
+  height: 38px;
+  overflow: hidden;
+}
+
+::ng-deep .mat-form-field-subscript-wrapper {
+  overflow: visible !important;
+}
+
+.w-s {
+  white-space: nowrap;
+}
+
+::ng-deep .form-group .brtb-0 {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+::ng-deep .form-group .bltb-0 {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+/*# sourceMappingURL=fixed-deposit.component.css.map */

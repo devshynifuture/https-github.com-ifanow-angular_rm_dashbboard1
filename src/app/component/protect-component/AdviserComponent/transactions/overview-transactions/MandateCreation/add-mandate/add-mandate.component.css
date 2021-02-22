@@ -1,0 +1,53 @@
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: 1.5em !important;
+}
+
+.text-transform-inherit {
+  text-transform: inherit;
+}
+
+.uploadPhotoBox {
+  border: 1px dashed #83959D;
+  background: #F5F7F7;
+  width: 340px;
+  height: 200px;
+  border-radius: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+}
+
+.perviewPhotoBox {
+  border: 1px solid #83959D;
+  border-radius: 2px;
+  width: 140px;
+  height: 160px;
+}
+
+.dragDropCLass {
+  border: 1px dashed #83959D;
+  height: 150px;
+  background: #F5F7F7;
+}
+
+::ng-deep .mat-progress-spinner {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+::ng-deep .mat-progress-spinner svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.hide {
+  display: none;
+}
+/*# sourceMappingURL=add-mandate.component.css.map */

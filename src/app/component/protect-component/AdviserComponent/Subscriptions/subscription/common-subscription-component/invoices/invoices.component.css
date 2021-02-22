@@ -1,0 +1,16 @@
+.width200 {
+  width: 200px;
+  margin-top: 220px;
+}
+
+::ng-deep .textRightSide .mat-sort-header-container {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.width300 {
+  width: 300px;
+  margin-top: 100px;
+}
+/*# sourceMappingURL=invoices.component.css.map */

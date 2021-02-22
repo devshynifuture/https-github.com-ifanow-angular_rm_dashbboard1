@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "confirmation-transaction.component.scss"
+    ],
+    "names": [],
+    "file": "confirmation-transaction.component.css"
+}

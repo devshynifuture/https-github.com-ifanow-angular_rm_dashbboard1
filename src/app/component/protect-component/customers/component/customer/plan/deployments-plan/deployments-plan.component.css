@@ -1,0 +1,14 @@
+.displayRow {
+  display: inline-block;
+}
+
+.displayFlex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.bgColor {
+  background-color: white;
+}
+/*# sourceMappingURL=deployments-plan.component.css.map */

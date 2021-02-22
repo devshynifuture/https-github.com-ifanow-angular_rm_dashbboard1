@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "domain-setting-popup.component.scss"
+    ],
+    "names": [],
+    "file": "domain-setting-popup.component.css"
+}

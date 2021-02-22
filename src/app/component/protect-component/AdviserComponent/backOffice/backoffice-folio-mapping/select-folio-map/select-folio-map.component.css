@@ -1,0 +1,27 @@
+.italicText {
+  font-style: italic;
+}
+
+::ng-deep .classEmpty .mat-form-field-appearance-standard .mat-form-field-flex {
+  padding-top: 0px !important;
+}
+
+.overflow-scroll-bar {
+  overflow-y: auto;
+  max-height: 500px;
+  padding-top: 20px;
+  padding-right: 20px;
+}
+
+.overflow-scroll-bar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.overflow-scroll-bar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.overflow-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/*# sourceMappingURL=select-folio-map.component.css.map */

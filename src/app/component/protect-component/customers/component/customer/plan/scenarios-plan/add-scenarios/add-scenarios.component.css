@@ -1,0 +1,19 @@
+.financialGoalsTable tr.mat-row {
+  height: 30px !important;
+}
+
+.financialGoalsTable tr.mat-header-row {
+  height: 40px !important;
+}
+
+.points {
+  display: block;
+  list-style-type: disc;
+  padding-left: 20px;
+  padding-top: 12px;
+}
+
+.points li {
+  text-align: left;
+}
+/*# sourceMappingURL=add-scenarios.component.css.map */

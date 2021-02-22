@@ -1,0 +1,11 @@
+::ng-deep #table-low.edit-mode-hover tr td:not(:last-child):hover {
+  -webkit-box-shadow: 0px 0px 10px #ccc;
+          box-shadow: 0px 0px 10px #ccc;
+  cursor: cell;
+}
+
+.adhocChangesBg {
+  background-color: #FFC100;
+  color: #fff;
+}
+/*# sourceMappingURL=cashflow-upper-income.component.css.map */

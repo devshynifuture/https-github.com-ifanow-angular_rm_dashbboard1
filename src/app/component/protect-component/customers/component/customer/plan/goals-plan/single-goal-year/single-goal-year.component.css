@@ -1,0 +1,11 @@
+.goalImg img {
+  max-width: 100%;
+}
+
+.static-value {
+  position: absolute;
+  font-weight: 400;
+  top: 13px;
+  left: 28px;
+}
+/*# sourceMappingURL=single-goal-year.component.css.map */

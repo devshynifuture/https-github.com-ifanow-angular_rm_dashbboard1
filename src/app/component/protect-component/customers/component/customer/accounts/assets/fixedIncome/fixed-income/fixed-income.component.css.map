@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,SAAS,CAAC;EACR,KAAK,EAAE,KAAK;CACb;;AAED,AAAA,YAAY,CAAC;EACX,QAAQ,EAAE,QAAQ;EAClB,SAAS,EAAE,IAAI;EACf,OAAO,EAAE,CAAC;EACV,KAAK,EAAE,CAAC;EACR,GAAG,EAAE,CAAC;CACP;;AACD,AAAA,KAAK,CAAC;EACJ,OAAO,EAAE,IAAI;CACd",
+    "sources": [
+        "fixed-income.component.scss"
+    ],
+    "names": [],
+    "file": "fixed-income.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,aAAa,EAAE,GAAG;CACnB;;AAED,AAAA,SAAS,AAAA,MAAM,AAAA,MAAM,CAAC;EACpB,gBAAgB,EAAE,kBAAkB;EACpC,MAAM,EAAE,OAAO;CAChB",
+    "sources": [
+        "invoice-pdf-document.component.scss"
+    ],
+    "names": [],
+    "file": "invoice-pdf-document.component.css"
+}

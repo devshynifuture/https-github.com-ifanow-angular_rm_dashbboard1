@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,YAAY,CAAA;EACrB,WAAW,EAAE,OAAO;EACrB,UAAU,EAAE,iBAAiB;EAC7B,WAAW,EAAE,MAAM;EACnB,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,eAAe;EAC5B,cAAc,EAAE,KAAK;EACrB,MAAM,EAAE,eAAe;EACvB,KAAK,EAAE,OAAO;CACb",
+    "sources": [
+        "marketplace-posts.component.scss"
+    ],
+    "names": [],
+    "file": "marketplace-posts.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACrG,KAAK,EAAE,gBAAgB;CACxB;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,qBAAqB,CAAC;EAChE,OAAO,EAAE,GAAG;CACb",
+    "sources": [
+        "add-other-payables.component.scss"
+    ],
+    "names": [],
+    "file": "add-other-payables.component.css"
+}

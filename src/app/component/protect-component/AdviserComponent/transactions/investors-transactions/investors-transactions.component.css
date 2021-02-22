@@ -1,0 +1,9 @@
+.searchInputWidth {
+  width: 300px;
+  margin-right: 8px;
+}
+
+.pe-none {
+  pointer-events: none;
+}
+/*# sourceMappingURL=investors-transactions.component.css.map */

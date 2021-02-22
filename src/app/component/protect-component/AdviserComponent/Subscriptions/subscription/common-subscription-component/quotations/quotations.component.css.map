@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,qBAAqB,CAAC,wBAAwB;AACxD,2BAA2B,CAAC,wBAAwB,CAAC;EACjD,gBAAgB,EAAE,kBAAkB;CACvC;;AAGA,AAAA,SAAS,CAAC,aAAa,AAAA,IAAK,CAAA,sBAAsB,EAAE,oBAAoB,CAAC,mBAAmB,CAAC;EAC1F,gBAAgB,EAAE,kBAAkB;CACvC;;AAED,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,KAAK;CACpB;;AAED,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,KAAK;CACpB",
+    "sources": [
+        "quotations.component.scss"
+    ],
+    "names": [],
+    "file": "quotations.component.css"
+}

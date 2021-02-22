@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "calendar-week.component.scss"
+    ],
+    "names": [],
+    "file": "calendar-week.component.css"
+}

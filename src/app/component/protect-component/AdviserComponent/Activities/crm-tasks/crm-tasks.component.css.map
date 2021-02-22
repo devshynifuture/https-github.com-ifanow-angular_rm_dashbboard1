@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,kBAAkB,CAAC;EACjB,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,UAAU,EAAE,KAAK;EACjB,SAAS,EAAE,KAAK;CACjB;;AACD,AAAA,UAAU,CAAC;EACT,QAAQ,EAAE,IAAI;EACd,UAAU,EAAE,KAAK;CAClB;;AAED,AAAA,eAAe,CAAA;EACX,QAAQ,EAAE,QAAQ;EAClB,IAAI,EAAE,GAAG;CACZ",
+    "sources": [
+        "crm-tasks.component.scss"
+    ],
+    "names": [],
+    "file": "crm-tasks.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAA+D,AAAA,SAAS,CAAC,UAAU,CAAC,iCAAiC,CAAC,qBAAqB,CAAC;EAC1E,OAAO,EAAE,cAAc;EACvB,MAAM,EAAE,4BAA4B;CACvC;;AAED,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,IAAI;CACnB",
+    "sources": [
+        "documents-subscriptions.component.scss"
+    ],
+    "names": [],
+    "file": "documents-subscriptions.component.css"
+}

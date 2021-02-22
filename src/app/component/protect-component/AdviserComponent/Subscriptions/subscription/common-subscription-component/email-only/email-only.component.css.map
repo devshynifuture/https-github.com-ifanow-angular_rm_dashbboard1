@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACV,MAAM,EAAE,eAAe;CACxB;;AAED,AAAA,SAAS,CAAC,OAAO,AAAA,SAAS,CAAC,WAAW,CAAC;EACrC,aAAa,EAAE,cAAc;CAC9B;;AAED,AAAA,aAAa,CAAC;EACZ,aAAa,EAAE,KAAK;CACrB;;AAED,AACE,SADO,CAAC,eAAe,CACvB,sBAAsB,CAAC;EACrB,MAAM,EAAE,KAAK;CAEd;;AAJH,AAME,SANO,CAAC,eAAe,CAMvB,KAAK,AAAA,eAAe,CAAC;EACnB,MAAM,EAAE,IAAI;CACb;;AARH,AAUE,SAVO,CAAC,eAAe,CAUvB,uBAAuB,CAAC;EACtB,cAAc,EAAE,cAAc;CAC/B",
+    "sources": [
+        "email-only.component.scss"
+    ],
+    "names": [],
+    "file": "email-only.component.css"
+}

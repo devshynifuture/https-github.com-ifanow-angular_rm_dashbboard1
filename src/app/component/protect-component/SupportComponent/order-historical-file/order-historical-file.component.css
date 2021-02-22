@@ -1,0 +1,41 @@
+::ng-deep .mat-radio-button {
+  min-width: 105px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: 1.5em !important;
+}
+
+.pb-100 {
+  padding-bottom: 100px !important;
+}
+
+::ng-deep .order-historical .mat-checkbox-layout .mat-checkbox-label {
+  white-space: normal;
+  word-break: break-word;
+}
+
+::ng-deep .order-historical .mat-checkbox-inner-container {
+  margin: 2px;
+  top: 4px;
+}
+
+.pos-rel {
+  position: relative !important;
+}
+
+.middle-of-slider {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+}
+
+.cur-wait {
+  cursor: wait !important;
+  z-index: -1 !important;
+}
+
+.opacity-4 {
+  opacity: 0.4 !important;
+}
+/*# sourceMappingURL=order-historical-file.component.css.map */

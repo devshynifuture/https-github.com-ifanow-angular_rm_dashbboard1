@@ -1,0 +1,28 @@
+@media (max-width: 1142px) {
+  #uiTransactions h3 {
+    font-size: 16px;
+  }
+  #uiTransactions .mat-tab-link {
+    font-size: 12px !important;
+    height: 54px !important;
+    width: 90px !important;
+    min-width: 90px !important;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+  }
+  .details_ui ul li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    font-size: 12px !important;
+    margin-bottom: 15px !important;
+  }
+  .heightScroll {
+    height: 380px !important;
+    overflow-y: scroll;
+  }
+}
+/*# sourceMappingURL=transaction-media.css.map */

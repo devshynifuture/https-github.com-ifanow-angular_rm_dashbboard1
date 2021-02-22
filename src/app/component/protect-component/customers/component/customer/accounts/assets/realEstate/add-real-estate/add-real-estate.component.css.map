@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,qBAAqB,CAAC;EAChE,OAAO,EAAE,GAAG;CACb;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACrG,KAAK,EAAE,gBAAgB;CACxB",
+    "sources": [
+        "add-real-estate.component.scss"
+    ],
+    "names": [],
+    "file": "add-real-estate.component.css"
+}

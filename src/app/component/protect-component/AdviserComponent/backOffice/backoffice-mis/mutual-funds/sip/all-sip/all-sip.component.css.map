@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACF,OAAO,EAAE,IAAI;CAChB;;AAED,AAAA,kBAAkB,CAAC;EACf,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,MAAM;EACtB,UAAU,EAAE,KAAK;EACjB,SAAS,EAAE,KAAK;CACjB;;AACD,AAAA,UAAU,CAAC;EACT,QAAQ,EAAE,IAAI;EACd,UAAU,EAAE,KAAK;CAClB;;AAED,AAAA,eAAe,CAAA;EACX,QAAQ,EAAE,QAAQ;EAClB,IAAI,EAAE,GAAG;CACZ",
+    "sources": [
+        "all-sip.component.scss"
+    ],
+    "names": [],
+    "file": "all-sip.component.css"
+}

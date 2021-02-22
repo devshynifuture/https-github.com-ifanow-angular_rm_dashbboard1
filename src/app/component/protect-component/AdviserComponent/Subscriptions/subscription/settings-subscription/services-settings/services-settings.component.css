@@ -1,0 +1,141 @@
+h2 {
+  color: #3F3F3F;
+  text-align: center;
+  padding: 16px 12px;
+  font-family: "Playfair Display";
+  letter-spacing: 0.2px;
+  line-height: 32px;
+}
+
+h3 {
+  font-family: "Playfair Display";
+  letter-spacing: 0.2px;
+  line-height: 32px;
+}
+
+.padder-80 {
+  padding-right: 80px;
+  padding-left: 80px;
+}
+
+.read-more {
+  text-align: right;
+  color: #008FFF;
+  margin-bottom: -47px;
+  font-size: 14px;
+}
+
+.h-a {
+  height: auto !important;
+}
+
+h3 p {
+  color: #757575;
+}
+
+.serDic {
+  height: 34px;
+  margin-top: 5px;
+  overflow: hidden;
+}
+
+.serDic p {
+  white-space: initial;
+  color: #4c4949;
+  width: 100%;
+}
+
+.button-fix {
+  right: 0;
+  position: fixed;
+  text-align: right;
+  margin-right: 30px;
+  z-index: 2;
+  margin-top: 15px !important;
+}
+
+.btn-primary {
+  border-radius: 0px !important;
+}
+
+.material-icons {
+  line-height: .7;
+}
+
+.content {
+  position: relative;
+  right: 20%;
+}
+
+.box {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+}
+
+label {
+  background: #004164;
+  border-radius: 4px;
+  letter-spacing: 0.2px;
+  color: #FFFFFF;
+  font-family: "Proxima Nova", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 10px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.done-icons {
+  background: #02B875;
+  padding: 0px 0px 4px 4px;
+  color: #fff;
+  float: right;
+  text-align: right;
+  line-height: .9;
+}
+
+.height23 {
+  height: 23px;
+}
+
+.heightMar23 {
+  margin-bottom: 12px;
+  height: 23px;
+}
+
+.height130 {
+  height: 130px;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass {
+  position: relative;
+}
+
+.skeletonAnimation .relClass .bar {
+  background-color: #E7E7E7;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass .bar:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 24px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 24px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+/*# sourceMappingURL=services-settings.component.css.map */

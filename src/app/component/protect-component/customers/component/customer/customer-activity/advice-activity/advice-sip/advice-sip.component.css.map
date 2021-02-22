@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACR,OAAO,EAAE,KAAK;EACd,WAAW,EAAE,IAAI;CAIpB;;AAND,AAGI,WAHO,CAGP,EAAE,CAAA;EACE,UAAU,EAAE,IAAI;CACnB",
+    "sources": [
+        "advice-sip.component.scss"
+    ],
+    "names": [],
+    "file": "advice-sip.component.css"
+}

@@ -1,0 +1,18 @@
+h1 {
+  font-family: "Playfair Display";
+  font-size: 34px;
+}
+
+.scheme-details p,
+.scheme-details h5 {
+  font-family: "Proxima Nova", sans-serif !important;
+}
+
+.scheme-details p {
+  color: #83959D;
+}
+
+.scheme-details h5 {
+  color: #3F3F3F;
+}
+/*# sourceMappingURL=fact-sheet.component.css.map */

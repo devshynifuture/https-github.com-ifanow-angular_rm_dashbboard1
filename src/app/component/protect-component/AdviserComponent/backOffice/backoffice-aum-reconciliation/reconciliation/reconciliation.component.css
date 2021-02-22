@@ -1,0 +1,32 @@
+.example-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep #ui-settingsplan .mat-tab-header {
+  background: transparent !important;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  position: inherit;
+  z-index: 0;
+}
+
+::ng-deep #ui-settingsplan .mat-tab-group {
+  margin-top: auto !important;
+  padding-top: 80px !important;
+}
+
+::ng-deep #ui-settingsplan .mat-tab-labels {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-right: 20px;
+}
+
+::ng-deep .mat-tab-labels {
+  margin-left: 0.1rem !important;
+  margin-right: 0.1rem !important;
+}
+/*# sourceMappingURL=reconciliation.component.css.map */

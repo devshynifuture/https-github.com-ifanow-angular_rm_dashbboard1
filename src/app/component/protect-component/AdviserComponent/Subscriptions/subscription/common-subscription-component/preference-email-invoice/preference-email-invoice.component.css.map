@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,wBAAwB,CAAC;EACrB,MAAM,EAAE,iBAAiB;CAC5B;;AAED,AAAA,SAAS,CAAC,WAAW,AAAA,OAAO,CAAC;EACzB,KAAK,EAAE,IAAI;CACd;;AAED,AAAA,SAAS,CAAC,OAAO,AAAA,SAAS,CAAC,WAAW,CAAC;EACnC,KAAK,EAAE,IAAI;EACX,aAAa,EAAE,IAAI;CACtB;;AAED,AAAA,UAAU,CAAC;EACP,UAAU,EAAE,KAAK;CACpB",
+    "sources": [
+        "preference-email-invoice.component.scss"
+    ],
+    "names": [],
+    "file": "preference-email-invoice.component.css"
+}

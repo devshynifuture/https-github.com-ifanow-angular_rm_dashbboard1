@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,gBADc,CACd,IAAI,CAAC;EACH,YAAY,EAAE,gBAAgB;EAC9B,WAAW,EAAE,gBAAgB;CAC9B;;AAJH,AAME,gBANc,CAMd,KAAK,CAAC;EACJ,UAAU,EAAE,eAAe;CAC5B;;AAGH,AAAA,OAAO,CAAC;EACN,gBAAgB,EAAE,kBAAkB;EACpC,KAAK,EAAE,kBAAkB;CAC1B",
+    "sources": [
+        "customer-overview.component.scss"
+    ],
+    "names": [],
+    "file": "customer-overview.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,YADQ,CACR,EAAE,AAAA,eAAe,CAAC;EACd,MAAM,EAAE,IAAI;CACf;;AAGL,AAAA,UAAU,CAAC,EAAE,CAAC;EACV,OAAO,EAAE,kBAAkB;EAC3B,WAAW,EAAE,GAAG;EAChB,SAAS,EAAE,eAAe;CAC7B;;AAED,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,IAAI;CACnB;;AAED,AAAA,SAAS,CAAC,aAAa,CAAC,mCAAmC,CAAC,oBAAoB,CAAC;EAC7E,WAAW,EAAE,GAAG;CACnB",
+    "sources": [
+        "client-subscription.component.scss"
+    ],
+    "names": [],
+    "file": "client-subscription.component.css"
+}

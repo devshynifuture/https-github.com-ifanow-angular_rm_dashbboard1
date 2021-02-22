@@ -286,7 +286,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         if (this.isLoading) {
           this.isLoading = false;
         }
+        setTimeout(() => {
+          this.hasEndReached = false;
 
+        }, 1000);
       } else {
         this.dataSource.data = (this.infiniteScrollClientList.length > 0) ? this.infiniteScrollClientList : null;
         this.dataSource.sort = this.sort;
@@ -303,7 +306,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         }
         this.dataSource.filteredData = [];
         this.eventService.openSnackBar('No More Data Found', "DISMISS");
-        this.hasEndReached = true;
+        setTimeout(() => {
+          this.hasEndReached = false;
+
+        }, 1000);
       }
     }
 
@@ -313,9 +319,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
     console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
     let tableOffsetTop = this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop;
-    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 38);
+    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 37);
     if (tableOffsetTop <= tableOffsetHeight) {
       if (!this.hasEndReached) {
+        this.hasEndReached = true;
         console.log("on entering inside", this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
         // this.infiniteScrollingFlag = true;
         if (!this.fromSearch && !this.infiniteScrollingFlag) {

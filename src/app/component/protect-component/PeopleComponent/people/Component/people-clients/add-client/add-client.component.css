@@ -1,0 +1,35 @@
+::ng-deep .font {
+  padding: 0px !important;
+  min-width: 65px;
+  height: 30px;
+  line-height: 1;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+::ng-deep .back {
+  min-width: 50px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: 1.5em !important;
+}
+
+.pr-7 {
+  padding-right: 7px;
+}
+
+.pl-7 {
+  padding-left: 7px;
+}
+
+::ng-deep .tabHeaderPadding .mat-tab-header {
+  padding-left: 40px !important;
+}
+
+@media (max-width: 767px) {
+  ::ng-deep .tabHeaderPadding .mat-tab-header {
+    padding-left: 0px !important;
+  }
+}
+/*# sourceMappingURL=add-client.component.css.map */
