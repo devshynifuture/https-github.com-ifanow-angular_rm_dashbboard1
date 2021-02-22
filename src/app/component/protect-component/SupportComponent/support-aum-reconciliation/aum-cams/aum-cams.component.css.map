@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACP,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,OAAO,EAAE,cAAc;EACvB,WAAW,EAAE,IAAI;CACpB",
+    "sources": [
+        "aum-cams.component.scss"
+    ],
+    "names": [],
+    "file": "aum-cams.component.css"
+}

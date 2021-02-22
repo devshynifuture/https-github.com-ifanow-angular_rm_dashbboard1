@@ -1,0 +1,23 @@
+.wordBreak {
+  margin: 0px;
+  word-break: break-all;
+}
+
+.tableScroll {
+  height: auto;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .wordBreak {
+    margin: 0px;
+    width: 160px;
+    display: inline-block;
+    word-break: break-all;
+  }
+  .tableScroll {
+    height: auto;
+    overflow: auto;
+  }
+}
+/*# sourceMappingURL=backoffice-file-upload-sip-stp.component.css.map */

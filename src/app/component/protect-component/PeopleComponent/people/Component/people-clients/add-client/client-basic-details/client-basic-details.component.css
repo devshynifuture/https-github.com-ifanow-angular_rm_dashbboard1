@@ -1,0 +1,14 @@
+.-m-28 {
+  margin-left: -28px;
+}
+
+.unmap-option {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+  padding-top: 0px !important;
+}
+/*# sourceMappingURL=client-basic-details.component.css.map */

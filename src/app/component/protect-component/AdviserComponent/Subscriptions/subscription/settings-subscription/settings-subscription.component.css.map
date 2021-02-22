@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAMA,AAAA,aAAa,CAAC;EACZ,MAAM,EAAE,GAAG,CAAC,KAAK,CAAC,mBAAmB;CACtC",
+    "sources": [
+        "settings-subscription.component.scss"
+    ],
+    "names": [],
+    "file": "settings-subscription.component.css"
+}

@@ -390,7 +390,7 @@ export class MisMfTransactionsComponent implements OnInit {
     const obj = {
       parentId: this.parentId,
       startFlag: 0,
-      endFlag: -1,
+      endFlag: 100000,
     };
 
     this.backoffice.getMfTransactions(obj)

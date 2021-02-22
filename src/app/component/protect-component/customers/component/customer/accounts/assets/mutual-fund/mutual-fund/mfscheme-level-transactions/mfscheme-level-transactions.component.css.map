@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,qBAAqB,CAAC;EAChE,OAAO,EAAE,GAAG;CACb;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACrG,KAAK,EAAE,gBAAgB;CACxB;;AAED,AAAA,SAAS,CAAC,eAAe,CAAC;EACxB,KAAK,EAAE,IAAI;CACZ",
+    "sources": [
+        "mfscheme-level-transactions.component.scss"
+    ],
+    "names": [],
+    "file": "mfscheme-level-transactions.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,MAAM,CAAC;EACL,YAAY,EAAE,GAAG;CAClB;;AAED,AAAA,IAAI,CAAC;EACH,OAAO,EAAE,eAAe;CACzB",
+    "sources": [
+        "add-plan-detail.component.scss"
+    ],
+    "names": [],
+    "file": "add-plan-detail.component.css"
+}

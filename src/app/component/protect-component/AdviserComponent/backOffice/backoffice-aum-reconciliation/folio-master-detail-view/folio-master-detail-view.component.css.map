@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,SADK,CAAC,cAAc,CACpB,cAAc,CAAA;EACV,OAAO,EAAE,OAAO;EAChB,SAAS,EAAE,IAAI;CAClB",
+    "sources": [
+        "folio-master-detail-view.component.scss"
+    ],
+    "names": [],
+    "file": "folio-master-detail-view.component.css"
+}

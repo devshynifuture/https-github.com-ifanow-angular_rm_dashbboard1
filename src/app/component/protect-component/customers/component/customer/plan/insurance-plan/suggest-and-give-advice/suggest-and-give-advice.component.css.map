@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,QAAQ,CAAA;EACd,cAAc,EAAE,IAAI;CACvB;;AACD,AAAA,SAAS,CAAC,gBAAgB,CAAA,AAAA,eAAC,CAAgB,aAAa,AAA7B,EAA+B;EACtD,cAAc,EAAE,eAAe;EAC/B,MAAM,EAAE,WAAW;EACnB,OAAO,EAAE,GAAG;CACb",
+    "sources": [
+        "suggest-and-give-advice.component.scss"
+    ],
+    "names": [],
+    "file": "suggest-and-give-advice.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACb,aAAa,EAAE,iBAAiB;EAChC,cAAc,EAAE,IAAI;EACpB,aAAa,EAAE,IAAI;CACtB;;AAED,AACI,iBADa,CACb,aAAa,CAAC;EACV,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,IAAI;CACf;;AAGL,AAAA,SAAS,CAAC,iBAAiB,CAAC,mCAAmC,CAAC,oBAAoB,CAAC;EACjF,WAAW,EAAE,cAAc;CAC9B",
+    "sources": [
+        "reallocate-asset.component.scss"
+    ],
+    "names": [],
+    "file": "reallocate-asset.component.css"
+}

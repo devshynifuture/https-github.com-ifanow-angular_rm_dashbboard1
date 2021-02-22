@@ -1,0 +1,88 @@
+.img-set {
+  padding: 12px;
+  border: 2px solid #83959D;
+  background: #F5F7F7;
+  float: right;
+}
+
+.mat-radio-button {
+  min-width: 0 !important;
+}
+
+::ng-deep .mat-expansion-panel:not([class*=mat-elevation-z]) {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  background-color: #F5F7F7 !important;
+  font-size: 14px !important;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #008FFF !important;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background-color: #D9DEE1 !important;
+}
+
+.f-56 {
+  font-size: 56px !important;
+}
+
+::ng-deep #fp-modules .mat-expansion-panel-body {
+  padding: 0 !important;
+}
+
+::ng-deep #fp-modules .mat-expansion-panel-header {
+  height: 40px !important;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep #fp-modules .mat-expansion-panel {
+  border-radius: 0px !important;
+}
+
+::ng-deep #ui-profileplan-card .mat-expansion-panel-body {
+  padding: 0 !important;
+  margin-top: 20px;
+}
+
+::ng-deep #ui-profileplan-card img {
+  margin: 0 auto;
+  display: block;
+}
+
+::ng-deep #ui-profileplan-card .example-card {
+  border: 1px solid #E8ECEF !important;
+  margin-bottom: 16px;
+}
+
+::ng-deep #ui-profileplan-card .example-card h5 {
+  padding-top: 10px;
+  color: #000000;
+}
+
+::ng-deep #ui-profileplan-card .mat-card-actions {
+  padding-bottom: 10px;
+}
+
+::ng-deep #ui-profileplan-card .mat-expansion-panel-header {
+  height: 40px !important;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep #ui-profileplan-card .mat-expansion-indicator {
+  display: none;
+}
+
+::ng-deep #ui-profileplan-card .mat-accordion .mat-expansion-panel:last-of-type {
+  border-radius: 0px !important;
+}
+
+::ng-deep .mat-card:not([class*=mat-elevation-z]) {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+/*# sourceMappingURL=profile-plan.component.css.map */

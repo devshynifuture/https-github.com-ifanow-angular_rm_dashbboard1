@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACP,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;EACZ,OAAO,EAAE,cAAc;EACvB,WAAW,EAAE,IAAI;CACpB",
+    "sources": [
+        "aum-franklin.component.scss"
+    ],
+    "names": [],
+    "file": "aum-franklin.component.css"
+}

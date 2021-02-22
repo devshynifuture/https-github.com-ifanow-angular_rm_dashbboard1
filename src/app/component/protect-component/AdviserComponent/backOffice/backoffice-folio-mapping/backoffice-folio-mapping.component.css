@@ -1,0 +1,72 @@
+.folio-mapping-box {
+  position: fixed;
+  margin-top: 64px;
+  float: right;
+  width: 100%;
+  padding-right: 0px;
+  z-index: 101;
+  background: #fff !important;
+  -webkit-box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
+          box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
+  height: 60px;
+}
+
+.mapBoxWidth {
+  border: 1px solid #BCC6CA;
+  border-radius: 1px;
+  width: 87px;
+  height: 33px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-right: 16px;
+}
+
+.searchBox {
+  position: relative;
+}
+
+.searchBox .searchIconfolio {
+  position: absolute;
+  top: 10px;
+  left: 7px;
+}
+
+.searchBox .form-control {
+  padding-left: 35px !important;
+}
+
+.example-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.pos-rel-left40 {
+  position: relative;
+  left: 40%;
+}
+
+.people-table-scroll {
+  max-height: 650px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+/*# sourceMappingURL=backoffice-folio-mapping.component.css.map */

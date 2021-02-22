@@ -1,0 +1,39 @@
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: #b0adac !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #008FFF !important;
+  /*inner circle color change*/
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle.act {
+  background-color: #b0adac !important;
+  /*inner circle color change*/
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #008FFF !important;
+  /*outer ring color change*/
+}
+
+::ng-deep.carousel-control-prev-icon,
+::ng-deep.carousel .carousel-control-next-icon,
+.carousel .carousel-control-prev-icon,
+::ng-deep.carousel .carousel-control-next-icon,
+.carousel .carousel-control-prev-icon {
+  display: none !important;
+}
+
+::ng-deep.carousel-indicators li {
+  background-color: #008FFF !important;
+}
+
+::ng-deep.carousel-indicators li .active {
+  background-color: #ddd !important;
+}
+
+::ng-deep .carousel-caption {
+  position: relative;
+}
+/*# sourceMappingURL=subscription-popup.component.css.map */

@@ -1,0 +1,44 @@
+.allcoateBtn {
+  width: 82px;
+  height: 30px;
+  border: 1px solid #008FFF;
+  background: transparent;
+  padding: 0px;
+}
+
+.unallcoateBtn {
+  width: 82px;
+  height: 30px;
+  border: 1px solid #FF6823;
+  background: transparent;
+  padding: 0px;
+}
+
+#table-low td .pl0 {
+  padding-left: 0px !important;
+}
+
+::ng-deep .btnHeight {
+  background: transparent !important;
+  border-top: transparent !important;
+}
+
+::ng-deep .btnHeight .mat-button-toggle-button {
+  height: 40px !important;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.width30 {
+  width: 30px;
+}
+
+.borderBtn {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.12) !important;
+  border-top: transparent !important;
+}
+/*# sourceMappingURL=mf-allocations.component.css.map */

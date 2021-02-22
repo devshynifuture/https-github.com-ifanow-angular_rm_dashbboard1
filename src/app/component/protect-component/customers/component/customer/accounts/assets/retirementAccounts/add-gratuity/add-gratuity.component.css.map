@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACnG,KAAK,EAAE,gBAAgB;CACxB",
+    "sources": [
+        "add-gratuity.component.scss"
+    ],
+    "names": [],
+    "file": "add-gratuity.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACV,KAAK,EAAE,CAAC;EACR,QAAQ,EAAE,KAAK;EACf,YAAY,EAAE,IAAI;CACrB",
+    "sources": [
+        "file-ordering-upload.component.scss"
+    ],
+    "names": [],
+    "file": "file-ordering-upload.component.css"
+}

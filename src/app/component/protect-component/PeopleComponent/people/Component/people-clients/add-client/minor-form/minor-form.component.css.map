@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,MAAM,CAAA;EAAC,WAAW,EAAE,KAAK;CAAG",
+    "sources": [
+        "minor-form.component.scss"
+    ],
+    "names": [],
+    "file": "minor-form.component.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,YAAY,CAAC,iBAAiB,CAAC;EACrC,SAAS,EAAE,IAAI;CAClB",
+    "sources": [
+        "platform-pop-up.component.scss"
+    ],
+    "names": [],
+    "file": "platform-pop-up.component.css"
+}

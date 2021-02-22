@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,EAAE,CAAC;EACD,WAAW,EAAE,kBAAkB;EAC/B,SAAS,EAAE,IAAI;CAChB;;AAKD,AAEE,eAFa,CAEb,CAAC;AAFH,eAAe,CAGb,EAAE,CAAC;EACD,WAAW,EAAE,qCAAqC;CACnD;;AALH,AAOE,eAPa,CAOb,CAAC,CAAC;EACA,KAAK,EAAE,OAAO;CACf;;AATH,AAWE,eAXa,CAWb,EAAE,CAAC;EACD,KAAK,EAAE,OAAO;CACf",
+    "sources": [
+        "fact-sheet.component.scss"
+    ],
+    "names": [],
+    "file": "fact-sheet.component.css"
+}

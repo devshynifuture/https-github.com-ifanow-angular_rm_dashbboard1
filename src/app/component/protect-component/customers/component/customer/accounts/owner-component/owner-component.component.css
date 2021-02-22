@@ -1,0 +1,8 @@
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 0px;
+}
+/*# sourceMappingURL=owner-component.component.css.map */

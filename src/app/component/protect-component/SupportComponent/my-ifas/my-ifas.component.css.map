@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,KAAK,EAAE,IAAI;CACZ;;AAED,AAAA,SAAS,CAAC;EACR,KAAK,EAAE,kBAAkB;CAC1B;;AAED,AAAA,WAAW,CAAC;EACV,KAAK,EAAE,kBAAkB;CAC1B;;AAED,AAAA,UAAU,CAAC;EACT,KAAK,EAAE,kBAAkB;CAC1B;;AAED,AAAA,SAAS,CAAC,kBAAkB,CAAC,UAAU,CAAC,KAAK,CAAC,EAAE,CAAC;EAC/C,OAAO,EAAE,kBAAkB;CAC5B",
+    "sources": [
+        "my-ifas.component.scss"
+    ],
+    "names": [],
+    "file": "my-ifas.component.css"
+}

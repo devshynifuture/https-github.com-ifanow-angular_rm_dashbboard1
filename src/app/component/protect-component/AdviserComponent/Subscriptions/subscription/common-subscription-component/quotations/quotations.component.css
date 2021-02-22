@@ -1,0 +1,19 @@
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: #008FFF !important;
+}
+
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #008FFF !important;
+}
+
+.width200 {
+  width: 200px;
+  margin-top: 220px;
+}
+
+.width300 {
+  width: 300px;
+  margin-top: 100px;
+}
+/*# sourceMappingURL=quotations.component.css.map */

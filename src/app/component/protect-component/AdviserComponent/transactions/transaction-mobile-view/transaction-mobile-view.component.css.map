@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "transaction-mobile-view.component.scss"
+    ],
+    "names": [],
+    "file": "transaction-mobile-view.component.css"
+}

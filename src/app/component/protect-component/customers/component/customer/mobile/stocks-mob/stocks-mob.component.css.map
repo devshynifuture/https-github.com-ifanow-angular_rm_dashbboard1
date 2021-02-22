@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "stocks-mob.component.scss"
+    ],
+    "names": [],
+    "file": "stocks-mob.component.css"
+}

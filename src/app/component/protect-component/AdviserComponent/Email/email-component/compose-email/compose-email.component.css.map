@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACV,KAAK,EAAE,GAAG;CACX;;AAED,AACE,SADO,CAAC,iBAAiB,CACzB,sBAAsB,CAAC;EACrB,MAAM,EAAE,KAAK;CAEd;;AAJH,AAME,SANO,CAAC,iBAAiB,CAMzB,KAAK,AAAA,eAAe,CAAC;EACnB,MAAM,EAAE,IAAI;CACb;;AARH,AAUE,SAVO,CAAC,iBAAiB,CAUzB,uBAAuB,CAAC;EACtB,cAAc,EAAE,cAAc;CAC/B",
+    "sources": [
+        "compose-email.component.scss"
+    ],
+    "names": [],
+    "file": "compose-email.component.css"
+}

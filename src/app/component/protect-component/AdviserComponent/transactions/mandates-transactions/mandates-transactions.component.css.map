@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,iBAAiB,CAAC;EACd,KAAK,EAAE,KAAK;EACZ,YAAY,EAAE,GAAG;CACpB;;AACD,AAAA,QAAQ,CACR;EACE,cAAc,EAAE,IAAI;CACrB",
+    "sources": [
+        "mandates-transactions.component.scss"
+    ],
+    "names": [],
+    "file": "mandates-transactions.component.css"
+}

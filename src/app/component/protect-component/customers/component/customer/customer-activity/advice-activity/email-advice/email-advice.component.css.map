@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CACR;EACI,cAAc,EAAE,IAAI;CACvB",
+    "sources": [
+        "email-advice.component.scss"
+    ],
+    "names": [],
+    "file": "email-advice.component.css"
+}

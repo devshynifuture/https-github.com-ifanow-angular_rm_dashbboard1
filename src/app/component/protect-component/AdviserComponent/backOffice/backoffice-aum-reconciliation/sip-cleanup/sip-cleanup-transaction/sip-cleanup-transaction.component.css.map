@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "sip-cleanup-transaction.component.scss"
+    ],
+    "names": [],
+    "file": "sip-cleanup-transaction.component.css"
+}

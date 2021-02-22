@@ -1,0 +1,24 @@
+.heightAuto {
+  height: auto !important;
+}
+
+::ng-deep .fr-box.fr-basic .fr-wrapper {
+  margin-bottom: 0px !important;
+}
+
+.custom-email {
+  margin-bottom: 120px;
+}
+
+::ng-deep #new-mail-chips .mat-chip-list-wrapper {
+  margin: -13px;
+}
+
+::ng-deep #new-mail-chips input.mat-chip-input {
+  height: auto;
+}
+
+::ng-deep #new-mail-chips .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+/*# sourceMappingURL=email-only.component.css.map */
