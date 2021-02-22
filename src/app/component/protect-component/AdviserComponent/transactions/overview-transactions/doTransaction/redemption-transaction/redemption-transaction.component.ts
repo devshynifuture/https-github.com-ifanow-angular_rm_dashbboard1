@@ -183,8 +183,8 @@ export class RedemptionTransactionComponent implements OnInit {
     this.navOfSelectedScheme = 0;
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
-    Object.assign(this.transactionSummary, { folioNumber: '' });
-    this.redemptionTransaction.controls.employeeContry.reset();
+    Object.assign(this.transactionSummary, {folioNumber: ''});
+    this.redemptionTransaction.controls.allRedeem.reset();
     this.redemptionTransaction.controls.investmentAccountSelection.reset();
     this.redemptionTransaction.controls.schemeRedeem.reset();
   }
