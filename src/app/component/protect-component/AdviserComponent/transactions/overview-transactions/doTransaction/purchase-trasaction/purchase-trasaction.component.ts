@@ -1,16 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { ProcessTransactionService } from '../process-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { Observable, of } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {ProcessTransactionService} from '../process-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {Observable, of} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MultiTransactionPopupComponent} from '../multi-transaction-popup/multi-transaction-popup.component';
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -781,7 +781,9 @@ export class PurchaseTrasactionComponent implements OnInit {
       obj.bankDetailId = this.bankDetails.id;
     }
     obj.nsePaymentMode = (this.purchaseTransaction.controls.modeOfPaymentSelection.value == 2) ? 'DEBIT_MANDATE' : 'ONLINE';
-
+    if (this.platformType == 1 && obj.folioNo) {
+      obj.folioNo = obj.folioNo.split('/')[0];
+    }
     return obj;
   }
 
@@ -888,9 +890,6 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.isEdit = false;
         } else {
           const obj = this.getSingleTransactionJson();
-          if (this.platformType == 1) {
-            obj.folioNo = obj.folioNo.split('/')[0]
-          }
           this.childTransactions.push(obj);
         }
         if (this.childTransactions.length == 1) {
