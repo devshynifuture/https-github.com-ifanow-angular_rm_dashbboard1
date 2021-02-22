@@ -221,20 +221,23 @@
                             <tr *matHeaderRowDef="displayedColumns1; sticky: true" mat-header-row></tr>
                             <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
                         </table>
-                        <div class="row relClass" *ngIf="infiniteScrollingFlag">
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
+                        <div *ngIf="infiniteScrollingFlag" class="full-center">
+                            <mat-spinner class="spinnerClass" [diameter]="30"></mat-spinner>
                         </div>
+                        <!-- <div class="row relClass" *ngIf="infiniteScrollingFlag">
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
 
                     <div class="text-center" *ngIf="!isLoading && dataSource === null">
