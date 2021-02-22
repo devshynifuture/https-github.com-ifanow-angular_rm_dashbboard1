@@ -687,7 +687,7 @@ export class SipTransactionComponent implements OnInit {
     this.schemeDetails = scheme;
     this.transactionSummary = {
       ...this.transactionSummary,
-      schemeName: scheme.schemeName,
+      // schemeName: scheme.schemeName,
     };
     this.setMinAmount();
   }
