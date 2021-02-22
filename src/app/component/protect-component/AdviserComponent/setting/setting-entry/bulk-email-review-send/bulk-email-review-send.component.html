@@ -188,7 +188,7 @@
                         [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
                         <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
                             [appSkeletonLoading]="isLoading" #clientTableSort="matSort" #tableEl>
-                            <ng-container matColumnDef="checkbox" sticky>
+                            <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="br">
                                     <mat-checkbox (change)="selectAll($event)" name="selectAll" *ngIf="!isLoading"
                                         [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
