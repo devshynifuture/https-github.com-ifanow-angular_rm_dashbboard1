@@ -13,6 +13,8 @@ export function relationListFilterOnID(clientType) {
         { name: 'Others', value: 10 },
         { name: 'Grandmother', value: 13 },
         { name: 'Grandfather', value: 14 },
+        { name: 'Father', value: 6 },
+        { name: 'Mother', value: 7 },
         //     ];
         // }
         // if (clientType == 2) {
