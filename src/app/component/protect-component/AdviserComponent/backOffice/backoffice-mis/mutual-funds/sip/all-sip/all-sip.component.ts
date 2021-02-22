@@ -18,6 +18,9 @@ export class AllSipComponent implements OnInit {
   advisorId: any;
   dataSource: any;
   showLoader = true;
+  getOrgData = AuthService.getOrgDetails();
+  dataSource2 = new MatTableDataSource([{}, {}, {}]);
+  reportDate: any;
   displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
     'frequency', 'amount'];
   totalAmount = 0;
@@ -37,6 +40,7 @@ export class AllSipComponent implements OnInit {
   currentPageIndex: any = 0;
   totalSipCount: any;
   pageEvent: PageEvent;
+  advisor: any;
 
   constructor(
     private backoffice: BackOfficeService,
@@ -48,6 +52,9 @@ export class AllSipComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.advisor = AuthService.getUserInfo();
+    this.reportDate = new Date();
+    console.log(this.getOrgData);
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
     this.isLoading = true;
     if (this.mode == 'expired') {
@@ -66,6 +73,7 @@ export class AllSipComponent implements OnInit {
       this.arnRiaValue = -1;
     }
     this.getAllSip(200, 1);
+    this.getAllSipData();
   }
 
   getAllSIPdataThenCreateExcel() {
@@ -93,7 +101,18 @@ export class AllSipComponent implements OnInit {
     this.excelGen.generateAllSipExcel(arr, 'Sip');
   }
 
+  ExcelAll(tableTitle) {
+
+    setTimeout(() => {
+      const blob = new Blob([document.getElementById('template').innerHTML], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+      });
+      saveAs(blob, tableTitle + '.xls');
+    }, 200);
+  }
+
   Excel(tableTitle) {
+    // const para = document.getElementById('template');
     const rows = this.tableEl._elementRef.nativeElement.rows;
     this.excelGen.generateExcel(rows, tableTitle);
   }
@@ -189,7 +208,70 @@ export class AllSipComponent implements OnInit {
     }
 
   }
+  getAllSipData() {
+    const obj = {
+      limit: -1,
+      pageNumber: 1,
+      advisorId: (this.parentId > 0) ? this.advisorId : 0,
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      parentId: (this.data) ? this.data.parentId : -1,
+      offset: 0
+    };
+    if (this.mode == 'all') {
+      this.backoffice.allSipGet(obj).subscribe(
+        data => {
+          if (data) {
+            console.log("this is all sip table data, ------", data)
+            this.dataSource2 = new MatTableDataSource(data);
+          } else {
+            this.dataSource2.filteredData = [];
+            this.dataSource2.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+            this.eventService.openSnackBar('No More Data Found', "DISMISS");
+            this.hasEndReached = true;
+          }
 
+        },
+        err => {
+          this.dataSource2.filteredData = [];
+          this.hasEndReached = true;
+          this.dataSource2.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+          this.eventService.openSnackBar('No More Data Found', "DISMISS");
+        }
+      );
+    } else if (this.mode == 'expired') {
+      this.backoffice.GET_expired(obj).subscribe(
+        data => {
+          if (data) {
+            this.dataSource2 = new MatTableDataSource(data);
+          } else {
+            this.dataSource2.filteredData = [];
+            this.dataSource2.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+            this.eventService.openSnackBar('No More Data Found', "DISMISS");
+          }
+
+        },
+        err => {
+          this.dataSource2.filteredData = [];
+        }
+      );
+    } else {
+      this.backoffice.GET_EXPIRING(obj).subscribe(
+        data => {
+          if (data) {
+            this.dataSource2 = new MatTableDataSource(this.data);
+          } else {
+            this.dataSource2.filteredData = [];
+            this.dataSource2.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+            this.eventService.openSnackBar('No More Data Found', "DISMISS");
+          }
+
+        },
+        err => {
+          this.dataSource2.filteredData = [];
+        }
+      );
+    }
+  }
   onPaginationChange(event) {
     const { pageIndex } = event;
     this.currentPageIndex = pageIndex + 1;
