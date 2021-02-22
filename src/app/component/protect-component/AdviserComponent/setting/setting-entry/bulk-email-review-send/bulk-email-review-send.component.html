@@ -116,6 +116,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="full-center">
+                            <mat-spinner class="spinnerClass" [diameter]="30"></mat-spinner>
+                        </div>
                     </div>
 
                     <div class="text-center" *ngIf="!isLoading && dataSource === null">
@@ -278,7 +281,8 @@
                         <span *ngIf="verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
                         <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
                             *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
-                            (click)="bulkEmail('')">Change</span> </p>
+                            (click)="bulkEmail('')">Change</span>
+                    </p>
                     <mat-form-field class="w-200" *ngIf="verifiedAccountsList.length>1">
                         <mat-select class="form-control" [formControl]="selectedFromEmail">
                             <mat-option *ngFor="let singleClient of verifiedAccountsList"
