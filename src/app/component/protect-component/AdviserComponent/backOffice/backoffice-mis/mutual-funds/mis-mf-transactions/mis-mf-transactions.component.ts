@@ -43,6 +43,7 @@ export class PickDateAdapter extends NativeDateAdapter {
   ],
 })
 export class MisMfTransactionsComponent implements OnInit {
+  mode;
   maxDate = new Date();
   advisor = AuthService.getUserInfo();
   reportDate = new Date();
@@ -233,7 +234,7 @@ export class MisMfTransactionsComponent implements OnInit {
       this.filterApi(this.obj.categoryId)
     }
   }
-  // remove(item) { //backup 
+  // remove(item) { //backup
   //   if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
   //     this.selectedStatusFilter = 'statusFilter';
   //   }
