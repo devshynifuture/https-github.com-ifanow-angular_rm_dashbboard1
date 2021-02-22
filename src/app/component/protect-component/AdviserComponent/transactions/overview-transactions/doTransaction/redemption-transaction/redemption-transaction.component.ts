@@ -10,6 +10,8 @@ import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {MultiTransactionPopupComponent} from '../multi-transaction-popup/multi-transaction-popup.component';
+import {CustomerService} from "../../../../../customers/component/customer/customer.service";
+import {EnumDataService} from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-redemption-transaction',
@@ -30,7 +32,8 @@ export class RedemptionTransactionComponent implements OnInit {
               private fb: FormBuilder,
               public dialog: MatDialog,
               private eventService: EventService,
-              public processTransaction: ProcessTransactionService) {
+              public processTransaction: ProcessTransactionService,
+              public enumDataService: EnumDataService) {
   }
 
   get data() {

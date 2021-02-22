@@ -11,6 +11,7 @@ import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MultiTransactionPopupComponent} from '../multi-transaction-popup/multi-transaction-popup.component';
 import {MatDialog, MatTableDataSource} from '@angular/material';
+import {EnumDataService} from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-switch-transaction',
@@ -73,7 +74,8 @@ export class SwitchTransactionComponent implements OnInit {
               private fb: FormBuilder,
               private eventService: EventService,
               public dialog: MatDialog,
-              public processTransaction: ProcessTransactionService) {
+              public processTransaction: ProcessTransactionService,
+              public enumDataService: EnumDataService) {
   }
 
   folioDetails: any;

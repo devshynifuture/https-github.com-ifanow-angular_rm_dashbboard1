@@ -11,6 +11,7 @@ import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {MultiTransactionPopupComponent} from '../multi-transaction-popup/multi-transaction-popup.component';
+import {EnumDataService} from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-purchase-trasaction',
@@ -35,7 +36,8 @@ export class PurchaseTrasactionComponent implements OnInit {
               private eventService: EventService,
               private utilService: UtilService,
               public dialog: MatDialog,
-              private customerService: CustomerService) {
+              private customerService: CustomerService,
+              public enumDataService: EnumDataService) {
   }
 
   get data() {
