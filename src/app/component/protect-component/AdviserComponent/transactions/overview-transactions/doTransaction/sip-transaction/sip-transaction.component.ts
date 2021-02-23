@@ -865,6 +865,7 @@ export class SipTransactionComponent implements OnInit {
       schemeDetails: this.schemeDetails,
       reInvestmentOpt: this.reInvestmentOpt,
       folioDetails: this.folioDetails,
+      isException: true,
     };
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       obj.mandateId = (this.selectedMandate) ? this.selectedMandate.id : undefined;
