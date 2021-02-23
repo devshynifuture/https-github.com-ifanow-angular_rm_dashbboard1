@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
-import { EnumDataService } from "../../../../../../../services/enum-data.service";
+import { EnumDataService } from '../../../../../../../services/enum-data.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -32,13 +32,13 @@ export class PurchaseTrasactionComponent implements OnInit {
   element: any;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
-    private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private eventService: EventService,
-    private utilService: UtilService,
-    public dialog: MatDialog,
-    private datePipe: DatePipe,
-    private customerService: CustomerService,
-    public enumDataService: EnumDataService) {
+              private subInjectService: SubscriptionInject, private fb: FormBuilder,
+              private eventService: EventService,
+              private utilService: UtilService,
+              public dialog: MatDialog,
+              private datePipe: DatePipe,
+              private customerService: CustomerService,
+              public enumDataService: EnumDataService) {
   }
 
   get data() {
@@ -104,9 +104,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.setDefaultData(this.inputData)
+    this.setDefaultData(this.inputData);
     if (data.mutualFundData) {
-      this.handleMutualFundData(data)
+      this.handleMutualFundData(data);
     }
   }
 
@@ -114,7 +114,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, false);
-    this.assignToTransactionSummary()
+    this.assignToTransactionSummary();
   }
 
 
@@ -145,7 +145,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   handleMutualFundData(data) {
     this.schemeName = data.mutualFundData.schemeName;
-    this.scheme = data.mutualFundData
+    this.scheme = data.mutualFundData;
     this.folioNumber = data.mutualFundData.folioNumber;
     this.mfDefault = data.transactionData;
     const foilo = { folioNumber: this.folioNumber };
@@ -600,7 +600,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data.schemeSelection) ? '2' : data.schemeSelection],
-      employeeContry: [(!data) ? '' : data.orderVal, [Validators.required,]],
+      employeeContry: [(!data) ? '' : data.orderVal, [Validators.required, ]],
       investmentAccountSelection: [(data.folioNumber) ? data.folioNumber : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
@@ -618,7 +618,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.getFolioList();
     }
     if (this.mutualFundData) {
-      this.mutualFundSchemeDetails()
+      this.mutualFundSchemeDetails();
     }
   }
   mutualFundSchemeDetails() {
@@ -631,7 +631,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.purchaseTransaction.controls.schemePurchase.disable();
     this.filterSchemeList = of([{ schemeName: this.schemeName }]);
     Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-    this.scheme.mutualFundSchemeMasterId = this.mutualFundData.schemeId
+    this.scheme.mutualFundSchemeMasterId = this.mutualFundData.schemeId;
     const obj1 = {
       mutualFundSchemeMasterId: this.mutualFundData.schemeId,
       aggregatorType: this.mfDefault.defaultClient.aggregatorType,
