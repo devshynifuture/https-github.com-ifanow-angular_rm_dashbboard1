@@ -467,6 +467,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, { folioNumber: '' });
+    Object.assign(this.transactionSummary, { enteredAmount: '' });
     this.purchaseTransaction.controls.reinvest.setValue('');
     this.purchaseTransaction.controls.employeeContry.reset();
     this.purchaseTransaction.controls.investmentAccountSelection.reset();
@@ -853,6 +854,9 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.purchaseTransaction.controls.employeeContry.reset();
         this.purchaseTransaction.controls.investmentAccountSelection.reset();
         this.purchaseTransaction.controls.schemePurchase.reset();
+        Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+        Object.assign(this.transactionSummary, { folioNumber: '' });
+        Object.assign(this.transactionSummary, { enteredAmount: '' });
       }
     }
   }
