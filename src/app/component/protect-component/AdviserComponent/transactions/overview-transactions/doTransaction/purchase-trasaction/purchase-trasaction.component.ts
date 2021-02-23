@@ -83,12 +83,10 @@ export class PurchaseTrasactionComponent implements OnInit {
   showSpinner = false;
   bankDetails: any;
   selectedMandate: any;
-  callOnFolioSelection: boolean;
   showSpinnerMandate = false;
   showSpinnerFolio = false;
   childTransactions = [];
   dataSource = new MatTableDataSource(this.childTransactions);
-
   multiTransact = false;
   schemeInput: any;
   showError = false;
@@ -476,10 +474,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   getExistingScheme() {
     this.showSpinner = true;
-    const amcId = 0;
-    // if (this.childTransactions && this.childTransactions.length > 0) {
-    //   amcId = this.childTransactions[0].amcId;
-    // }
+    const amcId = 0
     const obj = {
       amcId,
       bseOrderType: 'ORDER',
@@ -498,7 +493,6 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.purchaseTransaction.get('schemePurchase').setErrors({ setValue: error.message });
         this.purchaseTransaction.get('schemePurchase').markAsTouched();
         (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
-        // this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
   }
@@ -511,7 +505,6 @@ export class PurchaseTrasactionComponent implements OnInit {
     } else {
       this.purchaseTransaction.controls.employeeContry.clearValidators();
       this.purchaseTransaction.controls.employeeContry.clearAsyncValidators();
-
       this.purchaseTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(this.schemeDetails.minAmount)]);
       this.purchaseTransaction.controls.employeeContry.updateValueAndValidity();
     }
