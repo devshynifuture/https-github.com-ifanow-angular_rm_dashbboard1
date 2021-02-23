@@ -11,16 +11,22 @@
                 [ngClass]="{'cursor-not-allowed': isLoading}"
                 (page)="!isLoading ? pageEvent = onPaginationChange($event): $event.preventDefault()">
             </mat-paginator>
-            <div class="right text-right">
-                <button mat-stroked-button class="btn-default addon"
-                    *ngIf="!isLoading && dataSource.filteredData?.length>0 && mode =='all'"
-                    (click)="Excel('ALL SIP')"><i class="material-icons">add</i>XLS</button>
-                <button mat-stroked-button class="btn-default addon ml-8 v-middle"
-                    *ngIf="!isLoading && dataSource.filteredData?.length>0 && mode =='all'"
-                    (click)="ExcelAll('ALL SIP')">Download All Sip</button>
-                <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
-            </div>
+
         </div>
+    </div>
+    <div class="col-md-12 full-end">
+
+        <button mat-stroked-button class="btn-default addon"
+            *ngIf="!isLoading && dataSource.filteredData?.length>0 && mode =='all'" (click)="Excel('ALL SIP')"><i
+                class="material-icons">add</i>XLS</button>
+        <button mat-stroked-button class="btn-default addon ml-8 v-middle"
+            *ngIf="!isLoading  && !loadSip && dataSource.filteredData?.length>0 && mode =='all'"
+            (click)="ExcelAll('ALL SIP')">Download All Sip</button>
+        <div>
+            <mat-spinner *ngIf="loadSip" class="ml-12" [diameter]="30"></mat-spinner>
+        </div>
+        <button mat-stroked-button class="btn-success ml-8 addon mb-12 mt-12" (click)="aumReport()">Back</button>
+
     </div>
     <div class="row" *ngIf="!isLoading && dataSource.filteredData?.length>0">
         <div class="col-md-8"></div>
