@@ -87,7 +87,6 @@ export class ClientBankComponent implements OnInit {
     this.clientName = data.displayName;
     this.fieldFlag;
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
-    this.createBankForm(data);
   }
 
   toUpperCase(formControl, event) {
@@ -205,6 +204,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createBankForm({});
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
     if (this.userData.bankData == undefined && this.fieldFlag) {
       this.getBankList(this.userData);
