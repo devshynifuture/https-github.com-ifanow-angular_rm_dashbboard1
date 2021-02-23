@@ -76,8 +76,8 @@
                                     Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
-                                    {{navOfSelectedScheme}} as
-                                    on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
+                                    {{scheme.nav}} as
+                                    on:{{(scheme)?(scheme.navDate):''}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>
@@ -290,7 +290,8 @@
         <!-- commented for prod build -->
 
 
-        <button (click)="AddMultiTransaction()" *ngIf="!enumDataService.PRODUCTION && platformType && platformType == 1 && !mutualFundData"
+        <button (click)="AddMultiTransaction()"
+            *ngIf="!enumDataService.PRODUCTION && platformType && platformType == 1 && !mutualFundData"
             class="br-0 text-primary f-14" mat-button mat-raised-button>
             SAVE & ADD ANOTHER
         </button>

@@ -68,7 +68,7 @@
           </h5>
           <h5 class="m-0" *ngIf="transactionSummary.enteredAmount && transactionSummary.Ttype == 1"><span
               class="f-500">Amount:</span>
-            ₹{{(transactionSummary == undefined) ? '' : transactionSummary.enteredAmount}}/Lumpsum
+            ₹{{(transactionSummary == undefined) ? '' : transactionSummary.enteredAmount}}/{{transactionSummary.frequencyType}}
           </h5>
           <h5 class="m-0" *ngIf="transactionSummary.enteredUnits && transactionSummary.Ttype == 2"><span
               class="f-500">Units:</span>
