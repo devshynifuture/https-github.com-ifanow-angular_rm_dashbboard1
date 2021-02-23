@@ -39,7 +39,7 @@
       <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
         <h5 class="m-0   ">Enter name as per PAN</h5>
       </div>
-      <div class="col-md-8 form-group">
+      <div class="col-md-8 remove-top">
         <mat-form-field appearance="standard" floatLabel="never">
           <input #searchClient (input)="searchClientFamilyMember(searchClient.value)" [matAutocomplete]="auto1"
             appPrefixFocusDirective aria-label="client" class="form-control pl-8" formControlName="ownerName" matInput
@@ -74,11 +74,11 @@
       </div> -->
     </div>
 
-    <div class="row pt-10">
+    <div class="row pt-28">
       <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end">
         <h3 class="f-16 m-0">Holding nature</h3>
       </div>
-      <div class="col-md-7 form-group">
+      <div class="col-md-7 remove-top">
         <mat-form-field appearance="standard" floatLabel="never">
           <mat-select class="form-control" formControlName="holdingType">
             <mat-option disabled value=''>Select holding nature</mat-option>
@@ -91,11 +91,11 @@
       </div>
     </div>
 
-    <div class="row pt-18">
+    <div class="row pt-28">
       <div class="col-md-4 pr-0 d-flex align-items-center justify-content-end">
         <h3 class="f-16 m-0">Tax status</h3>
       </div>
-      <div class="col-md-7 form-group">
+      <div class="col-md-7 remove-top">
         <mat-form-field appearance="standard" floatLabel="never">
           <mat-select class="form-control" formControlName="taxMaster">
             <mat-option disabled value=''>Select tax status</mat-option>

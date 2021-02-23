@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
-import { EnumDataService } from "../../../../../../../services/enum-data.service";
+import { EnumDataService } from '../../../../../../../services/enum-data.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -104,9 +104,9 @@ export class PurchaseTrasactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.setDefaultData(this.inputData)
+    this.setDefaultData(this.inputData);
     if (data.mutualFundData) {
-      this.handleMutualFundData(data)
+      this.handleMutualFundData(data);
     }
   }
 
@@ -114,7 +114,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, false);
-    this.assignToTransactionSummary()
+    this.assignToTransactionSummary();
   }
 
 
@@ -145,7 +145,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   handleMutualFundData(data) {
     this.schemeName = data.mutualFundData.schemeName;
-    this.scheme = data.mutualFundData
+    this.scheme = data.mutualFundData;
     this.folioNumber = data.mutualFundData.folioNumber;
     this.mfDefault = data.transactionData;
     const foilo = { folioNumber: this.folioNumber };
@@ -601,11 +601,11 @@ export class PurchaseTrasactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data.schemeSelection) ? '2' : data.schemeSelection],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required,]],
-      investmentAccountSelection: [(data.folioNumber) ? data.folioNumber : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNo) ? data.folioNo : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag : '', [Validators.required]],
+      reinvest: [(data.dividendReinvestmentFlag == undefined) ? '' : data.dividendReinvestmentFlag, [Validators.required]],
       schemePurchase: [(data.scheme) ? data.scheme.schemeName : this.mutualFundData ? this.mutualFundData.schemeName : '', [Validators.required]],
     });
     this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
@@ -618,7 +618,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.getFolioList();
     }
     if (this.mutualFundData) {
-      this.mutualFundSchemeDetails()
+      this.mutualFundSchemeDetails();
     }
   }
   mutualFundSchemeDetails() {
@@ -631,7 +631,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     this.purchaseTransaction.controls.schemePurchase.disable();
     this.filterSchemeList = of([{ schemeName: this.schemeName }]);
     Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-    this.scheme.mutualFundSchemeMasterId = this.mutualFundData.schemeId
+    this.scheme.mutualFundSchemeMasterId = this.mutualFundData.schemeId;
     const obj1 = {
       mutualFundSchemeMasterId: this.mutualFundData.schemeId,
       aggregatorType: this.mfDefault.defaultClient.aggregatorType,
@@ -828,6 +828,7 @@ export class PurchaseTrasactionComponent implements OnInit {
               element.scheme = this.scheme;
               element.schemeDetails = this.schemeDetails;
               element.reInvestmentOpt = this.reInvestmentOpt;
+              element.dividendReinvestmentFlag = this.purchaseTransaction.get('reinvest').value;
               element.folioDetails = this.folioDetails;
             }
           });
