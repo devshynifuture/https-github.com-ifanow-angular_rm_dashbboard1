@@ -750,6 +750,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
               this.disableBtn = false;
               this.barButtonOptions.active = false;
               this.barButtonOptions1.active = false;
+              this.barButtonOptions1.value = 10;
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
               this.changeTabAndSendData(data);
@@ -960,6 +961,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.disableBtn = false;
         data.invTypeCategory = this.invTypeCategory;
         this.barButtonOptions.active = false;
+        this.barButtonOptions1.value = 10;
         this.barButtonOptions1.active = false;
         data.categoryTypeflag = 'familyMinor';
         if (flag == 'Next') {
