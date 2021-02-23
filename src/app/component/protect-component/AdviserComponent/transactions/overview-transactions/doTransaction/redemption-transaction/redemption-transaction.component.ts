@@ -73,7 +73,6 @@ export class RedemptionTransactionComponent implements OnInit {
   maiSchemeList: any;
   reInvestmentOpt: [];
   schemeDetails: any;
-  navOfSelectedScheme: any;
   transactionSummary: any;
   folioList: any = [];
   folioDetails: any;
@@ -189,7 +188,6 @@ export class RedemptionTransactionComponent implements OnInit {
     this.folioList = [];
     this.folioDetails = null;
     this.onFolioChange(null);
-    this.navOfSelectedScheme = 0;
     (this.schemeDetails) ? (this.schemeDetails.minAmount = 0) : 0;
     Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
     Object.assign(this.transactionSummary, { folioNumber: '' });
@@ -213,7 +211,6 @@ export class RedemptionTransactionComponent implements OnInit {
       this.scheme = data.scheme;
       this.schemeDetails = data.schemeDetails;
       this.folioDetails = data.folioDetails;
-      this.navOfSelectedScheme = this.scheme.nav;
       this.currentValue = this.processTransaction.calculateCurrentValue(this.scheme.nav, this.folioDetails.balanceUnit).toFixed(2);
     }
     if (!data) {
@@ -632,7 +629,6 @@ export class RedemptionTransactionComponent implements OnInit {
         this.amcId = this.scheme.amcId;
         this.scheme = null;
         this.schemeDetails = null;
-        this.navOfSelectedScheme = 0;
         this.folioDetails = null;
         this.folioList = [];
         this.redemptionTransaction.controls.employeeContry.reset();

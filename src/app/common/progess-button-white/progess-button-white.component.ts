@@ -83,6 +83,10 @@ export class ProgessButtonWhiteComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    // this.options.value = 0;
+  }
+
 
 }
 export interface MatProgressButtonOptions {
