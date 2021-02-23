@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACT,MAAM,EAAE,kBAAkB;EAE1B,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,KAAK;CAOf;;AAXD,AAKI,YALQ,CAKR,CAAC,CAAC;EACE,KAAK,EAAE,OAAO;CACjB;;AAPL,AAQI,YARQ,CAQR,MAAM,CAAC;EACH,WAAW,EAAE,cAAc;CAC9B;;AAGL,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,GAAG;EACV,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,cAAc,EAAE,MAAM;CACzB",
+    "sources": [
+        "setting-activity.component.scss"
+    ],
+    "names": [],
+    "file": "setting-activity.component.css"
+}

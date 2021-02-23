@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "scss-mob.component.scss"
+    ],
+    "names": [],
+    "file": "scss-mob.component.css"
+}

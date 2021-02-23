@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,UAAU,EAAE,OAAO;EACnB,KAAK,EAAE,OAAO;EACd,UAAU,EAAE,IAAI;CACjB",
+    "sources": [
+        "cashflow-upper-slider.component.scss"
+    ],
+    "names": [],
+    "file": "cashflow-upper-slider.component.css"
+}

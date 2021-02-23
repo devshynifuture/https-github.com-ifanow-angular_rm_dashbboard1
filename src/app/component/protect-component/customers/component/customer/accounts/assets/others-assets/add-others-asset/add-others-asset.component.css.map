@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACnG,KAAK,EAAE,gBAAgB;CAAE",
+    "sources": [
+        "add-others-asset.component.scss"
+    ],
+    "names": [],
+    "file": "add-others-asset.component.css"
+}

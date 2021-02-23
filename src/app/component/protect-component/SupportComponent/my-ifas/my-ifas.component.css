@@ -1,0 +1,20 @@
+table {
+  width: 100%;
+}
+
+.fc-green {
+  color: #02b875 !important;
+}
+
+.fc-warning {
+  color: #ff6823 !important;
+}
+
+.fc-yellow {
+  color: #ffc100 !important;
+}
+
+::ng-deep .back-office-table #table-low tbody td {
+  padding: 0px 8px !important;
+}
+/*# sourceMappingURL=my-ifas.component.css.map */

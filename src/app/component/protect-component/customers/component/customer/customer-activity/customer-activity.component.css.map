@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,OAAO,CAAC;EACJ,gBAAgB,EAAE,kBAAkB;EACpC,KAAK,EAAE,kBAAkB;CAC1B",
+    "sources": [
+        "customer-activity.component.scss"
+    ],
+    "names": [],
+    "file": "customer-activity.component.css"
+}

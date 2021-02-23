@@ -1,0 +1,9 @@
+.form-control {
+  border-radius: 0px;
+}
+
+.bg-white.hover:hover {
+  background-color: #E5E5E5 !important;
+  cursor: pointer;
+}
+/*# sourceMappingURL=invoice-pdf-document.component.css.map */

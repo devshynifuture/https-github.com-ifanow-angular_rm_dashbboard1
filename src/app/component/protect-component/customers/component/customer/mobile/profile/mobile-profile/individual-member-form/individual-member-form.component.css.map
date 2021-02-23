@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "individual-member-form.component.scss"
+    ],
+    "names": [],
+    "file": "individual-member-form.component.css"
+}

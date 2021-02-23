@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAC,AAAA,iBAAiB,CAAC;EACd,KAAK,EAAE,KAAK;EACZ,YAAY,EAAE,GAAG;CACpB;;AAED,AAAA,QAAQ,CAAC;EACL,cAAc,EAAE,IAAI;CACvB",
+    "sources": [
+        "investors-transactions.component.scss"
+    ],
+    "names": [],
+    "file": "investors-transactions.component.css"
+}

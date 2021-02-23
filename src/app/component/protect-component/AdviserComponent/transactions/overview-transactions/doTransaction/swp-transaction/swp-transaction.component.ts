@@ -11,6 +11,8 @@ import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MultiTransactionPopupComponent} from '../multi-transaction-popup/multi-transaction-popup.component';
 import {MatDialog, MatTableDataSource} from '@angular/material';
+import {CustomerService} from "../../../../../customers/component/customer/customer.service";
+import {EnumDataService} from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-swp-transaction',
@@ -76,7 +78,8 @@ export class SwpTransactionComponent implements OnInit {
               public processTransaction: ProcessTransactionService,
               private fb: FormBuilder,
               public dialog: MatDialog,
-              private eventService: EventService) {
+              private eventService: EventService,
+              public enumDataService: EnumDataService) {
   }
 
   frequency: any;

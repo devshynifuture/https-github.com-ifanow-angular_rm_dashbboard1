@@ -1,0 +1,13 @@
+.disableClass {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+::ng-deep .paginationClass .mat-paginator-range-label {
+  margin: 0px;
+}
+
+::ng-deep .paginationClass .mat-paginator-container {
+  min-height: auto;
+}
+/*# sourceMappingURL=sip-cleanup.component.css.map */

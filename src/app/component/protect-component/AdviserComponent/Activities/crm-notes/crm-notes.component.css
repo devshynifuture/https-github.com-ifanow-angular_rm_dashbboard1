@@ -1,0 +1,10 @@
+::ng-deep .froala-edit-class .fr-box.fr-basic .fr-wrapper {
+  min-height: 430px !important;
+  margin-bottom: 20px !important;
+}
+
+.memberBtnNotes {
+  font-size: 13px;
+  padding: 0px 8px;
+}
+/*# sourceMappingURL=crm-notes.component.css.map */

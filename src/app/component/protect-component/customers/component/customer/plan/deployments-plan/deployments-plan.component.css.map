@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACA,AAAA,WAAW,CAAA;EACP,OAAO,EAAC,YAAY;CACvB;;AAED,AAAA,YAAY,CAAA;EACR,OAAO,EAAC,IAAI;CACf;;AACD,AAAA,QAAQ,CAAC;EACL,gBAAgB,EAAC,KAAK;CACzB",
+    "sources": [
+        "deployments-plan.component.scss"
+    ],
+    "names": [],
+    "file": "deployments-plan.component.css"
+}

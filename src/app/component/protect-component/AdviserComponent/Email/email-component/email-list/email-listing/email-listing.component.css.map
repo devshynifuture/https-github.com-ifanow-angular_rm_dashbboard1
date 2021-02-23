@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAIA,AAAA,KAAK,CAAC;EACJ,YAAY,EAAE,cAAc;CAC7B;;AAED,AAAA,WAAW,CAAC;EACV,KAAK,EAAE,eAAe;EACtB,MAAM,EAAE,eAAe;CACxB;;AAED,AAAA,kBAAkB,CAAC;EACjB,UAAU,EAAE,eAAe;EAC3B,MAAM,EAAE,mBAAmB;CAM5B;;AARD,AAIE,kBAJgB,CAIhB,UAAU,CAAC,EAAE,CAAC;EACZ,aAAa,EAAE,iBAAiB;EAChC,UAAU,EAAE,WAAW;CACxB;;AAGH,AAAA,aAAa,CAAC;EACZ,aAAa,EAAE,iBAAiB;CACjC;;AAED,AAAA,YAAY,CAAC;EACX,MAAM,EAAE,QAAQ;CACjB",
+    "sources": [
+        "email-listing.component.scss"
+    ],
+    "names": [],
+    "file": "email-listing.component.css"
+}

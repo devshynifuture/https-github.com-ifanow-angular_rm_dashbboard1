@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,oBAAoB,CAAE;EAC5B,UAAU,EAAE,cAAc;CAC7B",
+    "sources": [
+        "multiple-email-address.component.scss"
+    ],
+    "names": [],
+    "file": "multiple-email-address.component.css"
+}

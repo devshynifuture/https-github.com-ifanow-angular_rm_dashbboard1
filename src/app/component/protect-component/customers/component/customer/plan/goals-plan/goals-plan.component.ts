@@ -186,7 +186,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.loadAllGoals(false);
       })
     );
-    this.loadAllAssets();
+    //this.loadAllAssets();
     this.loadAllGoals(false);
     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
   }
@@ -596,6 +596,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.singleGoalData.dashboardData.lump_equity = this.finPlanObj.obj.lump_equity
       this.singleGoalData.img = this.finPlanObj.obj.imageUrl
       this.singleGoalData.dashboardData.futureValue = this.finPlanObj.obj.goalFV
+      goalData.remainingData.retirementTableValue = this.finPlanObj.obj.retirementTableValue;
+      goalData.remainingData.milestoneModels = this.finPlanObj.obj.milestoneModels;
     }
     // this.cd.markForCheck();
     // this.cd.detectChanges();

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "clients-dashboard.component.scss"
+    ],
+    "names": [],
+    "file": "clients-dashboard.component.css"
+}

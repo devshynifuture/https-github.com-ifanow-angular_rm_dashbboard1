@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,UAAU,EAAE,oCAAoC,EAAE,OAAO;EACzD,MAAM,EAAE,KAAK;EAGb,aAAa,EAAE,GAAG;CAEnB;;AAED,AAAA,aAAa,CAAC;EACZ,UAAU,EAAE,sCAAsC,EAAE,OAAO;EAC3D,MAAM,EAAE,KAAK;EAGb,aAAa,EAAE,GAAG;EAClB,UAAU,EAAE,eAAe;EAC3B,iBAAiB,EAAE,SAAS;EAC5B,mBAAmB,EAAE,YAAY;CAClC",
+    "sources": [
+        "mob-invest.component.scss"
+    ],
+    "names": [],
+    "file": "mob-invest.component.css"
+}

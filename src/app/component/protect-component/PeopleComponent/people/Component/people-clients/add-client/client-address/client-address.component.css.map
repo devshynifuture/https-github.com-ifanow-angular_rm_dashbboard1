@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,MAAM,CAAC;EACH,WAAW,EAAE,KAAK;CACrB",
+    "sources": [
+        "client-address.component.scss"
+    ],
+    "names": [],
+    "file": "client-address.component.css"
+}

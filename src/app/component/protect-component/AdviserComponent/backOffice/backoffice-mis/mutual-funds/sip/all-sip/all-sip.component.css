@@ -1,0 +1,26 @@
+.hide {
+  display: none;
+}
+
+.example-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.pos-rel-left40 {
+  position: relative;
+  left: 40%;
+}
+/*# sourceMappingURL=all-sip.component.css.map */

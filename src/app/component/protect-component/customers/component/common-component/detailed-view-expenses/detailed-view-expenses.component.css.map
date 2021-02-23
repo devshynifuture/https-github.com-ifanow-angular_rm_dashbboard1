@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "detailed-view-expenses.component.scss"
+    ],
+    "names": [],
+    "file": "detailed-view-expenses.component.css"
+}

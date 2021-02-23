@@ -36,9 +36,10 @@
             <ng-container matColumnDef="amount">
                 <th *matHeaderCellDef class="br w-11 text-right" mat-header-cell> Amount</th>
                 <td *matCellDef="let element" class="br text-right" mat-cell>
-                    <div class="bar">
-                        {{element.amountType == 'Amount' ?  '₹' + element.orderVal: element.orderVal + 'Unit'}}
-                    </div>
+                  <div *ngIf="element.allUnits||element.allRedeem">All units</div>
+                  <div *ngIf="!element.allUnits&&!element.allRedeem" class="bar">
+                    {{element.amountType == 'Amount' ? '₹' + element.orderVal : element.orderVal + ' Unit'}}
+                  </div>
                 </td>
             </ng-container>
             <!-- <ng-container matColumnDef="icons">

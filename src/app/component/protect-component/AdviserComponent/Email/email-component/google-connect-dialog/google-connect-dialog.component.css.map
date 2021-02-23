@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "google-connect-dialog.component.scss"
+    ],
+    "names": [],
+    "file": "google-connect-dialog.component.css"
+}

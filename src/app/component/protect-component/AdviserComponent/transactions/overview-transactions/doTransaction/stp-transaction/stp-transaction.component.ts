@@ -10,6 +10,8 @@ import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {MultiTransactionPopupComponent} from '../multi-transaction-popup/multi-transaction-popup.component';
+import {CustomerService} from "../../../../../customers/component/customer/customer.service";
+import {EnumDataService} from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-stp-transaction',
@@ -36,7 +38,7 @@ export class StpTransactionComponent implements OnInit {
               public processTransaction: ProcessTransactionService,
               private eventService: EventService,
               public dialog: MatDialog,
-              private fb: FormBuilder) {
+              public enumDataService: EnumDataService, private fb: FormBuilder) {
   }
 
   get data() {

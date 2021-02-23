@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACnG,KAAK,EAAE,gBAAgB;CAC1B",
+    "sources": [
+        "add-motor-insurance-in-asset.component.scss"
+    ],
+    "names": [],
+    "file": "add-motor-insurance-in-asset.component.css"
+}

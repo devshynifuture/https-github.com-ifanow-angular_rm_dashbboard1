@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,cAAc,CAAC,iBAAiB,CAAC;EACvC,SAAS,EAAE,KAAK;CACnB",
+    "sources": [
+        "client-bank.component.scss"
+    ],
+    "names": [],
+    "file": "client-bank.component.css"
+}

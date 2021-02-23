@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACP,SAAS,EAAE,IAAI;CAClB",
+    "sources": [
+        "support-upper.component.scss"
+    ],
+    "names": [],
+    "file": "support-upper.component.css"
+}

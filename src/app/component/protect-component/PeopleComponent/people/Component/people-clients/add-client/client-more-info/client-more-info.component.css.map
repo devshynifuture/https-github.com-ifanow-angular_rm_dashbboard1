@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,MAAM,CAAC;EACH,WAAW,EAAE,KAAK;CACrB;;AAED,AAAA,SAAS,CAAC;EACN,MAAM,EAAE,eAAe;CAC1B",
+    "sources": [
+        "client-more-info.component.scss"
+    ],
+    "names": [],
+    "file": "client-more-info.component.css"
+}

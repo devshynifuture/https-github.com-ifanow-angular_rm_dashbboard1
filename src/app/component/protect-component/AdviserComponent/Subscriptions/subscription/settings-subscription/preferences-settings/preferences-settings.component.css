@@ -1,0 +1,140 @@
+h3 {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0.2px;
+  color: #3F3F3F;
+}
+
+p {
+  margin-bottom: 0;
+  color: #83959D;
+  line-height: 15px;
+}
+
+h5 {
+  font-family: "Proxima Nova", sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 0.2px;
+  color: #3F3F3F;
+  font-weight: 200;
+}
+
+.img-icons {
+  width: 70%;
+}
+
+.notes {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #3F3F3F;
+}
+
+.form-control {
+  height: 50px;
+}
+
+.form-control:focus {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  border-color: #ced4da !important;
+}
+
+.ba-danger {
+  border: 1px solid #FF6823;
+  border-radius: 2px;
+  padding: 1px;
+}
+
+.min-height {
+  min-height: 965px;
+}
+
+.active {
+  background-color: #d90000;
+  color: #fff;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+.b-outline {
+  outline: 1px solid #dee5e7 !important;
+  position: relative;
+}
+
+.b-outline::before {
+  content: '';
+  width: 10px;
+  height: 40px;
+  z-index: 2;
+  background: #fff;
+  position: absolute;
+  right: -5px;
+  top: 0px;
+}
+
+.read-more {
+  text-align: right;
+  color: #008FFF;
+  margin-bottom: -18px;
+  font-size: 14px;
+}
+
+.preferencesMenuList .vertical-menu li {
+  padding: 10px 12px !important;
+}
+
+.width350 {
+  width: 350px;
+}
+
+.height20 {
+  height: 20px;
+}
+
+.height23 {
+  height: 23px;
+}
+
+#ui-perferences .containerOne {
+  position: relative;
+}
+
+#ui-perferences .overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  width: 70%;
+  height: 0;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+#ui-perferences .containerOne:hover .overlay {
+  height: 100%;
+}
+
+#ui-perferences .text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 14px;
+}
+/*# sourceMappingURL=preferences-settings.component.css.map */

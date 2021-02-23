@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "dynamic-component.component.scss"
+    ],
+    "names": [],
+    "file": "dynamic-component.component.css"
+}

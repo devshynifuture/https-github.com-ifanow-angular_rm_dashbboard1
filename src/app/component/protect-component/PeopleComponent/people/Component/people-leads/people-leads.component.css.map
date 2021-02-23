@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACT,MAAM,EAAE,kBAAkB;EAC1B,MAAM,EAAE,KAAK;EACb,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,KAAK;CAIf;;AARD,AAKI,YALQ,CAKR,CAAC,CAAC;EACE,KAAK,EAAE,OAAO;CACjB;;AAGL,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,GAAG;EACV,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,cAAc,EAAE,MAAM;CACzB",
+    "sources": [
+        "people-leads.component.scss"
+    ],
+    "names": [],
+    "file": "people-leads.component.css"
+}

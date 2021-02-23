@@ -1,0 +1,15 @@
+.inputGroupText {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  padding: .375rem .75rem;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  border-left: transparent;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=refer-and-earn-popups.component.css.map */

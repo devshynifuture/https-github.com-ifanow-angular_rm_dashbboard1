@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,QADM,CACN,GAAG,CAAC;EACF,SAAS,EAAE,IAAI;CAChB;;AAGH,AAAA,aAAa,CAAC;EACZ,QAAQ,EAAE,QAAQ;EAClB,WAAW,EAAE,GAAG;EAChB,GAAG,EAAE,IAAI;EACT,IAAI,EAAE,IAAI;CAEX",
+    "sources": [
+        "single-goal-year.component.scss"
+    ],
+    "names": [],
+    "file": "single-goal-year.component.css"
+}
