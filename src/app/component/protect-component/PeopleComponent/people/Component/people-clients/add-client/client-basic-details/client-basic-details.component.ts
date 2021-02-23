@@ -66,7 +66,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     active: false,
     text: 'SAVE & NEXT',
     buttonColor: 'primary',
-    barColor: 'accent',
+    barColor: 'warn',
     raised: true,
     stroked: false,
     mode: 'determinate',
