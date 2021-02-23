@@ -605,14 +605,13 @@ export class PurchaseTrasactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag : '', [Validators.required]],
+      reinvest: [(!data.dividendReinvestmentFlag) ? '' : data.dividendReinvestmentFlag, [Validators.required]],
       schemePurchase: [(data.scheme) ? data.scheme.schemeName : this.mutualFundData ? this.mutualFundData.schemeName : '', [Validators.required]],
     });
     this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
       this.filterSchemeList = of(this.schemeList).pipe(startWith(''),
         map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
     });
-    this.purchaseTransaction.controls.reinvest.setValue((data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag : '')
     this.purchaseTransaction.controls.schemePurchase.setValue({ schemeName: (data.scheme) ? data.scheme.schemeName : '' });
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {

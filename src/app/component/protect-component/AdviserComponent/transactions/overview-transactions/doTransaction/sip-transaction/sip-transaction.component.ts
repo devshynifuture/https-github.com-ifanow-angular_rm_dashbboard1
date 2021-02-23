@@ -749,6 +749,7 @@ export class SipTransactionComponent implements OnInit {
         map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
     });
     this.sipTransaction.controls.schemeSip.setValue({ schemeName: (data.scheme) ? data.scheme.schemeName : '' });
+    this.sipTransaction.controls.date.setValue({ schemeName: (data.date) ? data.date : '' });
     this.sipTransaction.controls.tenure.valueChanges.subscribe(newValue => {
       this.checkAndHandleMaxInstallmentValidator();
     });
