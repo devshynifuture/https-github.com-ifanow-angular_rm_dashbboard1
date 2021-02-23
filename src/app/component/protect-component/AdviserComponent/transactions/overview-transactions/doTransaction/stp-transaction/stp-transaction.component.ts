@@ -315,7 +315,6 @@ export class StpTransactionComponent implements OnInit {
   selectedSchemeTransfer(schemeTransfer) {
     this.showSpinnerTrans = true;
     this.schemeTransfer = schemeTransfer;
-    this.schemeTransfer.navDate = this.datePipe.transform(schemeTransfer.navDate, 'dd-MM-yyyy');
     this.switchFrequency = [];
     Object.assign(this.transactionSummary, { schemeNameTranfer: schemeTransfer.schemeName });
     this.navOfSelectedScheme = schemeTransfer.nav;
@@ -378,6 +377,7 @@ export class StpTransactionComponent implements OnInit {
   selectedScheme(scheme) {
     this.scheme = scheme;
     this.stpTransaction.controls.transferIn.setValue('')
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.showUnits = true;
     this.showSpinner = true;
     this.folioList = [];
