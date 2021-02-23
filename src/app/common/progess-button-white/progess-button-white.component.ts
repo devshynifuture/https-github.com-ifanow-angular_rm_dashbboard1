@@ -65,7 +65,7 @@ export class ProgessButtonWhiteComponent implements OnInit {
     if (this.options.active) {
       setTimeout(() => {
         if (this.options.active && this.options.value < 100) {
-          this.options.value = this.options.value + this.delayTime;
+          this.options.value = 50;
           // console.log('this.options.value : ', this.options.value);
           // console.log('this.options.value : ', new Date().getMilliseconds());
 

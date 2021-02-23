@@ -282,9 +282,9 @@
         &
         NEXT
       </button> -->
-      <app-progress-button *ngIf="fieldFlag" (btnClick)="saveNext('Next')" [options]="barButtonOptions1"
-        class="br-0 text-inherit ml-12">
-      </app-progress-button>
+      <app-progess-button-white *ngIf="fieldFlag" (btnClick)="saveNext('Next')" [options]="barButtonOptions1"
+        class="br-0 text-inherit ml-12" [delayTime]="delayTime">
+      </app-progess-button-white>
       <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
         class="br-0 text-inherit mr-12">SAVE & NEXT
     </button> -->
