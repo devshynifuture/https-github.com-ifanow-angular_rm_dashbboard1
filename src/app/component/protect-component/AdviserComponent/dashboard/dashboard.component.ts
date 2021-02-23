@@ -1232,6 +1232,10 @@ export class DashboardComponent implements OnInit {
   }
 
   updateTodoList(todoData) {
+    if (this.updateNote.value == '') {
+      this.eventService.openSnackBar("Please type something", "Dismiss");
+      return;
+    }
     const obj = {
       id: todoData.id,
       advisorId: this.advisorId,
