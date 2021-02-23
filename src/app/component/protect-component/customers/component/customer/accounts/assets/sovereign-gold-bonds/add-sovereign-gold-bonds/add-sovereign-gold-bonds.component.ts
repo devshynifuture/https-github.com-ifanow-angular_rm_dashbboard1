@@ -380,7 +380,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       amountInvested: [data.investmentAmount, [Validators.required]],
       issuePrice: [data.issuePrice, [Validators.required]],
       units: [data.unitsInGram, [Validators.required]],
-      rates: [2.5, [Validators.required]],
+      rates: [data.interestRate ? data.interestRate : 2.5, [Validators.required]],
       tenure: [8, [Validators.required]],
       bondNumber: [data.bondNumber],
       userBankMappingId: [!data ? '' : data.linkedBankAccount],
@@ -621,9 +621,9 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       "nomineeList": this.goldBondForm.value.getNomineeName,
       "id": this.goldBondForm.value.id,
     }
-    if(this.error){
+    if (this.error) {
       this.goldBondForm.markAllAsTouched();
-    }else if (this.goldBondForm.invalid) {
+    } else if (this.goldBondForm.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       this.goldBondForm.markAllAsTouched();
       return;
