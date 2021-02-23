@@ -214,7 +214,7 @@
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>
             </mat-tab>
-            <mat-tab label="Nominee details">
+            <!-- <mat-tab label="Nominee details">
                 <div *ngFor="let item of nomineeArray; index as i">
                     <div class="ba-light mt-20">
                         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -245,7 +245,6 @@
                     </div>
                     <div class="row pt-4">
                         <div class="col-md-12 p-0 text-right">
-                            <!-- <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p> -->
                         </div>
                     </div>
                 </div>
@@ -261,6 +260,60 @@
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>
+            </mat-tab> -->
+            <mat-tab label="Nominee details">
+                <div *ngFor="let item of folioDetails; index as i">
+                    <div *ngFor="let item of item.nominees; index as i">
+                        <div class="ba-light mt-20">
+                            <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 roboto">{{(i+1|namedNumber)|titlecase}} nominee name</p>
+                                </div>
+                                <div class="col-md-8 p-0 text-right">
+                                    <p class="m-0 roboto">{{(item.name)?item.name:'N.A.'}}</p>
+                                </div>
+                            </div>
+                            <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 roboto"> Percentage allocated</p>
+                                </div>
+                                <div class="col-md-8 p-0 text-right">
+                                    <p class="m-0 roboto">{{(item.percentageAllocated)?item.percentageAllocated +
+                                        '%':'N.A.'}}</p>
+                                </div>
+                            </div>
+                            <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 roboto"> Nominee relation</p>
+                                </div>
+                                <div class="col-md-8 p-0 text-right">
+                                    <p class="m-0 roboto">{{(item.relation)?item.relation:'N.A.'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="col-md-12 p-0 text-right">
+                                <!-- <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div *ngIf="isNomineeLoading" class="skeletonAnimation">
+                    <div class="relClass">
+                        <div class="bar height24 mb-10"></div>
+                        <div class="bar height24 mb-10"></div>
+                        <div class="bar height24 mb-10"></div>
+                    </div>
+                </div> -->
+                <div *ngIf="!isLoading && folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div>
+                <!-- <div *ngIf="!isNomineeLoading && nomineeArray.length == 0"
+                    class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div> -->
             </mat-tab>
             <mat-tab label="Broker details">
                 <div class="ba-light mt-20" *ngFor="let item of folioDetails">
@@ -419,7 +472,12 @@
             </mat-tab>
         </mat-tab-group>
     </div>
-    <div *ngIf="isLoading" class="bg-white p-20">Loading data...</div>
+
+    <div *ngIf="isLoading" class="bg-white p-20 h-90vh full-center w-100 text-center">
+
+        <p class="m-0"> Loading data...</p>
+
+    </div>
 </div>
 <div class="bottom-fixed wrapper-12 w-45">
     <div class="row">

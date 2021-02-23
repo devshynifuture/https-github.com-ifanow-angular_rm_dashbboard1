@@ -41,6 +41,7 @@ export class AllSipComponent implements OnInit {
   totalSipCount: any;
   pageEvent: PageEvent;
   advisor: any;
+  loadSip = false;
 
   constructor(
     private backoffice: BackOfficeService,
@@ -73,7 +74,6 @@ export class AllSipComponent implements OnInit {
       this.arnRiaValue = -1;
     }
     this.getAllSip(200, 1);
-    this.getAllSipData();
   }
 
   getAllSIPdataThenCreateExcel() {
@@ -102,13 +102,7 @@ export class AllSipComponent implements OnInit {
   }
 
   ExcelAll(tableTitle) {
-
-    setTimeout(() => {
-      const blob = new Blob([document.getElementById('template').innerHTML], {
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-      });
-      saveAs(blob, tableTitle + '.xls');
-    }, 200);
+    this.getAllSipData(tableTitle);
   }
 
   Excel(tableTitle) {
@@ -208,7 +202,8 @@ export class AllSipComponent implements OnInit {
     }
 
   }
-  getAllSipData() {
+  getAllSipData(tableTitle) {
+    this.loadSip = true;
     const obj = {
       limit: -1,
       pageNumber: 1,
@@ -223,6 +218,13 @@ export class AllSipComponent implements OnInit {
           if (data) {
             console.log("this is all sip table data, ------", data)
             this.dataSource2 = new MatTableDataSource(data);
+            this.loadSip = false;
+            setTimeout(() => {
+              const blob = new Blob([document.getElementById('template').innerHTML], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+              });
+              saveAs(blob, tableTitle + '.xls');
+            }, 200);
           } else {
             this.dataSource2.filteredData = [];
             this.dataSource2.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
@@ -243,6 +245,13 @@ export class AllSipComponent implements OnInit {
         data => {
           if (data) {
             this.dataSource2 = new MatTableDataSource(data);
+            this.loadSip = false;
+            setTimeout(() => {
+              const blob = new Blob([document.getElementById('template').innerHTML], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+              });
+              saveAs(blob, tableTitle + '.xls');
+            }, 200);
           } else {
             this.dataSource2.filteredData = [];
             this.dataSource2.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
@@ -259,6 +268,13 @@ export class AllSipComponent implements OnInit {
         data => {
           if (data) {
             this.dataSource2 = new MatTableDataSource(this.data);
+            this.loadSip = false;
+            setTimeout(() => {
+              const blob = new Blob([document.getElementById('template').innerHTML], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+              });
+              saveAs(blob, tableTitle + '.xls');
+            }, 200);
           } else {
             this.dataSource2.filteredData = [];
             this.dataSource2.data = (this.finalSipList.length > 0) ? this.finalSipList : null;

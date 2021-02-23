@@ -2238,3 +2238,22 @@ a.docFileName:hover {
     margin-right: 15px;
   }
 }
+
+.my-custom-todo {
+
+
+  .edit-todo-icons {
+
+    display: none;
+    line-height: 10px;
+    top: 6px;
+    position: relative;
+
+
+  }
+
+  &:hover .edit-todo-icons {
+    display: block;
+    line-height: 10px;
+  }
+}

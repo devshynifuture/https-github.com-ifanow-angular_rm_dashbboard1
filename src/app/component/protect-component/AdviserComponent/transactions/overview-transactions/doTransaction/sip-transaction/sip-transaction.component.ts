@@ -749,6 +749,7 @@ export class SipTransactionComponent implements OnInit {
         map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
     });
     this.sipTransaction.controls.schemeSip.setValue({ schemeName: (data.scheme) ? data.scheme.schemeName : '' });
+    this.sipTransaction.controls.date.setValue({ schemeName: (data.date) ? data.date : '' });
     this.sipTransaction.controls.tenure.valueChanges.subscribe(newValue => {
       this.checkAndHandleMaxInstallmentValidator();
     });
@@ -773,10 +774,7 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.schemeSip.setValue({ schemeName: this.schemeName });
     this.sipTransaction.controls.schemeSip.disable();
     Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-    this.scheme = {
-      schemeName: this.schemeName,
-      mutualFundSchemeMasterId: this.mutualFundData.schemeId
-    };
+    this.scheme.mutualFundSchemeMasterId = this.mutualFundData.schemeId
     const obj1 = {
       mutualFundSchemeMasterId: this.mutualFundData.schemeId,
       aggregatorType: this.mfDefault.defaultClient.aggregatorType,
@@ -868,6 +866,7 @@ export class SipTransactionComponent implements OnInit {
       schemeDetails: this.schemeDetails,
       reInvestmentOpt: this.reInvestmentOpt,
       folioDetails: this.folioDetails,
+      isException: true,
     };
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       obj.mandateId = (this.selectedMandate) ? this.selectedMandate.id : undefined;
@@ -1013,6 +1012,7 @@ export class SipTransactionComponent implements OnInit {
               element.schemeDetails = this.schemeDetails;
               element.reInvestmentOpt = this.reInvestmentOpt;
               element.folioDetails = this.folioDetails;
+              element.frequencyType = this.selectedFreqModel.frequency
             }
           });
           this.isEdit = false;
