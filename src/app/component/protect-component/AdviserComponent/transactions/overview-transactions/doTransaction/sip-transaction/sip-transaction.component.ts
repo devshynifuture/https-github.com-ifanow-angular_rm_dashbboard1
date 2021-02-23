@@ -13,6 +13,8 @@ import {ConfirmDialogComponent} from '../../../../../common-component/confirm-di
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AddMandateComponent} from '../../MandateCreation/add-mandate/add-mandate.component';
 import {MultiTransactionPopupComponent} from '../multi-transaction-popup/multi-transaction-popup.component';
+import {CustomerService} from "../../../../../customers/component/customer/customer.service";
+import {EnumDataService} from "../../../../../../../services/enum-data.service";
 
 @Component({
   selector: 'app-sip-transaction',
@@ -34,7 +36,8 @@ export class SipTransactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               public processTransaction: ProcessTransactionService, private fb: FormBuilder,
-              private eventService: EventService, public dialog: MatDialog) {
+              private eventService: EventService, public dialog: MatDialog,
+              public enumDataService: EnumDataService) {
   }
 
   get data() {

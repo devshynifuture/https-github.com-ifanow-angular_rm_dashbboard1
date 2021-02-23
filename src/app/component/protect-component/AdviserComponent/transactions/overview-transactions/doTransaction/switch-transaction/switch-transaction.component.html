@@ -2,7 +2,7 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h3 class="mb-0 wrapper-20"><img (click)="backToTransact()" class="c-p mr-8"
-          src="/assets/images/svg/back-arrow.svg"> Switch transaction</h3>
+                                       src="/assets/images/svg/back-arrow.svg"> Switch transaction</h3>
     </div>
     <div class="col-md-4 text-right">
       <div class="wrapper-12">
@@ -46,7 +46,10 @@
         <ng-container matColumnDef="amount">
           <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
           <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.orderVal}} </div>
+            <div *ngIf="!element.allUnits"
+                 class="bar">{{element.amountType == 'Amount' ? '₹' + element.orderVal : element.orderVal + ' Unit'}}</div>
+            <div *ngIf="element.allUnits" class="bar"> All units</div>
+
           </td>
         </ng-container>
         <ng-container matColumnDef="icons">
@@ -80,15 +83,18 @@
             <div class="form-group remove-top">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input [matAutocomplete]="auto" appCustomAutoComplete aria-label="Number" class="form-control"
-                  formControlName="schemeSwitch" matInput placeholder="Start typing to see scheme names" type="text">
+                       formControlName="schemeSwitch" matInput placeholder="Start typing to see scheme names"
+                       type="text">
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedScheme($event.option.value)"
-                  [displayWith]="processTransaction.displaySchemeName">
+                                  [displayWith]="processTransaction.displaySchemeName">
                   <mat-option *ngFor="let scheme of filterSchemeList | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
                 </mat-autocomplete>
                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing
-                  NAV: {{navOfSelectedScheme}} as on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
+                  NAV: {{navOfSelectedScheme}} as
+                  on:
+<!--                  {{(mutualFundData && mutualFundData.navDate) ? mutualFundData.navDate : scheme.navDate ? scheme.navDate : '-'|date:'dd/MM/yyyy'}}-->
                 </mat-hint>
                 <mat-error *ngIf="switchTransaction.get('schemeSwitch').errors?.required" class="f-12 pt-4">
                   This field is required
@@ -112,7 +118,7 @@
                 <mat-select class="form-control" formControlName="investmentAccountSelection">
                   <mat-option *ngIf="folioList.length > 1" disabled value=''>Select scheme folio</mat-option>
                   <mat-option (click)="selectedFolio(folio)" *ngFor="let folio of folioList"
-                    [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
+                              [value]="folio.folioNumber">{{folio.folioNumber}}</mat-option>
                 </mat-select>
                 <mat-error class="f-12 pt-4">
                   This field is required
@@ -138,14 +144,14 @@
                   <p class="f-14 m-0">Current value</p>
                   <mat-form-field appearance="standard" floatLabel="never">
                     <input #currentValue [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                      formControlName="currentValue" matInput type="text">
+                           formControlName="currentValue" matInput type="text">
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 p-20 text-left">
                   <p class="f-14 m-0">Balance unit</p>
                   <mat-form-field appearance="standard" floatLabel="never">
                     <input #balanceUnit [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
-                      formControlName="balanceUnit" matInput type="text">
+                           formControlName="balanceUnit" matInput type="text">
                   </mat-form-field>
                 </div>
               </div>
@@ -161,18 +167,17 @@
         </div>
 
 
-
         <div class="row pt-28">
           <h5 class="mb-4 text-black">Select a scheme to switch in</h5>
           <div class="col-md-11 p-0">
             <div class="form-group remove-top">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input (changedValue)="getSchemeListTranfer($event)" [matAutocomplete]="auto1" appCustomAutoComplete
-                  aria-label="Number" class="form-control" formControlName="transferIn" matInput
-                  placeholder="Start typing to see transferIn names" type="text">
+                       aria-label="Number" class="form-control" formControlName="transferIn" matInput
+                       placeholder="Start typing to see transferIn names" type="text">
                 <mat-autocomplete #auto1="matAutocomplete"
-                  (optionSelected)="selectedSchemeTransfer($event.option.value)"
-                  [displayWith]="processTransaction.displaySchemeName">
+                                  (optionSelected)="selectedSchemeTransfer($event.option.value)"
+                                  [displayWith]="processTransaction.displaySchemeName">
                   <mat-option *ngFor="let scheme of filterNewSchemeList  | async" [value]="scheme">
                     {{scheme.schemeName}}
                   </mat-option>
@@ -222,7 +227,7 @@
           <div class="col-md-5 p-0">
             <mat-form-field>
               <mat-select (selectionChange)="switchType($event.value)" class="form-control br-0"
-                formControlName="switchType">
+                          formControlName="switchType">
                 <mat-option disabled value=''>Select Switch type</mat-option>
                 <mat-option value="1">Amount Rs.
                 </mat-option>
@@ -248,17 +253,18 @@
             <div class="form-group remove-top inputPaddNone">
               <mat-form-field appearance="standard" floatLabel="never">
                 <input #employeeContry
-                  (change)="enteredAmount($event.target.value,switchTransaction.get('switchType').value)"
-                  [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control br-0 rupess"
-                  formControlName="employeeContry" matInput maxlength="10" placeholder="Enter Amounts/Units"
-                  type="text">
+                       (change)="enteredAmount($event.target.value,switchTransaction.get('switchType').value)"
+                       [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                       class="form-control br-0 rupess"
+                       formControlName="employeeContry" matInput maxlength="10" placeholder="Enter Amounts/Units"
+                       type="text">
                 <mat-hint *ngIf="(switchTransaction.get('switchType').value) == 1" align="start"
-                  class="f-12 text-custom">
+                          class="f-12 text-custom">
                   Min amount:
                   ₹{{(schemeDetailsTransfer == undefined) ? '0' : schemeDetailsTransfer.minimumPurchaseAmount }}
                 </mat-hint>
                 <mat-hint *ngIf="(switchTransaction.get('switchType').value == 2)" align="start"
-                  class="f-12 text-custom">
+                          class="f-12 text-custom">
                   Min units: {{(schemeDetails == undefined) ? '0' : schemeDetails.minimumRedemptionQty }}
                 </mat-hint>
                 <mat-error
@@ -279,7 +285,7 @@
       </div>
       <div class="col-md-4 bg-grey lter p-0">
         <app-transaction-summary (bankDetailsSend)='getbankDetails($event)' (folioChange)='onFolioChange($event)'
-          (defaultDetails)='getDefaultDetails($event)' [data]="transactionSummary">
+                                 (defaultDetails)='getDefaultDetails($event)' [data]="transactionSummary">
         </app-transaction-summary>
       </div>
     </div>
@@ -296,8 +302,8 @@
 </div> -->
     <div class="col-md-8 text-right d-flex justify-content-end">
       <!-- commented for prod build -->
-      <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1 && !mutualFundData"
-        class="br-0 text-primary f-14" mat-button mat-raised-button>
+      <button (click)="AddMultiTransaction()" *ngIf="!enumDataService.PRODUCTION && platformType && platformType == 1 && !mutualFundData"
+              class="br-0 text-primary f-14" mat-button mat-raised-button>
         SAVE & ADD ANOTHER
       </button>
       <!-- <button mat-button class="btn-green text-white ml-12" (click)="switch()">
