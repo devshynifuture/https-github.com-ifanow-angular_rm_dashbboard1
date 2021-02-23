@@ -61,7 +61,8 @@
           </th>
           <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar">
-              <span *ngIf="element.unitsInGram && !isLoading">{{element.unitsInGram}}</span></div>
+              <span *ngIf="element.unitsInGram && !isLoading">{{element.unitsInGram}}</span>
+            </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -148,11 +149,12 @@
             <div class="bar">
               <span *ngIf=" !isLoading && element.bondNameAndSeries">
                 {{element.bondNameAndSeries}}
-              </span></div>
+              </span>
+            </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
-        <ng-container matColumnDef="xirrDate">
+        <!-- <ng-container matColumnDef="xirrDate">
           <th mat-sort-header="xirr" mat-header-cell *matHeaderCellDef class="br w-12 right-hc text-right hide-arrow">
             XIRR (as on date)
           </th>
@@ -162,7 +164,7 @@
               ? "%" : ""}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="status">
           <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Status</th>
           <td *matCellDef="let element" class="br   text-primary" mat-cell>
@@ -322,7 +324,8 @@
               {{i + 1}}</td>
             <td *ngFor="let owner of element.ownerList; let i = index"
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-              <span *ngIf="i == 0">{{owner.name}}</span></td>
+              <span *ngIf="i == 0">{{owner.name}}</span>
+            </td>
 
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
@@ -371,7 +374,7 @@
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <div><span>{{element.xirr ? element.xirr : '-'}}</span>{{!isLoading
-      ? "%" : ""}}</div>
+                ? "%" : ""}}</div>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
