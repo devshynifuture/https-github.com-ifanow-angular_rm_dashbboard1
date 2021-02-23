@@ -26,8 +26,8 @@
         <div class="row" *ngIf="getFlag == 'editExpenses' || getFlag == 'addExpenses'">
             <div class="col-md-12 p-0 text-right">
                 Add recuring
-                <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
-                    formControlName="isRecuring">
+                <mat-checkbox class="text-right" [disabled]="getFlag=='editExpenses'" [(ngModel)]="isRecuring"
+                    (change)="toggle($event)" formControlName="isRecuring">
                 </mat-checkbox>
             </div>
         </div>
@@ -241,7 +241,8 @@
         <div class="row ">
             <div class="col-md-12 p-0 text-right">
                 Add recuring
-                <mat-checkbox class="" [(ngModel)]="isRecuring" (change)=" toggle($event)" formControlName="isRecuring">
+                <mat-checkbox class="" [disabled]="getFlag=='editExpenses'" [(ngModel)]="isRecuring"
+                    (change)=" toggle($event)" formControlName="isRecuring">
                 </mat-checkbox>
             </div>
         </div>

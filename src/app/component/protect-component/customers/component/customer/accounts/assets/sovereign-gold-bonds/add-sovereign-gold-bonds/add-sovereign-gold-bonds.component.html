@@ -115,9 +115,10 @@
     <div class="col-md-5 pr-0 iconRupess">
       <div class="form-group mb-0">
         <mat-form-field>
-          <input autocomplete="off" (focusout)="calUnits()" matInput appInputValueValidation
-            [inputValidator]="validatorType.NUMBER_ONLY" type="text" class="form-control rupess br-0 "
+          <input autocomplete="off" #amountInvested (focusout)="calUnits()" matInput appInputValueValidation
+            [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" type="text" class="form-control rupess br-0 "
             formControlName="amountInvested">
+          <mat-hint align="end" class="f-12">{{amountInvested.value.length}}/10</mat-hint>
           <mat-error class="f-12">
             This field is required
           </mat-error>
