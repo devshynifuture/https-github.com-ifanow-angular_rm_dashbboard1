@@ -612,6 +612,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.filterSchemeList = of(this.schemeList).pipe(startWith(''),
         map(value => this.processTransaction.filterScheme(newValue + '', this.schemeList)));
     });
+    this.purchaseTransaction.controls.reinvest.setValue((data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag : '')
     this.purchaseTransaction.controls.schemePurchase.setValue({ schemeName: (data.scheme) ? data.scheme.schemeName : '' });
     this.ownerData = this.purchaseTransaction.controls;
     if (data.folioNo) {
@@ -828,6 +829,7 @@ export class PurchaseTrasactionComponent implements OnInit {
               element.scheme = this.scheme;
               element.schemeDetails = this.schemeDetails;
               element.reInvestmentOpt = this.reInvestmentOpt;
+              element.dividendReinvestmentFlag = this.purchaseTransaction.get('reinvest').value;
               element.folioDetails = this.folioDetails;
             }
           });
