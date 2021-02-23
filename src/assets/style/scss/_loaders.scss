@@ -211,10 +211,17 @@
   background-color: #3098ea !important;
 }
 
-.progress-bar-common-white .mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
-  background-color: #f2f2f2 !important;
-}
+.progress-bar-common-white {
 
-.progress-bar-common-white .mat-progress-bar-buffer {
-  background-color: #f2f2f2 !important;
+  .mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
+    background-color: #f2f2f2 !important;
+  }
+
+  .mat-progress-bar-buffer {
+    background-color: #f2f2f2 !important;
+  }
+
+  .mat-progress-bar.mat-warn .mat-progress-bar-fill::after {
+    background-color: #D9DEE1 !important;
+  }
 }

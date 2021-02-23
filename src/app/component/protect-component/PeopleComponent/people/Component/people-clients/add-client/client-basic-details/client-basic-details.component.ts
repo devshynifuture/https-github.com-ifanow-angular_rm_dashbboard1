@@ -147,7 +147,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     this.advisorData = AuthService.getUserInfo();
     this.basicDetailsData = data;
     this.tempBasicData = data;
-    this.delayTime = 10;
+    this.delayTime = .9;
     this.idData = (this.fieldFlag != 'familyMember') ? this.basicDetailsData.clientId : this.basicDetailsData.familyMemberId;
     if (data.fieldFlag == 'familyMember') {
       this.valueChangeFlag = true;
