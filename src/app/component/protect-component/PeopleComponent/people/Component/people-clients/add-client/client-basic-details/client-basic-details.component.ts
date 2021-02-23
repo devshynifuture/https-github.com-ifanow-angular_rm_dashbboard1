@@ -38,6 +38,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   mobileEditedData: any;
   emailEditedData: any[];
   deletedEmailData = [];
+  delayTime: number;
 
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
@@ -64,8 +65,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   barButtonOptions1: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE & NEXT',
-    buttonColor: 'accent',
-    barColor: 'accent',
+    buttonColor: 'primary',
+    barColor: 'warn',
     raised: true,
     stroked: false,
     mode: 'determinate',
@@ -146,6 +147,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     this.advisorData = AuthService.getUserInfo();
     this.basicDetailsData = data;
     this.tempBasicData = data;
+    this.delayTime = 10;
     this.idData = (this.fieldFlag != 'familyMember') ? this.basicDetailsData.clientId : this.basicDetailsData.familyMemberId;
     if (data.fieldFlag == 'familyMember') {
       this.valueChangeFlag = true;
