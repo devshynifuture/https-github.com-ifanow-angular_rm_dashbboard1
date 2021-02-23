@@ -6,7 +6,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ProcessTransactionService } from '../process-transaction.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AuthService } from 'src/app/auth-service/authService';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
@@ -108,23 +108,10 @@ export class SwitchTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
-    this.folioList = [];
-    this.reInvestmentOpt = [];
-    this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
-    this.transactionType = data.transactionType;
-    this.selectedFamilyMember = data.selectedFamilyMember;
-    this.getDataSummary = this.inputData.transactionData;
-    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
+    this.setDefaultData(data)
     if (data.mutualFundData) {
-      this.schemeName = data.mutualFundData.schemeName;
-      this.folioNumber = data.mutualFundData.folioNumber;
-      this.mfDefault = data.transactionData;
-      const foilo = { folioNumber: this.folioNumber };
-      this.folioList.push(foilo);
-      // this.schemeList.push({'schemeName': this.schemeName})
-      this.filterSchemeList = of([{ schemeName: this.schemeName }]);
-      this.mutualFundData = data.mutualFundData;
+      this.handleMutualFundData(data)
     }
     if (this.isViewInitCalled) {
       this.getdataForm('', false);
@@ -135,6 +122,31 @@ export class SwitchTransactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, false);
+  }
+
+  backToTransact() {
+    this.changedValue.emit('step-2');
+  }
+  setDefaultData(data) {
+    this.folioList = [];
+    this.reInvestmentOpt = [];
+    this.advisorId = AuthService.getAdvisorId();
+    this.inputData = data;
+    this.transactionType = data.transactionType;
+    this.selectedFamilyMember = data.selectedFamilyMember;
+    this.getDataSummary = this.inputData.transactionData;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
+  }
+  handleMutualFundData(data) {
+    this.schemeName = data.mutualFundData.schemeName;
+    this.folioNumber = data.mutualFundData.folioNumber;
+    this.mfDefault = data.transactionData;
+    const foilo = { folioNumber: this.folioNumber };
+    this.folioList.push(foilo);
+    this.filterSchemeList = of([{ schemeName: this.schemeName }]);
+    this.mutualFundData = data.mutualFundData;
+  }
+  assignToTransactionSummary() {
     Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
     Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
     Object.assign(this.transactionSummary, { transactType: 'SWITCH' });
@@ -144,11 +156,6 @@ export class SwitchTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
     Object.assign(this.transactionSummary, { multiTransact: false });
   }
-
-  backToTransact() {
-    this.changedValue.emit('step-2');
-  }
-
   getDefaultDetails(data) {
     this.getDataSummary = data;
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
@@ -618,6 +625,18 @@ export class SwitchTransactionComponent implements OnInit {
     } else {
       this.processTransaction.onAddTransaction('confirm', this.transactionSummary);
       Object.assign(this.transactionSummary, { allEdit: false });
+    }
+  }
+  deleteChildTran(element) {
+    UtilService.deleteRow(element, this.childTransactions);
+    this.dataSource.data = this.childTransactions;
+
+    if (this.childTransactions.length == 0) {
+      this.multiTransact = false;
+      this.resetForm();
+      // if (this.selectScheme == 1) {
+      //   this.getExistingScheme();
+      // }
     }
   }
 
