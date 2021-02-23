@@ -605,7 +605,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
-      reinvest: [(!data.dividendReinvestmentFlag) ? '' : data.dividendReinvestmentFlag, [Validators.required]],
+      reinvest: [(data.dividendReinvestmentFlag == undefined) ? '' : data.dividendReinvestmentFlag, [Validators.required]],
       schemePurchase: [(data.scheme) ? data.scheme.schemeName : this.mutualFundData ? this.mutualFundData.schemeName : '', [Validators.required]],
     });
     this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
