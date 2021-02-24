@@ -830,9 +830,9 @@ export class StpTransactionComponent implements OnInit {
             element.bankDetailId = this.bankDetails.id
             element.transferIn = this.stpTransaction.get('transferIn').value
             element.balanceUnit = this.stpTransaction.get('balanceUnit').value
-            element.currentValue = this.stpFrequency.get('currentValue').value
-            element.date = this.stpFrequency.get('date').value
-            element.frequencyType = this.stpFrequency.get('frequency').value
+            element.currentValue = this.stpTransaction.get('currentValue').value
+            element.date = this.stpTransaction.get('date').value
+            element.frequencyType = this.stpTransaction.get('frequency').value
             element.dividendReinvestmentFlag = this.stpTransaction.get('reinvest').value
           })
         } else {
