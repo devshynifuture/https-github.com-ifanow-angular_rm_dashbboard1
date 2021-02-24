@@ -1113,9 +1113,20 @@
                                                                     </div>
                                                                     <div
                                                                         style="width: 65%; float: left; margin-top: 20px; margin-left: 10px;">
-                                                                        <mat-progress-bar mode="determinate"
+                                                                        <!-- <mat-progress-bar mode="determinate"
                                                                             [value]="element.percentCompleted">
-                                                                        </mat-progress-bar>
+                                                                        </mat-progress-bar> -->
+                                                                        <!-- <progress id="file"
+                                                                            [value]="element.percentCompleted"
+                                                                            max="100">{{element.percentCompleted}}%</progress> -->
+                                                                        <div>
+                                                                            <div
+                                                                                style="background:rgb(192, 192, 192);width: 100%">
+                                                                                <div style="background:#007bff ;height:5px;"
+                                                                                    [ngStyle]="{'width':element.percentCompleted+'%' }">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
                                                                         {{ element.details }}
                                                                     </div>
                                                                 </div>
