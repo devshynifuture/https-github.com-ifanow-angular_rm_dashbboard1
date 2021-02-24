@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAKA,AAAA,SAAS,CAAC;EACN,KAAK,EAAE,KAAK;CACf;;AAED,AAAA,YAAY,CAAC;EACT,QAAQ,EAAE,QAAQ;EAClB,SAAS,EAAE,IAAI;EACf,OAAO,EAAE,CAAC;EACV,KAAK,EAAE,CAAC;EACR,GAAG,EAAE,CAAC;CACT;;AAED,AAAA,KAAK,CAAC;EACF,OAAO,EAAE,IAAI;CAChB",
-    "sources": [
-        "retirement-account.component.scss"
-    ],
-    "names": [],
-    "file": "retirement-account.component.css"
-}
