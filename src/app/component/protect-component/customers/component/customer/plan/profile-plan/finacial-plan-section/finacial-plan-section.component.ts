@@ -965,6 +965,7 @@ export class FinacialPlanSectionComponent implements OnInit {
               }
 
               arr.push({
+                goalValueObj: goalValueObj,
                 details: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 goalName: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 goalType: goalValueObj.goalType,
@@ -982,7 +983,8 @@ export class FinacialPlanSectionComponent implements OnInit {
                 lump_equity: this.getSumOfJsonMap(goalValueObj.lumpSumAmountEquity) || 0,
                 lump_debt: this.getSumOfJsonMap(goalValueObj.lumpSumAmountDebt) || 0,
                 goalAssetAllocation: item.goalAssetAllocation,
-                retirementTableValue: goalValueObj.retirementTableValue
+                retirementTableValue: goalValueObj.retirementTableValue,
+                notes: goalValueObj.notes
               });
             } else if (!!item.singleOrMulti && item.singleOrMulti === 2) {
               let goalValueObj = item.multiYearGoalPlan,
@@ -1032,6 +1034,7 @@ export class FinacialPlanSectionComponent implements OnInit {
                 });
               }
               arr.push({
+                goalValueObj: goalValueObj,
                 details: goalValueObj.name,
                 goalName: goalValueObj.name,
                 month,
@@ -1048,7 +1051,9 @@ export class FinacialPlanSectionComponent implements OnInit {
                 lump_equity: this.getSumOfJsonMap(goalValueObj.lumpSumAmountEquity) || 0,
                 lump_debt: this.getSumOfJsonMap(goalValueObj.lumpSumAmountDebt) || 0,
                 goalAssetAllocation: item.goalAssetAllocation,
-                retirementTableValue: goalValueObj.retirementTableValue
+                retirementTableValue: goalValueObj.retirementTableValue,
+                notes: goalValueObj.notes
+
               });
             }
           });
