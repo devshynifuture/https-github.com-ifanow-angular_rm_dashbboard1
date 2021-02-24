@@ -33,7 +33,7 @@ export class SwpTransactionComponent implements OnInit {
   element: any;
   platformType: any;
   minInstallmentNumber: any;
-  isEdit: any;
+  isEdit: boolean = false;
   editedId: any;
 
   get data() {
@@ -113,7 +113,7 @@ export class SwpTransactionComponent implements OnInit {
   ngOnInit() {
     this.transactionSummary = {};
     this.childTransactions = [];
-    this.getdataForm(this.inputData, true);
+    this.getdataForm(this.inputData, false);
     this.assignToTransactionSummary()
 
 
@@ -490,7 +490,7 @@ export class SwpTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
       Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });
     }
-    if (!this.mutualFundData) {
+    if (!this.mutualFundData && !isEdit) {
       this.getSchemeList();
     }
   }
