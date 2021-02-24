@@ -379,7 +379,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       issueDate: [data.investmentOrIssueDate ? new Date(data.investmentOrIssueDate) : null, [Validators.required]],
       amountInvested: [data.investmentAmount, [Validators.required]],
       issuePrice: [data.issuePrice, [Validators.required]],
-      units: [data.unitsInGram, [Validators.required]],
+      units: [data.unitsInGramForEditView ? data.unitsInGramForEditView : data.unitsInGram, [Validators.required]],
       rates: [data.interestRate ? data.interestRate : 2.5, [Validators.required]],
       tenure: [8, [Validators.required]],
       bondNumber: [data.bondNumber],

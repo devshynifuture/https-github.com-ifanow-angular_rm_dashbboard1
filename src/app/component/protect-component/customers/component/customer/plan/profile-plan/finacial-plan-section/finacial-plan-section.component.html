@@ -901,7 +901,7 @@
                                         *ngIf="mfCount && mfCount.national_saving_certificate != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #nsc
-                                                (change)="checkAndLoadPdf($event.checked,'NSC','','Portfolio / National pension system (NPS)',false,nsc)">
+                                                (change)="checkAndLoadPdf($event.checked,'NSC','','Portfolio / National savings certificate (NSC)',false,nsc)">
                                                 Portfolio / National savings certificate (NSC)
                                             </mat-checkbox>
                                         </div>
@@ -998,7 +998,7 @@
                                     <div class="row bb-1 pt-8 pb-8" *ngIf="mfCount && mfCount.cash_in_hand != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #cashInHand
-                                                (change)="checkAndLoadPdf($event.checked,'Cash in hand','','Portfolio / Gold',false,cashInHand)">
+                                                (change)="checkAndLoadPdf($event.checked,'Cash in hand','','Portfolio / Cash in hand',false,cashInHand)">
                                                 Portfolio / Cash in hand
                                             </mat-checkbox>
                                         </div>

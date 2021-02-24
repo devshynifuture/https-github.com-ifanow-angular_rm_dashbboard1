@@ -205,7 +205,8 @@
           <h3 class="m-0 roboto f-400 text-black pt-8">
             <div class="relClass">
               <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
-                <span *ngIf="!docOverviewFlag">{{documentSizeData.familyMemberCount}}</span>
+                <span
+                  *ngIf="!docOverviewFlag">{{documentSizeData.familyMemberCount?documentSizeData.familyMemberCount:'0'}}</span>
               </div>
             </div>
           </h3>

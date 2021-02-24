@@ -946,8 +946,11 @@ export class AddTasksComponent implements OnInit {
           .subscribe(res => {
             let msg = 'Sub-task';
             if (res) {
-              this.eventService.openSnackBar(msg + ' completed successfully', "DISMISS");
-              this.tabState = 1;
+              if (value == 1) {
+                this.eventService.openSnackBar(msg + ' completed successfully', "DISMISS");
+              } else {
+                this.eventService.openSnackBar(msg + ' updated successfully', "DISMISS");
+              } this.tabState = 1;
               subTaskItem.isCompleted = true;
               subTaskItem.status = 1;
               subTaskItem.completionDate = new Date();
