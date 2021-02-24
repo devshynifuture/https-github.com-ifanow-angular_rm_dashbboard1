@@ -143,7 +143,7 @@
                                         style="margin-right: 9px; margin-left: 2px;"
                                         src="/assets/images/svg/father-profile.svg" width="48px">
                                     <img (click)="open('edit',singleMembers)"
-                                        *ngIf="singleMembers.relationshipId==10 || singleMembers.relationshipId==8 || singleMembers.relationshipId==9  || singleMembers.relationshipId==11 || singleMembers.relationshipId==12 || singleMembers.relationshipId==13 || singleMembers.relationshipId==14 || singleMembers.relationshipId==15 || singleMembers.relationshipId==16 "
+                                        *ngIf="singleMembers.relationshipId==10 || singleMembers.relationshipId==8 || singleMembers.relationshipId==9  || singleMembers.relationshipId==11 || singleMembers.relationshipId==12 || singleMembers.relationshipId==13 || singleMembers.relationshipId==14 || singleMembers.relationshipId==15 || singleMembers.relationshipId==16 || singleMembers.relationshipId==0 "
                                         style="margin-right: 9px; margin-left: 2px;" src="/assets/images/svg/others.svg"
                                         width="48px">
                                     <img (click)="open('edit',singleMembers)"
@@ -164,8 +164,7 @@
                                             <span *ngIf="singleMembers.relationshipId==5">Daughter</span>
                                             <span *ngIf="singleMembers.relationshipId==7">Mother</span>
                                             <span *ngIf="singleMembers.relationshipId==6">Father</span>
-                                            <span
-                                                *ngIf="singleMembers.relationshipId==10 || singleMembers.relationshipId==0">Others</span>
+                                            <span *ngIf="singleMembers.relationshipId==10 ">Others</span>
                                             <span *ngIf="singleMembers.relationshipId==8">Brother</span>
                                             <span *ngIf="singleMembers.relationshipId==9">Sister</span>
                                             <!-- <span *ngIf="singleMembers.relationshipId==10">Others</span> -->

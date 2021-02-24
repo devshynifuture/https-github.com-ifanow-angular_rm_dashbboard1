@@ -38,7 +38,7 @@
           </mat-form-field>
         </div>
       </div>
-      <form [formGroup]="mailForm" class="mt-20">
+      <form [formGroup]="mailForm" [ngClass]="{'event-none': storeData.bodyEditable==false}" class="mt-20 ">
         <app-froala [(model)]="storeData.body" modelChange="saveData($event)"></app-froala>
         <!--                      (click)="onSubmit()"-->
         <!-- <button type="submit" [disabled]="!mailForm.valid" mat-stroked-button class="mt-16 btn-primary br-0">Submit
