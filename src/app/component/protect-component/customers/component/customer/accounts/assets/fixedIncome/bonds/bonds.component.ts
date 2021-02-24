@@ -409,7 +409,7 @@ export class BondsComponent implements OnInit {
         userBankMappingId: this.bonds.controls.linkBankAc.value,
         description: this.bonds.controls.description.value,
         nomineeList: this.bonds.value.getNomineeName,
-        tenure: parseInt(this.bonds.controls.tenure.value),
+        tenure: Number(this.bonds.controls.tenure.value),
         type: parseInt(this.bonds.controls.type.value),
         compounding: parseInt(this.bonds.controls.frequency.value),
         rateOfReturn: 0,

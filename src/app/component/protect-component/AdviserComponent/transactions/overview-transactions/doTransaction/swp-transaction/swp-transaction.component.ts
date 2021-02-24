@@ -461,43 +461,45 @@ export class SwpTransactionComponent implements OnInit {
 
     this.ownerData = this.swpTransaction.controls;
     if (this.mutualFundData) {
-      this.folioDetails = {};
-      this.swpTransaction.controls.schemeSelection.setValue('1');
-      this.swpTransaction.controls.folioSelection.setValue('1');
-      this.swpTransaction.controls.schemeSwp.setValue({ schemeName: this.schemeName });
-      this.swpTransaction.controls.schemeSwp.disable();
-      this.filterSchemeList = of([{ schemeName: this.schemeName }]);
-      Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-      this.scheme = {
-        schemeName: this.schemeName,
-        mutualFundSchemeMasterId: this.mutualFundData.schemeId
-      };
-      const obj1 = {
-        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
-        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
-        orderType: 'ORDER',
-        userAccountType: this.mfDefault.defaultClient.accountType,
-      };
-      this.onlineTransact.getSchemeDetails(obj1).subscribe(
-        data => this.getSchemeDetailsRes(data), (error) => {
-          this.eventService.openSnackBar(error, 'Dismiss');
-        }
-      );
-      this.navOfSelectedScheme = this.mutualFundData.nav;
-      this.currentValue = Math.round(this.mutualFundData.currentValue);
-      this.swpTransaction.controls.currentValue.setValue(this.currentValue);
-      this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
-      Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
-      this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
-      this.showUnits = true;
-      Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
-      Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });
+      this.mutualFundSchemeDetails()
     }
     if (!this.mutualFundData && !isEdit) {
       this.getSchemeList();
     }
   }
-
+  mutualFundSchemeDetails() {
+    this.folioDetails = {};
+    this.swpTransaction.controls.schemeSelection.setValue('1');
+    this.swpTransaction.controls.folioSelection.setValue('1');
+    this.swpTransaction.controls.schemeSwp.setValue({ schemeName: this.schemeName });
+    this.swpTransaction.controls.schemeSwp.disable();
+    this.filterSchemeList = of([{ schemeName: this.schemeName }]);
+    Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
+    this.scheme = {
+      schemeName: this.schemeName,
+      mutualFundSchemeMasterId: this.mutualFundData.schemeId
+    };
+    const obj1 = {
+      mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+      aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+      orderType: 'ORDER',
+      userAccountType: this.mfDefault.defaultClient.accountType,
+    };
+    this.onlineTransact.getSchemeDetails(obj1).subscribe(
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.openSnackBar(error, 'Dismiss');
+      }
+    );
+    this.navOfSelectedScheme = this.mutualFundData.nav;
+    this.currentValue = Math.round(this.mutualFundData.currentValue);
+    this.swpTransaction.controls.currentValue.setValue(this.currentValue);
+    this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
+    Object.assign(this.folioDetails, { balanceUnit: this.mutualFundData.balanceUnit });
+    this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
+    this.showUnits = true;
+    Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
+    Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });
+  }
   setDefaultTenure() {
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       this.swpTransaction.controls.tenure.setValue('3');
