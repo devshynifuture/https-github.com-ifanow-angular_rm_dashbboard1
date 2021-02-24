@@ -122,6 +122,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, false);
+    this.assignToTransactionSummary()
   }
 
   backToTransact() {
