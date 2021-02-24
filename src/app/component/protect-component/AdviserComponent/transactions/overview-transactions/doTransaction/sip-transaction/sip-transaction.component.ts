@@ -851,7 +851,6 @@ export class SipTransactionComponent implements OnInit {
       childTransactions: [],
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
       noOfInstallments: this.sipTransaction.controls.installment.value,
-
       selectedFreqModel: this.selectedFreqModel,
       schemeSelection: this.sipTransaction.get('schemeSelection').value,
       folioSelection: this.sipTransaction.get('folioSelection').value,
