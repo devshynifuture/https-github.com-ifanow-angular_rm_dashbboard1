@@ -678,6 +678,10 @@ export class SwpTransactionComponent implements OnInit {
               element.dividendReinvestmentFlag = this.schemeDetails.dividendReinvestmentFlag;
               element.productDbId = this.schemeDetails.id;
               element.frequencyType = this.frequency;
+              element.productCode = this.schemeDetails.schemeCode
+              element.isin = this.schemeDetails.isin
+              element.schemeCd = this.schemeDetails.schemeCode
+              element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId
             }
           });
           this.isEdit = false;
