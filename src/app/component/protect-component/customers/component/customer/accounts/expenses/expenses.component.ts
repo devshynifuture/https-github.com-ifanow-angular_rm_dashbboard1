@@ -236,51 +236,77 @@ export class ExpensesComponent implements OnInit {
     switch (this.finPlanObj.sectionName) {
       case 'Expense This month':
         this.getStartAndEndDate(1);
+        this.selectedPeriod = '1'
         break;
       case 'Expense Last month':
         this.getStartAndEndDate(2);
+        this.selectedPeriod = '2'
         break;
       case 'Expense This quarter':
         this.getStartAndEndDate(3);
+        this.selectedPeriod = '3'
         break;
       case 'Expense Last quarter':
         this.getStartAndEndDate(4);
+        this.selectedPeriod = '4'
         break;
       case 'Expense This calender year':
         this.getStartAndEndDate(5);
+        this.selectedPeriod = '5'
         break;
       case 'Expense Last calender year':
         this.getStartAndEndDate(6);
+        this.selectedPeriod = '6'
+
         break;
       case 'Expense This financial year':
         this.getStartAndEndDate(7);
+        this.selectedPeriod = '7'
+
         break;
       case 'Expense Last financial year':
         this.getStartAndEndDate(8);
+        this.selectedPeriod = '8'
+
         break;
       case 'Budget This month':
         this.getStartAndEndDate(1);
+        this.selectedPeriod = '1'
+
         break;
       case 'Budget Last month':
         this.getStartAndEndDate(2);
+        this.selectedPeriod = '2'
+
         break;
       case 'Budget This quarter':
         this.getStartAndEndDate(3);
+        this.selectedPeriod = '3'
+
         break;
       case 'Budget Last quarter':
         this.getStartAndEndDate(4);
+        this.selectedPeriod = '4'
+
         break;
       case 'Budget This calender year':
         this.getStartAndEndDate(5);
+        this.selectedPeriod = '5'
+
         break;
       case 'Budget Last calender year':
         this.getStartAndEndDate(6);
+        this.selectedPeriod = '6'
+
         break;
       case 'Budget This financial year':
         this.getStartAndEndDate(7);
+        this.selectedPeriod = '7'
+
         break;
       case 'Budget Last financial year':
         this.getStartAndEndDate(8);
+        this.selectedPeriod = '8'
         break;
     }
     this.getListFamilyMem()
