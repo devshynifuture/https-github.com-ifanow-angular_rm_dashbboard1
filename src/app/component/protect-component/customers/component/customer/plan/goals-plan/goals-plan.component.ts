@@ -587,6 +587,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if (this.selectedGoal && this.finPlanObj && this.finPlanObj.obj) {
       this.finPlanObj.obj.dashboardData = {}
       this.selectedGoal = this.finPlanObj.obj
+      this.selectedGoal.remainingData = this.finPlanObj.obj;
       this.singleGoalData = this.finPlanObj.obj
       this.singleGoalData.dashboardData.equity_monthly = this.finPlanObj.obj.equity_monthly
       this.singleGoalData.dashboardData.debt_monthly = this.finPlanObj.obj.debt_monthly
@@ -596,7 +597,14 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.singleGoalData.dashboardData.lump_equity = this.finPlanObj.obj.lump_equity
       this.singleGoalData.img = this.finPlanObj.obj.imageUrl
       this.singleGoalData.dashboardData.futureValue = this.finPlanObj.obj.goalFV
-      goalData.remainingData.retirementTableValue = this.finPlanObj.obj.retirementTableValue;
+      this.singleGoalData.dashboardData.key_arr_equity_monthly = this.getSumOfJsonMapArrKey(this.finPlanObj.obj.goalValueObj.sipAmountEquity),
+        this.singleGoalData.dashboardData.arr_goalYrAndFutValues = this.getSumOfJsonMapArr(this.finPlanObj.obj.goalValueObj.goalYrAndFutValues),
+        this.singleGoalData.dashboardData.presentValue = this.finPlanObj.obj.goalValueObj.goalPresentValue ? this.finPlanObj.obj.goalValueObj.goalPresentValue : this.finPlanObj.obj.goalValueObj.presentValue,
+        this.singleGoalData.dashboardData.arr_debt_monthly = this.getSumOfJsonMapArr(this.finPlanObj.obj.goalValueObj.sipAmountDebt),
+        this.singleGoalData.dashboardData.arr_lump_equity = this.getSumOfJsonMapArr(this.finPlanObj.obj.goalValueObj.lumpSumAmountEquity),
+        this.singleGoalData.dashboardData.arr_lump_debt = this.getSumOfJsonMapArr(this.finPlanObj.obj.goalValueObj.lumpSumAmountDebt),
+
+        goalData.remainingData.retirementTableValue = this.finPlanObj.obj.retirementTableValue;
       goalData.remainingData.milestoneModels = this.finPlanObj.obj.milestoneModels;
     }
     // this.cd.markForCheck();

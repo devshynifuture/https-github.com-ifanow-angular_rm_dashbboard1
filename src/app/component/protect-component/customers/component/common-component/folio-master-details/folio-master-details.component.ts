@@ -34,7 +34,7 @@ export class FolioMasterDetailsComponent implements OnInit {
     }
     this.custumService.getMfFolioMaster(obj).subscribe(
       data => this.getFolioMasterResponse(data), (error) => {
-        this.isLoading = true;
+        this.isLoading = false;
         this.folioDetails = [];
       }
     );
@@ -73,7 +73,7 @@ export class FolioMasterDetailsComponent implements OnInit {
       })
   }
   getFolioMasterResponse(data) {
-    this.isLoading = true;
+    this.isLoading = false;
     console.log(data);
     // this.folioDetails=data.folioMasterList;
     if (data) {
