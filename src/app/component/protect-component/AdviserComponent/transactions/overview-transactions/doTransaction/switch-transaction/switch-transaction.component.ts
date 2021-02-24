@@ -758,16 +758,18 @@ export class SwitchTransactionComponent implements OnInit {
           this.dataSource.data = this.childTransactions;
         }
         // this.schemeList = [];
-        this.showUnits = false;
-        this.switchTransaction.controls.switchType.reset();
-        this.switchTransaction.controls.employeeContry.reset();
-        this.switchTransaction.controls.investmentAccountSelection.reset();
-        this.switchTransaction.controls.schemeSwitch.reset();
-        this.switchTransaction.controls.transferIn.reset();
+        this.resetAfterMulti()
       }
     }
   }
-
+  resetAfterMulti() {
+    this.showUnits = false;
+    this.switchTransaction.controls.switchType.reset();
+    this.switchTransaction.controls.employeeContry.reset();
+    this.switchTransaction.controls.investmentAccountSelection.reset();
+    this.switchTransaction.controls.schemeSwitch.reset();
+    this.switchTransaction.controls.transferIn.reset();
+  }
   removeUnnecessaryDataFromJson(singleTransactionJson) {
     singleTransactionJson.childTransactions = null;
     singleTransactionJson.schemeSelection = null;
