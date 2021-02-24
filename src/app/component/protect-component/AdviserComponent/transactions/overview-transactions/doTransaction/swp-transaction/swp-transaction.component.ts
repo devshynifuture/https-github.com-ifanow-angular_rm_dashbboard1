@@ -111,16 +111,9 @@ export class SwpTransactionComponent implements OnInit {
     this.getDataSummary = this.inputData.transactionData;
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     if (data.mutualFundData) {
-      this.folioList = [];
-      this.schemeName = data.mutualFundData.schemeName;
-      this.folioNumber = data.mutualFundData.folioNumber;
-      this.mfDefault = data.transactionData;
-      const foilo = { folioNumber: this.folioNumber };
-      const schemeName = { schemeName: this.schemeName };
-      this.folioList.push(foilo);
-      // this.schemeList.push({'schemeName': this.schemeName})
-      this.filterSchemeList = of([{ schemeName: this.schemeName }]);
-      this.mutualFundData = data.mutualFundData;
+      this.handleMutualFundData(data)
+
+
     }
     if (this.isViewInitCalled) {
       this.getdataForm('', false);
@@ -131,7 +124,23 @@ export class SwpTransactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, true);
+    this.assignToTransactionSummary()
 
+
+  }
+  handleMutualFundData(data) {
+    this.folioList = [];
+    this.schemeName = data.mutualFundData.schemeName;
+    this.folioNumber = data.mutualFundData.folioNumber;
+    this.mfDefault = data.transactionData;
+    const foilo = { folioNumber: this.folioNumber };
+    this.scheme = data.mutualFundData
+    this.folioList.push(foilo);
+    this.filterSchemeList = of([{ schemeName: this.schemeName }]);
+    this.mutualFundData = data.mutualFundData;
+  }
+
+  assignToTransactionSummary() {
     Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
     Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
     Object.assign(this.transactionSummary, { transactType: 'SWP' });
@@ -140,7 +149,6 @@ export class SwpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { changeDetails: this.inputData.transactionData });
     Object.assign(this.transactionSummary, { isAdvisorSection: this.inputData.isAdvisorSection });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-
   }
 
   backToTransact() {

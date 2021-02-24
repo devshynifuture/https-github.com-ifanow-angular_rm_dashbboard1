@@ -143,6 +143,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.folioNumber = data.mutualFundData.folioNumber;
     this.mfDefault = data.transactionData;
     const foilo = { folioNumber: this.folioNumber };
+    this.scheme = data.mutualFundData
     this.folioList.push(foilo);
     this.filterSchemeList = of([{ schemeName: this.schemeName }]);
     this.mutualFundData = data.mutualFundData;
