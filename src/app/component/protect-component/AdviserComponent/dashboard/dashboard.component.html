@@ -1564,7 +1564,7 @@
                 <div *ngFor="let singleNote of todoListData;index as i" class="pt-12 pb-12 bt-1 ">
                   <span class="f-16 pl-10 f-500" *ngIf="singleNote.createdDate==0">Today</span>
                   <span class="f-16 f-500 pl-10" *ngIf="singleNote.createdDate==1">Yesterday</span>
-                  <span class="f-14"
+                  <span class="f-16 f-500 pl-10"
                     *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
                   <div class="row align-items-baseline pt-12 pb-0 my-custom-todo">
                     <div *ngIf="singleNote.update==false" class="col-md-2 pl-0">
