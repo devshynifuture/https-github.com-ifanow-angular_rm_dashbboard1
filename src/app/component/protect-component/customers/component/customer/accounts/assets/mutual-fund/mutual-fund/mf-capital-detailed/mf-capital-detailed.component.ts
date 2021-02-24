@@ -569,6 +569,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
                                     if (ind == 0) {
                                         ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
+                                        obj = this.checkTransactiontype(obj);
                                         ele.transactionType = (obj.fwTransactionType) ? obj.fwTransactionType : 0;
                                         ele.redeemAmount = (obj.amount) ? obj.amount : 0;
                                         ele.redeemStt = (obj.stt) ? obj.stt : 0;
@@ -639,6 +640,15 @@ export class MfCapitalDetailedComponent implements OnInit {
     // getArrayForFinalValue(){
     // this.dataSource4=['Grand total', '-', this.redeemAmount, this.total_stt, '-', '-', '-', 'amtPurchase', this.purchaseAmount, '-', '-', this.total_stGain, this.total_stLoss, this.total_ltGain, this.total_ltLoss, this.total_indexGain, this.total_indexLoss];
     // }
+    checkTransactiontype(obj) {
+        if (obj.rtTypeId == 6 && !obj.fwTransactionType.includes("CAS")) {
+            obj.fwTransactionType = obj.fwTransactionType + '(CAS)'
+        }
+        if (obj.rtTypeId == 14 && !obj.fwTransactionType.includes("*")) {
+            obj.fwTransactionType = obj.fwTransactionType + '*'
+        }
+        return obj;
+    }
     getFilteredValues(data, category) {
         let days;
         let gainLossBasedOnGrandfathering;
