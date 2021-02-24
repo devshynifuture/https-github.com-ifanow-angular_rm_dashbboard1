@@ -833,6 +833,7 @@ export class StpTransactionComponent implements OnInit {
             element.currentValue = this.stpTransaction.get('currentValue').value
             element.date = this.stpTransaction.get('date').value
             element.frequencyType = this.stpTransaction.get('frequency').value
+            element.schemeName = this.stpTransaction.get('transferIn').value.schemeName;
             element.dividendReinvestmentFlag = this.stpTransaction.get('reinvest').value
           })
         } else {
