@@ -729,12 +729,16 @@ export class SwitchTransactionComponent implements OnInit {
             if (element.id == this.editedId) {
               element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId;
               element.id = this.editedId;
+              element.isin = this.schemeDetails.isin
+              element.productCode = this.schemeDetails.schemeCode
               element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId
               element.toProductDbId = this.schemeDetailsTransfer.id
               element.toMutualFundSchemeMasterId = this.schemeTransfer.mutualFundSchemeMasterId
               element.toIsin = this.schemeDetailsTransfer.isin
               element.productDbId = this.schemeDetails.id
-              element.folioNo = this.switchTransaction.get('investmentAccountSelection').value;
+              element.schemeCd = this.schemeDetails.schemeCode,
+
+                element.folioNo = this.switchTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.switchTransaction.get('employeeContry').value;
               element.schemeName = this.switchTransaction.get('schemeSwitch').value;
               element.transferIn = this.switchTransaction.get('transferIn').value
