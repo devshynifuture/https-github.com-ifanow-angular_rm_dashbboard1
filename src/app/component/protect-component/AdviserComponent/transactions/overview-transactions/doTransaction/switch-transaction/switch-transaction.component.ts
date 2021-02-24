@@ -512,41 +512,43 @@ export class SwitchTransactionComponent implements OnInit {
       this.getSchemeWiseFolios();
     }
     if (this.mutualFundData) {
-      this.folioDetails = {};
-      this.navOfSelectedScheme = this.mutualFundData.nav;
-      this.switchTransaction.controls.schemeSelection.setValue('1');
-      this.switchTransaction.controls.folioSelection.setValue('1');
-      this.switchTransaction.controls.schemeSwitch.setValue({ schemeName: this.schemeName });
-      this.switchTransaction.controls.schemeSwitch.disable();
-      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
-      this.currentValue = Math.round(this.currentValue);
-      this.switchTransaction.controls.currentValue.setValue(this.mutualFundData.currentValue);
-      this.switchTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
-      this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
-      this.showUnits = true;
-      this.filterSchemeList = of([{ schemeName: this.schemeName }]);
-      Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-      this.scheme = {
-        schemeName: this.schemeName,
-        mutualFundSchemeMasterId: this.mutualFundData.schemeId
-      };
-      const obj1 = {
-        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
-        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
-        orderType: 'ORDER',
-        userAccountType: this.mfDefault.defaultClient.accountType,
-      };
-      this.onlineTransact.getSchemeDetails(obj1).subscribe(
-        data => this.getSchemeDetailsRes(data), (error) => {
-          this.eventService.openSnackBar(error, 'Dismiss');
-        }
-      );
+      this.mutualFundSchemeDetails()
     }
     if (!this.mutualFundData && !isEdit) {
       this.getSchemeList();
     }
   }
-
+  mutualFundSchemeDetails() {
+    this.folioDetails = {};
+    this.navOfSelectedScheme = this.mutualFundData.nav;
+    this.switchTransaction.controls.schemeSelection.setValue('1');
+    this.switchTransaction.controls.folioSelection.setValue('1');
+    this.switchTransaction.controls.schemeSwitch.setValue({ schemeName: this.schemeName });
+    this.switchTransaction.controls.schemeSwitch.disable();
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+    this.currentValue = Math.round(this.currentValue);
+    this.switchTransaction.controls.currentValue.setValue(this.mutualFundData.currentValue);
+    this.switchTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
+    this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
+    this.showUnits = true;
+    this.filterSchemeList = of([{ schemeName: this.schemeName }]);
+    Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
+    this.scheme = {
+      schemeName: this.schemeName,
+      mutualFundSchemeMasterId: this.mutualFundData.schemeId
+    };
+    const obj1 = {
+      mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+      aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+      orderType: 'ORDER',
+      userAccountType: this.mfDefault.defaultClient.accountType,
+    };
+    this.onlineTransact.getSchemeDetails(obj1).subscribe(
+      data => this.getSchemeDetailsRes(data), (error) => {
+        this.eventService.openSnackBar(error, 'Dismiss');
+      }
+    );
+  }
   getFormControl(): any {
     return this.switchTransaction.controls;
   }
