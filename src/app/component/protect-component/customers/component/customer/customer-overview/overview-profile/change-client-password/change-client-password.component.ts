@@ -111,7 +111,7 @@ export class ChangeClientPasswordComponent implements OnInit {
       const obj = {
         password: this.setNewPasswordForm.controls.confirmPassword.value,
         // newPassword: this.setNewPasswordForm.controls.confirmPassword.value,
-        advisorId: this.userData.advisorId
+        advisorId: this.userData.id
       };
       this.orgSettingService.resetTeamMemberPassword(obj).subscribe(data => {
         this.barButtonOptions.active = false;
