@@ -488,8 +488,12 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
 
   capitalise(event) {
     if (event.target.value != '') {
-      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+      event.target.value = event.target.value.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
     }
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   getClientOrLeadData(data) {

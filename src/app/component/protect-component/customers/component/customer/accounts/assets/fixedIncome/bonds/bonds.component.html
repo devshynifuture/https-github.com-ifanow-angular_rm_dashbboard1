@@ -141,8 +141,8 @@
             <div class="form-group noneTopPadding mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" matInput autocomplete="off" formControlName="tenure" placeholder="E.g. 30"
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text"
-                        maxlength="3" class="form-control br-0">
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY_WITH_TWO_DECIMAL" #tenure
+                        type="text" maxlength="5" class="form-control br-0">
                     <!-- <mat-select formControlName="tenure" class="form-control br-0">
                             <mat-option [value]="">Months</mat-option>
                             <mat-option *ngFor="let M of fdMonths" [value]="M">
