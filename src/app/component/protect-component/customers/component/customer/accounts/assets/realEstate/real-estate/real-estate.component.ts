@@ -162,6 +162,7 @@ export class RealEstateComponent implements OnInit {
 
   getRealEstate() {
     this.isLoading = true;
+    this.hideFilter = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -189,6 +190,7 @@ export class RealEstateComponent implements OnInit {
 
       console.log('getRealEstateRes', data);
       this.dataList = data;
+      this.hideFilter = false;
       this.datasource3.data = this.dataList.assetList;
       data.assetList.forEach(singleAsset => {
         singleAsset.typeString = this.enumService.getRealEstateTypeStringFromValue(singleAsset.typeId);
@@ -199,6 +201,7 @@ export class RealEstateComponent implements OnInit {
     } else {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
+      this.hideFilter = true;
     }
     // this.assetValidation.getAssetCountGLobalData()
     this.ref.detectChanges();//to refresh the dom when response come
@@ -266,6 +269,7 @@ export class RealEstateComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
+        this.realEstateCapability = this.roleService.portfolioPermission.subModule.assets.subModule.realEstate.capabilityList
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             if (data) {
