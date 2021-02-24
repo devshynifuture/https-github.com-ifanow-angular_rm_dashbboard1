@@ -536,6 +536,7 @@ export class StpTransactionComponent implements OnInit {
     if (isEdit == true) {
       this.isEdit = isEdit;
       this.editedId = data.id;
+      this.showUnits = true
       this.scheme = data.scheme;
       this.schemeDetails = data.schemeDetails;
       if (data.reInvestmentOpt) {
@@ -555,19 +556,19 @@ export class StpTransactionComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    if (this.dataSource) {
-      data = this.dataSource;
-    }
+    // if (this.dataSource) {
+    //   data = this.dataSource;
+    // }
     this.stpTransaction = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
-      reinvest: [(data.reinvest) ? data.reinvest : '', [Validators.required]],
+      reinvest: [(!data) ? '' : data.dividendReinvestmentFlag, [Validators.required]],
       currentValue: [(data.currentValue)],
       balanceUnit: [data.balanceUnit],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
-      frequency: [(data.frequency) ? data.frequencyType : '', [Validators.required]],
+      frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
       investmentAccountSelection: [(data.folioNo) ? data.folioNo : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
@@ -576,13 +577,14 @@ export class StpTransactionComponent implements OnInit {
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       STPType: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       schemeStp: [(!data) ? '' : (this.mutualFundData) ? this.mutualFundData.schemeName : '', [Validators.required]],
-      transferIn: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
+      transferIn: [(!data.transferIn) ? '' : data.transferIn.schemeName, [Validators.required]],
     });
     this.filterSchemeList = this.stpTransaction.controls.schemeStp.valueChanges.pipe(
       startWith(''),
       map(value => this.processTransaction.filterScheme(value + '', this.existingSchemeList))
     );
-    this.stpTransaction.controls.schemeStp.setValue({ schemeName: (data.scheme) ? data.scheme.schemeName : '' });
+    this.stpTransaction.controls.transferIn.setValue({ schemeName: (data.transferIn) ? data.transferIn.schemeName : '' });
+    this.stpTransaction.controls.schemeStp.setValue({ schemeName: (data.schemeStp) ? data.schemeStp.schemeName : '' });
 
     if (!this.mutualFundData) {
       this.stpTransaction.controls.transferIn.valueChanges.subscribe((newValue) => {
@@ -762,6 +764,11 @@ export class StpTransactionComponent implements OnInit {
       scheme: this.schemeTransfer,
       schemeName: this.schemeTransfer.schemeName,
       schemeDetails: this.schemeDetailsTransfer,
+      transferIn: this.stpTransaction.get('transferIn').value,
+      schemeStp: this.stpTransaction.get('schemeStp').value,
+      balanceUnit: this.stpTransaction.get('balanceUnit').value,
+      currentValue: this.stpTransaction.get('currentValue').value,
+      frequencyType: this.stpTransaction.get('frequency').value
     };
     if (this.platformType == 1 && obj.folioNo) {
       obj.folioNo = obj.folioNo.split('/')[0];
@@ -814,15 +821,21 @@ export class StpTransactionComponent implements OnInit {
             element.id = this.editedId;
             element.folioNo = this.stpTransaction.get('investmentAccountSelection').value;
             element.orderVal = this.stpTransaction.get('employeeContry').value;
-            element.schemeName = this.stpTransaction.get('transferIn').value;
+            element.schemeStp = this.stpTransaction.get('schemeStp').value;
             element.toIsin = this.schemeDetailsTransfer.isin
             element.productDbId = this.schemeDetails.id
             element.bankDetailId = this.bankDetails.id
             element.transferIn = this.stpTransaction.get('transferIn').value
+            element.balanceUnit = this.stpTransaction.get('balanceUnit').value
+            element.currentValue = this.stpFrequency.get('currentValue').value
+            element.date = this.stpFrequency.get('date').value
+            element.frequencyType = this.stpFrequency.get('frequency').value
+            element.dividendReinvestmentFlag = this.stpTransaction.get('reinvest').value
           })
         } else {
           let obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
+          this.showUnits = false
           const tenure = this.stpTransaction.controls.tenure.value;
           const installment = this.stpTransaction.controls.installment.value;
           obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);

@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC,UAAU,AAAA,gBAAgB,CAAC,EAAE,CAAC,EAAE,AAAA,IAAK,CAAA,WAAW,CAAC,MAAM,CAAC;EAC9D,UAAU,EAAE,iBAAiB;EAC7B,MAAM,EAAE,IAAI;CACf",
-    "sources": [
-        "cashflow-upper-expense.component.scss"
-    ],
-    "names": [],
-    "file": "cashflow-upper-expense.component.css"
-}

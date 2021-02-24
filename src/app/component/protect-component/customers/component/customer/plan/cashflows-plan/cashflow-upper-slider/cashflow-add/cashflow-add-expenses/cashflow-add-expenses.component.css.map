@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC;EACR,MAAM,EAAE,IAAI;CACb",
-    "sources": [
-        "cashflow-add-expenses.component.scss"
-    ],
-    "names": [],
-    "file": "cashflow-add-expenses.component.css"
-}

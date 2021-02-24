@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AACA,AAAA,SAAS,CAAC,UAAU,AAAA,gBAAgB,CAAC,EAAE,CAAC,EAAE,AAAA,IAAK,CAAA,WAAW,CAAC,MAAM,CAAC;EAC9D,UAAU,EAAE,iBAAiB;EAC7B,MAAM,EAAE,IAAI;CACf;;AAED,AAAA,eAAe,CAAA;EACX,gBAAgB,EAAC,OAAO;EACxB,KAAK,EAAE,IAAI;CACd",
-    "sources": [
-        "cashflow-upper-income.component.scss"
-    ],
-    "names": [],
-    "file": "cashflow-upper-income.component.css"
-}
