@@ -681,7 +681,6 @@ export class SwpTransactionComponent implements OnInit {
               element.productCode = this.schemeDetails.schemeCode
               element.isin = this.schemeDetails.isin
               element.schemeCd = this.schemeDetails.schemeCode
-              element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId
             }
           });
           this.isEdit = false;
