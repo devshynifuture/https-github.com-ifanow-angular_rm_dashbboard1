@@ -119,6 +119,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.assignToTransactionSummary()
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, false);

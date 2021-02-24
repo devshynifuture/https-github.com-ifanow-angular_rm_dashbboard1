@@ -818,6 +818,7 @@ export class StpTransactionComponent implements OnInit {
             element.toIsin = this.schemeDetailsTransfer.isin
             element.productDbId = this.schemeDetails.id
             element.bankDetailId = this.bankDetails.id
+            element.transferIn = this.stpTransaction.get('transferIn').value
           })
         } else {
           let obj = this.getSingleTransactionJson();
