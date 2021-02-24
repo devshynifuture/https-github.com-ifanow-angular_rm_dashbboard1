@@ -13,6 +13,7 @@ import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { CustomerService } from "../../../../../customers/component/customer/customer.service";
 import { EnumDataService } from "../../../../../../../services/enum-data.service";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-swp-transaction',
@@ -75,6 +76,7 @@ export class SwpTransactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject,
     private onlineTransact: OnlineTransactionService,
+    private datePipe: DatePipe,
     public processTransaction: ProcessTransactionService,
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -288,6 +290,7 @@ export class SwpTransactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.showUnits = true;
     this.folioList = [];
     this.schemeDetails = null;

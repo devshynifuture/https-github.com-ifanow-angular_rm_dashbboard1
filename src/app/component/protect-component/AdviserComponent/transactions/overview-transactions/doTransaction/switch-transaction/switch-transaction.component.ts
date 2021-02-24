@@ -12,6 +12,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MultiTransactionPopupComponent } from '../multi-transaction-popup/multi-transaction-popup.component';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { EnumDataService } from "../../../../../../../services/enum-data.service";
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-switch-transaction',
@@ -74,6 +75,7 @@ export class SwitchTransactionComponent implements OnInit {
     private fb: FormBuilder,
     private eventService: EventService,
     public dialog: MatDialog,
+    private datePipe: DatePipe,
     public processTransaction: ProcessTransactionService,
     public enumDataService: EnumDataService) {
   }
@@ -276,6 +278,7 @@ export class SwitchTransactionComponent implements OnInit {
     console.log('Switch selected scheme : ', scheme);
     this.showSpinner = true;
     this.scheme = scheme;
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.showUnits = true;
     this.folioList = [];
     this.schemeDetails = null;
