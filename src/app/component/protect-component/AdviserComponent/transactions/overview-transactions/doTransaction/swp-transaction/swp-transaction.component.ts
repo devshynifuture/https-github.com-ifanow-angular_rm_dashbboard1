@@ -684,6 +684,7 @@ export class SwpTransactionComponent implements OnInit {
               element.isin = this.schemeDetails.isin
               element.schemeCd = this.schemeDetails.schemeCode
             }
+            this.resetAfterMulti()
           });
           this.isEdit = false;
         } else {
@@ -694,18 +695,20 @@ export class SwpTransactionComponent implements OnInit {
           obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
 
           this.childTransactions.push(obj);
-          this.dataSource.data = this.childTransactions;
-          this.swpTransaction.controls.date.reset();
-          this.swpTransaction.controls.employeeContry.reset();
-          this.swpTransaction.controls.tenure.reset();
-          this.swpTransaction.controls.frequency.reset();
-          this.swpTransaction.controls.schemeSwp.reset();
-          this.swpTransaction.controls.investmentAccountSelection.reset();
+          this.resetAfterMulti()
         }
       }
     }
   }
-
+  resetAfterMulti() {
+    this.dataSource.data = this.childTransactions;
+    this.swpTransaction.controls.date.reset();
+    this.swpTransaction.controls.employeeContry.reset();
+    this.swpTransaction.controls.tenure.reset();
+    this.swpTransaction.controls.frequency.reset();
+    this.swpTransaction.controls.schemeSwp.reset();
+    this.swpTransaction.controls.investmentAccountSelection.reset();
+  }
   removeUnnecessaryDataFromJson(singleTransactionJson) {
     singleTransactionJson.childTransactions = null;
     singleTransactionJson.schemeSelection = null;

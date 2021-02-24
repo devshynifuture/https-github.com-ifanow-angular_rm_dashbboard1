@@ -1026,29 +1026,31 @@ export class SipTransactionComponent implements OnInit {
           } else {
           }
         }
-        this.dataSource.data = this.childTransactions;
-        this.navOfSelectedScheme = 0;
-        this.scheme = undefined;
-        this.schemeDetails = undefined;
-        this.reInvestmentOpt = [];
-        this.folioDetails = undefined;
-        this.folioList = [];
-        this.onFolioChange(undefined);
-        this.sipTransaction.controls.date.reset();
-        this.dateDisplay = [];
-        // this.sipTransaction.controls.tenure.reset();
-        this.sipTransaction.controls.installment.reset();
-        this.sipTransaction.controls.frequency.reset();
-        this.sipTransaction.controls.employeeContry.reset();
-        this.sipTransaction.controls.investmentAccountSelection.reset();
-        this.sipTransaction.controls.schemeSip.reset();
-        this.setDefaultTenure();
-        this.gotoTop();
+        this.resetAfterMulti()
       }
 
     }
   }
-
+  resetAfterMulti() {
+    this.dataSource.data = this.childTransactions;
+    this.navOfSelectedScheme = 0;
+    this.scheme = undefined;
+    this.schemeDetails = undefined;
+    this.reInvestmentOpt = [];
+    this.folioDetails = undefined;
+    this.folioList = [];
+    this.onFolioChange(undefined);
+    this.sipTransaction.controls.date.reset();
+    this.dateDisplay = [];
+    // this.sipTransaction.controls.tenure.reset();
+    this.sipTransaction.controls.installment.reset();
+    this.sipTransaction.controls.frequency.reset();
+    this.sipTransaction.controls.employeeContry.reset();
+    this.sipTransaction.controls.investmentAccountSelection.reset();
+    this.sipTransaction.controls.schemeSip.reset();
+    this.setDefaultTenure();
+    this.gotoTop();
+  }
   gotoTop() {
     window.scroll({
       top: 0,
