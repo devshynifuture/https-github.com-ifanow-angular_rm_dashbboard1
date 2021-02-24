@@ -822,6 +822,9 @@ export class StpTransactionComponent implements OnInit {
             element.folioNo = this.stpTransaction.get('investmentAccountSelection').value;
             element.orderVal = this.stpTransaction.get('employeeContry').value;
             element.schemeStp = this.stpTransaction.get('schemeStp').value;
+            element.mutualFundSchemeMasterId = this.scheme.mutualFundSchemeMasterId
+            element.toProductDbId = this.schemeDetailsTransfer.id
+            element.toMutualFundSchemeMasterId = this.schemeTransfer.mutualFundSchemeMasterId
             element.toIsin = this.schemeDetailsTransfer.isin
             element.productDbId = this.schemeDetails.id
             element.bankDetailId = this.bankDetails.id

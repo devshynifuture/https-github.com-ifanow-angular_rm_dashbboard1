@@ -94,7 +94,7 @@ export class SwpTransactionComponent implements OnInit {
   multiTransact = false;
   childTransactions = [];
   dataSource = new MatTableDataSource(this.childTransactions);
-  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount'];
+  displayedColumns: string[] = ['no', 'folio', 'ownerName', 'amount', 'icons'];
   advisorId: any;
   validatorType = ValidatorType;
   filterSchemeList: Observable<any[]>;
@@ -103,27 +103,10 @@ export class SwpTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
-    this.advisorId = AuthService.getAdvisorId();
-    this.reInvestmentOpt = [];
     this.inputData = data;
-    this.transactionType = data.transactionType;
-    this.selectedFamilyMember = data.selectedFamilyMember;
-    this.getDataSummary = this.inputData.transactionData;
-    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
+    this.setDefaultData(data)
     if (data.mutualFundData) {
-      this.folioList = [];
-      this.schemeName = data.mutualFundData.schemeName;
-      this.folioNumber = data.mutualFundData.folioNumber;
-      this.mfDefault = data.transactionData;
-      const foilo = { folioNumber: this.folioNumber };
-      const schemeName = { schemeName: this.schemeName };
-      this.folioList.push(foilo);
-      // this.schemeList.push({'schemeName': this.schemeName})
-      this.filterSchemeList = of([{ schemeName: this.schemeName }]);
-      this.mutualFundData = data.mutualFundData;
-    }
-    if (this.isViewInitCalled) {
-      this.getdataForm('', false);
+      this.handleMutualFundData(data)
     }
   }
 
@@ -131,7 +114,32 @@ export class SwpTransactionComponent implements OnInit {
     this.transactionSummary = {};
     this.childTransactions = [];
     this.getdataForm(this.inputData, true);
+    this.assignToTransactionSummary()
 
+
+  }
+  setDefaultData(data) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.reInvestmentOpt = [];
+    this.inputData = data;
+    this.transactionType = data.transactionType;
+    this.selectedFamilyMember = data.selectedFamilyMember;
+    this.getDataSummary = this.inputData.transactionData;
+    this.platformType = this.getDataSummary.defaultClient.aggregatorType;
+  }
+  handleMutualFundData(data) {
+    this.folioList = [];
+    this.schemeName = data.mutualFundData.schemeName;
+    this.folioNumber = data.mutualFundData.folioNumber;
+    this.mfDefault = data.transactionData;
+    const foilo = { folioNumber: this.folioNumber };
+    this.scheme = data.mutualFundData
+    this.folioList.push(foilo);
+    this.filterSchemeList = of([{ schemeName: this.schemeName }]);
+    this.mutualFundData = data.mutualFundData;
+  }
+
+  assignToTransactionSummary() {
     Object.assign(this.transactionSummary, { familyMemberId: this.inputData.familyMemberId });
     Object.assign(this.transactionSummary, { clientId: this.inputData.clientId });
     Object.assign(this.transactionSummary, { transactType: 'SWP' });
@@ -140,7 +148,6 @@ export class SwpTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { changeDetails: this.inputData.transactionData });
     Object.assign(this.transactionSummary, { isAdvisorSection: this.inputData.isAdvisorSection });
     Object.assign(this.transactionSummary, { selectedFamilyMember: this.inputData.selectedFamilyMember });
-
   }
 
   backToTransact() {
@@ -424,9 +431,6 @@ export class SwpTransactionComponent implements OnInit {
     if (!data) {
       data = {};
     }
-    if (this.dataSource) {
-      data = this.dataSource;
-    }
     this.swpTransaction = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
@@ -435,13 +439,13 @@ export class SwpTransactionComponent implements OnInit {
       investor: [(!data) ? '' : data.investor, [Validators.required]],
       balanceUnit: [(!data) ? '' : data.balanceUnit,],
       currentValue: [(!data) ? '' : data.currentValue,],
-      employeeContry: [(!data) ? '' : data.employeeContry, [Validators.required]],
-      investmentAccountSelection: [(data.folioNumber) ? data.folioNumber : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
+      investmentAccountSelection: [(data.folioNo) ? data.folioNo : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       date: [(data.date) ? data.date : '', [Validators.required]],
-      frequency: [(data.frequency) ? data.frequency : '', [Validators.required]],
+      frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '3', [Validators.required]],
       installment: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       schemeSwp: [(!data) ? '' : (this.mutualFundData) ? this.mutualFundData.schemeName : '', [Validators.required]],
@@ -450,6 +454,8 @@ export class SwpTransactionComponent implements OnInit {
       startWith(''),
       map(value => this.processTransaction.filterScheme(value + '', this.schemeList))
     );
+    this.swpTransaction.controls.schemeSwp.setValue({ schemeName: (data.scheme) ? data.scheme.schemeName : '' });
+
     this.ownerData = this.swpTransaction.controls;
     if (this.mutualFundData) {
       this.folioDetails = {};
