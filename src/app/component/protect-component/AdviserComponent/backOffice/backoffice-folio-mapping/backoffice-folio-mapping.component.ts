@@ -1,12 +1,12 @@
-import {FormControl} from '@angular/forms';
-import {BackofficeFolioMappingService} from './bckoffice-folio-mapping.service';
-import {AuthService} from './../../../../../auth-service/authService';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SelectFolioMapComponent} from './select-folio-map/select-folio-map.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
-import {debounceTime, switchMap} from 'rxjs/operators';
-import {EnumDataService} from "../../../../../services/enum-data.service";
+import { FormControl } from '@angular/forms';
+import { BackofficeFolioMappingService } from './bckoffice-folio-mapping.service';
+import { AuthService } from './../../../../../auth-service/authService';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { EnumDataService } from "../../../../../services/enum-data.service";
 
 // import { SwPush } from '@angular/service-worker';
 
@@ -28,8 +28,8 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   selection = new SelectionModel<any>(true, []);
   offset = 0;
   offsetList = 0;
-  @ViewChild('tableEl', {static: false}) tableEl;
-  @ViewChild('unmappedTableSort', {static: false}) unmappedTableSort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('unmappedTableSort', { static: false }) unmappedTableSort: MatSort;
   selectedFolioCount: any = 0;
   showMappingBtn = false;
   searchForm: FormControl;
@@ -57,7 +57,8 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   initPoint(): void {
     this.searchForm = new FormControl();
     this.advisorId = AuthService.getAdvisorId();
-    this.parentId = AuthService.getParentId() === 0 ? this.advisorId : 0;
+    // this.parentId = AuthService.getParentId() === 0 ? this.advisorId : 0;
+    this.parentId = this.advisorId;
     this.unmappedDataSource = new MatTableDataSource([]);
     this.getMutualFundFolioList(0);
     this.setValueChangesForSearch();
@@ -278,7 +279,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
 
-      data: {selectedFolios: data, type: 'backoffice'}
+      data: { selectedFolios: data, type: 'backoffice' }
     });
 
 
@@ -306,16 +307,16 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
-  {position: '', schemeName: '', number: '', investName: ''},
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
 ];
