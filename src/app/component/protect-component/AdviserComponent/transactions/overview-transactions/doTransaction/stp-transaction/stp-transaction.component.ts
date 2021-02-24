@@ -826,8 +826,10 @@ export class StpTransactionComponent implements OnInit {
             element.toProductDbId = this.schemeDetailsTransfer.id
             element.toMutualFundSchemeMasterId = this.schemeTransfer.mutualFundSchemeMasterId
             element.toIsin = this.schemeDetailsTransfer.isin
+            element.isin = this.schemeDetails.isin
             element.productDbId = this.schemeDetails.id
             element.bankDetailId = this.bankDetails.id
+            element.productDbId = (this.schemeDetails.id) ? this.schemeDetails.id : 999999
             element.transferIn = this.stpTransaction.get('transferIn').value
             element.balanceUnit = this.stpTransaction.get('balanceUnit').value
             element.currentValue = this.stpTransaction.get('currentValue').value
