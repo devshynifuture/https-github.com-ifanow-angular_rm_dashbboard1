@@ -100,8 +100,8 @@
                                     No schemes Found
                                 </mat-error>
                                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
-                                    {{navOfSelectedScheme}} as
-                                    on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
+                                    {{scheme.nav}} as
+                                    on:{{(scheme)?scheme.navDate:'-'}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>
