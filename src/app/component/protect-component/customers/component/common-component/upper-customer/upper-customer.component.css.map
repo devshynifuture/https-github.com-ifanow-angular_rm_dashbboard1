@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC,gBAAgB,CAAA;EACtB,QAAQ,EAAE,KAAK;EACf,KAAK,EAAE,CAAC;EACR,OAAO,EAAE,IAAI;EACb,UAAU,EAAE,IAAI;EAChB,YAAY,EAAE,IAAI;CAErB",
-    "sources": [
-        "upper-customer.component.scss"
-    ],
-    "names": [],
-    "file": "upper-customer.component.css"
-}

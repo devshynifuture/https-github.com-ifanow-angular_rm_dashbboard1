@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC,eAAe,CAAC;EACtB,KAAK,EAAE,IAAI;CACd;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACnG,KAAK,EAAE,gBAAgB;CACxB",
-    "sources": [
-        "add-expenses.component.scss"
-    ],
-    "names": [],
-    "file": "add-expenses.component.css"
-}
