@@ -342,10 +342,6 @@ button.btn-xs {
   min-width: 40px;
 }
 
-button.btn-rounded {
-  border-radius: 26px !important;
-}
-
 .addon {
   font-size: 14px !important;
   text-align: center !important;
@@ -542,9 +538,6 @@ button:focus {
   background: $greenColor;
 }
 
-.red-error {
-  color: $danger-dker
-}
 
 .text-light-Optional {
   color: #757575 !important;

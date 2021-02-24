@@ -57,11 +57,6 @@ h5 {
   font-family: "Roboto", sans-serif !important;
 }
 
-// .proxima,
-// .proximaFont,
-// .mat-table {
-//     font-family: "Proxima Nova", sans-serif !important;
-// }
 .playairFont {
   font-family: "Playfair Display" !important;
 }
@@ -125,17 +120,10 @@ a:hover {
     right: -3px;
   }
 
-
-
-
   .mat-form-field-suffix {
     position: inherit !important;
   }
 
-}
-
-.font-400 {
-  font-weight: 400;
 }
 
 .center-item {
@@ -277,11 +265,6 @@ ul {
   background: #CACFD2;
 }
 
-// #aumtabs .mat-tab-label,
-// #aumtabs1 .mat-tab-label {
-//   min-width: 120px;
-//   height: 40px !important;
-// }
 #uifolios .mat-form-field-appearance-outline .mat-form-field-infix {
   padding: .6em 0 1em 0 !important;
 }
@@ -859,7 +842,7 @@ button.primary-sm {
   flex-wrap: nowrap !important;
 }
 
-.plan-profile-full-height{
+.plan-profile-full-height {
   height: calc(100vh - 120px);
 }
 
@@ -868,7 +851,7 @@ button.primary-sm {
 }
 
 .ba-light-p {
-  p{
+  p {
     margin-bottom: 0px;
   }
 }
@@ -946,43 +929,45 @@ button.primary-sm {
 }
 
 
- @media screen  and (orientation:portrait) {
-   #tabviewJs {
+@media screen and (orientation:portrait) {
+  #tabviewJs {
     transform: rotate(-90deg);
     transform-origin: 50% 61%
-}
-.loginBox_adv .h-100vh{
-  height: auto ;
-}
-#ui-overview-subscription .vertical-menu {
-  height: 63vh;
-}
+  }
 
-.width-220 {
-  width: 175px;
-  height: auto; 
-}
+  .loginBox_adv .h-100vh {
+    height: auto;
+  }
 
-.plan-profile-full-height {
-  height: calc(100vh - 410px);
-}
+  #ui-overview-subscription .vertical-menu {
+    height: 63vh;
+  }
 
-.portrait_height {
-  height: 650px;
+  .width-220 {
+    width: 175px;
+    height: auto;
+  }
+
+  .plan-profile-full-height {
+    height: calc(100vh - 410px);
+  }
+
+  .portrait_height {
+    height: 650px;
     overflow: auto;
-}
+  }
 
-.portrait_height_account {
+  .portrait_height_account {
     height: 510px;
     overflow: auto;
-}
+  }
 
-.portrait_height_insurance {
-  height: 510px;
-  overflow: auto;
-}
+  .portrait_height_insurance {
+    height: 510px;
+    overflow: auto;
+  }
 
- 
+
 
 
 }
@@ -995,16 +980,18 @@ button.primary-sm {
     transform-origin: center;
     width: auto !important;
     height: auto !important;
+  }
+
+  .loginBox_adv .h-100vh {
+    height: 100vh;
+  }
 }
-.loginBox_adv .h-100vh {
-  height: 100vh;
-}
- }
 
 
- .sendNowBtn-btn {
+.sendNowBtn-btn {
   background: transparent !important;
-   &:hover{
-     background: transparent !important;
-   }
- }
+
+  &:hover {
+    background: transparent !important;
+  }
+}
