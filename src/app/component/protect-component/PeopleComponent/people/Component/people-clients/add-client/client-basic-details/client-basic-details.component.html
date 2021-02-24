@@ -103,8 +103,9 @@
                 <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group m-0">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input #fullName (input)="capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
-                                [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
+                            <input #fullName (input)="capitalise($event)"
+                                [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="50"
+                                appInputValueValidation autocomplete="off" class="form-control"
                                 formControlName="fullName" matInput placeholder="Enter name">
                             <mat-error>This field is required</mat-error>
                             <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
@@ -433,9 +434,10 @@
                 <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input #mFullName (input)="capitalise($event)" [inputValidator]="validatorType.PERSON_NAME"
-                                [maxLength]="50" appInputValueValidation class="form-control"
-                                formControlName="minorFullName" matInput placeholder="Enter name">
+                            <input #mFullName (input)="capitalise($event)"
+                                [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="50"
+                                appInputValueValidation class="form-control" formControlName="minorFullName" matInput
+                                placeholder="Enter name">
                             <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>

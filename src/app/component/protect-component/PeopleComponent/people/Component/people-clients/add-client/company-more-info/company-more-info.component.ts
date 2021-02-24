@@ -100,7 +100,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   }
   capitalise(event) {
     if (event.target.value != '') {
-      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+      event.target.value = event.target.value.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
     }
   }
 

@@ -8,9 +8,9 @@
         <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter name" #displayName appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" formControlName="displayName" matInput
-                        [maxLength]="50" class="form-control">
+                    <input autocomplete="off" placeholder="Enter name" (input)="capitalise($event)" #displayName
+                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
+                        formControlName="displayName" matInput [maxLength]="50" class="form-control">
                     <mat-hint align="end">{{displayName.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
