@@ -278,12 +278,12 @@
                   <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                     <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                       <span *ngIf="Others?.currentValue!=0">₹</span>
-                      <span appFormatNumber [value]="Others?.currentValue" *ngIf="Others">{{Others?.currentValue == 0 ?
-                        '-' : Others?.currentValue}}</span>
+                      <span appFormatNumber [value]="Others?.currentValue ? Others?.currentValue : '-'"
+                        *ngIf="Others"></span>
                     </p>
                     <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(Others?.percentage),'text-danger': checkNumberPositiveAndNegative(Others?.percentage)==false,'': checkNumberPositiveAndNegative(Others?.percentage)==undefined}"
                       class="m-0 roboto pr-8">
-                      <span *ngIf="letsideBarLoader==false">{{Others?.percentage == 0 ? '-' : Others?.percentage}}
+                      <span *ngIf="letsideBarLoader==false">{{Others?.percentage ? Others?.percentage : '-'}}
                         <span *ngIf="Others?.percentage!=0">%</span></span>
                     </p>
                   </div>
