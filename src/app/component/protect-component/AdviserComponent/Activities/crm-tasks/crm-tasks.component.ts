@@ -11,6 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { FormControl } from '@angular/forms';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -241,21 +242,50 @@ export class CrmTasksComponent implements OnInit {
     }
   }
 
-  deleteTask(id) {
-    this.crmTaskService.deleteActivityTask(id)
-      .subscribe(res => {
-        if (res) {
-          this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
-          this.finalTaskList = [];
-          DashboardService.dashTaskDashboardCount = null;
-          DashboardService.dashTodaysTaskList = null;
-          this.initPoint();
-        }
-      }, err => {
-        console.error(err);
-        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
-      })
+  deleteModal(value, id) {
+
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: "Are you sure you want to delete?",
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.crmTaskService.deleteActivityTask(id)
+          .subscribe(res => {
+            if (res) {
+              dialogRef.close();
+              this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
+              this.finalTaskList = [];
+              DashboardService.dashTaskDashboardCount = null;
+              DashboardService.dashTodaysTaskList = null;
+              this.initPoint();
+            }
+          }, err => {
+            console.error(err);
+            this.eventService.openSnackBar("Something went wrong!", "DISMISS");
+          })
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
+
 
   openAddTask(data) {
     if (data) {
