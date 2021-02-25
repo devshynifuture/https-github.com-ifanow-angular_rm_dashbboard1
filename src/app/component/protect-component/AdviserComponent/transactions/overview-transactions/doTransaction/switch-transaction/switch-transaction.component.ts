@@ -276,6 +276,9 @@ export class SwitchTransactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     console.log('Switch selected scheme : ', scheme);
+    this.schemeListTransfer = [];
+    this.schemeDetailsTransfer = undefined;
+    this.switchTransaction.controls.transferIn.setValue('')
     this.showSpinner = true;
     this.scheme = scheme;
     this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
@@ -485,7 +488,7 @@ export class SwitchTransactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
       reinvest: [(!data.dividendReinvestmentFlag) ? '' : data.dividendReinvestmentFlag, [Validators.required]],
-      employeeContry: [(!data) ? '' : data.orderVal, []],
+      employeeContry: [(!data.orderVal) ? data.qty : data.orderVal, []],
       currentValue: [(!data) ? '' : data.currentValue,],
       balanceUnit: [(!data) ? '' : data.balanceUnit,],
       investmentAccountSelection: [(data.folioNo) ? data.folioNo : (this.mutualFundData) ? this.mutualFundData.folioNumber : '', [Validators.required]],
@@ -696,6 +699,7 @@ export class SwitchTransactionComponent implements OnInit {
     if (this.getDataSummary.defaultClient.aggregatorType == 1) {
       // obj.mandateId = (this.achMandateNSE == undefined) ? null : this.achMandateNSE.id;
       obj.bankDetailId = this.bankDetails.id;
+    } else {
       obj.orderVal = (this.switchTransaction.controls.switchType.value == '2') ? null : this.switchTransaction.controls.employeeContry.value;
     }
     if (this.platformType == 1 && obj.folioNo) {

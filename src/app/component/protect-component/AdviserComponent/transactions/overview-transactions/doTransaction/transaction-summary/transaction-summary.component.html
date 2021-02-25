@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="row  pt-16 pb-16">
-        <div class="col-md-12 p-0" *ngIf="inputData.multiTransact != true && inputData.confirmation != true">
+        <div class="col-md-12 p-0" *ngIf="inputData.multiTransact != true || inputData.confirmation != true">
           <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
           <div class="bar">
             <h5 class="m-0"><span class="f-500">Scheme:</span>

@@ -376,6 +376,8 @@ export class StpTransactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
+    this.schemeListTransfer = [];
+    this.schemeDetailsTransfer = undefined;
     this.stpTransaction.controls.transferIn.setValue('')
     this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.showUnits = true;
