@@ -700,6 +700,18 @@ export class SwpTransactionComponent implements OnInit {
       }
     }
   }
+  deleteChildTran(element) {
+    UtilService.deleteRow(element, this.childTransactions);
+    this.dataSource.data = this.childTransactions;
+
+    if (this.childTransactions.length == 0) {
+      this.multiTransact = false;
+      this.resetForm();
+      // if (this.selectScheme == 1) {
+      //   this.getExistingScheme();
+      // }
+    }
+  }
   resetAfterMulti() {
     this.dataSource.data = this.childTransactions;
     this.swpTransaction.controls.date.reset();

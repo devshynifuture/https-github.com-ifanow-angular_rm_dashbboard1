@@ -861,6 +861,18 @@ export class StpTransactionComponent implements OnInit {
     this.stpTransaction.controls.schemeStp.reset();
     this.stpTransaction.controls.transferIn.reset();
   }
+  deleteChildTran(element) {
+    UtilService.deleteRow(element, this.childTransactions);
+    this.dataSource.data = this.childTransactions;
+
+    if (this.childTransactions.length == 0) {
+      this.multiTransact = false;
+      this.resetForm();
+      // if (this.selectScheme == 1) {
+      //   this.getExistingScheme();
+      // }
+    }
+  }
   removeUnnecessaryDataFromJson(singleTransactionJson) {
     singleTransactionJson.childTransactions = null
     singleTransactionJson.schemeSelection = null;
