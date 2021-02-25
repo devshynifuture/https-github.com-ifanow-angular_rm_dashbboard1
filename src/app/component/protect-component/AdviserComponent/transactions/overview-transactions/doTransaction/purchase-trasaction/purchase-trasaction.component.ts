@@ -184,7 +184,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data == '') {
       this.scheme = undefined;
       this.purchaseTransaction.controls.employeeContry.setValidators([Validators.min(0)]);
-      this.purchaseTransaction.controls.employeeContry.setValue();
+      this.purchaseTransaction.controls.employeeContry.setValue(undefined, undefined);
       this.schemeDetails.minAmount = 0;
       return;
     }

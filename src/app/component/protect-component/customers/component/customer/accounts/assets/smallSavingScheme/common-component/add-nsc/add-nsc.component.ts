@@ -471,11 +471,11 @@ export class AddNscComponent implements OnInit {
       this.assetValidation.addAssetCount({ type: 'Add', value: 'smallSavingSchemes' })
       this.eventService.openSnackBar("Added successfully!", "Dismiss")
     } console.log(data)
-    this.close(data)
+    this.close(true)
   }
-  close(data) {
+  close(flag) {
     this.isOptionalField = true
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: data });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   getBank() {

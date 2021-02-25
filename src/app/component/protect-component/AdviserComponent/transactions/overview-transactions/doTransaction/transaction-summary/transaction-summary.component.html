@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="row  pt-16 pb-16">
-        <div class="col-md-12 p-0">
+        <div class="col-md-12 p-0" *ngIf="inputData.multiTransact != true || inputData.confirmation != true">
           <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
           <div class="bar">
             <h5 class="m-0"><span class="f-500">Scheme:</span>
@@ -68,12 +68,16 @@
           </h5>
           <h5 class="m-0" *ngIf="transactionSummary.enteredAmount && transactionSummary.Ttype == 1"><span
               class="f-500">Amount:</span>
-            ₹{{(transactionSummary == undefined) ? '' : transactionSummary.enteredAmount}}/{{transactionSummary.frequencyType}}
+            ₹{{(transactionSummary == undefined) ? '' : transactionSummary.enteredAmount}}{{(transactionSummary.frequencyType)?'/':''}}{{transactionSummary.frequencyType}}
           </h5>
           <h5 class="m-0" *ngIf="transactionSummary.enteredUnits && transactionSummary.Ttype == 2"><span
               class="f-500">Units:</span>
             {{(transactionSummary == undefined) ? '' : transactionSummary.enteredUnits}}
           </h5>
+        </div>
+        <div class="col-md-12 p-0" *ngIf="inputData.multiTransact == true && inputData.confirmation == true">
+          <p class="m-0 roboto text-custom">Scheme, folio and amount</p>
+          <h5 class="m-0"><span class="f-500">Multiple Transaction Done</span></h5>
         </div>
       </div>
       <div *ngIf="selectedPlatform== 1" class="row  pt-16 pb-16">
