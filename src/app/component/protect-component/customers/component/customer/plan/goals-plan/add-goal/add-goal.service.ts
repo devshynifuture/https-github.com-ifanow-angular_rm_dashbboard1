@@ -84,7 +84,7 @@ export class AddGoalService {
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
       percentAllocated: 100,
-      otherAssetDebtOrEquityId: asset.otherAssetDebtOrEquityId
+      otherAssetDebtOrEquityId: (asset.assetType == 45) ? asset.otherAssetDebtOrEquityId : 0
     }
   }
   createAllocationObjectForMf(asset, advisor_client_id, selectedGoal) {
