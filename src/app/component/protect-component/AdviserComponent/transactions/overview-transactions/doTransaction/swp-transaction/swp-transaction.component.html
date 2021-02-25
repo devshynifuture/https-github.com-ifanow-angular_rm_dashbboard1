@@ -60,7 +60,7 @@
                             </i>
                             <mat-menu #menubank="matMenu">
                                 <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
-                                <button mat-menu-item>Delete</button>
+                                <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
                             </mat-menu>
                         </div>
                     </td>
