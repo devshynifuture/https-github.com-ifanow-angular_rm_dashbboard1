@@ -350,7 +350,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.cashAndFLow = this.cashAndFLow[0];
       this.Commodities = data.filter(element => element.assetType == 12);
       this.Commodities = this.Commodities[0];
-      this.Others = data.filter(element => element.assetType == 35);
+      this.Others = data.filter(element => element.assetType == 45);
       this.Others = this.Others[0];
       const tempSummaryTotalValue: any = {};
 
