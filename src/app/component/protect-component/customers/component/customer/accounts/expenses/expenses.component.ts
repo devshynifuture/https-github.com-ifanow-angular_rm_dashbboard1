@@ -986,7 +986,7 @@ export class ExpensesComponent implements OnInit {
       array = array.filter(item => item.totalAmount > 0);
       array.forEach(singleExpense => {
         singleExpense.progressPercent = 0;
-        singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
+        singleExpense.progressPercent += (singleExpense.spent / singleExpense.totalAmount) * 100;
         singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
         if (singleExpense.progressPercent > 100) {
           singleExpense.spentPer = 100;
@@ -1244,7 +1244,7 @@ export class ExpensesComponent implements OnInit {
     if (data) {
       data.forEach(singleExpense => {
         singleExpense.progressPercent = 0;
-        singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
+        singleExpense.progressPercent += (singleExpense.spent / singleExpense.totalAmount) * 100;
         singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
         if (singleExpense.progressPercent > 100) {
           singleExpense.spentPer = 100;
