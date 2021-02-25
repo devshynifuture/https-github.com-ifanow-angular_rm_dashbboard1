@@ -1048,6 +1048,9 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.employeeContry.reset();
     this.sipTransaction.controls.investmentAccountSelection.reset();
     this.sipTransaction.controls.schemeSip.reset();
+    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' });
+    Object.assign(this.transactionSummary, { enteredAmount: '' });
     this.setDefaultTenure();
     this.gotoTop();
   }
