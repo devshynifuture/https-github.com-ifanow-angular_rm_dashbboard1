@@ -28,23 +28,23 @@ export class AddGoalService {
       //   this.eventService.openSnackBar("Asset allocation unsuccessful !! Asset maturing after goal date.", "Dismiss");
       // } else {
 
-        let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
-        if (asset.absAllocation < 100) {
-          asset.goalAssetMapping.forEach(element => {
-            obj.percentAllocated = 100 - element.percentAllocated
-          });
-          obj.lump_debt = selectedGoal.dashboardData.lump_debt
-          if (asset.assetType == 44 || asset.assetType == 43) {
-            obj.insuranceCashFlowTypeId = asset.insuranceCashFlowTypeId
-            obj.insuranceCashFlowId = asset.insuranceCashFlowId
-          }
-          obj.lump_equity = selectedGoal.dashboardData.lump_equity
-          obj.currentValue = asset.currentValue
-          this.allocateAsset(obj);
-        } else {
-          this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
+      let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
+      if (asset.absAllocation < 100) {
+        asset.goalAssetMapping.forEach(element => {
+          obj.percentAllocated = 100 - element.percentAllocated
+        });
+        obj.lump_debt = selectedGoal.dashboardData.lump_debt
+        if (asset.assetType == 44 || asset.assetType == 43) {
+          obj.insuranceCashFlowTypeId = asset.insuranceCashFlowTypeId
+          obj.insuranceCashFlowId = asset.insuranceCashFlowId
         }
-   //  }
+        obj.lump_equity = selectedGoal.dashboardData.lump_equity
+        obj.currentValue = asset.currentValue
+        this.allocateAsset(obj);
+      } else {
+        this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
+      }
+      //  }
 
     }
 
@@ -83,7 +83,8 @@ export class AddGoalService {
       assetType: asset.assetType,
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
-      percentAllocated: 100
+      percentAllocated: 100,
+      otherAssetDebtOrEquityId: asset.otherAssetDebtOrEquityId
     }
   }
   createAllocationObjectForMf(asset, advisor_client_id, selectedGoal) {
