@@ -983,7 +983,7 @@ export class UtilService {
         member['imgUrl'] = "/assets/images/svg/man-profile.svg";
         member['width'] = "48px";
       }
-      else if ((member.relationshipId == 3) || (member.relationshipId == 7)) {
+      else if ((member.relationshipId == 3) || member.relationshipId == 5 && member.age > 18) {
         member['imgUrl'] = "/assets/images/svg/women-profile-icon.svg";
         member['width'] = "48px";
       }

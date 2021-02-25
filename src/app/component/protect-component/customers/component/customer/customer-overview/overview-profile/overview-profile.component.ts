@@ -209,6 +209,7 @@ export class OverviewProfileComponent implements OnInit {
       });
       this.familyMemberList = data;
       this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+      this.familyMemberList = UtilService.getImageOfFamilyMember(data);
       console.log(this.familyMemberList);
     } else {
       this.familyMemberList = undefined;
