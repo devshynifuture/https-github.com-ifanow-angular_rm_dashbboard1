@@ -11,5 +11,7 @@ export class DownloadingExcelComponent implements OnInit {
 
   ngOnInit() {
   }
+  close() {
 
+  }
 }
