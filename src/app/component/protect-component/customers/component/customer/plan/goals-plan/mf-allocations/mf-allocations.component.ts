@@ -32,7 +32,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   familyList: any[] = [];
 
   schemeFilterValue = 'all';
-  folioFilterValue = 'all';
+  folioFilterValue = 'non-zero';
   assetFilterValue = 'all';
   selectedFamFilter = 'all';
   advisor_client_id: any = {
