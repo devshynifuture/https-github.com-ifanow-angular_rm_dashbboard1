@@ -14,8 +14,8 @@
         <div class="col-md-3 d-flex pl-0">
             <div class="mr-28">
                 <div class="memberBorderBox">
-                    <img src="/assets/images/svg/man-profile.svg"
-                        *ngIf="singleIndividualIncome.relationshipId==2 ||singleIndividualIncome.relationshipId==1">
+                    <img [src]="clientData.profilePicUrl" class="w-90" *ngIf="singleIndividualIncome.relationshipId==1">
+                    <img src="/assets/images/svg/man-profile.svg" *ngIf="singleIndividualIncome.relationshipId==2 ">
                     <img src="/assets/images/svg/wife-profile.svg" *ngIf="singleIndividualIncome.relationshipId==3">
                     <img src="/assets/images/svg/son-profile.svg" *ngIf="singleIndividualIncome.relationshipId==4">
                     <img src="/assets/images/svg/daughter-profile.svg" *ngIf="singleIndividualIncome.relationshipId==5">
