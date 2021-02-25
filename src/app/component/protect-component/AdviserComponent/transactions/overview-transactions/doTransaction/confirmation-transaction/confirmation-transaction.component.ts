@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {Router} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirmation-transaction',
@@ -16,12 +16,13 @@ export class ConfirmationTransactionComponent implements OnInit {
   salutationString;
 
   constructor(private subInjectService: SubscriptionInject,
-              public router: Router,) {
+    public router: Router, ) {
   }
 
   @Input() set data(data) {
     this.inputData = data;
     this.confirmData = data;
+    this.inputData.confirmation = true
     this.platformName = this.confirmData.aggregatorType == 1 ? 'NSE NMF II' : 'BSE Star MF';
     this.salutationString = this.confirmData.isAdvisorSection ? 'Your client' : 'You';
     if (this.isViewInitCalled) {
@@ -46,6 +47,6 @@ export class ConfirmationTransactionComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 }
