@@ -8,8 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class DownloadingExcelComponent implements OnInit {
 
   constructor() { }
-
+  fileData: any[];
+  display: any[];
   ngOnInit() {
   }
+  close() {
 
+  }
 }

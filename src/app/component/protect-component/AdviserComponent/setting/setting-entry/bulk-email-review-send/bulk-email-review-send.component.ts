@@ -165,7 +165,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.mailForm = this.fb.group({
       mail_body: [''],
     });
-    this.data == 'Email' ? this.subject.setValue('Your new money management account is created!') : this.subject.setValue("IFANOW");
+    this.data == 'Sms' ? this.subject.setValue("IFANOW") : this.getSubjectTemplate();
 
     this.searchFC.valueChanges.pipe(
       debounceTime(700),
@@ -197,6 +197,25 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     } else {
       this.getClientListValue(0);
     }
+  }
+
+  getSubjectTemplate() {
+    const obj = {
+      advisorId: this.advisorId,
+      templateId: 8
+    }
+    this.orgSetting.getEmailBulkSubjectTemplate(obj).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.subject.setValue(data.subject);
+        } else {
+          this.subject.setValue('Your new money management account is created!')
+        }
+      }, err => {
+        this.subject.setValue('Your new money management account is created!')
+      }
+    )
   }
 
   getClientListValue(offset) {

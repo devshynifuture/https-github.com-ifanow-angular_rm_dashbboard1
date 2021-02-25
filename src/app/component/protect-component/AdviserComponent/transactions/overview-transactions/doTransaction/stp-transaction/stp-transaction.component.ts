@@ -841,24 +841,38 @@ export class StpTransactionComponent implements OnInit {
         } else {
           let obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
-          this.showUnits = false
           const tenure = this.stpTransaction.controls.tenure.value;
           const installment = this.stpTransaction.controls.installment.value;
           obj = this.processTransaction.calculateInstallmentAndEndDate(obj, tenure, installment);
           this.dataSource.data = this.childTransactions;
-          this.schemeList = [];
-          this.stpTransaction.controls.frequency.reset();
-          this.stpTransaction.controls.date.reset();
-          this.stpTransaction.controls.installment.reset();
-          this.stpTransaction.controls.employeeContry.reset();
-          this.stpTransaction.controls.investmentAccountSelection.reset();
-          this.stpTransaction.controls.schemeStp.reset();
-          this.stpTransaction.controls.transferIn.reset();
         }
+        this.resetAfterMulti()
       }
     }
   }
+  resetAfterMulti() {
+    this.showUnits = false
+    this.schemeList = [];
+    this.stpTransaction.controls.frequency.reset();
+    this.stpTransaction.controls.date.reset();
+    this.stpTransaction.controls.installment.reset();
+    this.stpTransaction.controls.employeeContry.reset();
+    this.stpTransaction.controls.investmentAccountSelection.reset();
+    this.stpTransaction.controls.schemeStp.reset();
+    this.stpTransaction.controls.transferIn.reset();
+  }
+  deleteChildTran(element) {
+    UtilService.deleteRow(element, this.childTransactions);
+    this.dataSource.data = this.childTransactions;
 
+    if (this.childTransactions.length == 0) {
+      this.multiTransact = false;
+      this.resetForm();
+      // if (this.selectScheme == 1) {
+      //   this.getExistingScheme();
+      // }
+    }
+  }
   removeUnnecessaryDataFromJson(singleTransactionJson) {
     singleTransactionJson.childTransactions = null
     singleTransactionJson.schemeSelection = null;

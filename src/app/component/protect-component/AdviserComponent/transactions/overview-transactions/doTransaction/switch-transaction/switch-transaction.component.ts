@@ -744,8 +744,8 @@ export class SwitchTransactionComponent implements OnInit {
               element.schemeCd = this.schemeDetails.schemeCode
               element.folioNo = this.switchTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.switchTransaction.get('employeeContry').value;
-              element.schemeName = this.switchTransaction.get('schemeSwitch').value;
-              element.transferIn = this.switchTransaction.get('transferIn').value
+              element.schemeName = this.switchTransaction.get('schemeSwitch').value.schemeName;
+              element.transferIn = this.switchTransaction.get('transferIn').value;
               element.schemeSwitch = this.switchTransaction.get('schemeSwitch').value;
               element.switchType = this.switchTransaction.get('switchType').value;
               element.modeOfPaymentSelection = this.switchTransaction.get('modeOfPaymentSelection').value;
@@ -758,16 +758,18 @@ export class SwitchTransactionComponent implements OnInit {
           this.dataSource.data = this.childTransactions;
         }
         // this.schemeList = [];
-        this.showUnits = false;
-        this.switchTransaction.controls.switchType.reset();
-        this.switchTransaction.controls.employeeContry.reset();
-        this.switchTransaction.controls.investmentAccountSelection.reset();
-        this.switchTransaction.controls.schemeSwitch.reset();
-        this.switchTransaction.controls.transferIn.reset();
+        this.resetAfterMulti()
       }
     }
   }
-
+  resetAfterMulti() {
+    this.showUnits = false;
+    this.switchTransaction.controls.switchType.reset();
+    this.switchTransaction.controls.employeeContry.reset();
+    this.switchTransaction.controls.investmentAccountSelection.reset();
+    this.switchTransaction.controls.schemeSwitch.reset();
+    this.switchTransaction.controls.transferIn.reset();
+  }
   removeUnnecessaryDataFromJson(singleTransactionJson) {
     singleTransactionJson.childTransactions = null;
     singleTransactionJson.schemeSelection = null;

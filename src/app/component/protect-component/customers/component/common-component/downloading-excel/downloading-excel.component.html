@@ -1,6 +1,7 @@
 <mat-nav-list>
     <div class="row bg-dark p-12">
-        <div class="col-md-9" *ngIf="data.flag=='uploadFolder'">
+        <!-- *ngIf="data.flag=='uploadFolder'" -->
+        <div class="col-md-9">
             <h4 class="l-26 f-500 mb-0 t-white f-20">Downloading excel files</h4>
         </div>
         <div class="col-3 p-0 text-right">
@@ -18,24 +19,26 @@
             CANCEL
         </div>
     </div>
-
-    <div class="row pt-16 pb-24 mb-24" *ngIf="data.flag!='uploadFolder'">
+    <!-- *ngIf="data.flag!='uploadFolder'" -->
+    <div class="row pt-16 pb-24 mb-24">
         <div class="col-10 pb-24" *ngFor="let item of fileData">
             <img class="mr-8" src="assets/images/svg/file-lines.svg">{{item.name}}
         </div>
         <div class="col-2 text-right">
-            <mat-progress-spinner class="example-margin " [color]="color" [mode]="mode" [value]="value">
+            <mat-progress-spinner class="example-margin ">
             </mat-progress-spinner>
         </div>
         <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
     </div>
-    <div class="row pt-16 pb-24 mb-24" *ngIf="data.flag=='uploadFolder'">
+    <!-- *ngIf="data.flag=='uploadFolder'" prod issue -->
+    <div class="row pt-16 pb-24 mb-24">
         <div class="col-10" *ngFor="let item of display">
-            <img class="mr-8"
-                src="/assets/images/svg/folder-icon.svg">{{item.folderNameToDisplay}}{{this.data.countFiles}}of{{item.length}}
+            <img class="mr-8" src="/assets/images/svg/folder-icon.svg">
+            <!-- {{item.folderNameToDisplay}}{{this.data.countFiles}}of{{item.length}} -->
         </div>
+        <!-- [color]="color" [mode]="mode" [value]="value" prod issue -->
         <div class="col-2 text-right">
-            <mat-progress-spinner class="example-margin " [color]="color" [mode]="mode" [value]="value">
+            <mat-progress-spinner class="example-margin ">
             </mat-progress-spinner>
         </div>
     </div>
