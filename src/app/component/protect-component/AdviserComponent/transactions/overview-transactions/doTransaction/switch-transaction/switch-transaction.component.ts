@@ -745,7 +745,7 @@ export class SwitchTransactionComponent implements OnInit {
               element.folioNo = this.switchTransaction.get('investmentAccountSelection').value;
               element.orderVal = this.switchTransaction.get('employeeContry').value;
               element.schemeName = this.switchTransaction.get('schemeSwitch').value;
-              element.transferIn = this.switchTransaction.get('transferIn').value
+              element.transferIn = this.switchTransaction.get('transferIn').value.schemeName;
               element.schemeSwitch = this.switchTransaction.get('schemeSwitch').value;
               element.switchType = this.switchTransaction.get('switchType').value;
               element.modeOfPaymentSelection = this.switchTransaction.get('modeOfPaymentSelection').value;
