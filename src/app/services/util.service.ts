@@ -977,6 +977,47 @@ export class UtilService {
     return false;
   }
 
+  static getImageOfFamilyMember(familyMemberList) {
+    familyMemberList.forEach(member => {
+      if ((member.relationshipId == 2) || (member.relationshipId == 4 && member.age > 18)) {
+        member['imgUrl'] = "/assets/images/svg/man-profile.svg";
+        member['width'] = "48px";
+      }
+      else if ((member.relationshipId == 3) || (member.relationshipId == 7)) {
+        member['imgUrl'] = "/assets/images/svg/women-profile-icon.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 4 && member.age <= 18) {
+        member['imgUrl'] = "/assets/images/svg/son-profile.svg";
+        member['width'] = "36px";
+      }
+      else if (member.relationshipId == 5 && member.age <= 18) {
+        member['imgUrl'] = "/assets/images/svg/daughter-profile.svg";
+        member['width'] = "36px";
+      }
+      else if (member.relationshipId == 7) {
+        member['imgUrl'] = "/assets/images/svg/mother-profile.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 6) {
+        member['imgUrl'] = "/assets/images/svg/father-profile.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 10 || member.relationshipId == 8 || member.relationshipId == 9 || member.relationshipId == 11 || member.relationshipId == 12 || member.relationshipId == 13 || member.relationshipId == 14 || member.relationshipId == 15 || member.relationshipId == 16 || member.relationshipId == 0) {
+        member['imgUrl'] = "/assets/images/svg/others.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 17 || member.relationshipId == 18 || member.relationshipId == 19) {
+        member['imgUrl'] = "/assets/images/svg/office-building.svg";
+        member['width'] = "48px";
+      } else {
+        member['imgUrl'] = "/assets/images/svg/others.svg";
+        member['width'] = "48px";
+      }
+    });
+    return familyMemberList;
+  }
+
   // do not use this function. use the loader function below
   loader(increament: number) {
     if (increament === 0) {
