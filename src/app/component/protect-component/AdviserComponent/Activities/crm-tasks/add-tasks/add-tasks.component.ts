@@ -90,6 +90,12 @@ export class AddTasksComponent implements OnInit {
   prevSubTaskFormValues: {};
   isTaskDone = false;
   taskTemplateLoading: boolean;
+  index: any;
+  orgList = [];
+  array = [];
+  subListArr = [];
+  assignedToAr = [];
+  isLoadingFirst = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -130,6 +136,7 @@ export class AddTasksComponent implements OnInit {
       }
       this.isManual = true;
       this.collaboratorList = this.data.collaborators;
+      this.orgList = this.collaboratorList;
       this.commentList = this.data.comments;
 
       this.commentList.map(element => {
@@ -162,7 +169,6 @@ export class AddTasksComponent implements OnInit {
     }
     this.getTaskTemplateList();
     this.getTeamMemberList();
-
     // this.clientList = this.addTaskForm.get('searchClientList').valueChanges
     //   .pipe(
     //     startWith(''),
@@ -423,7 +429,7 @@ export class AddTasksComponent implements OnInit {
 
       data.displayName = this.data.client;
 
-      this.setTeamMember(data.assignedTo);
+      this.setTeamMember(data.assignedTo, false);
 
       this.addTaskForm = this.fb.group({
         searchTemplateList: [data.taskTemplateId ? data.taskTemplateId : ''],
@@ -691,18 +697,38 @@ export class AddTasksComponent implements OnInit {
     return this.teamMemberList.find(c => c.userId === value);
   }
 
-  setTeamMember(data) {
+  setTeamMember(data, clicked) {
+    if (this.data && this.data.subTasks && clicked && !this.isLoadingFirst) {
+      if (data) {
+        let valSub = this.data.subTasks.filter(d => d.userId == data.userId);
+        let checkMainUser = this.collaboratorList[0].userId == data.userId;
+        if (this.collaboratorList.length > 1) {
+          if (checkMainUser || valSub.length == 0) {
+            this.isLoadingFirst = true;
+            this.collaboratorList = this.collaboratorList.filter(d => d.userId != this.data.assignedTo);
+            this.orgList = this.collaboratorList
+          }
+        }
+      }
+    }
     console.log("teamMember id or assignedTo idd", data);
     this.selectedTeamMemberId = data.userId;
     if (this.teamMemberList && this.teamMemberList.length > 0) {
-      if (this.canAddCollaborators(data.userId)) {
-        this.collaboratorList.push({
-          name: data.fullName,
-          default: true,
-          userId: data.userId,
-          profilePicUrl: data.profilePicUrl
-        })
-      }
+      // let valSub = this.subListArr.filter(d => d.userId == data.userId);
+      this.assignedToAr = [];
+      let arr = this.orgList;
+      let subList = this.subListArr;
+      let mergeArray = [...arr, ...subList]
+      // if (this.canAddCollaborators(data.userId)) {
+      this.assignedToAr.push({
+        name: data.fullName,
+        default: true,
+        userId: data.userId,
+        profilePicUrl: data.profilePicUrl
+      })
+      this.collaboratorList = [...mergeArray, ...this.assignedToAr]
+      this.collaboratorList = [...new Map(this.collaboratorList.map(item => [item.userId, item])).values()];
+      // }
     }
   }
 
@@ -745,7 +771,6 @@ export class AddTasksComponent implements OnInit {
 
   getSubTaskForm(data) {
     data !== null ? data : data = {};
-
     return this.fb.group({
       isCompleted: [false,],
       description: [data.description ? data.description : '', Validators.required],
@@ -909,7 +934,7 @@ export class AddTasksComponent implements OnInit {
               this.tabState = 1;
               this.eventService.openSnackBar('Sub-task deleted successfully!', "DISMISS");
               let index = this.subTaskList.indexOf(this.selectedSubTask);
-              this.removeSubTask(index);
+              this.removeSubTask(index, null);
             } else {
               this.eventService.openSnackBar('Something went wrong', "DISMISS");
               console.log(res);
@@ -1055,7 +1080,12 @@ export class AddTasksComponent implements OnInit {
     this.subTask.push(this.getSubTaskForm(item));
   }
 
-  removeSubTask(index) {
+  removeSubTask(index, data) {
+    // let value = data.value.assignedTo;
+    // if (this.collaboratorList.length > 1) {
+    //   this.collaboratorList = this.collaboratorList.filter(d => d.userId != value);
+    // }
+
     this.subTask.removeAt(index);
     if (this.subTask.length === 0) {
       this.showSubTaskHeading = false;
@@ -1069,6 +1099,7 @@ export class AddTasksComponent implements OnInit {
     if (this.isTaskDone) {
       this.shouldShowAddSubTaskLabel = false;
     }
+    this.pushArray();
   }
 
   downloadAttachment(item) {
@@ -1131,7 +1162,57 @@ export class AddTasksComponent implements OnInit {
         console.error(err)
       })
   }
+  selectionChange(value, index) {
+    console.log(value);
+    this.pushArray();
+    // console.log(this.teamMemberList)
+    // if (this.index == index) {
+    //   if (this.collaboratorList.length > 1) {
+    //     let val = this.collaboratorList.filter(d => d.userId == value.value);
+    //     if (val.length > 0 && val[0].userId == value.value) {
+    //       this.collaboratorList.pop();
+    //     } else if (val.length == 0) {
+    //       this.collaboratorList.pop();
+    //     }
+    //   }
+    // }
+    // this.index = index;
 
+    // let selectedData = this.teamMemberList.filter(d => d.userId == value.value);
+    // this.collaboratorList.push({
+    //   name: selectedData[0].fullName,
+    //   userId: selectedData[0].userId,
+    //   default: false,
+    //   profilePicUrl: selectedData[0].profilePicUrl,
+    // })
+    // this.collaboratorList = [...new Map(this.collaboratorList.map(item => [item.userId, item])).values()];
+
+
+
+  }
+  pushArray() {
+    this.array = [];
+    this.array = this.orgList;
+    let mergeArray = [...this.orgList, ...this.assignedToAr]
+    this.subListArr = [];
+    let subTaskList = this.addTaskForm.get('subTask') as FormArray;
+    subTaskList.controls.forEach(element => {
+      if (element.get('assignedTo').value) {
+        let selectedData = this.teamMemberList.filter(d => d.userId == element.get('assignedTo').value);
+        this.subListArr.push({
+          name: selectedData[0].fullName,
+          userId: selectedData[0].userId,
+          default: false,
+          profilePicUrl: selectedData[0].profilePicUrl,
+        })
+      }
+    });
+    this.subListArr = [...new Map(this.subListArr.map(item => [item.userId, item])).values()];
+    this.array = [...mergeArray, ...this.subListArr]
+    this.collaboratorList = this.array
+    this.collaboratorList = [...new Map(this.collaboratorList.map(item => [item.userId, item])).values()];
+
+  }
   uploadAttachmentToAws(value, choice) {
     let data;
     switch (choice) {
@@ -1192,7 +1273,7 @@ export class AddTasksComponent implements OnInit {
             this.subTaskList.push(res)
             this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
             this.eventService.openSnackBar("Sub-task added successfully", "DISMISS");
-            this.removeSubTask(formGroupIndex);
+            this.removeSubTask(formGroupIndex, null);
           }
         });
     } else {
@@ -1207,7 +1288,7 @@ export class AddTasksComponent implements OnInit {
           status: 0
         });
         this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
-        this.removeSubTask(formGroupIndex);
+        this.removeSubTask(formGroupIndex, null);
       } else {
         this.addTaskForm.get(`subTask.${formGroupIndex}`).markAllAsTouched();
       }
@@ -1304,6 +1385,7 @@ export class AddTasksComponent implements OnInit {
               } else {
                 element.assignedTo = element.ownerId;
                 this.subTask.push(this.getSubTaskForm(element));
+
               }
             });
           }
@@ -1318,9 +1400,12 @@ export class AddTasksComponent implements OnInit {
           let d = new Date();
           this.addTaskForm.get('taskDueDate').patchValue(moment(d, "DD-MM-YYYY").add(res.turnAroundTime, 'days'), { emitEvent: false });
         }
+        this.pushArray();
         console.log('this is subtask List::: ')
         if (res.assignedTo) {
           this.addTaskForm.patchValue({ assignedTo: res.assignedTo, taskDescription: item.taskDescription });
+          let selectedData = this.teamMemberList.filter(d => d.userId == res.assignedTo);
+          this.setTeamMember(selectedData[0], false);
         }
       } else {
         this.taskTemplateLoading = false;
@@ -1452,6 +1537,7 @@ export class AddTasksComponent implements OnInit {
         }
       });
     }
+    this.orgList = this.collaboratorList;
     // return arr;
   }
 
