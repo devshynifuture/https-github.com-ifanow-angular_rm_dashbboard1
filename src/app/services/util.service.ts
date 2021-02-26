@@ -1007,7 +1007,7 @@ export class UtilService {
         member['imgUrl'] = "/assets/images/svg/others.svg";
         member['width'] = "48px";
       }
-      else if (member.relationshipId == 17 || member.relationshipId == 18 || member.relationshipId == 19) {
+      else if (member.relationshipId == 17 || member.relationshipId == 18 || member.relationshipId == 19 || member.relationshipId == 23 || member.relationshipId == 24 || member.relationshipId == 25) {
         member['imgUrl'] = "/assets/images/svg/office-building.svg";
         member['width'] = "48px";
       } else {
