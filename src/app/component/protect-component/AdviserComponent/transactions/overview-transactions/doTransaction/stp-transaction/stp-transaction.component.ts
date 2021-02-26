@@ -817,6 +817,7 @@ export class StpTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, { multiTransact: this.multiTransact });
       if (this.scheme != undefined && this.schemeDetails != undefined && this.stpTransaction != undefined) {
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
