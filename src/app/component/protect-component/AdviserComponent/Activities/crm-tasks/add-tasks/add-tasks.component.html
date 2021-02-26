@@ -203,7 +203,7 @@
                         [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled>Select team member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                            (click)="setTeamMember(item)">
+                            (click)="setTeamMember(item,true)">
                             {{ item.fullName }}
                         </mat-option>
                     </mat-select>
@@ -432,7 +432,8 @@
 
                     <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
                         <img class="img-pos-two" src="/assets/images/svg/people.svg">
-                        <mat-select class="form-control" formControlName="assignedTo">
+                        <mat-select class="form-control" formControlName="assignedTo"
+                            (selectionChange)="selectionChange($event,i)">
                             <mat-option value="" disabled>
                                 Team member
                             </mat-option>
@@ -451,7 +452,7 @@
                     <i class="material-icons c-p mt-4 mr-3" [matMenuTriggerFor]="menu3" *ngIf="i === subTask.length-1">
                         add
                     </i>
-                    <i class="material-icons c-p mt-4" (click)="removeSubTask(i)">
+                    <i class="material-icons c-p mt-4" (click)="removeSubTask(i,item)">
                         remove
                     </i>
                 </div>
@@ -686,7 +687,7 @@
                     <mat-select class="form-control br-0" formControlName="assignedTo">
                         <mat-option value="" disabled>Team Member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                            (click)="setTeamMember(item)">
+                            (click)="setTeamMember(item,true)">
                             {{ item.fullName }}
                         </mat-option>
                     </mat-select>
