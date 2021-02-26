@@ -201,12 +201,11 @@
       <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
         class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
         <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
-          <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
+          <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family<br>members</p>
           <h3 class="m-0 roboto f-400 text-black pt-8">
             <div class="relClass">
               <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
-                <span
-                  *ngIf="!docOverviewFlag">{{documentSizeData.familyMemberCount?documentSizeData.familyMemberCount:'0'}}</span>
+                <span *ngIf="!docOverviewFlag">{{documentSizeData.familyMemberCount}}</span>
               </div>
             </div>
           </h3>
@@ -432,7 +431,7 @@
                     {{singleMember.name}}
                   </h5>
                 </div>
-                <div class="col-md-3 p-0 d-flex">
+                <div class="col-md-2 p-0">
                   <button *ngIf="singleMember.birthDayOrAnniversary==2" mat-stroked-button
                     class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
                   </button>
@@ -811,32 +810,32 @@
           <div class="d-flex">
             <div class="fundBox bg-white slide" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts">
               <div class="row">
-                <div class="col-md-9   pr-0">
-                  <h5 class="m-0 f-400 roboto text-black f-14 pl-10 lh-16">
+                <div class="col-md-9   p-0">
+                  <h5 class="m-0 f-400 roboto text-black f-14  lh-16">
                     UCC
                   </h5>
-                  <h5 class="m-0 f-400 f-14 roboto text-black pt-10 pl-10 lh-16">
+                  <h5 class="m-0 f-400 f-14 roboto text-black pt-10  lh-16">
                     {{singleAccount.clientName}}
                   </h5>
                 </div>
-                <div class="col-md-3 pl-0 d-flex justify-content-end">
+                <div class="col-md-3 pl-0 d-flex justify-content-end f-14 pr-0 text-primitive">
                   BSE
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-6">
+              <div class="row pt-16">
+                <div class="col-md-6 pr-8 pl-0">
                   <p class="m-0 text-primitive f-12"> Individual</p>
                 </div>
-                <div class="col-md-6">
-                  <p class="m-0 text-primitive f-12">
+                <div class="col-md-6 pr-0 pl-0 text-right">
+                  <p class="m-0 text-primitive f-12 lh-12 pt-4 ws-nowrap">
                     Anyone or survivor
                   </p>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-12">
+              <div class="row pt-16">
+                <div class="col-md-12 pl-0">
                   <button mat-stroked-button class="btn-success-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">INVESTMENT
                     READY
                   </button>
@@ -1004,27 +1003,27 @@
 
               <div class="row">
                 <div class="col-md-6 p-0 ">
-                  <p class="ml-10 f-400 roboto text-black  f-20 lh-16">
+                  <p class="f-400 roboto text-black  f-18 lh-16">
                     {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
                 </div>
-                <div class="col-md-6 p-0 ">
+                <div class="col-md-6 p-0 text-right">
                   <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}
                   </p>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-12">
+              <div class="row pt-0">
+                <div class="col-md-12 p-0">
                   <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
                 </div>
               </div>
 
 
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
+              <div class="row pt-16">
+                <div class="col-md-12 p-0">
+                  <p class="m-0 text-black f-400 roboto lh-16 pb-6">{{singleTransaction.clientName}}</p>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12 p-0">
                   <button mat-stroked-button
                     class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">{{getTnxStatus(singleTransaction.status)}}
                   </button>
@@ -1568,19 +1567,20 @@
                   <span class="f-16 f-500 pl-10"
                     *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
                   <div class="row align-items-baseline pt-12 pb-0 my-custom-todo">
-                    <div *ngIf="singleNote.update==false" class="col-md-2 pl-0">
+                    <div *ngIf="singleNote.update==false" class="col-md-1 pl-0">
                       <mat-radio-button value={{singleNote.id}}>
                       </mat-radio-button>
                     </div>
-                    <div [ngClass]="{'col-md-7': singleNote.update==false,'col-md-12': singleNote.update}"
-                      class=" pl-0">
-                      <span *ngIf="singleNote.update==false" class="text-break c-p f-14">{{singleNote.activityName}}
+                    <div [ngClass]="{'col-md-8': singleNote.update==false,'col-md-12': singleNote.update}"
+                      class=" pl-8">
+                      <p *ngIf="singleNote.update==false" class="text-break c-p f-14 pl-10 roboto f-400">
+                        {{singleNote.activityName}}
 
 
 
-                      </span>
+                      </p>
                       <div class="pb-8 pt-0 pl-10 d-flex align-items-center" *ngIf="singleNote.update">
-                        <input appAutofocus matInput class="form-control bg-white" [formControl]="updateNote"
+                        <input appAutofocus matInput class="form-control" [formControl]="updateNote"
                           autofocus={{singleNote.update}} placeholder="Enter note">
                         <span class="material-icons f-20 c-p pl-8 text-primitive" (click)="updateTodoList(singleNote)">
                           done
@@ -1588,7 +1588,7 @@
                       </div>
                     </div>
                     <div *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                      class="col-md-3 pl-0 d-flex">
+                      class="col-md-3 text-center pl-0 d-flex">
                       <div>
                         <span (click)="deleteTodoList(singleNote,i)" class="material-icons text-primitive f-20 c-p">
                           done
