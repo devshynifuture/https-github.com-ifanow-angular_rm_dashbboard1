@@ -666,6 +666,8 @@ export class SwpTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, { multiTransact: this.multiTransact });
+
       if (this.scheme != undefined && this.schemeDetails != undefined && this.swpTransaction != undefined) {
 
         if (this.isEdit == true) {
@@ -720,6 +722,9 @@ export class SwpTransactionComponent implements OnInit {
     this.swpTransaction.controls.frequency.reset();
     this.swpTransaction.controls.schemeSwp.reset();
     this.swpTransaction.controls.investmentAccountSelection.reset();
+    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' });
+    Object.assign(this.transactionSummary, { enteredAmount: '' });
   }
   removeUnnecessaryDataFromJson(singleTransactionJson) {
     singleTransactionJson.childTransactions = null;

@@ -817,6 +817,7 @@ export class StpTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, { multiTransact: this.multiTransact });
       if (this.scheme != undefined && this.schemeDetails != undefined && this.stpTransaction != undefined) {
         if (this.isEdit == true) {
           this.childTransactions.forEach(element => {
@@ -839,7 +840,9 @@ export class StpTransactionComponent implements OnInit {
             element.frequencyType = this.stpTransaction.get('frequency').value
             element.schemeName = this.stpTransaction.get('transferIn').value.schemeName;
             element.dividendReinvestmentFlag = this.stpTransaction.get('reinvest').value
+
           })
+          this.resetAfterMulti()
         } else {
           let obj = this.getSingleTransactionJson();
           this.childTransactions.push(obj);
@@ -862,6 +865,10 @@ export class StpTransactionComponent implements OnInit {
     this.stpTransaction.controls.investmentAccountSelection.reset();
     this.stpTransaction.controls.schemeStp.reset();
     this.stpTransaction.controls.transferIn.reset();
+    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' });
+    Object.assign(this.transactionSummary, { enteredAmount: '' });
+    Object.assign(this.transactionSummary, { schemeNameTranfer: '' })
   }
   deleteChildTran(element) {
     UtilService.deleteRow(element, this.childTransactions);

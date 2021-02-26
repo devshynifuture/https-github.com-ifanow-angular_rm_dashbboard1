@@ -729,6 +729,7 @@ export class SwitchTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, { multiTransact: this.multiTransact });
       if (this.scheme && this.schemeDetails != undefined && this.switchTransaction != undefined) {
         if (this.isEdit != true) {
           this.id++;
@@ -773,6 +774,10 @@ export class SwitchTransactionComponent implements OnInit {
     this.switchTransaction.controls.investmentAccountSelection.reset();
     this.switchTransaction.controls.schemeSwitch.reset();
     this.switchTransaction.controls.transferIn.reset();
+    Object.assign(this.transactionSummary, { schemeName: '' }); // to disable scheme name from transaction summary
+    Object.assign(this.transactionSummary, { folioNumber: '' });
+    Object.assign(this.transactionSummary, { enteredAmount: '' });
+    Object.assign(this.transactionSummary, { schemeNameTranfer: '' })
   }
   removeUnnecessaryDataFromJson(singleTransactionJson) {
     singleTransactionJson.childTransactions = null;

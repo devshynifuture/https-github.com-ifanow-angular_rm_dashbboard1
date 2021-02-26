@@ -47,7 +47,7 @@
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
 
                 <!-- <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12"> -->
-                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteTask(null)"
+                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteTaskModal('TASK',data)"
                     class="c-p ml-12">
                 <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
@@ -642,7 +642,7 @@
                     (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
                 <!-- <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12"> -->
-                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteSubTask()"
+                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteModal('SUBTASK')"
                     class="c-p ml-12">
                 <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
@@ -889,7 +889,7 @@
             class="row pt-10">
             <div class="w-10">
             </div>
-            <div class="w-90 f-14 p-0 pb-16">
+            <div class="w-90 f-14 p-0 pb-16 pt-12">
                 Collaborators
                 <span *ngFor="let item of collaboratorList">
                     <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"

@@ -18,6 +18,7 @@ import { Subscription, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { DashboardService } from '../../../dashboard/dashboard.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-tasks',
@@ -593,6 +594,7 @@ export class AddTasksComponent implements OnInit {
     } else if (value === 1 && this.saveChangesSubTask === true) {
       this.eventService.openSnackBar("Please save the changes!", "DISMISS");
     } else {
+      this.subTaskList = this.subTaskList.filter(element => element.id != subTaskItem.id)
       this.tabState = value;
     }
   }
@@ -892,44 +894,124 @@ export class AddTasksComponent implements OnInit {
       })
   }
 
+
+  deleteModal(value) {
+
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: "Are you sure you want to delete?",
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        const data = {
+          id: this.selectedSubTask.id,
+          taskId: this.selectedSubTask.taskId,
+          taskNumber: this.selectedSubTask.taskNumber,
+          description: this.selectedSubTask.description,
+          turnAroundTime: this.selectedSubTask.turn,
+          assignedTo: this.selectedSubTask.assignedTo,
+          status: this.selectedSubTask.status // true or false
+        }
+
+        if (this.selectedSubTask && this.selectedSubTask.hasOwnProperty('dueDate')) {
+          let date = new Date(this.selectedSubTask.dueDate)
+          let dueDate = date.getFullYear() + "-"
+            + `${(date.getMonth() + 1) < 10 ? '0' : ''}`
+            + (date.getMonth() + 1) + '-'
+            + `${date.getDate() < 10 ? '0' : ''}`
+            + date.getDate();
+          data['dueDate'] = dueDate;
+        }
+
+        this.crmTaskService.deleteSubTaskFromTask(data)
+          .subscribe(res => {
+            if (res) {
+              dialogRef.close();
+              this.changeTabState(this.selectedSubTask, 1)
+              this.addTaskSubTaskChanges = true;
+              this.tabState = 1;
+              this.eventService.openSnackBar('Sub-task deleted successfully!', "DISMISS");
+              let index = this.subTaskList.indexOf(this.selectedSubTask);
+              this.removeSubTask(index, null);
+            } else {
+              this.eventService.openSnackBar('Something went wrong', "DISMISS");
+              console.log(res);
+            }
+          }, err => {
+            console.error(err);
+            this.eventService.openSnackBar("Something went wrong", "DISMISS");
+          })
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
+  }
+
   deleteSubTask(item?) {
 
-    const data = {
-      id: item.id ? item.id : this.selectedSubTask.id,
-      taskId: item.taskId ? item.taskId : this.selectedSubTask.taskId,
-      taskNumber: item.taskNumber ? item.taskNumber : this.selectedSubTask.taskNumber,
-      description: item.description ? item.description : this.selectedSubTask.description,
-      turnAroundTime: item.turnAroundTime ? item.turnAroundTime : this.selectedSubTask.turn,
-      assignedTo: item.assignedTo ? item.assignedTo : this.selectedSubTask.assignedTo,
-      status: item.status || (item.status === 0) ? item.status : this.selectedSubTask.status // true or false
-    }
 
-    if (this.selectedSubTask && this.selectedSubTask.hasOwnProperty('dueDate')) {
-      let date = new Date(this.selectedSubTask.dueDate)
-      let dueDate = date.getFullYear() + "-"
-        + `${(date.getMonth() + 1) < 10 ? '0' : ''}`
-        + (date.getMonth() + 1) + '-'
-        + `${date.getDate() < 10 ? '0' : ''}`
-        + date.getDate();
-      data['dueDate'] = dueDate;
-    }
 
-    this.crmTaskService.deleteSubTaskFromTask(data)
-      .subscribe(res => {
-        if (res) {
-          this.addTaskSubTaskChanges = true;
-          this.tabState = 1;
-          this.eventService.openSnackBar('Sub-task deleted successfully!', "DISMISS");
-          let index = this.subTaskList.indexOf(this.selectedSubTask);
-          this.removeSubTask(index, null);
-        } else {
-          this.eventService.openSnackBar('Something went wrong', "DISMISS");
-          console.log(res);
-        }
-      }, err => {
-        console.error(err);
-        this.eventService.openSnackBar("Something went wrong", "DISMISS");
-      })
+  }
+
+
+  deleteTaskModal(value, data) {
+
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: "Are you sure you want to delete?",
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.crmTaskService.deleteActivityTask(data.id)
+          .subscribe(res => {
+            if (res) {
+              dialogRef.close();
+              this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
+              DashboardService.dashTaskDashboardCount = null;
+              DashboardService.dashTodaysTaskList = null;
+              this.initPoint();
+              this.close(true);
+            }
+          }, err => {
+            console.error(err);
+            this.eventService.openSnackBar("Something went wrong!", "DISMISS");
+          })
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
 
   markTaskOrSubTaskDone(choice, subTaskItem, value) {
