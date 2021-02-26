@@ -667,7 +667,7 @@
           <div *ngIf="dataSource2.data == null" class="ba-primitive br-4 p-18">
             <div class="row column-reverse-992 text-center-992">
               <div class="col-xl-7 col-lg-7 col-md-12 p-0">
-                <h3 class="f-16 roboto f-600"> No tasks added yet </h3>
+                <h3 class="f-16 roboto f-600"> No today's tasks added yet </h3>
                 <p class="f-14"> In order to collaborate with your team in an efficient way, you can create tasks and
                   track them here. </p>
                 <button [routerLink]="['/admin/activies/tasks']" class="btn-primary btn40" mat-button>
@@ -691,7 +691,7 @@
           <h5 class="m-0 f-500 roboto text-black">Transaction - Pending & Rejections</h5>
         </div>
         <div class="col-md-4 p-0 text-right">
-          <p class="m-0 f-400 roboto text-black">Last 7 days</p>
+          <p class="m-0 f-400 roboto text-black f-12">Last 7 days</p>
         </div>
         <div class="col-md-12 p-0 pt-10">
           <table mat-table [appSkeletonLoading]="last7DaysFlag" appSkeletonLoading class="skeletonAnimation"
@@ -990,21 +990,23 @@
           #slickModal="slick-carousel"> -->
         <div class="overflow-myfeed">
           <div class="d-flex">
-            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide  ">
+            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide h-190 ">
               <div class="row">
                 <div class="col-md-9 p-0">
-                  <p class="mb-0 f-400 roboto text-black ml-10 lh-16">
-                    {{singleTransaction.transactionTypeString}}</p>
+                  <p class="mb-0 f-400 roboto text-black lh-16">
+                    {{singleTransaction.transactionType}}</p>
                 </div>
                 <div class="col-md-3 p-0">
                   <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row pt-12">
                 <div class="col-md-6 p-0 ">
-                  <p class="f-400 roboto text-black  f-18 lh-16">
-                    {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
+                  <p class="f-400 roboto text-black mb-0 f-18 lh-16">
+                    <!-- // {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : '₹'}} -->
+                    {{singleTransaction.amount ? '₹' : ''}} {{singleTransaction.amount}}
+                  </p>
                 </div>
                 <div class="col-md-6 p-0 text-right">
                   <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}
@@ -1012,7 +1014,7 @@
                 </div>
               </div>
 
-              <div class="row pt-0">
+              <div class="row pt-12">
                 <div class="col-md-12 p-0">
                   <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
                 </div>
@@ -1024,13 +1026,13 @@
                   <p class="m-0 text-black f-400 roboto lh-16 pb-6">{{singleTransaction.clientName}}</p>
                 </div>
                 <div class="col-md-12 p-0">
-                  <button mat-stroked-button
-                    class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">{{getTnxStatus(singleTransaction.status)}}
+                  <button mat-stroked-button class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12 t-u"
+                    *ngIf="getTnxStatus(singleTransaction.status) != 'Pending Authorization' ">{{getTnxStatus(singleTransaction.status)}}
                   </button>
-                  <!-- <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
-                  class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
-                  AUTHORISATION
-                </button> -->
+                  <button *ngIf="getTnxStatus(singleTransaction.status) =='Pending Authorization'" mat-stroked-button
+                    class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
+                    AUTHORISATION
+                  </button>
                 </div>
               </div>
 
@@ -1394,7 +1396,7 @@
         <div *ngIf="dashBoardSummary.length ==0" class="ba-primitive br-4 p-18">
           <div class="row column-reverse-992 text-center-992">
             <div class="col-xl-7 col-lg-7 col-md-12 p-0">
-              <h3 class="f-16 roboto f-600">No subscriptions added yet</h3>
+              <h3 class="f-16 roboto f-600">No upcoming subscription added yet</h3>
               <p class="f-14">
                 Subscriptions is carefully designed for RIAs. You can define your core offerings, fee structure,
                 deliverables, agreements and automate the whole process around it. This will act as a foundation for
@@ -1533,9 +1535,7 @@
                     <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
                   </div> -->
                   <button (click)="showInput=true" *ngIf="showInput==false" mat-stroked-button
-                    class="btn-primary pr-8 pl-8 right mr-12"><span class="material-icons pr-8">
-                      add
-                    </span>Add a to-do</button>
+                    class="btn-primary pr-8 pl-8 right mr-12">Add a to-do</button>
 
                   <div class="todo-wrraper">
                     <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
@@ -1562,18 +1562,17 @@
             <div class="radio-buttons-advisor">
               <mat-radio-group [formControl]="selectedItem" aria-label="Select an option">
                 <div *ngFor="let singleNote of todoListData;index as i" class="pt-12 pb-12 bt-1 ">
-                  <span class="f-16 pl-10 f-500" *ngIf="singleNote.createdDate==0">Today</span>
-                  <span class="f-16 f-500 pl-10" *ngIf="singleNote.createdDate==1">Yesterday</span>
-                  <span class="f-16 f-500 pl-10"
+                  <span class="f-16 pl-20 f-500" *ngIf="singleNote.createdDate==0">Today</span>
+                  <span class="f-16 f-500 pl-20" *ngIf="singleNote.createdDate==1">Yesterday</span>
+                  <span class="f-16 f-500 pl-20"
                     *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
                   <div class="row align-items-baseline pt-12 pb-0 my-custom-todo">
-                    <div *ngIf="singleNote.update==false" class="col-md-1 pl-0">
+                    <div *ngIf="singleNote.update==false" class="col-md-1 pl-12">
                       <mat-radio-button value={{singleNote.id}}>
                       </mat-radio-button>
                     </div>
-                    <div [ngClass]="{'col-md-8': singleNote.update==false,'col-md-12': singleNote.update}"
-                      class=" pl-8">
-                      <p *ngIf="singleNote.update==false" class="text-break c-p f-14 pl-10 roboto f-400">
+                    <div [ngClass]="{'col-md-7': singleNote.update==false,'col-md-12': singleNote.update}" class=" ">
+                      <p *ngIf="singleNote.update==false" class="text-break c-p f-14 pl-10 roboto f-400 mb-0">
                         {{singleNote.activityName}}
 
 
@@ -1625,8 +1624,9 @@
 
             <div class="col-md-12 mt-20 mb-8 pl-0 addTo-DO">
               <div (click)="showInput=true" class="d-flex justify-content-center align-items-center mt-10 mb-8 c-p">
-                <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
-                <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
+                <!-- <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
+                <p  class="m-0 text-black pl-12 lh-20"></p> -->
+                <button mat-stroked-button class="btn-primary" *ngIf="showInput==false">Add a to-do</button>
               </div>
               <div class="todo-wrraper">
                 <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus

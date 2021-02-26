@@ -249,11 +249,12 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       this.schemeNameControl.patchValue('');
 
     }
-
     if (this.data && this.data.rtMasterId != 14 && (this.data.flag === 'editMutualFund' || this.data.flag === 'addTransaction' || this.data.flag === 'editTransaction')) {
+      if (this.data.rtMasterId != 4 && this.data.rtMasterId != 5) {
+        this.schemeLevelHoldingForm.get('sip').disable();
+      }
       this.schemeLevelHoldingForm.get('ownerName').disable();
       this.schemeLevelHoldingForm.get('folioNumber').disable();
-      this.schemeLevelHoldingForm.get('sip').disable();
       this.schemeLevelHoldingForm.get('tag').disable();
       this.schemeNameControl.disable();
     } else if (this.data && this.data.flag === 'editTransaction' || this.data.flag === 'editMutualFund') {
