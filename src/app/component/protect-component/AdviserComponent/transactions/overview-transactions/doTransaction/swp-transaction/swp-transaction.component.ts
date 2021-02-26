@@ -666,6 +666,8 @@ export class SwpTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, { multiTransact: this.multiTransact });
+
       if (this.scheme != undefined && this.schemeDetails != undefined && this.swpTransaction != undefined) {
 
         if (this.isEdit == true) {

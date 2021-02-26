@@ -729,6 +729,7 @@ export class SwitchTransactionComponent implements OnInit {
       return;
     } else {
       this.multiTransact = true;
+      Object.assign(this.transactionSummary, { multiTransact: this.multiTransact });
       if (this.scheme && this.schemeDetails != undefined && this.switchTransaction != undefined) {
         if (this.isEdit != true) {
           this.id++;
