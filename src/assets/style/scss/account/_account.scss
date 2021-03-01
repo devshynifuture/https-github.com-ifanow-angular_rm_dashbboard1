@@ -1167,6 +1167,16 @@ ul.mf-import-second-point {
 
 }
 
+#ui-cashflow-details-tables {
+  tr.mat-header-row {
+    height: 48px !important;
+  }
+
+  tr.mat-row {
+    height: 40px !important;
+  }
+}
+
 @media (min-width: 576px) {
   .card-columns {
     -moz-column-count: 2;
