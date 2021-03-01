@@ -652,6 +652,7 @@ export const appConfig = {
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   MAPPED_EXSTING_USER: 'nse/iin/mapping/update',
+  UPLOAD_NEW_FATACA: 'user/register/fatca/change/upload',
   // GET_CLIENT_FM_LIST,: 'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
   GET_TOKEN: 'user/bse/upload/password',
