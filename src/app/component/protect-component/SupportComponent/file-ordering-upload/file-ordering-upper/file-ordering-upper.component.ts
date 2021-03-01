@@ -1,13 +1,13 @@
-import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import {SubscriptionInject} from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatSort, MatTableDataSource} from '@angular/material';
 
-import { EventService } from './../../../../../Data-service/event.service';
-import { FileOrderingDetailComponent } from '../file-ordering-detail/file-ordering-detail.component';
-import { UtilService } from 'src/app/services/util.service';
-import { FileOrderingUploadService } from '../file-ordering-upload.service';
-import { SupportService } from '../../support.service';
-import { SelectionModel } from '@angular/cdk/collections';
+import {EventService} from './../../../../../Data-service/event.service';
+import {FileOrderingDetailComponent} from '../file-ordering-detail/file-ordering-detail.component';
+import {UtilService} from 'src/app/services/util.service';
+import {FileOrderingUploadService} from '../file-ordering-upload.service';
+import {SupportService} from '../../support.service';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-file-ordering-upper',
@@ -17,19 +17,21 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class FileOrderingUpperComponent implements OnInit {
   fileName: any;
   isDisableTooltip = true;
-  @ViewChild(MatSort, { static: true }) sortList: MatSort;
+  @ViewChild(MatSort, {static: true}) sortList: MatSort;
 
   constructor(
     private eventService: EventService,
     private subInjectService: SubscriptionInject,
     private fileOrderingService: FileOrderingUploadService,
     private supportService: SupportService
-  ) { }
+  ) {
+  }
+
   displayedColumns: string[] = ['checkbox', 'advisorName', 'arnRia', 'fileType', 'fileOrderTime', 'status', 'referenceId', 'inFileOrAdded', 'fileName', 'fileUrl', 'errorMsg', 'action'];
 
   dataSource = new MatTableDataSource<fileOrderingUpperI>(ELEMENT_DATA);
   data;
-  isLoading: boolean = false;
+  isLoading = false;
   fileTypeList = [];
   arrayOfIdsForRetry: any[] = [];
 
@@ -51,10 +53,10 @@ export class FileOrderingUpperComponent implements OnInit {
       this.selection.clear();
       this.arrayOfIdsForRetry = [];
     } else {
-      this.dataSource.data.forEach(row => {
-        this.selection.select(row)
-        if (!this.arrayOfIdsForRetry.includes(row['id'])) {
-          this.arrayOfIdsForRetry.push(row['id']);
+      this.dataSource.data.forEach((row: any) => {
+        this.selection.select(row);
+        if (!this.arrayOfIdsForRetry.includes(row.id)) {
+          this.arrayOfIdsForRetry.push(row.id);
         }
       });
 
@@ -87,23 +89,23 @@ export class FileOrderingUpperComponent implements OnInit {
           }
         }
         console.log(res);
-      })
+      });
   }
 
   fileOrderBulkListData() {
     this.isLoading = true;
-    let tableData = [];
+    const tableData = [];
     let reqObj;
     if (this.data.status !== 'total') {
-      let status = this.data.status === 'inqueue' ? 1 : (this.data.status === 'ordered' ? 2 : (this.data.status === 'uploaded' ? 3 : (this.data.status === 'skipped' ? 4 : null)))
+      const status = this.data.status === 'inqueue' ? 1 : (this.data.status === 'ordered' ? 2 : (this.data.status === 'uploaded' ? 3 : (this.data.status === 'skipped' ? 4 : null)));
       reqObj = {
         bulkFileOrderId: this.data.id,
         status
-      }
+      };
     } else {
       reqObj = {
         bulkFileOrderId: this.data.id,
-      }
+      };
     }
 
     this.fileOrderingService.getFileOrderBulkUpperListData(reqObj)
@@ -128,28 +130,28 @@ export class FileOrderingUpperComponent implements OnInit {
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
               referenceId: element.referenceId ? element.referenceId : null,
-              inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
+              inFileOrAdded: element.totalTransactions + '/' + element.transactionAdded,
               fileName: element.fileName ? element.fileName : null,
               errorMsg: element.errorMsg ? element.errorMsg : null,
               action: '',
               fromDate: element.fromDate,
               toDate: element.toDate,
               fileUrl: element.fileUrl ? element.fileUrl : null
-            })
+            });
           });
           this.dataSource.data = tableData;
           this.dataSource.sort = this.sortList;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBarNoDuration("No Data Found", "DISMISS");
+          this.eventService.openSnackBarNoDuration('No Data Found', 'DISMISS');
         }
       }, err => {
-        this.eventService.openSnackBarNoDuration("Something went wrong", "DISMISS");
-      })
+        this.eventService.showErrorMessage(err);
+      });
   }
 
   copyText(val: string): void {
-    let selBox = document.createElement('textarea');
+    const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
@@ -160,11 +162,11 @@ export class FileOrderingUpperComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    this.eventService.openSnackBar("COPIED!!!", "DISMISS");
+    this.eventService.openSnackBar('COPIED!!!', 'DISMISS');
   }
 
   consoleData(element) {
-    console.log("this is element:::", element);
+    console.log('this is element:::', element);
   }
 
   fileOrderRetry(value, singleOrMultiple) {
@@ -176,34 +178,34 @@ export class FileOrderingUpperComponent implements OnInit {
       if (this.arrayOfIdsForRetry.length !== 0) {
         idArray = [...this.arrayOfIdsForRetry];
       } else {
-        this.eventService.openSnackBarNoDuration("No Files Selected to Retry", "DISMISS");
+        this.eventService.openSnackBarNoDuration('No Files Selected to Retry', 'DISMISS');
       }
     }
-    let data = {
+    const data = {
       ids: idArray,
       isHistorical: this.data.flag == 'historical' ? true : false
-    }
+    };
     // console.log(this.arrayOfIdsForRetry);
     this.fileOrderingService.putFileOrderRetry(data)
       .subscribe(res => {
         if (res) {
-          console.log("this is retry files res:::", res);
+          console.log('this is retry files res:::', res);
           this.dataSource.data = ELEMENT_DATA;
           this.selection.clear();
-          this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData()
+          this.data.flag == 'historical' ? this.fileOrderingListData() : this.fileOrderBulkListData();
 
         }
       }, err => {
-        this.eventService.openSnackBar(err, "Dismiss");
-      })
+        this.eventService.openSnackBar(err, 'Dismiss');
+      });
   }
 
   fileOrderingListData() {
     this.isLoading = true;
-    let tableData = [];
+    const tableData = [];
     let reqObj;
     if (this.data.status !== 'total') {
-      let status = this.data.status === 'inqueue' ? 1 : (this.data.status === 'ordered' ? 2 : (this.data.status === 'uploaded' ? 3 : (this.data.status === 'skipped' ? 4 : null)))
+      const status = this.data.status === 'inqueue' ? 1 : (this.data.status === 'ordered' ? 2 : (this.data.status === 'uploaded' ? 3 : (this.data.status === 'skipped' ? 4 : null)));
       reqObj = {
         arnRiaDetailId: this.data.arnRiaDetailId,
         days: this.data.days,
@@ -211,7 +213,7 @@ export class FileOrderingUpperComponent implements OnInit {
         rtId: this.data.rtId,
         startedOn: this.data.startedOn,
         status
-      }
+      };
     } else {
       reqObj = {
         arnRiaDetailId: this.data.arnRiaDetailId,
@@ -219,7 +221,7 @@ export class FileOrderingUpperComponent implements OnInit {
         rmId: this.data.rmId,
         rtId: this.data.rtId,
         startedOn: this.data.startedOn
-      }
+      };
     }
 
     this.fileOrderingService.getFileOrderHistoricalUpperListData(reqObj)
@@ -244,7 +246,7 @@ export class FileOrderingUpperComponent implements OnInit {
               fileOrderTime: element.fileOrderDateTime,
               status: element.status,
               referenceId: element.referenceId ? element.referenceId : null,
-              inFileOrAdded: element.totalTransactions + "/" + element.transactionAdded,
+              inFileOrAdded: element.totalTransactions + '/' + element.transactionAdded,
               fileName: element.fileName ? element.fileName : null,
               errorMsg: element.errorMsg ? element.errorMsg : null,
               action: '',
@@ -252,17 +254,17 @@ export class FileOrderingUpperComponent implements OnInit {
               toDate: element.toDate,
               fileUrl: element.fileUrl ? element.fileUrl : null,
               isLoading: false
-            })
+            });
           });
           this.dataSource.data = tableData;
           this.dataSource.sort = this.sortList;
         } else {
           this.dataSource.data = null;
-          this.eventService.openSnackBarNoDuration("No Data Found", "DISMISS");
+          this.eventService.openSnackBarNoDuration('No Data Found', 'DISMISS');
         }
       }, err => {
-        this.eventService.openSnackBarNoDuration(err, "DISMISS");
-      })
+        this.eventService.openSnackBarNoDuration(err, 'DISMISS');
+      });
 
   }
 
@@ -272,8 +274,7 @@ export class FileOrderingUpperComponent implements OnInit {
       if (!this.arrayOfIdsForRetry.includes(row.id)) {
         this.arrayOfIdsForRetry.push(row.id);
       }
-    }
-    else if (event.checked === false) {
+    } else if (event.checked === false) {
       this.selection.toggle(row);
       this.arrayOfIdsForRetry = this.arrayOfIdsForRetry.filter(item => {
         return item !== row.id;
@@ -282,41 +283,41 @@ export class FileOrderingUpperComponent implements OnInit {
   }
 
   dialogClose(flag) {
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: flag });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: flag});
   }
 
   refreshOneRowOfList(element, index) {
     element.isLoading = true;
     console.log(element);
-    let data = {
+    const data = {
       fileOrderId: element.id
-    }
+    };
     this.fileOrderingService.getFileOrderRefreshUpperRowData(data)
       .subscribe(res => {
         if (res) {
           console.log(res);
-          let obj: any = {};
-          obj['id'] = element.id;
-          obj['position'] = index + 1;
-          obj['advisorName'] = this.data.advisorName;
-          obj['arnRia'] = element.arnRiaNumber;
-          obj['fileType'] = this.fileName;
-          obj['fileOrderTime'] = element.fileOrderDateTime;
-          obj['status'] = element.status;
-          obj['referenceId'] = element.referenceId ? element.referenceId : null;
-          obj['inFileOrAdded'] = element.totalTransactions + "/" + element.transactionAdded;
-          obj['fileName'] = element.fileName ? element.fileName : null;
-          obj['errorMsg'] = element.errorMsg ? element.errorMsg : null;
-          obj['action'] = '';
-          obj['fromDate'] = element.fromDate;
-          obj['toDate'] = element.toDate;
-          obj['fileUrl'] = element.fileUrl ? element.fileUrl : null;
-          obj['isLoading'] = false;
+          const obj: any = {};
+          obj.id = element.id;
+          obj.position = index + 1;
+          obj.advisorName = this.data.advisorName;
+          obj.arnRia = element.arnRiaNumber;
+          obj.fileType = this.fileName;
+          obj.fileOrderTime = element.fileOrderDateTime;
+          obj.status = element.status;
+          obj.referenceId = element.referenceId ? element.referenceId : null;
+          obj.inFileOrAdded = element.totalTransactions + '/' + element.transactionAdded;
+          obj.fileName = element.fileName ? element.fileName : null;
+          obj.errorMsg = element.errorMsg ? element.errorMsg : null;
+          obj.action = '';
+          obj.fromDate = element.fromDate;
+          obj.toDate = element.toDate;
+          obj.fileUrl = element.fileUrl ? element.fileUrl : null;
+          obj.isLoading = false;
           this.dataSource.data.splice(index, 1, obj);
           element.isLoading = false;
 
         }
-      })
+      });
 
     // this.dataSource.data = ELEMENT_DATA;
     // if (this.data.flag == 'historical') {
@@ -358,11 +359,54 @@ export class FileOrderingUpperComponent implements OnInit {
     }
   }
 }
+
 const ELEMENT_DATA: fileOrderingUpperI[] = [
-  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' },
-  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' },
-  { checkbox: '', position: '', advisorName: '', arnRia: '', fileType: '', fileOrderTime: '', status: '', referenceId: '', inFileOrAdded: '', fileName: '', fileUrl: '', failedReason: '', action: '' }
-]
+  {
+    checkbox: '',
+    position: '',
+    advisorName: '',
+    arnRia: '',
+    fileType: '',
+    fileOrderTime: '',
+    status: '',
+    referenceId: '',
+    inFileOrAdded: '',
+    fileName: '',
+    fileUrl: '',
+    failedReason: '',
+    action: ''
+  },
+  {
+    checkbox: '',
+    position: '',
+    advisorName: '',
+    arnRia: '',
+    fileType: '',
+    fileOrderTime: '',
+    status: '',
+    referenceId: '',
+    inFileOrAdded: '',
+    fileName: '',
+    fileUrl: '',
+    failedReason: '',
+    action: ''
+  },
+  {
+    checkbox: '',
+    position: '',
+    advisorName: '',
+    arnRia: '',
+    fileType: '',
+    fileOrderTime: '',
+    status: '',
+    referenceId: '',
+    inFileOrAdded: '',
+    fileName: '',
+    fileUrl: '',
+    failedReason: '',
+    action: ''
+  }
+];
 
 export interface fileOrderingUpperI {
   position: string;
@@ -375,7 +419,7 @@ export interface fileOrderingUpperI {
   referenceId: string;
   inFileOrAdded: string;
   fileName: string;
-  fileUrl: string,
+  fileUrl: string;
   failedReason: string;
   action: string;
 }

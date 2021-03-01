@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ReconciliationService } from '../reconciliation.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UpperSliderBackofficeComponent } from 'src/app/component/protect-component/SupportComponent/common-component/upper-slider-backoffice/upper-slider-backoffice.component';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, OnInit, Input} from '@angular/core';
+import {ReconciliationService} from '../reconciliation.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {MatTableDataSource} from '@angular/material';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UpperSliderBackofficeComponent} from 'src/app/component/protect-component/SupportComponent/common-component/upper-slider-backoffice/upper-slider-backoffice.component';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-recon-franklin',
@@ -21,14 +21,15 @@ export class ReconFranklinComponent implements OnInit {
     private reconService: ReconciliationService,
     private eventService: EventService,
     private fb: FormBuilder
-  ) { }
+  ) {
+  }
 
   brokerList: any[] = [];
   dataSource;
   advisorId = AuthService.getAdvisorId();
   parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
-  isBrokerSelected: boolean = false;
-  isLoading: boolean = false;
+  isBrokerSelected = false;
+  isLoading = false;
   selectBrokerForm = this.fb.group({
     selectBrokerId: [, Validators.required]
   });
@@ -37,7 +38,7 @@ export class ReconFranklinComponent implements OnInit {
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
 
   rtId;
-  displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
+  displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action'];
 
   ngOnInit() {
     this.isLoading = true;
@@ -58,7 +59,7 @@ export class ReconFranklinComponent implements OnInit {
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
       .subscribe(data => {
         if (data && data.length !== 0) {
           data.forEach(element => {
@@ -70,22 +71,22 @@ export class ReconFranklinComponent implements OnInit {
           this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
         }
       }, err => {
-        this.eventService.openSnackBar("Something went wrong", "DISMISS");
+        this.eventService.showErrorMessage(err);
       });
   }
 
   getBrokerList() {
-    this.reconService.getBrokerListValues({ advisorId: this.advisorId })
+    this.reconService.getBrokerListValues({advisorId: this.advisorId})
       .subscribe(res => {
-        if(res){
+        if (res) {
           this.brokerList = res;
-          this.selectBrokerForm.get('selectBrokerId').patchValue(this.brokerList[0].id, { emitEvent: false });
+          this.selectBrokerForm.get('selectBrokerId').patchValue(this.brokerList[0].id, {emitEvent: false});
           this.getAumReconHistoryData();
         }
-      }, err=> {
+      }, err => {
         this.isLoading = false;
         console.error(err);
-        this.eventService.openSnackBar("Something went wrong", "DISMISS");
+        this.eventService.showErrorMessage(err);
       });
   }
 
@@ -101,30 +102,30 @@ export class ReconFranklinComponent implements OnInit {
         rtId: this.rtId,
         parentId: this.adminId == 0 ? this.advisorId : this.parentId,
         isParent: (this.parentId === this.advisorId) ? true : false
-      }
+      };
       this.reconService.getAumReconHistoryDataValues(data)
         .subscribe(res => {
-          if(res){
+          if (res) {
             console.log(res);
             this.isLoading = false;
             this.dataSource.data = res;
           } else {
             this.isLoading = false;
             this.dataSource.data = null;
-            this.eventService.openSnackBar("No Data Found!", "DISMISS");
+            this.eventService.openSnackBar('No Data Found!', 'DISMISS');
           }
         }, err => {
           this.isLoading = false;
           this.dataSource.data = null;
-          this.eventService.openSnackBar("No Data Found!", "DISMISS");
+          this.eventService.openSnackBar('No Data Found!', 'DISMISS');
           console.error(err);
-        })
+        });
     }
   }
 
   openAumReconciliation(flag, data) {
-    let brokerId = this.selectBrokerForm.get('selectBrokerId').value;
-    let brokerCode = this.brokerList.find(c => c.id === brokerId).brokerCode;
+    const brokerId = this.selectBrokerForm.get('selectBrokerId').value;
+    const brokerCode = this.brokerList.find(c => c.id === brokerId).brokerCode;
     const fragmentData = {
       flag,
       id: 1,
@@ -159,22 +160,61 @@ export class ReconFranklinComponent implements OnInit {
 }
 
 export interface ElementI {
-  doneOn: string,
-  doneBy: string,
-  totalFolioCount: string,
-  unmatchedCountBeforeRecon: string,
-  unmatchedCountAfterRecon: string,
-  aumBalanceDate: string,
-  transactionDate: string,
-  deleted: string,
-  reordered: string,
-  orderSuccess: string,
-  orderFailed: string
-  action: string
+  doneOn: string;
+  doneBy: string;
+  totalFolioCount: string;
+  unmatchedCountBeforeRecon: string;
+  unmatchedCountAfterRecon: string;
+  aumBalanceDate: string;
+  transactionDate: string;
+  deleted: string;
+  reordered: string;
+  orderSuccess: string;
+  orderFailed: string;
+  action: string;
 }
 
 const ELEMENT_DATA: ElementI[] = [
-  { doneOn: '', doneBy: '', totalFolioCount: '', unmatchedCountBeforeRecon: '', unmatchedCountAfterRecon: '', aumBalanceDate: '', transactionDate: '', deleted: '', reordered: '', orderSuccess: '', orderFailed: '', action: '' },
-  { doneOn: '', doneBy: '', totalFolioCount: '', unmatchedCountBeforeRecon: '', unmatchedCountAfterRecon: '', aumBalanceDate: '', transactionDate: '', deleted: '', reordered: '', orderSuccess: '', orderFailed: '', action: '' },
-  { doneOn: '', doneBy: '', totalFolioCount: '', unmatchedCountBeforeRecon: '', unmatchedCountAfterRecon: '', aumBalanceDate: '', transactionDate: '', deleted: '', reordered: '', orderSuccess: '', orderFailed: '', action: '' },
-]
+  {
+    doneOn: '',
+    doneBy: '',
+    totalFolioCount: '',
+    unmatchedCountBeforeRecon: '',
+    unmatchedCountAfterRecon: '',
+    aumBalanceDate: '',
+    transactionDate: '',
+    deleted: '',
+    reordered: '',
+    orderSuccess: '',
+    orderFailed: '',
+    action: ''
+  },
+  {
+    doneOn: '',
+    doneBy: '',
+    totalFolioCount: '',
+    unmatchedCountBeforeRecon: '',
+    unmatchedCountAfterRecon: '',
+    aumBalanceDate: '',
+    transactionDate: '',
+    deleted: '',
+    reordered: '',
+    orderSuccess: '',
+    orderFailed: '',
+    action: ''
+  },
+  {
+    doneOn: '',
+    doneBy: '',
+    totalFolioCount: '',
+    unmatchedCountBeforeRecon: '',
+    unmatchedCountAfterRecon: '',
+    aumBalanceDate: '',
+    transactionDate: '',
+    deleted: '',
+    reordered: '',
+    orderSuccess: '',
+    orderFailed: '',
+    action: ''
+  },
+];
