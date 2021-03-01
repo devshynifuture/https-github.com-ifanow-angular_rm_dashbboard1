@@ -379,7 +379,6 @@ export class StpTransactionComponent implements OnInit {
     this.schemeListTransfer = [];
     this.schemeDetailsTransfer = undefined;
     this.stpTransaction.controls.transferIn.setValue('')
-    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.showUnits = true;
     this.showSpinner = true;
     this.folioList = [];
@@ -397,6 +396,7 @@ export class StpTransactionComponent implements OnInit {
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
   }
 
   getSchemeDetailsRes(data) {

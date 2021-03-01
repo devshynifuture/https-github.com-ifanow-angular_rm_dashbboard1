@@ -267,8 +267,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
-    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy'),
-      this.folioList = [];
+    this.folioList = [];
     this.folioDetails = null;
     this.reInvestmentOpt = [];
     this.schemeDetails = null;
@@ -285,6 +284,7 @@ export class PurchaseTrasactionComponent implements OnInit {
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy')
   }
 
   getSchemeDetailsRes(data) {

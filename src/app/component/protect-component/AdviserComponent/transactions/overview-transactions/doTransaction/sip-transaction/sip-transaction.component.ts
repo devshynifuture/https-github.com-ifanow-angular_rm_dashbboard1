@@ -384,7 +384,6 @@ export class SipTransactionComponent implements OnInit {
     this.schemeDetails = undefined;
     this.sipFrequency = [];
     this.onFolioChange(undefined);
-    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     Object.assign(this.transactionSummary, { schemeName: scheme.schemeName });
     this.navOfSelectedScheme = scheme.nav;
     const obj1 = {
@@ -398,6 +397,7 @@ export class SipTransactionComponent implements OnInit {
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
   }
 
   getSchemeDetailsRes(data) {
@@ -850,13 +850,13 @@ export class SipTransactionComponent implements OnInit {
       xSipMandateId: undefined,
       childTransactions: [],
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
-      noOfInstallments: this.sipTransaction.controls.installment.value,
+      // noOfInstallments: this.sipTransaction.controls.installment.value,
       selectedFreqModel: this.selectedFreqModel,
       schemeSelection: this.sipTransaction.get('schemeSelection').value,
       folioSelection: this.sipTransaction.get('folioSelection').value,
       modeOfPaymentSelection: this.sipTransaction.get('modeOfPaymentSelection').value,
       tenure: this.sipTransaction.controls.tenure.value,
-      date: this.sipTransaction.controls.date.value,
+      date: this.sipTransaction.controls.date.value.dateToDisplay,
       sipFrequency: this.sipFrequency,
       amcId: this.scheme.amcId,
       scheme: this.scheme,
@@ -1066,7 +1066,7 @@ export class SipTransactionComponent implements OnInit {
     if (this.sipTransaction.controls.modeOfPaymentSelection.value == '2' &&
       !this.sipTransaction.get('date').invalid && !this.sipTransaction.get('frequency').invalid) {
       setTimeout(() => {
-        const maxInstallmentNumber = this.calculateMaxInstallmentNumber(new Date(this.sipTransaction.get('date').value).getTime(),
+        const maxInstallmentNumber = this.calculateMaxInstallmentNumber(new Date(this.sipTransaction.get('date').value.dateToDisplay).getTime(),
           undefined, this.sipTransaction.get('frequency').value, this.sipTransaction.get('tenure').value);
         this.sipTransaction.controls.installment.setValidators([Validators.required, Validators.max(maxInstallmentNumber)]);
         this.installmentErrorMessage = 'Installment number cannot be greater than ' + MathUtilService.roundOffNumber(maxInstallmentNumber);
@@ -1096,7 +1096,7 @@ export class SipTransactionComponent implements OnInit {
     const differenceInWeeks = differenceInDays / 7;
     const differenceInYear = differenceInDays / 365;
 
-    if (tenure == 2) {
+    if (tenure == '2') {
       return differenceInYear;
     } else if (frequencyType == 'MONTHLY') {
       return differenceInMonths;
