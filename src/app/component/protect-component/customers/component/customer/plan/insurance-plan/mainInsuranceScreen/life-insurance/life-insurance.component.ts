@@ -768,7 +768,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('insuranceTemplate');
     //const header = this.summaryTemplateHeader.nativeElement.innerHTML
-    this.UtilService.htmlToPdf('', para.innerHTML, 'Insurance plan', false, this.fragmentData, '', '', false);
+    this.UtilService.htmlToPdf('', para.innerHTML, 'Insurance plan', false, this.fragmentData, '', '', false, null);
   }
   deleteWithoutHitingApi(deletedId) {
     let singleData = this.storedData.filter(d => d.id == this.inputData.id);

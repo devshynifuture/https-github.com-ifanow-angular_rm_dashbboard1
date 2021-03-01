@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,qBAAqB,CAAC;EAC9D,OAAO,EAAE,GAAG;CACf;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACnG,KAAK,EAAE,gBAAgB;CAC1B;;AAED,AAAA,SAAS,CAAC,eAAe,CAAC;EACtB,KAAK,EAAE,IAAI;CACd;;AAED,AAAA,SAAS,CAAC,SAAS,CAAC,mCAAmC,CAAC,oBAAoB,CAAC;EACzE,WAAW,EAAE,cAAc;CAC9B",
-    "sources": [
-        "mfscheme-level-holdings.component.scss"
-    ],
-    "names": [],
-    "file": "mfscheme-level-holdings.component.css"
-}

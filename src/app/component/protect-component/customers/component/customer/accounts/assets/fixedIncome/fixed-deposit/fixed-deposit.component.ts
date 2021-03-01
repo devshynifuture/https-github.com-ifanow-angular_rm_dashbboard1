@@ -527,7 +527,7 @@ export class FixedDepositComponent implements OnInit {
       this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
 
     } else {
-      this.fixedDeposit.controls['compound'].setErrors(null);
+      this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setErrors(null);
     }
   }
 

@@ -225,6 +225,9 @@ export class OnlineTransactionService {
   mappedExistingUser(data) {
     return this.http.post(apiConfig.TRANSACT + appConfig.MAPPED_EXSTING_USER, data);
   }
+  uploadNewFatacaDetails(data) {
+    return this.http.post(apiConfig.TRANSACT + appConfig.UPLOAD_NEW_FATACA, data);
+  }
   //
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)

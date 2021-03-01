@@ -1159,10 +1159,10 @@ export class InsuranceComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     if (this.insuranceTypeId == 1) {
       let para = document.getElementById('templateIns');
-      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false, null);
     } else {
       let para = document.getElementById('templateGen');
-      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false, null);
 
     }
 

@@ -61,7 +61,7 @@ export class CrmNotesComponent implements OnInit {
     private utilService: UtilService,
     private ref: ChangeDetectorRef,
     private fb: FormBuilder,
-    public processTransaction: ProcessTransactionService, ) {
+    public processTransaction: ProcessTransactionService,) {
     this.clientInfo = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
@@ -95,7 +95,7 @@ export class CrmNotesComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
   }

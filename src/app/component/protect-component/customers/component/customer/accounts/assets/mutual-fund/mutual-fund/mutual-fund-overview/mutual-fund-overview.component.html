@@ -1082,7 +1082,7 @@
                         <td>
                             <p style="margin: 0px; font-weight: 700; font-size: 14px;padding-top: 4px;"
                                 *ngIf="clientData">
-                                Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+                                Client name: {{clientNameToDisplay ? clientNameToDisplay : this.clientData.name}}</p>
                             <p style="margin-bottom: 10px; font-weight: 600; font-size: 14px; padding-top: 4px;">
                                 Summary </p>
                         </td>

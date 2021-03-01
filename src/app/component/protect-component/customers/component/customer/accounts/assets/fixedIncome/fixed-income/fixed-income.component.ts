@@ -172,7 +172,7 @@ export class FixedIncomeComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);

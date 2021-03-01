@@ -665,7 +665,8 @@ export class UtilService {
     fragData: any = {},
     key = null,
     svg = null,
-    showFooter
+    showFooter,
+    clientName
   ) {
     this.client = AuthService.getClientData();
     if (fragData.isSubscription) {
@@ -704,7 +705,7 @@ export class UtilService {
         var date = new Date();
         fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
-        const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
+        const namePdf = clientName ? clientName + '\'s ' : this.client.name + '\'s ' + pdfName + ' as on ' + date;
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
         a.download = namePdf + '.pdf';

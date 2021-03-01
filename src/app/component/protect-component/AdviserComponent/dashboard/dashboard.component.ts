@@ -1961,6 +1961,7 @@ export class DashboardComponent implements OnInit {
       parentId: this.parentId,
       startFlag: 0,
       endFlag: 5,
+      advisorId: this.advisorId
     };
     this.backoffice.getMfTransactions(obj).subscribe(
       data => {

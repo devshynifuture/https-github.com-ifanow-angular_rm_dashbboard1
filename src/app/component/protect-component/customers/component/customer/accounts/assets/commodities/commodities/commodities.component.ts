@@ -28,7 +28,7 @@ import { CustomerOverviewService } from '../../../../customer-overview/customer-
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
   @ViewChild('tableEl', { static: false }) tableEl;
-  dummyOtherDataList=[];
+  dummyOtherDataList = [];
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
@@ -145,7 +145,7 @@ export class CommoditiesComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);

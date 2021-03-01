@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,OAAO,EAAE,IAAI;CACd",
-    "sources": [
-        "mf-capital-detailed.component.scss"
-    ],
-    "names": [],
-    "file": "mf-capital-detailed.component.css"
-}

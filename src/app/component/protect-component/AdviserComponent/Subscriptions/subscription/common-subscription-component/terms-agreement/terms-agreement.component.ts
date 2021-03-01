@@ -111,7 +111,7 @@ export class TermsAgreementComponent implements OnInit {
     // this.eventService.changeUpperSliderState({ state: 'close' ,});
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
 
- 
+
   }
   getDocumentPlaceholderList(data) {
     this.placeHolderLoader = true
@@ -184,7 +184,7 @@ export class TermsAgreementComponent implements OnInit {
     {
       data: this.dataTerms.docText,
       cancelButton: () => {
-        this.utilservice.htmlToPdf('',this.dataTerms.docText, 'document', '',this.dataTerms.docText,'','',false);
+        this.utilservice.htmlToPdf('', this.dataTerms.docText, 'document', '', this.dataTerms.docText, '', '', false, null);
         dialogRef.close();
       }
     }

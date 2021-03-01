@@ -317,7 +317,7 @@ export class ClientWiseComponent implements OnInit {
     const obj = {
       advisorId: this.parentId == this.advisorId ? 0 : this.advisorId,
       arnRiaDetailsId: this.data ? this.data.arnRiaDetailId : -1,
-      parentId: this.data ? this.data.parentId : -1,
+      parentId: (this.parentId) ? this.parentId : -1,
     };
     if (this.aumIdList && this.aumIdList.length >= 0) {
       obj['rtId'] = this.aumIdList;
@@ -344,7 +344,7 @@ export class ClientWiseComponent implements OnInit {
       const obj = {
         advisorId: this.parentId == this.advisorId ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
-        parentId: this.data ? this.data.parentId : -1,
+        parentId: (this.parentId) ? this.parentId : -1,
         clientId: clientData.id,
         totalAum: clientData.totalAum,
       };
@@ -696,7 +696,7 @@ export class ClientWiseComponent implements OnInit {
       const obj = {
         advisorId: this.parentId == this.advisorId ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
-        parentId: this.data ? this.data.parentId : -1,
+        parentId: (this.parentId) ? this.parentId : -1,
         familyMemberId: investorData.familyMemberId,
         totalAum: investorData.totalAum,
         clientId: investorData.clientId,
@@ -779,7 +779,7 @@ export class ClientWiseComponent implements OnInit {
       const obj = {
         advisorId: this.parentId == this.advisorId ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
-        parentId: this.data ? this.data.parentId : -1,
+        parentId: (this.parentId) ? this.parentId : -1,
         familyMemberId: schemeData.familyMemberId,
         totalAum: schemeData.totalAum,
         schemeId: schemeData.mutualFundSchemeMasterId,

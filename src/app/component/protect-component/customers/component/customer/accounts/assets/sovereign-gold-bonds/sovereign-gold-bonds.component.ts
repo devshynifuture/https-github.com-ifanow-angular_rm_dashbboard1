@@ -107,7 +107,7 @@ export class SovereignGoldBondsComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
   }
