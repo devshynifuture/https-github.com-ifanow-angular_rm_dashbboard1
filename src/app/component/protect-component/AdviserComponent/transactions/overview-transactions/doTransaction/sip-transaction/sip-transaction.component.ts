@@ -357,7 +357,7 @@ export class SipTransactionComponent implements OnInit {
         this.selectExistingOrNew(this.ExistingOrNew);
       }
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
-
+      this.getExistingScheme();
     }
   }
 
