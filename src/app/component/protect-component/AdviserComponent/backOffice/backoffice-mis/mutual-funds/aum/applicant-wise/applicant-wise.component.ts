@@ -279,7 +279,7 @@ export class ApplicantWiseComponent implements OnInit {
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
-      parentId: (this.data) ? this.data.parentId : -1
+      parentId: (this.parentId) ? this.parentId : -1,
     };
     if (this.aumIdList && this.aumIdList.length >= 0) {
       obj['rtId'] = this.aumIdList;
@@ -641,7 +641,7 @@ export class ApplicantWiseComponent implements OnInit {
       const obj = {
         advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
-        parentId: (this.data) ? this.data.parentId : -1,
+        parentId: (this.parentId) ? this.parentId : -1,
         familyMembertId: applicantData.id,
         clientTotalAum: applicantData.totalAum,
         clientId: this.clientIdToPass
@@ -735,7 +735,7 @@ export class ApplicantWiseComponent implements OnInit {
       const obj = {
         advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
-        parentId: (this.data) ? this.data.parentId : -1,
+        parentId: (this.parentId) ? this.parentId : -1,
         familyMembertId: catData.familyMemberId,
         categoryId: catData.id,
         categoryTotalAum: catData.totalAum,
@@ -811,7 +811,7 @@ export class ApplicantWiseComponent implements OnInit {
       const obj = {
         advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
-        parentId: (this.data) ? this.data.parentId : -1,
+        parentId: (this.parentId) ? this.parentId : -1,
         familyMembertId: subCatData.familyMemberId,
         subCategoryId: subCatData.id,
         subCategoryTotalAum: subCatData.totalAum,
