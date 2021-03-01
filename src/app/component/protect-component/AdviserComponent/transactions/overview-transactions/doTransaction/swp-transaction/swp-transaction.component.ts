@@ -290,7 +290,6 @@ export class SwpTransactionComponent implements OnInit {
 
   selectedScheme(scheme) {
     this.scheme = scheme;
-    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.showUnits = true;
     this.folioList = [];
     this.schemeDetails = null;
@@ -310,6 +309,7 @@ export class SwpTransactionComponent implements OnInit {
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
   }
 
   getSchemeWiseFolios() {
