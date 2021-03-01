@@ -385,7 +385,7 @@
                             <div class="bg-white b-a b-black">
                                 <div class="row  b-b  b-black">
                                     <div class="col-md-8 p-0">
-                                        <p class="f-14 mb-0 roboto f-400 pl-10"> Cash flows </p>
+                                        <p class="f-14 mb-0 roboto f-400 pl-10"> Cash flows({{ yearToShow }}) </p>
                                     </div>
                                     <div class="col-md-4 b-l-black text-right p-0">
                                         <p class="f-14 text-black mb-0 pr-10">Amount</p>
@@ -401,23 +401,47 @@
                                         <p class="f-14 m-0 roboto f-400 pl-24"> - <span class="pl-12">Incomes</span></p>
                                         <p class="f-14 m-0 roboto f-400 pl-24">- <span class="pl-12">Asset
                                                 Inflows</span></p>
-                                        <p class="f-14 m-0 roboto f-400 pl-24">- <span class="pl-12">Incomes
+                                        <p class="f-14 m-0 roboto f-400 pl-24">- <span class="pl-12">Insurance
                                                 Inflows</span></p>
                                     </div>
-                                    <div class="col-md-4 pl-0 text-right b-l-black">
-                                        <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
-                                            {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber
-                                                [shouldRoundOff]="true"
+                                    <div class="col-md-4 pl-0 text-right b-l-black" *ngIf="!isLoadingCashFlow">
+                                        <p class="f-14 m-0 roboto f-400 h-20"></p>
+                                        <p class="f-14 m-0 roboto f-400 ">{{cashFlowData?.income ? "₹" :
+                                            ""}}<span appFormatNumber [shouldRoundOff]="true"
                                                 [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
-                                        <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                        <p class="f-14 m-0 roboto f-400 "> {{cashFlowData?.asset ? "₹" : ""}}<span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
+                                        <p class="f-14 m-0 roboto f-400 "> {{cashFlowData?.insurance ? "₹" : ""}}<span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 pl-0 text-right b-l-black" *ngIf="isLoadingCashFlow">
+                                        <div class="col-md-12 p-0 relClass h-20" *ngIf="isLoadingCashFlow">
+                                            <!-- <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div> -->
+                                        </div>
+                                        <div class="col-md-12 p-0 relClass mt-4" *ngIf="isLoadingCashFlow">
                                             <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
                                                 <p class="text-black f-12 m-0 text-right roboto f-400">
                                                     {{''}}</p>
                                             </div>
                                         </div>
-                                        <p class="f-14 m-0 roboto f-400 ">-</p>
-                                        <p class="f-14 m-0 roboto f-400 ">-</p>
-                                        <p class="f-14 m-0 roboto f-400 ">-</p>
+                                        <div class="col-md-12 p-0 relClass mt-4" *ngIf="isLoadingCashFlow">
+                                            <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 p-0 relClass mt-4 mb-4" *ngIf="isLoadingCashFlow">
+                                            <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -433,12 +457,52 @@
                                         <p class="f-14 m-0 roboto f-400 pl-24">- <span class="pl-12">Loan EMI's</span>
                                         </p>
                                     </div>
-                                    <div class="col-md-4 pl-0 text-right b-l-black">
-                                        <p class="f-14 m-0" *ngIf="!isLoadingCashFlow">
-                                            {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber
+                                    <div class="col-md-4 pl-0 text-right b-l-black" *ngIf="!isLoadingCashFlow">
+                                        <p class="f-14 m-0 roboto f-400 h-20"></p>
+                                        <p class="f-14 m-0 roboto f-400 ">{{cashFlowData?.expense ? "₹" : ""}}<span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span>
+                                        </p>
+                                        <p class="f-14 m-0 roboto f-400 ">{{cashFlowData?.asset ? "₹" : ""}}<span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
+                                        <p class="f-14 m-0 roboto f-400 ">
+                                            {{cashFlowData?.insurance ? "₹" : ""}}<span appFormatNumber
                                                 [shouldRoundOff]="true"
-                                                [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
-                                        <div class="col-md-6 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                                [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                        </p>
+                                        <p class="f-14 m-0 roboto f-400 "> {{cashFlowData?.loan ? "₹" : ""}}<span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span>
+                                        </p>
+
+                                        <!-- <div class="col-md-12 p-0 relClass" *ngIf="isLoadingCashFlow">
+                                            <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-md-4 pl-0 text-right b-l-black" *ngIf="isLoadingCashFlow">
+                                        <div class="col-md-12 p-0 relClass h-20" *ngIf="isLoadingCashFlow">
+                                            <!-- <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div> -->
+                                        </div>
+                                        <div class="col-md-12 p-0 relClass mt-4" *ngIf="isLoadingCashFlow">
+                                            <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 p-0 relClass mt-4" *ngIf="isLoadingCashFlow">
+                                            <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 p-0 relClass mt-4 mb-4" *ngIf="isLoadingCashFlow">
                                             <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
                                                 <p class="text-black f-12 m-0 text-right roboto f-400">
                                                     {{''}}</p>
@@ -451,9 +515,24 @@
                                     <div class="col-md-8 p-0">
                                         <p class="f-14 m-0 roboto f-500 pl-10 pt-4 pb-4">Surplus/Deficit- (a-b)</p>
                                     </div>
-                                    <div class="col-md-4 p-0 b-l-black">
-
+                                    <div class="col-md-4 p-0 b-l-black pt-4 pb-4 text-right pr-10"
+                                        *ngIf="!isLoadingCashFlow">
+                                        <p class="mb-0">
+                                            {{cashFlowData?.surplus ? "₹" : ""}}<span appFormatNumber
+                                                [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.surplus ? cashFlowData?.surplus : '-'"></span>
+                                        </p>
                                     </div>
+                                    <div class="col-md-4 p-0 b-l-black pt-4 pb-4 text-right pr-10"
+                                        *ngIf="isLoadingCashFlow">
+                                        <div class="col-md-12 p-0 relClass mt-4" *ngIf="isLoadingCashFlow">
+                                            <div [ngClass]="{'height24': isLoadingCashFlow}" class="bar">
+                                                <p class="text-black f-12 m-0 text-right roboto f-400">
+                                                    {{''}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <!-- <div class="row pt-8 pb-8 d-flex align-items-center justify-content-between b-b">
                                     <p class="f-14 m-0 roboto f-400">Expenses</p>

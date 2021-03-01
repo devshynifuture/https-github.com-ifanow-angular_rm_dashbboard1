@@ -74,7 +74,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
   getBSECredentials() {
     this.isLoadingBroker = true;
     let obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(

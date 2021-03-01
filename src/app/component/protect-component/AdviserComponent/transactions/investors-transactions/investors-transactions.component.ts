@@ -105,7 +105,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   getBSECredentials() {
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(
@@ -123,7 +123,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   }
   getBSESubBrokerCredentials() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
