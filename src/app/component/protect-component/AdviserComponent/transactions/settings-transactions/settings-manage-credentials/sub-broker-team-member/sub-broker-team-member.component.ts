@@ -41,7 +41,7 @@ export class SubBrokerTeamMemberComponent implements OnInit {
   getBSESubBrokerCredentials() {
     this.isLoading = true;
     let obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     }
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(

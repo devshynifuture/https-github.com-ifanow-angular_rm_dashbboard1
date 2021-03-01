@@ -144,7 +144,7 @@ export class SubmitReviewInnComponent implements OnInit {
   getBSECredentials() {
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     console.log('encode', obj);
@@ -161,7 +161,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
   getBSESubBrokerCredentials() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
