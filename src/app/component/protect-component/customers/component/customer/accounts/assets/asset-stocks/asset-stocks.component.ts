@@ -200,7 +200,7 @@ export class AssetStocksComponent implements OnInit {
       svg: this.svg
     };
     let header = null
-    this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'Stock', false, this.fragmentData, 'showPieChart', this.svg, false);
+    this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'Stock', false, this.fragmentData, 'showPieChart', this.svg, false, null);
     console.log('return value ====', this.returnValue);
     return obj;
   }

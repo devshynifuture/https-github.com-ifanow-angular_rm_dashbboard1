@@ -228,6 +228,7 @@ export class MutualFundUnrealizedTranComponent {
   resData: any;
   mfAllTransactionCapability: any = {};
   mfCapability: any = {};
+  clientNameToDisplay: any;
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -851,6 +852,7 @@ export class MutualFundUnrealizedTranComponent {
   }
   getMutualFundResponse(data) {
     if (data) {
+      this.checkFamMember();
       this.isLoading = true;
       this.mfData = data;
       // this.mutualFund = data;
@@ -898,7 +900,19 @@ export class MutualFundUnrealizedTranComponent {
       this.isLoading = false;
     }
   }
-
+  checkFamMember() {
+    this.clientNameToDisplay = null;
+    if (this.setDefaultFilterData) {
+      let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
+      if (famMember.length == 1) {
+        this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+      } else {
+        this.clientNameToDisplay = this.clientData.name
+      }
+    } else {
+      this.clientNameToDisplay = this.clientData.name
+    }
+  }
   filterForBulkEmailing(data) {
     if (data) {
       const categoryWiseMfList = [];
@@ -1003,6 +1017,7 @@ export class MutualFundUnrealizedTranComponent {
     };
     this.custumService.getMfUnrealizedTransactions(obj).subscribe(
       data => {
+        this.checkFamMember();
         // console.log(data);
         // this.mutualFund.mutualFundList = data;
         // this.asyncFilter(this.mutualFund.mutualFundList);
@@ -1598,7 +1613,7 @@ export class MutualFundUnrealizedTranComponent {
       } else {
         this.headerHtml = document.getElementById('alltemplateHeader');
       }
-      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML, para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '', true);
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML, para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
     }, 200);
   }
 

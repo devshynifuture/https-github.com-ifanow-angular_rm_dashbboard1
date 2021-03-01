@@ -121,7 +121,7 @@ export class SummaryPlanComponent implements OnInit {
         this.fragmentData.isSpinner = true;;
         let para = document.getElementById('planSummary');
         //const header = this.summaryTemplateHeader.nativeElement.innerHTML
-        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
+        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false.valueOf, null);
 
     }
     getFinPlan() {

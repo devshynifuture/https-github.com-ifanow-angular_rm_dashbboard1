@@ -266,7 +266,7 @@ export class IncomeComponent implements OnInit {
     const para = document.getElementById('incomeTemplate');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
 
-    this.util.htmlToPdf('', para.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
+    this.util.htmlToPdf('', para.innerHTML, 'Income', 'true', this.fragmentData, '', '', false, null);
 
   }
 

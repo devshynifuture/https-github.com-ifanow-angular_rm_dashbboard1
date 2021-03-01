@@ -197,7 +197,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.fragmentData.isSpinner = true;;
     let para = document.getElementById('planSummary');
     //const header = this.summaryTemplateHeader.nativeElement.innerHTML
-    this.UtilService.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
+    this.UtilService.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false, null);
 
   }
   loadAllGoals(flag) {
