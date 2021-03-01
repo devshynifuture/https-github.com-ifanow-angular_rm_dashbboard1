@@ -151,6 +151,7 @@ export class MutualFundSummaryComponent implements OnInit {
   pdfDownload: boolean;
   mfCapability: any = {};
   mfSummaryCapability: any = {};
+  clientNameToDisplay: any;
 
   // setTrueKey = false;
 
@@ -1204,6 +1205,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   getMutualFundResponse(data) {
     if (data) {
+      this.checkFamMember();
       this.getCountData.emit('call');
       this.mfData = data;
       this.mfData.schemeName = 'Grand Total';
@@ -1224,7 +1226,19 @@ export class MutualFundSummaryComponent implements OnInit {
       this.mfService.setDataForMfGet(null);
     }
   }
-
+  checkFamMember() {
+    this.clientNameToDisplay = null;
+    if (this.setDefaultFilterData) {
+      let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
+      if (famMember.length == 1) {
+        this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+      } else {
+        this.clientNameToDisplay = this.clientData.name
+      }
+    } else {
+      this.clientNameToDisplay = this.clientData.name
+    }
+  }
   filterForBulkEmailing(data) {
     if (data) {
       const categoryWiseMfList = [];
@@ -1860,7 +1874,7 @@ export class MutualFundSummaryComponent implements OnInit {
       // const header = document.getElementById('templateHeader');
       const header = this.summaryTemplateHeader.nativeElement.innerHTML;
 
-      this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true);
+      this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
     });
 
   }

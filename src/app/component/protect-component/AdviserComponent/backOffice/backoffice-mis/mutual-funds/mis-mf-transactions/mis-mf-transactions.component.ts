@@ -46,6 +46,7 @@ export class MisMfTransactionsComponent implements OnInit {
   mode;
   maxDate = new Date();
   advisor = AuthService.getUserInfo();
+  advisorId = AuthService.getAdvisorId();
   reportDate = new Date();
   rangesFooter;
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -367,6 +368,7 @@ export class MisMfTransactionsComponent implements OnInit {
       parentId: this.parentId,
       startFlag: endFlag,
       endFlag: endFlag + 50,
+      advisorId: this.advisorId
     };
 
     this.backoffice.getMfTransactions(obj)
@@ -392,6 +394,7 @@ export class MisMfTransactionsComponent implements OnInit {
       parentId: this.parentId,
       startFlag: 0,
       endFlag: 100000,
+      advisorId: this.advisorId
     };
 
     this.backoffice.getMfTransactions(obj)

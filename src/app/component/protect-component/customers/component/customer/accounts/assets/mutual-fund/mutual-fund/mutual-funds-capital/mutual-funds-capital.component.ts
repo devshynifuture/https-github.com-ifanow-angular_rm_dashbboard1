@@ -94,6 +94,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     criteriaDate: Date;
     loadingDone: boolean = false;
     mfCaptialGainCapability: any = {};
+    clientNameToDisplay: any;
     // capitalGainData: any;
     constructor(private cd: ChangeDetectorRef, private pdfGen: PdfGenService,
         public routerActive: ActivatedRoute,
@@ -345,13 +346,14 @@ export class MutualFundsCapitalComponent implements OnInit {
         const para = document.getElementById('template');
         // let header = null
         const header = document.getElementById('templateHeader');
-        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '', true);
+        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
     }
     calculateCapitalGain(data) {
         this.isLoading = false;
         let equityData = [];
         this.changeInput.emit(false);
         if (data) {
+            this.checkFamMember()
             const myArray = data
             const list = [];
             this.capitalGainData = [];
@@ -834,7 +836,7 @@ export class MutualFundsCapitalComponent implements OnInit {
 
         let para = document.getElementById('template');
         // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-        this.UtilService.htmlToPdf('', para.innerHTML, 'MF capital gain summary', 'true', this.fragmentData, '', '', true);
+        this.UtilService.htmlToPdf('', para.innerHTML, 'MF capital gain summary', 'true', this.fragmentData, '', '', true, null);
         // let rows = this.tableEl._elementRef.nativeElement.rows;
         // this.pdfGen.generatePdf(rows, tableTitle);
     }
@@ -864,6 +866,19 @@ export class MutualFundsCapitalComponent implements OnInit {
         }, 200);
 
 
+    }
+    checkFamMember() {
+        this.clientNameToDisplay = null;
+        if (this.rightFilterData) {
+            let famMember = this.rightFilterData.family_member_list.filter(d => d.selected == true);
+            if (famMember.length == 1) {
+                this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+            } else {
+                this.clientNameToDisplay = this.clientData.name
+            }
+        } else {
+            this.clientNameToDisplay = this.clientData.name
+        }
     }
     getDetails() {
         const obj = {
