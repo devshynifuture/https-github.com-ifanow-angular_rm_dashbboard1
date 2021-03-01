@@ -183,7 +183,7 @@ export class SwpTransactionComponent implements OnInit {
       this.resetForm();
       this.getSchemeList();
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
-
+      this.getSchemeList();
     }
     //
 

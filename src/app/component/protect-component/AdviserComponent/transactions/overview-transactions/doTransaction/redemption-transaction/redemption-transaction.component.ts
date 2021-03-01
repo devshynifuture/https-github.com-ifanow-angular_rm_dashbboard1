@@ -177,6 +177,7 @@ export class RedemptionTransactionComponent implements OnInit {
         this.getdataForm(oldData, true);
       }
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
+      this.getSchemeList();
     }
   }
 
