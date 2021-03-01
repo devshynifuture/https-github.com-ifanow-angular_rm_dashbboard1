@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {OnlineTransactionService} from '../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {AddClientMappingComponent} from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {TransactionEnumService} from '../../transaction-enum.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { AddClientMappingComponent } from '../settings-client-mapping/add-client-mapping/add-client-mapping.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { TransactionEnumService } from '../../transaction-enum.service';
 
 @Component({
   selector: 'app-settings-folio-mapping',
@@ -31,11 +31,11 @@ export class SettingsFolioMappingComponent implements OnInit {
   clientData: any;
   advisorId: any;
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
-              private eventService: EventService, private utilService: UtilService,
-              private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
+    private eventService: EventService, private utilService: UtilService,
+    private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
   }
 
   ngOnInit() {
@@ -56,7 +56,7 @@ export class SettingsFolioMappingComponent implements OnInit {
 
   getFilterOptionData() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(
@@ -83,7 +83,7 @@ export class SettingsFolioMappingComponent implements OnInit {
 
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
-    (this.clientData == undefined) ? this.clientData = {clientId: '', familyMemberId: ''} : '';
+    (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true,
@@ -111,7 +111,7 @@ export class SettingsFolioMappingComponent implements OnInit {
     this.displayedColumns = this.displayedColumnsUnmapped;
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
-    (this.clientData == undefined) ? this.clientData = {clientId: '', familyMemberId: ''} : '';
+    (this.clientData == undefined) ? this.clientData = { clientId: '', familyMemberId: '' } : '';
     const obj = {
       advisorId: this.advisorId,
       onlyBrokerCred: true,

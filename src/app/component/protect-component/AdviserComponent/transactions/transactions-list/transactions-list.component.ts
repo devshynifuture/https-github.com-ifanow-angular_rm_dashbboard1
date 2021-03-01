@@ -73,7 +73,7 @@ export class TransactionsListComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(
