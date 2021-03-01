@@ -405,7 +405,7 @@ export class SipTransactionComponent implements OnInit {
       this.eventService.openSnackBarNoDuration('Not able to find MF scheme details, Please contact with support team', 'DISMISS');
     }
     this.schemeDetails = data[0];
-    this.setMinAmount();
+    //this.setMinAmount();
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
     if (data.length > 1) {
       this.reInvestmentOpt = data;
@@ -413,10 +413,10 @@ export class SipTransactionComponent implements OnInit {
     if (data.length == 1) {
       this.reInvestmentOpt = [];
     }
+    this.getFrequency();
     if (this.sipTransaction.controls.folioSelection.value == '1' && !this.mutualFundData) {
       this.getFolioList();
     }
-    this.getFrequency();
     Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
     if (this.platformType == 1) {
       this.getMandateDetails()
@@ -428,10 +428,19 @@ export class SipTransactionComponent implements OnInit {
       return;
     } else if (this.sipTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
-    } else if (this.ExistingOrNew == 1) {
+    } else if (this.ExistingOrNew == '1') {
       this.schemeDetails.minAmount = this.schemeDetails.additionalPurchaseAmount;
     } else {
       this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
+    }
+    if (this.platformType == 2) {
+      if (this.sipTransaction.get('schemeSelection').value == '2' && this.schemeDetails) {
+        this.schemeDetails.minAmount = this.schemeDetails.minimumPurchaseAmount;
+      } else if (this.ExistingOrNew == '1') {
+        this.schemeDetails.minAmount = this.selectedFreqModel.sipMinimumInstallmentAmount;
+      } else {
+        this.schemeDetails.minAmount = this.selectedFreqModel.minimumPurchaseAmount;
+      }
     }
     if (this.selectedMandate) {
       Object.assign(this.transactionSummary, { umrnNo: this.selectedMandate.umrnNo });
