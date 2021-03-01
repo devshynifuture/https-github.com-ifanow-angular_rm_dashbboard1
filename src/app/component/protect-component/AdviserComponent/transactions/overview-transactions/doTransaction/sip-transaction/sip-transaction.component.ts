@@ -490,7 +490,7 @@ export class SipTransactionComponent implements OnInit {
     const currentDate = UtilService.getEndOfDay(new Date());
     currentDate.setDate(currentDate.getDate() + 7);
     this.dates = sipDates.split(',');
-    this.dateDisplay = this.processTransaction.getDateByArray(this.dates, true);
+    this.dateDisplay = this.processTransaction.getDateByArray(this.dates, 'SIP');
     this.dateDisplay = this.dateDisplay.filter(element => {
       return element.date > currentDate;
     });
