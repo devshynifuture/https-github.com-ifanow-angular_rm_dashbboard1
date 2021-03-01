@@ -1,6 +1,7 @@
-import {Injectable} from '@angular/core';
-import {MatSnackBar} from '@angular/material';
-import {BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { log } from 'console';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -96,7 +97,15 @@ export class EventService {
   }
 
   showErrorMessage(data, actionCallback = null) {
-    this.openSnackBar('Something went wrong', 'Dismiss', actionCallback);
+
+    console.log(data)
+    console.log(typeof data)
+    if (typeof data == 'string') {
+      this.openSnackBar(data, 'Dismiss', actionCallback);
+    }
+    else {
+      this.openSnackBar('Something went wrong', 'Dismiss', actionCallback);
+    }
   }
 
   sidebarData(message: string) {

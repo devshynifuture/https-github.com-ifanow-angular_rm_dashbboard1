@@ -4,7 +4,8 @@
         <div class="col-md-6 p-0">
             <h4 class="m-0 text-black roboto">Real estate </h4>
         </div>
-        <div class="col-md-6 p-0 d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
+        <div class="col-md-6 p-0 d-flex align-items-center justify-content-end "
+            *ngIf="datasource3.filteredData.length != 0">
             <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
@@ -167,11 +168,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
                                     Report as on:
@@ -237,7 +239,8 @@
                             {{isLoading ? '' : i + 1 }}</td>
                         <td *ngFor="let owner of element.ownerList; let i = index"
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-                            <span *ngIf="i == 0">{{owner.name}}</span></td>
+                            <span *ngIf="i == 0">{{owner.name}}</span>
+                        </td>
 
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
@@ -245,8 +248,8 @@
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-                            {{!isLoading && element.marketValue? "₹" : ""}}<span
-                                appFormatNumber>{{element.marketValue }}</span>
+                            {{!isLoading && element.marketValue? "₹" : ""}}<span appFormatNumber>{{element.marketValue
+                                }}</span>
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
