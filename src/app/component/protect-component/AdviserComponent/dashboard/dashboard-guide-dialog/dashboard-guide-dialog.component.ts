@@ -191,7 +191,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   doItLater
   step9SelectedId: number = 0;
   step10SelectedId: number = 0;
-  globalData: any;
+  globalData: any = {};
   validatorType;
   arnRiaMaxlength: any;
   arnRtaData: any;
