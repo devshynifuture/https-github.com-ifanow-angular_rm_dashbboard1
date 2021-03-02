@@ -201,16 +201,19 @@
             </div>
             <div class="row pt-40" id="profile-new-card">
                 <div (click)="selectRiskProfile(singleRiskProfile)" *ngFor="let singleRiskProfile of globalRiskProfile"
-                    class="w-20 pl-8 pr-8">
+                    class="w-20 pl-8 pr-8 c-p ">
                     <mat-card [ngClass]="{'dker': singleRiskProfile.selected,'lt':singleRiskProfile.selected==false}"
-                        class="bg-grey   br-4 text-center">
-                        <h5 class="f-16 m-0 pt-8 pb-20 roboto f-500">{{singleRiskProfile.riskProfileName}}</h5>
+                        class="bg-grey   br-4 text-center example-card">
+                        <h5 class="f-16 m-0 pt-8 pb-20 roboto f-500 ws-nowrap">{{singleRiskProfile.riskProfileName}}
+                        </h5>
                         <img src="/assets/images/svg/aggressive.svg" class="w-100 h-80">
-                        <p class="m-0 roboto f-400 pt-42">{{singleRiskProfile.description}}</p>
+                        <div class="h-170">
+                            <p class="m-0 roboto f-400 pt-24">{{singleRiskProfile.description}}</p>
+                        </div>
                         <button mat-stroked-button *ngIf="singleRiskProfile.selected==false"
-                            class="btn-primitive mt-36">Select</button>
+                            class="btn-primitive ">Select</button>
                         <button mat-stroked-button *ngIf="singleRiskProfile.selected"
-                            class=" mt-36 bg-white">Selected</button>
+                            class=" bg-white">Selected</button>
                     </mat-card>
                 </div>
                 <!-- <div class="w-20 pl-8 pr-8 ">
