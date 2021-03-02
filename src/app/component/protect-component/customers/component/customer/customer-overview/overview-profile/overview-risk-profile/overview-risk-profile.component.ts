@@ -275,7 +275,11 @@ export class OverviewRiskProfileComponent implements OnInit {
       "riskAssessmentScore": Math.round(avgScore)
     }
     this.planService.addManuallyRiskProfile(obj).subscribe(
-      data => this.submitRiskRes(data), error => {
+      data => {
+        this.selectManually = false;
+        this.resetGlobalRiskProfile();
+        this.submitRiskRes(data);
+      }, error => {
         this.showErrorMsg = true;
         this.eventService.openSnackBar(error, "Dismiss")
         //this.submitRiskRes(data);
