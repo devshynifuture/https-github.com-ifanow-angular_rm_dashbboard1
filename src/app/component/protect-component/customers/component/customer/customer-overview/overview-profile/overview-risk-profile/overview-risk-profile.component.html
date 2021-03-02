@@ -10,9 +10,11 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <h3 class="f-22 m-0">Hi {{clientInfo.displayName}}, welcome!</h3>
-                    <h5 class="m-0 pt-28 pb-28">Did you know your risk profile score? Find it out here.</h5>
-                    <button *ngIf="riskProfileCapability.Add" mat-stroked-button class="btn-primary br-0"
+                    <h5 class="m-0 pt-40 pb-48">Did you know your risk profile score? Find it out here.</h5>
+                    <button *ngIf="riskProfileCapability.Add" mat-stroked-button class="btn-primary br-0 w-40 h-40"
                         (click)="takeTests()">Take the test</button>
+                    <button (click)="isEmpty=false;selectManually=true;showResults=false" mat-stroked-button
+                        class="btn-primary br-0 ml-40 w-40 h-40">Select manually</button>
                 </div>
             </div>
         </div>
@@ -26,7 +28,7 @@
                 </button>
 
                 <button *ngIf="riskProfileCapability.Add" mat-flat-button class="ba-2xb text-primary h-40 lh-38"
-                    (click)="takeTests()">Retake risk
+                    (click)="retakeTest()">Retake risk
                     assessment</button>
                 <button mat-flat-button class="ba-2xb ml-12 text-primary h-40 lh-38"
                     (click)="open('riskProfile', null)">History</button>
@@ -175,6 +177,65 @@
                     </div>
 
                 </div>
+            </div>
+        </div>
+        <div *ngIf="selectManually">
+            <div class="row pt-40">
+                <div class="col-md-6 pl-0">
+
+                    <div (click)="retakeTest()" class="m-0 roboto f-18 c-p d-flex align-items-center"><span
+                            class="material-icons pr-10">
+                            keyboard_backspace
+                        </span>Back</div>
+                </div>
+            </div>
+            <div class="row pt-40">
+                <div class="col-md-6 pl-0">
+                    <h3 class="m-0 roboto f-500">Select your risk profile below</h3>
+                </div>
+                <div class="col-md-6 pr-0 text-right">
+                    <h4 class="m-0 f-18 roboto f-400">Want to take the test? <a (click)="takeTests()"
+                            class="text-primary"> Click
+                            here</a></h4>
+                </div>
+            </div>
+            <div class="row pt-40" id="profile-new-card">
+                <div (click)="selectRiskProfile(singleRiskProfile)" *ngFor="let singleRiskProfile of globalRiskProfile"
+                    class="w-20 pl-8 pr-8">
+                    <mat-card [ngClass]="{'dker': singleRiskProfile.selected,'lt':singleRiskProfile.selected==false}"
+                        class="bg-grey   br-4 text-center">
+                        <h5 class="f-16 m-0 pt-8 pb-20 roboto f-500">{{singleRiskProfile.riskProfileName}}</h5>
+                        <img src="/assets/images/svg/aggressive.svg" class="w-100 h-80">
+                        <p class="m-0 roboto f-400 pt-42">{{singleRiskProfile.description}}</p>
+                        <button mat-stroked-button *ngIf="singleRiskProfile.selected==false"
+                            class="btn-primitive mt-36">Select</button>
+                        <button mat-stroked-button *ngIf="singleRiskProfile.selected"
+                            class=" mt-36 bg-white">Selected</button>
+                    </mat-card>
+                </div>
+                <!-- <div class="w-20 pl-8 pr-8 ">
+                    <mat-card class="bg-grey dker br-4 text-center">
+                        <h5 class="f-16 m-0 pt-8 pb-20 roboto f-500 text-white">Moderately Aggressive</h5>
+                        <img src="/assets/images/svg/aggressive.svg" class="w-100 h-80">
+                        <p class="m-0 roboto text-white f-400 pt-20">You are an investor who is willing to accept small
+                            level of
+                            risk in exchange for some potential returns over the medium to long term</p>
+                        <button mat-stroked-button class=" mt-16 bg-white">Selected</button>
+                    </mat-card>
+                </div> -->
+                <!-- <div class="w-20 pl-8 pr-8 ">
+                    <mat-card class="bg-grey lt br-4 text-center">
+                        <h5 class="f-16 m-0 pt-8 pb-20 roboto f-500">Aggressive</h5>
+                        <img src="/assets/images/svg/aggressive.svg" class="w-100 h-80">
+                        <p class="m-0 roboto f-400 pt-20">You are an investor who is willing to accept small level of
+                            risk in
+                            exchange for some potential returns over the medium to long term</p>
+                        <button mat-stroked-button class="mt-16 btn-primitive">Select</button>
+                    </mat-card>
+                </div> -->
+            </div>
+            <div class="text-center pt-40 pb-60">
+                <button mat-stroked-button (click)="addRiskProfileManually()" class="btn-primary">Proceed</button>
             </div>
         </div>
     </div>
