@@ -400,6 +400,9 @@ export class OverviewRiskProfileComponent implements OnInit {
     if (res == null) {
       this.globalRiskProfile = [];
     } else {
+      res.forEach(element => {
+        element['selected'] = false;
+      });
       this.globalRiskProfile = res;
     }
     if (!this.customerOverview.riskProfileData) {
@@ -425,6 +428,10 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+  }
+
+  retakeTest() {
+    this.isEmpty = true;
   }
 
   loadRiskProfileRes(res) {

@@ -326,7 +326,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
       clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != 'familyMember') ? [Validators.required] : null],
-      clientCode: ['']
+      clientCode: [data.clientCode ? data.clientCode != 'NA' ? data.clientCode : '' : '']
     });
 
     if (this.fieldFlag != 'familyMember') {
@@ -460,7 +460,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
       clientOwner: [this.selectedClientOwner],
       role: [(data.roleId) ? data.roleId : ''],
-      clientCode: ['']
+      clientCode: [data.clientCode ? data.clientCode != 'NA' ? data.clientCode : '' : '']
     });
     if (this.invTypeCategory == 4) {
       this.nonIndividualForm.controls.comStatus.setValidators(null);
