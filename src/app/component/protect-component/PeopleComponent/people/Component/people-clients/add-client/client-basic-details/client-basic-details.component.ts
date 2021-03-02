@@ -1156,7 +1156,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       btnNo: 'UPDATE',
       positiveMethod: () => {
         const obj = {
-          familyMemberId: this.basicDetailsData.familyMemberId
+          familyMemberId: this.basicDetailsData.familyMemberId,
+          familyMemberType: 1
         };
         this.cusService.makeMinorToMajor(obj).subscribe(
           data => {

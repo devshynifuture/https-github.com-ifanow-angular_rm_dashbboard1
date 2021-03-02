@@ -1117,7 +1117,8 @@ export class CustomerService {
   }
 
   makeMinorToMajor(data) {
-    return this.http.postEncoded(apiConfig.USER + appConfig.CONVERT_MINOR_TO_MAJOR, data);
+    const httpParams = new HttpParams().set('familyMemberId', data.familyMemberId).set('familyMemberType', data.familyMemberType);
+    return this.http.putParam(apiConfig.USER + appConfig.CONVERT_MINOR_TO_MAJOR, data, httpParams);
   }
 
   getSubAdvisorListValues(data) {
