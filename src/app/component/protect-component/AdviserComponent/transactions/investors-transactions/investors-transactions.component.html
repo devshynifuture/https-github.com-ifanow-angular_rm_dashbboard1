@@ -102,7 +102,7 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="panNo">
-            <th (click)="openInvestorDetail(element)" *matHeaderCellDef class="br" mat-header-cell
+            <th *matHeaderCellDef class="br" mat-header-cell
               mat-sort-header="firstApplicantPan" sticky> PAN
             </th>
             <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
@@ -125,14 +125,14 @@
             </th>
             <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
-                {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ? 'ANYONE OR
-                SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ?
+                {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ?
+                'ANYONE OR SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ?
                 'JOINT' : '-'}}
               </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="clientCode">
-            <th (click)="openInvestorDetail(element)" *matHeaderCellDef class="br textLeft" mat-header-cell
+            <th *matHeaderCellDef class="br textLeft" mat-header-cell
               mat-sort-header="clientCode" sticky>
               Account
               number
@@ -143,7 +143,7 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="status" sticky>
-            <th (click)="openInvestorDetail(element)" *matHeaderCellDef class="br" mat-header-cell
+            <th *matHeaderCellDef class="br" mat-header-cell
               mat-sort-header="statusStringTemp">
               Status
             </th>

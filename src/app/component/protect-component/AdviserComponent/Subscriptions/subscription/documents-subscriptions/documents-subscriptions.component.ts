@@ -349,8 +349,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.subService.getSubscriptionClientsList(obj).subscribe(
       (data) => {
 
-      }, (error) => {
-        this.eventService.openSnackBar('Something went wrong!', 'Dismiss');
+      }, (err) => {
+        this.eventService.showErrorMessage(err);
       }
     );
   }

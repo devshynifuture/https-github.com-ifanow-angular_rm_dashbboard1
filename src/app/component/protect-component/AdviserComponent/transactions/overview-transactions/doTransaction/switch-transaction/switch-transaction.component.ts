@@ -186,6 +186,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.resetForm();
       this.getSchemeList();
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
+      this.getSchemeList();
     }
   }
 
@@ -281,7 +282,6 @@ export class SwitchTransactionComponent implements OnInit {
     this.switchTransaction.controls.transferIn.setValue('')
     this.showSpinner = true;
     this.scheme = scheme;
-    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.showUnits = true;
     this.folioList = [];
     this.schemeDetails = null;
@@ -299,6 +299,7 @@ export class SwitchTransactionComponent implements OnInit {
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
   }
 
   getbankDetails(event) {

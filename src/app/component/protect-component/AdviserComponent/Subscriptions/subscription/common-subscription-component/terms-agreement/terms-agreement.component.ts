@@ -1,18 +1,18 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
-import { MatDialog, TooltipPosition } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { Router } from '@angular/router';
-import { escapeRegExp, UtilService } from 'src/app/services/util.service';
-import { HttpClient } from '@angular/common/http';
-import { tableHtml } from './document-preview';
-import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
-import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output, Renderer2} from '@angular/core';
+import {FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
+import {MatDialog, TooltipPosition} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {Router} from '@angular/router';
+import {escapeRegExp, UtilService} from 'src/app/services/util.service';
+import {HttpClient} from '@angular/common/http';
+import {tableHtml} from './document-preview';
+import {DocumentPreviewComponent} from '../document-preview/document-preview.component';
+import {AddEditDocumentComponent} from '../add-edit-document/add-edit-document.component';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-terms-agreement',
@@ -41,8 +41,8 @@ export class TermsAgreementComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-  }
-  isRefresh: boolean = true;
+  };
+  isRefresh = true;
   model: any;
   dataSub: any;
   storeData: any;
@@ -55,8 +55,8 @@ export class TermsAgreementComponent implements OnInit {
   placeHolderLoader: boolean;
 
   constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog,
-    public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
-    private http: HttpClient, private utilservice: UtilService) {
+              public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
+              private http: HttpClient, private utilservice: UtilService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getcommanFroalaData(data)
     );
@@ -74,8 +74,8 @@ export class TermsAgreementComponent implements OnInit {
   @Input()
   set upperData(upperData) {
     this._upperData = upperData;
-    this.isRefresh = false
-    this.getDocumentPlaceholderList(upperData.documentData)
+    this.isRefresh = false;
+    this.getDocumentPlaceholderList(upperData.documentData);
     this.getDataTerms(upperData);
     if (upperData && upperData.documentData) {
       // this.changeDisplay();
@@ -109,26 +109,27 @@ export class TermsAgreementComponent implements OnInit {
     // this.subInjectService.rightSideData(value);
     // this.valueChange.emit(this.quotationDesignE);
     // this.eventService.changeUpperSliderState({ state: 'close' ,});
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: false});
 
 
   }
+
   getDocumentPlaceholderList(data) {
-    this.placeHolderLoader = true
-    const obj =
-    {
-      availableAt: data.availableAt,
-      documentTypeId: data.documentTypeId
-    }
+    this.placeHolderLoader = true;
+    const obj = {
+        availableAt: data.availableAt,
+        documentTypeId: data.documentTypeId
+      };
     this.subService.getDocumentPlaceholder(obj).subscribe(
       data => {
         if (data) {
-          this.placeHolderLoader = false
-          this.placeholderList = data
+          this.placeHolderLoader = false;
+          this.placeholderList = data;
         }
       }
-    )
+    );
   }
+
   getPlanServiceData() {
     const obj = {
       // advisorId: 12345,
@@ -138,7 +139,7 @@ export class TermsAgreementComponent implements OnInit {
     };
     this.subService.getSettingPlanServiceData(obj).subscribe(
       data => this.serviceData = data,
-      err => this.eventService.openSnackBar('Something went wrong', 'Dismiss')
+      err => this.eventService.showErrorMessage(err)
     );
   }
 
@@ -168,7 +169,7 @@ export class TermsAgreementComponent implements OnInit {
     // };
     // this.subService.getQuotationServiceData(obj).subscribe(
     // );
-    let d = new Date();
+    const d = new Date();
     this.serviceData.forEach(element => {
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_' + element.id + ')'), 'g'),
         element.serviceName);
@@ -176,18 +177,17 @@ export class TermsAgreementComponent implements OnInit {
         'Ronak Hindocha');
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(service_fee_' + element.id + ')'), 'g'),
         tableHtml);
-      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(advisor_name)'), 'g'), 'Ronak Hindocha')
+      this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(advisor_name)'), 'g'), 'Ronak Hindocha');
       this.dataTerms.docText = this.dataTerms.docText.replace(new RegExp(escapeRegExp('$(date)'), 'g'),
-        d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear())
+        d.getDate() + '/' + d.getMonth() + 1 + '/' + d.getFullYear());
     });
-    let obj =
-    {
-      data: this.dataTerms.docText,
-      cancelButton: () => {
-        this.utilservice.htmlToPdf('', this.dataTerms.docText, 'document', '', this.dataTerms.docText, '', '', false, null);
-        dialogRef.close();
-      }
-    }
+    const obj = {
+        data: this.dataTerms.docText,
+        cancelButton: () => {
+          this.utilservice.htmlToPdf('', this.dataTerms.docText, 'document', '', this.dataTerms.docText, '', '', false, null);
+          dialogRef.close();
+        }
+      };
     const dialogRef = this.dialog.open(DocumentPreviewComponent, {
       width: '65vw',
       height: '900px',
@@ -228,9 +228,9 @@ export class TermsAgreementComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data) {
-            this.upperData = sideBarData.data
-            this._upperData = sideBarData.data
-            this.changePlanData.emit(this.upperData)
+            this.upperData = sideBarData.data;
+            this._upperData = sideBarData.data;
+            this.changePlanData.emit(this.upperData);
           }
           rightSideDataSub.unsubscribe();
         }
@@ -251,20 +251,21 @@ export class TermsAgreementComponent implements OnInit {
     };
     this.subService.updateDocumentData(obj).subscribe(
       responseData => {
-        this.isRefresh = true
-        this.getResponseData(responseData)
+        this.isRefresh = true;
+        this.getResponseData(responseData);
       },
       err => {
         this.barButtonOptions.active = false;
       }
     );
   }
+
   getResponseData(data) {
     this.barButtonOptions.active = false;
     if (data == 1) {
       this.eventService.openSnackBar('Document added successfully', 'OK');
     }
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: this.isRefresh });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: this.isRefresh});
   }
 
   // Begin ControlValueAccesor methods.

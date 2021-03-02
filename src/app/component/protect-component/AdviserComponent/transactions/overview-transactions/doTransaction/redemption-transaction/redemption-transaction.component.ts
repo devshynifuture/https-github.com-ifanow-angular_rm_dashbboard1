@@ -177,6 +177,7 @@ export class RedemptionTransactionComponent implements OnInit {
         this.getdataForm(oldData, true);
       }
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
+      this.getSchemeList();
     }
   }
 
@@ -348,7 +349,6 @@ export class RedemptionTransactionComponent implements OnInit {
   selectedScheme(scheme) {
     this.redemptionTransaction.controls.employeeContry.reset();
     this.scheme = scheme;
-    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
     this.folioList = [];
     this.folioDetails = null;
     this.reInvestmentOpt = [];
@@ -366,6 +366,7 @@ export class RedemptionTransactionComponent implements OnInit {
         this.eventService.openSnackBar(error, 'Dismiss');
       }
     );
+    this.scheme.navDate = this.datePipe.transform(scheme.navDate, 'dd-MM-yyyy');
   }
 
   getSchemeDetailsRes(data) {

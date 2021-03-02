@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { SetupLumpsumDeploymentComponent } from './add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { MatDialog } from '@angular/material';
-import { ManageDeploymentComponent } from './manage-deployment/manage-deployment.component';
-import { ManageExclusionsComponent } from './manage-exclusions/manage-exclusions.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DeploymentDetailsComponent } from './deployment-details/deployment-details.component';
-import { PlanService } from '../plan.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { element } from 'protractor';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { RoleService } from 'src/app/auth-service/role.service';
-import { forkJoin, pipe, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {SetupLumpsumDeploymentComponent} from './add-investment-plan/setup-lumpsum-deployment/setup-lumpsum-deployment.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {MatDialog} from '@angular/material';
+import {ManageDeploymentComponent} from './manage-deployment/manage-deployment.component';
+import {ManageExclusionsComponent} from './manage-exclusions/manage-exclusions.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DeploymentDetailsComponent} from './deployment-details/deployment-details.component';
+import {PlanService} from '../plan.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {RoleService} from 'src/app/auth-service/role.service';
+import {forkJoin, of} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-investments-plan',
@@ -28,7 +27,7 @@ export class DeploymentsPlanComponent implements OnInit {
   displayedColumns1: string[] = ['position1', 'name1', 'weight1', 'symbol1'];
   dataSource;
   dataSourceT;
-  selectedTab = " Goal based";
+  selectedTab = ' Goal based';
   clientId: any;
   advisorId: any;
   selectedDeployments: any = [];
@@ -37,13 +36,17 @@ export class DeploymentsPlanComponent implements OnInit {
   familyMemberList: any;
   selected = 0;
   deploymentCapabilityList: any = {};
+
   constructor(private peopleService: PeopleService, private eventService: EventService, private subInjectService: SubscriptionInject,
-    private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService,
-    public roleService: RoleService) { }
+              private cusService: CustomerService, public dialog: MatDialog, private planService: PlanService,
+              public roleService: RoleService) {
+  }
+
   isLoading = false;
+
   ngOnInit() {
-    this.deploymentCapabilityList = this.roleService.activityPermission.subModule.deployments.capabilityList
-    this.viewMode = "tab1";
+    this.deploymentCapabilityList = this.roleService.activityPermission.subModule.deployments.capabilityList;
+    this.viewMode = 'tab1';
     this.type = 1;
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -64,19 +67,19 @@ export class DeploymentsPlanComponent implements OnInit {
       }
     );
   }
+
   getDeploymentData() {
     this.isLoading = true;
     this.dataSource = [{}, {}, {}];
-    const obj =
-    {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
       familyMemberId: this.selected
-    }
+    };
     const obj2 = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-    }
+    };
     const deployment = this.cusService.getAdviceDeploymentsData(obj).pipe(
       catchError(error => of(null))
     );
@@ -93,45 +96,48 @@ export class DeploymentsPlanComponent implements OnInit {
       }
 
     }, err => {
-      this.eventService.openSnackBar("something went wrong", "Dismiss")
+      this.eventService.showErrorMessage(err);
       this.dataSource = [];
-    })
+    });
 
   }
+
   getAssetType(data) {
     if (data[0] && data[1]) {
-      let mergeArray = [...data[0].GoalBaseDeploymentList, ...data[0].nonGoalBasedDeploymentList];
+      const mergeArray = [...data[0].GoalBaseDeploymentList, ...data[0].nonGoalBasedDeploymentList];
       mergeArray.forEach(element => {
         data[1].forEach(ele => {
           if (element.assetId == ele.assetId) {
-            element.assetName = ele.assetName
+            element.assetName = ele.assetName;
           }
         });
       });
     }
   }
+
   changTab(data) {
-    this.selected = data.id
+    this.selected = data.id;
     this.getDeploymentData();
   }
+
   selectSingleDeployment(flag, value) {
     console.log(flag, value);
-    (flag.checked) ? this.selectedDeployments.push({ id: value.id }) : this.selectedDeployments = this.selectedDeployments.filter(element => element.id != value.id);
-    console.log(this.selectedDeployments)
+    (flag.checked) ? this.selectedDeployments.push({id: value.id}) : this.selectedDeployments = this.selectedDeployments.filter(element => element.id != value.id);
+    console.log(this.selectedDeployments);
   }
+
   openPopup(flagVlaue, singleDeployment) {
     let componentName;
-    let dialogRef
-    if (flagVlaue == "deployment") {
-      componentName = ManageDeploymentComponent
+    let dialogRef;
+    if (flagVlaue == 'deployment') {
+      componentName = ManageDeploymentComponent;
       dialogRef = this.dialog.open(componentName, {
         width: '600px',
         height: '300px',
         data: singleDeployment
       });
 
-    }
-    else {
+    } else {
       componentName = ManageExclusionsComponent;
       dialogRef = this.dialog.open(componentName, {
         width: '600px',
@@ -149,6 +155,7 @@ export class DeploymentsPlanComponent implements OnInit {
     });
 
   }
+
   deleteDeployment(deleteData, flag) {
     const dialogData = {
       data: flag,
@@ -160,12 +167,12 @@ export class DeploymentsPlanComponent implements OnInit {
       positiveMethod: () => {
         this.planService.deleteDeployment(deleteData.id).subscribe(
           data => {
-            this.eventService.openSnackBar("Deployment is deleted", "Dismiss");
+            this.eventService.openSnackBar('Deployment is deleted', 'Dismiss');
             this.getDeploymentData();
             dialogRef.close();
           },
           error => this.eventService.showErrorMessage(error)
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -188,16 +195,14 @@ export class DeploymentsPlanComponent implements OnInit {
   openDep(flagValue, data) {
     let component, deploymentData;
     if (flagValue == 'open') {
-      component = DeploymentDetailsComponent
-      deploymentData = { data }
-    }
-    else {
+      component = DeploymentDetailsComponent;
+      deploymentData = {data};
+    } else {
       component = SetupLumpsumDeploymentComponent;
-      deploymentData =
-      {
+      deploymentData = {
         data: [],
         deploymentIdList: this.selectedDeployments
-      }
+      };
       this.dataSource.forEach(singleElement => {
         if (singleElement.selected) {
           deploymentData.data.push(singleElement);
