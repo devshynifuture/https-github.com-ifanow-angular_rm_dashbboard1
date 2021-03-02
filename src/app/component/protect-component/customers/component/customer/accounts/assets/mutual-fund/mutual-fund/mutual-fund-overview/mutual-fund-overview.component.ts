@@ -453,7 +453,9 @@ export class MutualFundOverviewComponent implements OnInit {
           setTimeout(() => {
             this.pieChart('piechartMutualFund');
             if (this.finPlanObj) {
-              this.svg = this.chart.getSVG();
+              if (this.chart) {
+                this.svg = this.chart.getSVG();
+              }
               this.loadsvg.emit(this.svg);
             }// pie chart data after calculating percentage
           }, 1000);
@@ -992,7 +994,9 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdf() {
-    this.svg = this.chart.getSVG();
+    if (this.chart) {
+      this.svg = this.chart.getSVG();
+    }
     this.fragmentData.isSpinner = true;
     const para = document.getElementById('templateOverview');
     const obj = {
@@ -1373,7 +1377,9 @@ export class MutualFundOverviewComponent implements OnInit {
   generatePdfBulk() {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     this.loadingDone = true;
-    this.svg = this.chart.getSVG();
+    if (this.chart) {
+      this.svg = this.chart.getSVG();
+    }
     const para = this.mfOverviewTemplate.nativeElement
 
     const obj = {
