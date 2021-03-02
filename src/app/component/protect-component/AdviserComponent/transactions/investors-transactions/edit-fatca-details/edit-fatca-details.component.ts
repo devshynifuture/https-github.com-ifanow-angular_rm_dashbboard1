@@ -119,6 +119,7 @@ export class EditFatcaDetailsComponent implements OnInit {
       // taxResidency: [!data ? '1' : (data.taxResidency) ? data.taxResidency + '' : '1', [Validators.required]],
 
     });
+    this.fatcaDetails.get('pan').disable();
     this.fatcaDetails.controls.countryOfBirth.valueChanges.subscribe(newValue => {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
         return this.processTransaction.filterName(newValue, this.countryList);

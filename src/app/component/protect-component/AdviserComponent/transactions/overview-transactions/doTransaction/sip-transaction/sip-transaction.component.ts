@@ -483,6 +483,7 @@ export class SipTransactionComponent implements OnInit {
 
   selectedFrequency(getFrerq) {
     this.selectedFreqModel = getFrerq;
+    this.setMinAmount()
     this.frequency = getFrerq.frequency;
     Object.assign(this.transactionSummary, { frequencyType: getFrerq.frequencyName });
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
