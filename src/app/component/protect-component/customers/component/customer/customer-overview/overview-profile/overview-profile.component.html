@@ -425,7 +425,9 @@
                         <div class="row ">
                             <div *ngFor="let singleAddress of addressList" class=" row ">
                                 <div class="col-md-9">
-                                    <p class=" f-12 mb-0 pt-4 text-primitive ">PERMANENT</p>
+                                    <p class=" f-12 mb-0 pt-4 text-primitive ">
+                                        {{!singleAddress.addressType ||singleAddress.addressType==1?'RESIDENTIAL':singleAddress.addressType==2?'OFFICE':'KYC'}}
+                                    </p>
 
 
                                     <p class=" f-14 ">
