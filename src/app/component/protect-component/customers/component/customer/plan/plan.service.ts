@@ -372,4 +372,8 @@ export class PlanService {
   lifeInsurancePlanAdd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_PLAN_ADD, data);
   }
+
+  addManuallyRiskProfile(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MANUAL_RISK_PROFILE, data);
+  }
 }
