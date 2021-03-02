@@ -343,7 +343,7 @@
                     </ng-container>
                     <ng-container matColumnDef="groupHeader">
                         <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                            class="f-600 pl-4 proximaFont text-left">
+                            class="f-600 pl-4 proximaFont text-left bb-1">
                             <div class="bar">{{group.schemeName}} {{group.isin ? ' | '+group.isin : ''}} |
                                 {{group.folioNumber}} | {{group.ownerName}}</div>
 
@@ -829,9 +829,9 @@
                     </tr>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    <tr mat-footer-row *matFooterRowDef="displayedColumnsTotal;sticky: true"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumnsTotal;sticky: false"></tr>
                     <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
-                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
                 </table>
             </div>
             <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}"
@@ -998,7 +998,7 @@
         <!-- </div> -->
         <div class="row w-100">
             <div class="col-md-12 p-0 mb-8">
-                <div class="b-a bt-0 bb-0">
+                <div class="b-a bt-1 bb-0">
                     <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
                         DIVIDEND SUMMARY
                     </h5>
@@ -1082,7 +1082,7 @@
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns2;sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                        <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: false" [hidden]="isLoading"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
                     </table>
                 </div>
                 <div *ngIf="dataSource2.data.length == 0"
