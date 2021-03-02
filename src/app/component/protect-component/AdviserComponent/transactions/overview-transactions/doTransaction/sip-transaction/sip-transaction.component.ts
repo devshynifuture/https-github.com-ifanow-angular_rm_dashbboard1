@@ -74,7 +74,7 @@ export class SipTransactionComponent implements OnInit {
   transactionType: any;
   schemeDetails: any = {};
   transactionSummary: any;
-  selectScheme = 2;
+  selectScheme = '2';
   schemeList: any;
   existingSchemeList = [];
   scheme: any;
@@ -208,7 +208,7 @@ export class SipTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, { folioNumber: '' }); // to disable folio number from transaction summary
     this.selectScheme = value;
     if (this.getDataSummary) {
-      if (this.selectScheme == 1) {
+      if (this.selectScheme == '1') {
         if (this.existingSchemeList && this.existingSchemeList.length > 0) {
           this.getExistingSchemesRes(this.existingSchemeList);
         } else {
@@ -253,7 +253,7 @@ export class SipTransactionComponent implements OnInit {
       tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId,
     };
     if (data.length > 2) {
-      if (this.selectScheme == 2) {
+      if (this.selectScheme == '2') {
         // this.getNewSchemesRes([]);
         this.showSchemeSpinner = true;
         this.onlineTransact.getNewSchemes(obj).subscribe(
@@ -325,14 +325,14 @@ export class SipTransactionComponent implements OnInit {
     this.getDataSummary = data;
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
+    } else {
+      this.getExistingScheme();
     }
     // this.sipTransaction.controls.investor.reset();
     this.platformType = this.getDataSummary.defaultClient.aggregatorType;
     Object.assign(this.transactionSummary, { aggregatorType: this.platformType });
-    if (this.selectScheme == 1 && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
+    if (this.selectScheme == '1' && !(this.existingSchemeList && this.existingSchemeList.length > 0)) {
       this.getExistingScheme();
-    } else {
-      this.sipTransaction.controls.schemeSip.reset();
     }
     this.oldDefaultData = data;
 
@@ -348,7 +348,7 @@ export class SipTransactionComponent implements OnInit {
         this.getDataForm(this.inputData, true);
       }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
-      if (this.selectScheme == 1) {
+      if (this.selectScheme == '1') {
         this.resetForm();
         this.existingSchemeList = [];
       } else {
@@ -357,7 +357,7 @@ export class SipTransactionComponent implements OnInit {
         this.selectExistingOrNew(this.ExistingOrNew);
       }
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
-
+      this.getExistingScheme();
     }
   }
 
@@ -483,6 +483,7 @@ export class SipTransactionComponent implements OnInit {
 
   selectedFrequency(getFrerq) {
     this.selectedFreqModel = getFrerq;
+    this.setMinAmount()
     this.frequency = getFrerq.frequency;
     Object.assign(this.transactionSummary, { frequencyType: getFrerq.frequencyName });
     if (this.getDataSummary.defaultClient.aggregatorType == 2) {
@@ -806,7 +807,7 @@ export class SipTransactionComponent implements OnInit {
     if (this.childTransactions.length == 0) {
       this.multiTransact = false;
       this.resetForm();
-      if (this.selectScheme == 1) {
+      if (this.selectScheme == '1') {
         this.getExistingScheme();
       }
     }
@@ -1030,7 +1031,7 @@ export class SipTransactionComponent implements OnInit {
         // Only once required because for same amcId search
         if (this.childTransactions.length == 1) {
           this.schemeList = [];
-          if (this.selectScheme == 1) {
+          if (this.selectScheme == '1') {
             this.getExistingScheme();
           } else {
           }

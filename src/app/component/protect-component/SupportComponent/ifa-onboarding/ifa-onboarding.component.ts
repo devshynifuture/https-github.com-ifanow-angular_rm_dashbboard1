@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { OrderHistoricalFileComponent } from "./../order-historical-file/order-historical-file.component";
-import { UtilService } from "src/app/services/util.service";
-import { SubscriptionInject } from "../../AdviserComponent/Subscriptions/subscription-inject.service";
-import { AdminDetailsComponent } from "./admin-details/admin-details.component";
-import { MatSort, MatTableDataSource } from "@angular/material";
-import { SupportService } from "../support.service";
-import { EventService } from "../../../../Data-service/event.service";
-import { AuthService } from "src/app/auth-service/authService";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OrderHistoricalFileComponent } from './../order-historical-file/order-historical-file.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { AdminDetailsComponent } from './admin-details/admin-details.component';
+import { MatSort, MatTableDataSource } from '@angular/material';
+import { SupportService } from '../support.service';
+import { EventService } from '../../../../Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
-  selector: "app-ifa-onboarding",
-  templateUrl: "./ifa-onboarding.component.html",
-  styleUrls: ["./ifa-onboarding.component.scss"],
+  selector: 'app-ifa-onboarding',
+  templateUrl: './ifa-onboarding.component.html',
+  styleUrls: ['./ifa-onboarding.component.scss'],
 })
 export class IfaOnboardingComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -31,16 +31,16 @@ export class IfaOnboardingComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
   displayedColumns = [
-    "adminName",
-    "email",
-    "mobile",
-    "rmName",
-    "stage",
-    "usingSince",
-    "plan",
-    "team",
-    "arn",
-    "menu",
+    'adminName',
+    'email',
+    'mobile',
+    'rmName',
+    'stage',
+    'usingSince',
+    'plan',
+    'team',
+    'arn',
+    'menu',
   ];
 
   ngOnInit() {
@@ -53,15 +53,15 @@ export class IfaOnboardingComponent implements OnInit {
       (data) => {
         if (data) {
           this.stagesArray = data;
-          console.log("stages array::", data);
+          console.log('stages array::', data);
           this.getMyIfaDetail();
         }
       },
-      (err) => this.eventService.openSnackBar(err, "Dismiss")
+      (err) => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
   getOverviewIFAOnbording() {
-    let obj = {
+    const obj = {
       adminAdvisorId: this.advisorId,
     };
     this.supportService.getOverviewIFAOnboarding(obj).subscribe(
@@ -71,34 +71,34 @@ export class IfaOnboardingComponent implements OnInit {
           this.getOverview = data;
         }
       },
-      (err) => this.eventService.openSnackBar(err, "Dismiss")
+      (err) => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
   getMyIfaDetail() {
-    let obj = {};
+    const obj = {};
     this.supportService.getMyIFAValues(obj).subscribe(
       (data) => {
         console.log(data);
         if (data && data.length !== 0) {
           this.isLoading = false;
-          let tableArray = [];
+          const tableArray = [];
           data.forEach((element, index) => {
             tableArray.push({
               adminName: element.name,
               email: element.emailId,
               mobile: element.mobileNo,
-              rmName: element.rmName ? element.rmName : " - ",
-              stage: element.taskMasterId ? this.getStageName(element.taskMasterId) : "-",
+              rmName: element.rmName ? element.rmName : ' - ',
+              stage: element.taskMasterId ? this.getStageName(element.taskMasterId) : '-',
               usingSince:
                 element.usingSinceYear +
-                "Y " +
+                'Y ' +
                 element.usingSinceMonth +
-                "M",
-              plan: element.plan ? element.plan : " - ",
+                'M',
+              plan: element.plan ? element.plan : ' - ',
               team: element.teamMemberCount,
               arn: element.arnRiaDetailCount,
               adminAdvisorId: element.adminAdvisorId,
-              menu: "",
+              menu: '',
               advisorId: element.adminAdvisorId,
             });
           });
@@ -108,7 +108,7 @@ export class IfaOnboardingComponent implements OnInit {
           this.isLoading = false;
         }
       },
-      (err) => this.eventService.openSnackBar(err, "Dismiss")
+      (err) => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 
@@ -122,7 +122,7 @@ export class IfaOnboardingComponent implements OnInit {
   }
 
   someFunction() {
-    console.log("this is some function");
+    console.log('this is some function');
   }
 
   openIfaHistory(value, data) {
@@ -130,17 +130,17 @@ export class IfaOnboardingComponent implements OnInit {
       flag: value,
       data,
       id: 1,
-      state: "open50",
+      state: 'open50',
       componentName: OrderHistoricalFileComponent,
     };
     const rightSideDataSub = this.subInjectService
       .changeNewRightSliderState(fragmentData)
       .subscribe((sideBarData) => {
-        console.log("this is sidebardata in subs subs : ", sideBarData);
+        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log(
-              "this is sidebardata in subs subs 3 ani: ",
+              'this is sidebardata in subs subs 3 ani: ',
               sideBarData
             );
           }
@@ -155,22 +155,22 @@ export class IfaOnboardingComponent implements OnInit {
       .subscribe(res => {
         this.isMainLoading = false;
         if (res) {
-          console.log("merge query response::", res);
-          this.eventService.openSnackBarNoDuration("Merge scheme code done Successfully", "DISMISS");
+          console.log('merge query response::', res);
+          this.eventService.openSnackBarNoDuration('Merge scheme code done Successfully', 'DISMISS');
         } else {
-          this.eventService.openSnackBarNoDuration("Merge scheme code successful", "DISMISS");
+          this.eventService.openSnackBarNoDuration('Merge scheme code successful', 'DISMISS');
         }
       }, err => {
         this.isMainLoading = false;
         console.error(err);
-        this.eventService.openSnackBar("Something went wrong", 'DISMISS');
-      })
+        this.eventService.showErrorMessage(err);
+      });
   }
 
   filterTableByName(event) {
-    let value = event.target.value;
+    const value = event.target.value;
     console.log(value);
-    if (value !== "") {
+    if (value !== '') {
       this.dataSource.data = this.tableData.filter((item) => {
         console.log(
           item.adminName.toLowerCase().includes(value.toLowerCase())
@@ -191,17 +191,17 @@ export class IfaOnboardingComponent implements OnInit {
       flag: value,
       data,
       id: 1,
-      state: "open",
+      state: 'open',
       componentName: AdminDetailsComponent,
     };
     const rightSideDataSub = this.subInjectService
       .changeNewRightSliderState(fragmentData)
       .subscribe((sideBarData) => {
-        console.log("this is sidebardata in subs subs : ", sideBarData);
+        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             console.log(
-              "this is sidebardata in subs subs 3 ani: ",
+              'this is sidebardata in subs subs 3 ani: ',
               sideBarData
             );
             this.dataSource.data = ELEMENT_DATA;
@@ -215,39 +215,39 @@ export class IfaOnboardingComponent implements OnInit {
 
 const ELEMENT_DATA = [
   {
-    adminName: "",
-    email: "",
-    mobile: "",
-    rmName: "",
-    stage: "",
-    usingSince: "",
-    plan: "",
-    team: "",
-    arn: "",
-    menu: "",
+    adminName: '',
+    email: '',
+    mobile: '',
+    rmName: '',
+    stage: '',
+    usingSince: '',
+    plan: '',
+    team: '',
+    arn: '',
+    menu: '',
   },
   {
-    adminName: "",
-    email: "",
-    mobile: "",
-    rmName: "",
-    stage: "",
-    usingSince: "",
-    plan: "",
-    team: "",
-    arn: "",
-    menu: "",
+    adminName: '',
+    email: '',
+    mobile: '',
+    rmName: '',
+    stage: '',
+    usingSince: '',
+    plan: '',
+    team: '',
+    arn: '',
+    menu: '',
   },
   {
-    adminName: "",
-    email: "",
-    mobile: "",
-    rmName: "",
-    stage: "",
-    usingSince: "",
-    plan: "",
-    team: "",
-    arn: "",
-    menu: "",
+    adminName: '',
+    email: '',
+    mobile: '',
+    rmName: '',
+    stage: '',
+    usingSince: '',
+    plan: '',
+    team: '',
+    arn: '',
+    menu: '',
   },
 ];

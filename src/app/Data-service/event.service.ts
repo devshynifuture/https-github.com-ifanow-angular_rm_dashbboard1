@@ -96,7 +96,11 @@ export class EventService {
   }
 
   showErrorMessage(data, actionCallback = null) {
-    this.openSnackBar('Something went wrong', 'Dismiss', actionCallback);
+    if (data && data instanceof String) {
+    } else {
+      data = 'Something went wrong';
+    }
+    this.openSnackBar(data, 'Dismiss', actionCallback);
   }
 
   sidebarData(message: string) {

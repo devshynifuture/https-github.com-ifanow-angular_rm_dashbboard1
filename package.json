@@ -55,6 +55,7 @@
     "hammerjs": "2.0.8",
     "highcharts": "7.2.1",
     "highcharts-angular": "2.4.0",
+    "highcharts-more": "^0.1.7",
     "html2pdf.js": "0.9.0",
     "jquery": "3.5.1",
     "moment": "2.24.0",
