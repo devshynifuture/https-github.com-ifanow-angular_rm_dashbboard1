@@ -452,8 +452,9 @@ export class MutualFundOverviewComponent implements OnInit {
         if (this.showSummaryBar) {
           setTimeout(() => {
             this.pieChart('piechartMutualFund');
+
+            this.svg = this.chart.getSVG();
             if (this.finPlanObj) {
-              this.svg = this.chart.getSVG();
               this.loadsvg.emit(this.svg);
             }// pie chart data after calculating percentage
           }, 1000);
