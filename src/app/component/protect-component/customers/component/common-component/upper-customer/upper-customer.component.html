@@ -5,9 +5,9 @@
       <i class="material-icons c-p pt-8 v-middle" (click)="close(false)"> clear</i>
     </div>
     <mat-tab-group class="mt-48" animationDuration="0ms" mat-align-tabs="center" [(selectedIndex)]="selected">
-      <mat-tab label="FACT SHEET">
+      <!-- <mat-tab label="FACT SHEET">
         <app-fact-shit></app-fact-shit>
-      </mat-tab>
+      </mat-tab> -->
       <mat-tab label="TRANSACTIONS">
         <app-transactions [data]="fragmentData" (changeInput)="outputResponse($event)"></app-transactions>
       </mat-tab>
