@@ -1,29 +1,26 @@
 <div class="bg-grey lter">
   <div class="row second-fix">
     <div class="col-md-12 bg-dark">
-      <h2 class="m-0 wrapper-24 text-white text-center">Aditya Birla Sun Life Equity Fund Direct Growth</h2>
+      <h2 class="m-0 wrapper-24 text-white text-center">{{data.schemeName}}</h2>
     </div>
   </div>
   <div class="container  pt-170 pb-44">
     <div class="row">
-      <div class="col-md-9">
-        <div class="d-flex mb-20">
+      <div class="col-md-1"></div>
+      <div class="col-md-6 pl-64 pt-2">
+        <div class="d-flex">
           <mat-chip-list aria-label="Fish selection">
-            <mat-chip>Equity</mat-chip>
-            <mat-chip>Multi Cap</mat-chip>
+            <mat-chip>{{data.categoryName}}</mat-chip>
+            <mat-chip>{{data.subCategoryName}}</mat-chip>
           </mat-chip-list>
-          <div class="pl-20">
-            <img src="/assets/images/svg/yellow-star.svg" class="c-p">
-            <img src="/assets/images/svg/yellow-star.svg" class="c-p">
-            <img src="/assets/images/svg/yellow-star.svg" class="c-p">
-            <img src="/assets/images/svg/light-star.svg" class="c-p">
-            <img src="/assets/images/svg/light-star.svg" class="c-p">
-          </div>
+
         </div>
       </div>
-      <div class="col-md-3">
-        <!-- <button mat-button class="btn-black right br-0">INVEST NOW</button> -->
+      <div class="col-md-1"></div>
+      <div class="col-md-3 pl-0 pr-64">
+        <button mat-button class="btn-black right br-0">INVEST NOW</button>
       </div>
+
     </div>
     <div class="row">
       <div class="col-md-9 p-0">
@@ -33,29 +30,30 @@
             <p class="m-0 f-12 text-primitive">CURRENT VALUE</p>
             <div class="row">
               <div class="col-md-7 p-0">
-                <h1 class="text-primary f-32 proxima">₹ 9,23,920</h1>
+                <h1 class="text-primary f-32 proxima">₹ <span> {{currentValue}}</span></h1>
               </div>
               <div class="col-md-5 p-0">
-                <h5 class="m-0 text-success pt-8 proxima">+9.68%</h5>
+                <h5 class="m-0 text-success pt-8 proxima"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue |
+                  number:'1.2-2'}}%</h5>
               </div>
             </div>
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-primitive">PROFIT (LOSS)</p>
-            <h1 class="m-0 text-success proxima f-32">₹ 47,590</h1>
+            <h1 class="m-0 text-success proxima f-32">₹ <span>{{profitOrLossValue}}</span></h1>
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-primitive">INVESTOR NAME</p>
-            <h3 class="m-0 text-black">Ronak Hasmukh Hindocha</h3>
-            <p class="m-0 text-primitive">23243434/78</p>
+            <h3 class="m-0 text-black">{{ investorName }}</h3>
+            <p class="m-0 text-primitive">{{ folioNumber }}</p>
           </div>
         </div>
         <div class="bg-white mt-20">
           <div class="row">
             <div class="col-md-6 pt-28 pl-28">
               <p class="m-0 text-primitive">NAV</p>
-              <h2 class="m-0 text-black">726.9030</h2>
-              <p class="m-0 text-primitive">as on 13/09/2019</p>
+              <h2 class="m-0 text-black">{{nav}}</h2>
+              <p class="m-0 text-primitive">as on {{data.navDate}}</p>
             </div>
             <div class="col-md-6 pt-28 pl-28 text-right">
               <p class="m-0 text-primitive">1 YEAR NAV RETURN</p>
@@ -63,9 +61,12 @@
               .
             </div>
           </div>
+
           <div class="row pt-44">
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
               <img src="/assets/images/svg/graph-popup.svg" alt="" class="w-100">
+            </div> -->
+            <div class="highcharts-figure" id="container-hc-figure" [chart]="portfolioGraph">
             </div>
           </div>
         </div>
@@ -112,8 +113,8 @@
         </div>
         <div class="row">
           <div class="col-md-12 pt-28">
-            <h4 class="m-0 f-500">About Aditya Birla Sun Life Equity Fund Direct-Growth</h4>
-            <p class="m-0 f-300 roboto pt-8">Aditya Birla Sun Life Equity Fund Direct Growth is a Equity Mutual Fund
+            <h4 class="m-0 f-500">About {{data.schemeName}}</h4>
+            <p class="m-0 f-300 roboto pt-8">{{data.schemeName}} is a Equity Mutual Fund
               Scheme launched by Aditya Birla Sun Life Mutual Fund. This scheme was introduced to investors on 01 Jan
               2013. Anil Shah is the Current Fund Manager of Aditya Birla Sun Life Equity Fund Direct Growth.The fund
               currently has an Asset Under Management(AUM) of ₹10,694 Cr and the Latest NAV as of 09 Sep 2019 is
@@ -157,7 +158,9 @@
               <p class="m-0 pt-32 roboto">An investment of </p>
               <h2 class="f-34 m-0 pt-8 proxima">50,000</h2>
               <p class="m-0 pt-12 roboto">would have fetched you following returns</p>
-              <img src="/assets/images/svg/graph-scheme.svg" class="w-100 pt-32">
+              <!-- <img src="/assets/images/svg/graph-scheme.svg" class="w-100 pt-32"> -->
+              <div class="highcharts-figure" id="container-hc-figure" [chart]="schemeChart">
+              </div>
             </div>
           </div>
           <div class="row pt-20">
@@ -189,7 +192,9 @@
           <div class="row">
             <div class="col-md-12">
               <p class="m-0">Riskometer</p>
-              <img src="/assets/images/svg/riskmeter.svg" class="w-100 pt-32">
+              <div class="highcharts-figure" id="container-hc-figure" [chart]="speedChartVar">
+              </div>
+              <!-- <img src="/assets/images/svg/riskmeter.svg" class="w-100 pt-32"> -->
               <p class="f-12 m-0 text-center">Investors understand that their principal
                 will be at Moderately High risk</p>
             </div>
