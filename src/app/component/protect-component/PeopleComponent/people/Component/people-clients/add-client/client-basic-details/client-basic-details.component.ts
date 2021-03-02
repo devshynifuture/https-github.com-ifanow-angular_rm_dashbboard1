@@ -326,6 +326,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
       clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != 'familyMember') ? [Validators.required] : null],
+      clientCode: ['']
     });
 
     if (this.fieldFlag != 'familyMember') {
@@ -458,7 +459,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
       clientOwner: [this.selectedClientOwner],
-      role: [(data.roleId) ? data.roleId : '']
+      role: [(data.roleId) ? data.roleId : ''],
+      clientCode: ['']
     });
     if (this.invTypeCategory == 4) {
       this.nonIndividualForm.controls.comStatus.setValidators(null);
@@ -686,7 +688,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         userId: this.basicDetailsData.userId,
         clientId: this.basicDetailsData.clientId,
         status: (this.fieldFlag == 'client') ? 1 : 2,
-        clientType: parseInt(this.invTypeCategory)
+        clientType: parseInt(this.invTypeCategory),
+        clientCode: (this.invTypeCategory == 1) ? this.basicDetails.value.clientCode : this.nonIndividualForm.value.clientCode
       };
       if (this.invTypeCategory == 1) {
         obj.dateOfBirth = this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy');
