@@ -511,21 +511,21 @@ export class FixedDepositComponent implements OnInit {
 
   getIntPayout() {
     if (this.fixedDeposit.value.payOpt == 1) {
-      this.fixedDeposit.controls['compound'].setValue(null);
-      this.fixedDeposit.controls['compound'].setErrors({ 'required': true });
-      this.fixedDeposit.get('compound').markAsTouched();
+      if (this.fixedDeposit.get('compound').invalid) {
+        this.fixedDeposit.controls['compound'].setValue(null);
+        this.fixedDeposit.controls['compound'].setErrors({ 'required': true });
+        this.fixedDeposit.get('compound').markAsTouched();
+      }
     } else {
       this.fixedDeposit.controls['compound'].setErrors(null);
     }
     if (this.fixedDeposit.value.payOpt == 2) {
-      this.fixedDeposit.fixedDeposit.get('interestType').value == '1'
-      // this.fixedDeposit.controls['interestType'].setValue(null);
-      // this.fixedDeposit.controls['interestType'].setErrors({ 'required': true });
-      // this.fixedDeposit.get('interestType').markAsTouched();
-      this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setValue(null);
-      this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setErrors({ 'required': true });
-      this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
-
+      this.fixedDeposit.get('interestType').value == '1'
+      if (this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
+        this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setValue(null);
+        this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setErrors({ 'required': true });
+        this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
+      }
     } else {
       this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setErrors(null);
     }
@@ -533,6 +533,7 @@ export class FixedDepositComponent implements OnInit {
 
 
   saveFixedDeposit() {
+    this.getIntPayout();
     if (this.fixedDeposit.value.maturity == 2) {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     } else {
