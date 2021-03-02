@@ -309,6 +309,7 @@ export const appConfig = {
   DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
   DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
   ////////////////////////////////plan////////////////////////////
+  ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
   GET_GLOBAL_GOAL_DATA: 'goal-planning/goal/global-data/get',
@@ -1015,7 +1016,6 @@ export const appConfig = {
   RESET_TEAM_MEMBER_PASSWORD: 'user/advisor/reset/password',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
-
   //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
   GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
   GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get',

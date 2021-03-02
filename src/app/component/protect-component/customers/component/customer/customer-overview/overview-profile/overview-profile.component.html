@@ -81,7 +81,7 @@
 
                     </div>
                     <div class="col-md-2 text-right">
-                        <img *ngIf="!letsideBarLoader" class="emailIcon" src="/assets/images/svg/email-icon.svg">
+                        <!-- <img *ngIf="!letsideBarLoader" class="emailIcon" src="/assets/images/svg/email-icon.svg"> -->
                         <img *ngIf="!letsideBarLoader" class=" c-p" [matMenuTriggerFor]="menu"
                             src="/assets/images/svg/menu-myProfile-icon.svg">
                         <mat-menu #menu="matMenu">
@@ -425,7 +425,9 @@
                         <div class="row ">
                             <div *ngFor="let singleAddress of addressList" class=" row ">
                                 <div class="col-md-9">
-                                    <p class=" f-12 mb-0 pt-4 text-primitive ">PERMANENT</p>
+                                    <p class=" f-12 mb-0 pt-4 text-primitive ">
+                                        {{!singleAddress.addressType ||singleAddress.addressType==1?'RESIDENTIAL':singleAddress.addressType==2?'OFFICE':'KYC'}}
+                                    </p>
 
 
                                     <p class=" f-14 ">

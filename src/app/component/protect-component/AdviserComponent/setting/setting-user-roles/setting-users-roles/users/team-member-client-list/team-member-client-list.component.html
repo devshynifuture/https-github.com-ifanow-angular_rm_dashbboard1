@@ -1,0 +1,50 @@
+<div class="row">
+    <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
+        <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0" matInput
+            placeholder="Type to filter data">
+    </mat-form-field>
+</div>
+<div class="row mt-28">
+    <div class="col-md-12 people-clients pb-16">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class="ox-hide people-clients-scroll responsive-table-port"
+            *ngIf="clientDatasource.filteredData.length>0">
+            <!--  -->
+            <table #tableEl matSort #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs"
+                appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+
+                <ng-container matColumnDef="position">
+                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br sticky "> Group head
+                        name
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.name}}</div>
+                    </td>
+                </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br ws-nowrap" sticky>
+                        Owner name
+                    </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.ownerName}}</div>
+                    </td>
+                </ng-container>
+                <!-- Weight Column -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef=" let row; columns: displayedColumns;"
+                    [ngClass]="{'c-p' : row.loginEnable == true}"></tr>
+                <!-- [ngClass]="(row.name=='Gayatri Pawar')?'opacity-60':''" -->
+                <!-- [ngStyle]="{'background-color': (row.name=='Gayatri Pawar')?'lightgrey':''}" -->
+            </table>
+            <!-- <div class="col-md-12 d-flex justify-content-center align-items-center">
+                <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
+            </div> -->
+        </div>
+    </div>
+    <div *ngIf="clientDatasource.filteredData.length==0 && isLoading==false" class="row">
+        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
+            <img class="width400" src="assets/images/svg/noDataFound.svg">
+            <p class="f-22 f-600 pt-28"> No Data Found </p>
+        </div>
+    </div>
+</div>
