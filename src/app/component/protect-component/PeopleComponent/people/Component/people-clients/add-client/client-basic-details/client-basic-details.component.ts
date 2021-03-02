@@ -1146,6 +1146,45 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  makeMajorMember(value) {
+    const dialogData = {
+      data: value,
+      header: 'CONVERT TO',
+      body: 'Are you sure you want to update?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UPDATE',
+      positiveMethod: () => {
+        const obj = {
+          familyMemberId: this.basicDetailsData.familyMemberId
+        };
+        this.cusService.makeMinorToMajor(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('updated successfully!', 'Dismiss');
+            dialogRef.close();
+            this.close(data);
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
   unmapFamilyMember(value) {
     const dialogData = {
       data: value,
