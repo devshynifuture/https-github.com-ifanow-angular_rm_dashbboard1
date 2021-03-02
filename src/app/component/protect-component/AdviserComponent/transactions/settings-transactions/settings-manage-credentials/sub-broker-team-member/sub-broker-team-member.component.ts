@@ -56,7 +56,7 @@ export class SubBrokerTeamMemberComponent implements OnInit {
   getBSESubBrokerCredentialsRes(data) {
     if (data) {
       this.isLoading = false;
-      data = data.filter(element => element.teamMemberSessionId != this.advisorId)
+      // data = data.filter(element => element.teamMemberSessionId != this.advisorId) //teamMember subbroker cred
       this.dataSource.data = data
       this.dataSource.sort = this.sort;
     } else {
