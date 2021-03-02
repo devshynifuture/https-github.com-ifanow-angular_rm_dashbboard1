@@ -1175,6 +1175,26 @@ ul.mf-import-second-point {
   tr.mat-row {
     height: 40px !important;
   }
+
+  .mat-expansion-panel-body {
+    padding: 0px !important;
+  }
+
+  .mat-expansion-toggle-indicator-after {
+    border-bottom: 0px !important;
+  }
+
+  .mat-expansion-panel-header {
+    border: 1px solid #dee5e7 !important;
+
+  }
+
+  .mat-expansion-panel {
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    // border: 1px solid #dee5e7 !important;
+
+  }
 }
 
 @media (min-width: 576px) {
