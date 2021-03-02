@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { ReplaceUserComponent } from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
 import { ChangeClientPasswordComponent } from 'src/app/component/protect-component/customers/component/customer/customer-overview/overview-profile/change-client-password/change-client-password.component';
+import { TeamMemberClientListComponent } from './team-member-client-list/team-member-client-list.component';
 
 @Component({
   selector: 'app-users',
@@ -56,6 +57,17 @@ export class UsersComponent implements OnInit {
       this.hasError = true;
       this.userList = undefined;
       this.loader(-1);
+    });
+  }
+
+  openDialog(data): void {
+    const dialogRef = this.dialog.open(TeamMemberClientListComponent, {
+      width: '500px',
+      data: data.id
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 
