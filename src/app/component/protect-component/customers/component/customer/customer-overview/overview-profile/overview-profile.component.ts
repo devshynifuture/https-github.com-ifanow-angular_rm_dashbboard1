@@ -57,6 +57,8 @@ export class OverviewProfileComponent implements OnInit {
   clientList: any;
   relationList: any;
   keyInfoCapability: any = {};
+  addressLength: number;
+  selectedAddress: any;
 
   constructor(private peopleService: PeopleService, private authService: AuthService,
     public dialog: MatDialog, public subInjectService: SubscriptionInject,
@@ -239,10 +241,19 @@ export class OverviewProfileComponent implements OnInit {
     if (data && data.length > 0) {
       this.customerOverview.addressList = data;
       this.addressList = data;
+      this.selectedAddress = data[0];
     } else {
       this.addressList == undefined;
     }
     this.adressFlag = false;
+  }
+
+  previousAddress(index) {
+    (index > 0) ? this.selectedAddress = this.addressList[index - 1] : '';
+  }
+
+  nextAddress(index) {
+    (index < this.addressList.length - 1) ? this.selectedAddress = this.addressList[index + 1] : '';
   }
 
   getDematList(data) {

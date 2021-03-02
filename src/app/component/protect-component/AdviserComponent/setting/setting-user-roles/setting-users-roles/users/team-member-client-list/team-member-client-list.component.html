@@ -1,10 +1,24 @@
-<div class="row">
-    <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
-        <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0" matInput
-            placeholder="Type to filter data">
-    </mat-form-field>
+<div class="popup-header-fix-30">
+    <div class="row bb-1">
+        <div class="col-md-8 d-flex align-items-center">
+            <h4 class="mb-0">Clients List</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-16 pr-0">
+                <i (click)="close()" class="material-icons c-p  v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="row mt-28">
+<div class="row pt-24">
+    <div class="col-md-12 remove-top">
+        <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
+            <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0" matInput
+                placeholder="Type to filter data">
+        </mat-form-field>
+    </div>
+</div>
+<div class="row pt-20">
     <div class="col-md-12 people-clients pb-16">
         <div [ngClass]="{'table-scroll':isLoading==false }" class="ox-hide people-clients-scroll responsive-table-port"
             *ngIf="clientDatasource.filteredData.length>0">
@@ -41,9 +55,12 @@
             </div> -->
         </div>
     </div>
+    <!-- <div class="col-md-12 text-right">
+        <button mat-button class="text-custom">CANCEL</button>
+    </div> -->
     <div *ngIf="clientDatasource.filteredData.length==0 && isLoading==false" class="row">
-        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-            <img class="width400" src="assets/images/svg/noDataFound.svg">
+        <div class="col-md-12 d-flex align-items-center flex-column justify-content-center pb-20">
+            <img class="w-50" src="assets/images/svg/noDataFound.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
         </div>
     </div>

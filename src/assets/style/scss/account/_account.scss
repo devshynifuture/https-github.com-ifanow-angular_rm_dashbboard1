@@ -150,10 +150,10 @@ ul.mf-import-second-point {
   }
 }
 
-.table-height-capital {
-  height: 300px;
-  overflow-y: auto;
-}
+// .table-height-capital {
+//   height: 300px;
+//   overflow-y: auto;
+// }
 
 // .mutualfunds-capital-equity,
 // .mutualfunds-capital-dividend-summary {
@@ -1174,6 +1174,26 @@ ul.mf-import-second-point {
 
   tr.mat-row {
     height: 40px !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0px !important;
+  }
+
+  .mat-expansion-toggle-indicator-after {
+    border-bottom: 0px !important;
+  }
+
+  .mat-expansion-panel-header {
+    border: 1px solid #dee5e7 !important;
+
+  }
+
+  .mat-expansion-panel {
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    // border: 1px solid #dee5e7 !important;
+
   }
 }
 

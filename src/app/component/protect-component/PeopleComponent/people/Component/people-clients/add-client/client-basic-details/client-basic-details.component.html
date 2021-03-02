@@ -8,6 +8,10 @@
         mat-menu-item>
         <span>Unmap</span>
     </button>
+    <button *ngIf="fieldFlag=='familyMember'&&!enumDataService.PRODUCTION && basicDetailsData.familyMemberType==2"
+        (click)="makeMajorMember('MAJOR')" mat-menu-item>
+        <span>Convert to major</span>
+    </button>
     <button *ngIf="fieldFlag=='familyMember'&&!enumDataService.PRODUCTION"
         (click)="openMoveFamilymemberToClient('Move',fieldFlag)" mat-menu-item>
         <span>Move family member</span>

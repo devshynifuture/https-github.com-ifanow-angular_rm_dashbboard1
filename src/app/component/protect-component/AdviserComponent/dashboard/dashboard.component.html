@@ -1571,7 +1571,7 @@
                       <mat-radio-button value={{singleNote.id}}>
                       </mat-radio-button>
                     </div>
-                    <div [ngClass]="{'col-md-7': singleNote.update==false,'col-md-12': singleNote.update}" class=" ">
+                    <div [ngClass]="{'col-md-8': singleNote.update==false,'col-md-12': singleNote.update}" class=" ">
                       <p *ngIf="singleNote.update==false" class="text-break c-p f-14 pl-10 roboto f-400 mb-0">
                         {{singleNote.activityName}}
 
@@ -1587,8 +1587,8 @@
                       </div>
                     </div>
                     <div *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                      class="col-md-3 text-center pl-0 d-flex">
-                      <div>
+                      class="col-md-2 text-center pl-0 pr-4 d-flex">
+                      <div class="d-flex">
                         <span (click)="deleteTodoList(singleNote,i)" class="material-icons text-primitive f-20 c-p">
                           done
                         </span>
@@ -1600,7 +1600,7 @@
 
 
                     </div>
-                    <div class="col-md-3" *ngIf="selectedItem.value!=singleNote.id && singleNote.update==false">
+                    <div class="col-md-2" *ngIf="selectedItem.value!=singleNote.id && singleNote.update==false">
                       <span class="edit-todo-icons material-icons c-p text-primitive" (click)="doubleClick(singleNote)">
                         mode_edit
                       </span>

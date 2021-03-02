@@ -147,7 +147,6 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
-    this.addressTypeText = this.addressForm.value.addressType == 1 ? 'Residential' : this.addressForm.value.addressType == 2 ? 'Office' : 'KYC';
     (data) ? this.proofTypeData = data : '';
     let regexPattern;
     if (data.proofType == '1') {
@@ -201,10 +200,6 @@ export class ClientAddressComponent implements OnInit {
     this.addressForm.get('proofIdNum').setValidators([(regexPattern) ? Validators.pattern(regexPattern) : null]);
     this.addressForm.get('proofIdNum').updateValueAndValidity();
 
-  }
-
-  changesAddressType(event) {
-    this.addressTypeText = this.addressForm.value.addressType == 1 ? 'Residential' : this.addressForm.value.addressType == 2 ? 'Office' : 'KYC';
   }
 
   toUpperCase(formControl, event) {

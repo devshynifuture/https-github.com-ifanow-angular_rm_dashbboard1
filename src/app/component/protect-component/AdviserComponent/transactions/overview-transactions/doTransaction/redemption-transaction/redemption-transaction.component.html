@@ -213,7 +213,7 @@
                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start"
                   class="f-12 text-custom">
                   Min amount:
-                  ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumPurchaseAmount }}
+                  ₹{{(schemeDetails == undefined) ? '-' : (platformType == 2)?schemeDetails.redemptionAmountMinimum:schemeDetails.minimumPurchaseAmount}}
                 </mat-hint>
                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 2)" align="start"
                   class="f-12 text-custom">
@@ -223,7 +223,8 @@
                 <mat-error
                   *ngIf="(redemptionTransaction.get('employeeContry').errors?.min) && (redemptionTransaction.get('redeemType').value == 1)"
                   class="f-12">
-                  Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                  Should be greater than or equal to
+                  {{(platformType == 2)?schemeDetails.redemptionAmountMinimum:schemeDetails.minimumPurchaseAmount}}
                 </mat-error>
                 <!-- <mat-error
                     *ngIf="(redemptionTransaction.get('employeeContry').errors?.min) && (redemptionTransaction.get('redeemType').value == 2)"

@@ -881,6 +881,7 @@ export const appConfig = {
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
   UNMAP_FAMILY_MEMBER: 'user/family-member/split',
+  CONVERT_MINOR_TO_MAJOR: 'user/family-member/family-member-type/update',
   GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   GET_PEOPLE_CLIENT_FILTER_FOR_BULK_EMAIL_REVIEW: 'user/client/filter/details/get',
   ADD_CLIENT: 'user/client/add',
