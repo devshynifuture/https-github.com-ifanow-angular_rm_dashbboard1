@@ -75,7 +75,8 @@ export class TransactionSummaryComponent implements OnInit {
     this.changeDetails = this.inputData.changeDetails
     if (this.changeDetails) {
       this.allData = this.changeDetails;
-      this.changeDetails.euin = this.changeDetails.subBrokerCredList[0];
+      this.changeDetails.euin = this.changeDetails.subBrokerCredList.filter(element => element.teamMemberSessionId != AuthService.getAdminId());
+      this.changeDetails.euin = this.changeDetails.euin[0]
       if (this.allData && this.allData.defaultClient && this.changeDetails.defaultClient
         && this.changeDetails.defaultClient.tpUserCredFamilyMappingId == this.allData.defaultClient.tpUserCredFamilyMappingId) {
         if (this.changeDetails.euin) {
@@ -297,7 +298,8 @@ export class TransactionSummaryComponent implements OnInit {
         return;
       }
     }
-    data.euin = data.subBrokerCredList[0];
+    data.euin = data.subBrokerCredList.filter(element => element.teamMemberSessionId != AuthService.getAdminId());
+    data.euin = data.euin[0]
     if (this.allData && this.allData.defaultClient && data.defaultClient
       && data.defaultClient.tpUserCredFamilyMappingId == this.allData.defaultClient.tpUserCredFamilyMappingId) {
       if (data.euin) {
