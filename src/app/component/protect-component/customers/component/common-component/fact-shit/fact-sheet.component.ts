@@ -11395,6 +11395,7 @@ export class FactSheetComponent implements OnInit {
     ]
   ]
   speedChartVar: Chart;
+  performaceGraph: Chart;
   currentValue: any;
   xirrValue: any;
   profitOrLossValue: any;
@@ -11417,26 +11418,138 @@ export class FactSheetComponent implements OnInit {
     this.initializePortfolioChart();
     this.speedChart();
     this.schemePerformance();
+    this.relativePerformanceGraph();
+  }
+  relativePerformanceGraph() {
+    const chartConfigPerformance: any = {
+      chart: {
+        renderTo: 'container',
+        margin: 100,
+        type: 'scatter',
+        animation: false,
+        options3d: {
+          enabled: true,
+          alpha: 10,
+          beta: 30,
+          depth: 250,
+          viewDistance: 5,
+          fitToPlot: false,
+          frame: {
+            bottom: { size: 1, color: 'rgba(0,0,0,0.02)' },
+            back: { size: 1, color: 'rgba(0,0,0,0.04)' },
+            side: { size: 1, color: 'rgba(0,0,0,0.06)' }
+          }
+        }
+      },
+      title: {
+        text: ''
+      },
+      subtitle: {
+        text: ''
+      },
+      plotOptions: {
+        scatter: {
+          width: 10,
+          height: 10,
+          depth: 10
+        }
+      },
+      yAxis: {
+        min: 0,
+        max: 10,
+        title: null,
+
+      },
+      xAxis: {
+        min: 0,
+        max: 10,
+      },
+      zAxis: {
+        min: 0,
+        max: 10,
+        showFirstLabel: false,
+      },
+      legend: {
+        enabled: false
+      },
+      series: [{
+        name: 'Data',
+        colorByPoint: true,
+        accessibility: {
+          exposeAsGroupOnly: true
+        },
+        data: [
+          [1, 6, 5]]
+      }]
+    };
+    this.performaceGraph = new Chart(chartConfigPerformance);
   }
   schemePerformance() {
     const chartConfigScheme: any = {
-      title: {
-        text: 'Budget'
+      chart: {
+        type: 'column'
       },
-
+      title: {
+        text: 'Browser market shares. January, 2018'
+      },
+      subtitle: {
+        text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>'
+      },
+      accessibility: {
+        announceNewData: {
+          enabled: true
+        }
+      },
       xAxis: {
-        categories: ['Buget', 'Spent']
+        type: 'category'
       },
       yAxis: {
-        visible: false
+        title: {
+          text: 'Total percent market share'
+        }
+
       },
-      series: [{
-        type: 'column',
-        colorByPoint: true,
-        color: "#5cc644",
-        data: ["15000", "45200", "189000", "5000"],
-        showInLegend: false
-      }]
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        series: {
+          borderWidth: 0,
+          dataLabels: {
+            enabled: true,
+            format: '{point.y:.1f}%'
+          }
+        }
+      },
+
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+      },
+
+      series: [
+        {
+          name: "Browsers",
+          colorByPoint: true,
+          data: [
+            {
+              name: "Savings Account",
+              y: 4500,
+              drilldown: "Savings Account"
+            },
+            {
+              name: "Fixed Deposits ",
+              y: 20000,
+              drilldown: "Fixed Deposits"
+            },
+            {
+              name: "This Scheme",
+              y: 5800,
+              drilldown: "This Scheme"
+            },
+          ]
+        }
+      ],
     };
     this.schemeChart = new Chart(chartConfigScheme);
   }
@@ -11451,7 +11564,7 @@ export class FactSheetComponent implements OnInit {
       },
 
       title: {
-        text: 'Speedometer'
+        text: 'Riskometer'
       },
 
       pane: {
