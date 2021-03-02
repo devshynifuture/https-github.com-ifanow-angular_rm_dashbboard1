@@ -217,6 +217,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   //   (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   // }
   getMappedData() {
+    this.displayedColumns = ['aggregatorType', 'brokerCode', 'name', 'panNo', 'taxStatus', 'holdingType',
+      'clientCode', 'status'];
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.isPendingData = false;
