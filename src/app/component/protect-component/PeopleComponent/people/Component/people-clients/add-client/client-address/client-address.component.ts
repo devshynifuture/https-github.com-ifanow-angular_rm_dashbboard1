@@ -66,6 +66,7 @@ export class ClientAddressComponent implements OnInit {
   valueChangeFlag: any;
   @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
   keyInfoCapability: any = {};
+  addressTypeText: string;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService,
@@ -135,7 +136,7 @@ export class ClientAddressComponent implements OnInit {
       data.address3 = thirdLine;
     };
     this.addressForm = this.fb.group({
-      // addressType: [(data.addressType) ? String(data.addressType) : '1'],
+      addressType: [(data.addressType) ? data.addressType : 1],
       addProofType: [(this.userMappingIdFlag == false) ? '' : (data.proofType) ? String(data.proofType) : ''],
       proofIdNum: [(this.userMappingIdFlag == false) ? '' : data.proofIdNumber],
       addressLine1: [data.address1, [Validators.required]],
@@ -146,7 +147,6 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
-
     (data) ? this.proofTypeData = data : '';
     let regexPattern;
     if (data.proofType == '1') {
@@ -332,7 +332,7 @@ export class ClientAddressComponent implements OnInit {
         country: this.addressForm.get('country').value,
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
-        // addressType: this.addressForm.get('addressType').value,
+        addressType: this.addressForm.get('addressType').value,
         proofType: (this.addressForm.get('addProofType').value == '') ? undefined : this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').invalid ? undefined : this.addressForm.get('proofIdNum').value,
         userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.userMappingIdFlag) ? this.addressList.userAddressMappingId : undefined,

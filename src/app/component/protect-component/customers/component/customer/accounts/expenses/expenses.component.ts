@@ -236,51 +236,77 @@ export class ExpensesComponent implements OnInit {
     switch (this.finPlanObj.sectionName) {
       case 'Expense This month':
         this.getStartAndEndDate(1);
+        this.selectedPeriod = '1'
         break;
       case 'Expense Last month':
         this.getStartAndEndDate(2);
+        this.selectedPeriod = '2'
         break;
       case 'Expense This quarter':
         this.getStartAndEndDate(3);
+        this.selectedPeriod = '3'
         break;
       case 'Expense Last quarter':
         this.getStartAndEndDate(4);
+        this.selectedPeriod = '4'
         break;
       case 'Expense This calender year':
         this.getStartAndEndDate(5);
+        this.selectedPeriod = '5'
         break;
       case 'Expense Last calender year':
         this.getStartAndEndDate(6);
+        this.selectedPeriod = '6'
+
         break;
       case 'Expense This financial year':
         this.getStartAndEndDate(7);
+        this.selectedPeriod = '7'
+
         break;
       case 'Expense Last financial year':
         this.getStartAndEndDate(8);
+        this.selectedPeriod = '8'
+
         break;
       case 'Budget This month':
         this.getStartAndEndDate(1);
+        this.selectedPeriod = '1'
+
         break;
       case 'Budget Last month':
         this.getStartAndEndDate(2);
+        this.selectedPeriod = '2'
+
         break;
       case 'Budget This quarter':
         this.getStartAndEndDate(3);
+        this.selectedPeriod = '3'
+
         break;
       case 'Budget Last quarter':
         this.getStartAndEndDate(4);
+        this.selectedPeriod = '4'
+
         break;
       case 'Budget This calender year':
         this.getStartAndEndDate(5);
+        this.selectedPeriod = '5'
+
         break;
       case 'Budget Last calender year':
         this.getStartAndEndDate(6);
+        this.selectedPeriod = '6'
+
         break;
       case 'Budget This financial year':
         this.getStartAndEndDate(7);
+        this.selectedPeriod = '7'
+
         break;
       case 'Budget Last financial year':
         this.getStartAndEndDate(8);
+        this.selectedPeriod = '8'
         break;
     }
     this.getListFamilyMem()
@@ -728,12 +754,12 @@ export class ExpensesComponent implements OnInit {
     if (tmp == 'templateExpense') {
       let expenseSvg = this.expenseChart.getSVG();
       header = this.transactionExpens.nativeElement.innerHTML
-      this.util.htmlToPdf('', para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg, false);
+      this.util.htmlToPdf('', para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg, false, null);
 
     } else {
       let budgetSvg = this.budgetChartSvg.getSVG();
       header = this.budgetPdf.nativeElement.innerHTML
-      this.util.htmlToPdf('', para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', budgetSvg, false);
+      this.util.htmlToPdf('', para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', budgetSvg, false, null);
 
 
     }
@@ -960,7 +986,7 @@ export class ExpensesComponent implements OnInit {
       array = array.filter(item => item.totalAmount > 0);
       array.forEach(singleExpense => {
         singleExpense.progressPercent = 0;
-        singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
+        singleExpense.progressPercent += (singleExpense.spent / singleExpense.totalAmount) * 100;
         singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
         if (singleExpense.progressPercent > 100) {
           singleExpense.spentPer = 100;
@@ -1218,7 +1244,7 @@ export class ExpensesComponent implements OnInit {
     if (data) {
       data.forEach(singleExpense => {
         singleExpense.progressPercent = 0;
-        singleExpense.progressPercent += (singleExpense.spent / singleExpense.amount) * 100;
+        singleExpense.progressPercent += (singleExpense.spent / singleExpense.totalAmount) * 100;
         singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
         if (singleExpense.progressPercent > 100) {
           singleExpense.spentPer = 100;

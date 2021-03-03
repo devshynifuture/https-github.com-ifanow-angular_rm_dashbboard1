@@ -75,6 +75,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     parentId: any;
     loadingDone: boolean = false;
     isShow = true;
+    clientNameToDisplay: any;
     constructor(private MfServiceService: MfServiceService,
         public routerActive: ActivatedRoute,
         private backOfficeService: BackOfficeService,
@@ -259,6 +260,19 @@ export class MfCapitalDetailedComponent implements OnInit {
             }
         );
     }
+    checkFamMember() {
+        this.clientNameToDisplay = null;
+        if (this.rightFilterData) {
+            let famMember = this.rightFilterData.family_member_list.filter(d => d.selected == true);
+            if (famMember.length == 1) {
+                this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+            } else {
+                this.clientNameToDisplay = this.clientData.name
+            }
+        } else {
+            this.clientNameToDisplay = this.clientData.name
+        }
+    }
     getDetailedData(data) {
         let equityData = [];
         this.total_stGain = 0;
@@ -272,6 +286,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.total_stt = 0;
         this.changeInput.emit(false);
         if (data) {
+            this.checkFamMember();
             const myArray = data
             const list = [];
             myArray.forEach(val => list.push(Object.assign({}, val)));
@@ -569,6 +584,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
                                     if (ind == 0) {
                                         ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
+                                        obj = this.checkTransactiontype(obj);
                                         ele.transactionType = (obj.fwTransactionType) ? obj.fwTransactionType : 0;
                                         ele.redeemAmount = (obj.amount) ? obj.amount : 0;
                                         ele.redeemStt = (obj.stt) ? obj.stt : 0;
@@ -639,6 +655,15 @@ export class MfCapitalDetailedComponent implements OnInit {
     // getArrayForFinalValue(){
     // this.dataSource4=['Grand total', '-', this.redeemAmount, this.total_stt, '-', '-', '-', 'amtPurchase', this.purchaseAmount, '-', '-', this.total_stGain, this.total_stLoss, this.total_ltGain, this.total_ltLoss, this.total_indexGain, this.total_indexLoss];
     // }
+    checkTransactiontype(obj) {
+        if (obj.rtTypeId == 6 && !obj.fwTransactionType.includes("CAS")) {
+            obj.fwTransactionType = obj.fwTransactionType + '(CAS)'
+        }
+        if (obj.rtTypeId == 14 && !obj.fwTransactionType.includes("*")) {
+            obj.fwTransactionType = obj.fwTransactionType + '*'
+        }
+        return obj;
+    }
     getFilteredValues(data, category) {
         let days;
         let gainLossBasedOnGrandfathering;
@@ -831,7 +856,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         const header = document.getElementById('templateHeader');
 
         // let header = null
-        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '', true);
+        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
 
     }
     Excel(tableTitle) {

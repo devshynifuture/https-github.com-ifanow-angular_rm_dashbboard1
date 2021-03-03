@@ -18,7 +18,7 @@ import { FatcaDetailsInnComponent } from '../IIN/UCC-Creation/fatca-details-inn/
 
 export class ProcessTransactionService {
   [x: string]: any;
-
+  dateA: any[];
   // countryCodeList;
   transactionSummary: {};
   schemeSelection: any;
@@ -219,16 +219,25 @@ export class ProcessTransactionService {
   }
 
   getDateByArray = function (arr, flag) {
-    let dArr = [], datesArr = [];
+    let dArr = [], datesArr1 = [], datesArr = [];
     const t = moment().subtract('days', 7);
     for (let i = 0; i < arr.length; i++) {
       datesArr.push(moment(t).set('date', arr[i]));
+      datesArr1.push(moment(t).set('date', arr[i]));
     }
     // datesArr = datesArr.filter((dt) => {
     //   return (moment(dt).isSameOrBefore(t));
     // });
     for (let i = 0; i < arr.length; i++) {
-      datesArr.push(moment(t).set('date', arr[i]).add(1, 'months'));
+      if (flag == 'SIP') {
+        datesArr.push(moment(t).set('date', arr[i]).add(30, "days"));
+        datesArr1.push(moment(t).set('date', arr[i]).add(60, "days"));
+      } else {
+        datesArr.push(moment(t).set('date', arr[i]).add(1, 'months'));
+      }
+    }
+    if (flag == 'SIP') {
+      datesArr.push(...datesArr1);
     }
     datesArr.forEach(_dt => {
       dArr.push({

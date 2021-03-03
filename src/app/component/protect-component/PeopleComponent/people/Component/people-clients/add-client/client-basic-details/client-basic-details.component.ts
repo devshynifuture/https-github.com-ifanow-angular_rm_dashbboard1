@@ -326,6 +326,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
       clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', (this.fieldFlag != 'familyMember') ? [Validators.required] : null],
+      clientCode: [data.clientCode ? data.clientCode != 'NA' ? data.clientCode : '' : '']
     });
 
     if (this.fieldFlag != 'familyMember') {
@@ -458,7 +459,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
       clientOwner: [this.selectedClientOwner],
-      role: [(data.roleId) ? data.roleId : '']
+      role: [(data.roleId) ? data.roleId : ''],
+      clientCode: [data.clientCode ? data.clientCode != 'NA' ? data.clientCode : '' : '']
     });
     if (this.invTypeCategory == 4) {
       this.nonIndividualForm.controls.comStatus.setValidators(null);
@@ -488,8 +490,12 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
 
   capitalise(event) {
     if (event.target.value != '') {
-      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+      event.target.value = event.target.value.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
     }
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   getClientOrLeadData(data) {
@@ -682,7 +688,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         userId: this.basicDetailsData.userId,
         clientId: this.basicDetailsData.clientId,
         status: (this.fieldFlag == 'client') ? 1 : 2,
-        clientType: parseInt(this.invTypeCategory)
+        clientType: parseInt(this.invTypeCategory),
+        clientCode: (this.invTypeCategory == 1) ? this.basicDetails.value.clientCode : this.nonIndividualForm.value.clientCode
       };
       if (this.invTypeCategory == 1) {
         obj.dateOfBirth = this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy');
@@ -750,6 +757,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
               this.disableBtn = false;
               this.barButtonOptions.active = false;
               this.barButtonOptions1.active = false;
+              this.barButtonOptions1.value = 10;
               data.invCategory = this.invTypeCategory;
               data.categoryTypeflag = (this.invTypeCategory == '1') ? 'Individual' : 'clientNonIndividual';
               this.changeTabAndSendData(data);
@@ -960,6 +968,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         this.disableBtn = false;
         data.invTypeCategory = this.invTypeCategory;
         this.barButtonOptions.active = false;
+        this.barButtonOptions1.value = 10;
         this.barButtonOptions1.active = false;
         data.categoryTypeflag = 'familyMinor';
         if (flag == 'Next') {
@@ -1135,6 +1144,46 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         console.log(`Dialog result: ${result}`);
       });
     }
+  }
+
+  makeMajorMember(value) {
+    const dialogData = {
+      data: value,
+      header: 'CONVERT TO',
+      body: 'Are you sure you want to update?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UPDATE',
+      positiveMethod: () => {
+        const obj = {
+          familyMemberId: this.basicDetailsData.familyMemberId,
+          familyMemberType: 1
+        };
+        this.cusService.makeMinorToMajor(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('updated successfully!', 'Dismiss');
+            dialogRef.close();
+            this.close(data);
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
   unmapFamilyMember(value) {

@@ -98,6 +98,7 @@ export class FixedDepositComponent implements OnInit {
   flag: any;
   // reqError: boolean = false;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+
   fdMonths = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
     '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26',
     '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41',
@@ -510,14 +511,29 @@ export class FixedDepositComponent implements OnInit {
 
   getIntPayout() {
     if (this.fixedDeposit.value.payOpt == 1) {
-      this.getFormControl().compound.setValidators([Validators.required]);
+      if (this.fixedDeposit.get('compound').invalid) {
+        this.fixedDeposit.controls['compound'].setValue(null);
+        this.fixedDeposit.controls['compound'].setErrors({ 'required': true });
+        this.fixedDeposit.get('compound').markAsTouched();
+      }
     } else {
-      this.getFormControl().compound.setValidators(null);
+      this.fixedDeposit.controls['compound'].setErrors(null);
+    }
+    if (this.fixedDeposit.value.payOpt == 2) {
+      this.fixedDeposit.get('interestType').value == '1'
+      if (this.fixedDeposit.get('frequencyOfPayoutPerYear').invalid) {
+        this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setValue(null);
+        this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setErrors({ 'required': true });
+        this.fixedDeposit.get('frequencyOfPayoutPerYear').markAsTouched();
+      }
+    } else {
+      this.fixedDeposit.controls['frequencyOfPayoutPerYear'].setErrors(null);
     }
   }
 
 
   saveFixedDeposit() {
+    this.getIntPayout();
     if (this.fixedDeposit.value.maturity == 2) {
       this.maturityDate = this.fixedDeposit.controls.maturityDate.value;
     } else {
@@ -533,22 +549,23 @@ export class FixedDepositComponent implements OnInit {
     }
     if (this.fixedDeposit.invalid || (!this.tenureValid && this.fixedDeposit.value.maturity != '2')) {
       // this.reqError = true;
-      this.inputs.find(input => !input.ngControl.valid).focus();
-      for (let element in this.fixedDeposit.controls) {
-        console.log(element);
-        this.fixedDeposit.controls[element].markAsTouched();
-        if (element == 'getCoOwnerName') {
-          for (let e in this.getCoOwner.controls) {
-            const arrayCon: any = this.getCoOwner.controls[e];
-            for (let i in arrayCon.controls) {
-              arrayCon.controls[i].markAsTouched();
-            }
-          }
-        }
-        // if (this.fixedDeposit.controls[element].invalid) {
-        // return;
-        // }
+      if (this.fixedDeposit.value.maturity != '1') {
+        this.inputs.find(input => !input.ngControl.valid).focus();
       }
+      this.fixedDeposit.markAllAsTouched();
+      // this.inputs.find(input => !input.ngControl.valid).focus();
+      // for (let element in this.fixedDeposit.controls) {
+      //   console.log(element);
+      //   this.fixedDeposit.controls[element].markAsTouched();
+      //   if (element == 'getCoOwnerName') {
+      //     for (let e in this.getCoOwner.controls) {
+      //       const arrayCon: any = this.getCoOwner.controls[e];
+      //       for (let i in arrayCon.controls) {
+      //         arrayCon.controls[i].markAsTouched();
+      //       }
+      //     }
+      //   }
+      // }
 
       // for (let element in this.getCoOwner.controls) {
       // console.log(element)

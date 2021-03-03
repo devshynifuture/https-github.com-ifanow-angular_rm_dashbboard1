@@ -1128,9 +1128,9 @@ export class DashboardComponent implements OnInit {
   getLastSevenDaysTransactionsRes(data) {
     this.transactionFlag = false;
     this.LastSevenDaysTransactions = data;
-    this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
-      x.status == 1 || x.status == 7;
-    });
+    // this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
+    //   x.status == 1 || x.status == 7;
+    // });
   }
 
   getSummaryDataDashboard() {
@@ -1961,6 +1961,7 @@ export class DashboardComponent implements OnInit {
       parentId: this.parentId,
       startFlag: 0,
       endFlag: 5,
+      advisorId: this.advisorId
     };
     this.backoffice.getMfTransactions(obj).subscribe(
       data => {

@@ -119,7 +119,7 @@
                                 [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="">
                             <mat-menu #menu="matMenu">
                                 <button *ngIf="roleService.activityPermission.subModule.taskCapabilityObj.delete==true"
-                                    mat-menu-item (click)="deleteTask(element.id)">Delete</button>
+                                    mat-menu-item (click)="deleteModal('TASK',element.id)">Delete</button>
                             </mat-menu>
                         </div>
                     </td>

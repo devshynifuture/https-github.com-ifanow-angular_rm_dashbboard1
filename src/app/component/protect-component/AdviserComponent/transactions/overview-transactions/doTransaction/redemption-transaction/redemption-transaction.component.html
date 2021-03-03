@@ -22,7 +22,61 @@
         </h5>
       </div>
     </div>
+    <div *ngIf="multiTransact == true && childTransactions.length>0" class="row pb-60 mt-20">
+      <div class="col-md-12 p-0 all-transactions">
+        <table [dataSource]="dataSource" id="table-low" mat-table>
+          <ng-container matColumnDef="no">
+            <th *matHeaderCellDef class="br" mat-header-cell> No</th>
+            <td *matCellDef="let element let i = index;" class="br w-4  " mat-cell>
+              <div class="bar"> {{i + 1 }} </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="folio">
+            <th *matHeaderCellDef class="br w-16" mat-header-cell> Folio</th>
+            <td *matCellDef="let element" class="br" mat-cell>
+              <div class="bar"> {{element.folioNo}} </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="ownerName">
+            <th *matHeaderCellDef class="br " mat-header-cell> Scheme name</th>
+            <td *matCellDef="let element" class="br" mat-cell>
+              <div class="bar">
+                {{element.schemeName}}
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="amount">
+            <th *matHeaderCellDef class="br w-11" mat-header-cell> Amount</th>
+            <td *matCellDef="let element" class="br" mat-cell>
+              <div *ngIf="!element.allRedeem" class="bar">
+                {{element.amountType == 'Amount' ? '₹' + element.orderVal : element.orderVal + ' Unit'}}</div>
+              <div *ngIf="element.allRedeem" class="bar"> All units</div>
 
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="icons">
+            <th *matHeaderCellDef class="t-2" mat-header-cell></th>
+            <td *matCellDef="let element" class="t-2" mat-cell>
+              <!-- ng build prod issue isLoading removed -->
+              <!-- <div *ngIf="!isLoading"> -->
+              <div>
+
+
+                <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
+
+                <mat-menu #menubank="matMenu">
+                  <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
+                  <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
+                </mat-menu>
+              </div>
+            </td>
+            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+          </ng-container>
+          <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+        </table>
+      </div>
+    </div>
     <div class="row pt-20 pb-10">
       <div class="col-md-8 pl-0 pr-20">
 
@@ -159,7 +213,7 @@
                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 1)" align="start"
                   class="f-12 text-custom">
                   Min amount:
-                  ₹{{(schemeDetails == undefined) ? '-' : schemeDetails.minimumPurchaseAmount }}
+                  ₹{{(schemeDetails == undefined) ? '-' : (platformType == 2)?schemeDetails.redemptionAmountMinimum:schemeDetails.minimumPurchaseAmount}}
                 </mat-hint>
                 <mat-hint *ngIf="(redemptionTransaction.get('redeemType').value == 2)" align="start"
                   class="f-12 text-custom">
@@ -169,7 +223,8 @@
                 <mat-error
                   *ngIf="(redemptionTransaction.get('employeeContry').errors?.min) && (redemptionTransaction.get('redeemType').value == 1)"
                   class="f-12">
-                  Should be greater than or equal to {{schemeDetails.minimumPurchaseAmount}}
+                  Should be greater than or equal to
+                  {{(platformType == 2)?schemeDetails.redemptionAmountMinimum:schemeDetails.minimumPurchaseAmount}}
                 </mat-error>
                 <!-- <mat-error
                     *ngIf="(redemptionTransaction.get('employeeContry').errors?.min) && (redemptionTransaction.get('redeemType').value == 2)"
@@ -194,62 +249,6 @@
 
     </div>
 
-    <div *ngIf="multiTransact == true && childTransactions.length>0" class="row pb-60 pt-10">
-      <div class="col-md-12 p-0 all-transactions">
-        <table [dataSource]="dataSource" id="table-low" mat-table>
-          <ng-container matColumnDef="no">
-            <th *matHeaderCellDef class="br" mat-header-cell> No</th>
-            <td *matCellDef="let element let i = index;" class="br w-4  " mat-cell>
-              <div class="bar"> {{i + 1 }} </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="folio">
-            <th *matHeaderCellDef class="br w-16" mat-header-cell> Folio</th>
-            <td *matCellDef="let element" class="br" mat-cell>
-              <div class="bar"> {{element.folioNo}} </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="ownerName">
-            <th *matHeaderCellDef class="br " mat-header-cell> Scheme name</th>
-            <td *matCellDef="let element" class="br" mat-cell>
-              <div class="bar">
-                {{element.schemeName}}
-              </div>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="amount">
-            <th *matHeaderCellDef class="br w-11" mat-header-cell> Amount</th>
-            <td *matCellDef="let element" class="br" mat-cell>
-              <div *ngIf="!element.allRedeem" class="bar">
-                {{element.amountType == 'Amount' ? '₹' + element.orderVal : element.orderVal + ' Unit'}}</div>
-              <div *ngIf="element.allRedeem" class="bar"> All units</div>
-
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="icons">
-            <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-            <td *matCellDef="let element" class="t-2" mat-cell>
-              <!-- ng build prod issue isLoading removed -->
-              <!-- <div *ngIf="!isLoading"> -->
-              <div>
-
-
-                <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
-
-                <mat-menu #menubank="matMenu">
-                  <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
-                  <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
-                </mat-menu>
-              </div>
-            </td>
-            <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-          </ng-container>
-          <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-          <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-        </table>
-      </div>
-    </div>
-
   </div>
   <div class="bottom-fixed wrapper-12 pt-16 w-65">
     <div class="row">
@@ -262,8 +261,7 @@
 </div> -->
       <div class="col-md-8 text-right d-flex justify-content-end">
         <!-- commented for prod build -->
-        <button (click)="AddMultiTransaction()"
-          *ngIf="!enumDataService.PRODUCTION && platformType && platformType == 1 && !mutualFundData"
+        <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1 && !mutualFundData"
           class="br-0 mr-12 text-primary f-14" mat-button mat-raised-button>
           SAVE & ADD ANOTHER
         </button>

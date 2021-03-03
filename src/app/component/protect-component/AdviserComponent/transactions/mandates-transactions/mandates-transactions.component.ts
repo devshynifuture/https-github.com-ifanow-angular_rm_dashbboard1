@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {OnlineTransactionService} from '../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MatSort, MatTableDataSource} from '@angular/material';
-import {DetailedViewMandateComponent} from './detailed-view-mandate/detailed-view-mandate.component';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {MandateCreationComponent} from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
-import {AddMandateComponent} from '../overview-transactions/MandateCreation/add-mandate/add-mandate.component';
-import {Router} from '@angular/router';
-import {TransactionRoleService} from "../transaction-role.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatSort, MatTableDataSource } from '@angular/material';
+import { DetailedViewMandateComponent } from './detailed-view-mandate/detailed-view-mandate.component';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { MandateCreationComponent } from '../overview-transactions/MandateCreation/mandate-creation/mandate-creation.component';
+import { AddMandateComponent } from '../overview-transactions/MandateCreation/add-mandate/add-mandate.component';
+import { Router } from '@angular/router';
+import { TransactionRoleService } from "../transaction-role.service";
 
 @Component({
   selector: 'app-mandates-transactions',
@@ -24,7 +24,7 @@ export class MandatesTransactionsComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   clientId: any;
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   credentialData: any;
   noData: string;
   dontHide: boolean;
@@ -32,9 +32,9 @@ export class MandatesTransactionsComponent implements OnInit {
   isAdvisorSection = true;
 
   constructor(private onlineTransact: OnlineTransactionService, private eventService: EventService,
-              private subInjectService: SubscriptionInject,
-              public transactionRoleService: TransactionRoleService,
-              private router: Router) {
+    private subInjectService: SubscriptionInject,
+    public transactionRoleService: TransactionRoleService,
+    private router: Router) {
   }
 
 
@@ -53,7 +53,7 @@ export class MandatesTransactionsComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     let obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(

@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC,eAAe,CAAC;EACtB,aAAa,EAAE,sBAAsB;CACxC;;AAED,AAAA,SAAS,CAAC,cAAc,AAAA,YAAY,CAAC,YAAY,CAAC;EAC9C,OAAO,EAAE,IAAI;CAChB",
-    "sources": [
-        "cashflow-upper-insurance.component.scss"
-    ],
-    "names": [],
-    "file": "cashflow-upper-insurance.component.css"
-}

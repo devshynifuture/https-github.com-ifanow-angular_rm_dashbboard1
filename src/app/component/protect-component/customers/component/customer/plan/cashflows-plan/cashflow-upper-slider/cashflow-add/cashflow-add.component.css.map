@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC,eAAe,CAAC;EACxB,KAAK,EAAE,IAAI;CACZ;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,qBAAqB,CAAC;EAChE,OAAO,EAAE,GAAG;CACb;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACrG,KAAK,EAAE,gBAAgB;CACxB;;AAGD,AAAA,aAAa,CAAC;EACZ,UAAU,EAAE,IAAI;EAChB,MAAM,EAAE,KAAK;CACd;;AAED,AAAA,SAAS,CAAC;EACR,MAAM,EAAE,IAAI;CACb",
-    "sources": [
-        "cashflow-add.component.scss"
-    ],
-    "names": [],
-    "file": "cashflow-add.component.css"
-}

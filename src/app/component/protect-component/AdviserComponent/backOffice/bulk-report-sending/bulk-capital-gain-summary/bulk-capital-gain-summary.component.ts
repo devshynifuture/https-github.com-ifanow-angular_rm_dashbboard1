@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import {MutualFundsCapitalComponent} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { MutualFundsCapitalComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-bulk-capital-gain-summary',
@@ -19,12 +19,12 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
   isLoading = false;
   GTdividendPayout: any;
   GTdividendReinvestment: any;
-  GTReinvesment : any;
-  dataSource : any;
-  dataSource1 : any;
-  dataSource2 : any;
-  equityObj : any;
-  debtObj : any;
+  GTReinvesment: any;
+  dataSource: any;
+  dataSource1: any;
+  dataSource2: any;
+  equityObj: any;
+  debtObj: any;
   reportDate: Date;
   fragmentData: any;
   clientData: any;
@@ -62,12 +62,12 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.triggerBack = this.sendData
-    console.log('dokyala tap ahe hya data cha',this.triggerBack)
+    console.log('dokyala tap ahe hya data cha', this.triggerBack)
     this.reportDate = new Date();
     this.fragmentData = {};
     this.getUploadData();
     this.fragmentData.isSpinner = true;
-    this.getObj.sendData  = this.sendData
+    this.getObj.sendData = this.sendData
     this.mfService.getCapitalSummary()
       .subscribe(res => {
         this.getObj = res; // used for getting mutual fund data coming from main gain call
@@ -118,7 +118,7 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
       toEmail: 'devshyni@futurewise.co.in'
     };
     this.utilService.bulkHtmlToPdf(obj);
-    this.utilService.htmlToPdf('',para.innerHTML, 'Capital_Gain_Summary', true, this.fragmentData, '', '',true);
+    this.utilService.htmlToPdf('', para.innerHTML, 'Capital_Gain_Summary', true, this.fragmentData, '', '', true, null);
     return obj;
 
   }

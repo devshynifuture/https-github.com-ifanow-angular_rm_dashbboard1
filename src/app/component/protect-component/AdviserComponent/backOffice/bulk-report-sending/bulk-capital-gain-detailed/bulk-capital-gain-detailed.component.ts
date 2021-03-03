@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import {MfCapitalDetailedComponent} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { MfCapitalDetailedComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 
 @Component({
   selector: 'app-bulk-capital-gain-detailed',
@@ -64,7 +64,7 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
   }
   ngOnInit() {
     this.triggerBack = this.sendData
-    console.log('dokyala tap ahe hya data cha',this.triggerBack)
+    console.log('dokyala tap ahe hya data cha', this.triggerBack)
     this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
@@ -123,7 +123,7 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
       toEmail: 'devshyni@futurewise.co.in'
     }
     this.utilService.bulkHtmlToPdf(obj)
-    this.utilService.htmlToPdf('',para.innerHTML, 'Capital_Gain_Summary', true, this.fragmentData, '', '',true)
+    this.utilService.htmlToPdf('', para.innerHTML, 'Capital_Gain_Summary', true, this.fragmentData, '', '', true, null)
     return obj
 
   }

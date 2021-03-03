@@ -309,6 +309,7 @@ export const appConfig = {
   DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
   DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
   ////////////////////////////////plan////////////////////////////
+  ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
   GET_GLOBAL_GOAL_DATA: 'goal-planning/goal/global-data/get',
@@ -652,6 +653,7 @@ export const appConfig = {
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   MAPPED_EXSTING_USER: 'nse/iin/mapping/update',
+  UPLOAD_NEW_FATACA: 'user/register/fatca/change/upload',
   // GET_CLIENT_FM_LIST,: 'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
   GET_TOKEN: 'user/bse/upload/password',
@@ -857,6 +859,7 @@ export const appConfig = {
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',
   CHECK_WHITE_LABEL_AND_UPDATE: 'setting/white-label/check',
+  GET_BULK_EMAIL_SUBJECT_TEMPLATE: 'setting/preference-email/template/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -878,6 +881,7 @@ export const appConfig = {
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
   UNMAP_FAMILY_MEMBER: 'user/family-member/split',
+  CONVERT_MINOR_TO_MAJOR: 'user/family-member/family-member-type/update',
   GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   GET_PEOPLE_CLIENT_FILTER_FOR_BULK_EMAIL_REVIEW: 'user/client/filter/details/get',
   ADD_CLIENT: 'user/client/add',
@@ -1013,7 +1017,6 @@ export const appConfig = {
   RESET_TEAM_MEMBER_PASSWORD: 'user/advisor/reset/password',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
-
   //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
   GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
   GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get',

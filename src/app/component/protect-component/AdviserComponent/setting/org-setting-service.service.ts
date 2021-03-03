@@ -210,4 +210,7 @@ export class OrgSettingServiceService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.CHECK_WHITE_LABEL_AND_UPDATE, data);
   }
 
+  getEmailBulkSubjectTemplate(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_EMAIL_SUBJECT_TEMPLATE, data);
+  }
 }

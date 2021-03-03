@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
-import * as Highcharts from 'highcharts';
 import { ColorString } from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
@@ -10,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import { Chart } from 'angular-highcharts';
+import HC_exporting from 'highcharts/modules/exporting';
 import { AppConstants } from 'src/app/services/app-constants';
 import { MutualFundOverviewComponent } from "../assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component";
 import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
@@ -19,6 +19,8 @@ import { ChangeDetectorRef } from "@angular/core/src/metadata/*";
 import { SettingsService } from "../../../../../AdviserComponent/setting/settings.service";
 import { CustomerOverviewService } from '../../customer-overview/customer-overview.service';
 import { MatSidenav } from '@angular/material';
+import Highcharts from 'highcharts';
+HC_exporting(Highcharts);
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -36,6 +38,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   summaryMap;
   graphList: any[];
   totalAssetsWithoutLiability = 0;
+  totalInsurance = 0;
   liabilityTotal = 0;
   nightyDayData: any;
   oneDay: any;
@@ -44,6 +47,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   expenseList = [];
   incomeList = [];
   userData: any;
+  fragmentData = { isSpinner: false, date: null, time: '', size: '' };
   filterCashFlow = { income: [], expense: [] };
   inflowFlag;
   yearArr = Array(12).fill('').map((v, i) => this.datePipe.transform(new Date().setMonth(new Date().getMonth() + i), 'MMM'));
@@ -59,6 +63,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   sidenavState = true;
   chartTotal = 100;
   chartData: any[];
+  chart: Highcharts.Chart;
   portFolioData: any[] = [];
   hasError = false;
   clientData = AuthService.getClientData();
@@ -121,7 +126,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private enumService: EnumServiceService,
     public authService: AuthService,
-    private customerOverview: CustomerOverviewService
+    private customerOverview: CustomerOverviewService,
+    private util: UtilService
   ) {
   }
 
@@ -304,11 +310,18 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.finalTotal = 0;
         this.liabilityTotal = 0;
         this.totalAssetsWithoutLiability = 0;
+        this.totalInsurance = 0;
       }
     );
     // this.getSummaryList(obj);
   }
+  generatePdf(data) {
+    this.fragmentData.isSpinner = true;;
+    let para = document.getElementById('template');
+    //const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    this.util.htmlToPdf('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null);
 
+  }
   calculateTotalSummaryValuesRes(data) {
     this.customerOverview.summaryLeftsidebarData = data;
     if (data && data.length > 0) {
@@ -319,6 +332,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       console.log(this.summaryTotalValue);
       this.liabilityTotal = 0;
       this.totalAssetsWithoutLiability = 0;
+      this.totalInsurance = 0;
       this.totalOfLiabilitiesAndTotalAssset(this.summaryTotalValue);
 
       this.summaryTotalValue.forEach(element => {
@@ -328,6 +342,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         } else if (!element.currentValue || element.currentValue == 0) {
           element.percentage = 0;
           element.currentValue = 0;
+        } else if (element.assetType == 3) {
+          const dividedValue = element.currentValue / this.totalInsurance;
+          element.percentage = (dividedValue * 100).toFixed(2);
         } else {
           const dividedValue = element.currentValue / this.totalAssetsWithoutLiability;
           element.percentage = (dividedValue * 100).toFixed(2);
@@ -350,7 +367,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.cashAndFLow = this.cashAndFLow[0];
       this.Commodities = data.filter(element => element.assetType == 12);
       this.Commodities = this.Commodities[0];
-      this.Others = data.filter(element => element.assetType == 35);
+      this.Others = data.filter(element => element.assetType == 45);
       this.Others = this.Others[0];
       const tempSummaryTotalValue: any = {};
 
@@ -697,6 +714,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     dataList.forEach(element => {
       if (element.assetType == 2) {
         this.liabilityTotal += element.currentValue;
+      } else if (element.assetType == 3) {
+        this.totalInsurance += element.currentValue;
       } else {
         this.totalAssetsWithoutLiability += element.currentValue;
       }

@@ -242,10 +242,10 @@ export class TempserviceService {
 
             singleData.mutualFundTransactions.forEach((ele, ind) => {
               ele.indexId = (ind + 1);
-              if (ele.rtTypeId == 6 && !ele.fwTransactionType.includes("CAS")) {
+              if (ele.rtType == 6 && !ele.fwTransactionType.includes("CAS")) {
                 ele.fwTransactionType = ele.fwTransactionType + '(CAS)'
               }
-              if (ele.rtTypeId == 14 && !ele.fwTransactionType.includes("*")) {
+              if (ele.rtType == 14 && !ele.fwTransactionType.includes("*")) {
                 ele.fwTransactionType = ele.fwTransactionType + '*'
               }
               ele.currentAmount = ele.unit * ele.nav;

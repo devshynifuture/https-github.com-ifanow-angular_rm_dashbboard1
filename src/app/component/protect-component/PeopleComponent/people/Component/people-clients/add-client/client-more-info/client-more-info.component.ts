@@ -240,6 +240,12 @@ export class ClientMoreInfoComponent implements OnInit {
     }
   }
 
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    }
+  }
+
   saveNextFamilyMember(flag) {
     if (this.moreInfoData.guardianData) {
       this.moreInfoData.guardianData.aadhaarNumber = this.moreInfoForm.value.adhharGuardian;

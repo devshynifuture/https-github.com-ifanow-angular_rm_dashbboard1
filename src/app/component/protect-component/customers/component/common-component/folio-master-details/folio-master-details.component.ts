@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from '../../customer/customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit, Input} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from '../../customer/customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-folio-master-details',
@@ -15,23 +15,27 @@ export class FolioMasterDetailsComponent implements OnInit {
   isNomineeLoading = false;
   nomineeArray = [];
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) {
+  }
+
   @Input()
   set data(data) {
     this.isLoading = true;
     this.inputData = data;
-    this.getFolioMasterDetails(this.inputData)
+    this.getFolioMasterDetails(this.inputData);
   }
 
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
   }
+
   getFolioMasterDetails(data) {
     const obj = {
       mfId: this.inputData.id
-    }
+    };
     this.custumService.getMfFolioMaster(obj).subscribe(
       data => this.getFolioMasterResponse(data), (error) => {
         this.isLoading = false;
@@ -50,28 +54,29 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
 
   getNomineeDetailsFolioSchemeWise() {
-    let data = {
+    const data = {
       folioNumber: this.inputData.folioNumber,
       schemeCode: this.inputData.schemeCode
-    }
+    };
     this.isNomineeLoading = true;
     this.custumService.getFolioSchemeWiseNomineeDetails(data)
-      .subscribe(res => {
+      .subscribe((res: any) => {
         this.isNomineeLoading = false;
         if (res) {
-          const decodedRes = JSON.parse(atob(res['payLoad']));
-          console.log("nominee daata", decodedRes);
+          const decodedRes = JSON.parse(atob(res.payLoad));
+          console.log('nominee daata', decodedRes);
           this.nomineeArray = [...decodedRes];
         } else {
           this.nomineeArray = [];
         }
       }, err => {
         this.nomineeArray = [];
-        this.isNomineeLoading = true
+        this.isNomineeLoading = true;
         console.error(err);
-        this.eventService.openSnackBar("Something went wrong", 'DISMISS');
-      })
+        this.eventService.showErrorMessage(err);
+      });
   }
+
   getFolioMasterResponse(data) {
     this.isLoading = false;
     console.log(data);
@@ -82,8 +87,9 @@ export class FolioMasterDetailsComponent implements OnInit {
       this.folioDetails = [];
     }
   }
+
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
 }

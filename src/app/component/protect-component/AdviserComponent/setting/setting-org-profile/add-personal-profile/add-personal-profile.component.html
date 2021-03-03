@@ -15,10 +15,10 @@
             [(selectedIndex)]="selectedTab">
             <mat-tab label="Profile" [formGroup]="personalProfile">
                 <div class="row pt-40">
-                    <div class="col-md-4 col-lg-4 text-right pr-0">
-                        <h5 class="mb-0 mt-20">Name</h5>
+                    <div class="col-md-4 col-lg-4 full-end pr-0">
+                        <h5 class="mb-0">Name</h5>
                     </div>
-                    <div class="col-md-7  col-lg-5">
+                    <div class="col-md-7  col-lg-5 remove-top">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input matInput formControlName="name" class="form-control"
@@ -37,10 +37,10 @@
                 </div>
 
                 <div class="row pt-40">
-                    <div class="col-md-4 col-lg-4 text-right pr-0">
-                        <h5 class="mb-0 mt-20">Email ID</h5>
+                    <div class="col-md-4 col-lg-4 full-end pr-0">
+                        <h5 class="mb-0">Email ID</h5>
                     </div>
-                    <div class="col-md-7 col-lg-5">
+                    <div class="col-md-7 col-lg-5 remove-top">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <app-email-domain-auto-suggest formControlName="emailId"
@@ -55,26 +55,25 @@
                 </div>
 
                 <div class="row pt-40 ">
-                    <div class="col-md-4 col-lg-4 text-right pr-0">
-                        <h5 class="mb-0 mt-20">Mobile No.</h5>
+                    <div class="col-md-4 col-lg-4 full-end pr-0">
+                        <h5 class="mb-0">Mobile No.</h5>
                     </div>
-                    <div class="col-md-3 col-lg-2 pr-0">
-                        <div class="form-group">
-                            <mat-form-field appearance="standard">
-                                <mat-select formControlName="isdCodeId" class="form-control">
-                                    <mat-option>
-                                        <ngx-mat-select-search [formControl]="filterCtrl"
-                                            placeholderLabel="ISD code...">
-                                        </ngx-mat-select-search>
-                                    </mat-option>
-                                    <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
-                                        {{code.code}}({{code.countryCode}})</mat-option>
-                                </mat-select>
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
-                        </div>
+                    <div class="col-md-3 col-lg-2 pr-0 remove-top">
+
+                        <mat-form-field appearance="standard">
+                            <mat-select formControlName="isdCodeId" class="form-control">
+                                <mat-option>
+                                    <ngx-mat-select-search [formControl]="filterCtrl" placeholderLabel="ISD code...">
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option [value]="code.id" *ngFor="let code of filteredIsdCodes | async">
+                                    {{code.code}}({{code.countryCode}})</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+
                     </div>
-                    <div class="col-md-4 col-lg-3">
+                    <div class="col-md-4 col-lg-3 remove-top">
                         <div class="form-group mb-0">
                             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                                 <input matInput formControlName="mobileNo" class="form-control"

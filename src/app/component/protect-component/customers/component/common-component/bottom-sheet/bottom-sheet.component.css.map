@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,SAAS,CAAC,2BAA2B,CAAC;EAClC,OAAO,EAAE,cAAc;EACvB,sBAAsB,EAAE,GAAG;EAC3B,uBAAuB,EAAE,GAAG;CAC/B;;AAED,AAAA,SAAS,CAAC,cAAc,CAAC;EACrB,WAAW,EAAE,cAAc;CAC9B;;AAED,AAAA,SAAS,CAAC,qBAAqB,CAAC;EAC5B,KAAK,EAAE,eAAe;EACtB,MAAM,EAAE,eAAe;EACvB,KAAK,EAAE,KAAK;CAKf;;AARD,AAII,SAJK,CAAC,qBAAqB,CAI3B,GAAG,CAAC;EACA,KAAK,EAAE,eAAe;EACtB,MAAM,EAAE,eAAe;CAC1B",
-    "sources": [
-        "bottom-sheet.component.scss"
-    ],
-    "names": [],
-    "file": "bottom-sheet.component.css"
-}

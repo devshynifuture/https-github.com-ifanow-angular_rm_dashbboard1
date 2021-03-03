@@ -49,7 +49,7 @@ export class AumComponent implements OnInit {
   aumIdListEventEmitRes: any;
 
   constructor(
-    private backoffice: BackOfficeService, private dataService: EventService,
+    private backoffice: BackOfficeService, private eventService: EventService,
     private fb: FormBuilder, private reconService: ReconciliationService,
     private misAumDataStorageService: MisAumDataStorageService
   ) { }
@@ -415,7 +415,7 @@ export class AumComponent implements OnInit {
   }
 
   getFilerrorResponse(err) {
-    this.dataService.openSnackBar('Something went wrong', 'Dismiss');
+    this.eventService.showErrorMessage(err);
   }
 
   categoryWise(value) {

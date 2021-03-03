@@ -379,7 +379,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       issueDate: [data.investmentOrIssueDate ? new Date(data.investmentOrIssueDate) : null, [Validators.required]],
       amountInvested: [data.investmentAmount, [Validators.required]],
       issuePrice: [data.issuePrice, [Validators.required]],
-      units: [data.unitsInGram, [Validators.required]],
+      units: [data.unitsInGramForEditView ? data.unitsInGramForEditView : data.unitsInGram, [Validators.required]],
       rates: [data.interestRate ? data.interestRate : 2.5, [Validators.required]],
       tenure: [8, [Validators.required]],
       bondNumber: [data.bondNumber],
@@ -525,7 +525,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
 
   addTransaction(data) {
     this.getTransaction.push(this.fb.group({
-      transactionDate: [!data ? '' : new Date(data.transactionDate), [Validators.required]],
+      transactionDate: [!data ? '' : this.datePipe.transform(data.transactionDate, 'yyyy-MM-dd'), [Validators.required]],
       unit: [!data ? '' : data.unit, [Validators.required]],
       amount: [!data ? '' : data.amount, [Validators.required]],
       type: ['redemption', [Validators.required]],
@@ -600,6 +600,11 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     console.log(sumOfUnit)
   }
   saveFormData() {
+    if (this.goldBondForm.value.sovereignGoldTransactionList.length > 0) {
+      this.goldBondForm.value.sovereignGoldTransactionList.forEach(element => {
+        element.transactionDate = this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd');
+      });
+    }
     let bondObj = {
       "clientId": this.goldBondForm.value.clientId,
       "advisorId": this.goldBondForm.value.advisorId,
