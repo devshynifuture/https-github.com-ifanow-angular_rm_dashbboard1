@@ -1,12 +1,12 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SettingsService} from '../../settings.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {Subscription} from 'rxjs';
-import {AuthService} from 'src/app/auth-service/authService';
-import {DatePipe} from '@angular/common';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SettingsService } from '../../settings.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
 import { AppConstants } from 'src/app/services/app-constants';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
@@ -23,7 +23,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   arnRiaFG: FormGroup;
   subscriber = new Subscription();
   advisorId: any;
-  @ViewChild('arnForm', {static: true}) arnForm: ElementRef;
+  @ViewChild('arnForm', { static: true }) arnForm: ElementRef;
   validatorType = ValidatorType;
   formPlaceHolders: any;
   barButtonOptions: MatProgressButtonOptions = {
@@ -38,6 +38,8 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     disabled: false,
     fullWidth: false,
   };
+  isNJ = false;
+  isPurdent = false;
   maxArnLength = 9;
 
   constructor(
@@ -56,7 +58,17 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     this.createForm();
     this.subscriberToFormChanges();
   }
+  changeFunction(value) {
+    if (value == 'isNj') {
+      this.isPurdent = false;
+    }
+    if (value == 'isPurdent') {
+      this.isNJ = false;
+    }
 
+    console.log(this.isNJ);
+    console.log(this.isPurdent);
+  }
   createForm() {
     let arnNumber = this.data.mainData.number;
     if (arnNumber) {
@@ -82,7 +94,9 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       gstNumber: [this.data.mainData.gstNumber || '', []],
       dataUploadTypeId: [this.data.mainData.dataUploadTypeId || '', [Validators.required]],
     });
-
+    // this.data.mainData.isNj = true;
+    // this.isNJ = this.data.mainData.isNj;
+    // this.isPurdent = this.data.mainData.isPurdent;
     if (this.data.mainData.gstApplicableId == 1) {
       this.arnRiaFG.controls.gstNumber.setValidators([Validators.required, Validators.minLength(15), Validators.maxLength(15)]);
     }
@@ -163,6 +177,8 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           jsonObj.renewalDate = this.datePipe.transform(jsonObj.renewalDate.toDate(), 'yyyy-MM-dd');
         }
       }
+      // jsonObj.isNj = this.isNJ;
+      // jsonObj.isPrudent = this.isPurdent;
 
       // edit action
       if (!this.data.isAddFlag) {
@@ -191,7 +207,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   }
 
   Close(status) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: status });
   }
 
   ngOnDestroy() {
