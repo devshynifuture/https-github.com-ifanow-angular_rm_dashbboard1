@@ -1,9 +1,9 @@
-import {Router, ActivatedRoute} from '@angular/router';
-import {Injectable} from '@angular/core/src/metadata/*';
-import {SettingsService} from '../component/protect-component/AdviserComponent/setting/settings.service';
-import {UtilService} from '../services/util.service';
-import {AuthService} from './authService';
-import {BehaviorSubject} from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Injectable } from '@angular/core/src/metadata/*';
+import { SettingsService } from '../component/protect-component/AdviserComponent/setting/settings.service';
+import { UtilService } from '../services/util.service';
+import { AuthService } from './authService';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -195,8 +195,8 @@ export class RoleService {
       leads: {
         enabled: true,
       },
-      clientsCapability: {add: true, edit: true, delete: true, download: true},
-      leadsCapability: {add: true, edit: true, delete: true, download: true, convertToclient: true}
+      clientsCapability: { add: true, edit: true, delete: true, download: true },
+      leadsCapability: { add: true, edit: true, delete: true, download: true, convertToclient: true }
     }
   };
   backofficePermission = {
@@ -220,8 +220,11 @@ export class RoleService {
       aumreconciliation: {
         enabled: true,
       },
-      misCapability: {add: true, download: true, edit: true, delete: true},
-      fileuploadsCapability: {download: true, add: true, edit: true, delete: true}
+      new: {
+        enabled: true,
+      },
+      misCapability: { add: true, download: true, edit: true, delete: true },
+      fileuploadsCapability: { download: true, add: true, edit: true, delete: true }
     }
   };
   dashboardPermission = {
@@ -252,7 +255,7 @@ export class RoleService {
       taskCapabilityList: [],
       calendarCapabilityList: [],
       emailCapabilityList: [],
-      taskCapabilityObj: {add: true, edit: true, delete: true}
+      taskCapabilityObj: { add: true, edit: true, delete: true }
     }
   };
   overviewPermission = {
@@ -273,7 +276,7 @@ export class RoleService {
             capabilityList: {} as any
           }
         },
-        profileCapabilityObj: {add: true, edit: true, delete: true}
+        profileCapabilityObj: { add: true, edit: true, delete: true }
       },
       documents: {
         enabled: true,
@@ -391,9 +394,9 @@ export class RoleService {
   }
 
   getRoleDetails(roleId, callbackMethod: (args: any) => void,
-                 failureMethod?: (args: any) => void ) {
+    failureMethod?: (args: any) => void) {
     // const observable = new Observable();
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
       if (callbackMethod) {
         callbackMethod(res);
@@ -412,9 +415,9 @@ export class RoleService {
     return;
   }
 
-  getClientRoleDetails(roleId, callbackMethod: (args: any) => void,failureMethod?: (args: any) => void) {
+  getClientRoleDetails(roleId, callbackMethod: (args: any) => void, failureMethod?: (args: any) => void) {
     // const observable = new Observable();
-    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({id: roleId}).subscribe((res) => {
+    this.settingsService.getAdvisorOrClientOrTeamMemberRoles({ id: roleId }).subscribe((res) => {
       console.log('roleService getRoleDetails response : ', res);
       if (callbackMethod) {
         callbackMethod(res);
@@ -603,6 +606,7 @@ export class RoleService {
     this.backofficePermission.subModule.duplicateData.enabled = backOfficePermission.duplicateData.showModule;
     this.backofficePermission.subModule.foliomapping.enabled = backOfficePermission.foliomapping.showModule;
     this.backofficePermission.subModule.folioquery.enabled = backOfficePermission.folioquery.showModule;
+
     this.backofficePermission.subModule.aumreconciliation.enabled = backOfficePermission.aumreconciliation.showModule;
     this.backofficePermission.subModule.misCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.mis.subModule.mis.capabilityList);
     this.backofficePermission.subModule.fileuploadsCapability = UtilService.getDetailedCapabilityMap(backOfficePermission.fileuploads.subModule.fileuploads.capabilityList);

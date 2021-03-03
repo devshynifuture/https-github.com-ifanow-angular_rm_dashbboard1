@@ -30,9 +30,9 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/architect": "^0.1102.1",
     "@angular/animations": "github:angular/animations-builds#8.2.x",
     "@angular/cdk": "github:angular/cdk-builds#8.2.x",
-    "@angular/cli": "8.3.25",
     "@angular/common": "~8.2.14",
     "@angular/core": "~8.2.14",
     "@angular/forms": "~8.2.14",
@@ -83,7 +83,8 @@
     "zone.js": "0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.803.25",
+    "@angular-devkit/build-angular": "^0.803.25",
+    "@angular/cli": "^8.3.29",
     "@angular/compiler": "8.2.14",
     "@angular/compiler-cli": "8.2.14",
     "@angular/language-service": "8.2.14",
