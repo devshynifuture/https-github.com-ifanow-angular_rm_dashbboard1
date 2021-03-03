@@ -1,1 +1,47 @@
-<p>plan-templates works!</p>
+<div class="row pt-20">
+    <div class="col-md-8 pl-10">
+        <h3 class="m-0 roboto f-400">Templates</h3>
+    </div>
+    <div class="col-md-4 full-end pr-10">
+        <button mat-stroked-button class="btn-primary" (click)="openAddtemlates()">ADD NEW</button>
+    </div>
+</div>
+<div class="row pt-16">
+    <div class="w-20 pr-10 pl-10" *ngFor="let item of fincialPlanList">
+        <mat-card class="p-0">
+            <div class="action-teamplates">
+                <img src="/assets/images/svg/pencil-action.svg" class="pr-10 c-p">
+                <img src="/assets/images/svg/refresh-icon.svg" class="c-p">
+            </div>
+
+            <img src="{{item.imageUrl}}" class="w-100">
+        </mat-card>
+        <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">{{item.name}}</h5>
+    </div>
+</div>
+<div class="row pt-16">
+    <div class="w-20 pr-10 pl-10" *ngFor="let item of quotes">
+        <mat-card class="p-0">
+            <div class="action-teamplates">
+                <img src="/assets/images/svg/pencil-action.svg" class="pr-10 c-p">
+                <img src="/assets/images/svg/refresh-icon.svg" class="c-p">
+            </div>
+
+            <img src="{{item.imageUrl}}" class="w-100">
+        </mat-card>
+        <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">{{item.name}}</h5>
+    </div>
+</div>
+<div class="row pt-16">
+    <div class="w-20 pr-10 pl-10" *ngFor="let item of miscellaneous">
+        <mat-card class="p-0">
+            <div class="action-teamplates">
+                <img src="/assets/images/svg/pencil-action.svg" class="pr-10 c-p">
+                <img src="/assets/images/svg/refresh-icon.svg" class="c-p">
+            </div>
+
+            <img src="{{item.imageUrl}}" class="w-100">
+        </mat-card>
+        <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">{{item.name}}</h5>
+    </div>
+</div>

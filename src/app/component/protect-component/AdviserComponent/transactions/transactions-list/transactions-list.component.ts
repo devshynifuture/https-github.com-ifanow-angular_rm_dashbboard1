@@ -114,7 +114,8 @@ export class TransactionsListComponent implements OnInit {
     const obj: any = {
       advisorId: this.advisorId,
       startDate: this.finalStartDate,
-      endDate: this.finalEndDate
+      endDate: this.finalEndDate,
+      adminId: AuthService.getAdminId()
     };
     if (this.isAdvisorSection) {
       obj.tpUserCredentialId = this.selectedBroker.id;

@@ -608,6 +608,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               this.barButtonOptions.active = false;
               this.Close(true);
             }
+          }, err => {
+            this.eventService.openSnackBarNoDuration('Mutual fund is already added. Kindly select show zero folio to yes if the folio is not reflecting in mutual fund reports', "Dismiss");
           })
 
       } else if (this.data.flag == 'editMutualFund' || this.addEditMutualFund === 'edit') {
@@ -687,6 +689,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
               } else {
                 this.eventService.openSnackBar(res, "Dismiss");
               }
+            }, err => {
+              this.eventService.openSnackBar(err, "Dismiss");
             })
         }
 

@@ -955,6 +955,7 @@ export const appConfig = {
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
   GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
   ADD_CALL_BACK_MOB: 'advisor-callback-detail/add',
+  GET_TEMPLATE_LIST: 'plan/setting/financial-plan/advisor-template/list/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
@@ -1065,8 +1066,10 @@ export const appConfig = {
   //////////////////////////// Lead interaction ///////////////////////
   POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',
   REFERRED_USERS: 'user/advisor/referrals/get',
-  FROALA_UPLOAD_URL: 'user/advisor/froala/file-upload?advisorId='
+  FROALA_UPLOAD_URL: 'user/advisor/froala/file-upload?advisorId=',
+  //////////////////////////////////////////////////////////////////////////
 
+  GLOBAL_REMINDER_FILTER: '/reminder/global-data/get'
 };
 
 

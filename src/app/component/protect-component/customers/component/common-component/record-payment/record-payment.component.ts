@@ -210,11 +210,11 @@ export class RecordPaymentComponent implements OnInit {
             this.dataSource[0].paymentMode = o.value;
           }
         });
-        this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
-        this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
+        this.dataSource[0].amountReceived = this.dataSource[0].amountReceived;
+        this.dataSource[0].chargeIfAny = this.dataSource[0].chargeIfAny;
         this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
         // this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
-        this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
+        this.dataSource[0].TDS = this.dataSource[0].TDS;
         this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
       } else {
         this.feeCollectionMode.forEach(o => {
