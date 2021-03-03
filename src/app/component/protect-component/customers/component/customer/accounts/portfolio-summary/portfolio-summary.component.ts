@@ -772,10 +772,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     dataList.forEach(element => {
       if (element.assetType == 2) {
         this.liabilityTotal += element.currentValue;
-      } else if (element.assetType == 3) {
-        this.totalInsurance += element.currentValue;
       } else {
         this.totalAssetsWithoutLiability += element.currentValue;
+      }
+      if (element.assetType == 3) {
+        this.totalInsurance += element.currentValue;
       }
     });
     console.log(this.totalAssetsWithoutLiability, 'total asset without liability');
