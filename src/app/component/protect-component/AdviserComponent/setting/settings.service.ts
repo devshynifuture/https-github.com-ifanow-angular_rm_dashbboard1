@@ -195,4 +195,7 @@ export class SettingsService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_TEMPLATE, data);
 
   }
+  setVisibilityTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SET_VISIBILITY, data);
+  }
 }

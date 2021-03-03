@@ -40,8 +40,24 @@ export class PlanTemplatesComponent implements OnInit {
       }
     );
   }
-  setVisibility() {
-
+  setVisibility(flag, item) {
+    let obj = {
+      id: item.id,
+      isVisible: flag
+    }
+    this.SettingsService.setVisibilityTemplate(obj).subscribe(
+      res => {
+        if (flag == true) {
+          this.eventService.openSnackBar('Template is visible in Financial Plan', 'Dismiss');
+        } else {
+          this.eventService.openSnackBar('Template is not visible in Financial Plan', 'Dismiss');
+        }
+        this.getTemplateList()
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
   }
   getTemplateListResponse(data) {
     console.log('templatelist', data)
