@@ -2257,3 +2257,29 @@ a.docFileName:hover {
     line-height: 10px;
   }
 }
+
+.width-70 {
+  .mat-expansion-panel-header-title {
+    margin-right: 0px !important;
+  }
+
+  .close-side-icons {
+    margin-left: 0px !important;
+    width: 100% !important;
+  }
+
+  .mat-expansion-panel-header {
+    padding-right: 0px !important;
+  }
+
+  .mat-list-item-content {
+
+    justify-content: center !important;
+  }
+
+  .desKBTN {
+    margin-left: 0px !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+}
