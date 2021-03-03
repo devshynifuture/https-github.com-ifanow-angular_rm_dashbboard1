@@ -23,7 +23,8 @@
                 </mat-menu> -->
                 <div class="form-group mb-0 ">
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select [formControl]="filterOptionControl" class="form-control br-0">
+                        <mat-select (selectionChange)="changeAssetType($event)" [formControl]="filterOptionControl"
+                            class="form-control br-0">
                             <mat-option *ngFor="let asset of filterOption" [value]="asset.reminderType">
                                 {{asset.name}}</mat-option>
                         </mat-select>

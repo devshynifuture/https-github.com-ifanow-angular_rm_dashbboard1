@@ -82,6 +82,10 @@ export class BackofficeNewComponent implements OnInit {
     this.getFixedDepositList();
   }
 
+  changeAssetType(event) {
+    console.log(event.value);
+  }
+
   getEndDate(value) {
     this.EndDate = UtilService.getStartOfTheDay(new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * Number(value))).getTime();
   }
