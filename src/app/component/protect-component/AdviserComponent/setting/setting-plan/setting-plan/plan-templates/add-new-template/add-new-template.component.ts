@@ -12,4 +12,8 @@ export class AddNewTemplateComponent implements OnInit {
   ngOnInit() {
   }
 
+  close() {
+
+  }
+
 }
