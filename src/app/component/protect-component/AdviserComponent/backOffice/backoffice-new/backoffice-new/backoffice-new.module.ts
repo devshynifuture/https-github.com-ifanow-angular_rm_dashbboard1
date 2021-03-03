@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BackofficeNewComponent } from './backoffice-new.component';
 import { MaterialModule } from 'src/app/material/material';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -12,9 +12,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     declarations: [BackofficeNewComponent],
     imports: [
         CommonModule,
-        MaterialModule,
         FormsModule,
         ReactiveFormsModule,
+        MaterialModule,
         CustomDirectiveModule,
         BackofficeNewRoutingModule
     ]
