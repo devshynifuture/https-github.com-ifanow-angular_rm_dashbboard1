@@ -174,9 +174,10 @@
                 <span *ngIf="showTabs" class="title" mat-line>Folio Mapping</span>
               </a>
 
-              <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/reminder">
+              <a class="sidenav-link" *ngIf="!enumDataService.PRODUCTION" routerLinkActive="bg-grey lter" mat-list-item
+                routerLink="/admin/reminder">
                 <span *ngIf="showTabs" class="title" mat-line>Reminder</span>
-              </a> -->
+              </a>
 
               <!--<a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
   <span *ngIf="showTabs" class="title" mat-line>Tasks</span>

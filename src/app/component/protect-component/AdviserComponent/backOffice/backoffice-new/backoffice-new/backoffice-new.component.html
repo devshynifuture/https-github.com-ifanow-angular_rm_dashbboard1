@@ -22,18 +22,28 @@
                     </div>
                 </mat-menu> -->
             <div class="row">
-                <div class="col-md-6 pl-0">
+                <div *ngIf="fixedDepositFilter" class="col-md-4 pl-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select (selectionChange)="changeAssetType($event)" [formControl]="filterOptionControl"
-                            class="form-control br-0">
-                            <mat-option *ngFor="let asset of filterOption" [value]="asset.reminderType">
-                                {{asset.name}}</mat-option>
+                        <mat-select [formControl]="filterOptionControl" class="form-control br-0">
+                            <mat-option selected value="Fixed Deposit">
+                                Fixed Deposit</mat-option>
                         </mat-select>
                     </mat-form-field>
 
                 </div>
-                <div class="col-md-6 pr-0">
+                <div *ngIf="fixedDepositFilter" class="col-md-4 pr-0">
+
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select (selectionChange)="changeSubAssetType($event)" [formControl]="selectedSubType"
+                            class="form-control br-0">
+                            <mat-option *ngFor="let asset of fixedDepositFilter" [value]="asset.reminderType">
+                                {{asset.reminderTypeString}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+                <div *ngIf="fixedDepositFilter" class="col-md-4 pr-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select (selectionChange)="sortDateFilter($event)" [formControl]="selectedNextDate"
