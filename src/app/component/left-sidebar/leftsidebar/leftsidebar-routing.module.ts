@@ -79,7 +79,7 @@ const routes: Routes = [
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-folio-mapping/backoffice-folio-mapping.module').then(m => m.BackofficeFolioMappingModule)
       },
       {
-        path: 'new',
+        path: 'reminder',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/backOffice/backoffice-new/backoffice-new/backoffice-new.module').then(m => m.BackofficeNewModule)
       },
       {
