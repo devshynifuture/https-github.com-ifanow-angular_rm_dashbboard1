@@ -955,6 +955,7 @@ export const appConfig = {
   ADD_CALL_BACK_MOB: 'advisor-callback-detail/add',
   GET_TEMPLATE_LIST: 'plan/setting/financial-plan/advisor-template/list/get',
   ADD_TEMPLATE: 'plan/financial-plan/template/add',
+  EDIT_TEMPLATE: 'plan/financial-plan/template/edit',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',

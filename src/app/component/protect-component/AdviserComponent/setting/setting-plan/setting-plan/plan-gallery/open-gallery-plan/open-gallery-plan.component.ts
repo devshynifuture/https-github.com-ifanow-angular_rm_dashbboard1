@@ -74,12 +74,19 @@ export class OpenGalleryPlanComponent implements OnInit {
               imageURL: responseObject.secure_url,
               goalTypeId: this.sendToCopy.goalTypeId,
             }
-            this.uploadGoalIMG(responseObject, jsonDataObj)
+            if (!this.goalIndividualData.template) {
+              this.uploadGoalIMG(responseObject, jsonDataObj)
+            } else {
+              this.uploadTemlate(responseObject)
+            }
           }
         });
     } else {
       this.Close(this.anyDetailsChanged);
     }
+  }
+  uploadTemlate(responseObject) {
+    this.dialogRef.close(responseObject);
   }
   uploadGoalIMG(responseObject, jsonDataObj) {
     if (this.individualGoal == true) {

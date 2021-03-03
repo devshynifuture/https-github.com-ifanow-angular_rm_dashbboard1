@@ -46,10 +46,9 @@ export class PlanTemplatesComponent implements OnInit {
     this.quotes = data[1].templates
     this.miscellaneous = data[2].templates
   }
-  openAddtemlates(value, data) {
-
+  openAddtemlates(data) {
     const fragmentData = {
-      flag: value,
+      flag: 'value',
       data,
       id: 1,
       state: 'open',
@@ -61,7 +60,7 @@ export class PlanTemplatesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-
+            this.getTemplateList()
           }
           rightSideDataSub.unsubscribe();
         }

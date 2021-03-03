@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-4 text-right">
                 <div class="wrapper-12">
-                    <i class="material-icons c-p pt-8 v-middle" (click)="onNoClick()"> clear</i>
+                    <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
                 </div>
             </div>
         </div>
@@ -37,10 +37,15 @@
                 </div>
 
                 <div class="d-flex">
-                    <div class="image-cropper" style="width: 50%;">
+                    <div class="image-cropper" style="width: 50%;" *ngIf="!goalIndividualData.template">
                         <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper"
                             (croppedImage)="showCroppedImage($event)"></app-image-cropper>
                     </div>
+                    <div *ngIf="goalIndividualData.template" class="image-cropper" style="width: 50%;">
+                        <app-image-cropper [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper"
+                            [aspectRatio]="232/320" (croppedImage)="showCroppedImage($event)"></app-image-cropper>
+                    </div>
+
                     <div class="profile-img" [hidden]="!showCropper" style="width: 50%;">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">
                     </div>
