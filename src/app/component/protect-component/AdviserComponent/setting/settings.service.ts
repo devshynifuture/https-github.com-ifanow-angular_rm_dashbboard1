@@ -180,8 +180,12 @@ export class SettingsService {
   getBulkEmailPasswordList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_EMAIL_PASSWORD_HISTORY, data);
   }
-  addCallBackMob(data){
+  addCallBackMob(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CALL_BACK_MOB, data);
+
+  }
+  getTemplateList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATE_LIST, data);
 
   }
 }
