@@ -188,4 +188,11 @@ export class SettingsService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATE_LIST, data);
 
   }
+  addNewTemplate(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_TEMPLATE, data);
+  }
+  editTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_TEMPLATE, data);
+
+  }
 }

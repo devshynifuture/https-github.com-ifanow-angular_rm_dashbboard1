@@ -2,20 +2,20 @@
     <div class="col-md-10 p-0">
         <h4 class="mb-0 l-22 wrapper-20">Add new template</h4>
     </div>
-    <div class="col-md-2 full-end pr-24">
+    <div class="col-md-2 full-end pr-24" (click)="close(false)">
         <i class="material-icons c-p ">
             clear
         </i>
     </div>
 </div>
-<div class="pt-90 pb-48">
+<div class="pt-90 pb-48" [formGroup]="addTemplate">
     <div class="row ">
-        <div class="col-md-5 full-end">
+        <div class="col-md-5 full-end pt-16">
             <h5 class="m-0 f-16 roboto f-400">Template name</h5>
         </div>
         <div class="col-md-5 pl-0">
-            <mat-form-field>
-                <input matInput class="form-control">
+            <mat-form-field appearance="standard">
+                <input placeholder="Enter template name" formControlName="name" matInput class="form-control">
             </mat-form-field>
         </div>
     </div>
@@ -25,15 +25,12 @@
         </div>
         <div class="col-md-5 pl-0">
             <mat-form-field>
-                <mat-select class="form-control">
-                    <mat-option>
-                        category 1
+                <mat-select class="form-control" formControlName="category" matInput>
+                    <mat-option value='' [disabled]=true>
+                        Select category
                     </mat-option>
-                    <mat-option>
-                        category 2
-                    </mat-option>
-                    <mat-option>
-                        category 3
+                    <mat-option *ngFor="let item of templateList" [value]="item.id">
+                        {{item.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -47,7 +44,10 @@
                 section of
                 financial plan. You can attach<br> it in your financial reports and send it to your client.</p>
         </div>
-        <div class="col-md-5 pl-0">
+        <div *ngIf="edit" class="col-md-5 pl-0" (click)="openGallery(imgUrl)">
+            <img src="{{imgUrl}}" class="hw-230">
+        </div>
+        <div *ngIf="!edit" class="col-md-5 pl-0" (click)="openGallery('/assets/images/setting.png')">
             <img src="/assets/images/setting.png" class="hw-230">
         </div>
     </div>
@@ -55,10 +55,10 @@
 <div class="bottom-fixed wrapper-12 pt-16 w-60">
     <div class="row">
         <div class="col-md-4 pt-8">
-            <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
+            <h5 (click)="close(false)" class="mb-0  text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 text-right">
-            <button class="btn-primary f-14 ml-12" mat-stroked-button>SAVE</button>
+            <button class="btn-primary f-14 ml-12" (click)="addTemplates()" mat-stroked-button>SAVE</button>
         </div>
     </div>
 </div>
