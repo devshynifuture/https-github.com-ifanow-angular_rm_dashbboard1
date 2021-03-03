@@ -40,6 +40,9 @@ export class PlanTemplatesComponent implements OnInit {
       }
     );
   }
+  setVisibility() {
+
+  }
   getTemplateListResponse(data) {
     console.log('templatelist', data)
     this.fincialPlanList = data[0].templates
