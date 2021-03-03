@@ -8,29 +8,32 @@
 
 <div class="pt-150">
     <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-8">
-            <div class="right text-right">
-                <!-- <button [matMenuTriggerFor]="menu1" class="ba-black borderLine br-0 mr-10" mat-stroked-button>
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+
+            <!-- <button [matMenuTriggerFor]="menu1" class="ba-black borderLine br-0 mr-10" mat-stroked-button>
                     Fixed deposit
                     <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
                     </mat-icon>
                 </button> -->
-                <!-- <mat-menu #menu1="matMenu">
+            <!-- <mat-menu #menu1="matMenu">
                     <div>
                         <button mat-menu-item>asfdsad</button>
                     </div>
                 </mat-menu> -->
-                <div class="form-group mb-0 ">
+            <div class="row">
+                <div class="col-md-6 pl-0">
+
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select [formControl]="filterOptionControl" class="form-control br-0">
                             <mat-option *ngFor="let asset of filterOption" [value]="asset.reminderType">
                                 {{asset.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
 
-                <div class="form-group mb-0 ">
+                </div>
+                <div class="col-md-6 pr-0">
+
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select (selectionChange)="sortDateFilter($event)" [formControl]="selectedNextDate"
                             class="form-control br-0">
@@ -39,8 +42,13 @@
                             <mat-option value="30">Next 30 Day</mat-option>
                         </mat-select>
                     </mat-form-field>
+
                 </div>
             </div>
+
+
+
+
         </div>
     </div>
     <div class="row pt-10 pb-24">
@@ -88,8 +96,8 @@
                     <ng-container matColumnDef="investName">
                         <th mat-header-cell *matHeaderCellDef> Amount </th>
                         <td mat-cell *matCellDef="let element">
-                            <div class="bar"> {{isLoading ? ' ' : '₹'}}<span
-                                    appFormatNumber>{{ element.maturityValue}}</span></div>
+                            <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{
+                                    element.maturityValue}}</span></div>
                         </td>
                     </ng-container>
 
