@@ -177,14 +177,12 @@ p {
 }
 
 .shadowBox:hover {
-  -webkit-box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
-          box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
 .shadowBox {
   background-color: #fff;
-  -webkit-box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-          box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 ::ng-deep .highcharts-legend-item {
@@ -206,6 +204,17 @@ p {
   height: 300px;
 }
 
+#piechartMutualFund123 {
+  height: 330px;
+  width: 320px !important;
+}
+
+#PortFolio {
+  min-width: 360px;
+  max-width: 800px;
+  height: 250px;
+}
+
 .skeletonAnimation .relClass {
   position: relative;
 }
@@ -217,8 +226,7 @@ p {
 
 .skeletonAnimation .relClass .bar300:after {
   position: absolute;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   top: 50%;
   left: 0;
   content: "";
@@ -229,8 +237,7 @@ p {
   background-size: 100px 300px;
   background-position: -10px 0;
   background-repeat: no-repeat;
-  -webkit-animation: loading 1s infinite;
-          animation: loading 1s infinite;
+  animation: loading 1s infinite;
 }
 
 .myFeedUi {
@@ -241,12 +248,8 @@ p {
 
 .myFeedUi li {
   height: 43px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   padding-left: 32px;
   border-left: 6px solid transparent;
   cursor: pointer;
@@ -258,8 +261,7 @@ p {
 }
 
 .feedInformation .clientNameBox {
-  -webkit-box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
-          box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
   border-radius: 0px;
   padding: 14px 20px;
   margin-top: 35px;
@@ -358,19 +360,10 @@ p {
   border: 1px solid #D9DEE1;
   border-radius: 4px;
   height: 140px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .feedInformation .vaultbBox {
@@ -393,19 +386,10 @@ p {
   width: 100px;
   height: 100px;
   margin: 0px auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   border: 3px solid #1F1F1F;
   font-size: 48px;
 }
@@ -582,24 +566,15 @@ p {
 }
 
 .pointUl {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   margin-top: 8px;
 }
 
 .pointUl li {
   text-align: left;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   margin-bottom: 5px;
 }
 
@@ -633,7 +608,6 @@ p {
 }
 
 .sticky-top {
-  position: -webkit-sticky;
   position: sticky;
   top: 140px;
   z-index: 1020;
@@ -699,13 +673,8 @@ p {
 .pointUlNew {
   display: block;
   margin-top: 8px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
 }
 
 .pointUlNew li {
@@ -755,8 +724,7 @@ p {
 
 .skeletonAnimation .relClass .bar:after {
   position: absolute;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   top: 50%;
   left: 0;
   content: "";
@@ -767,8 +735,7 @@ p {
   background-size: 100px 24px;
   background-position: -10px 0;
   background-repeat: no-repeat;
-  -webkit-animation: loading 1s infinite;
-          animation: loading 1s infinite;
+  animation: loading 1s infinite;
 }
 
 .skeletonAnimation .relClass .bar220 {
@@ -779,8 +746,7 @@ p {
 
 .skeletonAnimation .relClass .bar220:after {
   position: absolute;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   top: 50%;
   left: 0;
   content: "";
@@ -791,8 +757,7 @@ p {
   background-size: 100px 220px;
   background-position: -10px 0;
   background-repeat: no-repeat;
-  -webkit-animation: loading 1s infinite;
-          animation: loading 1s infinite;
+  animation: loading 1s infinite;
 }
 
 .skeletonAnimation .relClass .bar200 {
@@ -803,8 +768,7 @@ p {
 
 .skeletonAnimation .relClass .bar200:after {
   position: absolute;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   top: 50%;
   left: 0;
   content: "";
@@ -815,8 +779,7 @@ p {
   background-size: 100px 200px;
   background-position: -10px 0;
   background-repeat: no-repeat;
-  -webkit-animation: loading 1s infinite;
-          animation: loading 1s infinite;
+  animation: loading 1s infinite;
 }
 
 .height220 {
@@ -955,7 +918,6 @@ table {
 }
 
 .mat-toolbar.mat-primary {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -994,17 +956,12 @@ table {
   cursor: pointer;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
-  -webkit-box-shadow: 2px 1px 0px #ccc;
-          box-shadow: 2px 1px 0px #ccc;
+  box-shadow: 2px 1px 0px #ccc;
   z-index: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   height: 40px;
   width: 30px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   left: 23px;
 }
 
@@ -1081,14 +1038,10 @@ img.header-img {
 }
 
 .search-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 60%;
   position: relative;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .icon {
@@ -1101,8 +1054,7 @@ img.header-img {
 .search-field {
   background: #EBEEF3;
   border: 1px solid #EBEEF3;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   /* box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16); */
   border-radius: 4px;
   outline: none;
@@ -1139,27 +1091,6 @@ img.header-img {
 .search-field:hover,
 .bb-a {
   border: 1px solid #1B69B8 !important;
-}
-
-::-webkit-input-placeholder {
-  color: #707070;
-  position: relative;
-  top: -2px;
-  font-size: 14px;
-}
-
-:-ms-input-placeholder {
-  color: #707070;
-  position: relative;
-  top: -2px;
-  font-size: 14px;
-}
-
-::-ms-input-placeholder {
-  color: #707070;
-  position: relative;
-  top: -2px;
-  font-size: 14px;
 }
 
 ::placeholder {
@@ -1237,20 +1168,15 @@ img.header-img {
   cursor: pointer;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
-  -webkit-box-shadow: 2px 1px 0px #ccc;
-          box-shadow: 2px 1px 0px #ccc;
+  box-shadow: 2px 1px 0px #ccc;
   top: 75px;
   z-index: 1;
   /* padding: 5px; */
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   height: 40px;
   width: 30px;
   /* font-size: 25px; */
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .top-setting-css {
@@ -1267,35 +1193,23 @@ img.header-img {
   cursor: pointer;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
-  -webkit-box-shadow: 2px 1px 0px #ccc;
-          box-shadow: 2px 1px 0px #ccc;
+  box-shadow: 2px 1px 0px #ccc;
   top: 75px;
   z-index: 1;
   /* padding: 5px; */
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   height: 40px;
   width: 30px;
   /* font-size: 25px; */
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   right: -30px;
 }
 
 mat-drawer-content {
   padding: 12px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .mt-50 {
@@ -1331,9 +1245,7 @@ mat-drawer-content {
 }
 
 .mat-sidenav {
-  -webkit-box-flex: 0;
-      -ms-flex: 0 1 auto;
-          flex: 0 1 auto;
+  flex: 0 1 auto;
   padding-top: 118px !important;
 }
 
@@ -1359,18 +1271,13 @@ mat-drawer-content {
   cursor: pointer;
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
-  -webkit-box-shadow: 2px 1px 0px #ccc;
-          box-shadow: 2px 1px 0px #ccc;
+  box-shadow: 2px 1px 0px #ccc;
   height: 40px;
   width: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   position: fixed;
   z-index: 1;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   top: 172px;
 }
 
@@ -1430,4 +1337,7 @@ mat-drawer-content {
     height: auto;
   }
 }
-/*# sourceMappingURL=portfolio-summary.component.css.map */
+
+.hide {
+  display: none;
+}

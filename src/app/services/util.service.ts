@@ -658,16 +658,7 @@ export class UtilService {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
-  htmlToPdf(header,
-    inputData,
-    pdfName,
-    landscape,
-    fragData: any = {},
-    key = null,
-    svg = null,
-    showFooter,
-    clientName
-  ) {
+  htmlToPdf(header, inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null, showFooter, clientName) {
     this.client = AuthService.getClientData();
     if (fragData.isSubscription) {
       this.client = {
@@ -714,7 +705,54 @@ export class UtilService {
         return this.fileURL ? this.fileURL : null;
       });
   }
-
+  htmlToPdfPort(header, inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null, showFooter, clientName, svgs) {
+    this.client = AuthService.getClientData();
+    if (fragData.isSubscription) {
+      this.client = {
+        name: fragData.clientName,
+      };
+    }
+    inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+    const obj = {
+      htmlInput: inputData,
+      header: header,
+      name: pdfName,
+      showMfFooter: showFooter == false ? false : true,
+      landscape,
+      key,
+      svg,
+      svgs,
+    };
+    const browser = this.getBrowserName();
+    console.log(browser);
+    if (!this.client) {
+      this.client = {};
+      this.client.name = '';
+    }
+    return this.http
+      .post(
+        apiConfig.MAIN_URL + 'subscription/html-to-pdf',
+        obj,
+        { responseType: 'blob' }
+      )
+      .subscribe((data) => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        fragData.isSpinner = false;
+        fragData.size = this.formatFileSize(data.size, 0);
+        fragData.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+        var date = new Date();
+        fragData.time = date.toLocaleTimeString('en-US');
+        // window.open(fileURL,"hello");
+        const namePdf = clientName ? clientName + '\'s ' : this.client.name + '\'s ' + pdfName + ' as on ' + date;
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(file);
+        a.download = namePdf + '.pdf';
+        a.click();
+        // a.download = fileURL;
+        return this.fileURL ? this.fileURL : null;
+      });
+  }
   static convertArrayListToObject(list) {
     let obj = {}
     for (let i of list) {

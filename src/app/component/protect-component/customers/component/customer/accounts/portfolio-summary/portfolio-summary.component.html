@@ -399,8 +399,9 @@
 
                   <div *ngIf="graphList && graphList.length>0" class="row">
                     <div class="col-md-12 p-0">
-                      <div class="highcharts-figure" id="container-hc-figure" [chart]="portfolioGraph">
-                      </div>
+                      <!-- <div class="highcharts-figure" id="container-hc-figure" [chart]="portfolioGraph">
+                      </div> -->
+                      <div class="highcharts-figure" id="PortFolio"></div>
                       <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
                       <ul *ngIf="nightyDayData && oneDay" class="pl-20">
                         <li class="pr-4 text-black">90-days</li>
@@ -439,10 +440,10 @@
                     <div class="borderChatBox  h-360   bg-white">
                       <div class="row">
                         <div class="col-md-12 pr-0 md-text-center">
-                          <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading"
-                            [chart]="assetAllocationPieConfig">
-                          </div>
-
+                          <!-- <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading"
+                            id="piechartMutualFund">
+                          </div> -->
+                          <div class="highcharts-figure" id="piechartMutualFund123"></div>
                         </div>
 
                       </div>
@@ -759,16 +760,14 @@
                   appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                   liabilityTotal}}</span></span></span><br>
 
-            <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
-              style="width: 100%;padding-top: 20px;height: 300px;">
-
+            <div>$showPieChart2</div>
           </td>
           <td rowspan="2"
             style="width: 300px; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
             <span style="font-size: 18px;">
               Asset allocation
             </span><br>
-            <div>showPieChart</div>
+            <div>$showPieChart1</div>
           </td>
         </tr>
         <tr>
@@ -783,8 +782,7 @@
             <span style="font-size: 18px;">
               Net cash flow </span><br>
 
-            <img src="https://beta.my-planner.in/assets/images/svg/net-cash-flow-empty-state.svg"
-              style="width: 100%;padding-top: 20px;height: 250px;">
+            <div>$showPieChart3</div>
           </td>
         </tr>
       </tbody>
