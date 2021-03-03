@@ -58,8 +58,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       isLoading: true,
     }
   };
-  assetAllocationPieConfig: Chart;
-  portfolioGraph: Chart;
+  assetAllocationPieConfig: Highcharts.Chart;
+  portfolioGraph: Highcharts.Chart; portSvg: string;
+  cashFlowChart: Highcharts.Chart;
+  cashFlowSvg: string;
+  ;
   sidenavState = true;
   chartTotal = 100;
   chartData: any[];
@@ -119,6 +122,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   cashFlowDescNaming: any[] = [];
   assetAllocationRes: boolean;
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  svg: string;
   constructor(
     public eventService: EventService,
     private cusService: CustomerService,
@@ -127,7 +131,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     private enumService: EnumServiceService,
     public authService: AuthService,
     private customerOverview: CustomerOverviewService,
-    private util: UtilService
+    private util: UtilService,
+    private ref: ChangeDetectorRef,
+
   ) {
   }
 
@@ -150,8 +156,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    this.initializePieChart();
-    this.initializePortfolioChart();
     !this.customerOverview.summaryLeftsidebarData ? this.calculateTotalSummaryValues() : this.calculateTotalSummaryValuesRes(this.customerOverview.summaryLeftsidebarData);
     !this.customerOverview.aumGraphdata ? this.getAumGraphData() : this.getAumGraphDataResponse(this.customerOverview.aumGraphdata);
     !this.customerOverview.assetAllocationChart ? this.getAssetAllocationSummary() : this.getAssetAllocationSummaryResponse(this.customerOverview.assetAllocationChart);
@@ -175,8 +179,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     });
   }
 
-  initializePieChart() {
-    const chartConfig: any = {
+  initializePieChart(id) {
+    this.chart = Highcharts.chart(id, {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -218,12 +222,12 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         innerSize: '60%',
         data: this.chartData
       }]
-    };
-    this.assetAllocationPieConfig = new Chart(chartConfig);
+    })
+    console.log('Chart', this.chart)
   }
 
-  initializePortfolioChart() {
-    const chartConfig: any = {
+  initializePortfolioChart(id) {
+    this.portfolioGraph = Highcharts.chart(id, {
       chart: {
         zoomType: 'x'
       },
@@ -259,19 +263,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
               [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba') as ColorString],
             ]
           },
-          /*fillColor: {
-            linearGradient: {
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1
-            },
-            stops: [
-              [0, Highcharts.getOptions().colors[0]],
-              // [1,  Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-              [1, Highcharts.getOptions().colors[0]],
-            ]
-          },*/
           marker: {
             radius: 2
           },
@@ -289,8 +280,62 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         type: 'area',
         data: this.graphList
       }]
-    };
-    this.portfolioGraph = new Chart(chartConfig);
+    })
+    // const chartConfig: any = {
+    //   chart: {
+    //     zoomType: 'x'
+    //   },
+    //   xAxis: {
+    //     type: 'datetime',
+    //     showEmpty: true
+    //   },
+    //   yAxis: {
+    //     title: {
+    //       text: ''
+    //     }
+    //   },
+    //   title: {
+    //     text: ''
+    //   },
+    //   subtitle: {
+    //     text: document.ontouchstart === undefined ?
+    //       '' : ''
+    //   },
+    //   legend: {
+    //     enabled: false
+    //   },
+    //   plotOptions: {
+    //     area: {
+    //       fillColor: {
+    //         linearGradient: {
+    //           x1: 0,
+    //           y1: 0,
+    //           x2: 0,
+    //           y2: 1
+    //         }, stops: [
+    //           [0, Highcharts.getOptions().colors[0]],
+    //           [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba') as ColorString],
+    //         ]
+    //       },
+    //       marker: {
+    //         radius: 2
+    //       },
+    //       lineWidth: 1,
+    //       states: {
+    //         hover: {
+    //           lineWidth: 1
+    //         }
+    //       },
+    //       threshold: null
+    //     }
+    //   },
+
+    //   series: [{
+    //     type: 'area',
+    //     data: this.graphList
+    //   }]
+    // };
+    //this.portfolioGraph = new Chart(chartConfig);
   }
 
   calculateTotalSummaryValues() {
@@ -316,10 +361,18 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     // this.getSummaryList(obj);
   }
   generatePdf(data) {
+
+    this.svg = this.chart.getSVG()
+    this.portSvg = this.portfolioGraph.getSVG()
+    this.cashFlowSvg = this.cashFlowChart.getSVG()
+    console.log('svg', this.cashFlowSvg)
+    const svgs = [{ key: "$showpiechart1", svg: this.svg },
+    { key: "$showpiechart2", svg: this.portSvg },
+    { key: "$showpiechart3", svg: this.cashFlowSvg }]
     this.fragmentData.isSpinner = true;;
     let para = document.getElementById('template');
     //const header = this.summaryTemplateHeader.nativeElement.innerHTML
-    this.util.htmlToPdf('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null);
+    this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
 
   }
   calculateTotalSummaryValuesRes(data) {
@@ -469,12 +522,15 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       // if (counter > 4) {
       //   chartData.push(othersData);
       // }
+      this.ref.detectChanges();
+      this.initializePieChart('piechartMutualFund123');
       if (counter > 0) {
         this.chartTotal = chartTotal;
         this.chartData = chartData;
         this.assetAllocationPieChartDataMgnt(this.chartData);
       }
     }
+
     this.tabsLoaded.portfolioData.isLoading = false;
     this.tabsLoaded.portfolioData.dataLoaded = true;
   }
@@ -523,6 +579,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       for (const singleData of sortedDateList) {
         this.graphList.push([singleData.targetDate, Math.round(singleData.currentValue)]);
       }
+      this.ref.detectChanges();
+      this.initializePortfolioChart('PortFolio');
       this.setPortfolioGraphData(this.graphList);
     } else {
       this.graphList = []
@@ -530,8 +588,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   assetAllocationPieChartDataMgnt(data) {
-    this.assetAllocationPieConfig.removeSeries(0);
-    this.assetAllocationPieConfig.addSeries({
+    //this.assetAllocationPieConfig.(0);
+    this.chart.addSeries({
       type: 'pie',
       name: 'Asset allocation',
       animation: false,
@@ -541,7 +599,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   setPortfolioGraphData(data) {
-    this.portfolioGraph.removeSeries(0);
+    // this.portfolioGraph.removeSeries(0);
     this.portfolioGraph.addSeries({
       type: 'area',
       data: this.graphList
@@ -756,8 +814,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         .map(e => e.currentValue)
         .reduce((acc, curr) => acc + curr, 0);
     });
-
-    new Highcharts.Chart('cashFlow', {
+    this.cashFlowChart = Highcharts.chart('cashFlow', {
       chart: {
         type: 'column'
       },
@@ -787,7 +844,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         showInLegend: false,
         type: 'column',
       }]
-    });
+    })
+    // new Highcharts.Chart('cashFlow', {
+
+    // });
   }
 
   lineChart(id) {
