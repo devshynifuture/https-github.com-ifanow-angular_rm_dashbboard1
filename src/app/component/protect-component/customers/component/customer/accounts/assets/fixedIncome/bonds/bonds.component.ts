@@ -302,7 +302,7 @@ export class BondsComponent implements OnInit {
       linkBankAc: [(data == undefined) ? '' : data.userBankMappingId,],
       // tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       tenureInYear: [(data == undefined) ? '' : data.tenureInYear, [Validators.required, Validators.min(1), Validators.max(120)]],
-      tenureInMonth: [(data == undefined) ? '' : data.tenureInMonth, [Validators.required, Validators.min(1), Validators.max(12)]],
+      tenureInMonth: [(data == undefined) ? '' : data.tenureInMonth, [Validators.min(1), Validators.max(12)]],
       description: [(data == undefined) ? '' : data.description,],
       // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id,],

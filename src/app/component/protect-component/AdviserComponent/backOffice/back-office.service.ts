@@ -410,6 +410,9 @@ export class BackOfficeService {
   addMisAumData(data) {
     this.misAum.next(data);
   }
+  getGlobalReminderFilter(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GLOBAL_REMINDER_FILTER, data);
+  }
   private misAum = new BehaviorSubject<any>({});
   misAumData = this.misAum.asObservable();
 
