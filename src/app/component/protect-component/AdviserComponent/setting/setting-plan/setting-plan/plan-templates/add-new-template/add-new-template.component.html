@@ -2,20 +2,20 @@
     <div class="col-md-10 p-0">
         <h4 class="mb-0 l-22 wrapper-20">Add new template</h4>
     </div>
-    <div class="col-md-2 full-end pr-24">
+    <div class="col-md-2 full-end pr-24" (click)="close()">
         <i class="material-icons c-p ">
             clear
         </i>
     </div>
 </div>
-<div class="pt-90 pb-48">
+<div class="pt-90 pb-48" [formGroup]="addTemplate">
     <div class="row ">
         <div class="col-md-5 full-end">
             <h5 class="m-0 f-16 roboto f-400">Template name</h5>
         </div>
         <div class="col-md-5 pl-0">
             <mat-form-field>
-                <input matInput class="form-control">
+                <input formControlName="name" matInput class="form-control">
             </mat-form-field>
         </div>
     </div>
@@ -25,15 +25,9 @@
         </div>
         <div class="col-md-5 pl-0">
             <mat-form-field>
-                <mat-select class="form-control">
-                    <mat-option>
-                        category 1
-                    </mat-option>
-                    <mat-option>
-                        category 2
-                    </mat-option>
-                    <mat-option>
-                        category 3
+                <mat-select class="form-control" formControlName="category" matInput>
+                    <mat-option *ngFor="let item of templateList" [value]="item.name">
+                        {{item.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -47,7 +41,7 @@
                 section of
                 financial plan. You can attach<br> it in your financial reports and send it to your client.</p>
         </div>
-        <div class="col-md-5 pl-0">
+        <div class="col-md-5 pl-0" (click)="openGallery('/assets/images/setting.png')">
             <img src="/assets/images/setting.png" class="hw-230">
         </div>
     </div>

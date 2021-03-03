@@ -74,34 +74,37 @@ export class OpenGalleryPlanComponent implements OnInit {
               imageURL: responseObject.secure_url,
               goalTypeId: this.sendToCopy.goalTypeId,
             }
-            if (this.individualGoal == true) {
-              let obj = {
-                goalType: this.goalIndividualData.goalType,
-                id: this.goalIndividualData.goalId,
-                imageUrl: responseObject.secure_url,
-              }
-              this.orgSetting.uploadIndividualGoal(obj).subscribe((res) => {
-                this.anyDetailsChanged = true;
-                this.imgURL = jsonDataObj.imageURL;
-                this.showSpinner = false
-                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-                this.Close(this.anyDetailsChanged);
-              });
-            } else {
-              this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
-                this.anyDetailsChanged = true;
-                this.imgURL = jsonDataObj.imageURL;
-                this.showSpinner = false
-                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-                this.Close(this.anyDetailsChanged);
-              });
-            }
-
+            this.uploadGoalIMG(responseObject, jsonDataObj)
           }
         });
     } else {
       this.Close(this.anyDetailsChanged);
     }
+  }
+  uploadGoalIMG(responseObject, jsonDataObj) {
+    if (this.individualGoal == true) {
+      let obj = {
+        goalType: this.goalIndividualData.goalType,
+        id: this.goalIndividualData.goalId,
+        imageUrl: responseObject.secure_url,
+      }
+      this.orgSetting.uploadIndividualGoal(obj).subscribe((res) => {
+        this.anyDetailsChanged = true;
+        this.imgURL = jsonDataObj.imageURL;
+        this.showSpinner = false
+        this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+        this.Close(this.anyDetailsChanged);
+      });
+    } else {
+      this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
+        this.anyDetailsChanged = true;
+        this.imgURL = jsonDataObj.imageURL;
+        this.showSpinner = false
+        this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+        this.Close(this.anyDetailsChanged);
+      });
+    }
+
   }
   Close(flag: boolean) {
     // this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
