@@ -23,6 +23,7 @@ export class BackofficeNewComponent implements OnInit {
   StartDate: any;
   filterOption: any;
   filterOptionControl = new FormControl();
+  reminderType: any;
   constructor(private eventService: EventService,
     private customerService: CustomerService,
     private backOffice: BackOfficeService) { }
@@ -54,7 +55,7 @@ export class BackofficeNewComponent implements OnInit {
     const obj = {
       clientId: 0,
       advisorId: this.advisorId,
-      reminderType: 1,
+      reminderType: this.reminderType ? this.reminderType : 1,
       endDate: this.EndDate,
       startDate: this.StartDate
     };
@@ -84,6 +85,7 @@ export class BackofficeNewComponent implements OnInit {
 
   changeAssetType(event) {
     console.log(event.value);
+    this.reminderType = event.value;
   }
 
   getEndDate(value) {
