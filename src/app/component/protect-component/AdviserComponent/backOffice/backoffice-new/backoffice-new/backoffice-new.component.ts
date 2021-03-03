@@ -6,6 +6,7 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { UtilService } from 'src/app/services/util.service';
 import { FormControl } from '@angular/forms';
 import { BackOfficeService } from '../../back-office.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-backoffice-new',
@@ -22,32 +23,42 @@ export class BackofficeNewComponent implements OnInit {
   EndDate: any;
   StartDate: any;
   filterOption: any;
-  filterOptionControl = new FormControl();
+  filterOptionControl = new FormControl("Fixed Deposit");
+  selectedSubType = new FormControl();
   reminderType: any;
+  fixedDepositFilter: any;
   constructor(private eventService: EventService,
     private customerService: CustomerService,
     private backOffice: BackOfficeService) { }
 
 
   ngOnInit() {
+    this.isLoading = true;
     this.advisorId = AuthService.getAdvisorId();
     this.selectedNextDate.setValue('7');
     this.StartDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getEndDate(this.selectedNextDate.value);
-    this.getFixedDepositList();
     this.getGlobalFilter();
+
   }
 
   getGlobalFilter() {
     const obj = {}
     this.backOffice.getGlobalReminderFilter(obj).subscribe(
       data => {
-        if (data) {
-          console.log(data)
-          this.filterOption = data;
-        }
+        this.getGlobalFilterRes(data);
       }
     )
+  }
+
+  getGlobalFilterRes(data) {
+    if (data) {
+      console.log(data)
+      this.filterOption = data;
+      this.fixedDepositFilter = data.filter(element => element.name == 'Fixed Deposit');
+      this.selectedSubType.setValue(data[0].reminderType);
+      this.getFixedDepositList();
+    }
   }
 
   getFixedDepositList() {
@@ -55,7 +66,7 @@ export class BackofficeNewComponent implements OnInit {
     const obj = {
       clientId: 0,
       advisorId: this.advisorId,
-      reminderType: this.reminderType ? this.reminderType : 1,
+      reminderType: this.selectedSubType.value ? this.selectedSubType.value : 1,
       endDate: this.EndDate,
       startDate: this.StartDate
     };
@@ -83,10 +94,12 @@ export class BackofficeNewComponent implements OnInit {
     this.getFixedDepositList();
   }
 
-  changeAssetType(event) {
+  changeSubAssetType(event) {
     console.log(event.value);
-    this.reminderType = event.value;
+    this.selectedSubType.setValue(event.value);
+    this.getFixedDepositList();
   }
+
 
   getEndDate(value) {
     this.EndDate = UtilService.getStartOfTheDay(new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * Number(value))).getTime();
