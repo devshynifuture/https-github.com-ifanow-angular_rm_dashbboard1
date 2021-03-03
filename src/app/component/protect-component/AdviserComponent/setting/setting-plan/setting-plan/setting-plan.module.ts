@@ -13,9 +13,11 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 
 
+
 @NgModule({
   declarations: [PlanAssetallocationComponent, PlanReturnsinflationComponent, PlanTemplatesComponent, PlanGalleryComponent, SettingPlanComponent,
-    PlanKeyParametersComponent,],
+    PlanKeyParametersComponent,
+  ],
   imports: [
     CommonModule,
     SettingPlanRoutingModule,

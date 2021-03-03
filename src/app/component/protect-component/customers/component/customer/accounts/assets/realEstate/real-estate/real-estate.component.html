@@ -4,7 +4,8 @@
         <div class="col-md-6 p-0">
             <h4 class="m-0 text-black roboto">Real estate </h4>
         </div>
-        <div class="col-md-6 p-0 d-flex align-items-center justify-content-end " *ngIf="!hideFilter">
+        <div class="col-md-6 p-0 d-flex align-items-center justify-content-end "
+            *ngIf="datasource3.filteredData.length != 0">
             <div class="p-0 mr-10 d-flex align-items-center justify-content-center mt-8">
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             </div>
