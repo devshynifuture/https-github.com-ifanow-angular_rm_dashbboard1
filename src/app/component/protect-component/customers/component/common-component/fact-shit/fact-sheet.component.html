@@ -74,34 +74,54 @@
           <div class="wrapper-8">
             <p class="m-0 roboto f-500">Top Holdings</p>
             <div class="pt-12" id="table-low">
-              <table mat-table [dataSource]="dataSource">
+              <div *ngIf="dataSource.data.length > 0">
+                <table mat-table [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                  *ngIf="dataSource.data.length>0" class="skeletonAnimation" id="table-low">
 
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef> Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                </ng-container>
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div class="bar"><span *ngIf="!isLoading">{{element.name}} </span>
+                      </div>
+                    </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="sector">
-                  <th mat-header-cell *matHeaderCellDef> Sector </th>
-                  <td mat-cell *matCellDef="let element"> {{element.sector}} </td>
-                </ng-container>
+                  <ng-container matColumnDef="sector">
+                    <th mat-header-cell *matHeaderCellDef> Sector </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div class="bar">{{element.sector}}</div>
+                    </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="ins">
-                  <th mat-header-cell *matHeaderCellDef> Instrument </th>
-                  <td mat-cell *matCellDef="let element"> {{element.ins}} </td>
-                </ng-container>
+                  <ng-container matColumnDef="ins">
+                    <th mat-header-cell *matHeaderCellDef> Instrument </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div class="bar">{{element.ins}}</div>
+                    </td>
+                  </ng-container>
 
-                <ng-container matColumnDef="all">
-                  <th mat-header-cell *matHeaderCellDef> % Allocation </th>
-                  <td mat-cell *matCellDef="let element"> {{element.all}} </td>
-                </ng-container>
-                <ng-container matColumnDef="assets">
-                  <th mat-header-cell *matHeaderCellDef> Assets (Cr) </th>
-                  <td mat-cell *matCellDef="let element"> {{element.assets}} </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
+                  <ng-container matColumnDef="all">
+                    <th mat-header-cell *matHeaderCellDef> % Allocation </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div class="bar">{{element.all}}</div>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="assets">
+                    <th mat-header-cell *matHeaderCellDef> Assets (Cr) </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div class="bar"> {{element.assets}}</div>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </div>
+
+              <div *ngIf="dataSource.data.length == 0" class="d-flex flex-column align-items-center">
+                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                <h4 class="text-center pt-12"> No data found</h4>
+
+              </div>
             </div>
           </div>
         </div>

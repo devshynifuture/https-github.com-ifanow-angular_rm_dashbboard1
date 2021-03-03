@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 import { Chart } from 'angular-highcharts';
 import Highcharts, { ColorString } from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
 import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 import { CustomerService } from '../../customer/customer.service';
 require('highcharts/modules/solid-gauge')(Highcharts);
@@ -14,7 +16,8 @@ require('highcharts/highcharts-more')(Highcharts);
 })
 export class FactSheetComponent implements OnInit {
   displayedColumns = ['name', 'sector', 'ins', 'all', 'assets'];
-  dataSource = ELEMENT_DATA;
+  isLoading = false;
+  dataSource = new MatTableDataSource();
   portfolioGraph: Chart;
   graphList: any[];
   advisorId: any;
@@ -11402,7 +11405,7 @@ export class FactSheetComponent implements OnInit {
   investorName: any;
   folioNumber: any;
   nav: any;
-  constructor(private cusService: CustomerService, private mfService: MfServiceService) {
+  constructor(private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -11415,10 +11418,50 @@ export class FactSheetComponent implements OnInit {
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
     this.nav = this.data.nav;
+    this.getAllocationData();
+    this.getSpeedometer();
     this.initializePortfolioChart();
     this.speedChart();
     this.schemePerformance();
     this.relativePerformanceGraph();
+  }
+  getSpeedometer() {
+    const data = {
+      schemeCode: this.data.accordSchemeCode,
+    };
+    this.cusService.getFactSheetRiskometer(data)
+      .subscribe(res => {
+        if (res) {
+          console.log('speedometer', res);
+          this.eventService.openSnackBar(res, 'DISMISS');
+        } else {
+        }
+      }, err => {
+        this.eventService.openSnackBar('err', 'DISMISS');
+      });
+  }
+  getAllocationData() {
+    this.isLoading = true;
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    const data = {
+      schemeCode: this.data.accordSchemeCode,
+    };
+    this.cusService.getFactSheetAllocation(data)
+      .subscribe(res => {
+        if (res) {
+          console.log('Asset Allocation', res);
+          this.isLoading = false;
+          this.dataSource.data = res;
+          this.eventService.openSnackBar(res, 'DISMISS');
+        } else {
+          this.isLoading = false;
+          this.dataSource.data = [];
+        }
+      }, err => {
+        this.isLoading = false;
+        this.dataSource.data = [];
+        this.eventService.openSnackBar('err', 'DISMISS');
+      });
   }
   relativePerformanceGraph() {
     const chartConfigPerformance: any = {
