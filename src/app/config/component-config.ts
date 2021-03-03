@@ -953,6 +953,7 @@ export const appConfig = {
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
   GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
   ADD_CALL_BACK_MOB: 'advisor-callback-detail/add',
+  GET_TEMPLATE_LIST: 'plan/setting/financial-plan/advisor-template/list/get',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
