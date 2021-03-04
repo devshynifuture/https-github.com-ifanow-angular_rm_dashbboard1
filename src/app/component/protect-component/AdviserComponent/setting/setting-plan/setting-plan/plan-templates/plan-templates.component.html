@@ -17,6 +17,8 @@
                     (click)="setVisibility(false,item)" class="c-p pl-10">
                 <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
+                <img *ngIf="item.visible == false" src="/assets/images/svg/delete-outline.svg"
+                    (click)="setVisibility(true,item)" class="c-p pl-10">
             </div>
 
             <img src="{{item.imageUrl}}" class="w-100">
