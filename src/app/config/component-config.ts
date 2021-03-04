@@ -563,7 +563,7 @@ export const appConfig = {
   SAVE_PLAN_SECTION: "plan/financial-plan/save",
   GET_PLAN_SECTION: "plan/financial-plan/list/get",
   DELETE_FP_SECTION: 'plan/financial-plan/delete',
-  GET_TEMPLATES: 'plan/financial-plan/template/list/get',
+  GET_TEMPLATES: 'plan/financial-plan/advisor-template/list/get',
   GET_PREVIEW: 'plan/financial-plan/pdf-url/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
@@ -755,7 +755,7 @@ export const appConfig = {
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
   GET_SCHEMES_DETAILS: 'rmdashboard/get/scheme/details',
   MF_LIST_UNFREEZE: 'mutual-fund/mf-list/unfreeze',
-
+  EDIT_SIP_AMOUNT: 'backoffice/sip-cleanup/sip-amount/edit',
   /********************************* TASKS Section ****************************************/
 
   ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',
@@ -958,6 +958,9 @@ export const appConfig = {
   GET_TEMPLATE_LIST: 'plan/setting/financial-plan/advisor-template/list/get',
   ADD_TEMPLATE: 'plan/financial-plan/template/add',
   EDIT_TEMPLATE: 'plan/financial-plan/template/edit',
+  SET_VISIBILITY: 'plan/financial-plan/template/visibility/edit',
+  RESET_TEMPLATE: 'plan/financial-plan/advisor-template/reset',
+  DELETE_TEMPLATE: 'plan/financial-plan/template/delete',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',

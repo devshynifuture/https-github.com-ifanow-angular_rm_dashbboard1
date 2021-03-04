@@ -831,6 +831,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       this.basicDetails.get('role').clearValidators();
       this.basicDetails.get('role').updateValueAndValidity();
     }
+    this.mobileData.markAllAsTouched();
     let gardianObj = [];
     if (this.invTypeCategory == '1' && this.basicDetails.get('gender').invalid) {
       this.eventService.openSnackBar('Please select gender', 'Dimiss');

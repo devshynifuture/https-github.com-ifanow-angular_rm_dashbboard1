@@ -81,7 +81,8 @@
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}}
-                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">{{ category.sipAmount }}</span>
+                                        <span *ngIf="!isLoading" appFormatNumber
+                                            [shouldRoundOff]="true">{{ category.sipAmount }}</span>
                                     </div>
                                 </td>
                                 <td class="text-right">
@@ -114,178 +115,186 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
-                                    <div class="tableScrollSip" *ngIf="category.showCategory==false && category.applicantList?.length > 0"> 
-                                    <table class="skeletonAnimation table98 mt-16 mb-8" appSkeletonLoading
-                                        [appSkeletonLoading]="isLoadingApplicant" id="table-low">
-                                        <thead class="bg-light text-dark">
-                                            <tr class="h-40">
-                                                <th (click)="sortByApplicant(category.applicantList,'investorName')"
-                                                    class="c-p f-500">
-                                                    <span class="d-flex align-items-center"> Applicant Name
-                                                        <i class="material-icons  ml-4 f-14 text-primitive ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='investorName' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons  ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='investorName' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'schemeName')"
-                                                    class="c-p f-500">
-                                                    <span class="d-flex align-items-center"> Scheme Name
-                                                        <i class="material-icons  ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='schemeName' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons  ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='schemeName' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'folioNumber')"
-                                                    class="c-p f-500">
-                                                    <span class="d-flex align-items-center"> Folio
-                                                        <i class="material-icons  ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='folioNumber' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons  ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='folioNumber' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'registeredDate')"
-                                                    class="c-p f-500"> <span class="d-flex align-items-center"> Registered
-                                                        Date
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='registeredDate' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='registeredDate' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'from_date')"
-                                                    class="c-p f-500">
-                                                    <span class="d-flex align-items-center"> From Date
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='from_date' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='from_date' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'to_date')"
-                                                    class="c-p f-500">
-                                                    <span class="d-flex align-items-center"> To Date
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='to_date' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='to_date' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'sipTriggerDay')"
-                                                    class="c-p f-500"> <span class="d-flex align-items-center"> Trigger Day
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='sipTriggerDay' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='sipTriggerDay' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'frequency')"
-                                                    class="c-p f-500">
-                                                    <span class="d-flex align-items-center"> Frequency
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='frequency' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='frequency' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th (click)="sortByApplicant(category.applicantList,'sipAmount')"
-                                                    class="c-p w-9 f-500">
-                                                    <span class="d-flex align-items-center"> Amount
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='sipAmount' && !reverse2">
-                                                            arrow_upward </i>
-                                                        <i class="material-icons ml-4 f-14 text-primitive"
-                                                            *ngIf="propertyName2=='sipAmount' && reverse2">arrow_downward</i>
-                                                    </span>
-                                                </th>
-                                                <th class="f-500 w-9">% Weight</th>
-                                                <th class="f-500">Edit</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody *ngFor="let subcategory of category.applicantList; let i = index">
-                                            <tr>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? '' : subcategory.investorName}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? '' : subcategory.schemeName}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? '' : subcategory.folioNumber}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant  ? '' : (subcategory.registeredDate | date:'dd/MM/yyyy')}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? '' : (subcategory.from_date | date:'dd/MM/yyyy')}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? '' : (subcategory.to_date | date:'dd/MM/yyyy')}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? '' : subcategory.sipTriggerDay}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant  ? '' : subcategory.frequency}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? ' ' : '₹ '}} 
-                                                        <span *ngIf="!isLoadingApplicant" appFormatNumber [shouldRoundOff]="true"> {{ subcategory.sipAmount }}</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? '' : (subcategory.weightInPercentage | number:'1.2-2')}}{{(isLoadingApplicant?'':'%') }}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <!-- {{(isLoadingApplicant?'':' Add cease date') }} -->
-                                                    <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        <div *ngIf="!isLoadingApplicant">
-                                                             
-
-                                                                <span title="Add Cease Date" (click)="changeCeasedDateDialog(subcategory, category)"
-                                                                *ngIf="!subcategory.isEdit" class="material-icons c-p">
-                                                                    date_range
-                                                                    </span>
-
-
-                                                            <span *ngIf="subcategory.isEdit">
-                                                                {{ ceasedDate | date:'mediumDate' }}</span>
+                                    <div class="tableScrollSip"
+                                        *ngIf="category.showCategory==false && category.applicantList?.length > 0">
+                                        <table class="skeletonAnimation table98 mt-16 mb-8" appSkeletonLoading
+                                            [appSkeletonLoading]="isLoadingApplicant" id="table-low">
+                                            <thead class="bg-light text-dark">
+                                                <tr class="h-40">
+                                                    <th (click)="sortByApplicant(category.applicantList,'investorName')"
+                                                        class="c-p f-500">
+                                                        <span class="d-flex align-items-center"> Applicant Name
+                                                            <i class="material-icons  ml-4 f-14 text-primitive ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='investorName' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons  ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='investorName' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'schemeName')"
+                                                        class="c-p f-500">
+                                                        <span class="d-flex align-items-center"> Scheme Name
+                                                            <i class="material-icons  ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='schemeName' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons  ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='schemeName' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'folioNumber')"
+                                                        class="c-p f-500">
+                                                        <span class="d-flex align-items-center"> Folio
+                                                            <i class="material-icons  ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='folioNumber' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons  ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='folioNumber' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'registeredDate')"
+                                                        class="c-p f-500"> <span class="d-flex align-items-center">
+                                                            Registered
+                                                            Date
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='registeredDate' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='registeredDate' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'from_date')"
+                                                        class="c-p f-500">
+                                                        <span class="d-flex align-items-center"> From Date
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='from_date' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='from_date' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'to_date')"
+                                                        class="c-p f-500">
+                                                        <span class="d-flex align-items-center"> To Date
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='to_date' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='to_date' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'sipTriggerDay')"
+                                                        class="c-p f-500"> <span class="d-flex align-items-center">
+                                                            Trigger Day
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='sipTriggerDay' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='sipTriggerDay' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'frequency')"
+                                                        class="c-p f-500">
+                                                        <span class="d-flex align-items-center"> Frequency
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='frequency' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='frequency' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th (click)="sortByApplicant(category.applicantList,'sipAmount')"
+                                                        class="c-p w-9 f-500">
+                                                        <span class="d-flex align-items-center"> Amount
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='sipAmount' && !reverse2">
+                                                                arrow_upward </i>
+                                                            <i class="material-icons ml-4 f-14 text-primitive"
+                                                                *ngIf="propertyName2=='sipAmount' && reverse2">arrow_downward</i>
+                                                        </span>
+                                                    </th>
+                                                    <th class="f-500 w-9">% Weight</th>
+                                                    <th class="f-500">Edit</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let subcategory of category.applicantList; let i = index">
+                                                <tr>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? '' : subcategory.investorName}}
                                                         </div>
-                                                        <span *ngIf="isLoadingApplicant">{{''}}</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? '' : subcategory.schemeName}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? '' : subcategory.folioNumber}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant  ? '' : (subcategory.registeredDate | date:'dd/MM/yyyy')}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? '' : (subcategory.from_date | date:'dd/MM/yyyy')}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? '' : (subcategory.to_date | date:'dd/MM/yyyy')}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? '' : subcategory.sipTriggerDay}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant  ? '' : subcategory.frequency}}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? ' ' : '₹ '}}
+                                                            <span *ngIf="!isLoadingApplicant" appFormatNumber
+                                                                [shouldRoundOff]="true">
+                                                                {{ subcategory.sipAmount }}<span class="f-10"
+                                                                    *ngIf="subcategory.amountEdited">(edited)</span></span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            {{isLoadingApplicant ? '' : (subcategory.weightInPercentage | number:'1.2-2')}}{{(isLoadingApplicant?'':'%') }}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <!-- {{(isLoadingApplicant?'':' Add cease date') }} -->
+                                                        <div [ngClass]="{'bar': isLoadingApplicant}">
+                                                            <div *ngIf="!isLoadingApplicant">
+
+
+                                                                <span title="Add Cease Date"
+                                                                    (click)="changeCeasedDateDialog(subcategory, category)"
+                                                                    *ngIf="!subcategory.isEdit"
+                                                                    class="material-icons c-p">
+                                                                    date_range
+                                                                </span>
+
+
+                                                                <span *ngIf="subcategory.isEdit">
+                                                                    {{ ceasedDate | date:'mediumDate' }}</span>
+                                                            </div>
+                                                            <span *ngIf="isLoadingApplicant">{{''}}</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
 
                                     <!-- <div *ngIf="!isLoadingApplicant && category.showCategory==false">
@@ -303,7 +312,8 @@
                                 <td class="p-table text-right"><strong>Total</strong></td>
                                 <td class="p-table text-right">
                                     <strong>{{'₹ '}}
-                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">{{ totalOfSipAmount }}</span>
+                                        <span *ngIf="!isLoading" appFormatNumber
+                                            [shouldRoundOff]="true">{{ totalOfSipAmount }}</span>
                                     </strong>
                                 </td>
                                 <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>

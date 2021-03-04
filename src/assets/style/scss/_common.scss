@@ -126,6 +126,15 @@ a:hover {
 
 }
 
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #008FFF !important;
+}
+
+.top-100 {
+  top: 100px !important;
+}
+
 .center-item {
   display: block !important;
   margin: 0 auto;

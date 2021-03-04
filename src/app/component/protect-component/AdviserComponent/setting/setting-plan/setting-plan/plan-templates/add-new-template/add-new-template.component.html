@@ -10,20 +10,20 @@
 </div>
 <div class="pt-90 pb-48" [formGroup]="addTemplate">
     <div class="row ">
-        <div class="col-md-5 full-end pt-16">
+        <div class="col-md-6 full-end pt-16">
             <h5 class="m-0 f-16 roboto f-400">Template name</h5>
         </div>
-        <div class="col-md-5 pl-0">
+        <div class="col-md-4 pl-0">
             <mat-form-field appearance="standard">
                 <input placeholder="Enter template name" formControlName="name" matInput class="form-control">
             </mat-form-field>
         </div>
     </div>
     <div class="row pt-32">
-        <div class="col-md-5 full-end">
+        <div class="col-md-6 full-end">
             <h5 class="m-0 roboto f-16 f-400">Select category</h5>
         </div>
-        <div class="col-md-5 pl-0">
+        <div class="col-md-4 pl-0">
             <mat-form-field>
                 <mat-select class="form-control" formControlName="category" matInput>
                     <mat-option value='' [disabled]=true>
@@ -37,18 +37,28 @@
         </div>
     </div>
     <div class="row pt-32">
-        <div class="col-md-5 text-right">
+        <div class="col-md-6 text-right">
             <h5 class="m-0 roboto f-16 f-400">Upload your template</h5>
             <p class="f-12 roboto text-custom lh-14 f-400">This template will be available to download in<br>
                 miscellaenous
                 section of
                 financial plan. You can attach<br> it in your financial reports and send it to your client.</p>
         </div>
-        <div *ngIf="edit" class="col-md-5 pl-0" (click)="openGallery(imgUrl)">
-            <img src="{{imgUrl}}" class="hw-230">
+        <div *ngIf="edit" class="col-md-4 pl-0" (click)="openGallery(imgUrl)">
+            <div class="plan-templates-img-right-side">
+                <img src="{{imgUrl}}" class="h-230 b-a c-p">
+                <div class="middleOne">
+                    <p class="c-p"> Edit</p>
+                </div>
+            </div>
         </div>
         <div *ngIf="!edit" class="col-md-5 pl-0" (click)="openGallery('/assets/images/setting.png')">
-            <img src="/assets/images/setting.png" class="hw-230">
+            <div class="plan-templates-img-right-side">
+                <img src="/assets/images/setting.png" class="h-230 c-p">
+                <div class="middleOne">
+                    <p class="c-p"> Edit</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

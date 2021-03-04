@@ -12,9 +12,11 @@
   }
 }
 
+
 .action-teamplates {
   position: absolute;
   right: 10px;
+  z-index: 9;
 
   img {
     position: relative;

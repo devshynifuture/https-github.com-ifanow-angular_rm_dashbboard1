@@ -60,6 +60,7 @@
   </mat-icon>
   </a> -->
           <!-- *ngIf="!enumDataService.PRODUCTION&&roleService.subscriptionPermission.enabled" -->
+          <!-- [matMenuTriggerFor]="rightactivities" -->
           <mat-accordion class="menuAccordion">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
@@ -104,6 +105,10 @@
 
             </mat-expansion-panel>
           </mat-accordion>
+          <!-- <mat-menu #rightactivities="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+          </mat-menu> -->
 
           <a class="sidenav-link" *ngIf="roleService.transactionPermission.enabled"
             [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item

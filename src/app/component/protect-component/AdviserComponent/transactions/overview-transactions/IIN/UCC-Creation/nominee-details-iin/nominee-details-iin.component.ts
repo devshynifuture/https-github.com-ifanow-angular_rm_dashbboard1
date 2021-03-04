@@ -370,7 +370,30 @@ export class NomineeDetailsIinComponent implements OnInit {
   reset() {
     this.nomineeDetails.reset();
   }
-
+  skip(value, flag) {
+    const obj1 = [];
+    obj1.push(this.firstHolderNominee);
+    if (this.secondHolderNominee) {
+      obj1.push(this.secondHolderNominee);
+    }
+    if (this.thirdHolderNominee) {
+      obj1.push(this.thirdHolderNominee);
+    }
+    if (flag) {
+      this.doneData = true;
+      value = {};
+      const obj = {
+        ...this.inputData,
+        nomineeList: obj1,
+        id: 2,
+        aggregatorType: 1,
+        commMode: 1,
+        confirmationFlag: 1,
+      };
+      localStorage.setItem('nominee' + (this.data.clientId), JSON.stringify(obj));
+      this.openFatcaDetails(obj);
+    }
+  }
   SendToForm(value, flag) {
     this.saveNomineeDetails(this.holder.type);
     if (value == 'first') {
@@ -442,23 +465,11 @@ export class NomineeDetailsIinComponent implements OnInit {
       value = {};
       const obj = {
         ...this.inputData,
-        // ownerName: this.inputData.ownerName,
-        // holdingType: this.inputData.holdingType,
-        // taxMaster: this.inputData.taxMaster,
-        // taxMasterId: this.inputData.taxMasterId,
-        // holderList: this.inputData.holderList,
-        // bankDetailList: this.inputData.bankDetailList,
         nomineeList: obj1,
         id: 2,
         aggregatorType: 1,
-        // familyMemberId: this.inputData.familyMemberId,
-        // clientId: this.inputData.clientId,
-        // advisorId: this.inputData.advisorId,
-        // generalDetails: this.inputData.generalDetails,
-        // fatcaDetail: this.inputData.fatcaDetail,
         commMode: 1,
         confirmationFlag: 1,
-        // inputData: this.inputData,
       };
       localStorage.setItem('nominee' + (this.data.clientId), JSON.stringify(obj));
       this.openFatcaDetails(obj);

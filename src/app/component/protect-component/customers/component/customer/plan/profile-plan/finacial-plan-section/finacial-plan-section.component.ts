@@ -522,8 +522,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   getTemplateSection() {
-
-    this.planService.getTemplates('').subscribe(
+    let obj = {
+      advisorId: AuthService.getAdvisorId()
+    }
+    this.planService.getTemplates(obj).subscribe(
       data => this.getTemplatesRes(data),
       err => {
         console.error(err);
