@@ -343,14 +343,14 @@
               <div class="col-md-6 d-flex align-items-center">
                 <h3 class="m-0 roboto   f-500 text-black">Portfolio summary</h3>
               </div>
-              <div class="col-md-6 d-flex align-items-center justify-content-end">
+              <div class="col-md-6 d-flex align-items-center justify-content-end pr-10">
                 <!-- (click)="dobAsPerRecord.open()" // asper bug raise in Mf the dropdown to choose date should be removed as we are not going to show any back dated data over here -->
                 <p class="m-0 roboto f-400 f-16">As on
                   {{asOnDate | date:'dd/MM/yyyy'}}</p>
                 <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
-                  <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p pr-16 h-24"
+                  <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24"
                     matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
-                  <mat-spinner class="mr-10" [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+                  <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
                 </div>
 
@@ -646,7 +646,7 @@
     <table style="width: 100%;color: #000;font-family: 'Roboto', sans-serif;    border-collapse: collapse;">
       <tbody>
         <tr>
-          <td rowspan="4" style="border-right: 1px solid #ddd;width: 20%;border-bottom: 1px solid #ddd;">
+          <td rowspan="4" colspan="2" style="border-right: 1px solid #ddd;width: 20%;border-bottom: 1px solid #ddd;">
 
             <span>NET WORTH</span><br>
             <span style="font-size: 30px;"> <span>₹</span>
@@ -768,7 +768,7 @@
             <div>$showpiechart2</div>
           </td>
           <td rowspan="2"
-            style="width: 300px; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
+            style="width: 250px; text-align: center; border: 1px solid #dee5e7; border-right: transparent;">
             <span style="font-size: 18px;">
               Asset allocation
             </span><br>
