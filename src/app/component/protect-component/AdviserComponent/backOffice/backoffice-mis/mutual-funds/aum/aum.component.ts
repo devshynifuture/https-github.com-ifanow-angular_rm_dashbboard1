@@ -511,7 +511,7 @@ export class AumComponent implements OnInit {
         type: undefined,
         name: 'Net Sales',
         color: '#55c3e6',
-        data: [obj1.GrossSale + obj1.Redemption, obj2.GrossSale + obj2.Redemption, obj3.GrossSale + obj3.Redemption, obj4.GrossSale + obj4.Redemption]
+        data: [obj1.GrossSale - obj1.Redemption, obj2.GrossSale - obj2.Redemption, obj3.GrossSale - obj3.Redemption, obj4.GrossSale - obj4.Redemption]
       }]
     });
   }

@@ -7,70 +7,79 @@
     </div>
 </div>
 <div class="row pt-16">
-    <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">Financial Plan</h5>
+    <h5 class="m-0 pt-16 pl-16 roboto pb-0 f-400 text-center text-black">Financial Plan</h5>
 </div>
 <div class="row pt-16">
     <div class="w-20 pr-10 pl-10" *ngFor="let item of fincialPlanList">
         <mat-card class="p-0">
             <div class="action-teamplates">
-                <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
+                <img src="/assets/images/svg/pencil-action.svg" *ngIf="item.name == 'Index'"
+                    (click)="openAddtemlates(item)" class="pr-10 c-p">
+                <img *ngIf="item.manual == false && item.name == 'Index'" (click)="resetTemplate(item)"
                     src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                <img *ngIf="item.manual == false && item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
-                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                <img *ngIf="item.manual == false && item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
                 <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
                     (click)="deleteTemplate(item)" class="c-p pl-10">
             </div>
-
-            <img src="{{item.imageUrl}}" class="w-100">
+            <div class="plan-templates-img">
+                <img src="{{item.imageUrl}}" class="w-100">
+                <div class="middleOne" (click)="getPreview(item)">
+                    <p class="c-p"> Preview</p>
+                </div>
+            </div>
         </mat-card>
         <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">{{item.name}}</h5>
     </div>
 </div>
 <div class="row pt-16">
-    <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">Quotes</h5>
+    <h5 class="m-0 pt-16 roboto pl-16 f-400 text-center text-black">Quotes</h5>
 </div>
 <div class="row pt-16">
     <div class="w-20 pr-10 pl-10" *ngFor="let item of quotes">
         <mat-card class="p-0">
             <div class="action-teamplates">
-                <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
-                    src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                <img *ngIf="item.manual == false && item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
-                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                <img *ngIf="item.manual == false && item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
                 <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
                     (click)="deleteTemplate(item)" class="c-p pl-10">
             </div>
 
-            <img src="{{item.imageUrl}}" class="w-100">
+            <div class="plan-templates-img">
+                <img src="{{item.imageUrl}}" class="w-100">
+                <div class="middleOne" (click)="getPreview(item)">
+                    <p class="c-p"> Preview</p>
+                </div>
+            </div>
         </mat-card>
         <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">{{item.name}}</h5>
     </div>
 </div>
 <div class="row pt-16">
-    <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">Miscellaneous</h5>
+    <h5 class="m-0 pt-16 roboto pl-16 f-400 text-center text-black">Miscellaneous</h5>
 </div>
 <div class="row pt-16" *ngIf="miscellaneous">
     <div class="w-20 pr-10 pl-10" *ngFor="let item of miscellaneous  | slice:3:miscellaneous.length; let i=index">
         <mat-card class="p-0">
             <div class="action-teamplates">
-                <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
-                    src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                <img *ngIf="item.manual == false && item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
-                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                <img *ngIf="item.manual == false && item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
                 <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
                     (click)="deleteTemplate(item)" class="c-p pl-10">
             </div>
             <!-- (click)="getPreview(item)" -->
-            <img src="{{item.imageUrl}}" class="w-100">
+            <div class="plan-templates-img">
+                <img src="{{item.imageUrl}}" class="w-100">
+                <div class="middleOne" (click)="getPreview(item)">
+                    <p class="c-p"> Preview</p>
+                </div>
+            </div>
         </mat-card>
         <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">{{item.name}}</h5>
     </div>
