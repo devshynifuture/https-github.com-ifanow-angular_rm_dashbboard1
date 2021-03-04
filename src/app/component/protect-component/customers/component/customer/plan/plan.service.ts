@@ -360,7 +360,7 @@ export class PlanService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FP_SECTION, data);
   }
   getTemplates(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATES, '');
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATES, data);
   }
   getPreview(data) {
     const httpParams = new HttpParams().set('id', data.id);

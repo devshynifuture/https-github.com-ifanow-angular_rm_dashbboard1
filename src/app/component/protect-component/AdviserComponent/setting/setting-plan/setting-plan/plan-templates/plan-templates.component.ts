@@ -66,6 +66,7 @@ export class PlanTemplatesComponent implements OnInit {
     this.SettingsService.resetTemplate(obj).subscribe(
       res => {
         this.eventService.openSnackBar('Template is reset Successfully', 'Dismiss');
+        this.getTemplateList()
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');

@@ -538,7 +538,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Term != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.Term != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #termIns
                                                 (change)="checkAndLoadPdf($event.checked,'Term insurance','','Portfolio / Life Insurance / Term insurance',false,termIns)">
@@ -547,7 +547,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.Traditional != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.Traditional != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #trasIns
                                                 (change)="checkAndLoadPdf($event.checked,'Traditional insurance','','Portfolio / Life Insurance / Traditional insurance',false,trasIns)">
@@ -556,7 +556,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.ULIP != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.ULIP != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #ulipIns
                                                 (change)="checkAndLoadPdf($event.checked,'Ulip insurance','','Portfolio / Life Insurance / Ulip insurance',false,ulipIns)">
@@ -577,7 +577,7 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="bl br bb">
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.GeneralInsurance != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.GeneralInsurance != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #AllGenIns
                                                 (change)="checkAndLoadPdf($event.checked,'All General insurance','','Portfolio / General Insurance / All general insurances',false,AllGenIns)">
@@ -586,7 +586,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HealthInsurance != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.HealthInsurance != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #healthIns
                                                 (change)="checkAndLoadPdf($event.checked,'Health insurance','','Portfolio / General Insurance / Health insurance',false,healthIns)">
@@ -595,7 +595,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.PersonalAccident != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.PersonalAccident != 0">
                                         <div class="col-md-12">
                                             <mat-checkbox #personalAccIns
                                                 (change)="checkAndLoadPdf($event.checked,'Personal accident','','Portfolio / General Insurance / Personal accident',false,personalAccIns)">
@@ -604,7 +604,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.CriticalIllness != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.CriticalIllness != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #critIllIns
                                                 (change)="checkAndLoadPdf($event.checked,'Critical illness','','Portfolio / General Insurance / Critical illness',false,critIllIns)">
@@ -613,7 +613,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.MotorInsurance != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.MotorInsurance != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #motorIns
                                                 (change)="checkAndLoadPdf($event.checked,'Motor insurance','','Portfolio / General Insurance / Motor insurance',false,motorIns)">
@@ -622,7 +622,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.TravelInsurance != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.TravelInsurance != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #travelIns
                                                 (change)="checkAndLoadPdf($event.checked,'Travel insurance','','Portfolio / General Insurance / Travel insurance',false,travelIns)">
@@ -631,7 +631,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance.HomeInsurance != 0">
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.HomeInsurance != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #HomeIns
                                                 (change)="checkAndLoadPdf($event.checked,'Home insurance','','Portfolio / General Insurance / Home insurance',false,HomeIns)">
@@ -641,7 +641,7 @@
 
                                     </div>
                                     <div class="row bb-1 pt-8 pb-8"
-                                        *ngIf="portfolioInsurance.FireAndSpecialPerilsInsurance != 0">
+                                        *ngIf="portfolioInsurance?.FireAndSpecialPerilsInsurance != 0">
                                         <div class="col-md-1">
                                             <mat-checkbox #FireIns
                                                 (change)="checkAndLoadPdf($event.checked,'Fire & special perils','','Portfolio / General Insurance / Fire & special perils',false,FireIns)">
@@ -1093,7 +1093,7 @@
                                         </mat-card>
                                     </div>
                                     <div class="col-md-6 pr-0 pl-8"
-                                        *ngFor="let q of quotes?.templates | slice:11:31; let i=index">
+                                        *ngFor="let q of quotes?.templates | slice:11:quotes?.templates.length; let i=index">
                                         <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
                                             <img mat-card-image src="{{q.imageUrl}}" class="w-100">
                                             <mat-card-content>
@@ -1125,7 +1125,7 @@
                                 </mat-expansion-panel-header>
                                 <div class="row">
                                     <div class="col-md-6 pl-0 pr-8"
-                                        *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
+                                        *ngFor="let f of fincialPlan?.templates  | slice:0:10; let i=index">
                                         <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
                                             <img mat-card-image src="{{f.imageUrl}}" class="w-100">
                                             <mat-card-content>
@@ -1142,9 +1142,9 @@
                                         </mat-card>
                                     </div>
                                     <div class="col-md-6 pr-0 pl-8"
-                                        *ngFor="let f of fincialPlan.templates  | slice:0:10; let i=index">
+                                        *ngFor="let f of fincialPlan?.templates  | slice:11:fincialPlan?.templates.length; let i=index">
                                         <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
-                                            <img mat-card-image src="{{f}}" class="w-100">
+                                            <img mat-card-image src="{{f.imageUrl}}" class="w-100">
                                             <mat-card-content>
                                                 <h5 class="m-0 text-center">{{f.name}}</h5>
                                             </mat-card-content>
@@ -1189,7 +1189,7 @@
                                         </mat-card>
                                     </div>
                                     <div class="col-md-6 pr-0 pl-0"
-                                        *ngFor="let m of miscellaneous.templates | slice:2:3; let i=index">
+                                        *ngFor="let m of miscellaneous?.templates | slice:2:miscellaneous?.templates.length; let i=index">
                                         <mat-card class="example-card bg-grey lter pt-0 pl-0 pr-0">
                                             <img mat-card-image src="{{m.imageUrl}}" class="w-100">
                                             <mat-card-content>

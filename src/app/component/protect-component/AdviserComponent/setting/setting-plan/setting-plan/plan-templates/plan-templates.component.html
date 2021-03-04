@@ -11,7 +11,7 @@
         <mat-card class="p-0">
             <div class="action-teamplates">
                 <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.isManual == true" (click)="resetTemplate(item)"
+                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
                     src="/assets/images/svg/refresh-icon.svg" class="c-p">
                 <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
@@ -29,7 +29,7 @@
         <mat-card class="p-0">
             <div class="action-teamplates">
                 <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.isManual == true" (click)="resetTemplate(item)"
+                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
                     src="/assets/images/svg/refresh-icon.svg" class="c-p">
                 <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
@@ -47,7 +47,7 @@
         <mat-card class="p-0">
             <div class="action-teamplates">
                 <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.isManual == true" (click)="resetTemplate(item)"
+                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
                     src="/assets/images/svg/refresh-icon.svg" class="c-p">
                 <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">

@@ -563,7 +563,7 @@ export const appConfig = {
   SAVE_PLAN_SECTION: "plan/financial-plan/save",
   GET_PLAN_SECTION: "plan/financial-plan/list/get",
   DELETE_FP_SECTION: 'plan/financial-plan/delete',
-  GET_TEMPLATES: 'plan/financial-plan/template/list/get',
+  GET_TEMPLATES: 'plan/financial-plan/advisor-template/list/get',
   GET_PREVIEW: 'plan/financial-plan/pdf-url/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
