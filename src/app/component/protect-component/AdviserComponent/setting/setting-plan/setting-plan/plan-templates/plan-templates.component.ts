@@ -59,6 +59,20 @@ export class PlanTemplatesComponent implements OnInit {
       }
     );
   }
+  deleteTemplate(item) {
+    let obj = {
+      id: item.id,
+    }
+    this.SettingsService.deleteTemplate(obj).subscribe(
+      res => {
+        this.eventService.openSnackBar('Template is deleted Successfully', 'Dismiss');
+        this.getTemplateList()
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
   resetTemplate(item) {
     let obj = {
       id: item.id,

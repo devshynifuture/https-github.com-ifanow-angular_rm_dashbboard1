@@ -201,4 +201,7 @@ export class SettingsService {
   resetTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_TEMPLATE, data);
   }
+  deleteTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEMPLATE, data);
+  }
 }
