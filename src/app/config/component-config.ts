@@ -308,6 +308,8 @@ export const appConfig = {
   EDIT_NOTES_ACTIVITY: 'activity/note/edit',
   DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
   DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
+  MF_FACT_SHEET_RISKOMETER: 'mutual-fund/scheme/riskometer',
+  MF_FACT_SHEET_ALLOCATION: 'mutual-fund/scheme/company/percentage/allocation',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',

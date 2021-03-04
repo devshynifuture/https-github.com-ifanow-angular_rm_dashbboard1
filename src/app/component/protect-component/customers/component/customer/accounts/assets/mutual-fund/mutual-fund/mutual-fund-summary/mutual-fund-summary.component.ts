@@ -2137,13 +2137,13 @@ export class MutualFundSummaryComponent implements OnInit {
     );
   }
 
-  openUpperFragment(flag, element) {
+  openUpperFragment(flag, element, value) {
     this.ngZone.run(() => {
       if (flag == 'addTransaction') {
         const fragmentData = {
           flag: 'app-upper-customer',
           id: 1,
-          data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
+          data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element, sectionName: value },
           direction: 'top',
           componentName: UpperCustomerComponent,
           state: 'open'

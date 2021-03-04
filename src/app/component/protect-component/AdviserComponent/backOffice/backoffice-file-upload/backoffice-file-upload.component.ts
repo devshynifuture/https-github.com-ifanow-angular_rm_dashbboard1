@@ -49,7 +49,7 @@ export class BackofficeFileUploadComponent implements OnInit {
   type: any = 1;
   element: any;
   upload: boolean = false;
-  typeMF: any;
+  typeMF: any = '';
   fileTypeId: any;
   constructor(
     private subInjectService: SubscriptionInject,
@@ -195,6 +195,7 @@ export class BackofficeFileUploadComponent implements OnInit {
             this.filter.rt = '';
             this.selectedFileType = '';
             this.arnRiaId = '';
+            this.typeMF = '';
             setTimeout(() => {
               this.setFilter();
             }, 2000);
@@ -223,6 +224,7 @@ export class BackofficeFileUploadComponent implements OnInit {
             this.filter.rt = '';
             this.selectedFileType = '';
             this.arnRiaId = '';
+            this.typeMF = '';
             setTimeout(() => {
               this.setFilter();
             }, 2000);

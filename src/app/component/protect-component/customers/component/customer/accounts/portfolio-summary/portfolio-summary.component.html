@@ -142,7 +142,8 @@
                     <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                       <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                         <span *ngIf="fixedIncome.currentValue!=0">₹</span>
-                        <span *ngIf="fixedIncome" appFormatNumber [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
+                        <span *ngIf="fixedIncome" appFormatNumber
+                          [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
                           fixedIncome.currentValue}}</span>
                       </p>
                       <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
@@ -218,7 +219,8 @@
                   <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                     <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                       <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                      <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                      <span appFormatNumber [value]="smallSavingScheme.currentValue"
+                        *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                         smallSavingScheme.currentValue}}</span>
                     </p>
                     <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
@@ -376,7 +378,8 @@
                     </div>
                     <div class="col-md-6 pl-0">
                       <h2 *ngIf="letsideBarLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
-                        ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+                        ₹<span appFormatNumber
+                          [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                           liabilityTotal}}</span>
                       </h2>
                     </div>
@@ -672,7 +675,8 @@
               <span style="float: right;"> <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
                 <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
                   ? '-' : mutualFundValue.currentValue}}
-                </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
+                </span> <br><span style="float: right;"> <span
+                    *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
                     mutualFundValue.percentage}}
                     <span *ngIf="mutualFundValue.percentage!=0">%</span></span></span> </span>
             </div>
@@ -715,7 +719,8 @@
             <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
               <span> Small savings </span>
               <span style="float: right;"> <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                <span appFormatNumber [value]="smallSavingScheme.currentValue"
+                  *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                   smallSavingScheme.currentValue}}</span> <br><span style="float: right;"> <span
                     *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' :
                     smallSavingScheme.percentage}}
@@ -782,7 +787,14 @@
             <span style="font-size: 18px;">
               Net cash flow </span><br>
 
-            <div>$showpiechart3</div>
+            <div *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag">$showpiechart3</div>
+            <div *ngIf="cashFlowViewDataSource.length==0 || noCashflowData" class="row">
+              <div class="col-md-12 mt-30 d-flex align-items-center justify-content-center p-0">
+                <div class="content-Empty">
+                  <h4 class="f-14 mb-0 mt-20 text-center">No data found</h4>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>

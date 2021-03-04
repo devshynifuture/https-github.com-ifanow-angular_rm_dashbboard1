@@ -361,14 +361,19 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     // this.getSummaryList(obj);
   }
   generatePdf(data) {
-
-    this.svg = this.chart.getSVG()
-    this.portSvg = this.portfolioGraph.getSVG()
-    this.cashFlowSvg = this.cashFlowChart.getSVG()
+    if (this.chart) {
+      this.svg = this.chart.getSVG()
+    }
+    if (this.portfolioGraph) {
+      this.portSvg = this.portfolioGraph.getSVG()
+    }
+    if (this.cashFlowChart) {
+      this.cashFlowSvg = this.cashFlowChart.getSVG()
+    }
     console.log('svg', this.cashFlowSvg)
-    const svgs = [{ key: "$showpiechart1", svg: this.svg },
-    { key: "$showpiechart2", svg: this.portSvg },
-    { key: "$showpiechart3", svg: this.cashFlowSvg }]
+    const svgs = [{ key: "$showpiechart1", svg: this.svg ? this.svg : '' },
+    { key: "$showpiechart2", svg: this.portSvg ? this.portSvg : '' },
+    { key: "$showpiechart3", svg: this.cashFlowSvg ? this.cashFlowSvg : '' }]
     this.fragmentData.isSpinner = true;;
     let para = document.getElementById('template');
     //const header = this.summaryTemplateHeader.nativeElement.innerHTML

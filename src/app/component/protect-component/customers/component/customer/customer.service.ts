@@ -1168,5 +1168,13 @@ export class CustomerService {
   deleteCasFile(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CAS_FILE, data);
   }
+
+  getFactSheetAllocation(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_ALLOCATION, data);
+  }
+
+  getFactSheetRiskometer(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RISKOMETER, data);
+  }
 }
 
