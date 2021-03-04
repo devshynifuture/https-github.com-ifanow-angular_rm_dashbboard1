@@ -39,7 +39,9 @@ export class EditSipAmountComponent implements OnInit {
       data => {
         if (data) {
           this.eventService.openSnackBar("SIP amount edited sucessfully", "Dismiss");
-          this.close();
+          this.data['amount'] = this.sipEdit.controls.amount.value;
+          this.data['amountEdited'] = true;
+          this.close(this.data);
         }
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
@@ -47,8 +49,8 @@ export class EditSipAmountComponent implements OnInit {
     )
   }
 
-  close() {
-    this.dialogRef.close();
+  close(data) {
+    this.dialogRef.close(data);
   }
 
 }
