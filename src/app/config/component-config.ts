@@ -563,7 +563,7 @@ export const appConfig = {
   SAVE_PLAN_SECTION: "plan/financial-plan/save",
   GET_PLAN_SECTION: "plan/financial-plan/list/get",
   DELETE_FP_SECTION: 'plan/financial-plan/delete',
-  GET_TEMPLATES: 'plan/financial-plan/template/list/get',
+  GET_TEMPLATES: 'plan/financial-plan/advisor-template/list/get',
   GET_PREVIEW: 'plan/financial-plan/pdf-url/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
@@ -958,6 +958,8 @@ export const appConfig = {
   GET_TEMPLATE_LIST: 'plan/setting/financial-plan/advisor-template/list/get',
   ADD_TEMPLATE: 'plan/financial-plan/template/add',
   EDIT_TEMPLATE: 'plan/financial-plan/template/edit',
+  SET_VISIBILITY: 'plan/financial-plan/template/visibility/edit',
+  RESET_TEMPLATE: 'plan/financial-plan/advisor-template/reset',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',

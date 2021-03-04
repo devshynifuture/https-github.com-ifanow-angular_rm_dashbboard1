@@ -11,9 +11,12 @@
         <mat-card class="p-0">
             <div class="action-teamplates">
                 <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img src="/assets/images/svg/visibility.svg" (click)="setVisibility(true)" class="c-p pl-10">
-                <img src="/assets/images/svg/visibility_off.svg" (click)="setVisibility(false)" class="c-p pl-10">
+                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
+                    src="/assets/images/svg/refresh-icon.svg" class="c-p">
+                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                    (click)="setVisibility(false,item)" class="c-p pl-10">
+                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                    (click)="setVisibility(true,item)" class="c-p pl-10">
             </div>
 
             <img src="{{item.imageUrl}}" class="w-100">
@@ -26,9 +29,12 @@
         <mat-card class="p-0">
             <div class="action-teamplates">
                 <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img src="/assets/images/svg/visibility.svg" (click)="setVisibility(true)" class="c-p pl-10">
-                <img src="/assets/images/svg/visibility_off.svg" (click)="setVisibility(false)" class="c-p pl-10">
+                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
+                    src="/assets/images/svg/refresh-icon.svg" class="c-p">
+                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                    (click)="setVisibility(false,item)" class="c-p pl-10">
+                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                    (click)="setVisibility(true,item)" class="c-p pl-10">
             </div>
 
             <img src="{{item.imageUrl}}" class="w-100">
@@ -41,9 +47,12 @@
         <mat-card class="p-0">
             <div class="action-teamplates">
                 <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img src="/assets/images/svg/visibility.svg" (click)="setVisibility(true)" class="c-p pl-10">
-                <img src="/assets/images/svg/visibility_off.svg" (click)="setVisibility(false)" class="c-p pl-10">
+                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
+                    src="/assets/images/svg/refresh-icon.svg" class="c-p">
+                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                    (click)="setVisibility(false,item)" class="c-p pl-10">
+                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                    (click)="setVisibility(true,item)" class="c-p pl-10">
             </div>
 
             <img src="{{item.imageUrl}}" class="w-100">
