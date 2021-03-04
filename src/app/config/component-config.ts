@@ -957,6 +957,7 @@ export const appConfig = {
   ADD_TEMPLATE: 'plan/financial-plan/template/add',
   EDIT_TEMPLATE: 'plan/financial-plan/template/edit',
   SET_VISIBILITY: 'plan/financial-plan/template/visibility/edit',
+  RESET_TEMPLATE: 'plan/financial-plan/advisor-template/reset',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',

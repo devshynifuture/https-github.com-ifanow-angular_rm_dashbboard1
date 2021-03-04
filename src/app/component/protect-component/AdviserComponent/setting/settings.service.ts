@@ -198,4 +198,7 @@ export class SettingsService {
   setVisibilityTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SET_VISIBILITY, data);
   }
+  resetTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_TEMPLATE, data);
+  }
 }

@@ -59,6 +59,19 @@ export class PlanTemplatesComponent implements OnInit {
       }
     );
   }
+  resetTemplate(item) {
+    let obj = {
+      id: item.id,
+    }
+    this.SettingsService.resetTemplate(obj).subscribe(
+      res => {
+        this.eventService.openSnackBar('Template is reset Successfully', 'Dismiss');
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
   getTemplateListResponse(data) {
     console.log('templatelist', data)
     this.fincialPlanList = data[0].templates
