@@ -13,12 +13,13 @@
     <div class="w-20 pr-10 pl-10" *ngFor="let item of fincialPlanList">
         <mat-card class="p-0">
             <div class="action-teamplates">
-                <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
+                <img src="/assets/images/svg/pencil-action.svg" *ngIf="item.name == 'Index'"
+                    (click)="openAddtemlates(item)" class="pr-10 c-p">
+                <img *ngIf="item.manual == false && item.name == 'Index'" (click)="resetTemplate(item)"
                     src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                <img *ngIf="item.manual == false && item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
-                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                <img *ngIf="item.manual == false && item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
                 <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
                     (click)="deleteTemplate(item)" class="c-p pl-10">
@@ -36,12 +37,9 @@
     <div class="w-20 pr-10 pl-10" *ngFor="let item of quotes">
         <mat-card class="p-0">
             <div class="action-teamplates">
-                <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
-                    src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                <img *ngIf="item.manual == false && item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
-                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                <img *ngIf="item.manual == false && item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
                 <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
                     (click)="deleteTemplate(item)" class="c-p pl-10">
@@ -59,12 +57,9 @@
     <div class="w-20 pr-10 pl-10" *ngFor="let item of miscellaneous  | slice:3:miscellaneous.length; let i=index">
         <mat-card class="p-0">
             <div class="action-teamplates">
-                <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlates(item)" class="pr-10 c-p">
-                <img *ngIf="item.manual == false" (click)="resetTemplate(item)"
-                    src="/assets/images/svg/refresh-icon.svg" class="c-p">
-                <img *ngIf="item.visible == true" src="/assets/images/svg/visibility.svg"
+                <img *ngIf="item.manual == false && item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
-                <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
+                <img *ngIf="item.manual == false && item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
                 <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
                     (click)="deleteTemplate(item)" class="c-p pl-10">
