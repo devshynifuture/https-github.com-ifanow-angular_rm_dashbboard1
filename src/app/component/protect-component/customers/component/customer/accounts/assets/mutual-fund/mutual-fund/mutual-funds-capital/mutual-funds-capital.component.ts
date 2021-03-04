@@ -69,7 +69,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     rightFilterData: any;
     fromDateYear: any;
     toDateYear: any;
-    grandFatheringEffect: boolean;
+    grandFatheringEffect = true;
     objSendToDetailedCapital: any;
     redemption: any[];
     mutualFundList: any[];
@@ -139,6 +139,7 @@ export class MutualFundsCapitalComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
         this.mfCaptialGainCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList
         this.MfServiceService.getadvisorList()
             .subscribe(res => {
@@ -449,7 +450,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         Object.keys(data).map(key => {
             if (data[key][0].category == 'OTHER') {
                 data[key][0].mutualFund.forEach(element => {
-                    if (element.subCategoryName == 'FoFs (Overseas)' || element.subCategoryName == 'FoFs (Overseas)') {
+                    if (element.subCategoryName == 'FoFs (Domestic) - Debt Oriented' || element.subCategoryName == 'FoFs (Overseas)' || element.subCategoryName == 'FoFs (Overseas)') {
                         debtFund.push(element);
                     }
                 });
