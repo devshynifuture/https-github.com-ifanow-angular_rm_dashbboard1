@@ -165,6 +165,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
         let absLumsum = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
+            element.lumpsumPercent = (element.lumpsumPercent).toFixed(2)
+            element.sipPercent = (element.sipPercent).toFixed(2)
             absAllocation += element.percentAllocated;
             absSIP += element.sipPercent;
             absLumsum += element.lumpsumPercent
@@ -173,8 +175,6 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           });
           this.data.goalAssetAllocation.forEach(element => {
             mf.goalAssetMapping.forEach(element1 => {
-              element1.lumpsumPercent = (element1.lumpsumPercent).toFixed(2)
-              element1.sipPercent = (element1.sipPercent).toFixed(2)
               if (element.id == element1.id) {
                 element1.disable = false
               } else if (element.remainLumsum == 0 || element.remainSIP) {
