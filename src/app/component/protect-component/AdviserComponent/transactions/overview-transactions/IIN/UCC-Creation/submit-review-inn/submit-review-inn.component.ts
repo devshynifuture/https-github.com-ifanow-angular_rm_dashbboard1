@@ -274,12 +274,12 @@ export class SubmitReviewInnComponent implements OnInit {
 
   submit(singleBrokerCred) {
     console.log('singleBrokerCreds', singleBrokerCred)
-    if (singleBrokerCred.aggregatorType == 1) {
-      if (!this.nominee) {
-        this.failureMessage = 'Please go back and fill nominee details for NSE';
-        return;
-      }
-    }
+    // if (singleBrokerCred.aggregatorType == 1) {
+    //   if (!this.nominee) {
+    //     this.failureMessage = 'Please go back and fill nominee details for NSE';
+    //     return;
+    //   }
+    // }
     // this.doneData = true;
     this.selectedBroker = singleBrokerCred
     this.toSendObjHolderList = [];
