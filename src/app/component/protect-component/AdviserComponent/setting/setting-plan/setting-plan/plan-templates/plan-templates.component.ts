@@ -6,6 +6,7 @@ import { SubscriptionInject } from '../../../../Subscriptions/subscription-injec
 import { SettingsService } from '../../../settings.service';
 import { AddNewTemplateComponent } from './add-new-template/add-new-template.component';
 import { AuthService } from 'src/app/auth-service/authService';
+import { PreviewFinPlanComponent } from 'src/app/component/protect-component/customers/component/customer/plan/profile-plan/preview-fin-plan/preview-fin-plan.component';
 
 @Component({
   selector: 'app-plan-templates',
@@ -16,6 +17,7 @@ export class PlanTemplatesComponent implements OnInit {
   fincialPlanList: any;
   quotes: any;
   miscellaneous: any;
+  element: any;
 
   constructor(private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
@@ -52,6 +54,36 @@ export class PlanTemplatesComponent implements OnInit {
         } else {
           this.eventService.openSnackBar('Template is not visible in Financial Plan', 'Dismiss');
         }
+        this.getTemplateList()
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+  getPreview(element) {
+
+    const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
+      width: '600px',
+      height: '798px',
+      data: { bank: element, selectedElement: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      console.log('The dialog was closed');
+      this.element = result;
+      console.log('result -==', this.element)
+    });
+  }
+  deleteTemplate(item) {
+    let obj = {
+      id: item.id,
+    }
+    this.SettingsService.deleteTemplate(obj).subscribe(
+      res => {
+        this.eventService.openSnackBar('Template is deleted Successfully', 'Dismiss');
         this.getTemplateList()
       },
       err => {
