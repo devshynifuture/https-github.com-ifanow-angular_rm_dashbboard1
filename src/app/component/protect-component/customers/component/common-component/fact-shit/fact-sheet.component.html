@@ -81,7 +81,8 @@
                   <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Name </th>
                     <td mat-cell *matCellDef="let element">
-                      <div class="bar"><span *ngIf="!isLoading">{{element.name}} </span>
+                      <div class="bar"><span *ngIf="!isLoading">{{element.companyName ? element.companyName :'-'}}
+                        </span>
                       </div>
                     </td>
                   </ng-container>
@@ -89,27 +90,41 @@
                   <ng-container matColumnDef="sector">
                     <th mat-header-cell *matHeaderCellDef> Sector </th>
                     <td mat-cell *matCellDef="let element">
-                      <div class="bar">{{element.sector}}</div>
+                      <div class="bar">{{element.sectorName ? element.sectorName : '-'}}</div>
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="ins">
                     <th mat-header-cell *matHeaderCellDef> Instrument </th>
                     <td mat-cell *matCellDef="let element">
-                      <div class="bar">{{element.ins}}</div>
+                      <div class="bar">{{element.rating ? element.rating :'-'}}</div>
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="all">
                     <th mat-header-cell *matHeaderCellDef> % Allocation </th>
                     <td mat-cell *matCellDef="let element">
-                      <div class="bar">{{element.all}}</div>
+                      <div class="bar">{{element.holdPercentage | number:'1.2-2'}}{{isLoading ? '' :'%'}}</div>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="progress">
+                    <th mat-header-cell *matHeaderCellDef class="w-15"> </th>
+                    <td mat-cell *matCellDef="let element" class="w-15">
+                      <div class="bar">
+                        <div class="smallBoxReport">
+                          <mat-progress-bar *ngIf="isLoading==false"
+                            [matTooltip]="(element.holdPercentage | number:'1.2-2')+'%'" mode="determinate"
+                            [value]="element.holdPercentage">
+                          </mat-progress-bar>
+                        </div>
+                      </div>
                     </td>
                   </ng-container>
                   <ng-container matColumnDef="assets">
                     <th mat-header-cell *matHeaderCellDef> Assets (Cr) </th>
                     <td mat-cell *matCellDef="let element">
-                      <div class="bar"> {{element.assets}}</div>
+                      <div class="bar" appFormatNumber> <span>{{!isLoading ? (element.mktValue ? element.mktValue : '-')
+                          : ''}}</span></div>
                     </td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

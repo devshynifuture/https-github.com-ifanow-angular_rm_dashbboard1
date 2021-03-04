@@ -1348,6 +1348,7 @@ export class MutualFundUnrealizedTranComponent {
             this.mfService.setDataForMfGet('');
             this.mfService.setMfData('');
             this.mfService.setTransactionType('');
+            this.resData = '';
             this.ngOnInit();
             // this.getMutualFund();
           }

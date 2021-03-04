@@ -15,7 +15,7 @@ require('highcharts/highcharts-more')(Highcharts);
   styleUrls: ['./fact-sheet.component.scss']
 })
 export class FactSheetComponent implements OnInit {
-  displayedColumns = ['name', 'sector', 'ins', 'all', 'assets'];
+  displayedColumns = ['name', 'sector', 'ins', 'all', 'progress', 'assets'];
   isLoading = false;
   dataSource = new MatTableDataSource();
   portfolioGraph: Chart;
@@ -11452,7 +11452,6 @@ export class FactSheetComponent implements OnInit {
           console.log('Asset Allocation', res);
           this.isLoading = false;
           this.dataSource.data = res;
-          this.eventService.openSnackBar(res, 'DISMISS');
         } else {
           this.isLoading = false;
           this.dataSource.data = [];
@@ -11671,7 +11670,7 @@ export class FactSheetComponent implements OnInit {
       },
 
       series: [{
-        name: 'Speed',
+        name: 'Risk',
         data: [80]
       }]
     }

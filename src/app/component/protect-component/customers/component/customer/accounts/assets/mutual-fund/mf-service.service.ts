@@ -510,7 +510,7 @@ export class MfServiceService {
       category: category,
       familyMember: familyMember,
       scheme: scheme,
-      transactionView: transactionView,
+      transactionView: (rightSideData) ? rightSideData.transactionView : transactionView,
       reportType: (rightSideData) ? (rightSideData.reportType.length > 0 ? rightSideData.reportType[0].name : 'Sub Category wise') : 'Sub Category wise',
       reportAsOn: (rightSideData) ? rightSideData.reportAsOn : new Date(),
       showFolio: (rightSideData) ? rightSideData.showFolio + '' : '2',
