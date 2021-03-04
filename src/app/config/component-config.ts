@@ -755,7 +755,7 @@ export const appConfig = {
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
   GET_SCHEMES_DETAILS: 'rmdashboard/get/scheme/details',
   MF_LIST_UNFREEZE: 'mutual-fund/mf-list/unfreeze',
-
+  EDIT_SIP_AMOUNT: 'backoffice/sip-cleanup/sip-amount/edit',
   /********************************* TASKS Section ****************************************/
 
   ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',

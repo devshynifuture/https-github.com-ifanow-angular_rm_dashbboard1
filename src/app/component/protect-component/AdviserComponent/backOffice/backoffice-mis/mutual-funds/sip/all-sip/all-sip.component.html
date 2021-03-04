@@ -108,7 +108,8 @@
                         <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="amount">Amount
                         </th>
                         <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
-                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amount}}</span>
+                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amount}}<span
+                                        class="f-10" *ngIf="element.amountEdited">(edited)</span></span>
                             </div>
                         </td>
                         <!-- <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>

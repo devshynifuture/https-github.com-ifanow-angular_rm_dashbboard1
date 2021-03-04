@@ -1,0 +1,27 @@
+<div class="p-24">
+    <h3 class="mb-20">Edit SIP Amount</h3>
+    <div [formGroup]="sipEdit" class="row ">
+
+
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <div class="form-group mb-0 iconRupess">
+                    <mat-form-field>
+                        <input matInput #amount autocomplete="off" appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" class="form-control rupess br-0"
+                            formControlName="amount" matInput type="text" maxlength="10">
+                        <mat-error class="f-12">
+                            This field is required
+                        </mat-error>
+                        <mat-hint align="end">{{amount.value.length}}/10</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="f-right mt-44 mb-28">
+        <button mat-button (click)="close()">CANCEL</button>
+        <button mat-button (click)="sipEditSubmit()" class="text-primary">ADD</button>
+    </div>
+</div>

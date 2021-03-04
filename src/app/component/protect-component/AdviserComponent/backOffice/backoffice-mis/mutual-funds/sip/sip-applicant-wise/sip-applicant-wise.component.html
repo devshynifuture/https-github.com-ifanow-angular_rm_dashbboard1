@@ -255,7 +255,9 @@
                                                         <div [ngClass]="{'bar': isLoadingApplicant }">
                                                             {{isLoadingApplicant ? ' ' : '₹ '}}
                                                             <span *ngIf="!isLoadingApplicant" appFormatNumber
-                                                                [shouldRoundOff]="true">{{scheme.amount}}</span>
+                                                                [shouldRoundOff]="true">{{scheme.amount}}<span
+                                                                    class="f-10"
+                                                                    *ngIf="subcategory.amountEdited">(edited)</span></span>
                                                         </div>
                                                     </td>
                                                     <td>
