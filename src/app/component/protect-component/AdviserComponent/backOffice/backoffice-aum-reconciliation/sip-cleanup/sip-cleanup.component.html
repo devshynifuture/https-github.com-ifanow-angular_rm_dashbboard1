@@ -198,14 +198,14 @@
                 </ng-container>
                 <ng-container matColumnDef="menu">
                     <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element;index as i">
                         <span class="material-icons c-p" [matMenuTriggerFor]="menu">
                             more_vert
                         </span>
 
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="openRecordDeatils(element)">Datailed view</button>
-                            <button mat-menu-item (click)="openEditSIPPopup(element)">Edit SIP Amount</button>
+                            <button mat-menu-item (click)="openEditSIPPopup(element,i)">Edit SIP Amount</button>
                         </mat-menu>
                     </td>
                 </ng-container>

@@ -180,13 +180,16 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     // this.getSipCleanUpList(false);
   }
 
-  openEditSIPPopup(data) {
+  openEditSIPPopup(data, index) {
     const dialogRef = this.dialog.open(EditSipAmountComponent, {
       data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.dataSource.data[index] = result;
+      }
     });
   }
 
