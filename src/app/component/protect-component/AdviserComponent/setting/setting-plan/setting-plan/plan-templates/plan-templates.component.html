@@ -17,8 +17,8 @@
                     (click)="setVisibility(false,item)" class="c-p pl-10">
                 <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
-                <img *ngIf="item.visible == false" src="/assets/images/svg/delete-outline.svg"
-                    (click)="setVisibility(true,item)" class="c-p pl-10">
+                <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
+                    (click)="deleteTemplate(item)" class="c-p pl-10">
             </div>
 
             <img src="{{item.imageUrl}}" class="w-100">
@@ -37,6 +37,8 @@
                     (click)="setVisibility(false,item)" class="c-p pl-10">
                 <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
+                <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
+                    (click)="deleteTemplate(item)" class="c-p pl-10">
             </div>
 
             <img src="{{item.imageUrl}}" class="w-100">
@@ -55,8 +57,10 @@
                     (click)="setVisibility(false,item)" class="c-p pl-10">
                 <img *ngIf="item.visible == false" src="/assets/images/svg/visibility_off.svg"
                     (click)="setVisibility(true,item)" class="c-p pl-10">
+                <img *ngIf="item.manual == true" src="/assets/images/svg/delete-outline.svg"
+                    (click)="deleteTemplate(item)" class="c-p pl-10">
             </div>
-
+            <!-- (click)="getPreview(item)" -->
             <img src="{{item.imageUrl}}" class="w-100">
         </mat-card>
         <h5 class="m-0 pt-16 roboto pb-20 f-400 text-center text-black">{{item.name}}</h5>
