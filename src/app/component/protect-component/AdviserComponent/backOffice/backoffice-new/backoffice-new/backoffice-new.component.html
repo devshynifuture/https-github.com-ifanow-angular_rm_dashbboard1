@@ -22,28 +22,29 @@
                     </div>
                 </mat-menu> -->
             <div class="row">
-                <div *ngIf="fixedDepositFilter" class="col-md-4 pl-0">
+                <div class="col-md-4 pl-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
-                        <mat-select [formControl]="filterOptionControl" class="form-control br-0">
-                            <mat-option selected value="Fixed Deposit">
-                                Fixed Deposit</mat-option>
+                        <mat-select [formControl]="filterOptionControl" (selectionChange)="changeAssetType($event)"
+                            class="form-control br-0">
+                            <mat-option *ngFor="let assetType of assetTypeFilterList" [value]="assetType">
+                                {{assetType}}</mat-option>
                         </mat-select>
                     </mat-form-field>
 
                 </div>
-                <div *ngIf="fixedDepositFilter" class="col-md-4 pr-0">
+                <div class="col-md-4 pr-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select (selectionChange)="changeSubAssetType($event)" [formControl]="selectedSubType"
                             class="form-control br-0">
-                            <mat-option *ngFor="let asset of fixedDepositFilter" [value]="asset.reminderType">
+                            <mat-option *ngFor="let asset of subTypeFilter" [value]="asset.reminderType">
                                 {{asset.reminderTypeString}}</mat-option>
                         </mat-select>
                     </mat-form-field>
 
                 </div>
-                <div *ngIf="fixedDepositFilter" class="col-md-4 pr-0">
+                <div class="col-md-4 pr-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select (selectionChange)="sortDateFilter($event)" [formControl]="selectedNextDate"
@@ -76,7 +77,7 @@
                         <th mat-header-cell *matHeaderCellDef> Sr no </th>
                         <td mat-cell class="c-p" *matCellDef="let element;index as i">
                             <div class="bar">
-                                {{isLoading?'':i}}
+                                {{isLoading?'':i+1}}
                             </div>
                         </td>
                     </ng-container>
@@ -98,7 +99,7 @@
                         <th mat-header-cell *matHeaderCellDef> Asset type </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="bar">
-                                <!-- Fixed deposit -->
+                                {{isLoading?'':filterOptionControl.value}}
                             </div>
                         </td>
                     </ng-container>
@@ -107,8 +108,12 @@
                     <ng-container matColumnDef="investName">
                         <th mat-header-cell *matHeaderCellDef> Amount </th>
                         <td mat-cell *matCellDef="let element">
-                            <div class="bar"> {{isLoading ? ' ' : '₹'}}<span appFormatNumber>{{
-                                    element.maturityValue}}</span></div>
+                            <div class="bar"> {{isLoading ? ' ' : '₹'}}
+                                <span appFormatNumber>{{
+                                    element.maturityValue}}</span>
+                                <!-- <span *ngIf="selectedSubType!=1" appFormatNumber>{{
+                                        element.targetAmount}}</span> -->
+                            </div>
                         </td>
                     </ng-container>
 
@@ -116,7 +121,8 @@
                         <th mat-header-cell *matHeaderCellDef> Due date </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="bar">
-                                {{element.maturityDate | date:'dd/MM/yyyy'}}
+                                <span>{{element.maturityDate | date:'dd/MM/yyyy'}}</span>
+                                <!-- <span *ngIf="selectedSubType!=2">{{element.targetDate | date:'dd/MM/yyyy'}}</span> -->
                             </div>
                         </td>
                     </ng-container>

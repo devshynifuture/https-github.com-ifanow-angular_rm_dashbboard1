@@ -413,6 +413,9 @@ export class BackOfficeService {
   getGlobalReminderFilter(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GLOBAL_REMINDER_FILTER, data);
   }
+  editSipAmount(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SIP_AMOUNT, data)
+  }
   private misAum = new BehaviorSubject<any>({});
   misAumData = this.misAum.asObservable();
 
