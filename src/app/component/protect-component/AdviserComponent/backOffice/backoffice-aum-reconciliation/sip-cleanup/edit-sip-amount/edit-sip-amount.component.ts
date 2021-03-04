@@ -14,41 +14,43 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class EditSipAmountComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
-    private backofficeService: BackOfficeService,
-    public dialogRef: MatDialogRef<EditSipAmountComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private eventService: EventService) { }
+              private backofficeService: BackOfficeService,
+              public dialogRef: MatDialogRef<EditSipAmountComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: DialogData,
+              private eventService: EventService) { }
   sipEdit: FormGroup;
   validatorType;
   ngOnInit() {
     this.validatorType = ValidatorType;
     this.sipEdit = this.fb.group({
       amount: [this.data.amount, [Validators.required]]
-    })
+    });
   }
   sipEditSubmit() {
     if (this.sipEdit.invalid) {
       this.sipEdit.markAllAsTouched();
-      return
+      return;
     }
     const obj = {
-      "id": this.data.id,
-      "amount": this.sipEdit.controls.amount.value
-    }
+      id: this.data.id,
+      amount: this.sipEdit.controls.amount.value
+    };
     this.backofficeService.editSipAmount(obj).subscribe(
       data => {
         if (data) {
-          this.eventService.openSnackBar("SIP amount edited sucessfully", "Dismiss");
-          this.close();
+          this.eventService.openSnackBar('SIP amount edited sucessfully', 'Dismiss');
+          this.data.amount = this.sipEdit.controls.amount.value;
+          this.data.amountEdited = true;
+          this.close(this.data);
         }
       }, err => {
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
-    )
+    );
   }
 
-  close() {
-    this.dialogRef.close();
+  close(data) {
+    this.dialogRef.close(data);
   }
 
 }

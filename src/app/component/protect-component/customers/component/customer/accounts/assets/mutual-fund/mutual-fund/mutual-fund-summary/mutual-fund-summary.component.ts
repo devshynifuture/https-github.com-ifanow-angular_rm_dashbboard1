@@ -1726,6 +1726,9 @@ export class MutualFundSummaryComponent implements OnInit {
             this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.reportAsOn), 'dd-MMM-yyyy');
             this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
             // this.asyncFilter(this.reponseData.mutualFundList);
+            // if (this.setDefaultFilterData) {
+            //   this.setDefaultFilterData.transactionView = this.rightFilterData.transactionView;
+            // }
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);
             this.getFilterData(2);
@@ -2126,6 +2129,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.addedData = true;
             this.mfService.setDataForMfGet('');
             this.mfService.setMfData('');
+            this.resData = '';
             // this.ngOnInit();
             this.initPoint();
             // this.getMutualFund();
