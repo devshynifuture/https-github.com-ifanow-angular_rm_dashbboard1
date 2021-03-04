@@ -347,12 +347,12 @@
                 <!-- (click)="dobAsPerRecord.open()" // asper bug raise in Mf the dropdown to choose date should be removed as we are not going to show any back dated data over here -->
                 <p class="m-0 roboto f-400 f-16">As on
                   {{asOnDate | date:'dd/MM/yyyy'}}</p>
-                <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
+                <!-- <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
                   <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24"
                     matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
                   <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
-                </div>
+                </div> -->
 
                 <!-- <button class="b-a br-0 width180 h-40" mat-button>
     
