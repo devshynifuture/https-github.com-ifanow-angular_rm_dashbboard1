@@ -513,7 +513,10 @@
                                                                                                 [ngClass]="{'bar': isLoadingApplicant}">
                                                                                                 {{isLoadingApplicant ? ' ' : '₹ '}}<span
                                                                                                     appFormatNumber
-                                                                                                    [shouldRoundOff]="true">{{applicant.sipAmount}}</span>
+                                                                                                    [shouldRoundOff]="true">{{applicant.sipAmount}}<span
+                                                                                                        class="f-10"
+                                                                                                        *ngIf="applicant.amountEdited">(edited)</span>
+                                                                                                </span>
                                                                                             </div>
                                                                                         </span>
                                                                                     </td>

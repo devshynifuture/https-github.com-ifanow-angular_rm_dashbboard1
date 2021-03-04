@@ -126,6 +126,9 @@
             class="btnConfirm bg-primary text-white" mat-button>Create
             account
           </button>
+          <div class="rejectClass f-12 text-danger p-10">
+            {{failureMessage}}
+          </div>
           <p *ngIf="singleBrokerCred.tpUserRequestId>0" class="f-12 text-primary">Account created successfully
           </p>
 
@@ -435,10 +438,10 @@
       </tr>
       <tr style="border-top: 1px solid #000;">
         <td colspan="4" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Nominee Name:
-          <span>{{nominee.name}} </span>
+          <span>{{nominee?.name}} </span>
         </td>
         <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">Relationship:
-          <span>{{nominee.relationShip}}</span>
+          <span>{{nominee?.relationShip}}</span>
         </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
@@ -448,18 +451,18 @@
       <tr style="border-top: 1px solid #000;">
         <td colspan="6" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> <strong> Nominee Address:
           </strong> <span>
-            {{nominee.address.address1}},{{nominee.address.address2}},{{nominee.address.address3}}
+            {{nominee?.address.address1}},{{nominee?.address.address2}},{{nominee?.address.address3}}
           </span> </td>
       </tr>
       <tr style="border-top: 1px solid #000;">
         <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;">City:
-          <span>{{nominee.address.city}}</span>
+          <span>{{nominee?.address.city}}</span>
         </td>
         <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Pincode:
-          <span>{{nominee.address.pinCode}}</span>
+          <span>{{nominee?.address.pinCode}}</span>
         </td>
         <td colspan="2" style="border-right: 1px solid #000;padding: 4px;font-size: 14px;"> Country:
-          <span>{{nominee.address.country}}</span>
+          <span>{{nominee?.address.country}}</span>
         </td>
       </tr>
       <tr style="border-top: 1px solid #000;padding: 4px;">
