@@ -1,0 +1,97 @@
+<div class="row bb-1 popup-header-fix-50">
+    <div class="col-md-11 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">Manage KYC</h4>
+    </div>
+    <div class="col-md-1 col-2 full-center pl-0 pr-24">
+
+        <i (click)="close(false)" class="material-icons c-p">
+            clear
+        </i>
+
+    </div>
+</div>
+<div class="pt-80 pb-90 ">
+    <div class="pl-20 mob-pl-15 mob-pr-15">
+        <div class="row">
+            <div class="col-md-12 pl-0 mob-pr-0" *ngIf="dataSource.data.length > 0">
+                <div class="overflow-y-788">
+                    <table mat-table [dataSource]="dataSource" id="tbs" class="mt-20 skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
+
+                        <!-- Checkbox Column -->
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="memberName">
+                            <th mat-header-cell *matHeaderCellDef>Member Name </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{element.name}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pan">
+                            <th mat-header-cell *matHeaderCellDef> PAN Card No.</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.pan}} </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="mobile">
+                            <th mat-header-cell *matHeaderCellDef>Registered Mobile No. </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"><span
+                                        *ngIf="!isLoading">{{element.mobileNo ?element.mobileNo:'N/A'}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef> Email Address </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.emailId}} </div>
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="kycStatus">
+                            <th mat-header-cell *matHeaderCellDef> KYC Status </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.emailId}} </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Actions </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"> {{element.emailId}} </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed-50 wrapper-12 z-index-9">
+    <div class="row">
+        <div class="col-md-4 col-4">
+            <h5 (click)="close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+
+        <div class="col-md-8 col-8 right text-right">
+            <!-- <button *ngIf="!showMedium" (click)="next()" class="br-0  btn-primary text-inherit "> Next
+        </button> -->
+            <!-- <app-progress-button *ngIf="showMedium" (btnClick)="sendRrequest()" [options]="barButtonOptions"
+          class="br-0 text-inherit ">
+        </app-progress-button> -->
+        </div>
+    </div>
+</div>

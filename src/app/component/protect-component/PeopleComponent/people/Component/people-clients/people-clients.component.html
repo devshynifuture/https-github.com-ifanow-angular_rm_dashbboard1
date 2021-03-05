@@ -122,6 +122,9 @@
                                 (click)="addClient(element)" mat-menu-item>
                                 <span>Edit</span>
                             </button>
+                            <button *ngIf="!enumDataService.PRODUCTION" (click)="manageKYC(element)" mat-menu-item>
+                                <span>Manage KYC</span>
+                            </button>
                             <button (click)="resetPassword('',element)" mat-menu-item>
                                 <span>Reset password</span>
                             </button>
