@@ -234,4 +234,13 @@ export class PeopleService {
   checkValidUsername(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.CHECK_VALID_USERNAME, data);
   }
+  getKYCDetailsData(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_KYC_DETAILS, data);
+  }
+  sendKYCLink(data) {
+
+  }
+  doKYCNow(data) {
+
+  }
 }

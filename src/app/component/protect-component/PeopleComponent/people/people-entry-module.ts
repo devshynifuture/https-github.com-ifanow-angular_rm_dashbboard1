@@ -21,10 +21,10 @@ import { MY_FORMATS2 } from '../../../../constants/date-format.constant';
 import { MinorFormComponent } from './Component/people-clients/add-client/minor-form/minor-form.component';
 import { UnmapPopupComponent } from './Component/people-clients/add-client/client-basic-details/unmap-popup/unmap-popup.component';
 import { MoveFamilymemberToClientComponent } from './Component/people-clients/add-client/client-basic-details/move-familymember-to-client/move-familymember-to-client.component';
-import { ManageKycComponent } from './Component/people-clients/add-client/manage-kyc/manage-kyc.component';
+// import { ManageKycComponent } from './Component/people-clients/add-client/manage-kyc/manage-kyc.component';
 
 export const componentList = [CompanyMoreInfoComponent, MoveFamilymemberToClientComponent, AddClientComponent, LeadsClientsComponent, ClientBasicDetailsComponent, ClientMoreInfoComponent, ClientAddressComponent, ClientBankComponent, ClientDematComponent, ClientUploadComponent, AddHolderNamesComponent, MinorFormComponent, UnmapPopupComponent,
-  ManageKycComponent];
+];
 
 @NgModule({
   declarations: [componentList],
