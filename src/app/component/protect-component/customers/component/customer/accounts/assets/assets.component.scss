@@ -150,7 +150,7 @@ table {
 }
 
 .left-side-clicks {
-  margin-left: 228px;
+  margin-left: 230px;
   position: fixed !important;
   top: 125px !important;
   right: unset !important;
@@ -485,7 +485,7 @@ mat-drawer-content {
 .mat-drawer-side {
   border-right: transparent;
   padding-top: 118px !important;
-  
+
 }
 
 .leftside-overlay-toggle-button {
@@ -505,9 +505,11 @@ mat-drawer-content {
 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
-  .leftside-overlay-toggle-button { display: none;}
-  
-   
+  .leftside-overlay-toggle-button {
+    display: none;
+  }
+
+
 
 }
 
@@ -562,6 +564,5 @@ mat-drawer-content {
 @media screen and (orientation:portrait) {
   .sidenav-container {
     height: auto;
-   }
+  }
 }
-

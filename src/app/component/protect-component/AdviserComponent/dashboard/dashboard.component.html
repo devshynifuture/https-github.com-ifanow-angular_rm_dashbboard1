@@ -990,7 +990,7 @@
           #slickModal="slick-carousel"> -->
         <div class="overflow-myfeed">
           <div class="d-flex">
-            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide h-190 ">
+            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide h-160 ">
               <div class="row">
                 <div class="col-md-9 p-0">
                   <p class="mb-0 f-400 roboto text-black lh-16">
@@ -1015,8 +1015,8 @@
               </div>
 
               <div class="row pt-12">
-                <div class="col-md-12 p-0">
-                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
+                <div class="col-md-12 p-0" matTooltip="{{singleTransaction.schemeName}}">
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12 text-truncate">{{singleTransaction.schemeName}}</p>
                 </div>
               </div>
 
