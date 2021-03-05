@@ -42,7 +42,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   displayedColumns = ['goalYear', 'goalFv', 'status', 'percentage'];
   displayedColumns1 = ['select', 'milestone', 'amount', 'fv', 'icons'];
   clientFamily: any[];
-  dataSource = ([{}, {}, {}]);
+  //dataSource = ([{}, {}, {}]);
   dataSource1 = [];
   isRetirementTab = false;
   isLoading = true;
@@ -146,6 +146,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   getOrgData: any;
   details: any;
   defaultGallery: any;
+  dataSource: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -175,6 +176,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   @Input() finPlanObj: any;//finacial plan pdf input
   ngOnInit() {
+    this.dataSource = ([{}, {}, {}]);
     if (this.finPlanObj && this.finPlanObj.sectionName) {
       this.selectedGoal = this.finPlanObj.selectionName
     }
@@ -621,6 +623,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.isRetirementTab = false;
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
+    if (this.dataSource.length > 0) {
+      this.dataSource.forEach(element => {
+        element.achievedPercent = (element.achievedPercent).toFixed(2)
+      });
+    }
     this.dataSource1 = goalData.remainingData.milestoneModels ? goalData.remainingData.milestoneModels : [];
     //this.dataSource.sort = this.sort;
     console.log('table', this.dataSource)
