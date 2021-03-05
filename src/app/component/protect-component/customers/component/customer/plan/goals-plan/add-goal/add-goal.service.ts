@@ -61,7 +61,7 @@ export class AddGoalService {
             obj.sipPercent = parseInt(mfAsset.absSIP)
             obj.lumpsumOrSip = 2
           } else {
-            obj.lumpsumPercent = parseInt(mfAsset.absLumsum)
+            obj.lumpsumPercent = (100 - element.allocatedToOtherGoal)
             obj.lumpsumOrSip = 1
           }
         });
