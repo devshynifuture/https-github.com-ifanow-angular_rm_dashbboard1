@@ -24,11 +24,12 @@ import { DeleteProgressButtonComponent } from 'src/app/common/delete-progress-bu
 import { MultipleEmailAddressComponent } from './multiple-email-address/multiple-email-address.component';
 import { ResetClientPasswordComponent } from '../PeopleComponent/people/Component/people-clients/add-client/reset-client-password/reset-client-password.component';
 import { MsgDailogComponent } from './msg-dailog/msg-dailog.component';
+import { ManageKycComponent } from '../PeopleComponent/people/Component/people-clients/add-client/manage-kyc/manage-kyc.component';
 
 @NgModule({
-  declarations: [DeleteProgressButtonComponent, ResetClientPasswordComponent,
+  declarations: [DeleteProgressButtonComponent, ResetClientPasswordComponent, ManageKycComponent,
     FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent, MsgDailogComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent, ManageKycComponent],
   imports: [
     MaterialModule,
     CommonModule,
@@ -44,7 +45,7 @@ import { MsgDailogComponent } from './msg-dailog/msg-dailog.component';
 
     // AppModule
   ],
-  entryComponents: [DeleteProgressButtonComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent, MsgDailogComponent]
+  entryComponents: [DeleteProgressButtonComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MultipleEmailAddressComponent, ResetClientPasswordComponent, MsgDailogComponent, ManageKycComponent]
 })
 export class CommonComponentModule {
 }

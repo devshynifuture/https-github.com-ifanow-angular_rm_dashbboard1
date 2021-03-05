@@ -12,10 +12,10 @@
                     [ngClass]="{'activeColor lt':Tab=='Tab2'}" class="c-p">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
-                <!-- <li class="c-p">
-                    <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Financial health check
+                <li (click)="Tab='Tab3'" [ngClass]="{'activeColor lt':Tab=='Tab3'}" class="c-p">
+                    <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Manage KYC
                 </li>
-                <li class="c-p">
+                <!-- <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Preliminary data
                 </li> -->
             </ul>
@@ -664,6 +664,9 @@
         </div>
         <div *ngIf="Tab=='Tab2'" class="col-md-10 responsive-right-side-top">
             <app-overview-risk-profile></app-overview-risk-profile>
+        </div>
+        <div *ngIf="Tab=='Tab3' && !enumDataService.PRODUCTION" class="col-md-10 responsive-right-side-top">
+            <app-manage-kyc></app-manage-kyc>
         </div>
     </div>
 </div>

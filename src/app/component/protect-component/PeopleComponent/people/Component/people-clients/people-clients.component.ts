@@ -19,6 +19,7 @@ import { ExcelClientListService } from 'src/app/services/excel-client-list.servi
 import { RoleService } from 'src/app/auth-service/role.service';
 import { element } from 'protractor';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { ManageKycComponent } from './add-client/manage-kyc/manage-kyc.component';
 
 @Component({
   selector: 'app-people-clients',
@@ -222,6 +223,36 @@ export class PeopleClientsComponent implements OnInit {
       err => {
         this.eventService.openSnackBar(err, "Dismiss")
         this.downloadLoader = false
+      }
+    );
+  }
+
+  manageKYC(data) {
+    if (window.innerWidth <= 1024) {
+      this.tabviewshow = 'open80'
+    }
+    else { this.tabviewshow = 'open50' }
+    const fragmentData = {
+      flag: 'Manage KYC',
+      id: 1,
+      data,
+      state: this.tabviewshow,
+      componentName: ManageKycComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.cancelFlagService.setCancelFlag(undefined);
+            this.finalClientList = [];
+            this.peopleService.clientList = undefined;
+            this.getClientList(0);
+          }
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
       }
     );
   }
