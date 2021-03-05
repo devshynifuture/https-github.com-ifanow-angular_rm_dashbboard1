@@ -1190,7 +1190,7 @@
           </div>
         </div>
 
-        <div class="col-md-12 p-0" *ngIf="dataSource5.length > 0">
+        <div class="col-md-12 p-0 pt-10" *ngIf="dataSource5.length > 0">
           <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10"
             [appSkeletonLoading]="last7DaysLoading" appSkeletonLoading class="skeletonAnimation">
             <ng-container matColumnDef="position">
@@ -1414,8 +1414,9 @@
             </div>
           </div>
         </div>
-        <div *ngIf="dashBoardSummary.length > 4" class="col-md-12 text-right pt-8">
-          <div (click)="changeParentsTab(3)" class="c-p">View all</div>
+        <div *ngIf="dashBoardSummary.length > 4" class="col-md-12 text-right pt-8 pr-0">
+          <!-- <div (click)="changeParentsTab(3)" class="c-p">View all</div> -->
+          <button (click)="changeParentsTab(3)" mat-stroked-button class="advisor-view-all">View All</button>
         </div>
 
       </div>
