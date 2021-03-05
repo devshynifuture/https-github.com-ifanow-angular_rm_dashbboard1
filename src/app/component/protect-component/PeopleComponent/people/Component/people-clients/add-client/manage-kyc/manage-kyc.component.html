@@ -21,7 +21,7 @@
 <div [ngClass]="{'pt-80 pb-90': data}">
     <div [ngClass]="{'pl-20': data}" class=" mob-pl-15 mob-pr-15">
         <div class="row">
-            <div class="col-md-12 pl-0 mob-pr-0" *ngIf="dataSource.data.length > 0">
+            <div class="col-md-12 p-0 mob-pr-0" *ngIf="dataSource.data.length > 0">
                 <div class="overflow-y-788">
                     <table mat-table [dataSource]="dataSource" id="tbs" class="mt-20 skeletonAnimation"
                         appSkeletonLoading [appSkeletonLoading]="isLoading">
@@ -49,8 +49,8 @@
                         <ng-container matColumnDef="mobile">
                             <th mat-header-cell *matHeaderCellDef>Registered Mobile No. </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar"><span
-                                        *ngIf="!isLoading">{{element.mobileNo ?element.mobileNo:'N/A'}}</span>
+                                <div class="bar"><span *ngIf="!isLoading">{{element.mobileNo
+                                        ?element.mobileNo:'N/A'}}</span>
                                 </div>
                             </td>
                         </ng-container>
@@ -74,7 +74,11 @@
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef> Actions </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.emailId}} </div>
+                                <div class="bar"> {{element.emailId}}
+                                    <button mat-stroked-button class="btn-primary btn-mange-kyc">Basic</button>
+                                    <button mat-stroked-button
+                                        class="btn-danger btn-mange-kyc text-white">Basic</button>
+                                </div>
                             </td>
                         </ng-container>
 
@@ -85,8 +89,9 @@
                     </table>
                 </div>
             </div>
-            <div *ngIf="dataSource.data.length == 0 && isLoading==false" class="col-md-12 p-0 mt-44">
-                <h4 class="d-flex justify-content-center b-a p-44 pt-20">
+            <div *ngIf="dataSource.data.length == 0 && isLoading==false" class="col-md-12 p-0 mt-28 text-center">
+                <img src="/assets/images/svg/dialogs4.svg">
+                <h4 class="d-flex justify-content-center p-44 pt-28">
                     No data found
                 </h4>
             </div>
