@@ -44,21 +44,27 @@
                 section of
                 financial plan. You can attach<br> it in your financial reports and send it to your client.</p>
         </div>
-        <div *ngIf="edit" class="col-md-4 pl-0" (click)="openGallery(imgUrl)">
-            <div class="plan-templates-img-right-side">
-                <img src="{{imgUrl}}" class="h-230 b-a c-p">
-                <div class="middleOne">
-                    <p class="c-p"> Edit</p>
+        <div class="col-md-3 pl-0" *ngIf="edit">
+            <div (click)="openGallery(imgUrl)" class="w-163">
+                <div class="plan-templates-img-right-side">
+                    <img src="{{imgUrl}}" class="h-230 w-163 b-a c-p">
+                    <div class="middleOne">
+                        <p class="c-p"> Edit</p>
+                    </div>
                 </div>
             </div>
+
         </div>
-        <div *ngIf="!edit" class="col-md-5 pl-0" (click)="openGallery('/assets/images/setting.png')">
-            <div class="plan-templates-img-right-side">
-                <img src="/assets/images/setting.png" class="h-230 c-p">
-                <div class="middleOne">
-                    <p class="c-p"> Edit</p>
+        <div class="col-md-3 pl-0" *ngIf="!edit">
+            <div (click)="openGallery('/assets/images/setting.png')" class="w-163">
+                <div class="plan-templates-img-right-side">
+                    <img src="/assets/images/setting.png" class="h-230 w-163 c-p">
+                    <div class="middleOne">
+                        <p class="c-p"> Edit</p>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
