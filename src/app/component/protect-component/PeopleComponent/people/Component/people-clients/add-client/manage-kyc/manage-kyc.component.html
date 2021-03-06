@@ -85,21 +85,24 @@
                             <th mat-header-cell *matHeaderCellDef> Actions </th>
                             <td mat-cell *matCellDef="let element">
                                 <div *ngIf="isLoading" class="bar"></div>
-                                <div *ngIf="!isLoading && data && element.email && element.mobileNo" class="bar">
-                                    <button (click)="kycAdvisorSectionMethod()" *ngIf="element.kycComplaint!=0"
+                                <div *ngIf="!isLoading && data && element.email && element.mobileNo && !element.isLoader"
+                                    class="bar">
+                                    <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint!=0"
                                         mat-stroked-button class="btn-primary btn-mange-kyc">Redo KYC</button>
-                                    <button (click)="kycAdvisorSectionMethod()" *ngIf="element.kycComplaint==0"
+                                    <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint==0"
                                         mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
                                         Link</button>
                                 </div>
-                                <div *ngIf="!isLoading &&!data && element.email && element.mobileNo" class="bar">
-                                    <button (click)="kycClientSectionMethod()" mat-stroked-button
+                                <div *ngIf="!isLoading &&!data && element.email && element.mobileNo && !element.isLoader"
+                                    class="bar">
+                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
                                         *ngIf="element.kycComplaint!=0" class="btn-primary btn-mange-kyc">Redo
                                         KYC</button>
-                                    <button (click)="kycClientSectionMethod()" mat-stroked-button
+                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
                                         *ngIf="element.kycComplaint==0" class="btn-danger btn-mange-kyc text-white">Do
                                         KYC Now</button>
                                 </div>
+                                <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
                             </td>
                         </ng-container>
 

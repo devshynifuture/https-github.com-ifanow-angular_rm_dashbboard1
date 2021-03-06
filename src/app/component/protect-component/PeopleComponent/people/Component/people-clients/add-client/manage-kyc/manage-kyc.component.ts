@@ -32,6 +32,9 @@ export class ManageKycComponent implements OnInit {
       data => {
         this.isLoading = false;
         if (data && data.length > 0) {
+          data.forEach(element => {
+            element['isLoader'] = false;
+          });
           this.dataSource.data = data;
         } else {
           this.dataSource.data = []
@@ -44,7 +47,8 @@ export class ManageKycComponent implements OnInit {
     )
   }
 
-  kycClientSectionMethod() {
+  kycClientSectionMethod(elementData) {
+    elementData.isLoader = true;
     const hostNameOrigin = window.location.origin;
     const clientData = AuthService.getClientData();
     const obj = {
@@ -56,16 +60,19 @@ export class ManageKycComponent implements OnInit {
     }
     this.peopleService.doKYCNow(obj).subscribe(
       data => {
+        elementData.isLoader = false;
         if (data.innerObj) {
           window.open(data.innerObj.autoLoginUrl);
         }
       }, err => {
+        elementData.isLoader = false;
         this.eventService.openSnackBar(err, "Dismiss");
       }
     )
   }
 
-  kycAdvisorSectionMethod() {
+  kycAdvisorSectionMethod(elementData) {
+    elementData.isLoader = true;
     const hostNameOrigin = window.location.origin;
     const obj = {
       name: this.data.name,
@@ -76,8 +83,10 @@ export class ManageKycComponent implements OnInit {
     }
     this.peopleService.doKYCNow(obj).subscribe(
       data => {
+        elementData.isLoader = false;
         this.eventService.openSnackBar("Email sent sucessfully", "Dismiss");
       }, err => {
+        elementData.isLoader = false;
         this.eventService.openSnackBar(err, "Dismiss");
       }
     )
