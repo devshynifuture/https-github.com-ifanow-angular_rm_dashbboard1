@@ -12,7 +12,8 @@
                     [ngClass]="{'activeColor lt':Tab=='Tab2'}" class="c-p">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
-                <li (click)="Tab='Tab3'" [ngClass]="{'activeColor lt':Tab=='Tab3'}" class="c-p">
+                <li (click)="Tab='Tab3'" *ngIf="!enumDataService.PRODUCTION" [ngClass]="{'activeColor lt':Tab=='Tab3'}"
+                    class="c-p">
                     <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Manage KYC
                 </li>
                 <!-- <li class="c-p">
