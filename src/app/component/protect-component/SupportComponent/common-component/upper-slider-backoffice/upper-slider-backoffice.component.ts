@@ -18,6 +18,7 @@ import { ReconciliationService } from '../../../AdviserComponent/backOffice/back
   styleUrls: ['./upper-slider-backoffice.component.scss'],
 })
 export class UpperSliderBackofficeComponent implements OnInit {
+  logoText;
   arrWithTransCheckTrueAndisMappedMinusOne: any = [];
   markFolioIndex: any;
   totalCount: any;
