@@ -26,7 +26,7 @@ export class ManageKycComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     const obj = {
-      clientId: this.data ? this.data.id : AuthService.getClientId()
+      clientId: this.data ? this.data.clientId : AuthService.getClientId()
     }
     this.peopleService.getKYCDetailsData(obj).subscribe(
       data => {
@@ -45,17 +45,42 @@ export class ManageKycComponent implements OnInit {
   }
 
   kycClientSectionMethod() {
+    const hostNameOrigin = window.location.origin;
+    const clientData = AuthService.getClientData();
     const obj = {
-
+      name: clientData.name,
+      clientId: clientData.clientId,
+      email: clientData.email,
+      mobileNo: clientData.mobileNo,
+      redirectUrl: `${hostNameOrigin}/customer/detail/overview/profile`
     }
-    this.peopleService.sendKYCLink(obj)
+    this.peopleService.doKYCNow(obj).subscribe(
+      data => {
+        if (data.innerObj) {
+          window.open(data.innerObj.autoLoginUrl);
+        }
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
   }
 
   kycAdvisorSectionMethod() {
+    const hostNameOrigin = window.location.origin;
     const obj = {
-
+      name: this.data.name,
+      clientId: this.data.clientId,
+      email: this.data.email,
+      mobileNo: this.data.mobileNo,
+      redirectUrl: `${hostNameOrigin}/admin/people/clients`
     }
-    this.peopleService.doKYCNow(obj)
+    this.peopleService.doKYCNow(obj).subscribe(
+      data => {
+        this.eventService.openSnackBar("Email sent sucessfully", "Dismiss");
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
   }
 
   close(flag) {

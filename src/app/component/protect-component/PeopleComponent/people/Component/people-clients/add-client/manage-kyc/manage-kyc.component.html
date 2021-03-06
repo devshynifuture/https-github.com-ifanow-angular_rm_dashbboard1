@@ -41,7 +41,8 @@
                         <ng-container matColumnDef="pan">
                             <th mat-header-cell *matHeaderCellDef> PAN Card No.</th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.pan}} </div>
+                                <div class="bar"> <span *ngIf="!isLoading">{{element.pan?element.pan:'N/A'}}</span>
+                                </div>
                             </td>
                         </ng-container>
 
@@ -59,7 +60,8 @@
                         <ng-container matColumnDef="email">
                             <th mat-header-cell *matHeaderCellDef> Email Address </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.emailId}} </div>
+                                <div class="bar"> <span *ngIf="!isLoading">{{element.email?element.email:'N/A'}}</span>
+                                </div>
                             </td>
                         </ng-container>
 
@@ -67,17 +69,36 @@
                         <ng-container matColumnDef="kycStatus">
                             <th mat-header-cell *matHeaderCellDef> KYC Status </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.emailId}} </div>
+                                <div class="bar">
+                                    <span *ngIf="!isLoading ">
+                                        <span class="text-danger" *ngIf="element.kycComplaint==0">Not Verified</span>
+                                        <span class="text-primary" *ngIf="element.kycComplaint==1">KYC_VERIFIED</span>
+                                        <span *ngIf="element.kycComplaint==2">APPLIED</span>
+                                        <span *ngIf="element.kycComplaint==3">ACCEPTED</span>
+                                        <span *ngIf="element.kycComplaint==4">REJECTED</span>
+                                    </span>
+                                </div>
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef> Actions </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar"> {{element.emailId}}
-                                    <button mat-stroked-button class="btn-primary btn-mange-kyc">Basic</button>
-                                    <button mat-stroked-button
-                                        class="btn-danger btn-mange-kyc text-white">Basic</button>
+                                <div *ngIf="isLoading" class="bar"></div>
+                                <div *ngIf="!isLoading && data && element.email && element.mobileNo" class="bar">
+                                    <button (click)="kycAdvisorSectionMethod()" *ngIf="element.kycComplaint!=0"
+                                        mat-stroked-button class="btn-primary btn-mange-kyc">Redo KYC</button>
+                                    <button (click)="kycAdvisorSectionMethod()" *ngIf="element.kycComplaint==0"
+                                        mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                        Link</button>
+                                </div>
+                                <div *ngIf="!isLoading &&!data && element.email && element.mobileNo" class="bar">
+                                    <button (click)="kycClientSectionMethod()" mat-stroked-button
+                                        *ngIf="element.kycComplaint!=0" class="btn-primary btn-mange-kyc">Redo
+                                        KYC</button>
+                                    <button (click)="kycClientSectionMethod()" mat-stroked-button
+                                        *ngIf="element.kycComplaint==0" class="btn-danger btn-mange-kyc text-white">Do
+                                        KYC Now</button>
                                 </div>
                             </td>
                         </ng-container>

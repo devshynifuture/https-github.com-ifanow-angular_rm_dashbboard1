@@ -246,7 +246,7 @@ export class EnumDataService {
         console.log(data);
         this.enumService.addClientRole(data);
       }, err => {
-        this.getClientRole();
+        // this.getClientRole();
       }
     );
   }
