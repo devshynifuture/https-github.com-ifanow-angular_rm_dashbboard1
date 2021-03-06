@@ -235,12 +235,12 @@ export class PeopleService {
     return this.http.putEncoded(apiConfig.USER + appConfig.CHECK_VALID_USERNAME, data);
   }
   getKYCDetailsData(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_KYC_DETAILS, data);
+    return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST_ASSET, data);
   }
   sendKYCLink(data) {
-
+    return this.http.post(apiConfig.USER + appConfig.KYC_LINK_SEND, data);
   }
   doKYCNow(data) {
-
+    return this.http.post(apiConfig.USER + appConfig.KYC_LINK_GET, data);
   }
 }
