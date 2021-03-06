@@ -243,4 +243,7 @@ export class PeopleService {
   doKYCNow(data) {
     return this.http.post(apiConfig.USER + appConfig.KYC_LINK_GET, data);
   }
+  kycStatusUpdate(data) {
+    return this.http.put(apiConfig.USER + appConfig.KYC_STATUS_UPDATE, data);
+  }
 }
