@@ -280,7 +280,6 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
       this.disableAllocate = false
     }
-
   }
   Unfreezed() {
     const dialogData = {
