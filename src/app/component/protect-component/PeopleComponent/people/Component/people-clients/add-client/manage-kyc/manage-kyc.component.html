@@ -87,19 +87,27 @@
                                 <div *ngIf="isLoading" class="bar"></div>
                                 <div *ngIf="!isLoading && data && element.email && element.mobileNo && !element.isLoader"
                                     class="bar">
-                                    <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint!=0"
-                                        mat-stroked-button class="btn-primary btn-mange-kyc">Redo KYC</button>
-                                    <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint==0"
-                                        mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        *ngIf="element.kycComplaint!=0" mat-stroked-button
+                                        class="btn-primary btn-mange-kyc">Redo KYC</button>
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        *ngIf="element.kycComplaint==0" mat-stroked-button
+                                        class="btn-danger btn-mange-kyc text-white">Send
                                         Link</button>
                                 </div>
                                 <div *ngIf="!isLoading &&!data && element.email && element.mobileNo && !element.isLoader"
                                     class="bar">
-                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
-                                        *ngIf="element.kycComplaint!=0" class="btn-primary btn-mange-kyc">Redo
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        mat-stroked-button *ngIf="element.kycComplaint!=0"
+                                        class="btn-primary btn-mange-kyc">Redo
                                         KYC</button>
-                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
-                                        *ngIf="element.kycComplaint==0" class="btn-danger btn-mange-kyc text-white">Do
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        mat-stroked-button *ngIf="element.kycComplaint==0"
+                                        class="btn-danger btn-mange-kyc text-white">Do
                                         KYC Now</button>
                                 </div>
                                 <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>

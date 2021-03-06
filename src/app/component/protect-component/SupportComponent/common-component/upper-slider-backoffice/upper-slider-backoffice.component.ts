@@ -85,7 +85,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   filteredAumListWithIsMappedToMinusOne: any = [];
   reportDuplicateFoliosIsMappedToMinusOne: any[];
   arnRiaCode;
-
+  logoText = ''
   rtaList = [];
 
   ngOnInit() {

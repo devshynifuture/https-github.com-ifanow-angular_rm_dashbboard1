@@ -13,12 +13,14 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class ManageKycComponent implements OnInit {
   isLoading: boolean;
   @Input() data;
+  userData: any;
   constructor(private subInjectService: SubscriptionInject,
     private peopleService: PeopleService,
     private eventService: EventService) { }
   displayedColumns: string[] = ['memberName', 'pan', 'mobile', 'email', 'kycStatus', 'action'];
   dataSource = new MatTableDataSource([{}, {}, {}]);
   ngOnInit() {
+    this.userData = AuthService.getUserInfo();
     this.getKYCClientDetailsCall();
   }
 
@@ -50,12 +52,11 @@ export class ManageKycComponent implements OnInit {
   kycClientSectionMethod(elementData) {
     elementData.isLoader = true;
     const hostNameOrigin = window.location.origin;
-    const clientData = AuthService.getClientData();
     const obj = {
-      name: clientData.name,
-      clientId: clientData.clientId,
-      email: clientData.email,
-      mobileNo: clientData.mobileNo,
+      name: this.data ? this.data.name : elementData.name,
+      clientId: this.data ? this.data.clientId : elementData.clientId,
+      email: this.data ? this.data.email : elementData.email,
+      mobileNo: this.data ? this.data.mobileNo : elementData.mobileNo,
       redirectUrl: `${hostNameOrigin}/kyc-redirect`
     }
     if (elementData.kycComplaint != 0) {
@@ -64,6 +65,7 @@ export class ManageKycComponent implements OnInit {
     this.peopleService.doKYCNow(obj).subscribe(
       data => {
         elementData.isLoader = false;
+        elementData.kycComplaint = 2;
         if (data.innerObj) {
           window.open(data.innerObj.autoLoginUrl);
         }
@@ -78,18 +80,19 @@ export class ManageKycComponent implements OnInit {
     elementData.isLoader = true;
     const hostNameOrigin = window.location.origin;
     const obj = {
-      name: this.data.name,
-      clientId: this.data.clientId,
-      email: this.data.email,
-      mobileNo: this.data.mobileNo,
+      name: this.data ? this.data.name : elementData.name,
+      clientId: this.data ? this.data.clientId : elementData.clientId,
+      email: this.data ? this.data.email : elementData.email,
+      mobileNo: this.data ? this.data.mobileNo : elementData.mobileNo,
       redirectUrl: `${hostNameOrigin}/kyc-redirect`
     }
     if (elementData.kycComplaint != 0) {
       obj['redo'] = true;
     }
-    this.peopleService.doKYCNow(obj).subscribe(
+    this.peopleService.sendKYCLink(obj).subscribe(
       data => {
         elementData.isLoader = false;
+        elementData.kycComplaint = 2;
         this.eventService.openSnackBar("Email sent sucessfully", "Dismiss");
       }, err => {
         elementData.isLoader = false;
