@@ -56,7 +56,10 @@ export class ManageKycComponent implements OnInit {
       clientId: clientData.clientId,
       email: clientData.email,
       mobileNo: clientData.mobileNo,
-      redirectUrl: `${hostNameOrigin}/customer/detail/overview/profile`
+      redirectUrl: `${hostNameOrigin}/kyc-redirect`
+    }
+    if (elementData.kycComplaint != 0) {
+      obj['redo'] = true;
     }
     this.peopleService.doKYCNow(obj).subscribe(
       data => {
@@ -79,7 +82,10 @@ export class ManageKycComponent implements OnInit {
       clientId: this.data.clientId,
       email: this.data.email,
       mobileNo: this.data.mobileNo,
-      redirectUrl: `${hostNameOrigin}/admin/people/clients`
+      redirectUrl: `${hostNameOrigin}/kyc-redirect`
+    }
+    if (elementData.kycComplaint != 0) {
+      obj['redo'] = true;
     }
     this.peopleService.doKYCNow(obj).subscribe(
       data => {
