@@ -184,8 +184,8 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.fromDateYear = this.bulkData.from;
             this.toDateYear = this.bulkData.to;
         } else {
-            this.fromDateYear = 2019;
-            this.toDateYear = 2020;
+            this.fromDateYear = 2020;
+            this.toDateYear = 2021;
         }
         this.fromDate = new Date(this.fromDateYear, 3, 1);
         this.toDate = new Date(this.toDateYear, 2, 31);
