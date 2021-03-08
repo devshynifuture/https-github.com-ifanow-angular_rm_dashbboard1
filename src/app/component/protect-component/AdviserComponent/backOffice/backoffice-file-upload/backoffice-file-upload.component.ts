@@ -95,7 +95,8 @@ export class BackofficeFileUploadComponent implements OnInit {
       this.filterList = data;
       console.log('this is filter list :::', data);
     });
-    this.settingService.getArnlist({ advisorId: this.advisorId })
+    // this.settingService.getArnlist({ advisorId: this.advisorId })
+    this.settingService.getArnlistChanges({ advisorId: this.advisorId })
       .subscribe(res => {
         if (res.length > 0) {
           this.arnRiaList = res;

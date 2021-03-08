@@ -44,7 +44,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private supportService: SupportService,
     private datePipe: DatePipe,
     private reconService: ReconciliationService,
-    private util: UtilService
+    private util: UtilService,
+    public authService: AuthService
   ) { }
 
   displayedColumns: string[] = ['doneOne', 'totalfolios', 'before_recon', 'after_recon', 'aum_balance', 'transaction', 'export_folios'];
@@ -83,7 +84,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   filteredAumListWithIsMappedToMinusOne: any = [];
   reportDuplicateFoliosIsMappedToMinusOne: any[];
   arnRiaCode;
-
+  logoText: any;
   rtaList = [];
 
   ngOnInit() {

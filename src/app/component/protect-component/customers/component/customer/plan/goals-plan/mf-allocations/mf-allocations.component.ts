@@ -165,6 +165,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
         let absLumsum = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
+            element.lumpsumPercent = (element.lumpsumPercent).toFixed(2)
+            element.sipPercent = (element.sipPercent).toFixed(2)
             absAllocation += element.percentAllocated;
             absSIP += element.sipPercent;
             absLumsum += element.lumpsumPercent
@@ -269,7 +271,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       goalId: this.data.remainingData.id,
       mfId: data.id,
       sipPercent: data.sipPercent,
-      lumpsumPercent: data.lumpsumPercent,
+      lumpsumPercent: 100 - data.goalAssetMapping[0].allocatedToOtherGoal,
     }
     this.disableAllocate = true
     if (this.data.remainingData.freezed == true) {
@@ -278,7 +280,6 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
       this.disableAllocate = false
     }
-
   }
   Unfreezed() {
     const dialogData = {

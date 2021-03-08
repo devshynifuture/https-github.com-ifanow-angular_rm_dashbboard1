@@ -1009,7 +1009,7 @@
           #slickModal="slick-carousel"> -->
         <div class="overflow-myfeed">
           <div class="d-flex">
-            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide h-190 ">
+            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide h-160 ">
               <div class="row">
                 <div class="col-md-9 p-0">
                   <p class="mb-0 f-400 roboto text-black lh-16">
@@ -1034,8 +1034,8 @@
               </div>
 
               <div class="row pt-12">
-                <div class="col-md-12 p-0">
-                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
+                <div class="col-md-12 p-0" matTooltip="{{singleTransaction.schemeName}}">
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12 text-truncate">{{singleTransaction.schemeName}}</p>
                 </div>
               </div>
 
@@ -1230,7 +1230,7 @@
           </div>
         </div>
 
-        <div class="col-md-12 p-0" *ngIf="dataSource5.length > 0">
+        <div class="col-md-12 p-0 pt-10" *ngIf="dataSource5.length > 0">
           <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10"
             [appSkeletonLoading]="last7DaysLoading" appSkeletonLoading class="skeletonAnimation">
             <ng-container matColumnDef="position">
@@ -1454,8 +1454,9 @@
             </div>
           </div>
         </div>
-        <div *ngIf="dashBoardSummary.length > 4" class="col-md-12 text-right pt-8">
-          <div (click)="changeParentsTab(3)" class="c-p">View all</div>
+        <div *ngIf="dashBoardSummary.length > 4" class="col-md-12 text-right pt-8 pr-0">
+          <!-- <div (click)="changeParentsTab(3)" class="c-p">View all</div> -->
+          <button (click)="changeParentsTab(3)" mat-stroked-button class="advisor-view-all">View All</button>
         </div>
 
       </div>
@@ -1562,7 +1563,7 @@
   </div>
 
 
-  <div class="col-lg-3 col-md-3  mt-0 p-0">
+  <div class="col-lg-3 col-md-3  mt-0 p-0 bg-lter lter">
     <div class="sticky-top z-0 bg-4-todo">
       <mat-tab-group animationDuration="0ms" id="advisor-radio">
         <mat-tab *ngIf="roleService.dashboardPermission.dashboardCapability.To_do" label="To-do">
@@ -1611,7 +1612,7 @@
                       <mat-radio-button value={{singleNote.id}}>
                       </mat-radio-button>
                     </div>
-                    <div [ngClass]="{'col-md-8': singleNote.update==false,'col-md-12': singleNote.update}" class=" ">
+                    <div [ngClass]="{'col-md-8': singleNote.update==false,'col-md-12': singleNote.update}" class="pr-0">
                       <p *ngIf="singleNote.update==false" class="text-break c-p f-14 pl-10 roboto f-400 mb-0">
                         {{singleNote.activityName}}
 

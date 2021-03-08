@@ -195,7 +195,7 @@ ul.mf-import-second-point {
 
 #ui-assets-account {
   .vertical-menu {
-    width: 16.70vw;
+    width: 230px;
     height: 100vh;
     display: block !important;
     text-align: left;
@@ -1222,4 +1222,9 @@ ul.mf-import-second-point {
   }
 
 
+}
+#face-sheet-tabs{
+  .mat-tab-header{
+    position: static !important;
+  }
 }

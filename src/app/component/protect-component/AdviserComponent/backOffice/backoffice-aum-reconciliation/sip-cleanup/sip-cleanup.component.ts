@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddDeploymentsComponent } from './add-deployments/add-deployments.component';
 import { SipCleanupTransactionComponent } from './sip-cleanup-transaction/sip-cleanup-transaction.component';
 import { startWith, debounceTime } from 'rxjs/operators';
+import { EditSipAmountComponent } from './edit-sip-amount/edit-sip-amount.component';
 
 @Component({
   selector: "app-sip-cleanup",
@@ -177,6 +178,19 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       }
     });
     // this.getSipCleanUpList(false);
+  }
+
+  openEditSIPPopup(data, index) {
+    const dialogRef = this.dialog.open(EditSipAmountComponent, {
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.dataSource.data[index] = result;
+      }
+    });
   }
 
   applyFilter(event: Event) {

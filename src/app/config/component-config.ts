@@ -310,6 +310,11 @@ export const appConfig = {
   DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
   MF_FACT_SHEET_RISKOMETER: 'mutual-fund/scheme/riskometer',
   MF_FACT_SHEET_ALLOCATION: 'mutual-fund/scheme/company/percentage/allocation',
+  MF_FACT_SHEET_NAV: 'mutual-fund/scheme/historical/nav',
+  MF_FACT_SHEET_COUNT: 'mutual-fund/scheme/timeframe',
+  MF_FACT_SHEET_SCHEME_DETAILS: 'mutual-fund/scheme/details',
+  MF_FACT_SHEET_INV_RET: 'mutual-fund/scheme/invesment/returns',
+  MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/mf/ratio/graph',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
@@ -563,7 +568,7 @@ export const appConfig = {
   SAVE_PLAN_SECTION: "plan/financial-plan/save",
   GET_PLAN_SECTION: "plan/financial-plan/list/get",
   DELETE_FP_SECTION: 'plan/financial-plan/delete',
-  GET_TEMPLATES: 'plan/financial-plan/template/list/get',
+  GET_TEMPLATES: 'plan/financial-plan/advisor-template/list/get',
   GET_PREVIEW: 'plan/financial-plan/pdf-url/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
@@ -755,7 +760,7 @@ export const appConfig = {
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
   GET_SCHEMES_DETAILS: 'rmdashboard/get/scheme/details',
   MF_LIST_UNFREEZE: 'mutual-fund/mf-list/unfreeze',
-
+  EDIT_SIP_AMOUNT: 'backoffice/sip-cleanup/sip-amount/edit',
   /********************************* TASKS Section ****************************************/
 
   ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',
@@ -943,6 +948,9 @@ export const appConfig = {
   MOVE_FAMILY_MEMBER: 'user/family-member/move',
   MERGE_DUPLICATE_FAMILY_MEMBER: 'user/client/merge/duplicate',
   PROMOTE_TO_CLIENT: 'user/family-member/promote',
+  KYC_LINK_SEND: 'user/client/kyc-link/send',
+  KYC_LINK_GET: 'user/client/kyc-link/get',
+  KYC_STATUS_UPDATE: 'user/client/kyc-status/update',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -958,6 +966,9 @@ export const appConfig = {
   GET_TEMPLATE_LIST: 'plan/setting/financial-plan/advisor-template/list/get',
   ADD_TEMPLATE: 'plan/financial-plan/template/add',
   EDIT_TEMPLATE: 'plan/financial-plan/template/edit',
+  SET_VISIBILITY: 'plan/financial-plan/template/visibility/edit',
+  RESET_TEMPLATE: 'plan/financial-plan/advisor-template/reset',
+  DELETE_TEMPLATE: 'plan/financial-plan/template/delete',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
@@ -979,6 +990,7 @@ export const appConfig = {
   GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  GET_ARN_RIA_LIST_CHANGE: 'setting/arn-ria/list/get/file/upload',
   ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
   EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
   GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',

@@ -20,7 +20,7 @@ import { RoleService } from 'src/app/auth-service/role.service';
 })
 export class AssetsComponent implements OnInit {
   dialogState = false;
-  sidenavState: boolean = false;
+  sidenavState: boolean = true;
   matSideNavOpen: boolean = true;
   advisorId: any;
   clientId: any;
@@ -110,49 +110,42 @@ export class AssetsComponent implements OnInit {
     // this.stateOfPanel.mode = 'side';
     this.mfService.getViewMode()
       .subscribe(data => {
-        if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
-          this.sidenavState = true;
-          if (this.stateOfPanel._animationState == 'void') {
-            this.stateOfPanel.close();
-          } else {
-            this.stateOfPanel.close();
-
-            // this.toggleSideNav();
-          }
-          if (this.callInit && (data == 'Capital Gains' || data == 'Unrealized Transactions')) {
-            this.sidenavState = false;
-            this.stateOfPanel.open();
-          }
-        } else {
-          this.sidenavState = false;
-          this.stateOfPanel.mode = 'side';
-          if (data == 'Summary' || data == 'Overview Report' || data == 'All Transactions') {
-            if (this.stateOfPanel.opened == false) {
-              this.stateOfPanel.close();
-              this.sidenavState = true;
-            } else {
-              this.stateOfPanel.open();
-            }
-          }
-          if (this.callInit && (data == 'Summary' || data == 'Overview Report' || data == 'All Transactions' || data == 'Capital Gains' || data == 'Unrealized Transactions')) {
-            this.sidenavState = false;
-            this.stateOfPanel.open();
-          }
-          if (data == "") {
-            this.stateOfPanel.open();
-          }
-          // if (this.stateOfPanel.opened == false) {
-          //   this.stateOfPanel.close();
-          // } else {
-          //   this.stateOfPanel.open();
-          // }
-          if (this.router.url != "/customer/detail/account/assets/mutual") {
-            this.otherThanMf = true;
-            this.sidenavState = true;
-            this.stateOfPanel.mode = 'side';
-            this.stateOfPanel.open();
-          }
-        }
+        // if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
+        //   this.sidenavState = true;
+        //   if (this.stateOfPanel._animationState == 'void') {
+        //     this.stateOfPanel.close();
+        //   } else {
+        //     this.stateOfPanel.close();
+        //   }
+        //   if (this.callInit && (data == 'Capital Gains' || data == 'Unrealized Transactions')) {
+        //     this.sidenavState = false;
+        //     this.stateOfPanel.open();
+        //   }
+        // } else {
+        //   this.sidenavState = false;
+        //   this.stateOfPanel.mode = 'side';
+        //   if (data == 'Summary' || data == 'Overview Report' || data == 'All Transactions') {
+        //     if (this.stateOfPanel.opened == false) {
+        //       this.stateOfPanel.close();
+        //       this.sidenavState = true;
+        //     } else {
+        //       this.stateOfPanel.open();
+        //     }
+        //   }
+        //   if (this.callInit && (data == 'Summary' || data == 'Overview Report' || data == 'All Transactions' || data == 'Capital Gains' || data == 'Unrealized Transactions')) {
+        //     this.sidenavState = false;
+        //     this.stateOfPanel.open();
+        //   }
+        //   if (data == "") {
+        //     this.stateOfPanel.open();
+        //   }
+        //   if (this.router.url != "/customer/detail/account/assets/mutual") {
+        //     this.otherThanMf = true;
+        //     this.sidenavState = true;
+        //     this.stateOfPanel.mode = 'side';
+        //     this.stateOfPanel.open();
+        //   }
+        // }
       })
     // this.stateOfPanel.open();
     this.route.queryParams.subscribe((params) => {
@@ -287,20 +280,20 @@ export class AssetsComponent implements OnInit {
     this.sidenavState = !this.sidenavState;
   }
 
-  getValue(data) {
-    if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
-      this.sidenavState = true;
-      if (this.stateOfPanel._animationState == 'void') {
-        this.stateOfPanel.close();
-      } else {
-        this.toggleSideNav();
-      }
-    } else {
-      this.sidenavState = false;
-      this.stateOfPanel.open();
+  // getValue(data) {
+  //   if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
+  //     this.sidenavState = true;
+  //     if (this.stateOfPanel._animationState == 'void') {
+  //       this.stateOfPanel.close();
+  //     } else {
+  //       this.toggleSideNav();
+  //     }
+  //   } else {
+  //     this.sidenavState = false;
+  //     this.stateOfPanel.open();
 
-    }
-  }
+  //   }
+  // }
 
   getRouterLink(assetType) {
     if (assetType['viewmode'] === 'tab1') {
@@ -379,18 +372,18 @@ export class AssetsComponent implements OnInit {
       // }
     })
   }
-  clickable(value) {
-    if (value.name == 'Mutual funds') {
-      this.sidenavState = false;
-      this.otherThanMf = false;
-      this.stateOfPanel.open();
-    } else {
-      this.otherThanMf = true;
-      this.sidenavState = true;
-      this.stateOfPanel.open();
-    }
+  // clickable(value) {
+  //   if (value.name == 'Mutual funds') {
+  //     this.sidenavState = false;
+  //     this.otherThanMf = false;
+  //     this.stateOfPanel.open();
+  //   } else {
+  //     this.otherThanMf = true;
+  //     this.sidenavState = true;
+  //     this.stateOfPanel.open();
+  //   }
 
-  }
+  // }
   openFragment(value) {
     const fragmentData = {
       flag: value,

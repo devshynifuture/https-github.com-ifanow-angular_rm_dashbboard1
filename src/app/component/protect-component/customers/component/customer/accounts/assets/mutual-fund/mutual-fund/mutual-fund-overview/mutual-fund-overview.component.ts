@@ -450,8 +450,8 @@ export class MutualFundOverviewComponent implements OnInit {
         this.getCashFlowStatus();
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
         if (this.showSummaryBar) {
+          this.pieChart('piechartMutualFund');
           setTimeout(() => {
-            this.pieChart('piechartMutualFund');
             if (this.finPlanObj) {
               this.svg = this.chart.getSVG();
               this.loadsvg.emit(this.svg);
@@ -1375,6 +1375,7 @@ export class MutualFundOverviewComponent implements OnInit {
   generatePdfBulk() {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     this.loadingDone = true;
+    this.ref.detectChanges();
     if (this.chart) {
       this.svg = this.chart.getSVG();
     }

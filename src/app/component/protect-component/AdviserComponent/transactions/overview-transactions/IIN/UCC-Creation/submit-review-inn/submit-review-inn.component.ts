@@ -31,6 +31,7 @@ export class SubmitReviewInnComponent implements OnInit {
   thirdHolder: any;
   secondHolder: any;
   dataSource: any;
+  failureMessage: string = '';
 
   constructor(private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder,
@@ -272,6 +273,13 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   submit(singleBrokerCred) {
+    console.log('singleBrokerCreds', singleBrokerCred)
+    // if (singleBrokerCred.aggregatorType == 1) {
+    //   if (!this.nominee) {
+    //     this.failureMessage = 'Please go back and fill nominee details for NSE';
+    //     return;
+    //   }
+    // }
     // this.doneData = true;
     this.selectedBroker = singleBrokerCred
     this.toSendObjHolderList = [];
@@ -287,11 +295,13 @@ export class SubmitReviewInnComponent implements OnInit {
         this.toSendObjBankList.push(element);
       }
     });
-    this.allData.nomineeList.forEach(element => {
-      if (element.address && element.name) {
-        this.toSendObjNomineeList.push(element);
-      }
-    });
+    if (this.allData.nomineeList.length > 0 && this.nominee) {
+      this.allData.nomineeList.forEach(element => {
+        if (element.address && element.name) {
+          this.toSendObjNomineeList.push(element);
+        }
+      });
+    }
     this.allData.holderList = this.toSendObjHolderList;
     this.allData.bankDetailList = this.toSendObjBankList;
     this.allData.nomineeList = this.toSendObjNomineeList;

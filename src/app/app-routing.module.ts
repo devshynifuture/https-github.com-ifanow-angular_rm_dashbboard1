@@ -118,6 +118,10 @@ const routes: Routes = [
     loadChildren: () => import('./component/protect-component/Marketplace/marketplace/marketplace.module').then(m => m.MarketplaceModule)
   },
   {
+    path: 'kyc-redirect',
+    loadChildren: () => import('./component/kyc-redirect/kyc-redirect.module').then(m => m.KycRedirectModule)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
@@ -147,6 +151,7 @@ const routes: Routes = [
     path: 'data-not-found',
     component: DataNotFoundComponent
   },
+
   /* {
      path: 'buttons',
      component: ProgressButtonComponent

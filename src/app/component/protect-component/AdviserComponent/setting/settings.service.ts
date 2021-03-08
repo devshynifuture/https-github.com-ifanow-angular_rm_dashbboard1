@@ -142,6 +142,11 @@ export class SettingsService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, httpParams);
   }
 
+  getArnlistChanges(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST_CHANGE, httpParams);
+  }
+
   addArn(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ARN_RIA, data);
   }
@@ -194,5 +199,14 @@ export class SettingsService {
   editTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_TEMPLATE, data);
 
+  }
+  setVisibilityTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SET_VISIBILITY, data);
+  }
+  resetTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_TEMPLATE, data);
+  }
+  deleteTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEMPLATE, data);
   }
 }

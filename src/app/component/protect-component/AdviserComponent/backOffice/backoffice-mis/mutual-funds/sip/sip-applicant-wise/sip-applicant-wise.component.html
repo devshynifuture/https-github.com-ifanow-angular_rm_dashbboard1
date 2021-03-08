@@ -76,13 +76,14 @@
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}}
-                                        <span *ngIf="!isLoading" appFormatNumber
-                                            [shouldRoundOff]="true">{{ data.totalAum}}</span>
+                                        <span *ngIf="!isLoading" appFormatNumber [shouldRoundOff]="true">{{
+                                            data.totalAum}}</span>
                                     </div>
                                 </td>
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                        {{isLoading ? '' : data.weightInPercentage | number : '1.2-2'}}{{(isLoading?'':'%') }}
+                                        {{isLoading ? '' : data.weightInPercentage | number :
+                                        '1.2-2'}}{{(isLoading?'':'%') }}
                                     </div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(i,data)">
@@ -228,17 +229,20 @@
                                                     </td>
                                                     <td>
                                                         <div [ngClass]="{'bar': isLoadingApplicant }">
-                                                            {{isLoadingApplicant ? '' : (scheme.registeredDate | date:'dd/MM/yyyy')}}
+                                                            {{isLoadingApplicant ? '' : (scheme.registeredDate |
+                                                            date:'dd/MM/yyyy')}}
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div [ngClass]="{'bar': isLoadingApplicant }">
-                                                            {{isLoadingApplicant ? '' : (scheme.from_date | date:'dd/MM/yyyy')}}
+                                                            {{isLoadingApplicant ? '' : (scheme.from_date |
+                                                            date:'dd/MM/yyyy')}}
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div [ngClass]="{'bar': isLoadingApplicant }">
-                                                            {{isLoadingApplicant ? '' : (scheme.to_date | date:'dd/MM/yyyy')}}
+                                                            {{isLoadingApplicant ? '' : (scheme.to_date |
+                                                            date:'dd/MM/yyyy')}}
                                                         </div>
                                                     </td>
                                                     <td>
@@ -255,12 +259,15 @@
                                                         <div [ngClass]="{'bar': isLoadingApplicant }">
                                                             {{isLoadingApplicant ? ' ' : '₹ '}}
                                                             <span *ngIf="!isLoadingApplicant" appFormatNumber
-                                                                [shouldRoundOff]="true">{{scheme.amount}}</span>
+                                                                [shouldRoundOff]="true">{{scheme.amount}}<span
+                                                                    class="f-10"
+                                                                    *ngIf="scheme?.amountEdited">(edited)</span></span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div [ngClass]="{'bar': isLoadingApplicant }">
-                                                            {{isLoadingApplicant ? '' : (scheme.weightInPercentage | number:'1.2-2')}}{{(isLoadingApplicant?'':'%') }}
+                                                            {{isLoadingApplicant ? '' : (scheme.weightInPercentage |
+                                                            number:'1.2-2')}}{{(isLoadingApplicant?'':'%') }}
                                                         </div>
                                                     </td>
                                                     <td>
@@ -305,8 +312,8 @@
                             <tr>
                                 <td class="p-table text-right"><strong>Total</strong></td>
                                 <td class="p-table text-right"><strong>{{'₹ '}}
-                                        <span appFormatNumber
-                                            [shouldRoundOff]="true">{{ totalOfSipAmount }}</span></strong>
+                                        <span appFormatNumber [shouldRoundOff]="true">{{ totalOfSipAmount
+                                            }}</span></strong>
                                 </td>
                                 <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>

@@ -6,12 +6,14 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SipCleanupRoutingModule } from "./sip-cleanup-routing.module";
 import { RunSipMappingMasterComponent } from './run-sip-mapping-master/run-sip-mapping-master.component';
+import { EditSipAmountComponent } from './edit-sip-amount/edit-sip-amount.component';
 
 
 // import { RecordDetailsComponent } from './record-details/record-details.component';
 
 @NgModule({
-  declarations: [SipCleanupComponent, RunSipMappingMasterComponent
+  declarations: [SipCleanupComponent, RunSipMappingMasterComponent,
+    EditSipAmountComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +25,6 @@ import { RunSipMappingMasterComponent } from './run-sip-mapping-master/run-sip-m
 
   ],
   exports: [],
-  entryComponents: [RunSipMappingMasterComponent]
+  entryComponents: [RunSipMappingMasterComponent, EditSipAmountComponent]
 })
 export class SipCleanupModule { }

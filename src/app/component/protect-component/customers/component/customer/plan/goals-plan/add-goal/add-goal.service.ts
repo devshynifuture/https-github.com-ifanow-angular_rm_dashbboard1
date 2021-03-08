@@ -3,6 +3,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PlanService } from '../../plan.service';
 import { Subject } from 'rxjs';
 import { copyArrayItem } from '@angular/cdk/drag-drop';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AddGoalService {
   constructor(
     private eventService: EventService,
     private plansService: PlanService,
+    private subInjectService: SubscriptionInject,
   ) { }
 
   refreshObservable = new Subject();
@@ -61,7 +63,7 @@ export class AddGoalService {
             obj.sipPercent = parseInt(mfAsset.absSIP)
             obj.lumpsumOrSip = 2
           } else {
-            obj.lumpsumPercent = parseInt(mfAsset.absLumsum)
+            obj.lumpsumPercent = (100 - element.allocatedToOtherGoal)
             obj.lumpsumOrSip = 1
           }
         });
@@ -105,6 +107,7 @@ export class AddGoalService {
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
     }, err => {
       this.eventService.openSnackBar(err);
     })
@@ -115,6 +118,7 @@ export class AddGoalService {
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Unallocated", "Dismiss");
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
     }, err => {
       this.eventService.openSnackBar(err);
     })
