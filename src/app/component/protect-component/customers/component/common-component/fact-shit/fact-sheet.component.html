@@ -186,9 +186,10 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 pt-28">
+          <div class="col-md-12 pt-28" [appSkeletonLoading]="isLoadingSchemeDetails" appSkeletonLoading>
             <h4 class="m-0 f-500">About {{data.schemeName}}</h4>
-            <p class="m-0 f-300 roboto pt-8">{{data.schemeName}} is a {{data.categoryName | lowercase }} Mutual Fund
+            <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">{{data.schemeName}} is a
+              {{data.categoryName | lowercase }} Mutual Fund
               Scheme launched by {{schemeDetails?.amc}} Mutual Fund.<span *ngIf="schemeDetails?.inceptDate">This scheme
                 was introduced to investors on {{schemeDetails?.inceptDate ? (schemeDetails?.inceptDate |
                 date:'dd-MMM-yyyy') : '-'}}.</span><span
@@ -197,14 +198,28 @@
               currently has an Asset Under Management(AUM) of ₹<span appFormatNumber
                 [value]="schemeDetails?.aum"></span> Cr and the Latest NAV as of {{data.navDate | date:'dd/MM/yyyy'}} is
               ₹{{data?.nav}}.</p>
-            <p class="m-0 f-300 roboto pt-8">The {{data.schemeName}} is rated {{schemeDetails?.color}}.<span
-                *ngIf="data.sipAmount != 0">Minimum SIP
+            <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">The {{data.schemeName}} is rated
+              {{schemeDetails?.color}}.<span *ngIf="data.sipAmount != 0">Minimum SIP
                 Investment is {{data.sipAmount}}.</span><span *ngIf="schemeDetails?.lumpsum">Minimum Lumpsum Investment
                 is {{schemeDetails?.lumpsum}}. Exit load of
                 {{schemeDetails?.exitLoad}}% if redeemed
                 within 365 days.</span></p>
+            <div class="relClass" *ngIf="isLoadingSchemeDetails">
+              <div [ngClass]="{'height80': isLoadingSchemeDetails}" class="bar">
+                <h1 class="f-35 m-0 roboto text-black pt-8 ">
+                  <span>{{''}}</span>
+                </h1>
+              </div>
+            </div>
             <h4 class="m-0 f-500 pt-20">Scheme objective</h4>
-            <p class="f-300 roboto m-0 pt-8">{{schemeDetails?.objective}}</p>
+            <p class="f-300 roboto m-0 pt-8" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.objective}}</p>
+            <div class="relClass" *ngIf="isLoadingSchemeDetails">
+              <div [ngClass]="{'height80': isLoadingSchemeDetails}" class="bar">
+                <h1 class="f-35 m-0 roboto text-black pt-8 ">
+                  <span>{{''}}</span>
+                </h1>
+              </div>
+            </div>
             <h4 class="m-0 f-500 pt-20">Disclaimer</h4>
             <p class="f-300 roboto m-0 pt-8">Mutual Fund investments are subject to market risks, read all scheme
               related documents carefully. </p>

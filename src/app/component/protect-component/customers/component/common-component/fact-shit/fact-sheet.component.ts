@@ -42,6 +42,7 @@ export class FactSheetComponent implements OnInit {
   @Input() data;
   schemeChart: Chart;
   ngOnInitLoad = true;
+  isLoadingSchemeDetails = true;
   json = [
     [
       1167609600000,
@@ -11480,12 +11481,43 @@ export class FactSheetComponent implements OnInit {
         this.eventService.openSnackBar('err', 'DISMISS');
       });
   }
+  ConvertStringToNumber(input) {
+    input = input.replace(',', '')
+    var numeric = Number(input);
+    return numeric;
+  }
   getXirr() {
     let timePeriod = (this.selectedItem.value == '1' || this.selectedItem.value == '4') ? '3' : (this.selectedItem.value == '2') ? '6' : (this.selectedItem.value == '3') ? '1' : (this.selectedItem.value == '5') ? '5' : '0';
     let type = (this.selectedItem.value == '1' || this.selectedItem.value == '2') ? 'MONTH' : (this.selectedItem.value == '3' || this.selectedItem.value == '4' || this.selectedItem.value == '5') ? 'YEAR' : '0';
     const catObj = {};
     let array = [];
     const clone = Object.assign({}, this.data);
+    clone.absoluteReturn = this.ConvertStringToNumber(clone.absoluteReturn)
+    clone.amountInvested = this.ConvertStringToNumber(clone.amountInvested)
+    clone.balanceUnit = this.ConvertStringToNumber(clone.balanceUnit)
+    clone.currentValue = this.ConvertStringToNumber(clone.currentValue)
+    clone.dividendPayout = this.ConvertStringToNumber(clone.dividendPayout)
+    clone.nav = this.ConvertStringToNumber(clone.nav)
+    clone.sipAmount = this.ConvertStringToNumber(clone.sipAmount)
+    clone.switchOut = this.ConvertStringToNumber(clone.switchOut)
+    clone.totalAbsoluteReturn = this.ConvertStringToNumber(clone.totalAbsoluteReturn)
+    clone.totalAmountInvested = this.ConvertStringToNumber(clone.totalAmountInvested)
+    clone.totalBalanceUnit = this.ConvertStringToNumber(clone.totalBalanceUnit)
+    clone.totalCurrentValue = this.ConvertStringToNumber(clone.totalCurrentValue)
+    clone.xirr = this.ConvertStringToNumber(clone.xirr)
+    clone.totalDividendPayout = this.ConvertStringToNumber(clone.totalDividendPayout)
+    clone.totalSipAmount = this.ConvertStringToNumber(clone.totalSipAmount)
+    clone.totalSwitchOut = this.ConvertStringToNumber(clone.totalSwitchOut)
+    clone.totalUnrealizedGain = this.ConvertStringToNumber(clone.totalUnrealizedGain)
+    clone.totalXirr = this.ConvertStringToNumber(clone.totalXirr)
+    clone.unrealizedGain = this.ConvertStringToNumber(clone.unrealizedGain)
+    clone.withdrawalsTillToday = this.ConvertStringToNumber(clone.withdrawalsTillToday)
+    clone.navDate = new Date(clone.navDate);
+
+
+
+
+
     delete clone.family_member_list;
     clone.navDate = new Date(clone.navDate);
     array.push(clone);
@@ -11627,12 +11659,14 @@ export class FactSheetComponent implements OnInit {
       });
   }
   getDetails() {
+    this.isLoadingSchemeDetails = true;
     const data = {
       schemeCode: this.data.accordSchemeCode,
     };
     this.cusService.getFactSheetDetails(data)
       .subscribe(res => {
         if (res) {
+          this.isLoadingSchemeDetails = true;
           this.schemeDetails = res;
           console.log('speedometer', res);
         } else {
