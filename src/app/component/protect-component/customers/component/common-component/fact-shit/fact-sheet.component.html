@@ -310,7 +310,16 @@
           <div class="row">
             <div class="col-md-12">
               <!-- <p class="m-0">Riskometer</p> -->
-              <div class="highcharts-figure" id="container-hc-figure" [chart]="speedChartVar">
+              <div class="highcharts-figure" *ngIf="!speedLoading" id="container-hc-figure" [chart]="speedChartVar">
+              </div>
+              <div class="row skeletonAnimation" *ngIf="speedLoading" [appSkeletonLoading]="speedLoading"
+                appSkeletonLoading>
+                <div class="col-md-12  mt-20 overflow-hidden ">
+                  <div class="relClass">
+                    <div class="bar300 widthRelative" [ngClass]="{'height300': speedLoading}">
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- <img src="/assets/images/svg/riskmeter.svg" class="w-100 pt-32"> -->
               <p class="f-12 m-0 text-center">Investors understand that their principal

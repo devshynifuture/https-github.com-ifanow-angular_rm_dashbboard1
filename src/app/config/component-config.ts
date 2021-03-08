@@ -314,7 +314,7 @@ export const appConfig = {
   MF_FACT_SHEET_COUNT: 'mutual-fund/scheme/timeframe',
   MF_FACT_SHEET_SCHEME_DETAILS: 'mutual-fund/scheme/details',
   MF_FACT_SHEET_INV_RET: 'mutual-fund/scheme/invesment/returns',
-  MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/mf/ratio/graph',
+  MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/relative/performance',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
