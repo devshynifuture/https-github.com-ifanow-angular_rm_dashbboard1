@@ -178,7 +178,7 @@
         </div>
         <div class="row pt-24">
             <div class="col-md-12 p-0">
-                <app-froala [(model)]="kycForm.get('emailBody').value"></app-froala>
+                <app-froala [(model)]="emailBody"></app-froala>
             </div>
         </div>
     </div>
@@ -189,8 +189,7 @@
             <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 d-flex align-items-end justify-content-end">
-            <app-progress-button *ngIf="!step1" (btnClick)="saveNext('Save')" class="br-0 text-inherit ml-12"
-                [options]="barButtonOptions">
+            <app-progress-button *ngIf="!step1" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
             </app-progress-button>
         </div>
 
