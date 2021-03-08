@@ -14,7 +14,8 @@
           <a mat-tab-link routerLink="/admin/transactions/mandates"
             *ngIf="transactionRoleService.mandateModule.showModule" routerLinkActive="active">MANDATES</a>
           <!-- <a mat-tab-link routerLink="'expenses'">EXPENSES</a> -->
-          <a class="kycWidth" routerLink="/admin/transactions/kyc" mat-tab-link routerLinkActive="active">KYC</a>
+          <a *ngIf="!enumDataService.PRODUCTION" class="kycWidth" routerLink="/admin/transactions/kyc" mat-tab-link
+            routerLinkActive="active">KYC</a>
           <a *ngIf="transactionRoleService.settingsVisibility.showModule" [state]="{ example: 0 }" mat-tab-link
             routerLink="/admin/transactions/settings" routerLinkActive="active">SETTINGS</a>
         </nav>

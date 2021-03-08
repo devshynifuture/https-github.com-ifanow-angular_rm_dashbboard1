@@ -109,8 +109,11 @@
                         <th mat-header-cell *matHeaderCellDef> Amount </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="bar"> {{isLoading ? ' ' : '₹'}}
-                                <span appFormatNumber>{{
+                                <span appFormatNumber *ngIf="filterOptionControl.value!='SSY'">{{
                                     element.maturityValue}}</span>
+                                <span appFormatNumber *ngIf="filterOptionControl.value=='SSY'">
+                                    {{element.accountBalance}}
+                                </span>
                                 <!-- <span *ngIf="selectedSubType!=1" appFormatNumber>{{
                                         element.targetAmount}}</span> -->
                             </div>

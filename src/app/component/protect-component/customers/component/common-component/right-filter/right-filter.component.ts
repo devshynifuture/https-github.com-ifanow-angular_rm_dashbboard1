@@ -1,14 +1,14 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {CustomerService} from '../../customer/customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-service.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CustomerService } from '../../customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-right-filter',
@@ -16,7 +16,7 @@ import {AuthService} from 'src/app/auth-service/authService';
   styleUrls: ['./right-filter.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class RightFilterComponent implements OnInit {
@@ -84,8 +84,8 @@ export class RightFilterComponent implements OnInit {
   transactionType: any;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private custumService: CustomerService, private eventService: EventService,
-              private mfService: MfServiceService, private datePipe: DatePipe,) {
+    private custumService: CustomerService, private eventService: EventService,
+    private mfService: MfServiceService, private datePipe: DatePipe, ) {
   }
 
   @Input()
@@ -189,7 +189,7 @@ export class RightFilterComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       // const obj = {
       //   id: element.id,
       //   schemeName: element.schemeName,
@@ -258,7 +258,7 @@ export class RightFilterComponent implements OnInit {
 
   getTransactionView(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         displayName: (element.displayName) ? element.displayName : element,
         selected: (element.selected == false) ? element.selected = false : (element.selected == true) ? element.selected = true : true
@@ -275,7 +275,7 @@ export class RightFilterComponent implements OnInit {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
     }
     const filterData = [];
-    this.reportType.filter(function(element) {
+    this.reportType.filter(function (element) {
       const obj = {
         name: element,
         selected: false
@@ -312,28 +312,28 @@ export class RightFilterComponent implements OnInit {
         a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
       );
       const calculatedFinYears = sortingYeras;
-      this.financialYears = [{from: 2010, to: 2011, selected: true, disabled: true}, {
+      this.financialYears = [{ from: 2010, to: 2011, selected: true, disabled: true }, {
         from: 2011,
         to: 2012,
         selected: true,
         disabled: true
-      }, {from: 2012, to: 2013, selected: true, disabled: true}, {
+      }, { from: 2012, to: 2013, selected: true, disabled: true }, {
         from: 2013,
         to: 2014,
         selected: true,
         disabled: true
-      }, {from: 2014, to: 2015, selected: true, disabled: true},
-        {from: 2015, to: 2016, selected: true, disabled: true}, {
-          from: 2016,
-          to: 2017,
-          selected: true,
-          disabled: true
-        }, {from: 2017, to: 2018, selected: true, disabled: true}, {
-          from: 2018,
-          to: 2019,
-          selected: true,
-          disabled: true
-        }, {from: 2019, to: 2020, selected: true, disabled: true}, {from: 2020, to: 2021, selected: true, disabled: true}];
+      }, { from: 2014, to: 2015, selected: true, disabled: true },
+      { from: 2015, to: 2016, selected: true, disabled: true }, {
+        from: 2016,
+        to: 2017,
+        selected: true,
+        disabled: true
+      }, { from: 2017, to: 2018, selected: true, disabled: true }, {
+        from: 2018,
+        to: 2019,
+        selected: true,
+        disabled: true
+      }, { from: 2019, to: 2020, selected: true, disabled: true }, { from: 2020, to: 2021, selected: true, disabled: true }];
       calculatedFinYears.forEach(element => {
         this.financialYears.forEach(item => {
           if (element.from == item.from) {
@@ -341,7 +341,7 @@ export class RightFilterComponent implements OnInit {
           }
         });
       });
-      this.financialYears.filter(function(element) {
+      this.financialYears.filter(function (element) {
         if (element.from == 2019 && element.to == 2020) {
           element.selected = true;
           form.get('grandfathering').setValue('1');
@@ -382,7 +382,7 @@ export class RightFilterComponent implements OnInit {
     this.reportFormat = ['Summary', 'Detailed'];
 
     const filterData = [];
-    this.reportFormat.filter(function(element) {
+    this.reportFormat.filter(function (element) {
       const obj = {
         name: element,
         selected: false
@@ -413,17 +413,17 @@ export class RightFilterComponent implements OnInit {
   // }
   getSaveFilters() {
     this.saveFilters = [
-      {value: 'Current Client', selected: false}, {value: 'All Client', selected: false}];
+      { value: 'Current Client', selected: false }, { value: 'All Client', selected: false }];
 
   }
 
   getOverviewFilter() {
-    this.overviewFilter = [{name: 'Summary bar', selected: true},
-      {name: 'Scheme wise allocation', selected: true},
-      {name: 'Cashflow Status', selected: true},
-      {name: 'Family Member wise allocation', selected: true},
-      {name: 'Category wise allocation', selected: true},
-      {name: 'Sub Category wise allocation', selected: true}];
+    this.overviewFilter = [{ name: 'Summary bar', selected: true },
+    { name: 'Scheme wise allocation', selected: true },
+    { name: 'Cashflow Status', selected: true },
+    { name: 'Family Member wise allocation', selected: true },
+    { name: 'Category wise allocation', selected: true },
+    { name: 'Sub Category wise allocation', selected: true }];
   }
 
   changeFilterPeriod(value) {
@@ -452,7 +452,7 @@ export class RightFilterComponent implements OnInit {
     });
     if (this._data.selectFilter || this._data.selectFilter == 0) {
       this.saveFilters = [
-        {value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false}, {
+        { value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false }, {
           value: 'All Client',
           selected: (this._data.selectFilter == 0) ? true : false
         }];
@@ -495,9 +495,9 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    this.familyMember.filter(function(element) {
+    this.familyMember.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
+        filterData.filter(function (amc) {
           // amc.mutualFund.forEach(function (mf) {
           if (amc.familyMemberId == element.familyMemberId) {
             const obj = {
@@ -544,9 +544,9 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       if (element.selected == true) {
-        filterData.filter(function(amc) {
+        filterData.filter(function (amc) {
           // amc.mutualFund.forEach(function (mf) {
           if (amc.categoryId == element.categoryId) {
             const obj = {
@@ -598,7 +598,7 @@ export class RightFilterComponent implements OnInit {
     const filterData2 = this._data.mfData.mutualFundList;
     const filterData1 = [];
     const filterData3 = [];
-    this.folio.filter(function(element) {
+    this.folio.filter(function (element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
@@ -657,7 +657,7 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData3 = [];
     const filterData4 = [];
-    this.amc.filter(function(element) {
+    this.amc.filter(function (element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
@@ -715,7 +715,7 @@ export class RightFilterComponent implements OnInit {
     const filterData1 = [];
     const filterData3 = [];
     const filterData4 = [];
-    this.scheme.filter(function(element) {
+    this.scheme.filter(function (element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
@@ -875,7 +875,7 @@ export class RightFilterComponent implements OnInit {
     }
   }
 
-  changeSelect = function(data, i) {
+  changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
     if (this._data.name == 'Overview Report') {
       if (this.overviewFilter != undefined) {
@@ -1088,6 +1088,6 @@ export class RightFilterComponent implements OnInit {
 
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 }

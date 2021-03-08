@@ -249,10 +249,11 @@
           <div class="row pt-20">
             <div class="col-md-6">
               <p class="m-0 f-12 roboto">Scheme Returns</p>
-              <h1 class="m-0 text-primary">{{schemeReturnValue | number:'1.2-2'}}%</h1>
+              <h1 class="m-0 text-primary">{{schemeReturnValue ? (schemeReturnValue | number:'1.2-2') :
+                '-'}}{{schemeReturnValue ? '%' : ''}}</h1>
             </div>
             <div class="col-md-6">
-              <h1 class="m-0 text-primary pt-60">12.23%</h1>
+              <h1 class="m-0 text-primary pt-60">{{xirr ? (xirr | number:'1.2-2') : '-'}}{{xirr ? '%' : ''}}</h1>
               <p class="m-0 f-12 roboto pb-28">Your Returns</p>
             </div>
           </div>
@@ -299,10 +300,10 @@
           </div>
           <div class="row pt-24 pb-24">
             <div class="col-md-6">
-              <button mat-button class="btn-primary br-0" (click)="openTransaction(element)">START SIP</button>
+              <button mat-button class="btn-primary br-0" (click)="openTransaction(data)">START SIP</button>
             </div>
             <div class="col-md-6">
-              <button mat-button class="btn-primary br-0" (click)="openTransaction(element)">LUMPSUM</button>
+              <button mat-button class="btn-primary br-0" (click)="openTransaction(data)">LUMPSUM</button>
             </div>
           </div>
         </div>
@@ -310,7 +311,16 @@
           <div class="row">
             <div class="col-md-12">
               <!-- <p class="m-0">Riskometer</p> -->
-              <div class="highcharts-figure" id="container-hc-figure" [chart]="speedChartVar">
+              <div class="highcharts-figure" *ngIf="!speedLoading" id="container-hc-figure" [chart]="speedChartVar">
+              </div>
+              <div class="row skeletonAnimation" *ngIf="speedLoading" [appSkeletonLoading]="speedLoading"
+                appSkeletonLoading>
+                <div class="col-md-12  mt-20 overflow-hidden ">
+                  <div class="relClass">
+                    <div class="bar300 widthRelative" [ngClass]="{'height300': speedLoading}">
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- <img src="/assets/images/svg/riskmeter.svg" class="w-100 pt-32"> -->
               <p class="f-12 m-0 text-center">Investors understand that their principal
