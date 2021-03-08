@@ -188,10 +188,8 @@
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             {{singleMembers.age}} Yrs</p>
                                     </div>
-
-                                    <!-- <i class="material-icons familyDelete">
-                      cancel
-                  </i> -->
+                                    <!-- <img src="/assets/images/svg/circle-verified.svg" class="familyDelete">
+                                    <img src="/assets/images/svg/error-red.png" class="familyDelete"> -->
 
                                 </div>
                             </div>
@@ -229,8 +227,8 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span
-                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.displayName) ? clientOverviewData.displayName : 'N/A'}}
+                                                <span *ngIf="!letsideBarLoader">{{(clientOverviewData.displayName) ?
+                                                    clientOverviewData.displayName : 'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -244,7 +242,10 @@
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
                                                 <span *ngIf="!letsideBarLoader">
-                                                    {{(clientOverviewData.mobileList && clientOverviewData.mobileList.length > 0 && clientOverviewData.mobileList[0].mobileNo!=0) ? clientOverviewData.mobileList[0].mobileNo : 'N/A'}}
+                                                    {{(clientOverviewData.mobileList &&
+                                                    clientOverviewData.mobileList.length > 0 &&
+                                                    clientOverviewData.mobileList[0].mobileNo!=0) ?
+                                                    clientOverviewData.mobileList[0].mobileNo : 'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -334,7 +335,8 @@
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
                                                 <span *ngIf="!letsideBarLoader">
-                                                    {{(clientOverviewData.userName) ? clientOverviewData.userName : 'N/A'}}
+                                                    {{(clientOverviewData.userName) ? clientOverviewData.userName :
+                                                    'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -346,8 +348,8 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span
-                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.aadhaarNumber) ? clientOverviewData.aadhaarNumber : 'N/A'}}
+                                                <span *ngIf="!letsideBarLoader">{{(clientOverviewData.aadhaarNumber) ?
+                                                    clientOverviewData.aadhaarNumber : 'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -507,7 +509,8 @@
                             <div *ngIf="selectedAddress===singleAddress" class="row">
                                 <div class=" col-md-9 p-0 ">
                                     <p class=" f-12 mb-0 pt-4 text-primitive ">
-                                        {{!singleAddress.addressType ||singleAddress.addressType==1?'RESIDENTIAL':singleAddress.addressType==2?'OFFICE':'KYC'}}
+                                        {{!singleAddress.addressType
+                                        ||singleAddress.addressType==1?'RESIDENTIAL':singleAddress.addressType==2?'OFFICE':'KYC'}}
                                     </p>
 
 
@@ -649,8 +652,8 @@
                                 <div class=" row ">
                                     <div class=" col-md-9 p-0 ">
                                         <p class=" m-0 f-14 ">
-                                            <span
-                                                class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName ?selectedDemat.depositoryParticipantName :'N/A'}}</span>
+                                            <span class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName
+                                                ?selectedDemat.depositoryParticipantName :'N/A'}}</span>
                                             <br> DP ID:
                                             {{selectedDemat.depositoryParticipantId?selectedDemat.depositoryParticipantId:'N/A'}}
                                             <br> UCC:
