@@ -314,7 +314,7 @@ export const appConfig = {
   MF_FACT_SHEET_COUNT: 'mutual-fund/scheme/timeframe',
   MF_FACT_SHEET_SCHEME_DETAILS: 'mutual-fund/scheme/details',
   MF_FACT_SHEET_INV_RET: 'mutual-fund/scheme/invesment/returns',
-  MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/mf/ratio/graph',
+  MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/relative/performance',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
@@ -990,6 +990,7 @@ export const appConfig = {
   GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  GET_ARN_RIA_LIST_CHANGE: 'setting/arn-ria/list/get/file/upload',
   ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
   EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
   GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',

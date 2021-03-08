@@ -181,10 +181,23 @@
           <div class="wrapper-8">
             <p class="m-0 f-500 roboto">Relative performance</p>
             <!-- <img src="/assets/images/svg/dotted.svg" class="w-100 pt-32"> -->
-            <div class="highcharts-figure" id="container-hc-figure" [chart]="performaceGraph">
+            <div class="highcharts-figure" *ngIf="!relativePerLoading" id="container-hc-figure"
+              [chart]="performaceGraph">
+            </div>
+            <div class="row skeletonAnimation" *ngIf="relativePerLoading" [appSkeletonLoading]="relativePerLoading"
+              appSkeletonLoading>
+              <div class="col-md-12  mt-20 overflow-hidden ">
+                <div class="relClass">
+                  <div class="bar300 widthRelative" [ngClass]="{'height300': relativePerLoading}">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
+
+
         <div class="row">
           <div class="col-md-12 pt-28" [appSkeletonLoading]="isLoadingSchemeDetails" appSkeletonLoading>
             <h4 class="m-0 f-500">About {{data.schemeName}}</h4>
@@ -297,7 +310,16 @@
           <div class="row">
             <div class="col-md-12">
               <!-- <p class="m-0">Riskometer</p> -->
-              <div class="highcharts-figure" id="container-hc-figure" [chart]="speedChartVar">
+              <div class="highcharts-figure" *ngIf="!speedLoading" id="container-hc-figure" [chart]="speedChartVar">
+              </div>
+              <div class="row skeletonAnimation" *ngIf="speedLoading" [appSkeletonLoading]="speedLoading"
+                appSkeletonLoading>
+                <div class="col-md-12  mt-20 overflow-hidden ">
+                  <div class="relClass">
+                    <div class="bar300 widthRelative" [ngClass]="{'height300': speedLoading}">
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- <img src="/assets/images/svg/riskmeter.svg" class="w-100 pt-32"> -->
               <p class="f-12 m-0 text-center">Investors understand that their principal
@@ -313,8 +335,8 @@
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber class="bar"
                   [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span>
               </h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
                 </div>
@@ -323,8 +345,8 @@
             <div class="col-md-6">
               <p class="f-12 m-0">SCHEME TYPE</p>
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.type)}}</h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
                 </div>
@@ -335,8 +357,8 @@
             <div class="col-md-6">
               <p class="f-12 m-0">SCHEME STARTED</p>
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.inceptDate | date:'dd-MM-yyyy') }}</h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
                 </div>
@@ -346,8 +368,8 @@
               <p class="f-12 m-0">SCHEME SIZE</p>
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber [value]="schemeDetails?.aum"></span>
               </h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
                 </div>
@@ -358,8 +380,8 @@
             <div class="col-md-6">
               <p class="f-12 m-0">CASH POSITION</p>
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.aum | number:'1.2-2')}}%</h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
                 </div>
@@ -368,8 +390,8 @@
             <div class="col-md-6">
               <p class="f-12 m-0">EXPENSE RATIO</p>
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.expRatio}}</h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
                 </div>
@@ -380,7 +402,7 @@
             <div class="col-md-6">
               <p class="f-12 m-0">PE RATIO</p>
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pe | number:'1.2-2')}}</h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+              <div class="col-md-9 p-0 relClass pt-12 m-0" *ngIf="isLoadingSchemeDetails">
                 <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
@@ -390,7 +412,7 @@
             <div class="col-md-6">
               <p class="f-12 m-0">P/B RATIO</p>
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pb | number:'1.2-2')}}</h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+              <div class="col-md-9 p-0 relClass pt-12 m-0" *ngIf="isLoadingSchemeDetails">
                 <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
@@ -404,8 +426,8 @@
               <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">Exit load of {{schemeDetails?.exitLoad}}
                 if redeemed within
                 365 days.</h5>
-              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar  pt-12">
                   <p class="text-black f-12 m-0 text-right roboto f-400">
                     {{''}}</p>
                 </div>

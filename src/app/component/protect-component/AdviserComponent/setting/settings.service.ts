@@ -142,6 +142,11 @@ export class SettingsService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, httpParams);
   }
 
+  getArnlistChanges(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST_CHANGE, httpParams);
+  }
+
   addArn(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ARN_RIA, data);
   }
