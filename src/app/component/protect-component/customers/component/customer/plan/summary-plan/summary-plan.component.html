@@ -380,7 +380,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-6 mt-16  pt-20 skeletonAnimation pl-0"
+                        <div class="col-md-6 mt-16  pt-20 skeletonAnimation pl-0"
                             [appSkeletonLoading]="isLoadingCashFlow" appSkeletonLoading>
                             <div class="bg-white b-a pl-28 pr-28">
                                 <div class="row pt-20 ">
@@ -391,7 +391,7 @@
                                         <p class="f-12 text-custom mb-0 ">({{ yearToShow }})</p>
                                     </div>
 
-                                    
+
 
                                 </div>
                                 <div class="row">
@@ -404,7 +404,7 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Incomes</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">28,30,500</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.income}}</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1">
@@ -412,7 +412,7 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Assets</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">28,30,500</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.assetInflow}}</p>
                                     </div>
                                 </div>
                                 <div class="row ">
@@ -420,7 +420,7 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Insurance</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">28,30,500</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.insuranceInflow}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -433,7 +433,7 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Expenses</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">28,30,500</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.expense}}</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1">
@@ -441,7 +441,7 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Assets</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">28,30,500</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.assetOutFlow}}</p>
                                     </div>
                                 </div>
                                 <div class="row bb-1">
@@ -449,7 +449,7 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Insurance</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">28,30,500</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.insurancePremium}}</p>
                                     </div>
                                 </div>
 
@@ -458,7 +458,7 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Liabilities</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">28,30,500</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.loanEmi}}</p>
                                     </div>
                                 </div>
                                 <div class="row pb-20">
@@ -466,7 +466,7 @@
                                         <p class="m-0 pb-8 pt-20 roboto f-500">Surplus/Deficit</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right">
-                                        <p class="m-0 pb-8 pt-20 roboto f-500">8,73,500</p>
+                                        <p class="m-0 pb-8 pt-20 roboto f-500">{{cashFlowData?.surplus}}</p>
                                     </div>
                                 </div>
 
@@ -475,7 +475,7 @@
 
 
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingSummary"
                         appSkeletonLoading>

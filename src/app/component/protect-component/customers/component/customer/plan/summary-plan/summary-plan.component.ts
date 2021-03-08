@@ -727,6 +727,9 @@ export class SummaryPlanComponent implements OnInit {
                     console.log(data);
                     this.annualSurplus = 0;
                     this.cashFlowData = data;
+                    this.cashFlowData.loanEmi = (this.cashFlowData.loanEmi).toFixed(2)
+                    this.cashFlowData.surplus = (this.cashFlowData.surplus).toFixed(2)
+                    console.log('cashFlowData', this.cashFlowData)
                     this.annualSurplus = this.cashFlowData.income - this.cashFlowData.expense;
                     let total = this.cashFlowData.income + this.cashFlowData.expense;
                     this.incomePercent = Math.floor((this.cashFlowData.income / total) * 100);
