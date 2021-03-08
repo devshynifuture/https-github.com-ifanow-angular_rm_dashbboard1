@@ -1,0 +1,147 @@
+<div *ngIf="data" class="row bb-1 popup-header-fix-50">
+    <div class="col-md-11 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">Manage KYC</h4>
+    </div>
+    <div class="col-md-1 col-2 full-center pl-0 pr-24">
+
+        <i (click)="close(false)" class="material-icons c-p">
+            clear
+        </i>
+
+    </div>
+</div>
+<div *ngIf="!data" class="row pt-44 ">
+    <div class="col-md-4 p-0">
+        <h4 class="m-0 text-black roboto pt-8">Manage KYC</h4>
+    </div>
+    <div class="col-md-8 p-0">
+        <!-- <h4 class="m-0 text-black roboto pt-8">Manage KYC</h4> -->
+    </div>
+</div>
+<div [ngClass]="{'pt-80 pb-90': data}">
+    <div [ngClass]="{'pl-20': data}" class=" mob-pl-15 mob-pr-15">
+        <div class="row">
+            <div class="col-md-12 p-0 mob-pr-0" *ngIf="dataSource.data.length > 0">
+                <div class="overflow-y-788">
+                    <table mat-table [dataSource]="dataSource" id="tbs" class="mt-20 skeletonAnimation"
+                        appSkeletonLoading [appSkeletonLoading]="isLoading">
+
+                        <!-- Checkbox Column -->
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="memberName">
+                            <th mat-header-cell *matHeaderCellDef>Member Name </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    {{element.name}}
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pan">
+                            <th mat-header-cell *matHeaderCellDef> PAN Card No.</th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"> <span *ngIf="!isLoading">{{element.pan?element.pan:'N/A'}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="mobile">
+                            <th mat-header-cell *matHeaderCellDef>Registered Mobile No. </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"><span *ngIf="!isLoading">{{element.mobileNo
+                                        ?element.mobileNo:'N/A'}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef> Email Address </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar"> <span *ngIf="!isLoading">{{element.email?element.email:'N/A'}}</span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="kycStatus">
+                            <th mat-header-cell *matHeaderCellDef> KYC Status </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="bar">
+                                    <span *ngIf="!isLoading ">
+                                        <span class="text-danger" *ngIf="element.kycComplaint==0">Not Verified</span>
+                                        <span class="text-primary" *ngIf="element.kycComplaint==1">KYC_VERIFIED</span>
+                                        <span *ngIf="element.kycComplaint==2">APPLIED</span>
+                                        <span *ngIf="element.kycComplaint==3">ACCEPTED</span>
+                                        <span *ngIf="element.kycComplaint==4">REJECTED</span>
+                                    </span>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Actions </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div *ngIf="isLoading" class="bar"></div>
+                                <div *ngIf="!isLoading && data && element.email && element.mobileNo && !element.isLoader"
+                                    class="bar">
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        *ngIf="element.kycComplaint!=0" mat-stroked-button
+                                        class="btn-primary btn-mange-kyc">Redo KYC</button>
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        *ngIf="element.kycComplaint==0" mat-stroked-button
+                                        class="btn-danger btn-mange-kyc text-white">Send
+                                        Link</button>
+                                </div>
+                                <div *ngIf="!isLoading &&!data && element.email && element.mobileNo && !element.isLoader"
+                                    class="bar">
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        mat-stroked-button *ngIf="element.kycComplaint!=0"
+                                        class="btn-primary btn-mange-kyc">Redo
+                                        KYC</button>
+                                    <button
+                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        mat-stroked-button *ngIf="element.kycComplaint==0"
+                                        class="btn-danger btn-mange-kyc text-white">Do
+                                        KYC Now</button>
+                                </div>
+                                <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
+                            </td>
+                        </ng-container>
+
+                        <!-- Symbol Column -->
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="dataSource.data.length == 0 && isLoading==false" class="col-md-12 p-0 mt-28 text-center">
+                <img src="/assets/images/svg/dialogs4.svg">
+                <h4 class="d-flex justify-content-center p-44 pt-28">
+                    No data found
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="data" class="bottom-fixed-50 wrapper-12 z-index-9">
+    <div class="row">
+        <div class="col-md-4 col-4">
+            <h5 (click)="close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+
+        <div class="col-md-8 col-8 right text-right">
+            <!-- <button *ngIf="!showMedium" (click)="next()" class="br-0  btn-primary text-inherit "> Next
+        </button> -->
+            <!-- <app-progress-button *ngIf="showMedium" (btnClick)="sendRrequest()" [options]="barButtonOptions"
+          class="br-0 text-inherit ">
+        </app-progress-button> -->
+        </div>
+    </div>
+</div>

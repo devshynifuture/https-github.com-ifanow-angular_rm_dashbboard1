@@ -948,6 +948,9 @@ export const appConfig = {
   MOVE_FAMILY_MEMBER: 'user/family-member/move',
   MERGE_DUPLICATE_FAMILY_MEMBER: 'user/client/merge/duplicate',
   PROMOTE_TO_CLIENT: 'user/family-member/promote',
+  KYC_LINK_SEND: 'user/client/kyc-link/send',
+  KYC_LINK_GET: 'user/client/kyc-link/get',
+  KYC_STATUS_UPDATE: 'user/client/kyc-status/update',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
