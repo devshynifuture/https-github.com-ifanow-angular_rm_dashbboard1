@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./run-sip-mapping-master.component.scss']
 })
 export class RunSipMappingMasterComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'date'];
   dataSource = ELEMENT_DATA;
   countOfWizard: any;
   hideCount: boolean = false;
