@@ -305,56 +305,111 @@
             </div>
           </div>
         </div>
-        <div class="bg-white mt-20 scheme-details">
+        <div class="bg-white mt-20 scheme-details" [appSkeletonLoading]="isLoadingSchemeDetails" appSkeletonLoading>
           <p class="m-0 f-500 text-black pt-8 pl-8">Scheme details</p>
           <div class="row pt-20">
             <div class="col-md-6">
               <p class="f-12 m-0">MIN AMOUNT</p>
-              <h5 class="m-0"><span appFormatNumber
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber class="bar"
                   [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span>
               </h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
             <div class="col-md-6">
               <p class="f-12 m-0">SCHEME TYPE</p>
-              <h5 class="m-0">{{(schemeDetails?.type)}}</h5>
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.type)}}</h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row pt-28">
             <div class="col-md-6">
               <p class="f-12 m-0">SCHEME STARTED</p>
-              <h5 class="m-0">{{(schemeDetails?.inceptDate | date:'dd-MM-yyyy') }}</h5>
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.inceptDate | date:'dd-MM-yyyy') }}</h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
             <div class="col-md-6">
               <p class="f-12 m-0">SCHEME SIZE</p>
-              <h5 class="m-0"><span appFormatNumber [value]="schemeDetails?.aum"></span></h5>
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber [value]="schemeDetails?.aum"></span>
+              </h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row pt-28">
             <div class="col-md-6">
               <p class="f-12 m-0">CASH POSITION</p>
-              <h5 class="m-0">{{(schemeDetails?.aum | number:'1.2-2')}}%</h5>
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.aum | number:'1.2-2')}}%</h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
             <div class="col-md-6">
               <p class="f-12 m-0">EXPENSE RATIO</p>
-              <h5 class="m-0">{{schemeDetails?.expRatio}}</h5>
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.expRatio}}</h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row pt-28">
             <div class="col-md-6">
               <p class="f-12 m-0">PE RATIO</p>
-              <h5 class="m-0">{{(schemeDetails?.pe | number:'1.2-2')}}</h5>
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pe | number:'1.2-2')}}</h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
             <div class="col-md-6">
               <p class="f-12 m-0">P/B RATIO</p>
-              <h5 class="m-0">{{(schemeDetails?.pb | number:'1.2-2')}}</h5>
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pb | number:'1.2-2')}}</h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row pt-28 pb-28">
             <div class="col-md-12">
               <p class="f-12 m-0">EXIT LOAD</p>
-              <h5 class="m-0">Exit load of {{schemeDetails?.exitLoad}}
+              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">Exit load of {{schemeDetails?.exitLoad}}
                 if redeemed within
                 365 days.</h5>
+              <div class="col-md-6 p-0 relClass pt-12" *ngIf="isLoadingSchemeDetails">
+                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                  <p class="text-black f-12 m-0 text-right roboto f-400">
+                    {{''}}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
