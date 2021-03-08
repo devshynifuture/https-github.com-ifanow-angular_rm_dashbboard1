@@ -310,6 +310,11 @@ export const appConfig = {
   DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
   MF_FACT_SHEET_RISKOMETER: 'mutual-fund/scheme/riskometer',
   MF_FACT_SHEET_ALLOCATION: 'mutual-fund/scheme/company/percentage/allocation',
+  MF_FACT_SHEET_NAV: 'mutual-fund/scheme/historical/nav',
+  MF_FACT_SHEET_COUNT: 'mutual-fund/scheme/timeframe',
+  MF_FACT_SHEET_SCHEME_DETAILS: 'mutual-fund/scheme/details',
+  MF_FACT_SHEET_INV_RET: 'mutual-fund/scheme/invesment/returns',
+  MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/mf/ratio/graph',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
