@@ -116,6 +116,16 @@
   }
 }
 
+.kyc-transctions {
+  tr.mat-header-row {
+    height: 48px !important;
+  }
+
+  tr.mat-row {
+    height: 36px !important;
+  }
+}
+
 @media(max-width:1200px) {
 
   .transactions-list,

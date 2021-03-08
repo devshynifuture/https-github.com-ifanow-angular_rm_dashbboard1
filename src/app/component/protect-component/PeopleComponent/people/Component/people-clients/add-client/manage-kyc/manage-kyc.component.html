@@ -19,7 +19,7 @@
     </div>
 </div>
 <div [ngClass]="{'pt-80 pb-90': data}">
-    <div [ngClass]="{'pl-20': data}" class=" mob-pl-15 mob-pr-15">
+    <div [ngClass]="{'pl-20 pr-20': data}" class=" mob-pl-15 mob-pr-15">
         <div class="row">
             <div class="col-md-12 p-0 mob-pr-0" *ngIf="dataSource.data.length > 0">
                 <div class="overflow-y-788">
@@ -77,6 +77,9 @@
                                         <span *ngIf="element.kycComplaint==3">ACCEPTED</span>
                                         <span *ngIf="element.kycComplaint==4">REJECTED</span>
                                     </span>
+                                    <img src="/assets/images/svg/info-black.svg" matTooltip="Info about the action"
+                                        aria-label="Button that displays a tooltip when focused or hovered over"
+                                        class="pl-4">
                                 </div>
                             </td>
                         </ng-container>
