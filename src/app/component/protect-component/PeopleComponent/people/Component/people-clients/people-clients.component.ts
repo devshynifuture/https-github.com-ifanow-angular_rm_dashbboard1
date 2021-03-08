@@ -1,25 +1,25 @@
-import {Component, NgZone, OnInit, ViewChild} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AddClientComponent} from './add-client/add-client.component';
-import {PeopleService} from '../../../people.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
-import {Router} from '@angular/router';
-import {PdfGenService} from 'src/app/services/pdf-gen.service';
-import {CancelFlagService} from '../people-service/cancel-flag.service';
-import {EnumDataService} from 'src/app/services/enum-data.service';
-import {Observable, Subscription} from 'rxjs';
-import {debounceTime, startWith} from 'rxjs/operators';
-import {ResetClientPasswordComponent} from './add-client/reset-client-password/reset-client-password.component';
-import {ExcelClientListService} from 'src/app/services/excel-client-list.service';
-import {RoleService} from 'src/app/auth-service/role.service';
-import {element} from 'protractor';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {ManageKycComponent} from './add-client/manage-kyc/manage-kyc.component';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AddClientComponent } from './add-client/add-client.component';
+import { PeopleService } from '../../../people.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { CancelFlagService } from '../people-service/cancel-flag.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { Observable, Subscription } from 'rxjs';
+import { debounceTime, startWith } from 'rxjs/operators';
+import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
+import { ExcelClientListService } from 'src/app/services/excel-client-list.service';
+import { RoleService } from 'src/app/auth-service/role.service';
+import { element } from 'protractor';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { ManageKycComponent } from './add-client/manage-kyc/manage-kyc.component';
 
 @Component({
   selector: 'app-people-clients',
@@ -29,26 +29,26 @@ import {ManageKycComponent} from './add-client/manage-kyc/manage-kyc.component';
 export class PeopleClientsComponent implements OnInit {
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
-              private utilService: UtilService,
-              private subInjectService: SubscriptionInject, public eventService: EventService,
-              private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelClientListService,
-              public roleService: RoleService,
-              private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, public enumDataService: EnumDataService,
-              private enumService: EnumServiceService,
-              private auth: AuthService
+    private utilService: UtilService,
+    private subInjectService: SubscriptionInject, public eventService: EventService,
+    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelClientListService,
+    public roleService: RoleService,
+    private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, public enumDataService: EnumDataService,
+    private enumService: EnumServiceService,
+    private auth: AuthService
   ) {
     this.clientInfo = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
   }
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'member', 'owner',
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'kyc', 'member', 'owner',
     'login', /*'status', *//*'icons',*/ 'icons1'];
   dataSource;
   advisorId: any;
   clientDatasource = new MatTableDataSource();
   isLoading: boolean;
-  @ViewChild('tableEl', {static: false}) tableEl;
-  @ViewChild('clientTableSort', {static: false}) clientTableSort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('clientTableSort', { static: false }) clientTableSort: MatSort;
   screenSize: number;
   infiniteScrollingFlag;
   hasEndReached = false;
@@ -62,7 +62,7 @@ export class PeopleClientsComponent implements OnInit {
   tabviewshow: any;
   reportDate = new Date();
 
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   returnValue: any;
 
   ngOnInit() {
@@ -218,7 +218,7 @@ export class PeopleClientsComponent implements OnInit {
           });
           const header = ['Group head name', 'Registered mobile', 'Registered email', 'PAN', 'Members', 'Client owner', 'Last login', 'Status'];
           (flag == 'excel') ? this.excel.generateExcel(title, header, tableData) : this.pdfGen.generatePdfWithoutHtml(title, header, tableData);
-          
+
         }
       },
       err => {
@@ -267,7 +267,7 @@ export class PeopleClientsComponent implements OnInit {
       this.tabviewshow = 'open50';
     }
     if (data == null) {
-      data = {flag: 'Add client', fieldFlag: 'client'};
+      data = { flag: 'Add client', fieldFlag: 'client' };
     } else {
       data.flag = 'Edit client';
       data.fieldFlag = 'client';
@@ -308,12 +308,12 @@ export class PeopleClientsComponent implements OnInit {
         //   this.roleService.constructClientDataSource(rolesData);
         const url = this.roleService.goToValidClientSideUrl();
         this.authService.setClientData(singleClientData);
-        this.router.navigate([url], {state: {...singleClientData}});
+        this.router.navigate([url], { state: { ...singleClientData } });
         // });
       });
     } else {
       const url = this.roleService.goToValidClientSideUrl();
-      this.router.navigate([url], {state: {...singleClientData}});
+      this.router.navigate([url], { state: { ...singleClientData } });
     }
   }
 
@@ -483,26 +483,26 @@ export class PeopleClientsComponent implements OnInit {
     }
     this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
       debounceTime(700)).subscribe(
-      data => {
-        this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
-          if (responseArray) {
-            responseArray = this.formatEmailAndMobile(responseArray);
-            responseArray = responseArray.filter(element => element.userType == 2);
-            this.finalClientList = responseArray;
-            this.clientDatasource.data = responseArray;
-            this.hasEndReached = false;
-            this.infiniteScrollingFlag = false;
-            this.isLoading = false;
-          } else {
-            this.isLoading = false;
-            this.infiniteScrollingFlag = false;
-            this.clientDatasource.data = [];
-          }
-        }, error => {
-          this.eventService.openSnackBar(error, 'Dimiss');
-          console.log('getFamilyMemberListRes error : ', error);
-        });
-      }
-    );
+        data => {
+          this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
+            if (responseArray) {
+              responseArray = this.formatEmailAndMobile(responseArray);
+              responseArray = responseArray.filter(element => element.userType == 2);
+              this.finalClientList = responseArray;
+              this.clientDatasource.data = responseArray;
+              this.hasEndReached = false;
+              this.infiniteScrollingFlag = false;
+              this.isLoading = false;
+            } else {
+              this.isLoading = false;
+              this.infiniteScrollingFlag = false;
+              this.clientDatasource.data = [];
+            }
+          }, error => {
+            this.eventService.openSnackBar(error, 'Dimiss');
+            console.log('getFamilyMemberListRes error : ', error);
+          });
+        }
+      );
   }
 }

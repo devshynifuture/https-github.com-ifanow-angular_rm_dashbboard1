@@ -946,6 +946,7 @@ export const appConfig = {
   KYC_LINK_SEND: 'user/client/kyc-link/send',
   KYC_LINK_GET: 'user/client/kyc-link/get',
   KYC_STATUS_UPDATE: 'user/client/kyc-status/update',
+  KYC_STATUS_OF_PAN: 'user/kyc-status/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
