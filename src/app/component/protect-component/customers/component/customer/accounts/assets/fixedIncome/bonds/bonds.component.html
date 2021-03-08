@@ -146,7 +146,7 @@
                         #tenureInYear type="text" maxlength="3" class="form-control br-0">
                     <mat-error *ngIf="bonds.get('tenureInYear').errors?.required && bonds.get('tenureInYear').touched"
                         class="f-12 pt-4">
-                        This field is required
+                        Please fill either years or months
                     </mat-error>
                     <mat-error *ngIf="bonds.get('tenureInYear').errors?.max || bonds.get('tenureInYear').errors?.min"
                         class="f-12 pt-4">
@@ -162,7 +162,10 @@
                     <input autocomplete="off" matInput autocomplete="off" formControlName="tenureInMonth"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenureInMonth type="text"
                         maxlength="3" class="form-control br-0">
-                    <mat-hint>Optional</mat-hint>
+                    <mat-error *ngIf="bonds.get('tenureInMonth').errors?.required && bonds.get('tenureInMonth').touched"
+                        class="f-12 pt-4">
+                        Please fill either years or months
+                    </mat-error>
                     <mat-error *ngIf="bonds.get('tenureInMonth').errors?.max || bonds.get('tenureInMonth').errors?.min"
                         class="f-12 pt-4">
                         Should be between than 1 to 12

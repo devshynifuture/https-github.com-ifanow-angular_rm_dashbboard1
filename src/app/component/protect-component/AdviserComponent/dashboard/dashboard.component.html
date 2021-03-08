@@ -30,7 +30,7 @@
 
 <div class="row pt-125 " id="ui-dashboard-advisor">
 
-  <div class="col-lg-3 col-md-3  pl-20 pr-20 mt-44 new-grid-842 pb-28">
+  <div class="col-lg-3 col-md-3  pl-20 pr-20 mt-44 new-grid-842 pb-28" id="keyMetrics">
     <div class="sticky-top z-0">
       <h5 *ngIf="roleService.dashboardPermission.dashboardCapability.Key_metrics" class="m-0 roboto f-500 pb-16">Key
         metrics</h5>
@@ -950,15 +950,34 @@
         </div>
 
 
-        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0"
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0 && !credentialsAdded"
           class="ba-primitive br-4 p-18">
           <div class="row column-reverse-992 text-center-992">
             <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
               <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can open client’s investmetn
                 accounts from here and track their real time status.</p>
-              <button [routerLink]="['/admin/transactions/overview']" class="btn-primary btn40" mat-button>
+              <button (click)="openAddCredential('addCredentials','')" class="btn-primary btn40" mat-button>
                 Add NSE/BSE credentials
+              </button>
+              <div class="d-block">
+                <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
+              </div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
+              <img src="assets/images/svg/recent-investment-accounts.svg">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0 && credentialsAdded"
+          class="ba-primitive br-4 p-18">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
+              <h3 class="f-16 roboto f-600">Not recent investment accounts</h3>
+              <p class="f-14">Please add new investors by clicking on the button below</p>
+              <button class="btn-primary btn40" (click)="openNewCustomerIIN()" mat-button>
+                Add New Investor
               </button>
               <div class="d-block">
                 <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
@@ -1042,16 +1061,37 @@
         </div>
 
 
-        <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0" class="ba-primitive br-4 p-18">
+        <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0 && !credentialsAdded"
+          class="ba-primitive br-4 p-18">
           <div class="row column-reverse-992 text-center-992">
             <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
               <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can initiate online
                 transactions from here and track their real time status.</p>
-              <button [routerLink]="['/admin/transactions/overview']" class="btn-primary btn40" mat-button>
+              <button class="btn-primary btn40" id="nse/bse" (click)="openAddCredential('addCredentials','')"
+                mat-button>
                 Add NSE/BSE credentials
               </button>
               <div class="d-block mt-8">
+                <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
+              </div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
+              <img src="assets/images/svg/recent-online-transactions(MF).svg">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0 && credentialsAdded"
+          class="ba-primitive br-4 p-18">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
+              <h3 class="f-16 roboto f-600">No recent online transactions</h3>
+              <p class="f-14">Please add new transactions by clicking on the button below</p>
+              <button (click)="openTransaction()" class="btn-primary btn40" mat-button>
+                Add New Transaction
+              </button>
+              <div class="d-block">
                 <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
               </div>
             </div>
