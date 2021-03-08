@@ -782,19 +782,13 @@
         </tr>
         <tr>
 
-          <td style="padding-top: 20px;padding-left: 20px;" colspan="2">
+          <td style="padding-top: 20px;padding-left: 20px;" colspan="2"
+            *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag">
 
             <span style="font-size: 18px;">
               Net cash flow </span><br>
 
             <div *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag">$showpiechart3</div>
-            <div *ngIf="cashFlowViewDataSource.length==0 || noCashflowData" class="row">
-              <div class="col-md-12 mt-30 d-flex align-items-center justify-content-center p-0">
-                <div class="content-Empty">
-                  <h4 class="f-14 mb-0 mt-20 text-center">No data found</h4>
-                </div>
-              </div>
-            </div>
           </td>
         </tr>
       </tbody>

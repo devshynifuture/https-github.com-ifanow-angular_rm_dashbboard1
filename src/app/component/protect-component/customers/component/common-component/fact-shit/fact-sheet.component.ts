@@ -43,6 +43,7 @@ export class FactSheetComponent implements OnInit {
   schemeChart: Chart;
   ngOnInitLoad = true;
   isLoadingSchemeDetails = true;
+  relativePerLoading = true;
   json = [
     [
       1167609600000,
@@ -11464,11 +11465,13 @@ export class FactSheetComponent implements OnInit {
     this.relativePerformanceGraph();
   }
   getRatio() {
+    this.relativePerLoading = true;
     const data = {
       schemeCode: this.data.accordSchemeCode,
     };
     this.cusService.getFactRatio(data)
       .subscribe(res => {
+        this.relativePerLoading = false;
         if (res) {
           this.navReturn = res;
           this.changeSchemePerformace();
@@ -11478,6 +11481,7 @@ export class FactSheetComponent implements OnInit {
         } else {
         }
       }, err => {
+        this.relativePerLoading = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
   }
@@ -11666,12 +11670,13 @@ export class FactSheetComponent implements OnInit {
     this.cusService.getFactSheetDetails(data)
       .subscribe(res => {
         if (res) {
-          this.isLoadingSchemeDetails = true;
+          this.isLoadingSchemeDetails = false;
           this.schemeDetails = res;
           console.log('speedometer', res);
         } else {
         }
       }, err => {
+        this.isLoadingSchemeDetails = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
   }
