@@ -188,8 +188,10 @@
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             {{singleMembers.age}} Yrs</p>
                                     </div>
-                                    <!-- <img src="/assets/images/svg/circle-verified.svg" class="familyDelete">
-                                    <img src="/assets/images/svg/error-red.png" class="familyDelete"> -->
+                                    <img *ngIf="singleMembers.kycComplaint==1"
+                                        src="/assets/images/svg/circle-verified.svg" class="familyDelete">
+                                    <img *ngIf="singleMembers.kycComplaint!=1" src="/assets/images/svg/error-red.png"
+                                        class="familyDelete">
 
                                 </div>
                             </div>

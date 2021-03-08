@@ -171,7 +171,7 @@
                     <p *ngIf="!kycLoader && pan.value.length==10 &&  basicDetailsData.kycComplaint==1"
                         class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
                         <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
-                    <p *ngIf="!kycLoader && pan.value.length==10 && basicDetailsData.kycComplaint==0"
+                    <p *ngIf="!kycLoader && pan.value.length==10 && basicDetailsData.kycComplaint!=1"
                         class="mb-0 ml-12 d-flex roboto text-danger f-400 c-p">
                         <i class="material-icons mr-4"> highlight_off </i> Not verified</p>
 
@@ -537,7 +537,7 @@
                     <p *ngIf="!kycLoader && pan.value.length==10 &&  basicDetailsData.kycComplaint==1"
                         class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
                         <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
-                    <p *ngIf="!kycLoader && pan.value.length==10 && basicDetailsData.kycComplaint==0"
+                    <p *ngIf="!kycLoader && pan.value.length==10 && basicDetailsData.kycComplaint!=1"
                         class="mb-0 ml-12 d-flex roboto text-danger f-400 c-p">
                         <i class="material-icons mr-4"> highlight_off </i> Not verified</p>
                 </div>
@@ -896,7 +896,7 @@
                 <p *ngIf="!kycLoader && cpan.value.length==10 &&  basicDetailsData.kycComplaint==1"
                     class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
                     <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
-                <p *ngIf="!kycLoader && cpan.value.length==10 && basicDetailsData.kycComplaint==0"
+                <p *ngIf="!kycLoader && cpan.value.length==10 && basicDetailsData.kycComplaint!=1"
                     class="mb-0 ml-12 d-flex roboto text-danger f-400 c-p">
                     <i class="material-icons mr-4"> highlight_off </i> Not verified</p>
             </div>
@@ -1020,7 +1020,7 @@
                 <p *ngIf="!kycLoader && cpan.value.length==10 &&  basicDetailsData.kycComplaint==1"
                     class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
                     <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
-                <p *ngIf="!kycLoader && cpan.value.length==10 && basicDetailsData.kycComplaint==0"
+                <p *ngIf="!kycLoader && cpan.value.length==10 && basicDetailsData.kycComplaint!=1"
                     class="mb-0 ml-12 d-flex roboto text-danger f-400 c-p">
                     <i class="material-icons mr-4"> highlight_off </i> Not verified</p>
             </div>
