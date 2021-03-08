@@ -72,6 +72,7 @@ export class FactSheetComponent implements OnInit {
   fixedDeposite: any;
   scheme: any;
   json: any[];
+  xirr: any;
   constructor(private subInjectService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
 
@@ -165,6 +166,7 @@ export class FactSheetComponent implements OnInit {
     console.log(obj);
     this.cusService.getReportWiseCalculations(obj).subscribe(
       data => {
+        this.xirr = data[this.data.schemeCode].xirr;
         console.log(data);
       }, (error) => {
         this.eventService.showErrorMessage(error);
