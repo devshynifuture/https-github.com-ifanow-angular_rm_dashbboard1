@@ -990,6 +990,7 @@ export const appConfig = {
   GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  GET_ARN_RIA_LIST_CHANGE: 'setting/arn-ria/list/get/file/upload',
   ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
   EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
   GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
