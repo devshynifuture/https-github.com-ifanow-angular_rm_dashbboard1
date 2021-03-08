@@ -928,7 +928,7 @@ export const appConfig = {
   GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
   GET_CLIENT_SEARCH_LIST: 'user/client/filter/details/get',
-  GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
+  GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list',
   GET_TEAM_MEMBER_INFO: 'user/info/get',
   CHECK_VALID_USERNAME: 'user/username/update',
   // CLIENT_SEARCH: 'user/client/all/names/get',
@@ -951,6 +951,7 @@ export const appConfig = {
   KYC_LINK_SEND: 'user/client/kyc-link/send',
   KYC_LINK_GET: 'user/client/kyc-link/get',
   KYC_STATUS_UPDATE: 'user/client/kyc-status/update',
+  KYC_STATUS_OF_PAN: 'user/kyc-status/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',

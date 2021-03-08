@@ -246,4 +246,7 @@ export class PeopleService {
   kycStatusUpdate(data) {
     return this.http.put(apiConfig.USER + appConfig.KYC_STATUS_UPDATE, data);
   }
+  kycStatusOfPan(data) {
+    return this.http.get(apiConfig.USER + appConfig.KYC_STATUS_OF_PAN, data);
+  }
 }

@@ -39,6 +39,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   emailEditedData: any[];
   deletedEmailData = [];
   delayTime: number;
+  kycLoader: boolean;
 
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
@@ -309,6 +310,25 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
 
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
+  }
+
+  getKycStatusOfPan(event) {
+    if (event.value.length == 10) {
+      this.kycLoader = true;
+      const obj = {
+        pan: event.value,
+        taxStatus: this.invTaxStatus
+      }
+      this.peopleService.kycStatusOfPan(obj).subscribe(
+        data => {
+          this.kycLoader = false;
+          this.basicDetailsData.kycComplaint = data.status;
+        }, err => {
+          this.kycLoader = false;
+          this.eventService.openSnackBar(err, "Dismiss");
+        }
+      )
+    }
   }
 
   createIndividualForm(data) {
@@ -689,7 +709,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         clientId: this.basicDetailsData.clientId,
         status: (this.fieldFlag == 'client') ? 1 : 2,
         clientType: parseInt(this.invTypeCategory),
-        clientCode: (this.invTypeCategory == 1) ? this.basicDetails.value.clientCode : this.nonIndividualForm.value.clientCode
+        clientCode: (this.invTypeCategory == 1) ? this.basicDetails.value.clientCode : this.nonIndividualForm.value.clientCode,
+        kycComplaint: this.basicDetailsData.kycComplaint
       };
       if (this.invTypeCategory == 1) {
         obj.dateOfBirth = this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy');
@@ -831,7 +852,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       this.basicDetails.get('role').clearValidators();
       this.basicDetails.get('role').updateValueAndValidity();
     }
-    this.mobileData.markAllAsTouched();
+    this.mobileData ? this.mobileData.markAllAsTouched() : '';
     let gardianObj = [];
     if (this.invTypeCategory == '1' && this.basicDetails.get('gender').invalid) {
       this.eventService.openSnackBar('Please select gender', 'Dimiss');
@@ -945,7 +966,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       categoryTypeflag: null,
       anniversaryDate: null,
       gstin: (this.invTypeCategory == '3' || this.invTypeCategory == '4') ? this.nonIndividualForm.controls.gstinNum.value : null,
-      companyStatus: ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comStatus.value != '') ? this.nonIndividualForm.controls.comStatus.value : null
+      companyStatus: ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comStatus.value != '') ? this.nonIndividualForm.controls.comStatus.value : null,
+      kycComplaint: this.basicDetailsData.kycComplaint
     };
 
     if (this.invTypeCategory != 2) {

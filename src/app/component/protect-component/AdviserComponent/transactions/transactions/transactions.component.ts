@@ -1,8 +1,9 @@
-import {SubscriptionInject} from './../../Subscriptions/subscription-inject.service';
-import {Component, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {Router} from '@angular/router';
-import {TransactionRoleService} from '../transaction-role.service';
+import { SubscriptionInject } from './../../Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { TransactionRoleService } from '../transaction-role.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-transactions',
@@ -13,8 +14,9 @@ export class TransactionsComponent implements OnInit {
   settingIndex: number;
 
   constructor(private eventService: EventService,
-              private subInjectService: SubscriptionInject, private router: Router,
-              public transactionRoleService: TransactionRoleService) {
+    private subInjectService: SubscriptionInject, private router: Router,
+    public transactionRoleService: TransactionRoleService,
+    public enumDataService: EnumDataService) {
   }
 
   _value: number;
