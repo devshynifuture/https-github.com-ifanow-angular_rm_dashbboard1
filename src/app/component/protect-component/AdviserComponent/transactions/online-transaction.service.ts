@@ -228,6 +228,10 @@ export class OnlineTransactionService {
   uploadNewFatacaDetails(data) {
     return this.http.postEncoded(apiConfig.TRANSACT + appConfig.UPLOAD_NEW_FATACA, data);
   }
+
+  getKycListData(data) {
+    return this.http.get(apiConfig.TRANSACT + appConfig.KYC_LIST_GET, data);
+  }
   //
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)
