@@ -309,7 +309,7 @@ export class NpsSummaryPortfolioComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      maturityDate: [data ? new Date(data.maturityDate) : null],
+      maturityDate: [data.maturityDate ? new Date(data.maturityDate) : ''],
       currentValue: [(data == undefined) ? '' : data.currentValuation, [Validators.required]],
       valueAsOn: [(data == undefined) ? '' : new Date(data.valueAsOn), [Validators.required]],
       schemeChoice: [data.schemeChoice ? parseInt(data.schemeChoice) : '', [Validators.required]],
