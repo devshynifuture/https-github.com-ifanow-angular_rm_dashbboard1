@@ -782,7 +782,7 @@ export class CustomerService {
   }
 
   getReportWiseCalculations(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, { report: data.request });
+    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId + '&timePeriod=' + data.timePeriod + '&type=' + data.type, { report: data.request });
   }
 
   getMfUnrealizedTransactions(data) {
@@ -1174,6 +1174,26 @@ export class CustomerService {
 
   getFactSheetRiskometer(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RISKOMETER, data);
+  }
+
+  getFactSheetHistoricalNav(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_NAV, data);
+  }
+
+  getFactSheetCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_COUNT, data);
+  }
+
+  getFactSheetDetails(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_SCHEME_DETAILS, data);
+  }
+
+  getFactInvRet(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_INV_RET, data);
+  }
+
+  getFactRatio(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RATIO_GRAPH, data);
   }
 }
 
