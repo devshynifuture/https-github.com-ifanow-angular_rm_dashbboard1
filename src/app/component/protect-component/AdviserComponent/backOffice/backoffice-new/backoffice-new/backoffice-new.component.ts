@@ -540,7 +540,7 @@ export class BackofficeNewComponent implements OnInit {
       case (assetName == "SCSS"):
         this.getScssSchemedata();
         break;
-      case (assetName == "Other Asset"):
+      case (assetName == "Other Assets"):
         this.getOthersAssets();
         break;
       case (assetName == "Sovereign Gold Bond"):
