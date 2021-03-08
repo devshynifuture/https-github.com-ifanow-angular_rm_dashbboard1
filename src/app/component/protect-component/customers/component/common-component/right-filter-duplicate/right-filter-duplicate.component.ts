@@ -438,7 +438,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         });
       });
       this.financialYears.filter(function (element) {
-        if (element.from == 2019 && element.to == 2020) {
+        if (element.from == 2020 && element.to == 2021) {
           element.selected = true;
           form.get('grandfathering').setValue('1');
           form.get('grandfathering').updateValueAndValidity();

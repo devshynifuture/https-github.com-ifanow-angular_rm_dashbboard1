@@ -180,9 +180,9 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.setCapitaDetails.GTReinvesment = {}
         this.isLoading = true;
         if (this.finPlanObj) {
-            this.fromDateYear = 2019;
+            this.fromDateYear = 2020;
             this.fromDate = new Date(this.fromDateYear, 3, 1);
-            this.toDateYear = 2020;
+            this.toDateYear = 2021;
             this.toDate = new Date(this.toDateYear, 2, 31);
             this.grandFatheringEffect = true;
             this.teamMemberListGet();

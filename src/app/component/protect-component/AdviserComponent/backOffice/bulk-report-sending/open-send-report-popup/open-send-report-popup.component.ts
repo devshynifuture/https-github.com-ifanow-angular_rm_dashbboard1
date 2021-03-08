@@ -40,7 +40,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   clientDetails = new MatTableDataSource(this.data);
   checkFlag: boolean = false;
-  overviewAll : boolean = false
+  overviewAll: boolean = false
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
@@ -69,7 +69,7 @@ export class OpenSendReportPopupComponent implements OnInit {
     }
     this.sendNowCount()
   }
-  close(){
+  close() {
     this.dialogRef.close()
   }
   sendClientId() {
@@ -148,7 +148,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   clientCountRes(data) {
     this.isLoading = false
     this.clientCount = data
-    if(data.clientDetails){
+    if (data.clientDetails) {
       this.clientDetails.data = data.clientDetails
       this.clientDetails.data.forEach(element => {
         if (this.reportType == 1) {
@@ -166,8 +166,8 @@ export class OpenSendReportPopupComponent implements OnInit {
         }
       });
       console.log('client count', this.clientCount)
-    }else{
-      this.clientDetails.data  = []
+    } else {
+      this.clientDetails.data = []
     }
 
   }
@@ -189,7 +189,7 @@ export class OpenSendReportPopupComponent implements OnInit {
     //this.getMutualFundClient(0)
     //this.saveEvent = event
     this.reportType = reportType
-      this.checkFlag = event.checked
+    this.checkFlag = event.checked
   }
   getDetails(data) {
     const obj = {
@@ -209,8 +209,8 @@ export class OpenSendReportPopupComponent implements OnInit {
       mode: this.data1.reportType,
       fromDate: this.data1.selectedElement.fromDate,
       toDate: this.data1.selectedElement.toDate,
-      from: this.data1.selectedElement.from,
-      to: this.data1.selectedElement.to,
+      fromYear: this.data1.selectedElement.from,
+      toYear: this.data1.selectedElement.to,
     }
   }
   procced() {
