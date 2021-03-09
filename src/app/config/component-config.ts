@@ -283,6 +283,7 @@ export const appConfig = {
   REPORT_WISE_CALCULATION: 'mutual-fund/reportwise/calculation/get',
   MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST: 'mutual-fund/transaction/type/list/get',
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
+  GET_BANK_DETAILS: 'user/client/bank-detail/scheme-wise/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
   UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
   CAPITAL_GAIN_GET: 'mutual-fund/capital/gains/grandfathering/get',

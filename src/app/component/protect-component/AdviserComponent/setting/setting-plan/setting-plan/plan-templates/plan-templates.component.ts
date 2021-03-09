@@ -65,7 +65,7 @@ export class PlanTemplatesComponent implements OnInit {
 
     const dialogRef = this.dialog.open(PreviewFinPlanComponent, {
       width: '600px',
-      height: '798px',
+      // height: '798px',
       data: { bank: element, selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {

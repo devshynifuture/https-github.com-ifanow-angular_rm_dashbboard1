@@ -34,8 +34,8 @@ export class FolioMasterDetailViewComponent implements OnInit {
     };
     this.reconService.getMutualFundFolioMasterValues(data)
       .subscribe(res => {
-        if(res){
-          console.log("detail view folio master",res)
+        if (res) {
+          console.log("detail view folio master", res)
           this.folioDetailData = res[0];
           this.canShowData = true;
         } else {

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
@@ -32,7 +32,7 @@ export class FactSheetComponent implements OnInit {
   portfolioGraph4: Chart;
   portfolioGraph5: Chart;
   validatorType = ValidatorType;
-  amount = new FormControl();
+  amount = new FormControl([Validators.required]);
   graphList: any[];
   advisorId: any;
   clientId: any;
@@ -44,7 +44,10 @@ export class FactSheetComponent implements OnInit {
   ngOnInitLoad = true;
   isLoadingSchemeDetails = true;
   relativePerLoading = true;
+  navLoading = true;
   speedLoading = true;
+  isLoadingNav = true;
+  schemeReturnLoading = true;
   speedChartVar: Chart;
   performaceGraph: Chart;
   currentValue: any;
@@ -73,7 +76,16 @@ export class FactSheetComponent implements OnInit {
   scheme: any;
   json: any[];
   xirr: any;
-  constructor(private subInjectService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
+  ratioData = [];
+  maxx: number;
+  minx: number;
+  maxy: number;
+  miny: number;
+  xDivider: number;
+  yDivider: number;
+  error: boolean;
+  maxLengthError = false;
+  constructor(private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -88,30 +100,88 @@ export class FactSheetComponent implements OnInit {
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
     this.nav = this.data.nav;
-    //this.getHistoricalAndNav();
-    //this.getXirr();
     this.getInvRet();
     this.getRatio();
     this.getDetails();
     this.getAllocationData();
     this.getSpeedometer();
-    this.relativePerformanceGraph();
   }
   getRatio() {
     this.relativePerLoading = true;
     const data = {
       schemeCode: this.data.accordSchemeCode,
       subCategoryId: this.data.subCategoryId,
+      // schemeCode: 45175,
+      // subCategoryId: 2,
     };
     this.cusService.getFactRatio(data)
       .subscribe(res => {
         this.relativePerLoading = false;
         if (res) {
+          this.ratioData = [];
+          let ratio = res
+          ratio.forEach(ele => {
+            if (ele.sharpe > 0.5 && (ele.sharpe >= 2 || ele.sharpe <= 2.99)) {
+              this.ratioData.push({
+                x: ele.sharpe,
+                y: ele.sharpe * -1,
+                name: ele.schemeName
+              });
+            } else {
+              this.ratioData.push({
+                x: ele.sharpe,
+                y: ele.sharpe,
+                name: ele.schemeName
+              });
+            }
+          });
           console.log('speedometer', res);
-          this.schemePerformance();
+          let asc = this.mfService.sorting(this.ratioData, "x");
+          let desc = this.mfService.sortingDescending(this.ratioData, "x");
+          let maxVal = desc[0].x;
+          let minVal = asc[0].x;
+          if (maxVal > 0.5) {
+            if (maxVal > 1) {
+              let val = maxVal - 2;
+              this.maxx = maxVal;
+              this.minx = 2 - val;
+              let val2 = maxVal - 0.5;
+              this.maxy = maxVal;
+              this.miny = 0.5 - val2;
+              this.xDivider = 1.99;
+              this.yDivider = 0.5;
+            } else {
+              this.maxx = maxVal * 2;
+              this.minx = 0.01;
+              this.maxy = this.maxx;
+              this.miny = 0.01;
+              this.xDivider = this.maxx / 2;
+              this.yDivider = 0.5;
+            }
+
+          } else {
+            this.maxx = maxVal * 2;
+            this.minx = 0.01;
+            this.maxy = this.maxx;
+            this.miny = 0.01;
+            this.xDivider = this.maxx / 2;
+            this.yDivider = this.xDivider;
+          }
+          console.log('MaxValue..', maxVal)
+          console.log('MinValue', asc[0].x)
+          console.log('maxx', this.maxx)
+          console.log('minx', this.minx)
+          console.log('maxy', this.maxy)
+          console.log('miny', this.miny)
+          console.log('xDivider', this.xDivider)
+          console.log('yDivider', this.yDivider)
+
+          this.relativePerformanceGraph();
         } else {
+          this.relativePerformanceGraph();
         }
       }, err => {
+        this.relativePerformanceGraph();
         this.relativePerLoading = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
@@ -122,6 +192,7 @@ export class FactSheetComponent implements OnInit {
     return numeric;
   }
   getXirr() {
+    this.schemeReturnLoading = true;
     let timePeriod = (this.selectedItem.value == '1' || this.selectedItem.value == '4') ? '3' : (this.selectedItem.value == '2') ? '6' : (this.selectedItem.value == '3') ? '1' : (this.selectedItem.value == '5') ? '5' : '0';
     let type = (this.selectedItem.value == '1' || this.selectedItem.value == '2') ? 'MONTH' : (this.selectedItem.value == '3' || this.selectedItem.value == '4' || this.selectedItem.value == '5') ? 'YEAR' : '0';
     const catObj = {};
@@ -166,9 +237,11 @@ export class FactSheetComponent implements OnInit {
     console.log(obj);
     this.cusService.getReportWiseCalculations(obj).subscribe(
       data => {
+        this.schemeReturnLoading = false;
         this.xirr = data[this.data.schemeCode].xirr;
         console.log(data);
       }, (error) => {
+        this.schemeReturnLoading = false;
         this.eventService.showErrorMessage(error);
       }
     );
@@ -211,8 +284,16 @@ export class FactSheetComponent implements OnInit {
     })
   }
   changeAmount(value) {
-    if (this.amount.value > 10000) {
-      this.getInvRet()
+    if (this.amount.value == null) {
+      this.error = true;
+    } else {
+      this.error = false;
+    }
+    if (this.amount.value >= 100) {
+      this.maxLengthError = false;
+      this.getInvRet();
+    } else {
+      !this.error ? this.maxLengthError = true : this.maxLengthError = false;
     }
   }
   calculateScheme(rate, monthOrYear, time) {
@@ -253,21 +334,23 @@ export class FactSheetComponent implements OnInit {
         this.scheme = this.navReturn['mfreturn'] ? this.calculateScheme(this.navReturn['mfreturn'].fiveYearReturns, 'YEAR', 3) : null;
         break;
     }
-    this.getXirr();
+
     this.schemePerformance();
+    this.getXirr();
   }
   getInvRet() {
+    this.navLoading = true;
     const data = {
       amount: this.amount.value,
       schemeCode: this.data.accordSchemeCode,
     };
     this.cusService.getFactInvRet(data)
       .subscribe(res => {
+        this.navLoading = false;
         if (res) {
           this.navReturn = res;
           this.changeSchemePerformace();
           console.log('speedometer', res);
-          this.schemePerformance();
           if (this.ngOnInitLoad) {
             this.getCount();
             this.ngOnInitLoad = false;
@@ -275,6 +358,7 @@ export class FactSheetComponent implements OnInit {
         } else {
         }
       }, err => {
+        this.navLoading = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
   }
@@ -329,7 +413,7 @@ export class FactSheetComponent implements OnInit {
       state: 'open65',
       componentName: OnlineTransactionComponent,
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    const rightSideDataSub = this.subInjctService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
@@ -342,7 +426,7 @@ export class FactSheetComponent implements OnInit {
       }
     );
   }
-  getHistoricalNav() {
+  getHistoricalNav() {// to get historical nav graph and scheme return according to month and years selection
     switch (this.demo1TabIndex) {
       case 0:
         this.schemeReturnName = 'THREE MONTH';
@@ -378,6 +462,7 @@ export class FactSheetComponent implements OnInit {
     };
     this.cusService.getFactSheetHistoricalNav(data)
       .subscribe(res => {
+        this.isLoadingNav = false;
         if (res) {
 
           let arry = [];
@@ -388,12 +473,17 @@ export class FactSheetComponent implements OnInit {
           this.json = arry
           this.initializePortfolioChart();
         } else {
+          this.initializePortfolioChart();
+
         }
+
       }, err => {
+        this.initializePortfolioChart();
+        this.isLoadingNav = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
   }
-  checkToDisable(length) {
+  checkToDisable(length) {//to disable the 3,6 month or years wise data according to length 
     let check6mon = Math.round(365 / 2);
     let check3mon = Math.round(check6mon / 2);
     let check3y = Math.round(3 * 365);
@@ -418,26 +508,21 @@ export class FactSheetComponent implements OnInit {
     }
     if (this.disableall == false) {
       this.demo1TabIndex = 5;
-      // this.selectedItem.setValue('6');
     } else if (this.disable5y == false) {
       this.demo1TabIndex = 4;
-      // this.selectedItem.setValue('5');
     } else if (this.disable3y == false) {
       this.demo1TabIndex = 3;
-      // this.selectedItem.setValue('4');
     } else if (this.disable1y == false) {
       this.demo1TabIndex = 2;
-      // this.selectedItem.setValue('3');
     } else if (this.disable6m == false) {
       this.demo1TabIndex = 1;
-      // this.selectedItem.setValue('2');
     } else {
       this.demo1TabIndex = 0;
-      // this.selectedItem.setValue('1');
     }
+    this.isLoadingNav = true;
     this.getHistoricalNav()
   }
-  getSpeedometer() {
+  getSpeedometer() { //to getRiskometer data
     this.speedLoading = true;
     const data = {
       schemeCode: this.data.accordSchemeCode,
@@ -446,7 +531,6 @@ export class FactSheetComponent implements OnInit {
       .subscribe(res => {
         this.speedLoading = false;
         if (res) {
-          console.log('speedometer', res);
           this.riskometerStatus = res.color;
           switch (this.riskometerStatus) {
             case 'Low':
@@ -467,8 +551,10 @@ export class FactSheetComponent implements OnInit {
           }
           this.speedChart();
         } else {
+          this.speedChart();
         }
       }, err => {
+        this.speedChart();
         this.speedLoading = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
@@ -505,11 +591,14 @@ export class FactSheetComponent implements OnInit {
         text: ''
       },
       xAxis: {
-        min: 0,
-        max: 3,
+        min: this.miny,
+        max: this.maxx,
         tickInterval: 16,
+        title: {
+          text: ''
+        },
         plotLines: [{
-          value: 1.5,
+          value: this.xDivider,
           color: '#666',
           dashStyle: 'solid',
           width: 2,
@@ -520,20 +609,24 @@ export class FactSheetComponent implements OnInit {
         },
       },
       tooltip: {
-        headerFormat: '<span style="font-size:11px">{point.name}</span><br>',
-        pointFormat: '{point.name}'
+        headerFormat: '<span style="font-size:11px">{}</span><br>',
+        pointFormat: '{point.x}:{point.y}'
+        // pointFormat: '{point.name}'
       },
 
       yAxis: {
-        min: 0,
-        max: 3,
+        min: this.miny,
+        max: this.maxy,
         plotLines: [{
-          value: 1.5,
+          value: this.yDivider,
           dashStyle: 'solid',
           color: '#666',
           width: 2,
           zIndex: 5
         }],
+        title: {
+          text: ''
+        },
         labels: {
           enabled: false
         },
@@ -542,63 +635,18 @@ export class FactSheetComponent implements OnInit {
         showFirstLabel: false,
         lineColor: '#ccc'
       },
-      series: [{
-        color: '#17a2b8',
-        name: 'Relative performance',
-        data: [{
-          name: 'Chrome',
-          x: 0.2,
-          y: 0.2,
-          sliced: true,
-          selected: true
-        }, {
-          name: 'Internet Explorer',
-          x: 1.99,
-          y: 1.99
-        }, {
-          name: 'Firefox',
-          x: 0.5,
-          y: 0.5
-        }, {
-          name: 'Edge',
-          x: 1,
-          y: 1
-        }, {
-          name: 'Safari',
-          x: 10,
-          y: 10
-        }, {
-          name: 'Sogou Explorer',
-          x: 4.5,
-          y: 4.5
-        }, {
-          name: 'Opera',
-          x: 1.6,
-          y: 1.6
-        }, {
-          name: 'QQ',
-          x: 1.2,
-          y: 1.2
-        }, {
-          name: 'Other',
-          x: 2.61,
-          y: 2.61
-        },
+      series: [
         {
-          name: 'Other',
-          x: 3,
-          y: 3
-        }, {
-          name: 'Other',
-          x: 0,
-          y: 5
-        }, {
-          name: 'Other',
-          x: 5,
-          y: 5
-        }]
-      },]
-    };
+          color: "#17A2B8",
+          name: "Relative performance",
+          data: [{
+            name: 'Other',
+            x: 0.8406,
+            y: 0.8406
+          },]
+        }
+      ]
+    }
     this.performaceGraph = new Chart(chartConfigPerformance);
   }
   schemePerformance() {
@@ -681,7 +729,7 @@ export class FactSheetComponent implements OnInit {
         }
       },
       title: {
-        text: 'Riskometer',
+        text: '',
         align: 'center',
         verticalAlign: 'top',
         y: 40

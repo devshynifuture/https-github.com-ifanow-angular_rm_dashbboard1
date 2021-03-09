@@ -1,7 +1,7 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../customer/customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-folio-master-details',
@@ -14,6 +14,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   isLoading: boolean;
   isNomineeLoading = false;
   nomineeArray = [];
+  bankDetails: any;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) {
   }
@@ -30,6 +31,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getBankDetails()
   }
 
   getFolioMasterDetails(data) {
@@ -43,7 +45,24 @@ export class FolioMasterDetailsComponent implements OnInit {
       }
     );
   }
-
+  getBankDetails() {
+    this.bankDetails = []
+    const data = {
+      folioNumber: this.inputData.folioNumber,
+      schemeCode: this.inputData.schemeCode
+    };
+    this.custumService.getBankDetails(data)
+      .subscribe(res => {
+        if (res) {
+          console.log("bank details", res)
+          this.bankDetails = res;
+        } else {
+          this.bankDetails = [];
+        }
+      }, err => {
+        console.error(err);
+      })
+  }
   onTabChanged(event) {
     if (event.index == 2) {
       if (this.nomineeArray.length == 0) {
@@ -89,7 +108,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
 
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
 }
