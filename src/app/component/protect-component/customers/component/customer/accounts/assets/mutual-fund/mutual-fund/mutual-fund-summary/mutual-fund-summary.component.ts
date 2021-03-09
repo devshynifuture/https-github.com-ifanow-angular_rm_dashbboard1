@@ -152,6 +152,7 @@ export class MutualFundSummaryComponent implements OnInit {
   mfCapability: any = {};
   mfSummaryCapability: any = {};
   clientNameToDisplay: any;
+  excelDownload: boolean = false;
 
   // setTrueKey = false;
 
@@ -1564,6 +1565,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
     this.showDownload = true;
+    this.excelDownload = true;
     this.download = true
     this.customDataSource.data = this.customDataSource.data;
     const para = document.getElementById('templateSummary');
