@@ -230,7 +230,7 @@ export class OnlineTransactionService {
   }
 
   getKycListData(data) {
-    return this.http.get(apiConfig.TRANSACT + appConfig.KYC_LIST_GET, data);
+    return this.http.getEncoded(apiConfig.USER + appConfig.INVESTER_KYC_LIST_GET, data);
   }
   //
   // sipBSE(data){

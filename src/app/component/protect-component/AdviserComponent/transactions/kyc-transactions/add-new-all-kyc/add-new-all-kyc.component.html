@@ -134,11 +134,7 @@
             </div>
             <div class="col-md-10 p-0" id="new-mail-chips">
                 <mat-form-field>
-                    <mat-select formControlName="from" class="form-control">
-                        <!-- <mat-option value="" disabled>Select Email</mat-option> -->
-                        <mat-option *ngFor="let verifiedEmail of emailLists" [value]="verifiedEmail.emailAddress">
-                            {{verifiedEmail.emailAddress}}</mat-option>
-                    </mat-select>
+                    <input readonly matInput formControlName="from" class="form-control">
                 </mat-form-field>
             </div>
         </div>
