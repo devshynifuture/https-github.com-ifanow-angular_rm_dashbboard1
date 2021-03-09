@@ -31,6 +31,7 @@ export class OpenGalleryPlanComponent implements OnInit {
   sendToCopy: any;
   individualGoal: boolean;
   goalIndividualData: any;
+  choose: boolean;
   constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,
     private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService,
@@ -57,6 +58,7 @@ export class OpenGalleryPlanComponent implements OnInit {
   uploadImageForCorping(event) {
     this.imageUploadEvent = event;
     this.showCropper = true;
+    this.choose = false
   }
   onNoClick() {
     if (this.showCropper) {

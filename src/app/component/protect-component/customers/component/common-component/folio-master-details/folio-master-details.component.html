@@ -141,7 +141,7 @@
                 </div>
             </mat-tab>
             <mat-tab label="Bank details">
-                <div class="ba-light mt-20" *ngFor="let item of folioDetails">
+                <div class="ba-light mt-20" *ngFor="let item of bankDetails">
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
                         <div class="col-md-4 p-0">
                             <p class="m-0 roboto">Bank name</p>
@@ -192,7 +192,7 @@
                             <p class="m-0 roboto">Bank city</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.bankCity)?item.bankCity:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.address.city)?item.address.city:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -200,7 +200,7 @@
                             <p class="m-0 roboto">Bank PIN code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.bankPin)?item.bankPin:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.address.pinCode)?item.address.pinCode:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row pt-4">
@@ -209,7 +209,7 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="!isLoading && folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                <div *ngIf="!isLoading && bankDetails.length == 0" class="d-flex flex-column align-items-center">
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>

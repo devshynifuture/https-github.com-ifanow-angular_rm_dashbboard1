@@ -599,7 +599,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.singleGoalData.dashboardData.lump_equity = this.finPlanObj.obj.lump_equity
       this.singleGoalData.img = this.finPlanObj.obj.imageUrl
       this.singleGoalData.dashboardData.futureValue = this.finPlanObj.obj.goalFV
-      this.singleGoalData.dashboardData.key_arr_equity_monthly = this.getSumOfJsonMapArrKey(this.finPlanObj.obj.goalValueObj.sipAmountEquity),
+      this.singleGoalData.dashboardData.arr_equity_monthly = this.getSumOfJsonMapArr(this.finPlanObj.obj.goalValueObj.sipAmountEquity),
+        this.singleGoalData.dashboardData.key_arr_equity_monthly = this.getSumOfJsonMapArrKey(this.finPlanObj.obj.goalValueObj.sipAmountEquity),
         this.singleGoalData.dashboardData.arr_goalYrAndFutValues = this.getSumOfJsonMapArr(this.finPlanObj.obj.goalValueObj.goalYrAndFutValues),
         this.singleGoalData.dashboardData.presentValue = this.finPlanObj.obj.goalValueObj.goalPresentValue ? this.finPlanObj.obj.goalValueObj.goalPresentValue : this.finPlanObj.obj.goalValueObj.presentValue,
         this.singleGoalData.dashboardData.arr_debt_monthly = this.getSumOfJsonMapArr(this.finPlanObj.obj.goalValueObj.sipAmountDebt),
