@@ -890,7 +890,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getDefault()
+        this.loadAllGoals(false);
+        this.allocateOtherAssetService.refreshAssetList.next();
       }
     });
   }
