@@ -12,6 +12,8 @@ import { debounceTime, startWith } from 'rxjs/operators';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { OrgSettingServiceService } from '../../../setting/org-setting-service.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ManageKycComponent } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/manage-kyc/manage-kyc.component';
 
 export interface Fruit {
   name: string;
@@ -230,7 +232,31 @@ export class AddNewAllKycComponent implements OnInit {
 
   back() {
     this.step1 = true;
-    this.data['btnFlag'] = "Cancel";
+    if (this.data.backComponent) {
+      this.openFroala(this.selectedClientData, 'manageKYC')
+    } else {
+      this.data['btnFlag'] = "Cancel";
+    }
+  }
+
+  openFroala(data, value) {
+
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: ManageKycComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          // this.Close(true);
+          // data.kycComplaint = 2;
+        }
+        rightSideDataSub.unsubscribe();
+      }
+    );
   }
 
 }

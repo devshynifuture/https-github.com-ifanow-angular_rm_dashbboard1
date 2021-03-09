@@ -111,7 +111,12 @@ export class ManageKycComponent implements OnInit {
   }
 
   openFroala(data, value) {
-    AuthService.getClientData() ? data['btnFlag'] = 'Cancel' : data['btnFlag'] = 'Back';
+    if (AuthService.getClientData()) {
+      data['btnFlag'] = 'Cancel'
+    } else {
+      data['btnFlag'] = 'Back';
+      data['backComponent'] = "ManageKyc";
+    }
     const fragmentData = {
       flag: value,
       data,
