@@ -35,6 +35,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { OverviewProfileModule } from '../../customer-overview/overview-profile/overview-profile.module';
 import { ActiviesModule } from 'src/app/component/protect-component/AdviserComponent/Activities/activies.module';
 import { PlanSummaryModule } from '../summary-plan/plan-summary.module';
+import { SummaryModule } from '../../accounts/portfolio-summary/summary.module';
 
 @NgModule({
   declarations: [ProfilePlanComponent, IncomeComponent, RiskProfileComponent, ExpensesComponent,
@@ -60,7 +61,8 @@ import { PlanSummaryModule } from '../summary-plan/plan-summary.module';
     NgxDocViewerModule,
     OverviewProfileModule,
     ActiviesModule,
-    PlanSummaryModule
+    PlanSummaryModule,
+    SummaryModule
   ]
 })
 export class ProfilePlanModule { }

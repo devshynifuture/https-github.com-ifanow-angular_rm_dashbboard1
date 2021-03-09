@@ -50,6 +50,7 @@ import { OverviewRiskProfileComponent } from '../../../customer-overview/overvie
 import { RoleService } from 'src/app/auth-service/role.service';
 import { OthersAssetsComponent } from '../../../accounts/assets/others-assets/others-assets.component';
 import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component';
+import { PortfolioSummaryComponent } from '../../../accounts/portfolio-summary/portfolio-summary.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -89,7 +90,8 @@ import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component'
     MfCapitalDetailedComponent,
     CrmNotesComponent,
     OverviewRiskProfileComponent,
-    SummaryPlanComponent
+    SummaryPlanComponent,
+    PortfolioSummaryComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -747,6 +749,9 @@ export class FinacialPlanSectionComponent implements OnInit {
           break;
         case 'Summary':
           factory = this.resolver.resolveComponentFactory(SummaryPlanComponent);
+          break;
+        case 'portfolioSummary':
+          factory = this.resolver.resolveComponentFactory(PortfolioSummaryComponent);
           break;
         case 'Mutual fund summary':
           factory = this.resolver.resolveComponentFactory(MutualFundSummaryComponent);

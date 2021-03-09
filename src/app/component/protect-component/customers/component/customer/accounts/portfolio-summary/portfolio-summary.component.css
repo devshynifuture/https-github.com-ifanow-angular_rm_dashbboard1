@@ -14,6 +14,10 @@ p {
   height: 375px;
 }
 
+.hide {
+  display: none;
+}
+
 .k-pdf-export .k-filterable .k-grid-filter {
   display: none;
 }
@@ -206,7 +210,7 @@ p {
 
 #piechartMutualFund123 {
   height: 330px;
-  width: 320px !important;
+  width: 310px !important;
 }
 
 #PortFolio {
@@ -950,7 +954,7 @@ table {
 .left-side-clicks {
   margin-left: 228px;
   position: fixed !important;
-  top: 166px !important;
+  bottom: 5px !important;
   right: unset !important;
   background: #fff;
   cursor: pointer;
@@ -1169,7 +1173,7 @@ img.header-img {
   border-top-right-radius: 50%;
   border-bottom-right-radius: 50%;
   box-shadow: 2px 1px 0px #ccc;
-  top: 75px;
+  bottom: 5px;
   z-index: 1;
   /* padding: 5px; */
   display: flex;
@@ -1264,21 +1268,6 @@ mat-drawer-content {
 .mat-drawer-side {
   border-right: transparent;
   padding-top: 118px !important;
-}
-
-.leftside-overlay-toggle-button {
-  background: #fff;
-  cursor: pointer;
-  border-top-right-radius: 50%;
-  border-bottom-right-radius: 50%;
-  box-shadow: 2px 1px 0px #ccc;
-  height: 40px;
-  width: 30px;
-  display: flex;
-  position: fixed;
-  z-index: 1;
-  align-items: center;
-  top: 172px;
 }
 
 @media (max-width: 670px) {
