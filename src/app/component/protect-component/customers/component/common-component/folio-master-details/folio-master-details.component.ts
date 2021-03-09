@@ -15,6 +15,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   isNomineeLoading = false;
   nomineeArray = [];
   bankDetails: any;
+  obj: any;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) {
   }
@@ -47,11 +48,17 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
   getBankDetails() {
     this.bankDetails = []
-    const data = {
-      folioNumber: this.inputData.folioNumber,
-      schemeCode: this.inputData.schemeCode
-    };
-    this.custumService.getBankDetails(data)
+    if (this.inputData.rtMasterId == 3) {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+      };
+    } else {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+        schemeCode: this.inputData.schemeCode
+      };
+    }
+    this.custumService.getBankDetails(this.obj)
       .subscribe(res => {
         if (res) {
           console.log("bank details", res)
