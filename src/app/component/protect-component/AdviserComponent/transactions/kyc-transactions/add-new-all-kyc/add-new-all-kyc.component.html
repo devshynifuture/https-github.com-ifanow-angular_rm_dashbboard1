@@ -93,7 +93,11 @@
                         <span>:</span>
                     </div>
                     <div class="col-md-6">
-                        <p class="m-0 roboto f-400"> Not Verified</p>
+                        <span class="text-danger" *ngIf="selectedClientData.kycComplaint==0">Not Verified</span>
+                        <span class="text-primary" *ngIf="selectedClientData.kycComplaint==1">KYC_VERIFIED</span>
+                        <span *ngIf="selectedClientData.kycComplaint==2">APPLIED</span>
+                        <span *ngIf="selectedClientData.kycComplaint==3">ACCEPTED</span>
+                        <span *ngIf="selectedClientData.kycComplaint==4">REJECTED</span>
                     </div>
                 </div>
                 <div class="row pt-6 pb-6 bb">
@@ -121,7 +125,8 @@
                 </div>
             </div>
             <div class="mt-20">
-                <button (click)="step1=false" mat-stroked-button class="btn-primary">PREVIEW EMAIL & SEND KYC
+                <button *ngIf="selectedClientData.kycComplaint!=1" (click)="previewEmail()" mat-stroked-button
+                    class="btn-primary">PREVIEW EMAIL & SEND KYC
                     LINK</button>
             </div>
         </div>
@@ -151,7 +156,7 @@
                 <h5 class="m-0 roboto f-400">To </h5>
             </div>
             <div class="col-md-8 p-0">
-                <mat-form-field>
+                <mat-form-field class="event-none">
                     <mat-form-field class="form-control h-auto">
                         <mat-chip-list #chipList aria-label="Fruit selection">
                             <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
@@ -159,8 +164,9 @@
                                 {{fruit.name}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
-                            <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" class="b-0">
+                            <input readonly [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)" class="b-0">
                         </mat-chip-list>
                     </mat-form-field>
                 </mat-form-field>
@@ -172,13 +178,13 @@
             </div>
             <div class="col-md-8 p-0">
                 <mat-form-field>
-                    <input matInput formControlName="subject" class="form-control">
+                    <input readonly matInput formControlName="subject" class="form-control">
                 </mat-form-field>
             </div>
         </div>
         <div class="row pt-24">
             <div class="col-md-12 p-0">
-                <app-froala [(model)]="emailBody"></app-froala>
+                <app-froala class="event-none" [(model)]="emailBody"></app-froala>
             </div>
         </div>
     </div>
@@ -189,7 +195,8 @@
             <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
         </div>
         <div class="col-md-8 d-flex align-items-end justify-content-end">
-            <app-progress-button *ngIf="!step1" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            <app-progress-button (btnClick)="kycAdvisorSectionMethod()" *ngIf="!step1" class="br-0 text-inherit ml-12"
+                [options]="barButtonOptions">
             </app-progress-button>
         </div>
 

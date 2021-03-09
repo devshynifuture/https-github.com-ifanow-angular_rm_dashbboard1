@@ -101,6 +101,15 @@ export class AddNewAllKycComponent implements OnInit {
     }
   }
 
+  previewEmail() {
+    if (!this.selectedClientData.email) {
+      this.eventService.openSnackBar("Please add email address for further process", "Dismiss");
+      return;
+    }
+    this.step1 = false;
+    this.fruits.push({ name: this.selectedClientData.email })
+  }
+
   close(flag) {
     this.subInjectService.changeNewRightSliderState({
       state: 'close',
@@ -184,8 +193,27 @@ export class AddNewAllKycComponent implements OnInit {
       );
   }
 
-  sendEmailLink() {
-
+  kycAdvisorSectionMethod() {
+    this.barButtonOptions.active = true;
+    const hostNameOrigin = window.location.origin;
+    const obj = {
+      name: this.selectedClientData.name,
+      clientId: this.selectedClientData.clientId,
+      email: this.selectedClientData.email,
+      mobileNo: this.selectedClientData.mobileNo,
+      redirectUrl: `${hostNameOrigin}/kyc-redirect`,
+      fromEmail: this.kycForm.get('from').value
+    }
+    this.peopleService.sendKYCLink(obj).subscribe(
+      data => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar("Email sent sucessfully", "Dismiss");
+        this.close(true);
+      }, err => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
   }
 
 
