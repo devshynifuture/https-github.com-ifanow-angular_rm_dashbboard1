@@ -802,6 +802,7 @@ export class MfCapitalDetailedComponent implements OnInit {
                 mutualFund = this.MfServiceService.filterArray(this.mutualFund, 'familyMemberId', this.familyList, 'id');
             }
             mutualFund = this.MfServiceService.sorting(mutualFund, 'schemeName');
+            mutualFund = [...new Map(mutualFund.map(item => [item.id, item])).values()];
             mutualFund.forEach(element => {
                 if (element.dividendTransactions) {
                     element.dividendTransactions.forEach(ele => {
