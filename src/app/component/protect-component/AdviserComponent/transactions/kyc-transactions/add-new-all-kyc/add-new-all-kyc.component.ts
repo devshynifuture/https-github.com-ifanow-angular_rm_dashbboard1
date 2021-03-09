@@ -191,8 +191,7 @@ export class AddNewAllKycComponent implements OnInit {
     this.getEmailList();
     this.kycForm = this.fb.group({
       from: [, [Validators.required]],
-      subject: [, [Validators.required]],
-      emailBody: [, [Validators.required]]
+      subject: ["Complete and verify your Video KYC", [Validators.required]],
     })
   }
 
