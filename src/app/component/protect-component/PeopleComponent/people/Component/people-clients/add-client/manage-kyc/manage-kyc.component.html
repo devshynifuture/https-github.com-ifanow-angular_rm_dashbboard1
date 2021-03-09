@@ -108,11 +108,14 @@
                                         mat-stroked-button *ngIf="element.kycComplaint!=0"
                                         class="btn-primary btn-mange-kyc">Redo
                                         KYC</button>
-                                    <button
-                                        (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
-                                        mat-stroked-button *ngIf="element.kycComplaint==0"
-                                        class="btn-danger btn-mange-kyc text-white">Do
-                                        KYC Now</button>
+                                    <button (click)="openFroala(element,'KYCFroala')" mat-stroked-button
+                                        *ngIf="userData.userType==1 &&element.kycComplaint==0"
+                                        class="btn-danger btn-mange-kyc text-white">Send Link
+                                    </button>
+                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
+                                        *ngIf="userData.userType==2 && element.kycComplaint==0"
+                                        class="btn-danger btn-mange-kyc text-white">Do KYC Now
+                                    </button>
                                 </div>
                                 <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
                             </td>
