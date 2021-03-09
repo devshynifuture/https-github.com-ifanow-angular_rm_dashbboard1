@@ -34,7 +34,7 @@ export class AddNewAllKycComponent implements OnInit {
   getVerifiedList: any;
   emailLists: any;
   kycForm: FormGroup;
-  @Input() data;
+  @Input() data: any = {};
   constructor(
     private datePipe: DatePipe,
     private enumDataService: EnumDataService,
@@ -45,11 +45,12 @@ export class AddNewAllKycComponent implements OnInit {
     private orgSetting: OrgSettingServiceService) { }
 
   ngOnInit() {
-    if (this.data) {
+    if (this.data.name) {
       this.selectedClientData = this.data;
       this.previewEmail();
     } else {
       this.step1 = true;
+      this.data['btnFlag'] = 'Cancel'
     }
     this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : AuthService.getClientData().advisorId;
     this.getSubjectTemplate();
@@ -129,7 +130,7 @@ export class AddNewAllKycComponent implements OnInit {
     value.dateOfBirth = (value.birthDate) ? this.datePipe.transform(value.dateOfBirth, 'dd/MM/yyyy') : '-'
     value = this.formatEmailAndMobile(value);
     this.selectedClientData = value;
-    this.showSuggestion = false
+    this.showSuggestion = false;
   }
 
   formatEmailAndMobile(data) {
@@ -227,6 +228,10 @@ export class AddNewAllKycComponent implements OnInit {
     )
   }
 
+  back() {
+    this.step1 = true;
+    this.data['btnFlag'] = "Cancel";
+  }
 
 }
 

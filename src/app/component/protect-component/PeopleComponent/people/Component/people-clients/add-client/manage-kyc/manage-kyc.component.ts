@@ -67,7 +67,7 @@ export class ManageKycComponent implements OnInit {
     this.peopleService.doKYCNow(obj).subscribe(
       data => {
         elementData.isLoader = false;
-        elementData.kycComplaint = 2;
+        // elementData.kycComplaint = 2;
         if (data.innerObj) {
           window.open(data.innerObj.autoLoginUrl);
         }
@@ -111,6 +111,7 @@ export class ManageKycComponent implements OnInit {
   }
 
   openFroala(data, value) {
+    AuthService.getClientData() ? data['btnFlag'] = 'Cancel' : data['btnFlag'] = 'Back';
     const fragmentData = {
       flag: value,
       data,
@@ -122,7 +123,7 @@ export class ManageKycComponent implements OnInit {
       sideBarData => {
         if (UtilService.isRefreshRequired(sideBarData)) {
           // this.Close(true);
-          data.kycComplaint = 2;
+          // data.kycComplaint = 2;
         }
         rightSideDataSub.unsubscribe();
       }

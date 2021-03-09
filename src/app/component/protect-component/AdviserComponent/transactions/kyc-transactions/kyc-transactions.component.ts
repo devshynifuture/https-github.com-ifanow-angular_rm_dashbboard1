@@ -117,6 +117,7 @@ export class KycTransactionsComponent implements OnInit {
 
 
   openAddAllkyc(data, flag) {
+    data['btnFlag'] = 'Cancel';
     const fragmentData = {
       flag,
       data,
