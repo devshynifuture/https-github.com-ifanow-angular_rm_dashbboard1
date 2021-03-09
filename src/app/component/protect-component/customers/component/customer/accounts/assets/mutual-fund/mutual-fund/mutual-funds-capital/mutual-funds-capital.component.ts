@@ -95,6 +95,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     loadingDone: boolean = false;
     mfCaptialGainCapability: any = {};
     clientNameToDisplay: any;
+    excelDownload: boolean = false;
     // capitalGainData: any;
     constructor(private cd: ChangeDetectorRef, private pdfGen: PdfGenService,
         public routerActive: ActivatedRoute,
@@ -343,6 +344,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         );
     }
     generatePdf() {
+        this.excelDownload = false
         this.fragmentData.isSpinner = true
         const para = document.getElementById('template');
         // let header = null
@@ -825,6 +827,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         // this.excel.generateExcel(rows, tableTitle)
         // let rows3 = this.tableEl._elementRef.nativeElement.rows;
         // this.excel.generateExcel(rows, tableTitle)
+        this.excelDownload = true
         setTimeout(() => {
             var blob = new Blob([document.getElementById('template').innerHTML], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -842,6 +845,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         // this.pdfGen.generatePdf(rows, tableTitle);
     }
     generatePdfBulk() {
+        this.excelDownload = false
         this.loadingDone = true
         const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
         setTimeout(() => {

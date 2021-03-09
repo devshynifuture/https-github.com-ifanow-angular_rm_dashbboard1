@@ -1847,6 +1847,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   generatePdf() {
     this.pdfDownload = true
+    this.excelDownload = false
     this.customDataSource.data.array = [];
     this.customDataSource.data.array1 = [];
     this.customDataSource.data.array2 = [];
@@ -2188,6 +2189,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdfBulk() {
+    this.excelDownload = false
     this.customDataSource.data.array = [];
     this.customDataSource.data.array1 = [];
     this.customDataSource.data.array2 = [];
