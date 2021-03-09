@@ -7,7 +7,7 @@
   <div class="container  pt-170 pb-44">
     <div class="row">
 
-      <div class="col-md-6 pl-0 pt-2">
+      <div class="col-md-6 pl-0">
         <div class="d-flex">
           <mat-chip-list aria-label="Fish selection">
             <mat-chip class="bg-white f-400">{{data.categoryName}}</mat-chip>
@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 pl-0  full-end">
+      <div class="col-md-6 p-0  full-end">
         <button mat-button class="btn-black right br-0">INVEST NOW</button>
       </div>
 
@@ -25,7 +25,7 @@
     <div class="row pt-16">
       <div class="col-md-9 p-0">
 
-        <div class="row bg-white pt-28 pb-20 pl-28">
+        <div class="row bg-white pt-28 pb-20 pl-28 align-items-center">
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-primitive">CURRENT VALUE</p>
             <div class="row">
@@ -33,7 +33,8 @@
                 <h1 class="text-primary f-32 proxima">₹ <span> {{currentValue}}</span></h1>
               </div>
               <div class="col-md-5 p-0">
-                <h5 class="m-0 text-success pt-8 proxima"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue |
+                <h5 class="m-0 text-success pt-8 proxima pl-5"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue
+                  |
                   number:'1.2-2'}}%</h5>
               </div>
             </div>
@@ -42,23 +43,23 @@
             <p class="m-0 f-12 text-primitive">PROFIT (LOSS)</p>
             <h1 class="m-0 text-success proxima f-32">₹ <span>{{profitOrLossValue}}</span></h1>
           </div>
-          <div class="col-md-4 p-0">
+          <div class="col-md-4 pl-0 text-right">
             <p class="m-0 f-12 text-primitive">INVESTOR NAME</p>
-            <h3 class="m-0 text-black">{{ investorName }}</h3>
-            <p class="m-0 text-primitive">{{ folioNumber }}</p>
+            <h3 class="m-0 text-black roboto f-400">{{ investorName }}</h3>
+            <p class="m-0 text-primitive roboto f-400">{{ folioNumber }}</p>
           </div>
         </div>
         <div class="bg-white mt-20">
           <div class="row">
             <div class="col-md-6 pt-28 pl-28">
               <p class="m-0 text-primitive">NAV</p>
-              <h2 class="m-0 text-black">{{nav}}</h2>
-              <p class="m-0 text-primitive">as on {{data.navDate}}</p>
+              <h2 class="m-0 text-black proxima">{{nav}}</h2>
+              <p class="m-0 text-primitive proxima f-12">as on {{data.navDate}}</p>
             </div>
             <div class="col-md-6 pt-28 pl-28 text-right">
               <div *ngIf="!isLoadingNav">
-                <p class="m-0 text-primitive">{{schemeReturnName}} NAV RETURN</p>
-                <h2 class="m-0 text-black">{{schemeReturnValue | number:'1.2-2'}}%</h2>
+                <p class="m-0 text-primitive f-12 proxima">{{schemeReturnName}} NAV RETURN</p>
+                <h2 class="m-0 text-black proxima">{{schemeReturnValue | number:'1.2-2'}}%</h2>
               </div>
               <div class="skeletonAnimation" *ngIf="isLoadingNav" [appSkeletonLoading]="isLoadingNav"
                 appSkeletonLoading>
@@ -72,41 +73,41 @@
             </div>
           </div>
 
-          <div class="row pt-44" id="face-sheet-tabs">
+          <div class="row pt-20" id="face-sheet-tabs">
             <!-- <div class="col-md-12">
               <img src="/assets/images/svg/graph-popup.svg" alt="" class="w-100">
             </div> -->
 
-            <div class="col-md-12 p-0">
+            <div class="col-md-12 p-0" id="nav-return-chart">
               <mat-tab-group headerPosition="below" *ngIf="!isLoadingNav" (selectedTabChange)="tabClick($event)"
                 [(selectedIndex)]="demo1TabIndex">
                 <mat-tab label="3m" [disabled]='disable3m'>
-                  <div class="w-100 h-500">
+                  <div class="w-100 ">
                     <div class="highcharts-figure" [chart]="portfolioGraph"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="6m" [disabled]='disable6m'>
-                  <div class="w-100 h-500">
+                  <div class="w-100 ">
                     <div class="highcharts-figure" [chart]="portfolioGraph1"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="1y" [disabled]='disable1y'>
-                  <div class="w-100 h-500">
+                  <div class="w-100 ">
                     <div class="highcharts-figure" [chart]="portfolioGraph2"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="3y" [disabled]='disable3y'>
-                  <div class="w-100 h-500">
+                  <div class="w-100 ">
                     <div class="highcharts-figure" [chart]="portfolioGraph3"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="5y" [disabled]='disable5y'>
-                  <div class="w-100 h-500">
+                  <div class="w-100 ">
                     <div class="highcharts-figure" [chart]="portfolioGraph4"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="All" [disabled]='disableall'>
-                  <div class="w-100 h-500">
+                  <div class="w-100 ">
                     <div class="highcharts-figure" [chart]="portfolioGraph5"></div>
                   </div>
                 </mat-tab>
@@ -125,7 +126,7 @@
           </div>
 
         </div>
-        <div class="bg-white mt-20">
+        <div class="bg-white mt-20 top-holdings">
           <div class="wrapper-8">
             <p class="m-0 roboto f-500">Top Holdings</p>
             <div class="pt-12" id="table-low">
@@ -231,7 +232,8 @@
 
 
         <div class="row">
-          <div class="col-md-12 pt-28" [appSkeletonLoading]="isLoadingSchemeDetails" appSkeletonLoading>
+          <div class="col-md-12 pt-28" [appSkeletonLoading]="isLoadingSchemeDetails" appSkeletonLoading
+            [ngClass]="{'ox-hide': isLoadingSchemeDetails}">
             <h4 class="m-0 f-500">About {{data.schemeName}}</h4>
             <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">{{data.schemeName}} is a
               {{data.categoryName | lowercase }} Mutual Fund
@@ -274,15 +276,15 @@
         </div>
       </div>
       <div class="col-md-3 pr-0">
-        <div class="bg-white pt-12">
+        <div class="bg-white pt-8">
           <div class="row">
-            <div class="col-md-12">
-              <p class="m-0 text-black roboto">Learn more</p>
+            <div class="col-md-12 text-right">
+              <p class="m-0 text-black roboto f-500">Learn more</p>
             </div>
           </div>
           <div class="row pt-20 skeletonAnimation" [appSkeletonLoading]="schemeReturnLoading" appSkeletonLoading>
             <div class="col-md-6">
-              <p class="m-0 f-12 roboto">Scheme Returns</p>
+              <p class="m-0 f-12 roboto f-400">Scheme Returns</p>
               <h1 class="m-0 text-primary" *ngIf="!schemeReturnLoading">{{schemeReturnValue ? (schemeReturnValue |
                 number:'1.2-2') :
                 '-'}}{{schemeReturnValue ? '%' : ''}}</h1>
@@ -304,23 +306,24 @@
                   </div>
                 </div>
               </div>
-              <p class="m-0 f-12 roboto pb-28">Your Returns</p>
+              <p class="m-0 f-12 roboto pb-28 f-400">Your Returns</p>
             </div>
           </div>
+          <hr class="line-fact-sheet-right" *ngIf="!schemeReturnLoading">
         </div>
         <div class="bg-white mt-20">
           <div class="wrapper-8">
-            <p class="m-0 roboto">Scheme Performance</p>
+            <p class="m-0 roboto f-500">Scheme Performance</p>
           </div>
           <div class="row">
             <div class="col-md-12 text-center p-0">
-              <p class="m-0 pt-32 roboto">An investment of </p>
-              <h2 class="f-34 m-0 pt-8 proxima">
+              <p class="m-0 pt-32 roboto f-400">An investment of </p>
+              <h2 class="f-34 m-0 pt-0 proxima">
                 <div class="form-group mb-0">
                   <mat-form-field>
-                    <input class="form-control br-0 percentage" (keyup)="changeAmount($event)" [formControl]="amount"
-                      matInput type="number" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10"
-                      appInputValueValidation>
+                    <input class="form-control bl-0 br-0 bt-0 text-center br-none f-34 text-black input-investment"
+                      (keyup)="changeAmount($event)" [formControl]="amount" matInput type="number"
+                      [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation>
                   </mat-form-field>
                 </div>
                 <mat-error class="f-12 text-left" *ngIf="error">
@@ -330,9 +333,9 @@
                   Amount should be greater than 100
                 </mat-error>
               </h2>
-              <p class="m-0 pt-12 roboto">would have fetched you following returns</p>
+              <p class="m-0 pt-12 f-13 roboto f-400">would have fetched you following returns</p>
               <!-- <img src="/assets/images/svg/graph-scheme.svg" class="w-100 pt-32"> -->
-              <div class="highcharts-figure" *ngIf="!navLoading" id="container-hc-figure" [chart]="schemeChart">
+              <div class="highcharts-figure h-185" *ngIf="!navLoading" id="container-hc-figure" [chart]="schemeChart">
               </div>
               <div class="row skeletonAnimation" *ngIf="navLoading" [appSkeletonLoading]="navLoading"
                 appSkeletonLoading>
@@ -346,10 +349,10 @@
             </div>
           </div>
           <div class="row pt-20">
-            <div class="col-md-2 pl-0">
-              <p class="f-12 m-0 pt-12 text-right pl-12">Period</p>
+            <div class="col-md-3 pl-0">
+              <p class="f-12 m-0 pt-0 text-right pl-12">Period</p>
             </div>
-            <div class="col-md-10 p-0 face-sheet-radio">
+            <div class="col-md-9 p-0 face-sheet-radio">
               <mat-radio-group id="custom-radio" [formControl]="selectedItem" (change)="changeSelection($event.value)">
                 <mat-radio-button value="1">3m</mat-radio-button>
                 <mat-radio-button value="2">6m</mat-radio-button>
@@ -372,8 +375,9 @@
         <div class="bg-white mt-20 pb-20">
           <div class="row">
             <div class="col-md-12">
-              <p class="m-0">Riskometer</p>
-              <div class="highcharts-figure" *ngIf="!speedLoading" id="container-hc-figure" [chart]="speedChartVar">
+              <p class="m-0 pt-8 f-500 roboto">Riskometer</p>
+              <div class="highcharts-figure h-250" *ngIf="!speedLoading" id="container-hc-figure"
+                [chart]="speedChartVar">
               </div>
               <div class="row skeletonAnimation" *ngIf="speedLoading" [appSkeletonLoading]="speedLoading"
                 appSkeletonLoading>
@@ -385,117 +389,120 @@
                 </div>
               </div>
               <!-- <img src="/assets/images/svg/riskmeter.svg" class="w-100 pt-32"> -->
-              <p class="f-12 m-0 text-center">Investors understand that their principal
+              <p class="f-12 m-0 text-center f-400 text-black lh-14">Investors understand that their principal
                 will be at Moderately High risk</p>
             </div>
           </div>
         </div>
-        <div class="bg-white mt-20 scheme-details" [appSkeletonLoading]="isLoadingSchemeDetails" appSkeletonLoading>
-          <p class="m-0 f-500 text-black pt-8 pl-8">Scheme details</p>
-          <div class="row pt-20">
-            <div class="col-md-6">
-              <p class="f-12 m-0">MIN AMOUNT</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber class="bar"
-                  [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span>
-              </h5>
-              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
+        <div class="bg-white mt-20 " [appSkeletonLoading]="isLoadingSchemeDetails" appSkeletonLoading>
+          <p class="m-0 roboto f-500 text-black pt-8 pl-8">Scheme details</p>
+          <div class="scheme-details">
+            <div class="row pt-20 ">
+              <div class="col-md-6">
+                <p class="f-12 m-0">MIN AMOUNT</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber class="bar"
+                    [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span>
+                </h5>
+                <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 pr-0">
+                <p class="f-12 m-0">SCHEME TYPE</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.type)}}</h5>
+                <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <p class="f-12 m-0">SCHEME TYPE</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.type)}}</h5>
-              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
+            <div class="row pt-28">
+              <div class="col-md-6 pr-0">
+                <p class="f-12 m-0">SCHEME STARTED</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.inceptDate | date:'dd-MM-yyyy') }}
+                </h5>
+                <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-12 m-0">SCHEME SIZE</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber
+                    [value]="schemeDetails?.aum ? schemeDetails?.aum : '-'"></span>
+                </h5>
+                <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row pt-28">
-            <div class="col-md-6">
-              <p class="f-12 m-0">SCHEME STARTED</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.inceptDate | date:'dd-MM-yyyy') }}</h5>
-              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
+            <div class="row pt-28">
+              <div class="col-md-6">
+                <p class="f-12 m-0">CASH POSITION</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.aum ? (schemeDetails?.aum |
+                  number:'1.2-2') :'-'}}{{schemeDetails?.aum ? '%' : ''}}</h5>
+                <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-12 m-0">EXPENSE RATIO</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.expRatio}}</h5>
+                <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
-              <p class="f-12 m-0">SCHEME SIZE</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber
-                  [value]="schemeDetails?.aum ? schemeDetails?.aum : '-'"></span>
-              </h5>
-              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
+            <div class="row pt-28">
+              <div class="col-md-6">
+                <p class="f-12 m-0">PE RATIO</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pe | number:'1.2-2')}}</h5>
+                <div class="col-md-9 p-0 relClass pt-12 m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <p class="f-12 m-0">P/B RATIO</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pb | number:'1.2-2')}}</h5>
+                <div class="col-md-9 p-0 relClass pt-12 m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row pt-28">
-            <div class="col-md-6">
-              <p class="f-12 m-0">CASH POSITION</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.aum ? (schemeDetails?.aum |
-                number:'1.2-2') :'-'}}{{schemeDetails?.aum ? '%' : ''}}</h5>
-              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <p class="f-12 m-0">EXPENSE RATIO</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.expRatio}}</h5>
-              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar pt-12">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-28">
-            <div class="col-md-6">
-              <p class="f-12 m-0">PE RATIO</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pe | number:'1.2-2')}}</h5>
-              <div class="col-md-9 p-0 relClass pt-12 m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <p class="f-12 m-0">P/B RATIO</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{(schemeDetails?.pb | number:'1.2-2')}}</h5>
-              <div class="col-md-9 p-0 relClass pt-12 m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-28 pb-28">
-            <div class="col-md-12">
-              <p class="f-12 m-0">EXIT LOAD</p>
-              <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span *ngIf="schemeDetails?.exitLoad">Exit load of
-                  {{schemeDetails?.exitLoad}}
-                  if redeemed within
-                  365 days.</span><span *ngIf="!schemeDetails?.exitLoad">{{'-'}}</span></h5>
-              <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
-                <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar  pt-12">
-                  <p class="text-black f-12 m-0 text-right roboto f-400">
-                    {{''}}</p>
+            <div class="row pt-28 pb-28">
+              <div class="col-md-12">
+                <p class="f-12 m-0">EXIT LOAD</p>
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span *ngIf="schemeDetails?.exitLoad">Exit load of
+                    {{schemeDetails?.exitLoad}}
+                    if redeemed within
+                    365 days.</span><span *ngIf="!schemeDetails?.exitLoad">{{'-'}}</span></h5>
+                <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
+                  <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar  pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
                 </div>
               </div>
             </div>
