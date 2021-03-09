@@ -129,7 +129,7 @@ export class KycTransactionsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getBSECredentials();
-
+            data ? data.kycComplaint = 2 : '';
           }
           rightSideDataSub.unsubscribe();
         }

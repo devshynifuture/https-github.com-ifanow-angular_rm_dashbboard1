@@ -48,7 +48,6 @@ import { InvestorDetailComponent } from './investors-transactions/investor-detai
 import { MappedUserComponent } from './investors-transactions/investor-detail/mapped-user/mapped-user.component';
 import { MultiTransactionPopupComponent } from './overview-transactions/doTransaction/multi-transaction-popup/multi-transaction-popup.component';
 import { EditFatcaDetailsComponent } from './investors-transactions/edit-fatca-details/edit-fatca-details.component';
-import { AddNewAllKycComponent } from './kyc-transactions/add-new-all-kyc/add-new-all-kyc.component';
 import { CommonComponentModule } from '../../common-component/common-component.module';
 
 export const componentList = [
@@ -94,8 +93,7 @@ export const componentList = [
   DetailedViewMandateComponent,
   InvestorDetailComponent,
   MultiTransactionPopupComponent,
-  EditFatcaDetailsComponent,
-  AddNewAllKycComponent
+  EditFatcaDetailsComponent
   // VideoKycComponent
 
 

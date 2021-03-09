@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
@@ -34,6 +34,7 @@ export class AddNewAllKycComponent implements OnInit {
   getVerifiedList: any;
   emailLists: any;
   kycForm: FormGroup;
+  @Input() data;
   constructor(
     private datePipe: DatePipe,
     private enumDataService: EnumDataService,
@@ -44,8 +45,13 @@ export class AddNewAllKycComponent implements OnInit {
     private orgSetting: OrgSettingServiceService) { }
 
   ngOnInit() {
-    this.step1 = true;
-    this.advisorId = AuthService.getAdvisorId();
+    if (this.data) {
+      this.selectedClientData = this.data;
+      this.previewEmail();
+    } else {
+      this.step1 = true;
+    }
+    this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : AuthService.getClientData().advisorId;
     this.getSubjectTemplate();
     this.kycForm = this.fb.group({
       from: [, [Validators.required]],
@@ -205,6 +211,9 @@ export class AddNewAllKycComponent implements OnInit {
       mobileNo: this.selectedClientData.mobileNo,
       redirectUrl: `${hostNameOrigin}/kyc-redirect`,
       fromEmail: this.kycForm.get('from').value
+    }
+    if (this.selectedClientData.kycComplaint != 0) {
+      obj['redo'] = true;
     }
     this.peopleService.sendKYCLink(obj).subscribe(
       data => {

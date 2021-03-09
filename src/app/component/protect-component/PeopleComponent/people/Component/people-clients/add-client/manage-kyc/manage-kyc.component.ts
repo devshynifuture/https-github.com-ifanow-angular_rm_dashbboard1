@@ -4,6 +4,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AddNewAllKycComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/kyc-transactions/add-new-all-kyc/add-new-all-kyc.component';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-manage-kyc',
@@ -106,6 +108,24 @@ export class ManageKycComponent implements OnInit {
       state: 'close',
       refreshRequired: flag
     });
+  }
+
+  openFroala(data, value) {
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: AddNewAllKycComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          // this.Close(true);
+        }
+        rightSideDataSub.unsubscribe();
+      }
+    );
   }
 
 }

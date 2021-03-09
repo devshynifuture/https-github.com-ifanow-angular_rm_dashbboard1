@@ -84,9 +84,9 @@
 
                         <div *ngIf="isLoading" class="bar"></div>
                         <div *ngIf="!isLoading && element.email && element.mobileNo && !element.isLoader" class="bar">
-                            <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint!=0"
+                            <button (click)="openAddAllkyc(element,'KYCFroala')" *ngIf="element.kycComplaint!=0"
                                 mat-stroked-button class="btn-primary btn-mange-kyc">Redo KYC</button>
-                            <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint==0"
+                            <button (click)="openAddAllkyc(element,'KYCFroala')" *ngIf="element.kycComplaint==0"
                                 mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
                                 Link</button>
                         </div>
