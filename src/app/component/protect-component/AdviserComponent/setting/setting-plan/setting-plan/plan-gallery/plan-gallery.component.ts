@@ -48,8 +48,8 @@ export class PlanGalleryComponent implements OnInit {
   }
   openGallery(gallery) {
     const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
-      width: '470px',
-      height: '280px',
+      width: '40%',
+      height: '570px',
       data: { bank: gallery, animal: null }
     });
     dialogRef.afterClosed().subscribe(result => {

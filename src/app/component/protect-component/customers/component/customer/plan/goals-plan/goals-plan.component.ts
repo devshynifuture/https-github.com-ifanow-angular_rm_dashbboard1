@@ -884,8 +884,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       imageUrl: gallery
     }
     const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
-      width: '470px',
-      height: '280px',
+      width: '40%',
+      height: '570px',
       data: { bank: gallery, animal: obj }
     });
     dialogRef.afterClosed().subscribe(result => {
