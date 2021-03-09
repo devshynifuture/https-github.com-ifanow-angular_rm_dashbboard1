@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { AddNewAllKycComponent } from './add-new-all-kyc/add-new-all-kyc.component';
+import { OnlineTransactionService } from '../online-transaction.service';
 
 @Component({
   selector: 'app-kyc-transactions',
@@ -12,13 +13,38 @@ import { AddNewAllKycComponent } from './add-new-all-kyc/add-new-all-kyc.compone
 })
 export class KycTransactionsComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'email', 'status', 'actions'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource();
+  isLoading: boolean;
   constructor(private eventService: EventService,
     private utilService: UtilService, private subInjectService: SubscriptionInject
-    , public dialog: MatDialog) { }
+    , public dialog: MatDialog,
+    private tranService: OnlineTransactionService) { }
 
   ngOnInit() {
+    this.getKycTransactionList();
   }
+
+  getKycTransactionList() {
+    this.dataSource.data = [{}, {}, {}]
+    this.isLoading = true;
+    const obj = {
+
+    }
+    this.tranService.getKycListData(obj).subscribe(
+      data => {
+        this.isLoading = false;
+        if (data && data.length > 0) {
+          this.dataSource.data = data;
+        } else {
+          this.dataSource.data = [];
+        }
+      }, err => {
+        this.dataSource.data = [];
+        this.isLoading = false;
+      }
+    )
+  }
+
   openAddAllkyc(data, flag) {
     const fragmentData = {
       flag,

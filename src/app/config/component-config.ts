@@ -283,6 +283,7 @@ export const appConfig = {
   REPORT_WISE_CALCULATION: 'mutual-fund/reportwise/calculation/get',
   MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST: 'mutual-fund/transaction/type/list/get',
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
+  GET_BANK_DETAILS: 'user/client/bank-detail/scheme-wise/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
   UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
   CAPITAL_GAIN_GET: 'mutual-fund/capital/gains/grandfathering/get',
@@ -667,7 +668,7 @@ export const appConfig = {
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'user/tax-master/get',
   COUNTRY_MASTER: 'user/register/country-code/all/get',
-
+  KYC_LIST_GET: '',
   INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
   INVESTOR_STATUS_CHECK: 'user/register/status/check/update',
 
@@ -928,7 +929,7 @@ export const appConfig = {
   GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
   GET_CLIENT_SEARCH_LIST: 'user/client/filter/details/get',
-  GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
+  GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list',
   GET_TEAM_MEMBER_INFO: 'user/info/get',
   CHECK_VALID_USERNAME: 'user/username/update',
   // CLIENT_SEARCH: 'user/client/all/names/get',
@@ -951,6 +952,7 @@ export const appConfig = {
   KYC_LINK_SEND: 'user/client/kyc-link/send',
   KYC_LINK_GET: 'user/client/kyc-link/get',
   KYC_STATUS_UPDATE: 'user/client/kyc-status/update',
+  KYC_STATUS_OF_PAN: 'user/kyc-status/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',

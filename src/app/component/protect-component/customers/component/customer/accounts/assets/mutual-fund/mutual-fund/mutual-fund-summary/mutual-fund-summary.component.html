@@ -380,12 +380,12 @@
 
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg" alt="">
                         <mat-menu #menu3="matMenu" class="disabledOpacity">
-                            <button mat-menu-item *ngIf="mfSummaryCapability.Foliomasterdetails"
-                                (click)="openFolioMaster(element)">Folio master details</button>
-                            <button mat-menu-item *ngIf="mfSummaryCapability.SIPdetails"
-                                (click)="openSipDetails(element)">SIP details</button>
-                            <button mat-menu-item *ngIf="mfSummaryCapability.Transactonline" class="bt-1"
-                                (click)="openTransaction(element)">Transact
+                            <!-- *ngIf="mfSummaryCapability.Foliomasterdetails" -->
+                            <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
+                            <!-- *ngIf="mfSummaryCapability.SIPdetails" -->
+                            <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
+                            <!-- *ngIf="mfSummaryCapability.Transactonline" -->
+                            <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
                                 online</button>
                             <button mat-menu-item (click)="orderSOA(element)"
                                 *ngIf="(element.rtMasterId === 1 || element.rtMasterId === 2) && mfSummaryCapability.DownloadSOA">
@@ -510,7 +510,7 @@
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: auto;border-collapse: separate;">
         <tr>
-            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData && excelDownload!= true">
                 <div style="width: 200px;"
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">

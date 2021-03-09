@@ -229,6 +229,7 @@ export class MutualFundUnrealizedTranComponent {
   mfAllTransactionCapability: any = {};
   mfCapability: any = {};
   clientNameToDisplay: any;
+  excelDownload: boolean = false;
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -1289,6 +1290,7 @@ export class MutualFundUnrealizedTranComponent {
 
   Excel(tableTitle) {
     this.showDownload = true;
+    this.excelDownload = true
     setTimeout(() => {
       const blob = new Blob([document.getElementById('template').innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
@@ -1604,6 +1606,7 @@ export class MutualFundUnrealizedTranComponent {
 
   generatePdf() {
     this.showDownload = true;
+    this.excelDownload = false
     this.fragmentData.isSpinner = true;
     this.cd.markForCheck();
     this.cd.detectChanges();
@@ -1841,6 +1844,7 @@ export class MutualFundUnrealizedTranComponent {
   }
 
   generatePdfBulk() {
+    this.excelDownload = false
     this.loadingDone = true;
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');

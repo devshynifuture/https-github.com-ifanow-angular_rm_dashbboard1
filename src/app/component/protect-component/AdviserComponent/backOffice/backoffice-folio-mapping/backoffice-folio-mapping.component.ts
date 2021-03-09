@@ -93,7 +93,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
     if (value !== '') {
       const data = {
         parentId: this.parentId,
-        offset: this.offsetList,
+        offset: 0,
         limit: 300,
         searchQuery: value
       };

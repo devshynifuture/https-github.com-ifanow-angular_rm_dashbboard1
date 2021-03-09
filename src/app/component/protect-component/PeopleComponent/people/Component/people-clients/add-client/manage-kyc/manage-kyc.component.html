@@ -77,7 +77,8 @@
                                         <span *ngIf="element.kycComplaint==3">ACCEPTED</span>
                                         <span *ngIf="element.kycComplaint==4">REJECTED</span>
                                     </span>
-                                    <img src="/assets/images/svg/info-black.svg" matTooltip="Info about the action"
+                                    <img *ngIf="!isLoading && element.kycReason" src="/assets/images/svg/info-black.svg"
+                                        matTooltip={{element.kycReason}}
                                         aria-label="Button that displays a tooltip when focused or hovered over"
                                         class="pl-4">
                                 </div>
@@ -136,7 +137,7 @@
 <div *ngIf="data" class="bottom-fixed-50 wrapper-12 z-index-9">
     <div class="row">
         <div class="col-md-4 col-4">
-            <h5 (click)="close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 (click)="close(false)" class="mb-0 pt-8 text-white c-p">Close</h5>
         </div>
 
         <div class="col-md-8 col-8 right text-right">

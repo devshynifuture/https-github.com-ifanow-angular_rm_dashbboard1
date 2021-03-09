@@ -74,6 +74,20 @@
                         <div class="bar"> {{element.pan}}</div>
                     </td>
                 </ng-container>
+                <!-- <ng-container matColumnDef="kyc">
+                    <th mat-sort-header="kyc" mat-header-cell *matHeaderCellDef class="br" sticky>KYC status </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading ">
+                                <span class="text-danger f-12" *ngIf="element.kycComplaint==0">Not Verified</span>
+                                <span class="text-primary f-12" *ngIf="element.kycComplaint==1">KYC_VERIFIED</span>
+                                <span class="f-12" *ngIf="element.kycComplaint==2">APPLIED</span>
+                                <span class="f-12" *ngIf="element.kycComplaint==3">ACCEPTED</span>
+                                <span class="f-12" *ngIf="element.kycComplaint==4">REJECTED</span>
+                            </span>
+                        </div>
+                    </td>
+                </ng-container> -->
                 <ng-container matColumnDef="member">
                     <th mat-sort-header="count" mat-header-cell *matHeaderCellDef class="br" sticky> Members </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
