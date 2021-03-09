@@ -49,6 +49,7 @@ import { MappedUserComponent } from './investors-transactions/investor-detail/ma
 import { MultiTransactionPopupComponent } from './overview-transactions/doTransaction/multi-transaction-popup/multi-transaction-popup.component';
 import { EditFatcaDetailsComponent } from './investors-transactions/edit-fatca-details/edit-fatca-details.component';
 import { AddNewAllKycComponent } from './kyc-transactions/add-new-all-kyc/add-new-all-kyc.component';
+import { CommonComponentModule } from '../../common-component/common-component.module';
 
 export const componentList = [
   OnlineTransactionComponent,
@@ -110,7 +111,8 @@ export const componentList = [
     CustomDirectiveModule,
     CustomCommonModule,
     ScrollingModule,
-    PeopleEntryModule
+    PeopleEntryModule,
+    CommonComponentModule
   ],
   exports: [
     FormsModule,

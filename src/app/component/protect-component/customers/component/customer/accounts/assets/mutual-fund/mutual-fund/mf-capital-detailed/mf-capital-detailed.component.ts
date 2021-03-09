@@ -76,6 +76,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     loadingDone: boolean = false;
     isShow = true;
     clientNameToDisplay: any;
+    excelDownload: boolean = false;
     constructor(private MfServiceService: MfServiceService,
         public routerActive: ActivatedRoute,
         private backOfficeService: BackOfficeService,
@@ -851,6 +852,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     isSimpleRow = (index, item) => item.totalAmt;
 
     generatePdf() {
+        this.excelDownload = false
         this.fragmentData.isSpinner = true
         const para = document.getElementById('template');
         // const header = document.getElementById('templateHeader');
@@ -861,6 +863,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
     }
     Excel(tableTitle) {
+        this.excelDownload = true
         this.showDownload = true
         setTimeout(() => {
             var blob = new Blob([document.getElementById('template').innerHTML], {
@@ -874,6 +877,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     }
     generatePdfBulk() {
         this.loadingDone = true
+        this.excelDownload = false
         const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
         setTimeout(() => {
             let para = this.mfCapitalTemplateDetailed.nativeElement.innerHTML

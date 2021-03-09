@@ -1114,7 +1114,7 @@
             <td>
                 <table style="width: 100%;">
                     <tr>
-                        <td style="text-align: left;" *ngIf="getOrgData">
+                        <td style="text-align: left;" *ngIf="getOrgData && excelDownload != true">
                             <div
                                 *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                                 <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -1393,8 +1393,7 @@
 
                         <td valign="top"
                             style="text-align: right;width:6%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                            <span
-                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
+                            <span *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
                                 ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 :
                                 0)}}</span>
                         </td>
@@ -1866,8 +1865,7 @@
 
                         <td valign="top"
                             style="width: 6%; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                            <span
-                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
+                            <span *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
                                 ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 :
                                 0)}}</span>
                         </td>
