@@ -92,11 +92,11 @@
                                 <div *ngIf="!isLoading && data && element.email && element.mobileNo && !element.isLoader"
                                     class="bar">
                                     <button
-                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
                                         *ngIf="element.kycComplaint!=0" mat-stroked-button
                                         class="btn-primary btn-mange-kyc">Redo KYC</button>
                                     <button
-                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
                                         *ngIf="element.kycComplaint==0" mat-stroked-button
                                         class="btn-danger btn-mange-kyc text-white">Send
                                         Link</button>
@@ -104,12 +104,12 @@
                                 <div *ngIf="!isLoading &&!data && element.email && element.mobileNo && !element.isLoader"
                                     class="bar">
                                     <button
-                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
                                         mat-stroked-button *ngIf="element.kycComplaint!=0"
                                         class="btn-primary btn-mange-kyc">Redo
                                         KYC</button>
                                     <button
-                                        (click)="userData.userType==1?kycAdvisorSectionMethod(element):kycClientSectionMethod(element)"
+                                        (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
                                         mat-stroked-button *ngIf="element.kycComplaint==0"
                                         class="btn-danger btn-mange-kyc text-white">Do
                                         KYC Now</button>

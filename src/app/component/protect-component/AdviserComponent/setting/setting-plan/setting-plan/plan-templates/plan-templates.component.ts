@@ -7,6 +7,7 @@ import { SettingsService } from '../../../settings.service';
 import { AddNewTemplateComponent } from './add-new-template/add-new-template.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PreviewFinPlanComponent } from 'src/app/component/protect-component/customers/component/customer/plan/profile-plan/preview-fin-plan/preview-fin-plan.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-plan-templates',
@@ -77,19 +78,47 @@ export class PlanTemplatesComponent implements OnInit {
       console.log('result -==', this.element)
     });
   }
+
   deleteTemplate(item) {
     let obj = {
       id: item.id,
     }
-    this.SettingsService.deleteTemplate(obj).subscribe(
-      res => {
-        this.eventService.openSnackBar('Template is deleted Successfully', 'Dismiss');
-        this.getTemplateList()
+    const dialogData = {
+      data: 'TEMPLATE',
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.SettingsService.deleteTemplate(obj).subscribe(
+          res => {
+            dialogRef.close();
+            this.eventService.openSnackBar('Template is deleted Successfully', 'Dismiss');
+            this.getTemplateList()
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
       },
-      err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
       }
-    );
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
   resetTemplate(item) {
     let obj = {
