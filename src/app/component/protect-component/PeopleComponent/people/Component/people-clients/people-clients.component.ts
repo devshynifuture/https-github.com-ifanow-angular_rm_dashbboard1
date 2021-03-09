@@ -232,7 +232,7 @@ export class PeopleClientsComponent implements OnInit {
     if (window.innerWidth <= 1024) {
       this.tabviewshow = 'open80';
     } else {
-      this.tabviewshow = 'open50';
+      this.tabviewshow = 'open';
     }
     const fragmentData = {
       flag: 'Manage KYC',
