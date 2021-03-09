@@ -36,18 +36,19 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="row pt-32">
+    <div class="row pt-32 pb-48">
         <div class="col-md-6 text-right">
             <h5 class="m-0 roboto f-16 f-400">Upload your template</h5>
             <p class="f-12 roboto text-custom lh-14 f-400">This template will be available to download in<br>
                 miscellaenous
                 section of
-                financial plan. You can attach<br> it in your financial reports and send it to your client.</p>
+                financial plan.<br>The size
+                of the image should be 340 px x 476 px <br>or on a similar proportionate basis.</p>
         </div>
-        <div class="col-md-3 pl-0" *ngIf="edit">
-            <div (click)="openGallery(imgUrl)" class="w-163">
+        <div class="col-md-5 p-0" *ngIf="edit">
+            <div (click)="openGallery(imgUrl)">
                 <div class="plan-templates-img-right-side">
-                    <img src="{{imgUrl}}" class="h-230 w-163 b-a c-p">
+                    <img src="{{imgUrl}}" class="b-a c-p plan-setting-img-hw">
                     <div class="middleOne">
                         <p class="c-p"> Edit</p>
                     </div>
@@ -55,10 +56,10 @@
             </div>
 
         </div>
-        <div class="col-md-3 pl-0" *ngIf="!edit">
-            <div (click)="openGallery('/assets/images/setting.png')" class="w-163">
+        <div class="col-md-5 pl-0" *ngIf="!edit">
+            <div (click)="openGallery('/assets/images/setting.png')">
                 <div class="plan-templates-img-right-side">
-                    <img src="/assets/images/setting.png" class="h-230 w-163 c-p">
+                    <img src="/assets/images/svg/dummy-plan-setting.svg" class="c-p">
                     <div class="middleOne">
                         <p class="c-p"> Edit</p>
                     </div>
