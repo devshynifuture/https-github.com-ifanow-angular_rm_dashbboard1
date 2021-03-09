@@ -154,9 +154,9 @@
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
-        <!-- <ng-container matColumnDef="xirrDate">
+        <ng-container matColumnDef="xirrDate">
           <th mat-sort-header="xirr" mat-header-cell *matHeaderCellDef class="br w-12 right-hc text-right hide-arrow">
-            XIRR (as on date)
+            XIRR
           </th>
           <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
             <div class="bar" *ngIf="element.xirr == 0"><span *ngIf="!isLoading">-</span></div>
@@ -164,7 +164,7 @@
               ? "%" : ""}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
-        </ng-container> -->
+        </ng-container>
         <ng-container matColumnDef="status">
           <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Status</th>
           <td *matCellDef="let element" class="br   text-primary" mat-cell>
