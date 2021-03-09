@@ -102,7 +102,12 @@ export class MutualFundsCapitalComponent implements OnInit {
         private datePipe: DatePipe,
         private route: Router,
         private backOfficeService: BackOfficeService,
-        private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject,
+        private excel: ExcelGenService, private UtilService: UtilService,
+        private custumService: CustomerService,
+        private eventService: EventService,
+        private reconService: ReconciliationService,
+        private MfServiceService: MfServiceService,
+        private subInjectService: SubscriptionInject,
         public roleService: RoleService) {
 
 
@@ -346,6 +351,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     generatePdf() {
         this.excelDownload = false
         this.fragmentData.isSpinner = true
+        this.cd.detectChanges();
         const para = document.getElementById('template');
         // let header = null
         const header = document.getElementById('templateHeader');
