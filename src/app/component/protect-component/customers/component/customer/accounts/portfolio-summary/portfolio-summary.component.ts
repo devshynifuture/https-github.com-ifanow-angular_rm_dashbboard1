@@ -59,6 +59,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     }
   };
   @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+  @Output() loadsvg1 = new EventEmitter();//emit financial planning innerHtml reponse
+  @Output() loadsvg2 = new EventEmitter();//emit financial planning innerHtml reponse
+  @Output() loadsvg3 = new EventEmitter();//emit financial planning innerHtml reponse
 
   @Input() finPlanObj: any;//finacial plan pdf input
 
@@ -804,6 +807,18 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     // });
     if (this.finPlanObj) {
       this.ref.detectChanges();
+      if (this.chart) {
+        this.svg = this.chart.getSVG()
+        this.loadsvg1.emit(this.svg);
+      }
+      if (this.portfolioGraph) {
+        this.portSvg = this.portfolioGraph.getSVG()
+        this.loadsvg2.emit(this.portSvg);
+      }
+      if (this.cashFlowChart) {
+        this.cashFlowSvg = this.cashFlowChart.getSVG()
+        this.loadsvg3.emit(this.cashFlowSvg);
+      }
       this.loaded.emit(document.getElementById('portfolioSummary'));
     }
 
