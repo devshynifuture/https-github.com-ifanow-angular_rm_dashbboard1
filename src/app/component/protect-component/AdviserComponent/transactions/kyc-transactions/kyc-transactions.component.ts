@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./kyc-transactions.component.scss']
 })
 export class KycTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'email', 'status', 'actions'];
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'email', 'kycStatus', 'actions'];
   dataSource = new MatTableDataSource();
   isLoading: boolean;
   advisorId: any;
