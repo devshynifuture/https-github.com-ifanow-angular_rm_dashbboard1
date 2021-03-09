@@ -1,4 +1,4 @@
-<div id="ui-assets-account">
+<div id="ui-assets-account" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
   <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
     <mat-sidenav opened class="overflow-hidden p-0" #sidenav [mode]="'side'" role="navigation">
       <mat-nav-list class="width-250 pt-0" id="d">
@@ -142,8 +142,7 @@
                     <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                       <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                         <span *ngIf="fixedIncome.currentValue!=0">₹</span>
-                        <span *ngIf="fixedIncome" appFormatNumber
-                          [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
+                        <span *ngIf="fixedIncome" appFormatNumber [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
                           fixedIncome.currentValue}}</span>
                       </p>
                       <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
@@ -219,8 +218,7 @@
                   <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                     <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                       <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                      <span appFormatNumber [value]="smallSavingScheme.currentValue"
-                        *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                      <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                         smallSavingScheme.currentValue}}</span>
                     </p>
                     <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
@@ -378,8 +376,7 @@
                     </div>
                     <div class="col-md-6 pl-0">
                       <h2 *ngIf="letsideBarLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
-                        ₹<span appFormatNumber
-                          [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+                        ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                           liabilityTotal}}</span>
                       </h2>
                     </div>
@@ -637,7 +634,7 @@
   </mat-sidenav-container>
 </div>
 <!---------------------------------pdf ----------------------->
-<div id="template">
+<div id="portfolioSummary">
 
   <table style="width: 100%;color: #000;font-family: 'Roboto', sans-serif;    border-collapse: collapse;">
     <tbody>
@@ -646,8 +643,7 @@
 
           <span>NET WORTH</span><br>
           <span style="font-size: 30px;"> <span>₹</span>
-            <span *ngIf="letsideBarLoader==false" appFormatNumber
-              [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+            <span *ngIf="letsideBarLoader==false" appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
               liabilityTotal}}</span></span>
           <div style="padding-top: 15px;padding-right: 10px;">
             <span>ASSETS</span>
@@ -671,8 +667,7 @@
             <span style="float: right;"> <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
               <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
                 ? '-' : mutualFundValue.currentValue}}
-              </span> <br><span style="float: right;"> <span
-                  *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
+              </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
                   mutualFundValue.percentage}}
                   <span *ngIf="mutualFundValue.percentage!=0">%</span></span></span> </span>
           </div>
@@ -715,8 +710,7 @@
           <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
             <span> Small savings </span>
             <span style="float: right;"> <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-              <span appFormatNumber [value]="smallSavingScheme.currentValue"
-                *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+              <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                 smallSavingScheme.currentValue}}</span> <br><span style="float: right;"> <span
                   *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' :
                   smallSavingScheme.percentage}}

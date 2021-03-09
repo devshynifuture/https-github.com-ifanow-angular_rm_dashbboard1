@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ColorString } from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -58,6 +58,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       isLoading: true,
     }
   };
+  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
+
+  @Input() finPlanObj: any;//finacial plan pdf input
+
   assetAllocationPieConfig: Highcharts.Chart;
   portfolioGraph: Highcharts.Chart; portSvg: string;
   cashFlowChart: Highcharts.Chart;
@@ -281,61 +285,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         data: this.graphList
       }]
     })
-    // const chartConfig: any = {
-    //   chart: {
-    //     zoomType: 'x'
-    //   },
-    //   xAxis: {
-    //     type: 'datetime',
-    //     showEmpty: true
-    //   },
-    //   yAxis: {
-    //     title: {
-    //       text: ''
-    //     }
-    //   },
-    //   title: {
-    //     text: ''
-    //   },
-    //   subtitle: {
-    //     text: document.ontouchstart === undefined ?
-    //       '' : ''
-    //   },
-    //   legend: {
-    //     enabled: false
-    //   },
-    //   plotOptions: {
-    //     area: {
-    //       fillColor: {
-    //         linearGradient: {
-    //           x1: 0,
-    //           y1: 0,
-    //           x2: 0,
-    //           y2: 1
-    //         }, stops: [
-    //           [0, Highcharts.getOptions().colors[0]],
-    //           [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba') as ColorString],
-    //         ]
-    //       },
-    //       marker: {
-    //         radius: 2
-    //       },
-    //       lineWidth: 1,
-    //       states: {
-    //         hover: {
-    //           lineWidth: 1
-    //         }
-    //       },
-    //       threshold: null
-    //     }
-    //   },
-
-    //   series: [{
-    //     type: 'area',
-    //     data: this.graphList
-    //   }]
-    // };
-    //this.portfolioGraph = new Chart(chartConfig);
   }
 
   calculateTotalSummaryValues() {
@@ -375,7 +324,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     { key: "$showpiechart2", svg: this.portSvg ? this.portSvg : '' },
     { key: "$showpiechart3", svg: this.cashFlowSvg ? this.cashFlowSvg : '' }]
     this.fragmentData.isSpinner = true;;
-    let para = document.getElementById('template');
+    let para = document.getElementById('portfolioSummary');
     //const header = this.summaryTemplateHeader.nativeElement.innerHTML
     this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
 
@@ -853,6 +802,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     // new Highcharts.Chart('cashFlow', {
 
     // });
+    if (this.finPlanObj) {
+      this.ref.detectChanges();
+      this.loaded.emit(document.getElementById('portfolioSummary'));
+    }
+
   }
 
   lineChart(id) {
