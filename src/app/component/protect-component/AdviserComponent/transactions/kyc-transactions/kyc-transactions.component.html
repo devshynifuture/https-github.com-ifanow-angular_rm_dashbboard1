@@ -22,67 +22,85 @@
 </div>
 <div class="row pt-10">
     <div *ngIf="dataSource.data.length > 0" class=" col-md-12 kyc-transctions">
-        <table mat-table appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation"
-            [dataSource]="dataSource" id="table-low">
+        <div class="ox-hide kyc-transctions-scroll" (scroll)="onWindowScroll($event)">
+            <table #tableEl matSort #clientTableSort="matSort" mat-table appSkeletonLoading
+                [appSkeletonLoading]="isLoading" class="skeletonAnimation " [dataSource]="dataSource" id="table-low">
 
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Group Head Name </th>
-                <td mat-cell *matCellDef="let element" class="br ">
-                    <div class="bar">{{element.name}}</div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Group Head Name </th>
+                    <td mat-cell *matCellDef="let element" class="br ">
+                        <div class="bar">{{element.groupHead}}</div>
+                    </td>
+                </ng-container>
 
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Investor Name </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> {{element.name}}</div>
-                </td>
-            </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Investor Name </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.name}}</div>
+                    </td>
+                </ng-container>
 
-            <!-- Weight Column -->
-            <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> PAN Card No. </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">{{element.pan}} </div>
-                </td>
-            </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> PAN Card No. </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"><span *ngIf="!isLoading">{{element.pan?element.pan:'N/A'}}</span> </div>
+                    </td>
+                </ng-container>
 
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="symbol">
-                <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Registered Mobile No. </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"><span *ngIf="!isLoading">{{element.mobileNo
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Registered Mobile No. </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"><span *ngIf="!isLoading">{{element.mobileNo
                         ?element.mobileNo:'N/A'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Email Address </th>
-                <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar"> <span *ngIf="!isLoading">{{element.email?element.email:'N/A'}}</span></div>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> KYC Status </th>
-                <div class="bar"></div>
-                <td mat-cell *matCellDef="let element" class="br"> {{element.status}}
-                    <img src="/assets/images/svg/info-black.svg" matTooltip="Info about the action" class="pl-4 c-p">
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Email Address </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> <span *ngIf="!isLoading">{{element.email?element.email:'N/A'}}</span></div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> KYC Status </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div *ngIf="isLoading" class="bar"></div>
+                        <span *ngIf="!isLoading">
+                            <span class="text-danger" *ngIf="element.kycComplaint==0">Not Verified</span>
+                            <span class="text-primary" *ngIf="element.kycComplaint==1">KYC_VERIFIED</span>
+                            <span *ngIf="element.kycComplaint==2">APPLIED</span>
+                            <span *ngIf="element.kycComplaint==3">ACCEPTED</span>
+                            <span *ngIf="element.kycComplaint==4">REJECTED</span>
+                            <img *ngIf="!isLoading && element.kycReason" src="/assets/images/svg/info-black.svg"
+                                matTooltip={{element.kycReason}} class="pl-4 c-p">
+                        </span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Actions </th>
+                    <td mat-cell *matCellDef="let element" class="br">
 
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Actions </th>
-                <td mat-cell *matCellDef="let element" class="br">
+                        <div *ngIf="isLoading" class="bar"></div>
+                        <div *ngIf="!isLoading && element.email && element.mobileNo && !element.isLoader" class="bar">
+                            <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint!=0"
+                                mat-stroked-button class="btn-primary btn-mange-kyc">Redo KYC</button>
+                            <button (click)="kycAdvisorSectionMethod(element)" *ngIf="element.kycComplaint==0"
+                                mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                Link</button>
+                        </div>
+                        <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
+                    </td>
+                </ng-container>
 
-                    <button mat-stroked-button class="btn-primary h-20 lh-20 br-2 pl-8 pr-8 f-12">Redo KYC</button>
-                    <!-- <button mat-stroked-button class="btn-danger text-white h-20 lh-20 br-2 pl-8 pr-8 f-12">Send
-                        Link</button> -->
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="col-md-12 d-flex justify-content-center align-items-center">
+                <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
+            </div>
+        </div>
     </div>
     <div *ngIf="dataSource.data.length == 0 && isLoading==false" class="col-md-12 p-0 mt-28 text-center">
         <img src="/assets/images/svg/dialogs4.svg">
