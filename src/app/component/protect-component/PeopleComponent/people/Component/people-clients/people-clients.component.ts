@@ -41,7 +41,7 @@ export class PeopleClientsComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
   }
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'member', 'owner',
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'kyc', 'member', 'owner',
     'login', /*'status', *//*'icons',*/ 'icons1'];
   dataSource;
   advisorId: any;
@@ -232,7 +232,7 @@ export class PeopleClientsComponent implements OnInit {
     if (window.innerWidth <= 1024) {
       this.tabviewshow = 'open80';
     } else {
-      this.tabviewshow = 'open50';
+      this.tabviewshow = 'open';
     }
     const fragmentData = {
       flag: 'Manage KYC',
