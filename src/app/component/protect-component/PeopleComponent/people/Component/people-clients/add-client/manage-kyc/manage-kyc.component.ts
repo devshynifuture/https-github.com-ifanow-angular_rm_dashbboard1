@@ -122,6 +122,7 @@ export class ManageKycComponent implements OnInit {
       sideBarData => {
         if (UtilService.isRefreshRequired(sideBarData)) {
           // this.Close(true);
+          data.kycComplaint = 2;
         }
         rightSideDataSub.unsubscribe();
       }
