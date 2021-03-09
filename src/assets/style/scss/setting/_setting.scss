@@ -192,6 +192,16 @@
   }
 }
 
+#ui-add-new-all-kyc-froala {
+  .fr-toolbar .fr-btn-grp {
+    margin: 0px !important;
+  }
+
+  .fr-box.fr-basic .fr-wrapper {
+    min-height: 320px !important;
+  }
+}
+
 .add-new-role {
   .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
     line-height: 38px !important;

@@ -54,7 +54,7 @@ export class AddNewTemplateComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(OpenGalleryPlanComponent, {
       width: '40%',
-      // height: '280px',
+      height: '570px',
       data: { bank: gallery, animal: obj }
     });
     dialogRef.afterClosed().subscribe(result => {
