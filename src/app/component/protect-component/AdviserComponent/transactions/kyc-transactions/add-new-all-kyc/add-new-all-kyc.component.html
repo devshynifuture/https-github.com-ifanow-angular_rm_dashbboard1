@@ -55,49 +55,39 @@
             <h5 class="m-0 roboto f-500 pt-60 pb-10">Following are the details of {{selectedClientData.name}}</h5>
             <div class="ba-light">
                 <div class="row pt-6 pb-6 bb">
-                    <div class="col-md-5 pl-8 pr-0">
+                    <div class="col-md-6 pl-8 pr-0">
                         <p class="m-0 roboto f-400">Full name</p>
 
                     </div>
-                    <div class="col-md-1">
-                        <span>:</span>
-                    </div>
-
-                    <div class="col-md-6">
+                    <div class="col-md-6 text-right">
                         <p class="m-0 roboto f-400"> {{selectedClientData.name}}</p>
                     </div>
                 </div>
                 <div class="row pt-6 pb-6 bb">
-                    <div class="col-md-5 pl-8 pr-0">
+                    <div class="col-md-6 pl-8 pr-0">
                         <p class="m-0 roboto f-400">Date of birth</p>
                     </div>
-                    <div class="col-md-1">
-                        <span>:</span>
-                    </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-6 text-right">
                         <p class="m-0 roboto f-400"> {{selectedClientData.birthDate?selectedClientData.birthDate:'N/A'}}
                         </p>
                     </div>
                 </div>
                 <div class="row pt-6 pb-6 bb">
-                    <div class="col-md-5 pl-8 pr-0">
+                    <div class="col-md-6 pl-8 pr-0">
                         <p class="m-0 roboto f-400">PAN</p>
                     </div>
-                    <div class="col-md-1">
-                        <span>:</span>
-                    </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-6 text-right">
                         <p class="m-0 roboto f-400"> {{selectedClientData.pan?selectedClientData.pan:'N/A'}}</p>
                     </div>
                 </div>
                 <div class="row pt-6 pb-6 bb">
-                    <div class="col-md-5 pl-8 pr-0">
+                    <div class="col-md-6 pl-8 pr-0">
                         <p class="m-0 roboto f-400">KYC Status</p>
                     </div>
-                    <div class="col-md-1">
-                        <span>:</span>
-                    </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-6 text-right">
                         <span class="text-danger" *ngIf="selectedClientData.kycComplaint==0">Not Verified</span>
                         <span class="text-primary" *ngIf="selectedClientData.kycComplaint==1">KYC_VERIFIED</span>
                         <span *ngIf="selectedClientData.kycComplaint==2">APPLIED</span>
@@ -106,25 +96,21 @@
                     </div>
                 </div>
                 <div class="row pt-6 pb-6 bb">
-                    <div class="col-md-5 pl-8 pr-0">
+                    <div class="col-md-6 pl-8 pr-0">
                         <p class="m-0 roboto f-400">Mobile number</p>
                     </div>
-                    <div class="col-md-1">
-                        <span>:</span>
-                    </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-6 text-right">
                         <p class="m-0 roboto f-400"> {{selectedClientData.mobileNo?selectedClientData.mobileNo:'N/A'}}
                         </p>
                     </div>
                 </div>
                 <div class="row pt-6 pb-6">
-                    <div class="col-md-5 pl-8 pr-0">
+                    <div class="col-md-6 pl-8 pr-0">
                         <p class="m-0 roboto f-400">Email</p>
                     </div>
-                    <div class="col-md-1">
-                        <span>:</span>
-                    </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-6 text-right">
                         <p class="m-0 roboto f-400"> {{selectedClientData.email?selectedClientData.email:'N/A'}}</p>
                     </div>
                 </div>
