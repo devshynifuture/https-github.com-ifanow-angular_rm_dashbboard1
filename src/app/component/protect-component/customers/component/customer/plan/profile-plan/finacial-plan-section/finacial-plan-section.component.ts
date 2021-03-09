@@ -50,6 +50,7 @@ import { OverviewRiskProfileComponent } from '../../../customer-overview/overvie
 import { RoleService } from 'src/app/auth-service/role.service';
 import { OthersAssetsComponent } from '../../../accounts/assets/others-assets/others-assets.component';
 import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component';
+import { PortfolioSummaryComponent } from '../../../accounts/portfolio-summary/portfolio-summary.component';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -89,7 +90,8 @@ import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component'
     MfCapitalDetailedComponent,
     CrmNotesComponent,
     OverviewRiskProfileComponent,
-    SummaryPlanComponent
+    SummaryPlanComponent,
+    PortfolioSummaryComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -147,6 +149,9 @@ export class FinacialPlanSectionComponent implements OnInit {
   storeResult: any;
   searchQuery: any;
   listOfNotes: any;
+  svg1: any;
+  svg2: any;
+  svg3: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -485,7 +490,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   pdfFromImage(element, list, i) {
-    if (list.name == "Miscellaneous") {
+    if (list.name == "Miscellaneous" && element.manual == false) {
       this.uploadImageSetText(element)
     } else {
       if (element.add == true) {
@@ -583,8 +588,14 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false, null);
-
+    if (sectionName == 'portfolioSummary') {
+      let svgs = [{ key: "$showpiechart1", svg: this.svg1 ? this.svg : '' },
+      { key: "$showpiechart2", svg: this.svg2 ? this.svg2 : '' },
+      { key: "$showpiechart3", svg: this.svg3 ? this.svg3 : '' }]
+      this.util.htmlToPdfPort('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
+    } else {
+      this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false, null);
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -748,6 +759,9 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Summary':
           factory = this.resolver.resolveComponentFactory(SummaryPlanComponent);
           break;
+        case 'portfolioSummary':
+          factory = this.resolver.resolveComponentFactory(PortfolioSummaryComponent);
+          break;
         case 'Mutual fund summary':
           factory = this.resolver.resolveComponentFactory(MutualFundSummaryComponent);
           break;
@@ -857,7 +871,27 @@ export class FinacialPlanSectionComponent implements OnInit {
             console.log('svg', this.svg)
             svg.unsubscribe();
           });
-      } else if (sectionName == "RiskProfile") {
+      } else if (sectionName == "portfolioSummary") {
+        var svg1 = pdfContent.loadsvg1
+          .subscribe(data => {
+            this.svg1 = data
+            console.log('svg', this.svg1)
+            svg1.unsubscribe();
+          });
+        var svg2 = pdfContent.loadsvg2
+          .subscribe(data => {
+            this.svg2 = data
+            console.log('svg', this.svg2)
+            svg2.unsubscribe();
+          });
+        var svg3 = pdfContent.loadsvg3
+          .subscribe(data => {
+            this.svg3 = data
+            console.log('svg', this.svg3)
+            svg3.unsubscribe();
+          });
+      }
+      else if (sectionName == "RiskProfile") {
         var svg = pdfContent.loadsvg
           //.pipe(delay(1))
           .subscribe(data => {
@@ -912,10 +946,17 @@ export class FinacialPlanSectionComponent implements OnInit {
       htmlInput: String(innerHtmlData.innerHTML),
       svg: this.svg,
       key: 'showPieChart',
+      svgs: null
     };
     this.sectionName = sectionName
     if (sectionName == 'Mutual fund overview') {
 
+    }
+    if (sectionName == 'portfolioSummary') {
+      let svgs = [{ key: "$showpiechart1", svg: this.svg1 ? this.svg1 : '' },
+      { key: "$showpiechart2", svg: this.svg2 ? this.svg2 : '' },
+      { key: "$showpiechart3", svg: this.svg3 ? this.svg3 : '' }]
+      obj.svgs = svgs
     }
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
       data => this.uploadFileRes(data, displayName, flag, array)
