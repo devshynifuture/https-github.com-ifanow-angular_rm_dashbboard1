@@ -99,13 +99,15 @@
                                         (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
                                         *ngIf="element.kycComplaint==4" mat-stroked-button
                                         class="btn-primary btn-mange-kyc">Redo KYC</button> -->
-                                    <span
+                                    <!-- <span
                                         *ngIf="(element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3) && element.email && element.mobileNo && element.pan">
-                                        - </span>
+                                        - </span> -->
                                     <button
+                                        [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                        [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
-                                        *ngIf="element.kycComplaint==0 || element.kycComplaint==4" mat-stroked-button
-                                        class="btn-danger btn-mange-kyc text-white">Send
+                                        *ngIf="element.kycComplaint==0 || element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                        mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
                                         Link</button>
                                 </div>
                                 <div *ngIf="!isLoading &&!data && element.email && element.pan && element.mobileNo && !element.isLoader"
@@ -118,14 +120,20 @@
                                     <!-- <span
                                         *ngIf="(element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3) && element.email && element.mobileNo && element.pan">
                                         - </span> -->
-                                    <span
+                                    <!-- <span
                                         *ngIf="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3">
-                                        - </span>
-                                    <button (click)="openFroala(element,'KYCFroala')" mat-stroked-button
-                                        *ngIf="userData.userType==1 && element.kycComplaint==0 || element.kycComplaint==4"
+                                        - </span> -->
+                                    <button
+                                        [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                        [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                        (click)="openFroala(element,'KYCFroala')" mat-stroked-button
+                                        *ngIf="userData.userType==1 && element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
                                         class="btn-danger btn-mange-kyc text-white">Send Link
                                     </button>
-                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
+                                    <button
+                                        [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                        [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                        (click)="kycClientSectionMethod(element)" mat-stroked-button
                                         *ngIf="userData.userType==2 && element.kycComplaint==0 || element.kycComplaint==4"
                                         class="btn-danger btn-mange-kyc text-white">Do KYC Now
                                     </button>

@@ -95,10 +95,14 @@
                             class="bar">
                             <!-- <button (click)="openAddAllkyc(element,'KYCFroala')" *ngIf="element.kycComplaint==4"
                                 mat-stroked-button class="btn-primary btn-mange-kyc">Redo KYC</button> -->
-                            <span
+                            <!-- <span
                                 *ngIf="(element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3) && element.email && element.mobileNo && element.pan">
-                                - </span>
-                            <button (click)="openAddAllkyc(element,'KYCFroala')" *ngIf="element.kycComplaint==0"
+                                - </span> -->
+                            <button
+                                [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                (click)="openAddAllkyc(element,'KYCFroala')"
+                                *ngIf="element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
                                 mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
                                 Link</button>
                         </div>
