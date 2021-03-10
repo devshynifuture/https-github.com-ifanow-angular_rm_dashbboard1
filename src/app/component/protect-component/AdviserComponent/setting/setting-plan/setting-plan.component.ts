@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-setting-plan',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingPlanComponent implements OnInit {
 
-  constructor() { }
+  constructor(public enumDataService: EnumDataService,
+  ) { }
 
   ngOnInit() {
   }
