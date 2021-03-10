@@ -18,7 +18,7 @@
       </div>
 
       <div class="col-md-6 p-0  full-end">
-        <button mat-button class="btn-black right br-0">INVEST NOW</button>
+        <!-- <button mat-button class="btn-black right br-0">INVEST NOW</button> -->
       </div>
 
     </div>
@@ -33,7 +33,7 @@
                 <h1 class="text-primary f-32 proxima">₹ <span> {{currentValue}}</span></h1>
               </div>
               <div class="col-md-5 p-0">
-                <h5 class="m-0 text-success pt-8 proxima pl-5"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue
+                <h5 class="m-0 text-success pt-12 proxima pl-5"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue
                   |
                   number:'1.2-2'}}%</h5>
               </div>
@@ -276,7 +276,7 @@
         </div>
       </div>
       <div class="col-md-3 pr-0">
-        <div class="bg-white pt-8">
+        <div class="bg-white pt-8 c-p" (click)="openLearnMore()">
           <div class="row">
             <div class="col-md-12 text-right">
               <p class="m-0 text-black roboto f-500">Learn more</p>

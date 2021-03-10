@@ -7,6 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { FormControl } from '@angular/forms';
 import { BackOfficeService } from '../../back-office.service';
 import { element } from 'protractor';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-backoffice-new',
@@ -31,6 +32,7 @@ export class BackofficeNewComponent implements OnInit {
   subTypeFilter: any;
   constructor(private eventService: EventService,
     private customerService: CustomerService,
+    private datePipe: DatePipe,
     private backOffice: BackOfficeService) { }
 
 
@@ -400,6 +402,11 @@ export class BackofficeNewComponent implements OnInit {
       endDate: this.EndDate,
       startDate: this.StartDate
     }
+
+    console.log(this.datePipe.transform(this.StartDate, 'yyyy-MM-dd'))
+    console.log(this.datePipe.transform(this.EndDate, 'yyyy-MM-dd'))
+    obj.startDate = this.datePipe.transform(this.StartDate, 'yyyy-MM-dd')
+    obj.endDate = this.datePipe.transform(this.EndDate, 'yyyy-MM-dd')
     this.isLoading = true;
     this.assetTypeList.data = [{}, {}, {}];
     this.customerService.getInsuranceData(obj).subscribe(
