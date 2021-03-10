@@ -224,7 +224,7 @@ export class CrmNotesComponent implements OnInit {
     this.stateCtrl.setValue('');
     this.selectedNote = note
     this.subjectPDF = (note.subject) ? note.subject : '-'
-    this.showContentPDf = note.content ? note.content : '-'
+    this.showContentPDf = note.showContent ? note.showContent : '-'
     this.clientName = note.clientName ? note.clientName : '-'
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
