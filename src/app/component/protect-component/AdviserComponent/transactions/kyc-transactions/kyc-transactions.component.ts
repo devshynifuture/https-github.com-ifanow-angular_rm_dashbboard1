@@ -49,6 +49,7 @@ export class KycTransactionsComponent implements OnInit {
         console.log(data)
         if (data && data.length > 0) {
           data = this.formatEmailAndMobile(data);
+          data = data.filter(element => !(!element.email || !element.mobileNo || !element.pan) && element.familyMemberId != 2);
           this.finalClientList = this.finalClientList ? this.finalClientList.concat(data) : data;
           this.dataSource.data = this.finalClientList;
           this.hasEndReached = false;
@@ -130,7 +131,7 @@ export class KycTransactionsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             // this.getBSECredentials();
-            data ? data.kycComplaint = 2 : '';
+            // data ? data.kycComplaint = 2 : '';
           }
           rightSideDataSub.unsubscribe();
         }
