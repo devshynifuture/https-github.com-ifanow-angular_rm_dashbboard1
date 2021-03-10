@@ -95,7 +95,7 @@ export class CrmNotesComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true, AuthService.getAdvisorDetails().fullName);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true, 'Notes');
     console.log('return value ====', this.returnValue);
     return obj;
   }
