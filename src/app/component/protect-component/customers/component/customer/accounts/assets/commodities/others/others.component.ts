@@ -341,7 +341,7 @@ export class OthersComponent implements OnInit {
         marketValue: this.others.controls.marketValue.value == "" ? 0.0 : parseInt(this.others.controls.marketValue.value),
         marketValueAsOnDate: this.others.controls.marketValueAsOnDate == "" ? null : this.datePipe.transform(this.others.controls.marketValueAsOnDate.value, 'yyyy-MM-dd'),
         purchaseValue: this.others.controls.purchaseValue.value == "" ? 0.0 : parseInt(this.others.controls.purchaseValue.value),
-        growthRate: this.others.controls.growthRate.value == "" ? 0.0 : parseInt(this.others.controls.growthRate.value),
+        growthRate: this.others.controls.growthRate.value == "" ? 0.0 : this.others.controls.growthRate.value,
         dateOfPurchase: this.others.controls.dateOfPurchase == "" ? null : this.datePipe.transform(this.others.controls.dateOfPurchase.value, 'yyyy-MM-dd'),
         description: this.others.controls.description.value,
         nomineeList: this.others.value.getNomineeName,
