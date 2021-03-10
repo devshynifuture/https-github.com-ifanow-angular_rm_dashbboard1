@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 import { EventService } from "../../../../../../Data-service/event.service";
 
 @Component({
@@ -16,11 +17,11 @@ export class UpperCustomerComponent implements OnInit {
     this.sectionName = this.fragmentData.sectionName;
     console.log("this is what im getting:: from called function::", data);
   }
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, public enumDataService: EnumDataService) {
   }
 
   ngOnInit() {
-    (this.fragmentData == 'mutualFunds') ? this.selected = 0 : this.selected = 1;
+    (this.sectionName == 'Fact sheet') ? this.selected = 0 : this.selected = 1;
   }
 
   close(flag) {

@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
@@ -88,10 +89,15 @@ export class FactSheetComponent implements OnInit {
   maxLengthError = false;
   constructor(protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
-
+  formatMoney(value) {
+    // const temp = `${value}`.replace(/\,/g, "");
+    let val = this.mfService.mutualFundRoundAndFormat(value, 0);
+    (val == 0) ? val = null : val;
+    this.amount.setValue(val);
+  }
   ngOnInit() {
     this.selectedItem.setValue('3');
-    this.amount.setValue(500000);
+    this.formatMoney(50000);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.asOnDate = new Date().getTime();
@@ -320,7 +326,7 @@ export class FactSheetComponent implements OnInit {
     return riskData;
   }
   ConvertStringToNumber(input) {
-    input = input.replace(',', '')
+    input = input.replace(/,/g, "")
     var numeric = Number(input);
     return numeric;
   }
@@ -442,12 +448,15 @@ export class FactSheetComponent implements OnInit {
     })
   }
   changeAmount(value) {
-    if (this.amount.value == null) {
+    value = this.ConvertStringToNumber(this.amount.value)
+    value == 0 ? value = null : value;
+    this.formatMoney(value);
+    if (value == null || value == 0) {
       this.error = true;
     } else {
       this.error = false;
     }
-    if (this.amount.value >= 100) {
+    if (value >= 100) {
       this.maxLengthError = false;
       this.getInvRet();
     } else {
@@ -456,6 +465,7 @@ export class FactSheetComponent implements OnInit {
   }
   calculateScheme(rate, monthOrYear, time) {
     let amt = this.amount.value;
+    amt = this.ConvertStringToNumber(amt);
     let totalAmt;
     if (monthOrYear == 'MONTH') {
       totalAmt = amt * (1 + ((rate / 100) * time))
@@ -467,28 +477,28 @@ export class FactSheetComponent implements OnInit {
   changeSchemePerformace() {
     switch (this.selectedItem.value) {
       case '1':
-        this.savingAccount = this.navReturn['fdReturn'][2].fdRate;
-        this.fixedDeposite = this.navReturn['fdReturn'][2].savingRate;
+        this.fixedDeposite = this.navReturn['fdReturn'][2].fdRate;
+        this.savingAccount = this.navReturn['fdReturn'][2].savingRate;
         this.scheme = this.navReturn['mfreturn'] ? this.calculateScheme(this.navReturn['mfreturn'].threeYearReturns, 'MONTH', 3) : null;
         break;
       case '2':
-        this.savingAccount = this.navReturn['fdReturn'][1].fdRate;
-        this.fixedDeposite = this.navReturn['fdReturn'][1].savingRate;
+        this.fixedDeposite = this.navReturn['fdReturn'][1].fdRate;
+        this.savingAccount = this.navReturn['fdReturn'][1].savingRate;
         this.scheme = this.navReturn['mfreturn'] ? this.calculateScheme(this.navReturn['mfreturn'].sixMonthReturns, 'MONTH', 6) : null;
         break;
       case '3':
-        this.savingAccount = this.navReturn['fdReturn'][0].fdRate;
-        this.fixedDeposite = this.navReturn['fdReturn'][0].savingRate;
+        this.fixedDeposite = this.navReturn['fdReturn'][0].fdRate;
+        this.savingAccount = this.navReturn['fdReturn'][0].savingRate;
         this.scheme = this.navReturn['mfreturn'] ? this.calculateScheme(this.navReturn['mfreturn'].oneYearReturns, 'YEAR', 1) : null;
         break;
       case '4':
-        this.savingAccount = this.navReturn['fdReturn'][3].fdRate;
-        this.fixedDeposite = this.navReturn['fdReturn'][3].savingRate;
+        this.fixedDeposite = this.navReturn['fdReturn'][3].fdRate;
+        this.savingAccount = this.navReturn['fdReturn'][3].savingRate;
         this.scheme = this.navReturn['mfreturn'] ? this.calculateScheme(this.navReturn['mfreturn'].threeYearReturns, 'YEAR', 3) : null;
         break;
       case '5':
-        this.savingAccount = this.navReturn['fdReturn'][4].fdRate;
-        this.fixedDeposite = this.navReturn['fdReturn'][4].savingRate;
+        this.fixedDeposite = this.navReturn['fdReturn'][4].fdRate;
+        this.savingAccount = this.navReturn['fdReturn'][4].savingRate;
         this.scheme = this.navReturn['mfreturn'] ? this.calculateScheme(this.navReturn['mfreturn'].fiveYearReturns, 'YEAR', 3) : null;
         break;
     }
@@ -498,7 +508,7 @@ export class FactSheetComponent implements OnInit {
   getInvRet() {
     this.navLoading = true;
     const data = {
-      amount: this.amount.value,
+      amount: this.ConvertStringToNumber(this.amount.value),
       schemeCode: this.data.accordSchemeCode,
     };
     this.cusService.getFactInvRet(data)
@@ -795,6 +805,7 @@ export class FactSheetComponent implements OnInit {
       },
       series: [
         {
+
           color: "#17A2B8",
           name: "Relative performance",
           data: this.ratioData
