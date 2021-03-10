@@ -69,6 +69,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   portfolioGraph: Highcharts.Chart; portSvg: string;
   cashFlowChart: Highcharts.Chart;
   cashFlowSvg: string;
+  getOrgData: any;
+  userInfo: any;
   ;
   sidenavState = true;
   chartTotal = 100;
@@ -142,6 +144,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     private ref: ChangeDetectorRef,
 
   ) {
+    this.userInfo = AuthService.getUserInfo();
+    this.userData = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails()
   }
 
   ngOnInit() {
@@ -159,6 +164,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     // }
 
     this.userData = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails()
     console.log('Portfolio summary userData : ', this.userData);
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();

@@ -64,6 +64,7 @@ export class SummaryPlanComponent implements OnInit {
     @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
 
     @Input() finPlanObj: any;//finacial plan pdf input
+    reportDate: Date;
 
     constructor(
         private summaryPlanService: SummaryPlanServiceService,
@@ -84,6 +85,7 @@ export class SummaryPlanComponent implements OnInit {
     @ViewChild(MatPaginator, { static: false }) paginator;
 
     ngOnInit() {
+        this.reportDate = new Date()
         this.isLoadingBudget = true;
         this.summaryPlanService.getClientId().subscribe(res => {
             this.clientIdToClearStorage = res;
