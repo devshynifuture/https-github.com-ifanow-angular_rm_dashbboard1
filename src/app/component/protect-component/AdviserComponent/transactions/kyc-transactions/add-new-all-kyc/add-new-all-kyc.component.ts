@@ -222,7 +222,11 @@ export class AddNewAllKycComponent implements OnInit {
       data => {
         this.barButtonOptions.active = false;
         this.eventService.openSnackBar("Email sent sucessfully", "Dismiss");
-        this.close(true);
+        if (this.data.backComponent) {
+          this.openFroala(this.selectedClientData, 'manageKYC')
+        } else {
+          this.close(true);
+        }
       }, err => {
         this.barButtonOptions.active = false;
         this.eventService.openSnackBar(err, "Dismiss");
@@ -231,10 +235,10 @@ export class AddNewAllKycComponent implements OnInit {
   }
 
   back() {
-    this.step1 = true;
     if (this.data.backComponent) {
       this.openFroala(this.selectedClientData, 'manageKYC')
     } else {
+      this.step1 = true;
       this.data['btnFlag'] = "Cancel";
     }
   }

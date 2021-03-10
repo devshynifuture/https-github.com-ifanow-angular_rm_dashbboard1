@@ -14,6 +14,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 import { CustomerService } from '../../customer/customer.service';
+import { LearnMoreFactsheetComponent } from './learn-more-factsheet/learn-more-factsheet.component';
 require('highcharts/modules/solid-gauge')(Highcharts);
 require('highcharts/highcharts-more')(Highcharts);
 
@@ -86,7 +87,7 @@ export class FactSheetComponent implements OnInit {
   yDivider: number;
   error: boolean;
   maxLengthError = false;
-  constructor(private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
+  constructor(protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
   formatMoney(value) {
     // const temp = `${value}`.replace(/\,/g, "");
@@ -384,6 +385,28 @@ export class FactSheetComponent implements OnInit {
       }, (error) => {
         this.schemeReturnLoading = false;
         this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  openLearnMore(data) {
+    const fragmentData = {
+      flag: 'value',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: LearnMoreFactsheetComponent,
+
+    };
+    const rightSideDataSub = this.subinject.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getTemplateList()
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
       }
     );
   }

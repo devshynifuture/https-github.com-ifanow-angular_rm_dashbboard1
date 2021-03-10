@@ -780,7 +780,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
       this.lifeInsuranceFilter = this.dataSource.data;
-      this.getCount();
+      //this.getCount();
       // this.getStatusId(this.dataSource.data);
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
@@ -804,7 +804,7 @@ export class InsuranceComponent implements OnInit {
         }
       });
     } else {
-      this.getCount();
+      //this.getCount();
 
 
       this.dataSource.data = [];
