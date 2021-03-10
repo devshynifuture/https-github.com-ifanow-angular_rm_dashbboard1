@@ -16,6 +16,7 @@ import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.s
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { BulkEmailTestComponent } from '../../accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
 import { CustomerOverviewService } from '../customer-overview.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-overview-myfeed',
@@ -186,7 +187,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
-    private customerOverview: CustomerOverviewService
+    private customerOverview: CustomerOverviewService,
+    private enumDataService: EnumDataService
     // private workerService: WebworkerService,
   ) {
     this.advisorId = AuthService.getAdvisorId();

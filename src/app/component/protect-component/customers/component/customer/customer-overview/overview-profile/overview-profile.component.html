@@ -189,9 +189,11 @@
                                             {{singleMembers.age}} Yrs</p>
                                     </div>
                                     <img *ngIf="singleMembers.kycComplaint==1 && !enumDataService.PRODUCTION"
-                                        src="/assets/images/svg/circle-verified.svg" class="familyDelete">
+                                        src="/assets/images/svg/circle-verified.svg" matTooltip="Verified"
+                                        class="familyDelete c-p">
                                     <img *ngIf="singleMembers.kycComplaint!=1 && !enumDataService.PRODUCTION"
-                                        src="/assets/images/svg/error-red.png" class="familyDelete">
+                                        src="/assets/images/svg/error-red.png" matTooltip="Not verified"
+                                        class="familyDelete c-p">
 
                                 </div>
                             </div>
