@@ -396,7 +396,8 @@
                                 (click)="openUpperFragment('addTransaction', element,'View transaction')">View
                                 transactions</button>
                             <!-- element.isNFO == false && element.isClosed == 0 && -->
-                            <button mat-menu-item *ngIf="element?.isClosed == 0 && !enumDataService.PRODUCTION"
+                            <button mat-menu-item
+                                *ngIf="element.nfo == false &&  element?.isClosed == 0 && !enumDataService.PRODUCTION"
                                 class="bt-1" (click)="openUpperFragment('addTransaction', element ,'Fact sheet')">Fact
                                 sheet</button>
                             <!-- Hidden because we show edit to all cams,carvy data -->
