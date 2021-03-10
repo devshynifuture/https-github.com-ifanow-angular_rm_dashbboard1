@@ -88,7 +88,8 @@
                       <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                         <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 text-right roboto ">
                           <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
-                          <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
+                          <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue ==
+                            0
                             ? '-' : mutualFundValue.currentValue}}
                           </span>
                         </p>
@@ -175,8 +176,8 @@
                       </p>
                       <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(realEstate.percentage),'text-danger': checkNumberPositiveAndNegative(realEstate.percentage)==false,'': checkNumberPositiveAndNegative(realEstate.percentage)==undefined}"
                         class="m-0 roboto pr-8">
-                        <span
-                          *ngIf="letsideBarLoader==false">{{realEstate.percentage == 0 ? '-' : realEstate.percentage}}
+                        <span *ngIf="letsideBarLoader==false">{{realEstate.percentage == 0 ? '-' :
+                          realEstate.percentage}}
                           <span *ngIf="realEstate.percentage!=0">%</span></span>
                       </p>
                     </div>
@@ -201,8 +202,8 @@
                       </p>
                       <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(retirement.percentage),'text-danger': checkNumberPositiveAndNegative(retirement.percentage)==false,'': checkNumberPositiveAndNegative(retirement.percentage)==undefined}"
                         class=" m-0 roboto pr-8">
-                        <span
-                          *ngIf="letsideBarLoader==false">{{retirement.percentage == 0 ? '-' : retirement.percentage}}
+                        <span *ngIf="letsideBarLoader==false">{{retirement.percentage == 0 ? '-' :
+                          retirement.percentage}}
                           <span *ngIf="retirement.percentage!=0">%</span></span>
                       </p>
                     </div>
@@ -619,7 +620,8 @@
                     <p class="text-custom m-0">Contact
                       : </p>
                     <p class="pl-4">
-                      {{userData.mobileList ? userData.mobileList.length > 0 ? userData.mobileList[0].mobileNo : '' : ''}}
+                      {{userData.mobileList ? userData.mobileList.length > 0 ? userData.mobileList[0].mobileNo : '' :
+                      ''}}
                     </p>
 
                   </div>
@@ -643,9 +645,52 @@
     <table style="width: 100%;color: #000;font-family: 'Roboto', sans-serif;    border-collapse: collapse;">
       <tbody>
         <tr>
-          <td rowspan="4" style="border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;width: 250px;">
+          <td colspan="3" style="border-bottom:1px solid #ddd;">
+            <table style="width: 100%;">
+              <tr>
+                <td style="text-align: left; vertical-align: top; width: 20%;">
+                  <div
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                  </div>
+                  <div
+                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                  </div>
+                  <div
+                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                  </div>
+                </td>
+                <td style=" text-align: right; width: 50%;">
+                  <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                  <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                      Mob
+                      number:</strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                  </p>
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                      Email:</strong>
+                    {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
-            <span>NET WORTH</span><br>
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
+                      {{'Plan Summary'}}</strong>
+                  </p>
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                      {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="4"
+            style="border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;width: 250px;padding-top: 12px;">
+
+            <span style="padding-top: 12px;">NET WORTH</span><br>
             <span style="font-size: 30px;"> <span>₹</span>
               <span *ngIf="letsideBarLoader==false" appFormatNumber
                 [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
@@ -750,24 +795,24 @@
             </div>
           </td>
           <td
-            style="border-bottom:1px solid #ddd;width: 40%;font-size: 20px;font-weight: bold;padding-bottom: 10px;padding-left: 10px;">
+            style="border-bottom:1px solid #ddd;width: 40%;font-size: 20px;font-weight: bold;padding-bottom: 10px;padding-left: 10px;padding-top: 12px;">
             Portfolio summary</td>
           <td style="border-bottom:1px solid #ddd;text-align: right;">As on {{asOnDate | date:'dd/MM/yyyy'}}</td>
         </tr>
         <tr>
-          <td rowspan="2" style="padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
+          <td rowspan="1" style="padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
             <span style="font-size: 18px;">
               Portfolio growth <span style="float: right;font-size: 30px;color: #008fff!important;">₹<span
                   appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                   liabilityTotal}}</span></span></span><br>
 
-            <div style="width: 200px;height: 200px;padding-top: 20px;padding-bottom: 60px;">$showpiechart2</div>
+            <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart2</div>
           </td>
-          <td rowspan="2" style="text-align: center;">
+          <td rowspan="1" style="text-align: center;">
             <span style="font-size: 18px;">
               Asset allocation
             </span><br>
-            <div style="width: 200px;height: 200px;border-left:1px solid #ddd">$showpiechart1</div>
+            <div style="width: 150px;height: 150px;border-left:1px solid #ddd">$showpiechart1</div>
           </td>
         </tr>
         <tr>
@@ -781,13 +826,13 @@
 
           <td rowspan="2" style="padding-top: 20px;padding-left: 20px;" colspan="2"
             *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag">
-            <div style="padding-top: 100px;">
+            <div style="padding-top: 180px;">
               <span style="font-size: 18px;padding-top: 30px;">
                 Net cash flow </span><br>
             </div>
 
 
-            <div *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag" style="height: 200px;">$showpiechart3</div>
+            <div *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag" style="height: 150px;">$showpiechart3</div>
           </td>
         </tr>
       </tbody>
