@@ -17,9 +17,9 @@
         </div>
       </div>
 
-      <div class="col-md-6 p-0  full-end">
+      <!-- <div class="col-md-6 p-0  full-end">
         <button mat-button class="btn-black right br-0">INVEST NOW</button>
-      </div>
+      </div> -->
 
     </div>
     <div class="row pt-16">
@@ -52,9 +52,20 @@
         <div class="bg-white mt-20">
           <div class="row">
             <div class="col-md-6 pt-28 pl-28">
-              <p class="m-0 text-primitive">NAV</p>
-              <h2 class="m-0 text-black proxima">{{nav}}</h2>
-              <p class="m-0 text-primitive proxima f-12">as on {{data.navDate}}</p>
+              <div *ngIf="!isLoadingNav">
+                <p class="m-0 text-primitive">NAV</p>
+                <h2 class="m-0 text-black proxima">{{nav}}</h2>
+                <p class="m-0 text-primitive proxima f-12">as on {{data.navDate}}</p>
+              </div>
+              <div class="skeletonAnimation" *ngIf="isLoadingNav" [appSkeletonLoading]="isLoadingNav"
+                appSkeletonLoading>
+                <div class="text-primitive relClass m-0">
+                  <div [ngClass]="{'height30': isLoadingNav}" class="bar pt-12">
+                    <p class="text-black f-12 m-0 text-right roboto f-400">
+                      {{''}}</p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="col-md-6 pt-28 pl-28 text-right">
               <div *ngIf="!isLoadingNav">
@@ -322,8 +333,7 @@
                 <div class="form-group mb-0">
                   <mat-form-field>
                     <input class="form-control bl-0 br-0 bt-0 text-center br-none f-34 text-black input-investment"
-                      (keyup)="changeAmount($event)" [formControl]="amount" matInput type="number"
-                      [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" appInputValueValidation>
+                      (keyup)="changeAmount($event)" [formControl]="amount" matInput type="text">
                   </mat-form-field>
                 </div>
                 <mat-error class="f-12 text-left" *ngIf="error">
