@@ -88,9 +88,9 @@
                 <div class="col-md-12 p-0 insuranceTable">
 
                     <h5 class="roboto f-500">Suggested policies</h5>
-                    <table *ngIf="dataSouce3?.length > 0" mat-table [dataSource]="dataSouce3" multiTemplateDataRows
-                        class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
-                        class="mt-8 skeletonAnimation c-p">
+                    <table *ngIf="dataSource3?.length > 0" mat-table [dataSource]="dataSource3" multiTemplateDataRows
+                           class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
+                           class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
@@ -182,11 +182,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                         <tr mat-row *matRowDef="let element; columns: displayedColumns3" class="example-element-row"
                             [class.example-expanded-row]="expandedElement === element"
-                            (click)="expandedElement = expandedElement === element  ? null : element;changeValue(dataSouce3,element)">
+                            (click)="expandedElement = expandedElement === element  ? null : element;changeValue(dataSource3,element)">
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>
-                    <div *ngIf="!isLoadingPlan && dataSouce3?.length == 0"
+                    <div *ngIf="!isLoadingPlan && dataSource3?.length == 0"
                         class="d-flex flex-column align-items-center">
                         <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                         <h4 class="text-center pt-12">No data found</h4>
@@ -1194,7 +1194,7 @@
         <tr>
             <td colspan="5" style="padding: 10px;"></td>
         </tr>
-        <tr *ngIf="dataSouce3.length > 0">
+        <tr *ngIf="dataSource3.length > 0">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 40px; width: 100%;">
                     <tr>
@@ -1217,7 +1217,7 @@
                                         Status</td>
                                 </tr>
 
-                                <tr *ngFor="let element of dataSouce3">
+                                <tr *ngFor="let element of dataSource3">
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
                                         {{element?.insurance?.policyName ? element?.insurance?.policyName :

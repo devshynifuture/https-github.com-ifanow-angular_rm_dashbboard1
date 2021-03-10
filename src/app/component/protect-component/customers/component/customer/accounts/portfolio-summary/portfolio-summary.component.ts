@@ -1,25 +1,26 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ColorString } from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { UtilService } from 'src/app/services/util.service';
-import { Chart } from 'angular-highcharts';
+import {Component, OnDestroy, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ColorString} from 'highcharts';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {DatePipe} from '@angular/common';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {UtilService} from 'src/app/services/util.service';
+import {Chart} from 'angular-highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
-import { AppConstants } from 'src/app/services/app-constants';
-import { MutualFundOverviewComponent } from "../assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component";
-import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { BackOfficeService } from "../../../../../AdviserComponent/backOffice/back-office.service";
-import { ChangeDetectorRef } from "@angular/core/src/metadata/*";
-import { SettingsService } from "../../../../../AdviserComponent/setting/settings.service";
-import { CustomerOverviewService } from '../../customer-overview/customer-overview.service';
-import { MatSidenav } from '@angular/material';
+import {AppConstants} from 'src/app/services/app-constants';
+import {MutualFundOverviewComponent} from '../assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import {SubscriptionInject} from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BackOfficeService} from '../../../../../AdviserComponent/backOffice/back-office.service';
+import {ChangeDetectorRef} from '@angular/core/src/metadata/*';
+import {SettingsService} from '../../../../../AdviserComponent/setting/settings.service';
+import {CustomerOverviewService} from '../../customer-overview/customer-overview.service';
+import {MatSidenav} from '@angular/material';
 import Highcharts from 'highcharts';
+
 HC_exporting(Highcharts);
 
 @Component({
@@ -29,6 +30,7 @@ HC_exporting(Highcharts);
 })
 
 export class PortfolioSummaryComponent implements OnInit, OnDestroy {
+  reportDate;
   advisorId: any;
   clientId: any;
   summaryTotalValue: any;
@@ -47,8 +49,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   expenseList = [];
   incomeList = [];
   userData: any;
-  fragmentData = { isSpinner: false, date: null, time: '', size: '' };
-  filterCashFlow = { income: [], expense: [] };
+  fragmentData = {isSpinner: false, date: null, time: '', size: ''};
+  filterCashFlow = {income: [], expense: []};
   inflowFlag;
   yearArr = Array(12).fill('').map((v, i) => this.datePipe.transform(new Date().setMonth(new Date().getMonth() + i), 'MMM'));
   tabsLoaded = {
@@ -58,20 +60,21 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       isLoading: true,
     }
   };
-  @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
-  @Output() loadsvg1 = new EventEmitter();//emit financial planning innerHtml reponse
-  @Output() loadsvg2 = new EventEmitter();//emit financial planning innerHtml reponse
-  @Output() loadsvg3 = new EventEmitter();//emit financial planning innerHtml reponse
+  @Output() loaded = new EventEmitter(); // emit financial planning innerHtml reponse
+  @Output() loadsvg1 = new EventEmitter(); // emit financial planning innerHtml reponse
+  @Output() loadsvg2 = new EventEmitter(); // emit financial planning innerHtml reponse
+  @Output() loadsvg3 = new EventEmitter(); // emit financial planning innerHtml reponse
 
-  @Input() finPlanObj: any;//finacial plan pdf input
+  @Input() finPlanObj: any; // finacial plan pdf input
 
   assetAllocationPieConfig: Highcharts.Chart;
-  portfolioGraph: Highcharts.Chart; portSvg: string;
+  portfolioGraph: Highcharts.Chart;
+  portSvg: string;
   cashFlowChart: Highcharts.Chart;
   cashFlowSvg: string;
   getOrgData: any;
   userInfo: any;
-  ;
+
   sidenavState = true;
   chartTotal = 100;
   chartData: any[];
@@ -130,8 +133,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   families: any[] = [];
   cashFlowDescNaming: any[] = [];
   assetAllocationRes: boolean;
-  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  @ViewChild('sidenav', {static: true}) sidenav: MatSidenav;
   svg: string;
+
   constructor(
     public eventService: EventService,
     private cusService: CustomerService,
@@ -142,11 +146,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     private customerOverview: CustomerOverviewService,
     private util: UtilService,
     private ref: ChangeDetectorRef,
-
   ) {
     this.userInfo = AuthService.getUserInfo();
     this.userData = AuthService.getUserInfo();
-    this.getOrgData = AuthService.getOrgDetails()
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   ngOnInit() {
@@ -164,7 +167,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     // }
 
     this.userData = AuthService.getUserInfo();
-    this.getOrgData = AuthService.getOrgDetails()
+    this.getOrgData = AuthService.getOrgDetails();
     console.log('Portfolio summary userData : ', this.userData);
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
@@ -235,8 +238,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         innerSize: '60%',
         data: this.chartData
       }]
-    })
-    console.log('Chart', this.chart)
+    });
+    console.log('Chart', this.chart);
   }
 
   initializePortfolioChart(id) {
@@ -293,7 +296,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         type: 'area',
         data: this.graphList
       }]
-    })
+    });
   }
 
   calculateTotalSummaryValues() {
@@ -318,26 +321,29 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     );
     // this.getSummaryList(obj);
   }
+
   generatePdf(data) {
     if (this.chart) {
-      this.svg = this.chart.getSVG()
+      this.svg = this.chart.getSVG();
     }
     if (this.portfolioGraph) {
-      this.portSvg = this.portfolioGraph.getSVG()
+      this.portSvg = this.portfolioGraph.getSVG();
     }
     if (this.cashFlowChart) {
-      this.cashFlowSvg = this.cashFlowChart.getSVG()
+      this.cashFlowSvg = this.cashFlowChart.getSVG();
     }
-    console.log('svg', this.cashFlowSvg)
-    const svgs = [{ key: "$showpiechart1", svg: this.svg ? this.svg : '' },
-    { key: "$showpiechart2", svg: this.portSvg ? this.portSvg : '' },
-    { key: "$showpiechart3", svg: this.cashFlowSvg ? this.cashFlowSvg : '' }]
-    this.fragmentData.isSpinner = true;;
-    let para = document.getElementById('portfolioSummary');
-    //const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    console.log('svg', this.cashFlowSvg);
+    const svgs = [{key: '$showpiechart1', svg: this.svg ? this.svg : ''},
+      {key: '$showpiechart2', svg: this.portSvg ? this.portSvg : ''},
+      {key: '$showpiechart3', svg: this.cashFlowSvg ? this.cashFlowSvg : ''}];
+    this.fragmentData.isSpinner = true;
+    
+    const para = document.getElementById('portfolioSummary');
+    // const header = this.summaryTemplateHeader.nativeElement.innerHTML
     this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
 
   }
+
   calculateTotalSummaryValuesRes(data) {
     this.customerOverview.summaryLeftsidebarData = data;
     if (data && data.length > 0) {
@@ -546,12 +552,12 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.initializePortfolioChart('PortFolio');
       this.setPortfolioGraphData(this.graphList);
     } else {
-      this.graphList = []
+      this.graphList = [];
     }
   }
 
   assetAllocationPieChartDataMgnt(data) {
-    //this.assetAllocationPieConfig.(0);
+    // this.assetAllocationPieConfig.(0);
     this.chart.addSeries({
       type: 'pie',
       name: 'Asset allocation',
@@ -758,7 +764,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     console.log(data);
     const thisMonthStart = UtilService.getStartOfTheDay(new Date(new Date().setDate(1)));
     const thisMonthEnd = UtilService.getEndOfDay(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0));
-    const { income, expense } = data;
+    const {income, expense} = data;
     income.forEach(element => {
       element.month = this.datePipe.transform(new Date(element.targetDate), 'MMM');
     });
@@ -807,22 +813,22 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         showInLegend: false,
         type: 'column',
       }]
-    })
+    });
     // new Highcharts.Chart('cashFlow', {
 
     // });
     if (this.finPlanObj) {
       this.ref.detectChanges();
       if (this.chart) {
-        this.svg = this.chart.getSVG()
+        this.svg = this.chart.getSVG();
         this.loadsvg1.emit(this.svg);
       }
       if (this.portfolioGraph) {
-        this.portSvg = this.portfolioGraph.getSVG()
+        this.portSvg = this.portfolioGraph.getSVG();
         this.loadsvg2.emit(this.portSvg);
       }
       if (this.cashFlowChart) {
-        this.cashFlowSvg = this.cashFlowChart.getSVG()
+        this.cashFlowSvg = this.cashFlowChart.getSVG();
         this.loadsvg3.emit(this.cashFlowSvg);
       }
       this.loaded.emit(document.getElementById('portfolioSummary'));
