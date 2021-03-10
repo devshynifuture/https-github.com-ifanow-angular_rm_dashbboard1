@@ -467,7 +467,7 @@ export class FactSheetComponent implements OnInit {
     let amt = this.amount.value;
     amt = this.ConvertStringToNumber(amt);
     let totalAmt;
-    if (monthOrYear == 'MONTH') {
+    if (monthOrYear == 'YEAR') {
       totalAmt = amt * (1 + ((rate / 100) * time))
     } else {
       totalAmt = amt * (1 + (rate / 100) * (time / 12))

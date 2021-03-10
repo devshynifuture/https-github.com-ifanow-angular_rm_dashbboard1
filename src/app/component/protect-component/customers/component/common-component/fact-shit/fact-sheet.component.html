@@ -263,7 +263,7 @@
               {{schemeDetails?.color}}.<span *ngIf="data.sipAmount != 0">Minimum SIP
                 Investment is {{data.sipAmount}}.</span><span *ngIf="schemeDetails?.lumpsum">Minimum Lumpsum Investment
                 is {{schemeDetails?.lumpsum}}. Exit load of
-                {{schemeDetails?.exitLoad}}% if redeemed
+                {{schemeDetails?.remarks}}% if redeemed
                 within 365 days.</span></p>
             <div class="relClass" *ngIf="isLoadingSchemeDetails">
               <div [ngClass]="{'height80': isLoadingSchemeDetails}" class="bar">
@@ -289,7 +289,7 @@
       </div>
       <div class="col-md-3 pr-0">
         <div class="bg-white pt-8">
-          <div class="row">
+          <div class="row" (click)="openLearnMore()">
             <div class="col-md-12 text-right">
               <p class="m-0 text-black roboto f-500">Learn more</p>
             </div>
@@ -505,10 +505,10 @@
             <div class="row pt-28 pb-28">
               <div class="col-md-12">
                 <p class="f-12 m-0">EXIT LOAD</p>
-                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span *ngIf="schemeDetails?.exitLoad">Exit load of
-                    {{schemeDetails?.exitLoad}}
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span *ngIf="schemeDetails?.remarks">Exit load of
+                    {{schemeDetails?.remarks}}
                     if redeemed within
-                    365 days.</span><span *ngIf="!schemeDetails?.exitLoad">{{'-'}}</span></h5>
+                    365 days.</span><span *ngIf="!schemeDetails?.remarks">{{'-'}}</span></h5>
                 <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
                   <div [ngClass]="{'height23': isLoadingSchemeDetails}" class="bar  pt-12">
                     <p class="text-black f-12 m-0 text-right roboto f-400">
