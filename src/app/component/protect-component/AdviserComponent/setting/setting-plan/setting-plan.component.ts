@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-setting-plan',
