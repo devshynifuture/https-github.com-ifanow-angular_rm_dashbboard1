@@ -332,8 +332,8 @@ export class FactSheetComponent implements OnInit {
   }
   getXirr() {
     this.schemeReturnLoading = true;
-    let timePeriod = (this.demo1TabIndex == 0 || this.demo1TabIndex == 3) ? '3' : (this.demo1TabIndex == 1) ? '6' : (this.demo1TabIndex == 2) ? '1' : (this.demo1TabIndex == 4) ? '5' : (this.demo1TabIndex == 5) ? '0' : '0';
-    let type = (this.demo1TabIndex == 0 || this.demo1TabIndex == 1) ? 'MONTH' : (this.demo1TabIndex == 2 || this.demo1TabIndex == 3 || this.demo1TabIndex == 4) ? 'YEAR' : (this.demo1TabIndex == 5) ? 'ALL' : '0';
+    let timePeriod = (this.demo1TabIndex == 0 || this.demo1TabIndex == 3) ? '3' : (this.demo1TabIndex == 1) ? '6' : (this.demo1TabIndex == 2) ? '1' : (this.demo1TabIndex == 4) ? '5' : (this.demo1TabIndex == 5) ? '40' : '0';
+    let type = (this.demo1TabIndex == 0 || this.demo1TabIndex == 1) ? 'MONTH' : (this.demo1TabIndex == 2 || this.demo1TabIndex == 3 || this.demo1TabIndex == 4) ? 'YEAR' : (this.demo1TabIndex == 5) ? 'YEAR' : '0';
 
     // let timePeriod = (this.selectedItem.value == '1' || this.selectedItem.value == '4') ? '3' : (this.selectedItem.value == '2') ? '6' : (this.selectedItem.value == '3') ? '1' : (this.selectedItem.value == '5') ? '5' : '0';
     // let type = (this.selectedItem.value == '1' || this.selectedItem.value == '2') ? 'MONTH' : (this.selectedItem.value == '3' || this.selectedItem.value == '4' || this.selectedItem.value == '5') ? 'YEAR' : '0';
@@ -809,6 +809,29 @@ export class FactSheetComponent implements OnInit {
           color: "#17A2B8",
           name: "Relative performance",
           data: this.ratioData
+        }, {
+          enableMouseTracking: false,
+          linkedTo: 0,
+          marker: {
+            enabled: false
+          },
+          dataLabels: {
+            defer: false,
+            enabled: true,
+            y: 20,
+            style: {
+              fontSize: '10px',
+              opacity: 0.7,
+            },
+            format: '{point.name}'
+          },
+          keys: ['x', 'y', 'name'],
+          data: [
+            [this.minx, this.miny, '<span style="color:#008FFF"><b>Low Risk<br/>Low Return</b></span>'],
+            [this.minx, this.maxy, '<span style="color:#008FFF"><b>Low Risk<br/>High Return</b></span>'],
+            [this.maxx, this.maxy, '<span style="color:#008FFF"><b>High Risk<br/>High Return</b></span>'],
+            [this.maxx, this.miny, '<span style="color:#008FFF"><b>High Risk<br/>Low Return</b></span> ']
+          ]
         }
       ]
     }
