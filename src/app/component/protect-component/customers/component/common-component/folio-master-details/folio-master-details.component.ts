@@ -16,6 +16,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   nomineeArray = [];
   bankDetails: any;
   obj: any;
+  msgForFranklin: string;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) {
   }
@@ -49,6 +50,7 @@ export class FolioMasterDetailsComponent implements OnInit {
   getBankDetails() {
     this.bankDetails = []
     if (this.inputData.rtMasterId == 3) {
+      this.msgForFranklin = 'We havent been able to identify the bank account associated with this scheme because franklin doesnt provide scheme code in folio files hence, we are showing all the accounts related to this folio'
       this.obj = {
         folioNumber: this.inputData.folioNumber,
       };

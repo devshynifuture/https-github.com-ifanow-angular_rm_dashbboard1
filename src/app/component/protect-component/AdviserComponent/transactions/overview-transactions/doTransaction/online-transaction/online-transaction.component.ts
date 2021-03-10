@@ -236,8 +236,8 @@ export class OnlineTransactionComponent implements OnInit {
         this.noSubBroker = true;
       }
     }
-    this.showData(data);
     this.defaultData = data
+    this.showData(data);
   }
 
   showData(value) {
@@ -245,6 +245,10 @@ export class OnlineTransactionComponent implements OnInit {
       if (this.formStep == 'step-1') {
         if (this.noMapping == false && this.noSubBroker == false) {
           this.formStep = 'step-2';
+          if (this.inputData.flag == 'addNewTransactionStartSIP') {
+            this.transactionType = 'SIP'
+            this.selectTransactionType('SIP');
+          }
         }
       }
     }
@@ -332,6 +336,9 @@ export class OnlineTransactionComponent implements OnInit {
   openPurchaseTransaction(value, data) {
     this.transactionType = value;
     this.transactionData = data;
+    if (this.inputData.flag == 'addNewTransactionStartSIP') {
+      this.saveAndNext()
+    }
 
   }
 
