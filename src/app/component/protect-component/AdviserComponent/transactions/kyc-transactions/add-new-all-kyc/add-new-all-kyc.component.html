@@ -116,8 +116,8 @@
                 </div>
             </div>
             <div class="mt-20">
-                <button *ngIf="selectedClientData.kycComplaint!=1" (click)="previewEmail()" mat-stroked-button
-                    class="btn-primary">PREVIEW EMAIL & SEND KYC
+                <button *ngIf="selectedClientData.kycComplaint!=1" (click)="previewEmail();data['btnFlag'] = 'Back'"
+                    mat-stroked-button class="btn-primary">PREVIEW EMAIL & SEND KYC
                     LINK</button>
             </div>
         </div>
@@ -179,7 +179,10 @@
 <div class="bottom-fixed wrapper-12 w-50">
     <div class="row">
         <div class="col-md-4">
-            <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+            <h5 (click)="data.btnFlag=='Cancel'?close('close'):back()" class="mb-0 pt-8 text-white c-p">
+                {{data.btnFlag}}</h5>
+            <!-- <h5 *ngIf="step1==false" (click)="back()" class="mb-0 pt-8 text-white c-p">Back -->
+            <!-- </h5> -->
         </div>
         <div class="col-md-8 d-flex align-items-end justify-content-end">
             <app-progress-button (btnClick)="kycAdvisorSectionMethod()" *ngIf="!step1" class="br-0 text-inherit ml-12"
