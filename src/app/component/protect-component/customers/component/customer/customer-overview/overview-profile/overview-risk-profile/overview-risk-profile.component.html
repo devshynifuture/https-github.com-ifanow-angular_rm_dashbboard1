@@ -254,9 +254,9 @@
         </div>
     </div>
 
-    <div *ngIf="hasError" class="d-flex flex-column align-items-center">
+    <div *ngIf="hasError" class="d-flex flex-column align-items-center pt-90">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
-        <h4 class="text-center pt-12">Sorry! it's not you it's us</h4>
+        <h4 class="text-center pt-12">No data found</h4>
     </div>
 
 
@@ -278,6 +278,16 @@
                     style=" width: 95%; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
                     <tr>
                         <td style="text-align: left; vertical-align: bottom; width: 50%;">
+                            <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
+                                style="width: 250px;">
+
+                        </td>
+
+                        <td style="text-align: right; vertical-align: top; width: 50%;">
+
+                            <h3 style="margin: 0px; font-size: 18px;">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
+                            </h3>
                             <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
                                 Client name : <span> {{clientInfo.name}} </span>
                             </p>
@@ -290,15 +300,6 @@
                             <p style="margin: 0px 0px 0px 0px; font-size: 16px;">
                                 PAN : <span> {{clientInfo.pan}} </span>
                             </p>
-                        </td>
-
-                        <td style="text-align: right; vertical-align: top; width: 50%;">
-                            <p style="margin: 0px 0px 5px 0px; font-size: 16px;">
-                                Prepared by
-                            </p>
-                            <h3 style="margin: 0px; font-size: 18px;">
-                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
-                            </h3>
                         </td>
 
                     </tr>
