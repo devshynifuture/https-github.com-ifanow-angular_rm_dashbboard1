@@ -163,7 +163,7 @@ import { DetailedViewOthersMobComponent } from './component/customer/mobile/comm
 import { DetailedViewRealEstateMobComponent } from './component/customer/mobile/real-estate-mob/add-real-estate-mob/detailed-view-real-estate-mob/detailed-view-real-estate-mob.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AssetAllocationPieChartComponent } from './component/customer/asset-allocation-pie-chart/asset-allocation-pie-chart.component';
-import { LearnMoreFactsheetComponent } from './component/common-component/fact-shit/learn-more-factsheet/learn-more-factsheet.component';
+import { LearnMoreFactsheetComponent } from './component/common-component/fact-sheet/learn-more-factsheet/learn-more-factsheet.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
