@@ -665,6 +665,7 @@ export class UtilService {
         name: fragData.clientName,
       };
     }
+    clientName = clientName ? clientName + '\'s ' : this.client.name + '\'s ';
     inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
@@ -696,7 +697,7 @@ export class UtilService {
         var date = new Date();
         fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
-        const namePdf = clientName ? clientName + '\'s ' : this.client.name + '\'s ' + pdfName + ' as on ' + date;
+        const namePdf = clientName + pdfName + ' as on ' + date;
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
         a.download = namePdf + '.pdf';
@@ -713,6 +714,7 @@ export class UtilService {
       };
     }
     inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
+    clientName = clientName ? clientName + '\'s ' : this.client.name + '\'s ';
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
@@ -744,7 +746,7 @@ export class UtilService {
         var date = new Date();
         fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
-        const namePdf = clientName ? clientName + '\'s ' : this.client.name + '\'s ' + pdfName + ' as on ' + date;
+        const namePdf = clientName + pdfName + ' as on ' + date;
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
         a.download = namePdf + '.pdf';

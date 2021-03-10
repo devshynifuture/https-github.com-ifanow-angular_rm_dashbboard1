@@ -1307,3 +1307,35 @@ ul.mf-import-second-point {
   top: -80px;
   left: 65px;
 }
+
+.bg-kyc-notification {
+  background: #FF5353;
+  border: 1px solid #FF5353;
+  box-sizing: border-box;
+  box-shadow: 0px -4px 12px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  .manage-kyc {
+    color: #FF5353;
+    font-size: 12px !important;
+    background-color: #fff;
+    border-radius: 4px !important;
+    padding: 0 10px !important;
+    height: 30px !important;
+    line-height: 28px !important;
+  }
+
+  .mat-checkbox-inner-container {
+    height: 8px !important;
+    width: 8px !important;
+    margin-right: 5px !important;
+  }
+
+  .mat-checkbox-layout {
+    vertical-align: top;
+  }
+
+  .mat-checkbox-frame {
+    border-color: #fff !important;
+    border-width: 1px !important;
+  }
+}

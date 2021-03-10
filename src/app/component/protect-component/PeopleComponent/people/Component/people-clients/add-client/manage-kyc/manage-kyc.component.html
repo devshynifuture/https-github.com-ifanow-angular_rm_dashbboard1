@@ -30,7 +30,7 @@
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="memberName">
-                            <th mat-header-cell *matHeaderCellDef class="br">Member Name </th>
+                            <th mat-header-cell *matHeaderCellDef class="br">Member name </th>
                             <td mat-cell *matCellDef="let element" class="br">
                                 <div class="bar">
                                     {{element.name}}
@@ -48,7 +48,7 @@
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="mobile">
-                            <th mat-header-cell *matHeaderCellDef class="br">Registered Mobile </th>
+                            <th mat-header-cell *matHeaderCellDef class="br">Registered mobile </th>
                             <td mat-cell *matCellDef="let element" class="br">
                                 <div class="bar"><span *ngIf="!isLoading">{{element.mobileNo
                                         ?element.mobileNo:'N/A'}}</span>
@@ -67,7 +67,7 @@
 
 
                         <ng-container matColumnDef="kycStatus">
-                            <th mat-header-cell *matHeaderCellDef class="br"> KYC Status </th>
+                            <th mat-header-cell *matHeaderCellDef class="br"> KYC status </th>
                             <td mat-cell *matCellDef="let element" class="br">
                                 <div class="bar">
                                     <span *ngIf="!isLoading && element.email && element.mobileNo && element.pan">
@@ -128,8 +128,11 @@
                                         *ngIf="userData.userType==2 && element.kycComplaint==0 || element.kycComplaint==4"
                                         class="btn-danger btn-mange-kyc text-white">Do KYC Now
                                     </button>
+                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
+                                        *ngIf="userData.userType==2 && element.kycComplaint==0" disabled>Disabled
+                                    </button>
                                 </div>
-                                <!-- <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner> -->
+                                <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
                             </td>
                         </ng-container>
 
