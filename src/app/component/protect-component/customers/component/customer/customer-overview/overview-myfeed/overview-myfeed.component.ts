@@ -188,7 +188,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
     private customerOverview: CustomerOverviewService,
-    private enumDataService: EnumDataService
+    public enumDataService: EnumDataService
     // private workerService: WebworkerService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
