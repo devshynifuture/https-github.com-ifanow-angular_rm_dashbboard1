@@ -116,6 +116,9 @@
                                         *ngIf="userData.userType==2 && element.kycComplaint==0"
                                         class="btn-danger btn-mange-kyc text-white">Do KYC Now
                                     </button>
+                                    <button (click)="kycClientSectionMethod(element)" mat-stroked-button
+                                        *ngIf="userData.userType==2 && element.kycComplaint==0" disabled>Disabled
+                                    </button>
                                 </div>
                                 <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
                             </td>

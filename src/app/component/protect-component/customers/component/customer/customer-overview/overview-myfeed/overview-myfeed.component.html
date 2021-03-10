@@ -50,6 +50,25 @@
                     <p class="m-0 roboto">Your personalized money feed is ready! </p>
                 </div>
                 <!-- <button (click)="generateUpload(null)">generateUpload</button> -->
+                <div class="pl-15 pr-15 pt-24">
+                    <div class="row pb-10 pt-16 bg-kyc-notification no-wrap">
+                        <div class="w-12 pt-4 text-center">
+                            <img src="/assets/images/svg/kyc.svg">
+                        </div>
+                        <div class="w-65 ">
+                            <h3 class="m-0 roboto f-500 text-white f-18 lh-21">Complete Members’ Video KYC Now</h3>
+                            <p class="f-13 roboto f-400 text-white m-0">2 Members are remaining to complete their KYC
+                            </p>
+                        </div>
+                        <div class="w-30 pl-0">
+                            <button mat-stroked-button class="manage-kyc f-500">MANAGE KYC <span
+                                    class="material-icons f-14 lh-12">
+                                    arrow_right_alt
+                                </span></button>
+                            <mat-checkbox class="text-white f-8">Don’t show this again</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
                 <div class="scrolling_myFeed">
                     <!-- your account intro -->
                     <div class="wrapperBox mb-20" [hidden]="true">
@@ -134,8 +153,8 @@
                                                 <li *ngFor="let data of chartData">
                                                     <span class="pointNumber" [style.background-color]="data.color">
                                                     </span>
-                                                    <span class="f-14 width55"
-                                                        appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                                                    <span class="f-14 width55" appFormatNumber>{{(data.y/chartTotal*100)
+                                                        | number : '0.2-2'}}%</span>
                                                     <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                 </li>
                                             </ul>
@@ -366,29 +385,35 @@
                                         <div class="col-md-4">
                                             <div class="border-Right-line">
                                                 <h5 class="f-14 mb-0 text-primitive">Current Value</h5>
-                                                <span class="roboto"> ₹<span
-                                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+                                                <span class="roboto"> ₹<span appFormatNumber>{{(mutualFund) ?
+                                                        (mutualFund.total_current_value) : 0}}</span>
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="col-md-4 pr-8">
                                             <div class="border-Right-line">
                                                 <h5 class="f-14  mb-0 text-primitive">Amount invested</h5>
-                                                <span class="text-success roboto"> ₹<span
-                                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
+                                                <span class="text-success roboto"> ₹<span appFormatNumber>{{(mutualFund)
+                                                        ? (mutualFund.total_amount_invested) : 0}}</span>
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <h5 class="f-14 mb-0 text-primitive">Returns</h5>
                                             <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  "
-                                                class="text-success roboto">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                                                class="text-success roboto">{{((mutualFund.total_xirr) ?
+                                                (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0
+                                                || mutualFund.total_xirr == 'Infinity') ?
+                                                (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
                                             <i class="material-icons f-14 f-700 text-success"
                                                 *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0">
                                                 <span>arrow_upward</span>
                                             </i>
                                             <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 "
-                                                class="text-danger">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                                                class="text-danger">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr
+                                                | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr
+                                                == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') :
+                                                0)}}{{'%'}}</span>
                                             <i class="material-icons f-14 f-700 text-danger"
                                                 *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0">
                                                 <span>arrow_downward</span>
@@ -404,8 +429,8 @@
                                                 <li *ngFor="let data of mfAllocationData">
                                                     <span class="pointNumber" [style.background-color]="data.color">
                                                     </span>
-                                                    <span class="f-14 width60"
-                                                        appFormatNumber>{{(data.y | number:'1.2-2')}}%</span>
+                                                    <span class="f-14 width60" appFormatNumber>{{(data.y |
+                                                        number:'1.2-2')}}%</span>
                                                     <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                 </li>
                                             </ul>
@@ -796,8 +821,8 @@
                                     <h5 class="m-0 roboto">Money to be deployed
                                     </h5>
                                     <p class="f-12 text-primitive">current + upcoming</p>
-                                    <h3 class="text-primary m-0 f-22">₹<span
-                                            appFormatNumber>{{adviseData?.deployed || 0}}</span>
+                                    <h3 class="text-primary m-0 f-22">₹<span appFormatNumber>{{adviseData?.deployed ||
+                                            0}}</span>
                                     </h3>
                                 </div>
                             </div>
@@ -1282,7 +1307,8 @@
 
                                 <p class="text-custom m-0">Contact
                                     :
-                                    {{userInfo.mobileList ? userInfo.mobileList.length > 0 ? userInfo.mobileList[0].mobileNo : '' : ''}}
+                                    {{userInfo.mobileList ? userInfo.mobileList.length > 0 ?
+                                    userInfo.mobileList[0].mobileNo : '' : ''}}
                             </div>
                         </div>
                     </div>
