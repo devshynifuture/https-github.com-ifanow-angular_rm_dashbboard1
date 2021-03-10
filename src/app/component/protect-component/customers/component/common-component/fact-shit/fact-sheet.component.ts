@@ -768,7 +768,7 @@ export class FactSheetComponent implements OnInit {
       },
       tooltip: {
         headerFormat: '<span style="font-size:11px">{}</span><br>',
-        pointFormat: '{point.x}:{point.y}'
+        pointFormat: '{point.name}'
         // pointFormat: '{point.name}'
       },
 

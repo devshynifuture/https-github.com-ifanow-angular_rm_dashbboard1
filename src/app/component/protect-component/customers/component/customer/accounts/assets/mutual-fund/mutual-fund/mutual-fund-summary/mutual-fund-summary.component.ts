@@ -35,6 +35,7 @@ import { OnlineTransactionService } from 'src/app/component/protect-component/Ad
 import { AssetValidationService } from '../../../asset-validation.service';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { CustomerOverviewService } from '../../../../../customer-overview/customer-overview.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 
 @Component({
@@ -186,7 +187,8 @@ export class MutualFundSummaryComponent implements OnInit {
     private assetValidation: AssetValidationService,
     public roleService: RoleService,
     private cd: ChangeDetectorRef,
-    private customerOverview: CustomerOverviewService) {
+    private customerOverview: CustomerOverviewService,
+    public enumDataService: EnumDataService) {
     this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
       if (queryParamMap.has('clientId')) {
         const param1 = queryParamMap.params;
