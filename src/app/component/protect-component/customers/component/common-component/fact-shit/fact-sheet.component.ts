@@ -565,7 +565,7 @@ export class FactSheetComponent implements OnInit {
     }
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data },
+      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransactionStartSIP', data },
       id: 1,
       state: 'open65',
       componentName: OnlineTransactionComponent,
