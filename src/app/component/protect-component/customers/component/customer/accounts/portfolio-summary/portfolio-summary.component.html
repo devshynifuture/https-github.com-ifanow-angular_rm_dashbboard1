@@ -144,8 +144,7 @@
                       <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                         <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                           <span *ngIf="fixedIncome.currentValue!=0">₹</span>
-                          <span *ngIf="fixedIncome" appFormatNumber
-                            [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
+                          <span *ngIf="fixedIncome" appFormatNumber [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
                             fixedIncome.currentValue}}</span>
                         </p>
                         <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
@@ -223,8 +222,7 @@
                     <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                       <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                         <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                        <span appFormatNumber [value]="smallSavingScheme.currentValue"
-                          *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                        <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                           smallSavingScheme.currentValue}}</span>
                       </p>
                       <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
@@ -383,8 +381,7 @@
                       </div>
                       <div class="col-md-6 pl-0">
                         <h2 *ngIf="letsideBarLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
-                          ₹<span appFormatNumber
-                            [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+                          ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                             liabilityTotal}}</span>
                         </h2>
                       </div>
@@ -652,23 +649,37 @@
             <table style="width: 100%;">
               <tr>
                 <td style="text-align: left; vertical-align: top; width: 20%;">
-                  <img src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png"
-                    style="width: 250px;">
+                  <div
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                  </div>
+                  <div
+                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                  </div>
+                  <div
+                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                  </div>
                 </td>
                 <td style=" text-align: right; width: 50%;">
-                  <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
-                    ACME INVESTMENT ADVISORY</p>
-                  <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong>
-                      Number: </strong>
-                    7304503504
+                  <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                  <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                      Mob
+                      number:</strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
                   </p>
-                  <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Email:
-                    </strong>
-                    demo@futurewise.co.in</p>
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                      Email:</strong>
+                    {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
-                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
-                      Report as on: 10-10-2021
-                    </strong>
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
+                      {{'Plan Summary'}}</strong>
+                  </p>
+                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                      {{reportDate | date:'dd-MMM-yyyy' }}</strong>
                   </p>
                 </td>
               </tr>
@@ -706,8 +717,7 @@
               <span style="float: right;"> <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
                 <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
                   ? '-' : mutualFundValue.currentValue}}
-                </span> <br><span style="float: right;"> <span
-                    *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
+                </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
                     mutualFundValue.percentage}}
                     <span *ngIf="mutualFundValue.percentage!=0">%</span></span></span> </span>
             </div>
@@ -751,8 +761,7 @@
             <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
               <span> Small savings </span>
               <span style="float: right;"> <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="smallSavingScheme.currentValue"
-                  *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                   smallSavingScheme.currentValue}}</span> <br><span style="float: right;"> <span
                     *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' :
                     smallSavingScheme.percentage}}
