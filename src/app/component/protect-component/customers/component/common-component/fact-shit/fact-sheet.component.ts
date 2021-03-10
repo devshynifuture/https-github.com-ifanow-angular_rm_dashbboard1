@@ -106,6 +106,25 @@ export class FactSheetComponent implements OnInit {
     this.getAllocationData();
     this.getSpeedometer();
   }
+  getMinMaxValue(data, value) {
+    let result;
+    if (value == "min") {
+      if (data.length > 0) {
+        data = this.mfService.sorting(data, "x");
+        result = data[0].x;
+      } else {
+        result = 0;
+      }
+    } else {
+      if (data.length > 0) {
+        data = this.mfService.sortingDescending(data, "x");
+        result = data[0].x;
+      } else {
+        result = 0;
+      }
+    }
+    return result;
+  }
   getRatio() {
     this.relativePerLoading = true;
     const data = {
@@ -133,124 +152,137 @@ export class FactSheetComponent implements OnInit {
           let desc = this.mfService.sortingDescending(this.ratioData, "x");
           let maxVal = desc[0].x;
           let minVal = asc[0].x;
-          let lowRiskLowReturn = this.filter(this.ratioData, 'lowRiskLowReturn');
-          let HighRiskLowReturn = this.filter(this.ratioData, 'HighRiskLowReturn');
-          let lowRiskHighReturn = this.filter(this.ratioData, 'lowRiskHighReturn');
-          let highRiskHighReturn = this.filter(this.ratioData, 'highRiskHighReturn');
+          console.log(maxVal);
+          console.log(minVal);
+          let lowRiskLowReturn = this.filter(this.ratioData, "lowRiskLowReturn");
+          let HighRiskLowReturn = this.filter(this.ratioData, "HighRiskLowReturn");
+          let lowRiskHighReturn = this.filter(this.ratioData, "lowRiskHighReturn");
+          let highRiskHighReturn = this.filter(
+            this.ratioData,
+            "highRiskHighReturn"
+          );
           if (lowRiskHighReturn.length > 0) {
             lowRiskHighReturn.forEach(element => {
-              element.x = element.x * (-1)
+              element.x = element.x * -1;
             });
           }
-          console.log('lowRiskLowReturn', lowRiskLowReturn)
-          console.log('HighRiskLowReturn', HighRiskLowReturn)
-          console.log('lowRiskHighReturn', lowRiskHighReturn)
-          console.log('highRiskHighReturn', highRiskHighReturn)
+
+          let minFirstQuad = this.getMinMaxValue(lowRiskLowReturn, "min");
+          let maxFirstQuad = this.getMinMaxValue(lowRiskLowReturn, "max");
+          let minSecondQuad = this.getMinMaxValue(lowRiskHighReturn, "min");
+          let maxSecondQuad = this.getMinMaxValue(lowRiskHighReturn, "max");
+          let minThirdQuad = this.getMinMaxValue(highRiskHighReturn, "min");
+          let maxThirdQuad = this.getMinMaxValue(highRiskHighReturn, "max");
+          let minForthQuad = this.getMinMaxValue(HighRiskLowReturn, "min");
+          let maxForthQuad = this.getMinMaxValue(HighRiskLowReturn, "max");
+
+          console.log("lowRiskLowReturn", lowRiskLowReturn);
+          console.log("HighRiskLowReturn", HighRiskLowReturn);
+          console.log("lowRiskHighReturn", lowRiskHighReturn);
+          console.log("highRiskHighReturn", highRiskHighReturn);
+
+          console.log("minFirstQuad", minFirstQuad);
+          console.log("maxFirstQuad", maxFirstQuad);
+          console.log("minSecondQuad", minSecondQuad);
+          console.log("maxSecondQuad", maxSecondQuad);
+          console.log("minThirdQuad", minThirdQuad);
+          console.log("maxThirdQuad", maxThirdQuad);
+          console.log("minForthQuad", minForthQuad);
+          console.log("maxForthQuad", maxForthQuad);
           // xmin and xmax calculation
           let xmaxCal = maxVal;
           let xminCal;
-          let sortXminFirst = this.mfService.sortingDescending(lowRiskLowReturn, "x");
-          let sortXminSecond = this.mfService.sortingDescending(lowRiskHighReturn, "x");
-          let xminFirst = sortXminFirst[0].x;
-          let xminSecond = sortXminSecond[0].x;
-          if (xminFirst < xminSecond) {
-            xminCal = xminFirst;
+          if (minFirstQuad < minSecondQuad) {
+            xminCal = minFirstQuad;
           } else {
-            xminCal = xminSecond;
+            xminCal = minSecondQuad;
           }
-          console.log('xmaxCal', xmaxCal);
-          console.log('xminCal', xminCal);
+          console.log("xmaxCal", xmaxCal);
+          console.log("xminCal", xminCal);
           // calculate right andleft side disatance
-          let rightDist = xmaxCal - 0.5
-          let leftDist = 0.5 - xminCal
-          let differenece = Math.abs(rightDist - leftDist)
-          console.log('rightDist', rightDist);
-          console.log('leftDist', leftDist);
-          console.log('differenece', differenece);
+          let rightDist = xmaxCal - 0.5;
+          let leftDist = 0.5 - xminCal;
+          let differenece = Math.abs(rightDist - leftDist);
+          console.log("rightDist", rightDist);
+          console.log("leftDist", leftDist);
+          console.log("differenece", differenece);
           if (rightDist > leftDist) {
             this.maxx = xmaxCal;
             if (xminCal < 0) {
-              this.minx = (differenece * -1) + xminCal
+              this.minx = differenece * -1 + xminCal;
             } else {
-              this.minx = (differenece) + xminCal
+              this.minx = differenece + xminCal;
             }
           } else {
             this.minx = xminCal;
             if (xmaxCal < 0) {
-              this.maxx = (differenece * -1) + xmaxCal
+              this.maxx = differenece * -1 + xmaxCal;
             } else {
-              this.maxx = (differenece) + xmaxCal
+              this.maxx = differenece + xmaxCal;
             }
           }
-          console.log('maxx', this.maxx);
-          console.log('minx', this.minx);
+          console.log("maxx", this.maxx);
+          console.log("minx", this.minx);
 
           //calculate ymin and ymax
-          let firstQudrant = this.mfService.sorting(lowRiskLowReturn, "x");
-          let forthQuadrant = this.mfService.sorting(HighRiskLowReturn, "x");
-          let secondQudrant = this.mfService.sortingDescending(lowRiskHighReturn, "x");
-          let thirdQuadrant = this.mfService.sortingDescending(highRiskHighReturn, "x");
           // find min value of y
           let yminCal;
           let ymaxCal;
-          let minFirst = firstQudrant[0].x;
-          let minForth = forthQuadrant[0].x;
-          if (minFirst < minForth) {
-            yminCal = minFirst;
+          if (minFirstQuad < minForthQuad) {
+            yminCal = minFirstQuad;
           } else {
-            yminCal = minForth;
+            yminCal = minForthQuad;
           }
           // find max value of y
-          let maxSecond = secondQudrant[0].x;
-          let maxThird = thirdQuadrant[0].x;
-          if (maxSecond > maxThird) {
-            ymaxCal = maxSecond;
+          if (maxSecondQuad > minThirdQuad) {
+            ymaxCal = maxSecondQuad;
           } else {
-            ymaxCal = maxThird;
+            ymaxCal = minThirdQuad;
           }
-
-          console.log('yminCal', yminCal);
-          console.log('ymaxCal', ymaxCal);
+          console.log("yminCal", yminCal);
+          console.log("ymaxCal", ymaxCal);
 
           //calculate ymin and ymax begin
 
-          let topDist = ymaxCal - 1.99
-          let bottomDist = 1.99 - yminCal
-          let differenceY = Math.abs(rightDist - leftDist)
-          console.log('rightDist', topDist);
-          console.log('leftDist', bottomDist);
-          console.log('differenece', differenceY);
+          let topDist = ymaxCal - 1.99;
+          let bottomDist = 1.99 - yminCal;
+          let differenceY = Math.abs(topDist - bottomDist);
+          console.log("topDist", topDist);
+          console.log("bottomDist", bottomDist);
+          console.log("differenceY", differenceY);
           if (topDist > bottomDist) {
             this.maxy = ymaxCal;
             if (yminCal < 0) {
-              this.miny = (differenceY * -1) + yminCal
+              this.miny = differenceY * -1 + yminCal;
             } else {
-              this.miny = (differenceY) + yminCal
+              this.miny = differenceY + yminCal;
             }
           } else {
             this.miny = yminCal;
             if (ymaxCal < 0) {
-              this.maxy = (differenceY * -1) + ymaxCal
+              this.maxy = differenceY * -1 + ymaxCal;
             } else {
-              this.maxy = (differenceY) + ymaxCal
+              this.maxy = differenceY + ymaxCal;
             }
           }
-          console.log('maxx', this.miny);
-          console.log('minx', this.maxy);
+          this.xDivider = 0.5;
+          this.yDivider = 1.99;
+          console.log("maxx", this.miny);
+          console.log("minx", this.maxy);
 
+          console.log("maxx", this.maxx);
+          console.log("minx", this.minx);
+          console.log("maxy", this.maxy);
+          console.log("miny", this.miny);
+          console.log("xDivider", this.xDivider);
+          console.log("yDivider", this.yDivider);
 
-
-
-
-
-
-
-          console.log('maxx', this.maxx)
-          console.log('minx', this.minx)
-          console.log('maxy', this.maxy)
-          console.log('miny', this.miny)
-          console.log('xDivider', this.xDivider)
-          console.log('yDivider', this.yDivider)
+          console.log("maxx", this.maxx);
+          console.log("minx", this.minx);
+          console.log("maxy", this.maxy);
+          console.log("miny", this.miny);
+          console.log("xDivider", this.xDivider);
+          console.log("yDivider", this.yDivider);
 
           this.relativePerformanceGraph();
         } else {
@@ -293,8 +325,11 @@ export class FactSheetComponent implements OnInit {
   }
   getXirr() {
     this.schemeReturnLoading = true;
-    let timePeriod = (this.selectedItem.value == '1' || this.selectedItem.value == '4') ? '3' : (this.selectedItem.value == '2') ? '6' : (this.selectedItem.value == '3') ? '1' : (this.selectedItem.value == '5') ? '5' : '0';
-    let type = (this.selectedItem.value == '1' || this.selectedItem.value == '2') ? 'MONTH' : (this.selectedItem.value == '3' || this.selectedItem.value == '4' || this.selectedItem.value == '5') ? 'YEAR' : '0';
+    let timePeriod = (this.demo1TabIndex == 0 || this.demo1TabIndex == 3) ? '3' : (this.demo1TabIndex == 1) ? '6' : (this.demo1TabIndex == 2) ? '1' : (this.demo1TabIndex == 4) ? '5' : (this.demo1TabIndex == 5) ? '0' : '0';
+    let type = (this.demo1TabIndex == 0 || this.demo1TabIndex == 1) ? 'MONTH' : (this.demo1TabIndex == 2 || this.demo1TabIndex == 3 || this.demo1TabIndex == 4) ? 'YEAR' : (this.demo1TabIndex == 5) ? 'ALL' : '0';
+
+    // let timePeriod = (this.selectedItem.value == '1' || this.selectedItem.value == '4') ? '3' : (this.selectedItem.value == '2') ? '6' : (this.selectedItem.value == '3') ? '1' : (this.selectedItem.value == '5') ? '5' : '0';
+    // let type = (this.selectedItem.value == '1' || this.selectedItem.value == '2') ? 'MONTH' : (this.selectedItem.value == '3' || this.selectedItem.value == '4' || this.selectedItem.value == '5') ? 'YEAR' : '0';
     const catObj = {};
     let array = [];
     const clone = Object.assign({}, this.data);
@@ -436,7 +471,6 @@ export class FactSheetComponent implements OnInit {
     }
 
     this.schemePerformance();
-    this.getXirr();
   }
   getInvRet() {
     this.navLoading = true;
@@ -572,6 +606,7 @@ export class FactSheetComponent implements OnInit {
           console.log('speedometer', arry);
           this.json = arry
           this.initializePortfolioChart();
+          this.getXirr();
         } else {
           this.initializePortfolioChart();
 
@@ -698,7 +733,7 @@ export class FactSheetComponent implements OnInit {
           text: ''
         },
         plotLines: [{
-          value: 0.5,
+          value: this.xDivider,
           color: '#666',
           dashStyle: 'solid',
           width: 2,
@@ -710,7 +745,7 @@ export class FactSheetComponent implements OnInit {
       },
       tooltip: {
         headerFormat: '<span style="font-size:11px">{}</span><br>',
-        pointFormat: '{point.x}:{point.y}'
+        pointFormat: '{point.name}'
         // pointFormat: '{point.name}'
       },
 
@@ -718,7 +753,7 @@ export class FactSheetComponent implements OnInit {
         min: this.miny,
         max: this.maxy,
         plotLines: [{
-          value: 1.99,
+          value: this.yDivider,
           dashStyle: 'solid',
           color: '#666',
           width: 2,
@@ -739,39 +774,7 @@ export class FactSheetComponent implements OnInit {
         {
           color: "#17A2B8",
           name: "Relative performance",
-          data: [{
-            name: 'Other',
-            x: 0.025,
-            y: 0.025
-          }, {
-            name: 'Other',
-            x: 0.52,
-            y: 0.52
-          }, {
-            name: 'Other',
-            x: 0.084,
-            y: 0.084
-          }, {
-            name: 'Other',
-            x: -0.084,
-            y: -0.084
-          }, {
-            name: 'Other',
-            x: 1.34,
-            y: 1.34
-          }, {
-            name: 'Other',
-            x: 0.658,
-            y: 0.658
-          }, {
-            name: 'Other',
-            x: -2.1,
-            y: 2.1
-          }, {
-            name: 'Other',
-            x: 3.4,
-            y: 3.4
-          },]
+          data: this.ratioData
         }
       ]
     }
