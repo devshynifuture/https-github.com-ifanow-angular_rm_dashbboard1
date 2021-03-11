@@ -754,6 +754,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Travel insurance':
         case 'Home insurance':
         case 'Fire & special perils':
+        case 'Others Insurance':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
           break;
         case 'Summary':
