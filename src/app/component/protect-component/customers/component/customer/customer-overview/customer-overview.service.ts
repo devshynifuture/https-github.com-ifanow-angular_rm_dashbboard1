@@ -25,6 +25,7 @@ export class CustomerOverviewService {
   documentFamilyMemberList: any;
   suggestedClientListUsingEmail: any;
   suggestedClientListUsingMobile: any;
+  kycCountData: any
   constructor() { }
 
 
@@ -49,5 +50,6 @@ export class CustomerOverviewService {
     this.documentFamilyMemberList = null;
     this.suggestedClientListUsingMobile = null;
     this.suggestedClientListUsingEmail = null;
+    this.kycCountData = null
   }
 }

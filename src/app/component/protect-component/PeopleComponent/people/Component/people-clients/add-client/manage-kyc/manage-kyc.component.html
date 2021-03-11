@@ -128,7 +128,7 @@
                                         [ngClass]="{'cursor-not-allowed opa-half ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         (click)="openFroala(element,'KYCFroala')" mat-stroked-button
                                         *ngIf="userData.userType==1 && element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                        class="btn-danger btn-mange-kyc text-white">Send Link
+                                        class="btn-danger btn-mange-kyc text-white">{{userData.userType==1?'Send Link':'Do KYC Now'}}
                                     </button>
                                     <button
                                         [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
