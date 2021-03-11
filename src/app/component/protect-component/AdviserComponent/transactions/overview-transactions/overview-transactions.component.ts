@@ -57,7 +57,7 @@ export class OverviewTransactionsComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
     public eventService: EventService, private http: HttpService,
-    private tranService: OnlineTransactionService, private enumDataService: EnumDataService,
+    private tranService: OnlineTransactionService, public enumDataService: EnumDataService,
     public transactionRoleServcie: TransactionRoleService) {
     this.advisorId = AuthService.getAdvisorId();
   }
