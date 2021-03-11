@@ -769,9 +769,10 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
           freezed: false,
         }
         this.plansService.freezCalculation(obj).subscribe(res => {
-          //this.allocateOtherAssetService.refreshAssetList.next();
-          this.loadAllAssets();
+          this.allocateOtherAssetService.refreshAssetList.next();
+          this.loadAllGoals(false);
           this.eventService.openSnackBar("Goal unfreeze successfully");
+          this.subInjectService.closeNewRightSlider({ state: 'close', refreshRequired: true });
           dialogRef.close();
         }, err => {
           this.eventService.openSnackBar(err);
