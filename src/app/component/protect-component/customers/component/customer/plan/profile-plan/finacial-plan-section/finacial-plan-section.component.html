@@ -671,6 +671,15 @@
                                         </div>
 
                                     </div>
+                                    <div class="row bb-1 pt-8 pb-8" *ngIf="portfolioInsurance?.Others != 0">
+                                        <div class="col-md-1">
+                                            <mat-checkbox #OtherIns
+                                                (change)="checkAndLoadPdf($event.checked,'Others Insurance','','Portfolio / General Insurance / Others',false,OtherIns)">
+                                                Portfolio / General Insurance / Others
+                                            </mat-checkbox>
+                                        </div>
+
+                                    </div>
                                 </div>
 
                             </mat-expansion-panel>

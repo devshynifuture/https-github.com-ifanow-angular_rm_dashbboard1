@@ -1197,5 +1197,13 @@ export class CustomerService {
   getFactRatio(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RATIO_GRAPH, data);
   }
+
+  getKycDetailsOfClient(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_KYC_DETAILS_OF_CLIENT, data);
+  }
+
+  hideKycPopup(data) {
+    return this.http.put(apiConfig.USER + appConfig.HIDE_KYC_POPUP, data);
+  }
 }
 

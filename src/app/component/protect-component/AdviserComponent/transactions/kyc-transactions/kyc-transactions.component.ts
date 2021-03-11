@@ -20,9 +20,17 @@ export class KycTransactionsComponent implements OnInit {
   advisorId: any;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('clientTableSort', { static: false }) clientTableSort: MatSort;
+  filterList = [
+    { name: 'Not verified', checked: false, value: 0 },
+    { name: 'KYC verified', checked: false, value: 1 },
+    { name: 'Applied', checked: false, value: 2 },
+    { name: 'Accepted', checked: false, value: 3 },
+    { name: 'Rejected', checked: false, value: 4 }
+  ]
   hasEndReached = false;
   infiniteScrollingFlag: boolean;
   finalClientList: any;
+  compliantIdList = [];
   constructor(private eventService: EventService,
     private utilService: UtilService, private subInjectService: SubscriptionInject
     , public dialog: MatDialog,
@@ -41,7 +49,8 @@ export class KycTransactionsComponent implements OnInit {
       // advisorId: this.advisorId,
       advisorId: this.advisorId,
       offset: offset,
-      limit: 20
+      limit: 20,
+      status: this.compliantIdList
     }
     this.tranService.getKycListData(obj).subscribe(
       data => {
@@ -64,6 +73,19 @@ export class KycTransactionsComponent implements OnInit {
         this.isLoading = false;
       }
     )
+  }
+
+  filterIDWise(event, data, index) {
+    if (event.checked) {
+      this.compliantIdList.push(data.value);
+    } else {
+      this.compliantIdList.splice(index, 1);
+    }
+    console.log(this.compliantIdList)
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    this.finalClientList = undefined
+    this.getKycTransactionList(0)
   }
 
   onWindowScroll(e: any) {

@@ -50,22 +50,25 @@
                     <p class="m-0 roboto">Your personalized money feed is ready! </p>
                 </div>
                 <!-- <button (click)="generateUpload(null)">generateUpload</button> -->
-                <div *ngIf="!enumDataService.PRODUCTION" class="pl-15 pr-15 pt-24">
+                <div *ngIf="!enumDataService.PRODUCTION && kycDetails && kycDetails.show" class="pl-15 pr-15 pt-24">
                     <div class="row pb-10 pt-16 bg-kyc-notification no-wrap">
                         <div class="w-12 pt-4 text-center">
                             <img src="/assets/images/svg/kyc.svg">
                         </div>
                         <div class="w-65 ">
                             <h3 class="m-0 roboto f-500 text-white f-18 lh-21">Complete Members’ Video KYC Now</h3>
-                            <p class="f-13 roboto f-400 text-white m-0">2 Members are remaining to complete their KYC
+                            <p class="f-13 roboto f-400 text-white m-0">{{kycDetails.count}} Members are remaining to
+                                complete their KYC
                             </p>
                         </div>
                         <div class="w-30 pl-0">
-                            <button mat-stroked-button class="manage-kyc f-500">MANAGE KYC <span
+                            <button [routerLink]="['/customer/detail/overview/profile']" [queryParams]="{ Tab: 'Tab3'}"
+                                mat-stroked-button class="manage-kyc f-500 c-p">MANAGE KYC <span
                                     class="material-icons f-14 lh-12">
                                     arrow_right_alt
                                 </span></button>
-                            <mat-checkbox class="text-white f-10 pl-10">Don’t show this again</mat-checkbox>
+                            <mat-checkbox (click)="hideKycPopup()" class="text-white f-10 pl-10">Don’t show this again
+                            </mat-checkbox>
                         </div>
                     </div>
                 </div>
