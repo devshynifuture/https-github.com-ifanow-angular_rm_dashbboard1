@@ -188,11 +188,11 @@
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             {{singleMembers.age}} Yrs</p>
                                     </div>
-                                    <img *ngIf="singleMembers.kycComplaint==1 && !enumDataService.PRODUCTION"
+                                    <img *ngIf="singleMembers.kycComplaint==1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType!=2"
                                         src="/assets/images/svg/circle-verified.svg" matTooltip="KYC Verified"
                                         class="familyDelete c-p">
-                                    <img *ngIf="singleMembers.kycComplaint!=1 && !enumDataService.PRODUCTION"
-                                        src="/assets/images/svg/error-red.png" matTooltip="KYC not verified"
+                                    <img *ngIf="singleMembers.kycComplaint!=1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType!=2"
+                                        src="/assets/images/svg/error-red.png" matTooltip="KYC Not Verified"
                                         class="familyDelete c-p">
 
                                 </div>

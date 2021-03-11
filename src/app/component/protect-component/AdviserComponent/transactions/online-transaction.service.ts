@@ -232,6 +232,10 @@ export class OnlineTransactionService {
   getKycListData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.INVESTER_KYC_LIST_GET, data);
   }
+
+  getKycTransactionDashboardMetrix(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_KYC_TRANASCTION_MATRIX, data);
+  }
   //
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)

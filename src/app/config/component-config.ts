@@ -635,6 +635,7 @@ export const appConfig = {
   GET_MAPPED_CLIENTS_FILTER: 'user/client/mapped/filter/client-wise/view',
   UPDATE_ALL_NSE_CLIENTS: 'nse/iin/all/update',
   AUTO_REMAP_CLIENT: 'user/clients/remap/auto',
+  GET_KYC_TRANASCTION_MATRIX: 'user/advisor/kyc-metrics/get',
 
 
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',

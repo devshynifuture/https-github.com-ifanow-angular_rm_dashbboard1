@@ -49,6 +49,10 @@ export class OverviewTransactionsComponent implements OnInit {
   isLoadingIIN: boolean = false;
   isLoadingMandate: boolean = false;
   hours: number;
+  metrixLoader: boolean;
+  kycDetails: any;
+  kycDonePercentage: any;
+  clientWithoutKycPercentage: any;
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
@@ -62,6 +66,7 @@ export class OverviewTransactionsComponent implements OnInit {
     this.enumDataService.setBankAccountTypes();
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
+    this.getKycDashboardMetrix();
     this.getAllTransactionList();
     this.getMandate();
     this.getIInData();
@@ -91,6 +96,25 @@ export class OverviewTransactionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  getKycDashboardMetrix() {
+    this.metrixLoader = true;
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.tranService.getKycTransactionDashboardMetrix(obj).subscribe(
+      data => {
+        this.metrixLoader = false;
+        if (data) {
+          this.kycDonePercentage = ((data.kycVerifiedCount / data.totalCount) * 100);
+          this.kycDonePercentage = (this.kycDonePercentage).toFixed(2);
+          this.clientWithoutKycPercentage = ((data.kycUnverifiedCount / data.totalCount) * 100);
+          this.clientWithoutKycPercentage = (this.clientWithoutKycPercentage).toFixed(2);
+          this.kycDetails = data;
+        }
+      }
+    )
   }
 
   openTransactionHistory(data) {
@@ -166,6 +190,10 @@ export class OverviewTransactionsComponent implements OnInit {
         rightSideDataSub.unsubscribe();
       }
     );
+  }
+
+  getKycDetails() {
+
   }
 
   getAllTransactionList() {
