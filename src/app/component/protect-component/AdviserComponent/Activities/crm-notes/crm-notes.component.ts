@@ -53,6 +53,7 @@ export class CrmNotesComponent implements OnInit {
   @Input() finPlanObj: any;
   @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
   subjectPDF: any;
+  sendTags: string;
 
 
   constructor(private peopleService: PeopleService,
@@ -94,8 +95,10 @@ export class CrmNotesComponent implements OnInit {
       key: 'showPieChart',
       svg: ''
     };
+    var innerHTML = para.innerHTML
+    innerHTML = innerHTML.replace("%**TEXT%**REPLACE", this.sendTags)
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true, 'Notes');
+    this.returnValue = this.utilService.htmlToPdf(header, innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', '', true, 'Notes');
     console.log('return value ====', this.returnValue);
     return obj;
   }
@@ -224,7 +227,7 @@ export class CrmNotesComponent implements OnInit {
     this.stateCtrl.setValue('');
     this.selectedNote = note
     this.subjectPDF = (note.subject) ? note.subject : '-'
-    this.showContentPDf = note.showContent ? note.showContent : '-'
+    this.showContentPDf = (note.showContent) ? String(note.showContent) : '-'
     this.clientName = note.clientName ? note.clientName : '-'
     this.clientId = note.clientId
     this.notes.controls.subject.setValue(note.subject)
@@ -236,6 +239,12 @@ export class CrmNotesComponent implements OnInit {
       this.hideOwner = true
       this.stateCtrl.setValue('')
     }
+    var para = document.createElement("P");
+    para.innerText = note.content;
+    document.body.appendChild(para);
+    var text = para.innerHTML.replace(/&lt;/g, '<')
+    var text1 = text.replace(/&gt;/g, '/>')
+    this.sendTags = text1
     this.emailBody = note.content
     this.listOfNotes.forEach(element => {
       if (element.id == note.id) {
