@@ -13,7 +13,7 @@
 <div class="row ptb-100">
     <div class="col-md-12" *ngIf="!isLoading">
         <mat-tab-group animationDuration="0ms" id="ui-foliomaster" (selectedTabChange)="onTabChanged($event)">
-            <mat-tab label="Scheme details">
+            <mat-tab label="Investor details">
                 <div *ngFor="let item of folioDetails">
                     <div class="ba-light mt-20">
                         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -362,7 +362,7 @@
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>
             </mat-tab>
-            <mat-tab label="Investor details">
+            <mat-tab label="Other details">
                 <div class="ba-light mt-20" *ngFor="let item of folioDetails">
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
                         <div class="col-md-4 p-0">
