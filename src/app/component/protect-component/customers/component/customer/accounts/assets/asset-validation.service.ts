@@ -68,6 +68,7 @@ export class AssetValidationService {
     this.otherDataList = null;
     this.otherAssetsList = null;
     this.stockDataList = null;
+    this.goldBondList = null;
   }
 
   static ageValidators(age: Number) {
