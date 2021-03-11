@@ -174,6 +174,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   adminAdvisorIds = [];
   clientIdToClearStorage: string;
   mutualFundObj: { assetType: number; investedAmount: any; gainAmount: any; currentValue: any; assetTypeString: string; path: string; };
+  kycDetails: any;
 
   constructor(
     private customerService: CustomerService,
@@ -309,6 +310,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   portFolioSectionOffset: any = 0;
 
   ngOnInit() {
+    this.customerOverview.kycCountData ? this.kycDetails = this.customerOverview.kycCountData : this.getKycDetailsOfClient();
     this.userInfo = AuthService.getUserInfo();
     this.mfServiceService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
@@ -351,6 +353,35 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.cashFlowSectionOffset = this.cashFlowSection.nativeElement.offsetTop;
     this.portFolioSectionOffset = this.portFolioSection.nativeElement.offsetTop;
     this.riskProfileSectionOffset = this.riskProfileSection.nativeElement.offsetTop;
+  }
+
+  getKycDetailsOfClient() {
+    const obj = {
+      clientId: this.clientId
+    }
+    this.customerService.getKycDetailsOfClient(obj).subscribe(
+      data => {
+        if (data) {
+          this.kycDetails = data;
+          this.customerOverview.kycCountData = data
+        }
+      }
+    )
+  }
+
+  hideKycPopup() {
+    this.kycDetails.show = false;
+    const obj = {
+      clientId: this.clientId
+    }
+    this.customerService.hideKycPopup(obj).subscribe(
+      data => {
+        this.kycDetails.show = false;
+        this.customerOverview.kycCountData = data
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    )
   }
 
   @HostListener('window:scroll')
