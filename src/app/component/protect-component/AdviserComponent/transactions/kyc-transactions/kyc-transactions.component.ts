@@ -7,6 +7,7 @@ import { AddNewAllKycComponent } from './add-new-all-kyc/add-new-all-kyc.compone
 import { OnlineTransactionService } from '../online-transaction.service';
 import { PeopleService } from '../../../PeopleComponent/people.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-kyc-transactions',
@@ -66,7 +67,7 @@ export class KycTransactionsComponent implements OnInit {
         } else {
           this.isLoading = false;
           this.infiniteScrollingFlag = false;
-          this.dataSource.data = (this.finalClientList.length > 0) ? this.finalClientList : [];
+          this.dataSource.data = (this.finalClientList && this.finalClientList.length > 0) ? this.finalClientList : [];
         }
       }, err => {
         this.dataSource.data = [];
@@ -79,7 +80,8 @@ export class KycTransactionsComponent implements OnInit {
     if (event.checked) {
       this.compliantIdList.push(data.value);
     } else {
-      this.compliantIdList.splice(index, 1);
+      let indexSearched = this.compliantIdList.findIndex(element => element == data.value)
+      this.compliantIdList.splice(indexSearched, 1);
     }
     console.log(this.compliantIdList)
     this.isLoading = true;
