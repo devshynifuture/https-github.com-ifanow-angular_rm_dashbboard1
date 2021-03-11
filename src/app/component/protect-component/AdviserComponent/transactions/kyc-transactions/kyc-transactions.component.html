@@ -10,8 +10,16 @@
                 </a> -->
             </div>
             <div class="col-md-8 p-0 full-end">
-                <!-- <button class="btn-default addon" mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
-                </button> -->
+                <button [matMenuTriggerFor]="menu1" class="btn-default addon" mat-stroked-button><i
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
+                <mat-menu #menu1="matMenu">
+                    <div class="p-8" *ngFor="let singleObj of filterList;index as i">
+                        <mat-checkbox (change)="filterIDWise($event,singleObj,i)" [checked]="singleObj.checked">
+                            {{singleObj.name}}</mat-checkbox>
+                    </div>
+
+                </mat-menu>
                 <button mat-stroked-button class="btn-primary ml-10" (click)="openAddAllkyc({},'TEst')">ADD
                     NEW</button>
             </div>
@@ -27,7 +35,7 @@
                 [appSkeletonLoading]="isLoading" class="skeletonAnimation " [dataSource]="dataSource" id="table-low">
 
                 <ng-container matColumnDef="position">
-                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Group head name </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Group head name </th>
                     <td mat-cell *matCellDef="let element" class="br ">
                         <div class="bar">{{element.groupHead}}</div>
                     </td>
@@ -35,7 +43,7 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Investor name </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> {{element.name}}</div>
                     </td>
@@ -43,7 +51,7 @@
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="weight">
-                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> PAN </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">{{element.pan}} </div>
                     </td>
@@ -51,20 +59,20 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="symbol">
-                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Registered mobile </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"><span *ngIf="!isLoading">{{element.mobileNo
                                 ?element.mobileNo:'N/A'}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="email">
-                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Registered email </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar"> <span *ngIf="!isLoading">{{element.email?element.email:'N/A'}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="kycStatus">
-                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> KYC status</th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> KYC status</th>
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
                             <span *ngIf="!isLoading && element.email && element.mobileNo && element.pan">
@@ -83,7 +91,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef class="br roboto f-500"> Actions </th>
+                    <th mat-header-cell *matHeaderCellDef class="br"> Actions </th>
                     <div class="bar"></div>
                     <td mat-cell *matCellDef="let element" class="br">
                         <!-- <img src="/assets/images/svg/info-black.svg" matTooltip="Info about the action"
@@ -100,7 +108,7 @@
                                 - </span> -->
                             <button
                                 [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                [ngClass]="{'cursor-not-allowed opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                 (click)="openAddAllkyc(element,'KYCFroala')"
                                 *ngIf="element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
                                 mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send

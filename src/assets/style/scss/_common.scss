@@ -870,12 +870,16 @@ button.primary-sm {
   }
 }
 
+.opa-half {
+  opacity: .5;
+}
+
 .no-wrap {
   flex-wrap: nowrap !important;
 }
 
 .plan-profile-full-height {
-  height: calc(100vh - 120px);
+  height: calc(100vh - 100px);
 }
 
 .new-lineText {

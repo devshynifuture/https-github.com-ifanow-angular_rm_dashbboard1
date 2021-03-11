@@ -1,4 +1,4 @@
-<div *ngIf="data" class="row bb-1 popup-header-fix w-60">
+<div *ngIf="data" class="row bb-1 popup-header-fix w-50">
     <div class="col-md-11 p-0">
         <h4 class="mb-0 l-22 wrapper-20">Manage KYC</h4>
     </div>
@@ -104,7 +104,7 @@
                                         - </span> -->
                                     <button
                                         [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                        [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                        [ngClass]="{'cursor-not-allowed opa-half ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         (click)="userData.userType==1?openFroala(element,'KYCFroala'):kycClientSectionMethod(element)"
                                         *ngIf="element.kycComplaint==0 || element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
                                         mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
@@ -125,14 +125,14 @@
                                         - </span> -->
                                     <button
                                         [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                        [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                        [ngClass]="{'cursor-not-allowed opa-half ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         (click)="openFroala(element,'KYCFroala')" mat-stroked-button
                                         *ngIf="userData.userType==1 && element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                        class="btn-danger btn-mange-kyc text-white">Send Link
+                                        class="btn-danger btn-mange-kyc text-white">{{userData.userType==1?'Send Link':'Do KYC Now'}}
                                     </button>
                                     <button
                                         [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                        [ngClass]="{'cursor-not-allowed ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                        [ngClass]="{'cursor-not-allowed opa-half ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         (click)="kycClientSectionMethod(element)" mat-stroked-button
                                         *ngIf="userData.userType==2 && element.kycComplaint==0 || element.kycComplaint==4"
                                         class="btn-danger btn-mange-kyc text-white">Do KYC Now
@@ -159,7 +159,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="data" class="bottom-fixed w-60 wrapper-12 z-index-9">
+<div *ngIf="data" class="bottom-fixed w-50 wrapper-12 z-index-9">
     <div class="row">
         <div class="col-md-4 col-4">
             <h5 (click)="close(false)" class="mb-0 pt-12 text-white c-p">Close</h5>
