@@ -999,7 +999,8 @@
                         <td>
                             <p style=" font-size: 18px; margin-bottom: 0px; font-weight: 600;"> Planner notes</p>
 
-                            <p style="margin: 0px; font-size: 16px; word-break:break-word;">
+                            <p
+                                style="margin: 0px; font-size: 16px; word-break:break-word;border:1px solid #dee5e7;padding: 5px;">
                                 {{singleGoalData?.remainingData?.notes}}.
                             </p>
                         </td>
@@ -1036,7 +1037,8 @@
                                 </tr>
 
                                 <tr *ngFor="let element of dataSource">
-                                    <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                         {{element.goalYear}} </td>
                                     <td
                                         style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
@@ -1048,7 +1050,8 @@
                                         ₹ <span appFormatNumber
                                             [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'> </span>
                                     </td>
-                                    <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                         {{element.achievedPercent}}% </td>
                                 </tr>
                             </table>
