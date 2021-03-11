@@ -109,6 +109,7 @@ export class KycTransactionsComponent implements OnInit {
 
   formatEmailAndMobile(data) {
     data.forEach((singleData) => {
+      singleData['verifyStatus'] = (singleData.kycComplaint == 1) ? 'Already KYC Verified.' : (singleData.kycComplaint == 2 || singleData.kycComplaint == 3) ? 'KYC Application is in process.' : '';
       singleData['isLoader'] = false;
       if (singleData.mobileList && singleData.mobileList.length > 0) {
         singleData.mobileNo = singleData.mobileList[0].mobileNo;

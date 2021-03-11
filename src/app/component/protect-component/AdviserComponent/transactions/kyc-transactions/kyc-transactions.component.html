@@ -72,7 +72,8 @@
                 <ng-container matColumnDef="email">
                     <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
                     <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> <span *ngIf="!isLoading">{{element.email?element.email:'N/A'}}</span></div>
+                        <div class="bar"> <span *ngIf="!isLoading"
+                                class="t-l">{{element.email?element.email:'N/A'}}</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="kycStatus">
@@ -114,7 +115,12 @@
                                 [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
                                 [ngClass]="{'cursor-not-allowed opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                 (click)="openAddAllkyc(element,'KYCFroala')"
-                                *ngIf="element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                *ngIf="element.kycComplaint==0 || element.kycComplaint==4" mat-stroked-button
+                                class="btn-danger btn-mange-kyc text-white">Send
+                                Link</button>
+                            <button matTooltip={{element.verifyStatus}}
+                                [ngClass]="{'opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                *ngIf="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
                                 mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
                                 Link</button>
                         </div>

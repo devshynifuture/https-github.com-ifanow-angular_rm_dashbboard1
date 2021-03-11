@@ -117,6 +117,7 @@ export class AddNewAllKycComponent implements OnInit {
       return;
     }
     this.step1 = false;
+    this.fruits = []
     this.fruits.push({ name: this.selectedClientData.email })
   }
 
