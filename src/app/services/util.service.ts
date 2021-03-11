@@ -406,7 +406,19 @@ export class UtilService {
 
     if (firstD === secondD) {
       return 0;
-    } else if (firstD > secondD) {
+    } else if (firstD >= secondD) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+  public static compareDatesFor(date1, date2) {
+    const firstD = new Date(date1).getTime();
+    const secondD = new Date(date2).getTime();
+
+    // if (firstD === secondD) {
+    //   return 0;
+    if (firstD >= secondD) {
       return -1;
     } else {
       return 1;
