@@ -15,7 +15,7 @@
                 </button>
                 <mat-menu #menu1="matMenu">
                     <div class="p-8" *ngFor="let singleObj of filterList;index as i">
-                        <mat-checkbox (change)="filterIDWise($event,singleObj,index)" [checked]="singleObj.checked">
+                        <mat-checkbox (change)="filterIDWise($event,singleObj,i)" [checked]="singleObj.checked">
                             {{singleObj.name}}</mat-checkbox>
                     </div>
 
