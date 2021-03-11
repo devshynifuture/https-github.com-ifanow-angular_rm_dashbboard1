@@ -297,7 +297,7 @@ export class AddEPFComponent implements OnInit {
       balanceAsOn: [(data == undefined) ? '' : new Date(data.balanceAsOn), [Validators.required]],
       voluntaryContribution: [(data == undefined) ? '' : data.voluntaryContribution, [Validators.required]],
       EPFNo: [(data == undefined) ? '' : (data.epfNo),],
-      maturityDate: [data.maturityDate],
+      maturityDate: [data.maturityDate ? new Date(data.maturityDate) : ''],
       bankAcNo: [(data == undefined) ? '' : data.userBankMappingId],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
