@@ -42,7 +42,7 @@
                 appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
 
                 <ng-container matColumnDef="position">
-                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br sticky w-20"> Group head
+                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br sticky w-18"> Group head
                         name
                     </th>
                     <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
@@ -64,7 +64,7 @@
                     <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br" sticky> Registered email
                     </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.email}}</div>
+                        <div class="bar t-l"> {{element.email}}</div>
                     </td>
                 </ng-container>
                 <!-- Symbol Column -->
@@ -79,11 +79,9 @@
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar">
                             <span *ngIf="!isLoading ">
-                                   <span class="text-danger" *ngIf="element.kycComplaint==0">Not verified</span>
-                                <span class="text-primary" *ngIf="element.kycComplaint==1">KYC verified</span>
-                                <span *ngIf="element.kycComplaint==2">Applied</span>
-                                <span *ngIf="element.kycComplaint==3">Accepted</span>
-                                <span *ngIf="element.kycComplaint==4">Rejected</span>
+                                <span class="text-danger" *ngIf="element.kycRemainCount!=0">{{element.kycRemainCount}}
+                                    Not Verified</span>
+                                <span class="text-sucess" *ngIf="element.kycComplaint==0">All Verified</span>
                             </span>
                         </div>
                     </td>
@@ -223,7 +221,8 @@
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email != '-' ? getOrgData.email:userInfo.emailList.length > 0?userInfo.emailList[0].email : userInfo.email}}
+                                {{getOrgData.email != '-' ? getOrgData.email:userInfo.emailList.length >
+                                0?userInfo.emailList[0].email : userInfo.email}}
                             </p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>

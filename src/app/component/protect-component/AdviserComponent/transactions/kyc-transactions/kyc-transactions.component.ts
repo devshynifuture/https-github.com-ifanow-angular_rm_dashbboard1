@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -8,6 +8,8 @@ import { OnlineTransactionService } from '../online-transaction.service';
 import { PeopleService } from '../../../PeopleComponent/people.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { element } from 'protractor';
+import { Subscription, Observable } from 'rxjs';
+import { startWith, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-kyc-transactions',
@@ -32,6 +34,9 @@ export class KycTransactionsComponent implements OnInit {
   infiniteScrollingFlag: boolean;
   finalClientList: any;
   compliantIdList = [];
+  inputString: any;
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
   constructor(private eventService: EventService,
     private utilService: UtilService, private subInjectService: SubscriptionInject
     , public dialog: MatDialog,
@@ -51,7 +56,8 @@ export class KycTransactionsComponent implements OnInit {
       advisorId: this.advisorId,
       offset: offset,
       limit: 20,
-      status: this.compliantIdList
+      status: this.compliantIdList,
+      name: this.inputString
     }
     this.tranService.getKycListData(obj).subscribe(
       data => {
@@ -103,6 +109,7 @@ export class KycTransactionsComponent implements OnInit {
 
   formatEmailAndMobile(data) {
     data.forEach((singleData) => {
+      singleData['verifyStatus'] = (singleData.kycComplaint == 1) ? 'Already KYC Verified.' : (singleData.kycComplaint == 2 || singleData.kycComplaint == 3) ? 'KYC Application is in process.' : '';
       singleData['isLoader'] = false;
       if (singleData.mobileList && singleData.mobileList.length > 0) {
         singleData.mobileNo = singleData.mobileList[0].mobileNo;
@@ -163,6 +170,23 @@ export class KycTransactionsComponent implements OnInit {
       }
     );
   }
+  searchClientFamilyMember(value) {
+
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(700)).subscribe(
+        data => {
+          this.isLoading = true;
+          this.dataSource.data = [{}, {}, {}];
+          this.finalClientList = undefined
+          this.inputString = value;
+          this.getKycTransactionList(0)
+        }
+      )
+  }
+
 }
 export interface PeriodicElement {
   name: string;
