@@ -551,8 +551,8 @@ export class FactSheetComponent implements OnInit {
     };
     this.cusService.getFactSheetDetails(data)
       .subscribe(res => {
+        this.isLoadingSchemeDetails = false;
         if (res) {
-          this.isLoadingSchemeDetails = false;
           this.schemeDetails = res;
           console.log('speedometer', res);
         } else {
@@ -651,29 +651,61 @@ export class FactSheetComponent implements OnInit {
         this.eventService.openSnackBar('err', 'DISMISS');
       });
   }
+  getDifferenceDays() {
+    let currentDate = new Date();
+    let numbers = this.data.investedDate.replace(/-/g, "/")
+    var date1 = numbers.split('/')
+    var newDate = date1[1] + '/' + date1[0] + '/' + date1[2];
+    var date = new Date(newDate);
+
+    //calculate time difference  
+    var time_difference = currentDate.getTime() - date.getTime();
+
+    //calculate days difference by dividing total milliseconds in a day  
+    var days_difference = time_difference / (1000 * 60 * 60 * 24);
+    return days_difference;
+  }
   checkToDisable(length) {//to disable the 3,6 month or years wise data according to length 
-    let check6mon = Math.round(365 / 2);
-    let check3mon = Math.round(check6mon / 2);
     let check3y = Math.round(3 * 365);
     let check5y = Math.round(5 * 365);
-    if (length >= check3mon) {
+    length = this.getDifferenceDays();
+    if (length == 0 || length >= 90) {
       this.disable3m = false;
     }
-    if (length >= check6mon) {
+    if (length > 90 || length >= 180) {
       this.disable6m = false;
+    }
+    if (length > 180 || length >= 365) {
+      this.disable1y = false;
     }
     if (length >= check3y) {
       this.disable3y = false;
     }
-    if (length >= check5y) {
+    if (length > check5y) {
       this.disable5y = false;
     }
-    if (length > check5y) {
-      this.disableall = false;
-    }
-    if (length >= 365 && !this.disable3m && !this.disable6m) {
-      this.disable1y = false;
-    }
+    // let check6mon = Math.round(365 / 2);
+    // let check3mon = Math.round(check6mon / 2);
+    // let check3y = Math.round(3 * 365);
+    // let check5y = Math.round(5 * 365);
+    // if (length >= check3mon) {
+    //   this.disable3m = false;
+    // }
+    // if (length >= check6mon) {
+    //   this.disable6m = false;
+    // }
+    // if (length >= check3y) {
+    //   this.disable3y = false;
+    // }
+    // if (length >= check5y) {
+    //   this.disable5y = false;
+    // }
+    // if (length > check5y) {
+    //   this.disableall = false;
+    // }
+    // if (length >= 365 && !this.disable3m && !this.disable6m) {
+    //   this.disable1y = false;
+    // }
     if (this.disableall == false) {
       this.demo1TabIndex = 5;
     } else if (this.disable5y == false) {
