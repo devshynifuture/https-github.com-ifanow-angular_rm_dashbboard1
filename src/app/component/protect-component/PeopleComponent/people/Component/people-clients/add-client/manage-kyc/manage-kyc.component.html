@@ -60,7 +60,8 @@
                         <ng-container matColumnDef="email">
                             <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
                             <td mat-cell *matCellDef="let element" class="br">
-                                <div class="bar"> <span *ngIf="!isLoading">{{element.email?element.email:'N/A'}}</span>
+                                <div class="bar"> <span *ngIf="!isLoading"
+                                        class="t-l">{{element.email?element.email:'N/A'}}</span>
                                 </div>
                             </td>
                         </ng-container>
@@ -128,7 +129,8 @@
                                         [ngClass]="{'cursor-not-allowed opa-half ': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         (click)="openFroala(element,'KYCFroala')" mat-stroked-button
                                         *ngIf="userData.userType==1 && element.kycComplaint==0 || element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                        class="btn-danger btn-mange-kyc text-white">{{userData.userType==1?'Send Link':'Do KYC Now'}}
+                                        class="btn-danger btn-mange-kyc text-white">{{userData.userType==1?'Send
+                                        Link':'Do KYC Now'}}
                                     </button>
                                     <button
                                         [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
