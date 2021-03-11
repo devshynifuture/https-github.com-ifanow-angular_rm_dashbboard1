@@ -37,6 +37,7 @@ export class ManageKycComponent implements OnInit {
         this.isLoading = false;
         if (data && data.length > 0) {
           data.forEach(element => {
+            element['verifyStatus'] = (element.kycComplaint == 1) ? 'Already KYC Verified.' : (element.kycComplaint == 2 || element.kycComplaint == 3) ? 'KYC Application is in process.' : '';
             element['isLoader'] = false;
           });
           this.dataSource.data = data;

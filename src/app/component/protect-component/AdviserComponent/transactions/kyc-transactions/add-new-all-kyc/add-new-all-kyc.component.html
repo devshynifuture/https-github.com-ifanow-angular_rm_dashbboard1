@@ -117,7 +117,7 @@
             </div>
             <div class="mt-20">
                 <button
-                    *ngIf="selectedClientData.kycComplaint==0 && selectedClientData.kycComplaint==4 && selectedClientData.email && selectedClientData.mobileNo && selectedClientData.pan && selectedClientData.pan && selectedClientData.familyMemberType!=2"
+                    *ngIf="(selectedClientData.kycComplaint==0 || selectedClientData.kycComplaint==4) && selectedClientData.email && selectedClientData.mobileNo && selectedClientData.pan && selectedClientData.pan && selectedClientData.familyMemberType!=2"
                     (click)="previewEmail();data['btnFlag'] = 'Back'" mat-stroked-button class="btn-primary">PREVIEW
                     EMAIL & SEND KYC
                     LINK</button>
