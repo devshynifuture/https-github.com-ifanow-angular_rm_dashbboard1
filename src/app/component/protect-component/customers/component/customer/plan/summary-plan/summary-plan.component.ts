@@ -65,6 +65,8 @@ export class SummaryPlanComponent implements OnInit {
 
     @Input() finPlanObj: any;//finacial plan pdf input
     reportDate: Date;
+    totalMonth = 0;
+    totalLumpsum = 0;
 
     constructor(
         private summaryPlanService: SummaryPlanServiceService,
@@ -447,6 +449,10 @@ export class SummaryPlanComponent implements OnInit {
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.planService.getGoalSummaryPlanData(data)
             .subscribe(res => {
+                let monthly = 0;
+                let Alllumpsum = 0;
+                this.totalMonth = 0;
+                this.totalLumpsum = 0;
                 if (res) {
                     console.log(res);
                     this.goalSummaryCountObj = res;
@@ -489,6 +495,8 @@ export class SummaryPlanComponent implements OnInit {
                                 goalAssetAllocation: item.goalAssetAllocation,
                                 retirementTableValue: goalValueObj.retirementTableValue
                             });
+                            monthly = month;
+                            Alllumpsum = lumpsum;
                         } else if (!!item.singleOrMulti && item.singleOrMulti === 2) {
                             let goalValueObj = item.multiYearGoalPlan,
                                 lumpsumDebt = 0,
@@ -553,7 +561,11 @@ export class SummaryPlanComponent implements OnInit {
                                 goalAssetAllocation: item.goalAssetAllocation,
                                 retirementTableValue: goalValueObj.retirementTableValue
                             });
+                            monthly = month;
+                            Alllumpsum = lumpsum;
                         }
+                        this.totalMonth += monthly
+                        this.totalLumpsum += Alllumpsum
                     });
                     this.dataSource.data = arr;
                     this.isLoadingGoals = false;
