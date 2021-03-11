@@ -172,10 +172,16 @@
                 <div class="col-md-8 p-0">
                     <h3 class="m-0 roboto wrapper-20 f-500 text-black">Plan summary</h3>
                 </div>
-                <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
+                <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
+                    *ngIf="!isLoadingCashFlow && !fragmentData.isSpinner">
                     <img (click)="generatePdf(null)" class=" c-p pr-16 h-24" matTooltip="Download PDF"
                         src="assets/images/svg/download-pdf-blue.svg">
+
                 </div>
+                <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end" *ngIf="fragmentData.isSpinner">
+                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner" class="ml-28"></mat-spinner>
+                </div>
+
             </div>
 
             <div class="bg-grey lter h-full">
@@ -401,7 +407,7 @@
                                 </div>
                                 <div class="row bb-1">
                                     <div class="col-md-8 p-0">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">Incomes</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">Income</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
                                         <p class="m-0 pb-8 pt-10 roboto f-400"> {{cashFlowData?.income ? "₹" : ""}}<span
@@ -409,7 +415,7 @@
                                                 [value]="cashFlowData ? cashFlowData.income : '-'"></span></p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-5">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -425,7 +431,7 @@
                                                 [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -442,7 +448,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -455,7 +461,7 @@
                                 </div>
                                 <div class="row bb-1">
                                     <div class="col-md-8 p-0">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">Expenses</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">Budgeted expenses</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
                                         <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.expense ? "₹" : ""}}<span
@@ -464,7 +470,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-5">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -472,7 +478,7 @@
                                 </div>
                                 <div class="row bb-1">
                                     <div class="col-md-8 p-0">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">Assets</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">Asset outflows</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
                                         <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.asset ? "₹" : ""}}<span
@@ -480,7 +486,7 @@
                                                 [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -488,7 +494,7 @@
                                 </div>
                                 <div class="row bb-1">
                                     <div class="col-md-8 p-0">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">Insurance</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">Insurance premiums</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
                                         <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.insurance ? "₹" :
@@ -497,7 +503,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -506,7 +512,7 @@
 
                                 <div class="row ">
                                     <div class="col-md-8 p-0">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">Liabilities</p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">Loan EMI's</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
                                         <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.loan ? "₹" : ""}}<span
@@ -514,7 +520,7 @@
                                                 [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -531,7 +537,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
-                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar">
+                                        <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-16">
                                             <p class="text-black f-12 m-0 text-right roboto f-400">
                                                 {{''}}</p>
                                         </div>
@@ -625,7 +631,6 @@
                             <img class="c-p" *ngIf="finPlanList" src="assets/images/svg/financial-plan.svg"
                                 (click)="downloadPrevoius(finPlanList)">
 
-                            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner" class="ml-28"></mat-spinner>
                             <div class="detailsPDF">
                                 <p class="f-12 l-18 f-500 roboto mb-10">
                                     <span *ngIf="finPlanList">{{finPlanList.reportName+'.pdf'}}</span>
