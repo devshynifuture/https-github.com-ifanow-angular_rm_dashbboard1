@@ -262,7 +262,7 @@ export class InsuranceComponent implements OnInit {
       case 'Fire & special perils':
         this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 10);
         break;
-      case 'Others':
+      case 'Others Insurance':
         this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 11);
         break;
       default:

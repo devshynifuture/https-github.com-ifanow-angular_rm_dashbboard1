@@ -79,11 +79,9 @@
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar">
                             <span *ngIf="!isLoading ">
-                                   <span class="text-danger" *ngIf="element.kycComplaint==0">Not verified</span>
-                                <span class="text-primary" *ngIf="element.kycComplaint==1">KYC verified</span>
-                                <span *ngIf="element.kycComplaint==2">Applied</span>
-                                <span *ngIf="element.kycComplaint==3">Accepted</span>
-                                <span *ngIf="element.kycComplaint==4">Rejected</span>
+                                <span class="text-danger" *ngIf="element.kycRemainCount!=0">{{element.kycRemainCount}}
+                                    Not Verified</span>
+                                <span class="text-sucess" *ngIf="element.kycComplaint==0">All Verified</span>
                             </span>
                         </div>
                     </td>

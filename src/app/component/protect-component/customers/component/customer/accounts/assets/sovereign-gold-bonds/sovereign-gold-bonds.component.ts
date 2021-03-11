@@ -291,7 +291,7 @@ export class SovereignGoldBondsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.assetValidation.goldBondList = this.dataList ? this.dataList : null;
+    this.assetValidation.goldBondList = this.dataList.assetList ? this.dataList : null;
   }
 
   deleteModal(value, element) {

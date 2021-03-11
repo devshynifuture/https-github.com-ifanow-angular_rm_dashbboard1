@@ -56,12 +56,13 @@
           <td mat-footer-cell *matFooterCellDef class="br text-right pr-20 f-600 "> Total</td>
         </ng-container>
         <ng-container matColumnDef="units">
-          <th mat-sort-header="unitsInGram" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
+          <th mat-sort-header="unitsInGramForEditView" mat-header-cell *matHeaderCellDef
+            class="br right-hc text-right hide-arrow">
             Units (grams)
           </th>
           <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar">
-              <span *ngIf="element.unitsInGram && !isLoading">{{element.unitsInGram}}</span>
+              <span *ngIf="element.unitsInGramForEditView && !isLoading">{{element.unitsInGramForEditView}}</span>
             </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
@@ -83,26 +84,27 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="interest">
-          <th mat-sort-header="interestAmountYearly" mat-header-cell *matHeaderCellDef
+          <th mat-sort-header="interestAmountYearlyToShow" mat-header-cell *matHeaderCellDef
             class="brv w-12  right-hc text-right hide-arrow">
             Interest amount
           </th>
           <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
-            <div class="bar" *ngIf="element.interestAmountYearly == 0"><span *ngIf="!isLoading">-</span></div>
-            <div class="bar" *ngIf="element.interestAmountYearly != 0">{{!isLoading ? "₹" : ""}}<span
-                [value]="element.interestAmountYearly" appFormatNumber>{{element.interestAmountYearly}}</span></div>
+            <div class="bar" *ngIf="element.interestAmountYearlyToShow == 0"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.interestAmountYearlyToShow != 0">{{!isLoading ? "₹" : ""}}<span
+                [value]="element.interestAmountYearlyToShow"
+                appFormatNumber>{{element.interestAmountYearlyToShow}}</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="amountInvested">
-          <th mat-sort-header="investmentAmount" mat-header-cell *matHeaderCellDef
+          <th mat-sort-header="investmentAmountToShow" mat-header-cell *matHeaderCellDef
             class="br w-12 right-hc text-right hide-arrow">
             Invested amount
           </th>
           <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
-            <div class="bar" *ngIf="element.investmentAmount == 0"><span *ngIf="!isLoading">-</span></div>
-            <div class="bar" *ngIf="element.investmentAmount != 0">{{!isLoading ? "₹" : ""}}<span
-                [value]="element.investmentAmount" appFormatNumber>{{element.investmentAmount}}</span></div>
+            <div class="bar" *ngIf="element.investmentAmountToShow == 0"><span *ngIf="!isLoading">-</span></div>
+            <div class="bar" *ngIf="element.investmentAmountToShow != 0">{{!isLoading ? "₹" : ""}}<span
+                [value]="element.investmentAmountToShow" appFormatNumber>{{element.investmentAmountToShow}}</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -329,7 +331,7 @@
 
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
-              <span *ngIf="element.unitsInGram && !isLoading">{{element.unitsInGram}}</span>
+              <span *ngIf="element.unitsInGramForEditView && !isLoading">{{element.unitsInGramForEditView}}</span>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
@@ -340,15 +342,17 @@
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
-              <div *ngIf="element.interestAmountYearly == 0"><span *ngIf="!isLoading">-</span></div>
-              <div *ngIf="element.interestAmountYearly != 0">{{!isLoading ? "₹" : ""}}<span
-                  [value]="element.interestAmountYearly" appFormatNumber>{{element.interestAmountYearly}}</span></div>
+              <div *ngIf="element.interestAmountYearlyToShow == 0"><span *ngIf="!isLoading">-</span></div>
+              <div *ngIf="element.interestAmountYearlyToShow != 0">{{!isLoading ? "₹" : ""}}<span
+                  [value]="element.interestAmountYearlyToShow"
+                  appFormatNumber>{{element.interestAmountYearlyToShow}}</span></div>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
-              <div *ngIf="element.investmentAmount == 0"><span *ngIf="!isLoading">-</span></div>
-              <div *ngIf="element.investmentAmount != 0">{{!isLoading ? "₹" : ""}}<span
-                  [value]="element.investmentAmount" appFormatNumber>{{element.investmentAmount}}</span></div>
+              <div *ngIf="element.investmentAmountToShow == 0"><span *ngIf="!isLoading">-</span></div>
+              <div *ngIf="element.investmentAmountToShow != 0">{{!isLoading ? "₹" : ""}}<span
+                  [value]="element.investmentAmountToShow" appFormatNumber>{{element.investmentAmountToShow}}</span>
+              </div>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
