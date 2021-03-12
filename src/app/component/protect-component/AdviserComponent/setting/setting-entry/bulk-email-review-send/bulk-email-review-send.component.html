@@ -281,7 +281,10 @@
                 <div class="d-flex align-items-center justify-content-between mb-24">
                     <p class="mb-0">Since your email is <span *ngIf="verifiedAccountsList.length==0">not verified</span>
                         <span *ngIf="verifiedAccountsList.length>0">verified</span>, the bulk email will be sent from
-                        <span *ngIf="verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span
+                            *ngIf="templateObj.fromEmail=='N/A' && verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span
+                            *ngIf="templateObj.fromEmail!='N/A' && verifiedAccountsList.length==1">{{templateObj.fromEmail}}</span>
                         <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
                             *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
                             (click)="bulkEmail('')">Change</span>

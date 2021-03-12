@@ -87,7 +87,7 @@
                         <p class="m-0 roboto f-400">KYC Status</p>
                     </div>
 
-                    <div class="col-md-6 text-right t-l">
+                    <div class="col-md-6 text-right ">
                         <span class="text-danger" *ngIf="selectedClientData.kycComplaint==0">Not verified</span>
                         <span class="text-primary" *ngIf="selectedClientData.kycComplaint==1">KYC verified</span>
                         <span *ngIf="selectedClientData.kycComplaint==2">Applied</span>
@@ -117,10 +117,16 @@
             </div>
             <div class="mt-20">
                 <button
-                    *ngIf="(selectedClientData.kycComplaint==0 || selectedClientData.kycComplaint==4) && selectedClientData.email && selectedClientData.mobileNo && selectedClientData.pan && selectedClientData.pan && selectedClientData.familyMemberType!=2"
+                    *ngIf="(selectedClientData.kycComplaint==0 || selectedClientData.kycComplaint==4) && selectedClientData.email && selectedClientData.mobileNo && selectedClientData.pan && selectedClientData.familyMemberType!=2"
                     (click)="previewEmail();data['btnFlag'] = 'Back'" mat-stroked-button class="btn-primary">PREVIEW
                     EMAIL & SEND KYC
                     LINK</button>
+                <p *ngIf="selectedClientData.familyMemberType==2" class="m-0  roboto f-400  text-danger">Ineligible
+                    for KYC, as selected investor is a minor.</p>
+                <p *ngIf="(!selectedClientData.email || !selectedClientData.mobileNo || !selectedClientData.pan) && selectedClientData.familyMemberType!=2"
+                    class="m-0 roboto f-400  text-danger">Please provide <span
+                        *ngIf="!selectedClientData.pan">PAN,</span><span *ngIf="!selectedClientData.mobileNo">
+                        Mobile,</span> <span *ngIf="!selectedClientData.email">Email</span> to proceed with KYC.</p>
             </div>
         </div>
     </div>
