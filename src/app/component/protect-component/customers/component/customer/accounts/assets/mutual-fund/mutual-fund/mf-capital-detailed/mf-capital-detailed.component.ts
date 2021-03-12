@@ -99,7 +99,9 @@ export class MfCapitalDetailedComponent implements OnInit {
                 const obj = {
                     id: this.familyMemberId
                 }
-                this.familyList.push(obj)
+                if (param1.familyMemberId) {
+                    this.familyList.push(obj)
+                }
             }
             else {
                 this.advisorId = AuthService.getAdvisorId();

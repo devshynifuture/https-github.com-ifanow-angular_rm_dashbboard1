@@ -166,7 +166,9 @@ export class MutualFundsCapitalComponent implements OnInit {
                 const obj = {
                     id: this.familyMemberId
                 }
-                this.familyList.push(obj)
+                if (param1.familyMemberId) {
+                    this.familyList.push(obj)
+                }
                 this.fromDateYear = (param1.from);
                 this.toDateYear = (param1.to);
                 console.log('2423425', param1)
