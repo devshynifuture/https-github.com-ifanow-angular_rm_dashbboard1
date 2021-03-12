@@ -404,7 +404,7 @@ export class MisMfTransactionsComponent implements OnInit {
           this.ExcelTransaData = new MatTableDataSource(res)
 
           setTimeout(() => {
-            const blob = new Blob([document.getElementById('template').innerHTML], {
+            const blob = new Blob([document.getElementById('templateMis').innerHTML], {
               type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
             });
             saveAs(blob, tableTitle + '.xls');
@@ -424,8 +424,12 @@ export class MisMfTransactionsComponent implements OnInit {
 
   }
   Excel(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
+    this.getAllTransactionData(tableTitle);
+    // const para = document.getElementById('templateMis');
+    // const blob = new Blob([para.innerHTML], {
+    //   type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+    // });
+    // saveAs(blob, tableTitle + '.xls');
   }
 }
 
