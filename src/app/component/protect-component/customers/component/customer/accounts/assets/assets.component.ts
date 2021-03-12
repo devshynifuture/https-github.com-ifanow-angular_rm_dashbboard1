@@ -110,6 +110,17 @@ export class AssetsComponent implements OnInit {
     // this.stateOfPanel.mode = 'side';
     this.mfService.getViewMode()
       .subscribe(data => {
+        if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
+          this.sidenavState = true;
+          if (this.stateOfPanel._animationState == 'void') {
+            this.stateOfPanel.close();
+          } else {
+            this.stateOfPanel.close();
+          }
+        } else {
+          this.sidenavState = false;
+          this.stateOfPanel.open();
+        }
         // if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
         //   this.sidenavState = true;
         //   if (this.stateOfPanel._animationState == 'void') {
