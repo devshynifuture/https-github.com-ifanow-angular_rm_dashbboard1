@@ -272,8 +272,8 @@
                 </div>
             </mat-tab> -->
             <mat-tab label="Nominee details">
-                <div *ngFor="let item of folioDetails; index as i">
-                    <div *ngFor="let item of item.nominees; index as i">
+                <div *ngFor="let item of nomineeArray; index as i">
+                    <div>
                         <div class="ba-light mt-20">
                             <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
                                 <div class="col-md-4 p-0">
@@ -318,6 +318,11 @@
                 <div *ngIf="!isLoading && folioDetails.length == 0" class="d-flex flex-column align-items-center">
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No data found</h4>
+                </div>
+                <div *ngIf="isLoading" class="bg-white p-20 h-90vh full-center w-100 text-center">
+
+                    <p class="m-0"> Loading data...</p>
+
                 </div>
                 <!-- <div *ngIf="!isNomineeLoading && nomineeArray.length == 0"
                     class="d-flex flex-column align-items-center">
