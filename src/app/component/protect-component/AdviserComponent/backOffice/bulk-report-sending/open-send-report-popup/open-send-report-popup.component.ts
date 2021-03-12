@@ -107,16 +107,16 @@ export class OpenSendReportPopupComponent implements OnInit {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 5,
-        from: this.data1.selectedElement.from,
-        to: this.data1.selectedElement.to,
+        fromYear: this.data1.selectedElement.from,
+        toYear: this.data1.selectedElement.to,
       }
       this.reportType = 5
     } else if (this.data1.reportType == 'capitalGainDetails') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 6,
-        from: this.data1.selectedElement.from,
-        to: this.data1.selectedElement.to,
+        fromYear: this.data1.selectedElement.from,
+        toYear: this.data1.selectedElement.to,
       }
       this.reportType = 6
     }
