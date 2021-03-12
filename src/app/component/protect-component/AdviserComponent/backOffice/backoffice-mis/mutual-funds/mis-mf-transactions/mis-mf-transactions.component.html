@@ -211,7 +211,7 @@
     </div>
 </div>
 
-<div id="template" class="hide">
+<div id="templateMis" style="display: none;">
     <html>
     <meta charset="UTF-8">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
@@ -307,7 +307,7 @@
             <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(isLoading) ? '':element.fwTransactionType}}</td>
-            <td *ngIf="mode=='expired'"
+            <td
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(isLoading) ? '':element.transactionDate | date: 'dd/MM/yyyy' }}</td>
         </tr>
