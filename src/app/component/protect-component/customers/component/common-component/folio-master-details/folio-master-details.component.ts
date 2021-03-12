@@ -82,16 +82,24 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
 
   getNomineeDetailsFolioSchemeWise() {
-    const data = {
-      folioNumber: this.inputData.folioNumber,
-      schemeCode: this.inputData.schemeCode
-    };
+    this.isLoading = true
+    if (this.inputData.rtMasterId == 3) {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+      };
+    } else {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+        schemeCode: this.inputData.schemeCode
+      };
+    }
     this.isNomineeLoading = true;
-    this.custumService.getFolioSchemeWiseNomineeDetails(data)
+    this.custumService.getFolioSchemeWiseNomineeDetails(this.obj)
       .subscribe((res: any) => {
         this.isNomineeLoading = false;
         if (res) {
-          const decodedRes = JSON.parse(atob(res.payLoad));
+          const decodedRes = res;
+          this.isLoading = false
           console.log('nominee daata', decodedRes);
           this.nomineeArray = [...decodedRes];
         } else {
