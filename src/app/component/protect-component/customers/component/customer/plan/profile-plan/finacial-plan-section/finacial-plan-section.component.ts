@@ -164,7 +164,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private planService: PlanService,
     private peopleService: PeopleService,
     private subInjectService: SubscriptionInject,
-    private enumDataService: EnumDataService,
+    public enumDataService: EnumDataService,
     public roleService: RoleService) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
