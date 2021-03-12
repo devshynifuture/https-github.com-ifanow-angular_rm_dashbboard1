@@ -58,7 +58,7 @@ export class SendNowReportsComponent implements OnInit {
     this.financialYears = [{ 'from': 2010, 'to': 2011, 'selected': true, 'disabled': true }, { 'from': 2011, 'to': 2012, 'selected': true, 'disabled': true }, { 'from': 2012, 'to': 2013, 'selected': true, 'disabled': true }, { 'from': 2013, 'to': 2014, 'selected': true, 'disabled': true }, { 'from': 2014, 'to': 2015, 'selected': true, 'disabled': true },
     { 'from': 2015, 'to': 2016, 'selected': true, 'disabled': true }, { 'from': 2016, 'to': 2017, 'selected': true, 'disabled': true }, { 'from': 2017, 'to': 2018, 'selected': true, 'disabled': true }, { 'from': 2018, 'to': 2019, 'selected': true, 'disabled': true }, { 'from': 2019, 'to': 2020, 'selected': true, 'disabled': true }, { 'from': 2020, 'to': 2021, 'selected': true, 'disabled': true }]
     this.financialYears.filter(function (element) {
-      if (element.from == 2019 && element.to == 2020) {
+      if (element.from == 2020 && element.to == 2021) {
         element.selected = true;
       } else {
         element.selected = false;
