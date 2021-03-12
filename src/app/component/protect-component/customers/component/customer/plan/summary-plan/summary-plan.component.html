@@ -1101,7 +1101,7 @@
                                             <tr>
                                                 <td style="background: #ffffff; padding: 10px; width: 50%;">
                                                     <h3 style="font-size: 16px; font-weight: 400;">Goal summary</h3>
-                                                    <div style="float: left;">
+                                                    <div style="float: left;display: flex;">
                                                         <div
                                                             style="border: 1px solid #BCC6CA; text-align: center; margin-bottom: 10px; width: 140px;">
                                                             <p>
@@ -1127,7 +1127,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div style="float: left; margin-left: 10px;">
+                                                    <div style="float: left; margin-left: 10px;display: flex;">
                                                         <div
                                                             style="border: 1px solid #BCC6CA; padding: 10px; text-align: center; margin-bottom: 10px; width: 140px;">
                                                             <p>
@@ -1147,6 +1147,29 @@
                                                             <p style=" color: #008FFF; margin-top: 0px;">
                                                                 <span appFormatNumber [shouldRoundOff]="true"
                                                                     [value]="goalSummaryCountObj?.lumpsumInvestmentMappedToGoals ? goalSummaryCountObj?.lumpsumInvestmentMappedToGoals : 0"></span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="float: left; margin-left: 10px;">
+                                                        <div
+                                                            style="border: 1px solid #BCC6CA; padding: 10px; text-align: center; margin-bottom: 10px; width: 140px;">
+                                                            <p>
+                                                                Additional suggestions
+                                                            </p>
+                                                            <hr>
+                                                            <p style="margin-bottom: 0px;">
+                                                                Monthly
+                                                            </p>
+                                                            <p style=" color: #008FFF; margin-top: 0px; ">
+                                                                <span appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="totalMonth ? totalMonth :'0'"></span>
+                                                            </p>
+                                                            <p style="margin-bottom: 0px;">
+                                                                Lumpsum
+                                                            </p>
+                                                            <p style=" color: #008FFF; margin-top: 0px;">
+                                                                <span appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="totalLumpsum ? totalLumpsum :'0'"></span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -1171,24 +1194,12 @@
                                                         <tr>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
-                                                                Incomes </td>
+                                                                Income </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
                                                                 {{cashFlowData?.income ? "₹" : ""}}<span appFormatNumber
                                                                     [shouldRoundOff]="true"
                                                                     [value]="cashFlowData ? cashFlowData.income : '-'"></span>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td
-                                                                style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
-                                                                Expenses </td>
-                                                            <td
-                                                                style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.expense ? "₹" : ""}}<span
-                                                                    appFormatNumber [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span>
                                                             </td>
                                                         </tr>
 
@@ -1203,6 +1214,18 @@
                                                                     [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span>
                                                             </td>
                                                         </tr>
+
+                                                        <tr>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
+                                                                Insurance </td>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
+                                                                ">{{cashFlowData?.insurance ? "₹" :
+                                                                ""}}<span appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                            </td>
+                                                        </tr>
                                                         <tr>
                                                             <td colspan="2"
                                                                 style="border-bottom: 1px solid #dee5e7; font-weight: 700; padding: 12px 0px; font-size: 16px; color: #000000;">
@@ -1212,25 +1235,37 @@
                                                         <tr>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
-                                                                Insurance </td>
+                                                                Budgeted expenses </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.insurance ? "₹" : ""}}<span
+                                                                {{cashFlowData?.expense ? "₹" : ""}}<span
                                                                     appFormatNumber [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                                    [value]="cashFlowData?.expense ? cashFlowData?.expense : '-'"></span>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
-                                                                Liabilities </td>
+                                                                Asset outflows </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.loan ? "₹" : ""}}<span appFormatNumber
+                                                                {{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
                                                                     [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span>
+                                                                    [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span>
                                                             </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
+                                                                Insurance premiums</td>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
+                                                                {{cashFlowData?.insurance ? "₹" :
+                                                                ""}}<span appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                            </td>
+                                                        </tr>
                                                         <tr>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px; font-weight: 600;">
