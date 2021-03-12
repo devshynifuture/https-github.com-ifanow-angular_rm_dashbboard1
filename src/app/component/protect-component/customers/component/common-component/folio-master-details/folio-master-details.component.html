@@ -315,11 +315,12 @@
                         <div class="bar height24 mb-10"></div>
                     </div>
                 </div> -->
-                <div *ngIf="!isLoading && folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                <div *ngIf="!isNomineeLoading && folioDetails.length == 0"
+                    class="d-flex flex-column align-items-center">
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>
-                <div *ngIf="isLoading" class="bg-white p-20 h-90vh full-center w-100 text-center">
+                <div *ngIf="isNomineeLoading" class="bg-white p-20 h-90vh full-center w-100 text-center">
 
                     <p class="m-0"> Loading data...</p>
 
