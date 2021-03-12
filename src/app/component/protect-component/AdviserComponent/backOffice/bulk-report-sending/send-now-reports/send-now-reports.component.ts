@@ -75,7 +75,7 @@ export class SendNowReportsComponent implements OnInit {
   }
   proceed() {
     if (this.selectedReportType == "capitalGainSummary" || this.selectedReportType == "capitalGainDetailed") {
-      if (this.date.to) {
+      if (!this.date.to) {
         this.date = this.default
       }
     }
