@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { SummaryPlanServiceService } from './summary-plan-service.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiConfig } from 'src/app/config/main-config';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
     selector: 'app-summary-plan',
@@ -78,7 +79,8 @@ export class SummaryPlanComponent implements OnInit {
         private util: UtilService,
         private sanitizer: DomSanitizer,
         private cd: ChangeDetectorRef,
-        private http: HttpClient
+        private http: HttpClient,
+        public enumDataService: EnumDataService
     ) {
         console.log('org', this.getOrgData)
         console.log('userInfo', this.userInfo)
