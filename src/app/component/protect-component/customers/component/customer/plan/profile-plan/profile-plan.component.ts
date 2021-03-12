@@ -4,6 +4,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-plan',
@@ -13,12 +14,20 @@ import { RoleService } from 'src/app/auth-service/role.service';
 export class ProfilePlanComponent implements OnInit {
 
   viewMode;
+  paramsData: any;
   constructor(private subInjectService: SubscriptionInject,
     public enumDataService: EnumDataService,
-    public roleService: RoleService) { }
+    public roleService: RoleService, public routerActive: ActivatedRoute) {
+    this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
+      console.log(queryParamMap);
+      this.paramsData = queryParamMap.params
+    });
+  }
   isLoading = false;
   ngOnInit() {
-    if (this.roleService.planPermission.subModule.profile.subModule.income.enabled) {
+    if (Object.keys(this.paramsData).length !== 0) {
+      this.viewMode = this.paramsData.Tab;
+    } else if (this.roleService.planPermission.subModule.profile.subModule.income.enabled) {
       this.viewMode = "tab1";
       return;
     }

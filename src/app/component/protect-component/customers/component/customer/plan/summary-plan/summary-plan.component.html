@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="row pt-20">
+                <div class="row pt-20" [routerLink]="['/customer/detail/plan/profile']">
                     <div class="col-md-6 p-0">
                         <p class="text-black f-12 m-0 roboto f-400">INCOME</p>
                     </div>
@@ -40,7 +40,7 @@
                             [value]="incomePercent"></mat-progress-bar>
                     </div>
                 </div>
-                <div class="row pt-20">
+                <div class="row pt-20" [routerLink]="['/customer/detail/plan/profile']" [queryParams]="{ Tab: 'tab2'}">
                     <div class="col-md-6 p-0">
                         <p class="text-black f-12 m-0 roboto f-400">EXPENSES</p>
                     </div>
@@ -77,7 +77,8 @@
             </div>
 
             <div *ngIf="budgetData?.length > 0 && !isLoadingBudget">
-                <div class="row bb c-p pt-10" *ngFor="let item of budgetData">
+                <div class="row bb c-p pt-10" *ngFor="let item of budgetData"
+                    [routerLink]="['/customer/detail/plan/profile']" [queryParams]="{ Tab: 'tab2',name:'Budget'}">
                     <div class="col-md-9 pr-0">
                         <p class="mb-0 f-14 text-black roboto f-400"> {{item.expenseType}} </p>
                         <p class="mb-10 f-14 roboto text-custom f-400"> ₹<span appFormatNumber>{{item.amount}}</span> /
@@ -559,7 +560,7 @@
                     </div>
                     <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingSummary"
                         appSkeletonLoading>
-                        <div class="bg-white p-20">
+                        <div class="bg-white p-20 c-p" [routerLink]="['/customer/detail/plan/insurance']">
                             <h5 class="f-500 mb-10"> Insurance summary</h5>
                             <div *ngIf="insurancePlanList?.length > 0 && !isLoadingSummary">
                                 <div class="row b-b pt-14" *ngFor="let item of insurancePlanList">
