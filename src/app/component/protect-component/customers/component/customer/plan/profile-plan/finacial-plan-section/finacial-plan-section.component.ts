@@ -51,6 +51,7 @@ import { RoleService } from 'src/app/auth-service/role.service';
 import { OthersAssetsComponent } from '../../../accounts/assets/others-assets/others-assets.component';
 import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component';
 import { PortfolioSummaryComponent } from '../../../accounts/portfolio-summary/portfolio-summary.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -163,6 +164,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private planService: PlanService,
     private peopleService: PeopleService,
     private subInjectService: SubscriptionInject,
+    private enumDataService: EnumDataService,
     public roleService: RoleService) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
