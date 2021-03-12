@@ -41,7 +41,7 @@ export class SummaryPlanComponent implements OnInit {
     incomePercent: number;
     expensePercent: number;
     @ViewChild('summaryPlan', { static: false }) summaryPlan: ElementRef;
-
+    show = true;
     fragmentData = { isSpinner: false, date: null, time: '', size: '' };
     map: any;
     loopEle: number;
@@ -125,7 +125,7 @@ export class SummaryPlanComponent implements OnInit {
         this.fragmentData.isSpinner = true;;
         let para = document.getElementById('planSummary');
         //const header = this.summaryTemplateHeader.nativeElement.innerHTML
-        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false.valueOf, null);
+        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', 'false', this.fragmentData, '', '', false, null);
 
     }
     getFinPlan() {
@@ -741,8 +741,8 @@ export class SummaryPlanComponent implements OnInit {
                     console.log(data);
                     this.annualSurplus = 0;
                     this.cashFlowData = data;
-                    this.cashFlowData.loanEmi = (this.cashFlowData.loanEmi).toFixed(2)
-                    this.cashFlowData.surplus = (this.cashFlowData.surplus).toFixed(2)
+                    this.cashFlowData.loanEmi = this.cashFlowData.loanEmi ? (this.cashFlowData.loanEmi).toFixed(2) : 0
+                    this.cashFlowData.surplus = this.cashFlowData.surplus ? (this.cashFlowData.surplus).toFixed(2) : 0
                     console.log('cashFlowData', this.cashFlowData)
                     this.annualSurplus = this.cashFlowData.income - this.cashFlowData.expense;
                     let total = this.cashFlowData.income + this.cashFlowData.expense;

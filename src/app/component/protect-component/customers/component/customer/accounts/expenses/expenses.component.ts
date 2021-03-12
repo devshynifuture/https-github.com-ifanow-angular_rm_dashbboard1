@@ -144,6 +144,7 @@ export class ExpensesComponent implements OnInit {
   budgetId: any;
   @Output() loaded = new EventEmitter();
   @Input() finPlanObj: any;
+  @Input() data: any;
   totalTransactionAmount: any;
   totalBudgetAmount: any
   totalbudegtRecurring: any;
@@ -164,6 +165,8 @@ export class ExpensesComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.finPlanObj);
+    console.log(this.data);
+
     if (this.roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled) {
       this.viewMode = "Transactions"
     } else {
@@ -189,6 +192,17 @@ export class ExpensesComponent implements OnInit {
       })
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    if (Object.keys(this.data).length !== 0) {
+      this.dataSource4.data = [{}, {}, {}];
+      this.dataSource5.data = [{}, {}, {}];
+      this.isLoadingBudget = true;
+      if (this.data.name) {
+        this.tab = this.data.name;
+        this.viewMode = this.data.name;
+      }
+
+
+    }
     this.selectedPeriod = '1'
     if (this.finPlanObj) {
       this.getFinPlanBasedCall();
@@ -546,6 +560,11 @@ export class ExpensesComponent implements OnInit {
           // this.loaded.emit(document.getElementById('templateExpense'));
           this.loaded.emit(this.transactionExpens.nativeElement);
         } else {
+          this.getBudgetApis();
+        }
+      }
+      if (Object.keys(this.data).length !== 0) {
+        if (this.data.name) {
           this.getBudgetApis();
         }
       }
@@ -1049,7 +1068,12 @@ export class ExpensesComponent implements OnInit {
           } else {
 
             if (this.chekToCallApiBudget()) {
-              this.getBudgetApis()
+              this.viewMode = 'Budget';
+              if (Object.keys(this.data).length !== 0) {
+                this.getAllExpense();
+              } else {
+                this.getBudgetApis()
+              }
             } else {
               this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
             }

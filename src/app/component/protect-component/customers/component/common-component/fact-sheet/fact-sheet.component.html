@@ -142,9 +142,9 @@
           <div class="wrapper-8">
             <p class="m-0 roboto f-500">Top Holdings</p>
             <div class="pt-12" id="table-low">
-              <div *ngIf="dataSource.data.length > 0">
+              <div *ngIf="dataSource.data.length > 0" class="table-scroll-holdings">
                 <table mat-table [dataSource]="dataSource" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                  *ngIf="dataSource.data.length>0" class="skeletonAnimation" id="table-low">
+                  *ngIf="dataSource.data.length>0" class="skeletonAnimation" id="tbs">
 
                   <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Name </th>

@@ -69,7 +69,7 @@
                 <app-income></app-income>
             </div>
             <div *ngSwitchCase="'tab2'">
-                <app-expenses></app-expenses>
+                <app-expenses [data]="paramsData"></app-expenses>
             </div>
             <div *ngSwitchCase="'tab3'">
                 <div class="d-flex justify-content-center mt-150">
