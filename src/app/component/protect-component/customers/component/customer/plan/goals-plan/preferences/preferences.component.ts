@@ -73,10 +73,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   selected = 0;
 
   ngOnInit() {
+    if (this.data.remainingData.freezed == true) {
+      this.freez = true
+    }
     if (this.data.singleOrMulti == 1) {
-      if (this.data.remainingData.freezed == true) {
-        this.freez = true
-      }
       console.log((new Date(this.data.remainingData.goalStartDate).getFullYear()));
       console.log((new Date().getFullYear()) + 1)
       this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear() - 1)).map((v, idx) => v + idx);
