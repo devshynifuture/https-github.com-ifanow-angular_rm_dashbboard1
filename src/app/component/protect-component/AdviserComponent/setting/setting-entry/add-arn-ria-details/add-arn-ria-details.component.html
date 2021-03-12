@@ -63,15 +63,14 @@
         <div class="col-md-6 col-lg-5">
             <div class="form-group p-0">
                 <mat-form-field class="url" floatLabel="never" appearance="standard">
-                    <button mat-stroked-button
-                        class="b-0 borderBtn h-40   bg-grey lter min-80 text-custom">{{arnRiaFG.get('arnOrRia').value ==
+                    <button mat-stroked-button class="b-0 borderBtn h-40   bg-grey lter min-80 text-custom">{{arnRiaFG.get('arnOrRia').value ==
                         '' ? 'ARN/INA' : arnRiaFG.get('arnOrRia').value == 1 ? 'ARN' : 'INA'}}</button>
                     <input matInput type="text" formControlName="number"
                         [placeholder]="formPlaceHolders.ENTER_ARN_RIA_NUMBER"
                         class="form-control br-0 inputBorderTransparent" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="{{maxArnLength}}">
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="11">
                     <mat-hint *ngIf="arnRiaFG.get('arnOrRia').value == 1 || arnRiaFG.get('arnOrRia').value == 2"
-                        align="end">{{arnRiaFG.get('number').value.length}}/{{maxArnLength}}</mat-hint>
+                        align="end">{{arnRiaFG.get('number').value.length}}/11</mat-hint>
                     <mat-error *ngIf="arnRiaFG.get('number').errors?.required">This field is required</mat-error>
                     <mat-error
                         *ngIf="arnRiaFG.get('number').errors?.pattern || arnRiaFG.get('number').errors?.maxlength || arnRiaFG.get('number').errors?.minlength">
