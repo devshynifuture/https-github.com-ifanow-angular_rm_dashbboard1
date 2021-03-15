@@ -20,6 +20,12 @@
       <!-- <div class="col-md-6 p-0  full-end">
         <button mat-button class="btn-black right br-0">INVEST NOW</button>
       </div> -->
+      <div class="col-md-6 pl-0 d-flex align-items-center justify-content-end">
+        <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24" matTooltip="Download PDF"
+          src="assets/images/svg/download-pdf-blue.svg">
+        <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
+
+      </div>
 
     </div>
     <div class="row pt-16">
@@ -526,7 +532,7 @@
 
 
 <!-- pdf fact sheet -->
-<div style="background-color: #f2f2f2;" class="d-none">
+<div style="background-color: #f2f2f2;" class="d-none" id="fact-Sheet">
   <table style="width: 100%;">
     <tr>
       <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
