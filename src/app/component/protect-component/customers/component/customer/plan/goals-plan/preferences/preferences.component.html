@@ -133,6 +133,9 @@
                         <div class="col-md-12" *ngIf="savingsSDError">
                             <mat-error>Savings start date cannot be same or greater than savings end date</mat-error>
                         </div>
+                        <div class="col-md-12" *ngIf="goalError">
+                            <mat-error>Savings start date cannot be same or greater than goal start date</mat-error>
+                        </div>
                     </div>
                     <div class="row pt-20 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
