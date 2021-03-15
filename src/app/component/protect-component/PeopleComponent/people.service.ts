@@ -16,8 +16,14 @@ export class PeopleService {
     private authService: AuthService) {
   }
   clientList;
+  teamMembers;
+  nomineeList;
   // commmented code which are giving error =>>>>>>>>>>>
 
+  clearCacheData() {
+    // this.clientList = undefined;
+    this.teamMembers = undefined;
+  }
 
   getClientList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1);

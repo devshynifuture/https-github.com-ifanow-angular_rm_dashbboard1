@@ -136,6 +136,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
   svg: string;
   AlltotalAssetsWithoutLiability = 0;
+  mainLoader: boolean = true;
 
   constructor(
     public eventService: EventService,
@@ -415,6 +416,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.hasError = true;
         this.assetAllocationRes = false;
         this.tabsLoaded.portfolioData.isLoading = false;
+        this.loaderFunction();
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
@@ -422,6 +424,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   getAssetAllocationSummaryResponse(res) {
     this.customerOverview.assetAllocationChart = res;
+    this.tabsLoaded.portfolioData.isLoading = false;
+    this.loaderFunction();
     if (res == null) {
       this.assetAllocationRes = false;
       this.portFolioData = [];
@@ -501,7 +505,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.tabsLoaded.portfolioData.isLoading = false;
     this.tabsLoaded.portfolioData.dataLoaded = true;
   }
 
@@ -514,6 +517,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
 
     return data;
+  }
+
+  loaderFunction() {
+    if (!this.summaryFlag && !this.tabsLoaded.portfolioData.isLoading) {
+      this.mainLoader = false;
+    } else {
+      this.mainLoader = true;
+    }
   }
 
   getAumGraphData() {
@@ -530,7 +541,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         // this.lineChart('container-hc-figure');
       },
       err => {
+        this.graphList = [];
         this.finalTotal = 0;
+        this.summaryFlag = false;
+        this.loaderFunction();
       }
     );
   }
@@ -555,6 +569,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     } else {
       this.graphList = [];
     }
+    this.summaryFlag = false;
+    this.loaderFunction();
   }
 
   assetAllocationPieChartDataMgnt(data) {
@@ -591,6 +607,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       err => {
         this.cashFlowViewDataSource = [];
         this.noCashflowData = true;
+        this.cashflowFlag = false;
+        this.loaderFunction();
       }
     );
   }
@@ -607,6 +625,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.expenseList = [];
     this.createFilterList();
     this.sortDataUsingFlowType(data);
+    this.loaderFunction();
   }
 
   sortDataUsingFlowType(ObjectArray) {

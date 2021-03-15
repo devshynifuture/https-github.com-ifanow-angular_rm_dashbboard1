@@ -69,7 +69,7 @@ export class ClientDematComponent implements OnInit {
   clientName: any;
   nomineesListFM1: any = [];
   callMethod1: { methodName: string; ParamValue: any; disControl: any; };
-  bankList: any = [];
+  @Input() bankList;
   keyInfoCapability: any = {};
   mobileEditedData: any[];
 
@@ -337,6 +337,9 @@ export class ClientDematComponent implements OnInit {
   }
 
   getDematList(data) {
+    if (this.userData.flag && this.userData.flag.includes('Add')) {
+      return;
+    }
     let obj;
     if (this.dialogRef) {
       obj = {
@@ -375,6 +378,7 @@ export class ClientDematComponent implements OnInit {
       this.createDematForm(null);
       this.getDematList(this.userData);
     } else {
+      this.bankList = this.userData.bankList;
       this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
       (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
       this.barButtonOptions.text = 'SAVE & CLOSE';
@@ -382,7 +386,7 @@ export class ClientDematComponent implements OnInit {
     }
     this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     if (!this.dialogRef) {
-      this.getBankList();
+      // this.getBankList();
     }
     else {
       this.bankList = this.dialogData.bankList;
@@ -393,28 +397,6 @@ export class ClientDematComponent implements OnInit {
       this.barButtonOptions.text = 'SAVE';
     }
 
-  }
-
-  getBankList() {
-    const obj = [{
-      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    }];
-    this.cusService.getBankList(obj).subscribe(
-      data => {
-        console.log(data);
-        (data == 0) ? data = undefined : '';
-        if (data && data.length > 0) {
-          this.bankList = data;
-        } else {
-          this.bankList = [];
-        }
-      },
-      err => {
-        this.bankList = [];
-      }
-      // this.eventService.openSnackBar(err, "Dismiss")
-    );
   }
 
   getHolderList(data) {

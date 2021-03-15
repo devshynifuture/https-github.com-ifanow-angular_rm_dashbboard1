@@ -486,6 +486,7 @@ export class OverviewProfileComponent implements OnInit {
       clientData.bankData = data;
     } else {
       component = ClientDematComponent;
+      clientData.bankList = this.bankList;
       clientData.dematData = data;
     }
     clientData.headerFlag = headerFlag;

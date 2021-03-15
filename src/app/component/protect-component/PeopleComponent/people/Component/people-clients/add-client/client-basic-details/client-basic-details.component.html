@@ -1,5 +1,5 @@
-<button *ngIf="fieldFlag=='familyMember' || fieldFlag=='client'" mat-icon-button [matMenuTriggerFor]="menu"
-    class="unmap-option c-p">
+<button *ngIf="(fieldFlag=='familyMember' || fieldFlag=='client') &&!enumDataService.PRODUCTION" mat-icon-button
+    [matMenuTriggerFor]="menu" class="unmap-option c-p">
     <mat-icon>more_vert</mat-icon>
 </button>
 

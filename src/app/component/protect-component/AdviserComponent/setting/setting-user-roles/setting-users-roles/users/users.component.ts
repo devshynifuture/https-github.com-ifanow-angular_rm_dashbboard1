@@ -10,6 +10,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { ReplaceUserComponent } from 'src/app/component/protect-component/common-component/replace-user/replace-user.component';
 import { ChangeClientPasswordComponent } from 'src/app/component/protect-component/customers/component/customer/customer-overview/overview-profile/change-client-password/change-client-password.component';
 import { TeamMemberClientListComponent } from './team-member-client-list/team-member-client-list.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-users',
@@ -30,7 +31,8 @@ export class UsersComponent implements OnInit {
     private settingsService: SettingsService,
     private eventService: EventService,
     private dialog: MatDialog,
-    protected subinject: SubscriptionInject
+    protected subinject: SubscriptionInject,
+    private peopleService: PeopleService
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -109,6 +111,7 @@ export class UsersComponent implements OnInit {
           replaceUserId: result,
         };
         this.settingsService.deleteTeamMember(replaceUser).subscribe(res => {
+          this.peopleService.teamMembers = undefined;
           this.eventService.openSnackBar('User deleted successfully', "Dismiss");
           this.loadUsers();
           this.loader(-1);
@@ -176,6 +179,7 @@ export class UsersComponent implements OnInit {
         const deleteFromTrashSubscription = this.settingsService.suspendMember(user.id)
           .subscribe(response => {
             this.eventService.openSnackBar('User Suspended');
+            this.peopleService.teamMembers = undefined;
             deleteFromTrashSubscription.unsubscribe();
             this.loadUsers();
             dialog.close();

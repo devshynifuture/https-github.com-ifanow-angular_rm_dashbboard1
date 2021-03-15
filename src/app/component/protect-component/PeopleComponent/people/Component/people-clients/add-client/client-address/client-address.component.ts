@@ -260,6 +260,9 @@ export class ClientAddressComponent implements OnInit {
   }
 
   getAddressList(data) {
+    if (this.userData.flag && this.userData.flag.includes('Add')) {
+      return;
+    }
     const obj = {
       userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
       userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
