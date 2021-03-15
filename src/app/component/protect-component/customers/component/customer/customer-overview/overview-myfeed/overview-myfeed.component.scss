@@ -39,10 +39,12 @@
 
         .borderChatBox {
           width: 100%;
-          height: 260px;
+          max-height: 290px;
           border-radius: 4px !important;
           border: 1px solid #D9DEE1;
           margin-top: 10px;
+          padding-top: 10px;
+          padding-bottom: 10px;
 
           img {
             max-width: 100%;
@@ -598,14 +600,14 @@
         width: 60px;
       }
 
-       
-      .loaderMargin{
+
+      .loaderMargin {
         margin: 70px 20px 0px 0px;
       }
 
 
-      @media screen and (min-width: 768px) and (max-width: 991px) { 
-         
+      @media screen and (min-width: 768px) and (max-width: 991px) {
+
         .sticky-top {
           position: inherit;
           top: 0;
@@ -614,10 +616,11 @@
 
         .myfeedWrapper {
           li.activeClass {
-          //  width: 30%;
+            //  width: 30%;
             /* height: 40px; */
-            
+
           }
+
           .activeClass {
             background: #D9DEE1;
             border-left: transparent;
@@ -625,7 +628,7 @@
           }
         }
 
-         
+
 
         .borderChatBoxEmpty {
           height: auto;
@@ -640,20 +643,17 @@
           flex-direction: column-reverse;
         }
 
-         
+
 
 
         .skeletonAnimation .relClass .bar220 {
           margin: 20px auto;
         }
 
-        .loaderMargin{
+        .loaderMargin {
           margin: 0px 20px 0px 20px;
         }
 
-        
+
 
       }
-
-
-      
