@@ -230,6 +230,8 @@ export class MutualFundUnrealizedTranComponent {
   mfCapability: any = {};
   clientNameToDisplay: any;
   excelDownload: boolean = false;
+  ninethArrayTran: any;
+  ninethArrayTotalTran: any;
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -384,9 +386,9 @@ export class MutualFundUnrealizedTranComponent {
 
     } else {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-        'units', 'balanceUnits', 'days', 'icons'];
+        'units', 'balanceUnits', 'days', 'lockPeriod', 'icons'];
       this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-        'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'iconsTotal'];
+        'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'iconsTotal'];
     }
     this.dataTransaction.displayedColumns = this.displayedColumns;
     this.colspanValue = Math.round(this.displayedColumns.length / 2);
@@ -629,42 +631,128 @@ export class MutualFundUnrealizedTranComponent {
 
     if (header == 'no') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Sr no.', index: ind, isCheked: true,
+        name: 'Sr no.', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '9%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'order-left': '1px solid #DADCE0',
+          'text-align': 'left'
+        }
       });
       // Object.assign(this.customDataSource.data, { no: true });
     } else if (header == 'transactionType') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction type', index: ind, isCheked: true,
+        name: 'Transaction type', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '15%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'left'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionType: true });
     } else if (header == 'transactionDate') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction date', index: ind, isCheked: true,
+        name: 'Transaction date', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '15%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionDate: true });
     } else if (header == 'transactionAmount') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction amount', index: ind, isCheked: true,
+        name: 'Transaction amount', index: ind, isCheked: true, style: {
+          width: '15%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionAmount: true });
     } else if (header == 'transactionNav') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction NAV', index: ind, isCheked: true,
+        name: 'Transaction NAV', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '8%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionNav: true });
     } else if (header == 'units') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Units', index: ind, isCheked: true,
+        name: 'Units', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '10%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { units: true });
     } else if (header == 'balanceUnits') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Balance units', index: ind, isCheked: true,
+        name: 'Balance units', index: ind, isCheked: true, style: {
+          'border-top': ' 1px solid #DADCE0',
+          width: '10%',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
       });
       // Object.assign(this.customDataSource.data, { balanceUnits: true });
     } else if (header == 'days') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Days', index: ind, isCheked: true,
+        name: 'Days', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
+    } else if (header == 'lockPeriod') {
+      this.customDataSource.data.arrayTran.push({
+        name: 'Unlock date', index: ind, isCheked: true, style: {
+          width: '13%',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
       });
       // Object.assign(this.customDataSource.data, { days: true });
     }
@@ -903,13 +991,18 @@ export class MutualFundUnrealizedTranComponent {
   }
   checkFamMember() {
     this.clientNameToDisplay = null;
-    if (this.setDefaultFilterData) {
-      let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
-      if (famMember.length == 1) {
-        this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+    if (Object.keys(this.setDefaultFilterData).length > 0) {
+      if (this.setDefaultFilterData.familyMember) {
+        let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
+        if (famMember.length == 1) {
+          this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+        } else {
+          this.clientNameToDisplay = this.clientData.name
+        }
       } else {
         this.clientNameToDisplay = this.clientData.name
       }
+
     } else {
       this.clientNameToDisplay = this.clientData.name
     }
@@ -1173,6 +1266,12 @@ export class MutualFundUnrealizedTranComponent {
             case 7:
               this.eighthArrayTran = this.filterHedaerWiseTran(element);
               this.eighthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+
+              break;
+            case 8:
+              this.ninethArrayTran = this.filterHedaerWiseTran(element);
+              this.ninethArrayTotalTran = this.filterHedaerWiseTotalTran(element);
 
 
               break;
@@ -1742,7 +1841,9 @@ export class MutualFundUnrealizedTranComponent {
       case 'Days':
         obj = 'days';
         break;
-
+      case 'Unlock date':
+        obj = 'elssDate';
+        break;
     }
 
     return obj;
@@ -1773,6 +1874,9 @@ export class MutualFundUnrealizedTranComponent {
         obj = 'totalBalanceUnit';
         break;
       case 'Days':
+        obj = '';
+        break;
+      case 'Unlock date':
         obj = '';
         break;
 

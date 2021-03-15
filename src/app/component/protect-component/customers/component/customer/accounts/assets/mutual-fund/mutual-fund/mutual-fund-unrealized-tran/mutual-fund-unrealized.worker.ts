@@ -28,6 +28,9 @@ addEventListener('message', ({ data }) => {
 
     } else {
     }
+    if (element.elssDate) {
+      element.elssDate = element.elssDate ? new Date(element.elssDate).toISOString().replace(/T.*/, '').split('-').reverse().join('-') : '-';
+    }
     element.purchasePrice = mfService.mutualFundRoundAndFormat(element.purchasePrice, 4)
     if (element.totalCurrentValue && element.totalTransactionAmt && !element.totalGain) {
       element.totalGain = (element.totalCurrentValue - element.totalTransactionAmt) - (element.dividendPayout ? element.dividendPayout : 0);
