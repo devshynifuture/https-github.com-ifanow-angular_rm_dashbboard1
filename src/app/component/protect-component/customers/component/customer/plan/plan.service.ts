@@ -386,6 +386,12 @@ export class PlanService {
   getPlanData() {
     return this.planData.asObservable();
   }
+  setGoalData(value) {
+    this.planData.next(value);
+  }
+  getGoalData() {
+    return this.planData.asObservable();
+  }
   setClientId(value) {
     this.clientId.next(value);
   }
@@ -394,5 +400,8 @@ export class PlanService {
   }
   clearStorage() {
     this.setPlanData('');
+  }
+  clearStorageGoal() {
+    this.setGoalData('');
   }
 }
