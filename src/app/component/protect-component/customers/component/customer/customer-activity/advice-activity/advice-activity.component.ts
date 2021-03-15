@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { SelectAdviceComponent } from './select-advice/select-advice.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AdviceUtilsService } from './advice-utils.service';
 
 @Component({
   selector: 'app-advice-activity',
@@ -14,7 +15,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 export class AdviceActivityComponent implements OnInit {
   viewMode: string;
 
-  constructor(private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
+  constructor(private adviceUtilService: AdviceUtilsService, private eventService: EventService, public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService) { }
   selected;
   selectedTab = "Life insurance";
@@ -32,6 +33,7 @@ export class AdviceActivityComponent implements OnInit {
   ngOnInit() {
 
     this.viewMode = 'tab6';
+    this.adviceUtilService.setAdviceLoading(true);
   }
   openselectAdvice(data) {
     const fragmentData = {
