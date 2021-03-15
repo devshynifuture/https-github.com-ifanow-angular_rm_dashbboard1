@@ -17,6 +17,7 @@ import { FileUploadServiceService } from '../assets/file-upload-service.service'
 import { LoanAmortsComponent } from './loan-amorts/loan-amorts.component';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { InsuranceService } from '../insurance/insurance.service';
 
 
 @Component({
@@ -80,7 +81,7 @@ export class LiabilitiesComponent implements OnInit {
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
     public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService, private pdfGen: PdfGenService,
-    public roleService: RoleService) {
+    public roleService: RoleService, private insService: InsuranceService) {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
@@ -152,6 +153,7 @@ export class LiabilitiesComponent implements OnInit {
       data => {
         console.log(data);
         this.realEstateData = data;
+        this.insService.setInsData(this.realEstateData);
       }
       , (error) => {
         this.eventService.showErrorMessage(error);
