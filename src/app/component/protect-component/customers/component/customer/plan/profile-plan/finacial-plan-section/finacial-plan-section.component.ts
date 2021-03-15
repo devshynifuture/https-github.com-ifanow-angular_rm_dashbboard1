@@ -183,6 +183,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.count = 0;
     this.moduleAdded = [];
     this.clientDetails = [{}, {}, {}];
+    this.planService.setClientId(this.clientId);
     this.planService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
