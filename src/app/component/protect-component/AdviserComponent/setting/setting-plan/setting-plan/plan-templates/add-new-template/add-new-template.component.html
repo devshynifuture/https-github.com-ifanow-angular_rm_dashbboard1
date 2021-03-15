@@ -15,8 +15,14 @@
         </div>
         <div class="col-md-4 pl-0">
             <mat-form-field appearance="standard">
-                <input placeholder="Enter template name" formControlName="name" matInput class="form-control">
+                <input placeholder="Enter template name" (change)="getNameValidation($event.target.value)"
+                    formControlName="name" matInput class="form-control">
             </mat-form-field>
+        </div>
+        <div class="col-md-10 full-end pt-8">
+            <mat-error *ngIf="error">
+                Template name should not be same as default template
+            </mat-error>
         </div>
     </div>
     <div class="row pt-32">
@@ -39,10 +45,7 @@
     <div class="row pt-32 pb-48">
         <div class="col-md-6 text-right">
             <h5 class="m-0 roboto f-16 f-400">Upload your template</h5>
-            <p class="f-12 roboto text-custom lh-14 f-400">This template will be available to download in<br>
-                miscellaenous
-                section of
-                financial plan.<br>The size
+            <p class="f-12 roboto text-custom lh-14 f-400">The size
                 of the image should be 340 px x 476 px <br>or on a similar proportionate basis.</p>
         </div>
         <div class="col-md-5 p-0" *ngIf="edit">

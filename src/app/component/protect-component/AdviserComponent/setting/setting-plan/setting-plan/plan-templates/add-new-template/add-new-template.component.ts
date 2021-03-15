@@ -23,6 +23,7 @@ export class AddNewTemplateComponent implements OnInit {
   edit: boolean;
   imgUrl: any;
   result: any;
+  error: boolean = false;
   constructor(private eventService: EventService,
     private settingService: SettingsService,
     private subInjectService: SubscriptionInject,
@@ -31,11 +32,11 @@ export class AddNewTemplateComponent implements OnInit {
   ) { }
   @Input()
   set data(data) {
+    this.getTemplateList()
     this.inputData = data
     console.log('input date', data)
   }
   ngOnInit() {
-    this.getTemplateList()
     this.setDataForm(this.inputData)
   }
   uploadImageForCorping(event) {
@@ -46,6 +47,16 @@ export class AddNewTemplateComponent implements OnInit {
     setTimeout(() => {
       this.finalImage = imageAsBase64;
     });
+  }
+  getNameValidation(event) {
+    const evens = this.templateList[0].templates.filter(element => element.name.toUpperCase() == event.toUpperCase());
+    const evens1 = this.templateList[1].templates.filter(element => element.name.toUpperCase() == event.toUpperCase());
+    const evens2 = this.templateList[2].templates.filter(element => element.name.toUpperCase() == event.toUpperCase());
+    if (evens.length > 0 || evens1.length > 0 || evens2.length > 0) {
+      this.error = true
+    } else {
+      this.error = false
+    }
   }
   openGallery(gallery) {
     let obj = {
