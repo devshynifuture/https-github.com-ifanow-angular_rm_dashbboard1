@@ -8,6 +8,7 @@ export class InsuranceService {
   private insuranceData = new BehaviorSubject('')
   private loadedData = new BehaviorSubject('')
   private allInsData = new BehaviorSubject('')
+  private realEstate = new BehaviorSubject('')
 
   constructor() { }
 
@@ -28,5 +29,11 @@ export class InsuranceService {
   }
   geetAllInsuranceList() {
     return this.allInsData.asObservable();
+  }
+  setRealEstateData(value) {
+    this.realEstate.next(value);
+  }
+  getRealEstateData() {
+    return this.realEstate.asObservable();
   }
 }
