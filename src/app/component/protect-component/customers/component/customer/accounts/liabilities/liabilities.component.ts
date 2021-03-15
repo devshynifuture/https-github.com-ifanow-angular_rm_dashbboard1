@@ -72,6 +72,7 @@ export class LiabilitiesComponent implements OnInit {
   getOrgData: any;
   selectedItem
   getAdvisorDetail: any;
+  realEstateData: any;
 
 
   constructor(private cd: ChangeDetectorRef, private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -108,6 +109,7 @@ export class LiabilitiesComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
+    this.getRealEstate();
     // this.advisorData = AuthService.getProfileInfo();
     this.getLiability('');
     this.getPayables();
@@ -140,6 +142,21 @@ export class LiabilitiesComponent implements OnInit {
   //   this.footer.push(Object.assign(footerData))
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
+
+  getRealEstate() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.customerService.getRealEstate(obj).subscribe(
+      data => {
+        console.log(data);
+        this.realEstateData = data;
+      }
+      , (error) => {
+        this.eventService.showErrorMessage(error);
+      });
+  }
   fetchData(value, fileName, element) {
     element.advisorId = this.advisorId;
     element.isClient = element.borrowers[0].isClient;

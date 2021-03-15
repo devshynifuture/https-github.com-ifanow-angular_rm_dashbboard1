@@ -87,7 +87,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
 
   // minDate = new Date()
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    public custumService: CustomerService, public eventService: EventService, private datePipe: DatePipe, private dialog: MatDialog,private custmService:CustomerService,private enumService:EnumServiceService) {
+    public custumService: CustomerService, public eventService: EventService, private datePipe: DatePipe, private dialog: MatDialog, private custmService: CustomerService, private enumService: EnumServiceService) {
   }
 
   @Input()
@@ -115,6 +115,27 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.getRealEstate();
     this.getLiability(this.data);
   }
+  realEstateGetReponse(data) {
+    console.log(data);
+    if (data) {
+      data.assetList.forEach((element, ind) => {
+        element.typeString = this.enumService.getRealEstateTypeStringFromValue(element.typeId);
+        const obj = {
+          id: ind + 1,
+          ownerName: element.ownerList[0].name,
+          propertyName: element.typeString
+        }
+        this.propertyList.push(obj);
+      });
+      this.propertyListDuplicate = this.propertyList;
+
+      this.filterPropertyOwnerWise(this.addLiabilityForm.value.getCoOwnerName[0].name);
+      if (this.data.propertyId) {
+        this.addLiabilityForm.controls.get('property').setValue(this.data.propertyId);
+
+      }
+    }
+  }
   getRealEstate() {
     const obj = {
       advisorId: this.advisorId,
@@ -122,25 +143,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     };
     this.custmService.getRealEstate(obj).subscribe(
       data => {
-        console.log(data);
-        if(data){
-          data.assetList.forEach((element,ind) => {
-            element.typeString = this.enumService.getRealEstateTypeStringFromValue(element.typeId);
-            const obj={
-              id:ind+1,
-              ownerName:element.ownerList[0].name,
-              propertyName:element.typeString
-            }
-            this.propertyList.push(obj);
-          });
-          this.propertyListDuplicate = this.propertyList; 
-          
-          this.filterPropertyOwnerWise(this.addLiabilityForm.value.getCoOwnerName[0].name);
-          if(this.data.propertyId){
-            this.addLiabilityForm.controls.get('property').setValue(this.data.propertyId);
-
-          }
-        }
+        this.realEstateGetReponse(data);
       }
       , (error) => {
         this.eventService.showErrorMessage(error);
@@ -161,15 +164,15 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
-  filterPropertyOwnerWise(data){
+  filterPropertyOwnerWise(data) {
     let fiterdata = [];
     let array = this.propertyListDuplicate;
-    array.forEach(element =>{
-      if(data==element.ownerName){
+    array.forEach(element => {
+      if (data == element.ownerName) {
         fiterdata.push(element)
       }
     })
-    this.propertyList=fiterdata;
+    this.propertyList = fiterdata;
   }
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
@@ -186,7 +189,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       ParamValue: value,
       disControl: type
     };
-    if(!this.isBorrowerAdded){
+    if (!this.isBorrowerAdded) {
       this.filterPropertyOwnerWise(value);
     }
   }
@@ -277,7 +280,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.propertyList = [] ;
+      this.propertyList = [];
       this.getRealEstate();
       // setTimeout(() => {
       //   this.getRealEstate();
@@ -547,10 +550,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.addLiabilityForm };
 
   }
-  changeValidation(value){
-    if(value == 1){
+  changeValidation(value) {
+    if (value == 1) {
       this.addLiabilityForm.get('property').setValidators([Validators.required]);
-    }else{
+    } else {
       this.addLiabilityForm.controls['property'].setValue(null);
       this.addLiabilityForm.controls['property'].setErrors(null);
       this.addLiabilityForm.get('property').setValidators(null);
@@ -574,7 +577,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       });
     }
     this.addLiabilityForm.value.getCoOwnerName.forEach(element => {
-      if(element.familyMemberId == 0){
+      if (element.familyMemberId == 0) {
         element.familyMemberId = this.clientId;
         element.isClient = 1;
       }

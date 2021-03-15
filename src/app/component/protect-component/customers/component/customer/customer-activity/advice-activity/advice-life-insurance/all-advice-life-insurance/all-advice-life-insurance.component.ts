@@ -59,12 +59,16 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
   adviceName: string;
   adviceNameObj: { adviceName: string; };
   familyMemberList: any;
+  adviceSectionLoading: string;
   constructor(private peopleService: PeopleService, private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.adviceUtilService.getAdviceLoading().subscribe(res => {
+      this.adviceSectionLoading = res;
+    });
     this.adviceUtilService.getFamilyMemberList()
       .subscribe(res => {
         this.familyMemberList = res;
@@ -87,23 +91,26 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
           this.globalObj = res;
         }
       });
-    // if (this.chekToCallApi()) {
-    this.getAdviceByAsset();
-    // } else {
-    //   this.LIData = this.globalObj['LIData']
-    //   this.getAllSchemeResponse(this.globalObj['allAdviceLifeInsurance']);
-    //   this.displayList = this.globalObj['displayList'];
-    // }
-    this.getAllCategory();
+    if (this.adviceSectionLoading) {
+      this.getAdviceByAsset();
+      this.adviceUtilService.setAdviceLoading(false);
+    } else if (this.chekToCallApi()) {
+      this.getAdviceByAsset();
+    } else {
+      this.LIData = this.globalObj['LIData']
+      this.getAllSchemeResponse(this.globalObj['allAdviceLifeInsurance']);
+      this.displayList = this.globalObj['displayList'];
+    }
+    //this.getAllCategory();
   }
   chekToCallApi() {
     return this.globalObj && this.globalObj['allAdviceLifeInsurance'] && Object.keys(this.globalObj['allAdviceLifeInsurance']).length > 0 ? false : true;
   }
   getAllCategory() {
-    this.isLoading = true;
-    this.termDataSource = [{}, {}, {}];
-    this.traditionalDataSource = [{}, {}, {}];
-    this.ulipDataSource = [{}, {}, {}];
+    // this.isLoading = true;
+    // this.termDataSource = [{}, {}, {}];
+    // this.traditionalDataSource = [{}, {}, {}];
+    // this.ulipDataSource = [{}, {}, {}];
     this.activityService.getAllCategory('').subscribe(
       data => {
         console.log(data);
@@ -359,7 +366,7 @@ export class AllAdviceLifeInsuranceComponent implements OnInit {
     console.log(this.selectedAssetId)
   }
 
-  checkAll(flag, tableDataList, tableFlag, ) {
+  checkAll(flag, tableDataList, tableFlag,) {
     console.log(flag, tableDataList)
     const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId, this.familyMemberList);
     this.getFlagCount(tableFlag, count)
