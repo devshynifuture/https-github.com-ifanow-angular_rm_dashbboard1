@@ -188,7 +188,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.fragmentData = { isSpinner: false };
     this.dataSource1 = [];
     //this.dataSource.data = [];
-    this.plansService.setClientId(this.clientId);
     this.subscriber.add(
       this.allocateOtherAssetService.refreshObservable.subscribe(() => {
         this.loadAllGoals(false);
@@ -202,6 +201,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.clearStorageGoal();
       }
     }
+    this.plansService.setClientId(this.clientId);
     this.plansService.getGoalData()
       .subscribe(res => {
         this.storedData = '';
