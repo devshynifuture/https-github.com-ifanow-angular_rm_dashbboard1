@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 import { AddRealEstateComponent } from '../../customer/accounts/assets/realEstate/add-real-estate/add-real-estate.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { RealEstatePropertyComponent } from 'src/app/common/real-estate-property/real-estate-property.component';
+import { InsuranceService } from '../../customer/accounts/insurance/insurance.service';
 
 @Component({
   selector: 'app-add-liabilities',
@@ -87,7 +88,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
 
   // minDate = new Date()
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    public custumService: CustomerService, public eventService: EventService, private datePipe: DatePipe, private dialog: MatDialog, private custmService: CustomerService, private enumService: EnumServiceService) {
+    public custumService: CustomerService, public eventService: EventService, private datePipe: DatePipe, private dialog: MatDialog, private custmService: CustomerService, private enumService: EnumServiceService, private insService: InsuranceService) {
   }
 
   @Input()
@@ -109,10 +110,14 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.show = false;
     this.showTransact = false;
     this.showSelect = false;
+    this.insService.getInsData()
+      .subscribe(res => {
+        this.realEstateGetReponse(res);
+      })
     this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.getRealEstate();
+    //this.getRealEstate();
     this.getLiability(this.data);
   }
   realEstateGetReponse(data) {

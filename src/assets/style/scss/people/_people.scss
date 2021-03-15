@@ -12,22 +12,22 @@
     height: 31px !important;
   }
 
-  #tbs {
-    tr.mat-row {
-      height: 34px !important;
-      transition: transform .2s;
+  // #tbs {
+  //   tr.mat-row {
+  //     height: 34px !important;
+  //     transition: transform .2s;
 
-      &:hover {
-        transform: scale(1.011);
-        transform-origin: 50% 50%;
-      }
-    }
+  //     &:hover {
+  //       transform: scale(1.011);
+  //       transform-origin: 50% 50%;
+  //     }
+  //   }
 
-    tbody td {
-      padding: 4px 8px !important;
+  //   tbody td {
+  //     padding: 4px 8px !important;
 
-    }
-  }
+  //   }
+  // }
 }
 
 // .people-leads {
