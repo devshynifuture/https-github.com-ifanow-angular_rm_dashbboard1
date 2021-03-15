@@ -60,6 +60,9 @@
                     <div class="profile-img" [hidden]="!showCropper" style="width: 50%;">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">
                     </div>
+                    <div *ngIf="goalIndividualData.template" class="setting-upload-crop-img " [hidden]="!showCropper">
+                        <img [src]="finalImage" alt="cropped Image">
+                    </div>
                 </div>
 
             </div>
