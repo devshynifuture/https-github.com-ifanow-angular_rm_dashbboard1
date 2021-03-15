@@ -661,16 +661,22 @@ export class MutualFundOverviewComponent implements OnInit {
   }
   checkFamMember() {
     this.clientNameToDisplay = null;
-    if (this.setDefaultFilterData) {
-      let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
-      if (famMember.length == 1) {
-        this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+    if (Object.keys(this.setDefaultFilterData).length > 0) {
+      if (this.setDefaultFilterData.familyMember) {
+        let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
+        if (famMember.length == 1) {
+          this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+        } else {
+          this.clientNameToDisplay = this.clientData.name
+        }
       } else {
         this.clientNameToDisplay = this.clientData.name
       }
+
     } else {
       this.clientNameToDisplay = this.clientData.name
     }
+
   }
   getCashFlowData(data) {
     const cashFlow = data;

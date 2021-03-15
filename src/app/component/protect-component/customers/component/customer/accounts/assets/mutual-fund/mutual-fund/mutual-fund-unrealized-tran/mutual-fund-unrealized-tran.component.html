@@ -437,6 +437,23 @@
                      </div>
                   </td>
                </ng-container>
+               <ng-container matColumnDef="lockPeriod">
+                  <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                     Unlock date
+                  </th>
+                  <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                     <div class="bar">
+                        <span>{{element?.elssDate ? (element?.elssDate) : '-'}}</span>
+                     </div>
+                  </td>
+               </ng-container>
+               <ng-container matColumnDef="lockPeriodTotal">
+                  <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                     <div class="bar">
+                        <span class="f-700">{{''}}</span>
+                     </div>
+                  </td>
+               </ng-container>
                <ng-container matColumnDef="groupHeader">
                   <td *matCellDef="let group" [attr.colspan]="displayedColumns?.length"
                      class="text-center zIndex text-primary bb">
@@ -560,6 +577,10 @@
          <td *ngIf="customDataSource.data?.arrayTran[7]?.isCheked == true"
             style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>{{customDataSource.data?.arrayTran[7]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
+            style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayTran[8]?.name}}</b>
          </td>
       </tr>
    </table>
@@ -1079,13 +1100,17 @@
             style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
             <b>{{customDataSource.data?.arrayTran[7]?.name}}</b>
          </td>
+         <td *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
+            style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayTran[8]?.name}}</b>
+         </td>
       </tr>
       <tbody *ngFor="let item of customDataSource.data ;index as i">
 
 
 
          <tr style="page-break-inside: avoid">
-            <td *ngIf="item.groupName" [attr.colspan]="8"
+            <td *ngIf="item.groupName" [attr.colspan]="9"
                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.groupName}}
             </td>
@@ -1103,7 +1128,7 @@
             </td>
          </tr>
          <tr style="page-break-inside: avoid" *ngIf="item.name || item.folio">
-            <td [attr.colspan]="8"
+            <td [attr.colspan]="9"
                style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
             </td>
@@ -1111,13 +1136,13 @@
          <tr *ngIf="item.fwTransactionType || item.category"
             style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid; border-top: 1px solid #DADCE0;">
             <td *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;text-align: left;">
+               [ngStyle]="customDataSource.data?.arrayTran[0].style">
                <!-- {{item.indexId}} -->
                {{item[firstArrayTran]}}
 
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[1]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
+               [ngStyle]="customDataSource.data?.arrayTran[1].style">
                <span *ngIf="item.fwTransactionType">
                   <!-- {{(item.fwTransactionType) ? item.fwTransactionType : '-'}} -->
                   {{item[secondArrayTran]}}
@@ -1125,13 +1150,13 @@
                </span>
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[2]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               [ngStyle]="customDataSource.data?.arrayTran[2].style">
                <!-- {{item.transactionDate | date:'dd/MM/yyyy'}} -->
                {{item[thirdArrayTran]}}
 
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[3]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               [ngStyle]="customDataSource.data?.arrayTran[3].style">
                <span>
                   <!-- {{item.amount}} -->
                   {{item[fourthArrayTran]}}
@@ -1139,7 +1164,7 @@
                </span>
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[4]?.isCheked == true"
-               style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-top: 1px solid #DADCE0;text-align: right;">
+               [ngStyle]="customDataSource.data?.arrayTran[4].style">
                <span>
                   <!-- {{item.purchasePrice}} -->
                   {{item[fifthArrayTran]}}
@@ -1147,7 +1172,7 @@
                </span>
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[5]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               [ngStyle]="customDataSource.data?.arrayTran[5].style">
                <span>
                   <!-- {{item.unit}} -->
                   {{item[SixthArrayTran]}}
@@ -1155,61 +1180,72 @@
                </span>
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[6]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+               [ngStyle]="customDataSource.data?.arrayTran[6].style">
                <!-- {{item.balanceUnits}} -->
                {{item[seventhArrayTran]}}
 
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[7]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[7].style">
                <!-- {{item.days}} -->
                {{item[eighthArrayTran]}}
+
+            </td>
+            <td *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
+               <!-- {{item.days}} -->
+               {{item[ninethArrayTran]}}
 
             </td>
          </tr>
          <tr *ngIf="item.total && viewMode != 'All Transactions'"
             style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                {{item[firstArrayTotalTran]}}
             </td>
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[1]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                <!-- Total -->
                {{item[secondArrayTotalTran]}}
 
             </td>
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[2]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                {{item[thirdArrayTotalTran]}}
 
             </td>
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[3]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                <!-- {{item.totalTransactionAmt}} -->
                {{item[fourthArrayTotalTran]}}
 
             </td>
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[4]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                {{item[fifthArrayTotalTran]}}
 
             </td>
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[5]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                <!-- {{item.totalUnit}} -->
                {{item[SixthArrayTotalTran]}}
 
             </td>
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[6]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                <!-- {{item.totalBalanceUnit}} -->
                {{item[seventhArrayTotalTran]}}
 
             </td>
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[7]?.isCheked == true"
-               style=" border-bottom:1px solid #DADCE0;  text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-top: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
                {{item[eighthArrayTotalTran]}}
+
+            </td>
+            <td class="f-700" *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
+               [ngStyle]="customDataSource.data?.arrayTran[8].style">
+               {{item[ninethArrayTotalTran]}}
 
             </td>
          </tr>
