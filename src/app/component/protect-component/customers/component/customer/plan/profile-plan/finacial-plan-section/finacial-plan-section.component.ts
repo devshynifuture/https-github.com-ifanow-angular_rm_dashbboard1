@@ -191,6 +191,8 @@ export class FinacialPlanSectionComponent implements OnInit {
         this.planService.clearStorage();
       }
     }
+    this.planService.setClientId(this.clientId);
+
     this.planService.getPlanData()
       .subscribe(res => {
         this.storedData = '';
