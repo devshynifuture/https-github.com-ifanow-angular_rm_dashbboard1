@@ -87,7 +87,8 @@ export class FactSheetComponent implements OnInit {
   yDivider: number;
   error: boolean;
   maxLengthError = false;
-  constructor(protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
+  fragmentData = { isSpinner: false, date: null, time: '', size: '' };
+  constructor(private util: UtilService, protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
   formatMoney(value) {
     // const temp = `${value}`.replace(/\,/g, "");
@@ -131,6 +132,27 @@ export class FactSheetComponent implements OnInit {
       }
     }
     return result;
+  }
+  generatePdf(data) {
+    // if (this.chart) {
+    //   this.svg = this.chart.getSVG();
+    // }
+    // if (this.portfolioGraph) {
+    //   this.portSvg = this.portfolioGraph.getSVG();
+    // }
+    // if (this.cashFlowChart) {
+    //   this.cashFlowSvg = this.cashFlowChart.getSVG();
+    // }
+    // console.log('svg', this.cashFlowSvg);
+    // const svgs = [{ key: '$showpiechart1', svg: this.svg ? this.svg : '' },
+    // { key: '$showpiechart2', svg: this.portSvg ? this.portSvg : '' },
+    // { key: '$showpiechart3', svg: this.cashFlowSvg ? this.cashFlowSvg : '' }];
+    this.fragmentData.isSpinner = true;
+
+    const para = document.getElementById('fact-Sheet');
+    // const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null, null);
+
   }
   getRatio() {
     this.relativePerLoading = true;

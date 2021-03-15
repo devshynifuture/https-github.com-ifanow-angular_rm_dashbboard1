@@ -59,6 +59,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   goalSDrror: boolean;
   goalRError: boolean;
   goalAddError: boolean;
+  goalError: boolean;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -294,6 +295,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       } else {
         this.goalAddError = false;
       }
+      if ([-1].includes(UtilService.compareDates(sStartDate, gstartDate))) {
+        this.goalError = true;
+      } else {
+        this.goalError = false;
+      }
     }
     else if (this.data.singleOrMulti == 2) {
       const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
@@ -320,6 +326,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       } else {
         this.goalAddError = false;
       }
+      if ([-1].includes(UtilService.compareDates(sStartDate, gstartDate))) {
+        this.goalError = true;
+      } else {
+        this.goalError = false;
+      }
     } else {
       // savings SD cannot be greater than goal start date
       if ([-1].includes(UtilService.compareDates(sEndtDate, gstartDate))) {
@@ -337,6 +348,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       } else {
         this.goalAddError = false;
       }
+      if ([-1].includes(UtilService.compareDates(sStartDate, gstartDate))) {
+        this.goalError = true;
+      } else {
+        this.goalError = false;
+      }
     }
 
     // savings start date cannot be greater than end date
@@ -346,7 +362,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.savingsSDError = false;
     }
 
-    return this.goalSDError || this.savingsEDError || this.savingsSDError || this.goalSDrror || this.goalAddError;
+    return this.goalSDError || this.savingsEDError || this.savingsSDError || this.goalSDrror || this.goalAddError || this.goalError;
   }
 
   savePreference() {

@@ -37,6 +37,7 @@ export class AddSovereignGoldBondsComponent implements OnInit {
     // }
   };
   maxDate: Date = new Date();
+  maxtransactionDate: Date = new Date();
   validatorType = ValidatorType;
   goldBondForm: any;
   ownerData: any;
@@ -573,6 +574,8 @@ export class AddSovereignGoldBondsComponent implements OnInit {
       let price = this.bondSeriesList.filter(x => x.seriesName == data);
       this.goldBondForm.get("issuePrice").setValue(price[0].retailPrice);
       this.goldBondForm.get("issueDate").setValue(new Date(price[0].issueDate));
+      let date = new Date(price[0].issueDate);
+      this.maxtransactionDate = new Date(date.getFullYear() + 5, date.getMonth(), date.getDate());
     }
     this.calUnits();
   }

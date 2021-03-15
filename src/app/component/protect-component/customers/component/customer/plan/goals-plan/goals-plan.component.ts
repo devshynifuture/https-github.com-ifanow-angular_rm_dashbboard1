@@ -147,6 +147,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   details: any;
   defaultGallery: any;
   dataSource: any;
+  storedData: string;
+  clientIdToClearStorage: string;
+  clientId: any;
+  LoadCount: number;
+  goalTableValues: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -164,6 +169,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.advisor_client_id.clientId = AuthService.getClientId();
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
+    this.clientId = AuthService.getClientId()
     this.getOrgData = AuthService.getOrgDetails();
     console.log('isAdvisor', authService.isAdvisor())
   }
@@ -188,11 +194,32 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.loadAllGoals(false);
       })
     );
-    //this.loadAllAssets();
-    this.loadAllGoals(false);
+    this.plansService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.plansService.clearStorageGoal();
+      }
+    }
+    this.plansService.setClientId(this.clientId);
+    this.plansService.getGoalData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.loadAllGoals(false);
+    } else {
+      this.loadPlanRes(this.storedData, false);
+    }
+    //this.loadAllGoals(false);
     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
   }
-
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
+  }
   // load all goals created for the client and select the first goal
   generatePdf(data) {
     this.fragmentData = {}
@@ -208,23 +235,37 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};
     this.dataSource3 = new MatTableDataSource(ELEMENT_DATA);
-    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
-      if (data) {
-        this.allGoals = data
-        if (flag == true) {
-          this.loadAllGoals(false)
-        }
-      } else {
-        this.allGoals = [];
-      }
-      this.isLoading = false;
-      this.loaderFn.decreaseCounter();
-    }, err => {
-      this.eventService.openSnackBar(err, "Dismiss");
-      this.loaderFn.decreaseCounter();
-    });
-  }
 
+    let obj = {
+      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId()
+    }
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe(
+      data => this.loadPlanRes(data, flag),
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.loaderFn.decreaseCounter();
+      }
+    );
+  }
+  loadPlanRes(data, flag) {
+    if (data) {
+      this.plansService.setGoalData(data)
+      this.allGoals = data
+      if (flag == true) {
+        this.loadAllGoals(false)
+      }
+    } else {
+      this.allGoals = [];
+    }
+    this.isLoading = false;
+    if (this.subscriber) {
+      this.afterDataLoadMethod()
+      this.loaderFn.decreaseCounter();
+    } else {
+      this.loaderFn.decreaseCounter();
+    }
+  }
   loadAllAssets() {
     const otherAssets = this.plansService.getAssetsForAllocation(this.advisor_client_id);
     const mfAssets = this.plansService.getMFList(this.advisor_client_id);
@@ -341,10 +382,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   // create json which is used on dashboard and other areas
   mapGoalDashboardData(goal: any) {
     let mapData: any = {};
-
+    this.goalTableValues = []
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
     mapData.singleOrMulti = goal.singleOrMulti;
+    mapData.goalTableValues = goal.goalTableValues;
     mapData.goalAssetAllocation = goal.goalAssetAllocation;
     if (goal.singleOrMulti == 1) {
       const goalSubData = goal.singleGoalModel;
@@ -361,6 +403,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       } else {
         mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
       }
+      //this.goalTableValues = goal.goalTableValues
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
         presentValue: goalSubData.goalPresentValue,

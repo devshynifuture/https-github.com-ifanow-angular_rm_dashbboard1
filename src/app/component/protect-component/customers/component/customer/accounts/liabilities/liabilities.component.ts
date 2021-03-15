@@ -17,6 +17,7 @@ import { FileUploadServiceService } from '../assets/file-upload-service.service'
 import { LoanAmortsComponent } from './loan-amorts/loan-amorts.component';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 import { RoleService } from 'src/app/auth-service/role.service';
+import { InsuranceService } from '../insurance/insurance.service';
 
 
 @Component({
@@ -72,6 +73,7 @@ export class LiabilitiesComponent implements OnInit {
   getOrgData: any;
   selectedItem
   getAdvisorDetail: any;
+  realEstateData: any;
 
 
   constructor(private cd: ChangeDetectorRef, private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -79,7 +81,7 @@ export class LiabilitiesComponent implements OnInit {
     private fileUpload: FileUploadServiceService,
     private _bottomSheet: MatBottomSheet,
     public util: UtilService, public dialog: MatDialog, private excelGen: ExcelGenService, private pdfGen: PdfGenService,
-    public roleService: RoleService) {
+    public roleService: RoleService, private insService: InsuranceService) {
     this.clientData = AuthService.getClientData();
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
@@ -108,6 +110,7 @@ export class LiabilitiesComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
+    this.getRealEstate();
     // this.advisorData = AuthService.getProfileInfo();
     this.getLiability('');
     this.getPayables();
@@ -140,6 +143,22 @@ export class LiabilitiesComponent implements OnInit {
   //   this.footer.push(Object.assign(footerData))
   //   ExcelService.exportExcel(headerData, header, this.excelData, this.footer, value)
   // }
+
+  getRealEstate() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.customerService.getRealEstate(obj).subscribe(
+      data => {
+        console.log(data);
+        this.realEstateData = data;
+        this.insService.setInsData(this.realEstateData);
+      }
+      , (error) => {
+        this.eventService.showErrorMessage(error);
+      });
+  }
   fetchData(value, fileName, element) {
     element.advisorId = this.advisorId;
     element.isClient = element.borrowers[0].isClient;

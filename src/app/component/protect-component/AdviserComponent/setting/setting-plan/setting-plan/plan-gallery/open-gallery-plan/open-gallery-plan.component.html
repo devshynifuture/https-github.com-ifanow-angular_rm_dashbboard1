@@ -31,7 +31,19 @@
 
         <div class="row ">
             <div class="col-md-12 " *ngIf="cropImage">
-                <div class="text-center mt-20" *ngIf="!showCropper">
+                <div class="text-center mt-10" *ngIf="!showCropper">
+                    <!-- <div class="row">
+                        <div class="col-md-7">
+                            <div class="bg-grey lter">
+                                <img src="/assets/images/svg/dummy-plan-setting.svg"
+                                    class="setting-upload-crop-img  center-item">
+                            </div>
+
+                        </div>
+                        <div class="col-md-5">
+                            <img src="/assets/images/svg/dummy-plan-setting.svg" class="setting-upload-crop-img ">
+                        </div>
+                    </div> -->
                     <h5 class="m-0  ">Upload a template photo.</h5>
                 </div>
 
@@ -47,6 +59,9 @@
 
                     <div class="profile-img" [hidden]="!showCropper" style="width: 50%;">
                         <img [src]="finalImage" alt="cropped Image" class="w-100">
+                    </div>
+                    <div *ngIf="goalIndividualData.template" class="setting-upload-crop-img " [hidden]="!showCropper">
+                        <img [src]="finalImage" alt="cropped Image">
                     </div>
                 </div>
 
@@ -64,8 +79,8 @@
 </div>
 
 <div class="row pt-32 pb-28">
-    <div class="col-md-4"></div>
-    <div class="col-md-6 pl-36">
+    <div class="col-md-6"></div>
+    <div class="col-md-6 pl-36 pr-0">
         <!--    // TODo [mat-dialog-close]="data"-->
         <button class="br-0 text-inherit f-14" mat-button (click)="Close(false)">
             CANCEL
