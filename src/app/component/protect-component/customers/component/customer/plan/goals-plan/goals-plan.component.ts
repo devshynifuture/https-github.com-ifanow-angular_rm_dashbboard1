@@ -151,6 +151,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   clientIdToClearStorage: string;
   clientId: any;
   LoadCount: number;
+  goalTableValues: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -381,10 +382,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   // create json which is used on dashboard and other areas
   mapGoalDashboardData(goal: any) {
     let mapData: any = {};
-
+    this.goalTableValues = []
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
     mapData.singleOrMulti = goal.singleOrMulti;
+    mapData.goalTableValues = goal.goalTableValues;
     mapData.goalAssetAllocation = goal.goalAssetAllocation;
     if (goal.singleOrMulti == 1) {
       const goalSubData = goal.singleGoalModel;
@@ -401,6 +403,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       } else {
         mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
       }
+      //this.goalTableValues = goal.goalTableValues
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
         presentValue: goalSubData.goalPresentValue,

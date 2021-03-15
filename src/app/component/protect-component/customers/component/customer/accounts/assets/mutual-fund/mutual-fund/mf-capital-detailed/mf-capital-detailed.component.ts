@@ -894,7 +894,8 @@ export class MfCapitalDetailedComponent implements OnInit {
                 clientId: this.clientId,
                 advisorId: this.advisorId,
                 fromEmail: this.clientDetails.advisorData.email,
-                toEmail: this.clientData.email
+                toEmail: this.clientData.email,
+                mfBulkEmailRequestId: this.mfBulkEmailRequestId
             }
             this.UtilService.bulkHtmlToPdf(obj)
             //this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Detailed', true, this.fragmentData, '', '')
