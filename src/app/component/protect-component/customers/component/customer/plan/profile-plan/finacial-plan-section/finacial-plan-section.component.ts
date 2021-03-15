@@ -153,6 +153,9 @@ export class FinacialPlanSectionComponent implements OnInit {
   svg1: any;
   svg2: any;
   svg3: any;
+  storedData: string;
+  clientIdToClearStorage: any;
+  LoadCount: number;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -180,24 +183,32 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.count = 0;
     this.moduleAdded = [];
     this.clientDetails = [{}, {}, {}];
-    this.getListFamilyMem();
-    this.getGoalSummaryValues();
-    this.getInsuranceList();
-    this.getAssetCountGlobalData()
-    this.getCountPortfolioInsurance()
-    this.getIncome()
-    //this.getExpense()
-    this.getBuget()
-    this.getTemplateSection()
-    this.getPlanSection()
-    this.getLibilities()
-    this.riskHistory();
-    this.getNotes();
-    this.isLoading = true
+    this.planService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.planService.clearStorage();
+      }
+    }
+    this.planService.getPlanData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getPlanSection()
+    } else {
+      this.getPlanSectionRes(this.storedData);
+    }
     this.emailBody = '<html><body><img src="https://res.cloudinary.com/futurewise/image/upload/v1491912047/fp-templates-uploads/index.jpg" width="965px" height="1280px"><div style="position: absolute;top: 18px;left: 16px;font-size: 20;padding-left:15px;"> <b>Date: ' + this.datePipe.transform(new Date(), 'dd-MM-yyyy') + '</b></div><div style="position: absolute;top: 18px;right: 18px;padding-right:15px;"> <img _ngcontent-hwm-c87="" width="140px" src=' + this.getOrgData.logoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20; padding-right:15px;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;padding-right:15px"> <b>' + this.clientData.name + '`s Plan</b></div></body></html>'
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
     console.log('clientData', this.getOrgData)
+  }
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
   }
   viewRiskResult(value: any, sectionName: any, obj: any, displayName: any, flag: any, array) {
     this.viewResult(value, sectionName, obj, displayName, flag, array)
@@ -415,6 +426,17 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   addNew() {
     this.hideTable = true
+    this.getListFamilyMem();
+    this.getGoalSummaryValues();
+    this.getInsuranceList();
+    this.getAssetCountGlobalData()
+    this.getCountPortfolioInsurance()
+    this.getIncome()
+    this.getBuget()
+    this.getLibilities()
+    this.riskHistory();
+    this.getNotes();
+    this.getTemplateSection()
   }
 
   deletePlanSection(value, data) {
@@ -572,6 +594,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   getPlanSectionRes(data) {
     if (data) {
+      this.planService.setPlanData(data);
       this.isLoading = false
       console.log('get plan section data', data)
       this.clientDetails = data

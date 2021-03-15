@@ -3,12 +3,16 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { appConfig } from 'src/app/config/component-config';
 import { apiConfig } from 'src/app/config/main-config';
 import { HttpParams } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanService {
+
+  private planData = new BehaviorSubject('')
+  private clientId = new BehaviorSubject('')
+
 
   constructor(private http: HttpService) { }
   public assetSubject = new Subject();
@@ -375,5 +379,20 @@ export class PlanService {
 
   addManuallyRiskProfile(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MANUAL_RISK_PROFILE, data);
+  }
+  setPlanData(value) {
+    this.planData.next(value);
+  }
+  getPlanData() {
+    return this.planData.asObservable();
+  }
+  setClientId(value) {
+    this.clientId.next(value);
+  }
+  getClientId() {
+    return this.clientId.asObservable();
+  }
+  clearStorage() {
+    this.setPlanData('');
   }
 }
