@@ -17,6 +17,10 @@ export class FolioMasterDetailsComponent implements OnInit {
   bankDetails: any;
   obj: any;
   msgForFranklin: string;
+  isLoadingOthers = false;
+  othersData: any;
+  emailList: any;
+  mobileList: any;
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) {
   }
@@ -78,11 +82,37 @@ export class FolioMasterDetailsComponent implements OnInit {
         this.getNomineeDetailsFolioSchemeWise();
       }
     }
+    if (event.index == 4) {
+      this.getOtherFolioDetails();
+    }
     console.log(this.inputData);
   }
+  getOtherFolioDetails() {
+    this.isLoadingOthers = true;
+    this.obj = {
+      folioNumber: this.inputData.folioNumber,
+      schemeCode: this.inputData.schemeCode
+    };
+    this.custumService.OtherFolioDetails(this.obj)
+      .subscribe((res: any) => {
+        this.isLoadingOthers = false;
+        if (res) {
+          this.othersData = res;
+          this.emailList = this.othersData.emailList;
+          this.mobileList = this.othersData.mobileList;
 
+        } else {
+          this.othersData = res;
+        }
+      }, err => {
+        this.othersData = null;
+        this.isLoadingOthers = false;
+        console.error(err);
+        this.eventService.showErrorMessage(err);
+      });
+  }
   getNomineeDetailsFolioSchemeWise() {
-    this.isLoading = true
+    this.isNomineeLoading = true;
     if (this.inputData.rtMasterId == 3) {
       this.obj = {
         folioNumber: this.inputData.folioNumber,
@@ -93,7 +123,6 @@ export class FolioMasterDetailsComponent implements OnInit {
         schemeCode: this.inputData.schemeCode
       };
     }
-    this.isNomineeLoading = true;
     this.custumService.getFolioSchemeWiseNomineeDetails(this.obj)
       .subscribe((res: any) => {
         this.isNomineeLoading = false;
@@ -107,7 +136,7 @@ export class FolioMasterDetailsComponent implements OnInit {
         }
       }, err => {
         this.nomineeArray = [];
-        this.isNomineeLoading = true;
+        this.isNomineeLoading = false;
         console.error(err);
         this.eventService.showErrorMessage(err);
       });

@@ -77,7 +77,8 @@
             <div class="col-md-6 pt-28 pl-28 text-right">
               <div *ngIf="!isLoadingNav">
                 <p class="m-0 text-primitive f-12 proxima">{{schemeReturnName}} NAV RETURN</p>
-                <h2 class="m-0 text-black proxima">{{schemeReturnValue | number:'1.2-2'}}%</h2>
+                <h2 class="m-0 text-black proxima">{{schemeReturnValue ? (schemeReturnValue | number:'1.2-2') : 0}}%
+                </h2>
               </div>
               <div class="skeletonAnimation" *ngIf="isLoadingNav" [appSkeletonLoading]="isLoadingNav"
                 appSkeletonLoading>
@@ -262,8 +263,7 @@
                 {{data.schemeName}}.</span>The fund
               currently has an Asset Under Management(AUM) of ₹<span appFormatNumber
                 [value]="schemeDetails?.aum ? schemeDetails?.aum :'-'"></span> Cr and the Latest NAV as of
-              {{data.navDate
-              | date:'dd/MM/yyyy'}} is
+              {{data.navDate}} is
               ₹{{data?.nav}}.</p>
             <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">The {{data.schemeName}} is rated
               {{schemeDetails?.color}}.<span *ngIf="data.sipAmount != 0">Minimum SIP
@@ -278,7 +278,7 @@
                 </h1>
               </div>
             </div>
-            <h4 class="m-0 f-500 pt-20">Scheme objective</h4>
+            <h4 class="m-0 f-500 pt-20" *ngIf="schemeDetails?.objective">Scheme objective</h4>
             <p class="f-300 roboto m-0 pt-8" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.objective}}</p>
             <div class="relClass" *ngIf="isLoadingSchemeDetails">
               <div [ngClass]="{'height80': isLoadingSchemeDetails}" class="bar">
@@ -417,7 +417,8 @@
             <div class="row pt-20 ">
               <div class="col-md-6">
                 <p class="f-12 m-0">MIN AMOUNT</p>
-                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails"><span appFormatNumber class="bar"
+                <h5 class="m-0" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.minAmount ? '₹' : ''}}<span
+                    appFormatNumber class="bar"
                     [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span>
                 </h5>
                 <div class="col-md-9 p-0 relClass m-0" *ngIf="isLoadingSchemeDetails">
@@ -535,30 +536,42 @@
 <div style="background-color: #f2f2f2;" class="d-none" id="fact-Sheet">
   <table style="width: 100%;">
     <tr>
-      <td style="text-align: left; vertical-align: top; width: 50%;" *ngIf="getOrgData">
-        <div style="width: 200px;">
-          <img style="max-width: 100%;"
-            src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-          <span width="200px" style="font-size: 25px;">Company Name</span>
+      <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+        <div style="width: 200px;"
+          *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+          <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+        </div>
+        <div style="width: 200px;"
+          *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+          <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+        </div>
+        <div
+          *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+          <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
         </div>
       </td>
-      <td style=" text-align: right; width: 50%;">
-        <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
-          SLA Financial Solutions
+      <td style=" text-align: right;" colspan="12">
+        <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+          {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+        <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+          {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+        <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
+          {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
+        <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Fact sheet</strong>
         </p>
-        <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong>
-            Number: </strong>
-          9172604455
-        </p>
-        <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Email:
-          </strong>
-          slafinsol@gmail.com
-        </p>
-        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
-            Report as on:
-            15-Mar-2021</strong>
+        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+            {{reportDate | date:'dd-MMM-yyyy' }}</strong>
         </p>
       </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" style="padding: 10px;"></td>
+    </tr>
+    <tr>
+      <td colspan="8" style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;">
+        Client name: {{clientNameToDisplay ? clientNameToDisplay : this.clientData.name}}</td>
+
     </tr>
   </table>
   <table style="width: 100%">
@@ -568,9 +581,9 @@
           <tr>
             <td style="padding-top: 20px;padding-bottom: 20px;">
               <span
-                style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">EQUITY</span>
+                style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">{{data.categoryName}}</span>
               <span
-                style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">EQUITY</span>
+                style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">{{data.subCategoryName}}</span>
             </td>
           </tr>
         </table>
@@ -581,19 +594,24 @@
                 <tr>
                   <td style="width: 40%">
                     <p style="margin: 0px;font-size: 12px;color: #83959D">CURRENT VALUE</p>
-                    <p style="margin:0px;"><span style="font-size: 28px;color: #008FFF;">₹ 19,73,828</span>
-                      <span style="color:#02B875 !important;font-size: 16px;">+31.28%</span>
+                    <p style="margin:0px;"><span style="font-size: 28px;color: #008FFF;">₹ <span>
+                          {{currentValue}}</span></span>
+                      <span style="color:#02B875 !important;font-size: 16px;"><span>{{(xirrValue >= 0) ? '+' :
+                          '-'}}</span>{{xirrValue
+                        |
+                        number:'1.2-2'}}%</span>
                     </p>
                   </td>
                   <td style="width: 20%">
                     <p style="margin: 0px;font-size: 12px;color: #83959D">PROFIT (LOSS)</p>
-                    <p style="margin:0px;"><span style="font-size: 28px;color: #02B875;">₹ 19,73,828</span>
+                    <p style="margin:0px;"><span style="font-size: 28px;color: #02B875;">₹
+                        <span>{{profitOrLossValue}}</span></span>
                     </p>
                   </td>
                   <td style="width: 33%;text-align: right;">
                     <p style="margin: 0px;font-size: 12px;color: #83959D">INVESTOR NAME</p>
-                    <p style="margin: 0px;font-size: 20px;color: #000">Ronak Hasmukh Hindocha</p>
-                    <p style="margin: 0px;font-size: 12px;color: #83959D">23243434/78</p>
+                    <p style="margin: 0px;font-size: 20px;color: #000">{{ investorName }}</p>
+                    <p style="margin: 0px;font-size: 12px;color: #83959D">{{ folioNumber }}</p>
                   </td>
                 </tr>
               </table>
@@ -607,12 +625,13 @@
           <tr style="background-color: #fff;">
             <td style="padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
               <p style="margin: 0px;font-size: 12px;color: #83959D">NAV</p>
-              <p style="margin: 0px;font-size: 26px;color: #000">726.9030</p>
-              <p style="margin: 0px;font-size: 12px;color: #83959D">as on 13/09/2019</p>
+              <p style="margin: 0px;font-size: 26px;color: #000">{{nav}}</p>
+              <p style="margin: 0px;font-size: 12px;color: #83959D">as on {{data.navDate}}</p>
             </td>
             <td style="text-align: right;padding-top: 10px;padding-bottom: 10px;padding-right: 10px;">
-              <p style="margin: 0px;font-size: 12px;color: #83959D">1 YEAR NAV RETURN</p>
-              <p style="margin: 0px;font-size: 26px;color: #000">12.23%</p>
+              <p style="margin: 0px;font-size: 12px;color: #83959D">{{schemeReturnName}} NAV RETURN</p>
+              <p style="margin: 0px;font-size: 26px;color: #000">{{schemeReturnValue ? (schemeReturnValue |
+                number:'1.2-2') : 0}}%</p>
             </td>
           </tr>
           <tr>
@@ -624,12 +643,18 @@
           <tr>
             <td style="text-align: center;background-color: #fff;font-size: 18px;padding-bottom: 4px;padding-top: 8px;"
               colspan="2">
-              <span style="padding-right: 20px;">3m</span>
-              <span style="padding-right: 20px;">6m</span>
-              <span style="padding-right: 20px;">1y</span>
-              <span style="padding-right: 20px;">3y</span>
-              <span style="padding-right: 20px;">5y</span>
-              <span style="padding-right: 0px;border-bottom: 2px solid #2680eb !important;">all</span>
+              <span style="padding-right: 20px;"
+                [ngStyle]="{'border-bottom': demo1TabIndex == 0 ? '2px solid #2680eb' : 'none' }">3m</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 1 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">6m</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 2 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">1y</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 3 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">3y</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 4 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">5y</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 5 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 0px;">all</span>
             </td>
           </tr>
           <tr>
@@ -659,16 +684,25 @@
                     style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px;text-align: right;padding-right: 5px; ">
                     Assets (Cr)</td>
                 </tr>
-                <tr>
-                  <td style="padding-top: 5px;padding-bottom: 5px;padding-left: 5px;color: #212121;">ICICI Bank</td>
-                  <td style="padding-top: 5px;padding-bottom: 5px;color: #212121;">Financial</td>
-                  <td style="padding-top: 5px;padding-bottom: 5px;">Equity</td>
-                  <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;color: #212121;">12.23%</td>
+                <tr *ngFor="let element of dataSource.data">
+                  <td style="padding-top: 5px;padding-bottom: 5px;padding-left: 5px;color: #212121;">
+                    {{element.companyName ? element.companyName :'-'}}</td>
+                  <td style="padding-top: 5px;padding-bottom: 5px;color: #212121;">{{element.sectorName ?
+                    element.sectorName : '-'}}</td>
+                  <td style="padding-top: 5px;padding-bottom: 5px;">{{element.rating ? element.rating :'-'}}</td>
+                  <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;color: #212121;">
+                    {{element.holdPercentage | number:'1.2-2'}}{{isLoading ? '' :'%'}}</td>
                   <td style="padding-left: 20px;">
-                    <div style="height: 15px;background-color: #008FFF;width: 110px;"></div>
+                    <div style="background:rgb(192, 192, 192);width: 100%">
+                      <div style="background:#007bff ;height: 15px;" [ngStyle]="{'width':element.holdPercentage+'%' }">
+                      </div>
+                    </div>
+                    <!-- <div style="height: 15px;background-color: #008FFF;width: 110px;"></div> -->
                   </td>
                   <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;padding-right: 5px;color: #212121;">
-                    1,290</td>
+                    <span appFormatNumber>{{!isLoading ? (element.mktValue ? element.mktValue : '-')
+                      : ''}}</span>
+                  </td>
                 </tr>
               </table>
             </td>
@@ -692,19 +726,30 @@
           <tr>
             <td colspan="2">
               <p style="font-weight: bold;padding-bottom: 10px;margin:0px;padding-top: 20px;font-size: 16px;">About
-                Aditya Birla Sun Life Equity Fund Direct-Growth</p>
-              <p style="margin: 0px;color: #000;font-size: 14px;">Aditya Birla Sun Life Equity Fund Direct Growth is a
-                Equity Mutual Fund Scheme launched by Aditya Birla Sun Life Mutual Fund. This scheme was introduced to
-                investors on 01 Jan 2013. Anil Shah is the Current Fund Manager of Aditya Birla Sun Life Equity Fund
-                Direct Growth.The fund currently has an Asset Under Management(AUM) of ₹10,694 Cr and the Latest NAV as
-                of 09 Sep 2019 is ₹726.52.</p>
-              <p style="margin: 0px;padding-top: 10px;color: #000;font-size: 14px;">The Aditya Birla Sun Life Equity
-                Fund Direct Growth is rated Moderately High risk. Minimum SIP Investment is 100. Minimum Lumpsum
-                Investment is 100. Exit load of 1% if redeemed within 365 days..</p>
-              <p style="font-weight: bold;padding-bottom: 5px;padding-top:15px;margin:0px;font-size: 16px">Scheme
+                {{data.schemeName}}</p>
+              <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">{{data.schemeName}} is a
+                {{data.categoryName | lowercase }} Mutual Fund
+                Scheme launched by {{schemeDetails?.amc}} Mutual Fund.<span *ngIf="schemeDetails?.inceptDate">This
+                  scheme
+                  was introduced to investors on {{schemeDetails?.inceptDate ? (schemeDetails?.inceptDate |
+                  date:'dd-MMM-yyyy') : '-'}}.</span><span
+                  *ngIf="schemeDetails?.fundManager1">{{schemeDetails?.fundManager1}} is the Current Fund Manager of
+                  {{data.schemeName}}.</span>The fund
+                currently has an Asset Under Management(AUM) of ₹<span appFormatNumber
+                  [value]="schemeDetails?.aum ? schemeDetails?.aum :'-'"></span> Cr and the Latest NAV as of
+                {{data.navDate}} is
+                ₹{{data?.nav}}.</p>
+              <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">The {{data.schemeName}} is rated
+                {{schemeDetails?.color}}.<span *ngIf="data.sipAmount != 0">Minimum SIP
+                  Investment is {{data.sipAmount}}.</span><span *ngIf="schemeDetails?.lumpsum">Minimum Lumpsum
+                  Investment
+                  is {{schemeDetails?.lumpsum}}. Exit load of
+                  {{schemeDetails?.remarks}}% if redeemed
+                  within 365 days.</span></p>
+              <p style="font-weight: bold;padding-bottom: 5px;padding-top:15px;margin:0px;font-size: 16px"
+                *ngIf="schemeDetails?.objective">Scheme
                 objective</p>
-              <p style="margin: 0px;color: #000;font-size: 14px;">Aims to provide long term capital appreciation through
-                a portfolio with target allocation of 90 percent in equity.</p>
+              <p class="f-300 roboto m-0 pt-8" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.objective}}</p>
               <p style="font-weight: bold;padding-bottom: 5px;padding-top:15px;margin:0px;font-size: 16px;">Disclaimer
               </p>
               <p style="margin: 0px;color: #000;font-size: 14px;">Mutual Fund investments are subject to market risks,
@@ -718,11 +763,14 @@
           <tr>
             <td style="padding-top: 15px;padding-bottom: 15px;padding-left: 10px;">
               <p style="color: #000;font-size: 12px;margin: 0px;">Scheme Returns</p>
-              <p style="color: #008FFF;font-size: 32px;margin: 0px;">12.23%</p>
+              <p style="color: #008FFF;font-size: 32px;margin: 0px;">{{schemeReturnValue ? (schemeReturnValue |
+                number:'1.2-2') :
+                '-'}}{{schemeReturnValue ? '%' : ''}}</p>
             </td>
             <td style="padding-top: 15px;padding-bottom: 15px;padding-right: 10px;text-align: right">
               <p style="color: #000;font-size: 12px;margin: 0px;">Scheme Returns</p>
-              <p style="color: #008FFF;font-size: 32px;margin: 0px;">12.23%</p>
+              <p style="color: #008FFF;font-size: 32px;margin: 0px;">{{xirr ? (xirr | number:'1.2-2') :
+                '-'}}{{xirr ? '%' : ''}}</p>
             </td>
           </tr>
         </table>
@@ -738,10 +786,28 @@
           <tr>
             <td style="text-align: center;">
               <p style="margin: 0px;">An investment of </p>
-              <h4 style="text-decoration: underline;font-size: 46px;margin: 0px;">50,000</h4>
+              <h4 style="text-decoration: underline;font-size: 46px;margin: 0px;"><span
+                  *ngIf="amount.value">{{amount.value}}</span></h4>
               <p style="margin: 0px;padding-bottom: 10px;padding-top: 5px;">would have fetched you following returns</p>
               <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/styled-mode-column/thumbnail.png"
                 style="width: 100%;">
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;background-color: #fff;font-size: 18px;padding-bottom: 4px;padding-top: 8px;"
+              colspan="2">
+              <span style="padding-right: 20px;"
+                [ngStyle]="{'border-bottom': demo1TabIndex == 0 ? '2px solid #2680eb !important' : 'none' }">3m</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 1 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">6m</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 2 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">1y</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 3 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">3y</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 4 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 20px;">5y</span>
+              <span [ngStyle]="{'border-bottom': demo1TabIndex == 5 ? '2px solid #2680eb' : 'none' }"
+                style="padding-right: 0px;">all</span>
             </td>
           </tr>
         </table>
@@ -773,48 +839,54 @@
               <tr>
                 <td style="padding-left: 10px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;padding-top: 20px;">MIN AMOUNT</p>
-                  <p style="margin: 0px;font-size: 16px;">₹100</p>
+                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.minAmount ? '₹' : ''}}<span appFormatNumber
+                      class="bar" [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span></p>
                 </td>
                 <td style="padding-right: 10px;padding-top: 20px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">MIN AMOUNT</p>
-                  <p style="margin: 0px;font-size: 16px;">₹100</p>
+                  <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME TYPE</p>
+                  <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.type)}}</p>
                 </td>
               </tr>
               <tr>
                 <td style="padding-left: 10px;padding-top: 30px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME STARTED</p>
-                  <p style="margin: 0px;font-size: 16px;">21/03/2013</p>
+                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.inceptDate ? (schemeDetails?.inceptDate
+                    | date:'dd-MM-yyyy') :'-' }}</p>
                 </td>
                 <td style="padding-right: 10px;padding-top: 30px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME SIZE</p>
-                  <p style="margin: 0px;font-size: 16px;">₹10,694 Cr</p>
+                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.aum ? '₹' : ''}}<span appFormatNumber
+                      [value]="schemeDetails?.aum ? schemeDetails?.aum : '-'"></span></p>
                 </td>
               </tr>
               <tr>
                 <td style="padding-left: 10px;padding-top: 30px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;">CASH POSITION</p>
-                  <p style="margin: 0px;font-size: 16px;">1.4%</p>
+                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.aum ? (schemeDetails?.aum |
+                    number:'1.2-2') :'-'}}{{schemeDetails?.aum ? '%' : ''}}</p>
                 </td>
                 <td style="padding-right: 10px;padding-top: 30px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;">EXPENSE RATIO</p>
-                  <p style="margin: 0px;font-size: 16px;">1.04</p>
+                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.expRatio}}</p>
                 </td>
               </tr>
               <tr>
                 <td style="padding-left: 10px;padding-top: 30px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;">PE RATIO</p>
-                  <p style="margin: 0px;font-size: 16px;">20.42</p>
+                  <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.pe | number:'1.2-2')}}</p>
                 </td>
                 <td style="padding-right: 10px;padding-top: 30px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;">P/B RATIO</p>
-                  <p style="margin: 0px;font-size: 16px;">2.29</p>
+                  <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.pb | number:'1.2-2')}}</p>
                 </td>
               </tr>
               <tr>
                 <td colspan="2" style="padding-left: 10px;padding-top: 30px;padding-bottom: 20px;">
                   <p style="margin:0px;color: #83959D;font-size: 12px;">EXIT LOAD</p>
-                  <p style="margin: 0px;font-size: 16px;">Exit load of 1% if redeemed within
-                    365 days.
+                  <p style="margin: 0px;font-size: 16px;"><span *ngIf="schemeDetails?.remarks">Exit load of
+                      {{schemeDetails?.remarks}}
+                      if redeemed within
+                      365 days.</span>
                   </p>
                 </td>
               </tr>
