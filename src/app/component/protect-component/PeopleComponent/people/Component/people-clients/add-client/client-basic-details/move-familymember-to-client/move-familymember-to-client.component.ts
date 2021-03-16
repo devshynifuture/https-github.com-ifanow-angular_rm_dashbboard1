@@ -178,7 +178,16 @@ export class MoveFamilymemberToClientComponent implements OnInit {
             data => {
               this.showSpinnerOwner = false;
               if (data) {
-                data = data.filter(element => element.groupHeadId == this.value.clientId && element.familyId == this.value.familyMemberId);
+                if (this.flag != "move") {
+                  if (this.fieldFlag == 'client') {
+                    data = data.filter(element => element.groupHeadId != this.value.clientId);
+                  } else {
+                    data = data.filter(element => element.familyId != this.value.familyMemberId);
+                  }
+                } else {
+
+                }
+
                 data.forEach(element => {
                   if (element.familyId > 0) {
                     element.showName = element.familyMemberName;
