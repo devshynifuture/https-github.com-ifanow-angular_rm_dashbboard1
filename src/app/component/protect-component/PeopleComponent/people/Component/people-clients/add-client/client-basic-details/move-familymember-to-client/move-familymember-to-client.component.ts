@@ -52,6 +52,7 @@ export class MoveFamilymemberToClientComponent implements OnInit {
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
   isLoading: boolean;
+  headerFlag: string;
   constructor(private peopleService: PeopleService,
     private datePipe: DatePipe,
     private enumDataService: EnumDataService,
@@ -66,6 +67,11 @@ export class MoveFamilymemberToClientComponent implements OnInit {
     this.flag = this.data.flag;
     this.fieldFlag = this.data.fieldFlag;
     this.barButtonOptions.text = this.flag;
+    if (this.fieldFlag == 'familyMember') {
+      this.headerFlag = "Merge duplicate family member";
+    } else {
+      this.headerFlag = "Merge duplicate client";
+    }
   }
 
 
@@ -172,7 +178,7 @@ export class MoveFamilymemberToClientComponent implements OnInit {
             data => {
               this.showSpinnerOwner = false;
               if (data) {
-                data = data.filter(element => element.groupHeadId != this.value.clientId);
+                data = data.filter(element => element.groupHeadId == this.value.clientId && element.familyId == this.value.familyMemberId);
                 data.forEach(element => {
                   if (element.familyId > 0) {
                     element.showName = element.familyMemberName;

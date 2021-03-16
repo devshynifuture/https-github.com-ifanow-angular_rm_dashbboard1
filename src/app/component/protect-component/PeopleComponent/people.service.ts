@@ -255,4 +255,7 @@ export class PeopleService {
   kycStatusOfPan(data) {
     return this.http.get(apiConfig.USER + appConfig.KYC_STATUS_OF_PAN, data);
   }
+  getAdvisorNameMobile(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_ADVSOR_NAME_MOBILE, data);
+  }
 }
