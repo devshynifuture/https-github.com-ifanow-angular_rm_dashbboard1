@@ -210,7 +210,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       (this.basicDetailsData.familyMemberType == 1 || this.basicDetailsData.familyMemberType == 0) ?
         this.createIndividualForm(this.basicDetailsData) : this.createMinorForm(this.basicDetailsData);
     } else {
-      this.getClientList();
+      this.peopleService.teamMembers ? this.getTeamMemberListRes(this.peopleService.teamMembers) : this.getTeamMemberList();
       this.basicDetailsData = data;
       if (this.basicDetailsData.userId == null) {
         this.invTypeCategory = '1';
@@ -304,7 +304,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientRoles = this.enumService.getClientRole();
     console.log(this.clientRoles, 'this.clientRoles 123A');
-    console.log('tax status data', this.enumDataService.getDataForTaxMasterService());
+    // console.log('tax status data', this.enumDataService.getDataForTaxMasterService());
     this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
   }
 
@@ -801,22 +801,27 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   }
 
 
-  getClientList() {
+  getTeamMemberList() {
     const obj = {
       advisorId: this.advisorId
     };
     this.peopleService.getTeamMemberList(obj).subscribe(
       data => {
-        console.log(data);
-        this.clientOwnerList = data;
-        if (this.clientOwnerList.length == 1 && this.basicDetailsData.userId == undefined) {
-          this.selectedClientOwner = this.clientOwnerList[0].adminAdvisorId;
-        }
+        this.getTeamMemberListRes(data);
       },
       err => {
         console.error(err);
       }
     );
+  }
+
+  getTeamMemberListRes(data) {
+    // console.log(data);
+    this.clientOwnerList = data;
+    if (this.clientOwnerList.length == 1 && this.basicDetailsData.userId == undefined) {
+      this.selectedClientOwner = this.clientOwnerList[0].adminAdvisorId;
+    }
+    this.peopleService.teamMembers = data;
   }
 
   changeTabAndSendData(data) {

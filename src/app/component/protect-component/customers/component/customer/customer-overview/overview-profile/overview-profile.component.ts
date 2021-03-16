@@ -78,6 +78,7 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getProofType();
     // this.enumDataService.getBank();
     this.enumDataService.getClientRole();
+    this.enumDataService.apiCallIsdCodesData();
     this.clientSuggeService.setEmptySuggestionList();
 
     if (this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.enabled) {
@@ -486,6 +487,7 @@ export class OverviewProfileComponent implements OnInit {
       clientData.bankData = data;
     } else {
       component = ClientDematComponent;
+      clientData.bankList = this.bankList;
       clientData.dematData = data;
     }
     clientData.headerFlag = headerFlag;

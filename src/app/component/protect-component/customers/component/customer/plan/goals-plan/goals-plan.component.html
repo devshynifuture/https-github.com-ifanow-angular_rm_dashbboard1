@@ -509,7 +509,58 @@
                                     <div class="bar">
                                         <span>
                                             {{element.achievedPercent ? element.achievedPercent : 0}}%
+                                        </span>{{loaderFn.loading?'':'%'}}
+                                    </div>
+                                </td>
+
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+
+                    </div>
+                    <div class="row pt-40" *ngIf="!loaderFn.loading && !isRetirementTab">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 pb-12">Goal year wise details</h5>
+                        </div>
+                    </div>
+
+                    <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden"
+                        *ngIf="!loaderFn.loading && !isRetirementTab">
+                        <table mat-table [dataSource]="goalTableValues" id="tbs" class="skeletonAnimation"
+                            appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                            <ng-container matColumnDef="goalYear">
+                                <th *matHeaderCellDef class="br  " mat-header-cell> Goal Year</th>
+                                <td *matCellDef="let element; let i = index;" class="br" mat-cell>
+                                    <div class="bar"> {{element.goalYr | date: 'yyyy'}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="goalFv">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal FV </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber>
+                                            {{element.fvOnGoalDate}} </span></div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal present value</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}
+                                        <span appFormatNumber>
+                                            {{(element.yearlyGoalValue ? element.yearlyGoalValue : 0)}}
                                         </span>
+                                    </div>
+                                </td>
+
+                            </ng-container>
+                            <ng-container matColumnDef="percentage">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right">Percentage</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">
+                                        <span>
+                                            {{element.achievedPercent ? element.achievedPercent : 0}}%
+                                        </span>{{loaderFn.loading?'':'%'}}
                                     </div>
                                 </td>
 

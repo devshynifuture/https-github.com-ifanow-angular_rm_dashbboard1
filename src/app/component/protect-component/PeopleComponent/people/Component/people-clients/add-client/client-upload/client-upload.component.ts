@@ -75,7 +75,7 @@ export class ClientUploadComponent implements OnInit {
   errProof2 = true;
   showErr2 = false;
   userData: any;
-  bankList: any;
+  // // bankList: any;
   fileUploadData: any;
   file: any;
   clientData: any;
@@ -99,19 +99,27 @@ export class ClientUploadComponent implements OnInit {
     console.log(data, 'user data1');
     this.userData = data;
   }
+
+  @Input() bankList;
+
   @Input() set isRefreshBank(data) {
     if (data) {
-      this.getBankList();
+      if (this.userData.flag && this.userData.flag.includes('Add')) {
+        return;
+      }
     }
   }
   ngOnInit() {
     this.advisorId = AuthService.getUserInfo().advisorId;
     // this.clientId = AuthService.getClientId();
     // this.addDocObj.clientId = this.clientId;
-
+    this.selectedBank = ''
     this.proofTypes = this.enumService.getProofType();
     this.bankLIst = this.enumService.getBank();
-    this.getBankList();
+    if (this.userData.flag && this.userData.flag.includes('Add')) {
+      return;
+    }
+    // this.getBankList();
     const obj = {
       userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ?
         this.userData.clientId : this.userData.familyMemberId,
@@ -371,29 +379,6 @@ export class ClientUploadComponent implements OnInit {
         this.fileComPanRef.nativeElement.files.FileList = null;
         break;
     }
-  }
-  getBankList() {
-    const obj =
-      [{
-        userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-        userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-      }];
-    this.custumService.getBankList(obj).subscribe(
-      data => {
-        console.log(data);
-        if (data && data.length > 0) {
-          this.bankList = data;
-          this.selectedBank = data[0].bankId;
-        } else {
-          this.bankList = [];
-        }
-      },
-      err => {
-        this.bankList = [];
-        this.selectedBank = '';
-      }
-      // this.eventService.openSnackBar(err, "Dismiss")
-    );
   }
   deleteImg(imgId) {
     const obj = { id: imgId };

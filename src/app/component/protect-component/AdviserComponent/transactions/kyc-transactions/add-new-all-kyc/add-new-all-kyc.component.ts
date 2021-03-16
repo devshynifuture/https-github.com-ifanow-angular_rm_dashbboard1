@@ -146,6 +146,20 @@ export class AddNewAllKycComponent implements OnInit {
     return data;
   }
 
+  getAndReplaceAdvisorNameMobile() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.peopleService.getAdvisorNameMobile(obj).subscribe(
+      data => {
+        if (data) {
+          this.emailBody = this.emailBody.replace('$admin_advisor_personal_profile_name', data.advisorName);
+          this.emailBody = this.emailBody.replace('$admin_advisor_mobile_number', data.advisorMobile)
+        }
+      }
+    )
+  }
+
   getSubjectTemplate() {
     const obj = {
       advisorId: this.advisorId,
@@ -159,7 +173,10 @@ export class AddNewAllKycComponent implements OnInit {
             from: [data.fromEmail, [Validators.required]],
             subject: [data.subject, [Validators.required]],
           })
+          data.body = data.body.replace('$member_profile_name', this.selectedClientData.name);
+          // 
           this.emailBody = data.body;
+          this.getAndReplaceAdvisorNameMobile();
         } else {
         }
       }, err => {

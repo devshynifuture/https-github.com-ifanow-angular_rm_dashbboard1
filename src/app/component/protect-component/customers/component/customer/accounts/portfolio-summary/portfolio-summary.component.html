@@ -143,8 +143,7 @@
                       <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                         <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                           <span *ngIf="fixedIncome.currentValue!=0">₹</span>
-                          <span *ngIf="fixedIncome" appFormatNumber
-                            [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
+                          <span *ngIf="fixedIncome" appFormatNumber [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
                             fixedIncome.currentValue}}</span>
                         </p>
                         <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
@@ -222,8 +221,7 @@
                     <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                       <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                         <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                        <span appFormatNumber [value]="smallSavingScheme.currentValue"
-                          *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                        <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                           smallSavingScheme.currentValue}}</span>
                       </p>
                       <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
@@ -373,7 +371,7 @@
                 </div>
               </div>
 
-              <div [hidden]="letsideBarLoader" class="row">
+              <div [hidden]="mainLoader" class="row">
                 <div class="col-xl-7 col-lg-12 col-md-12">
                   <div class="b-a mt-20 shadowBox bg-white">
                     <div class="row">
@@ -381,9 +379,8 @@
                         <h4 class="m-0 wrapper-20">Portfolio growth</h4>
                       </div>
                       <div class="col-md-6 pl-0">
-                        <h2 *ngIf="letsideBarLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
-                          ₹<span appFormatNumber
-                            [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+                        <h2 *ngIf="mainLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
+                          ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                             liabilityTotal}}</span>
                         </h2>
                       </div>
@@ -412,13 +409,13 @@
                         <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
                         <ul *ngIf="nightyDayData && oneDay" class="pl-20">
                           <li class="pr-4 text-black">90-days</li>
-                          <li *ngIf="letsideBarLoader==false"
+                          <li *ngIf="mainLoader==false"
                             [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"
                             class="text-success pr-24">₹<span appFormatNumber
                               [value]="nightyDayData.value">{{nightyDayData.value}}</span>
                           </li>
                           <li class="pr-4 text-black">1-days</li>
-                          <li *ngIf="letsideBarLoader==false"
+                          <li *ngIf="mainLoader==false"
                             [ngClass]="{'text-success': oneDay.flag,'text-danger':oneDay.flag==false}"
                             class="text-danger">
                             ₹<span appFormatNumber [value]="oneDay.value">{{oneDay.value}}</span></li>
@@ -429,7 +426,7 @@
                 </div>
 
 
-                <div [hidden]="letsideBarLoader" class="col-xl-5  col-lg-12 col-md-12 pl-0 pl-15-1200">
+                <div [hidden]="mainLoader" class="col-xl-5  col-lg-12 col-md-12 pl-0 pl-15-1200">
                   <div class="b-a mt-20 shadowBox bg-white">
                     <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
                     <div *ngIf="!assetAllocationRes" class="row">
@@ -461,23 +458,23 @@
                 </div>
               </div>
 
-              <div class="row skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+              <div class="row skeletonAnimation" [appSkeletonLoading]="mainLoader" appSkeletonLoading>
                 <div class="col-md-12 col-lg-6 mt-20 overflow-hidden ">
                   <div class="relClass">
-                    <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+                    <div class="bar300" [ngClass]="{'height300': mainLoader}">
                     </div>
                   </div>
                 </div>
                 <div class="col-md-12 col-lg-6 mt-20 overflow-hidden">
                   <div class="relClass">
-                    <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+                    <div class="bar300" [ngClass]="{'height300': mainLoader}">
                     </div>
                   </div>
                 </div>
               </div>
 
 
-              <div [hidden]="letsideBarLoader" class="mtClass" [formGroup]="cashFlowFG">
+              <div [hidden]="cashflowFlag" class="mtClass" [formGroup]="cashFlowFG">
                 <div class="b-a shadowBox wrapper-12 bg-white">
 
                   <div class="row">
@@ -592,10 +589,10 @@
                 </div>
               </div>
 
-              <div class="row skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+              <div class="row skeletonAnimation" [appSkeletonLoading]="cashflowFlag" appSkeletonLoading>
                 <div class="col-md-12 mt-20 overflow-hidden ">
                   <div class="relClass">
-                    <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+                    <div class="bar300" [ngClass]="{'height300': cashflowFlag}">
                     </div>
                   </div>
                 </div>
@@ -719,8 +716,7 @@
               <span style="float: right;"> <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
                 <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
                   ? '-' : mutualFundValue.currentValue}}
-                </span> <br><span style="float: right;"> <span
-                    *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
+                </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
                     mutualFundValue.percentage}}
                     <span *ngIf="mutualFundValue.percentage!=0">%</span></span></span> </span>
             </div>
@@ -764,8 +760,7 @@
             <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
               <span> Small savings </span>
               <span style="float: right;"> <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="smallSavingScheme.currentValue"
-                  *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                   smallSavingScheme.currentValue}}</span> <br><span style="float: right;"> <span
                     *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' :
                     smallSavingScheme.percentage}}

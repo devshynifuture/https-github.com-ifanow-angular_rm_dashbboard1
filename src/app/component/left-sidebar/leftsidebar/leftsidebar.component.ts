@@ -480,6 +480,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   logout() {
     this.clientList = [];
+    this.peopleService.clearCacheData();
     this.customerOverview.clearServiceData();
     this.domainData = AuthService.getDomainDetails();
     this.peopleService.clientList = undefined;

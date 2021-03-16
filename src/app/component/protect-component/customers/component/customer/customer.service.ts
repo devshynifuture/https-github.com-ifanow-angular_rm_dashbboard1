@@ -4,11 +4,16 @@ import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UtilService } from '../../../../../services/util.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
+
+  private documentData = new BehaviorSubject('')
+  private clientId = new BehaviorSubject('')
+
   constructor(private http: HttpService, private httpService: HttpClient) {
   }
 
@@ -1208,6 +1213,23 @@ export class CustomerService {
 
   OtherFolioDetails(data) {
     return this.http.get(apiConfig.USER + appConfig.OTHER_FOLIO_DETAILS, data);
+  }
+
+  setDocumentData(value) {
+    this.documentData.next(value);
+  }
+  getDocumentData() {
+    return this.documentData.asObservable();
+  }
+
+  setClientId(value) {
+    this.clientId.next(value);
+  }
+  getClientId() {
+    return this.clientId.asObservable();
+  }
+  clearStorage() {
+    this.setDocumentData('');
   }
 }
 

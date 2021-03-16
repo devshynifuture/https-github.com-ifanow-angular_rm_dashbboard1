@@ -162,7 +162,7 @@ export class PlanService {
   }
   getAllGoals(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_GOALS, httpParams);
+    return this.http.get(apiConfig.GOAL + appConfig.GET_ALL_GOALS, httpParams);
   }
   deleteGoal(data) {
     const httpParams = new HttpParams().set('goalId', data.goalId).set('goalType', data.goalType).set('id', data.id);
@@ -203,7 +203,7 @@ export class PlanService {
   //   return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_INFLAMATION_RETURNS, data)
   // }
   getMFList(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_DATA, data);
+    return this.http.get(apiConfig.GOAL + appConfig.GET_MF_DATA, data);
   }
   saveMileStone(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_MILESTONE, data);
