@@ -2152,6 +2152,9 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   openUpperFragment(flag, element, value) {
+    if (element) {
+      element.clientName = this.clientNameToDisplay;
+    }
     this.ngZone.run(() => {
       if (flag == 'addTransaction') {
         const fragmentData = {

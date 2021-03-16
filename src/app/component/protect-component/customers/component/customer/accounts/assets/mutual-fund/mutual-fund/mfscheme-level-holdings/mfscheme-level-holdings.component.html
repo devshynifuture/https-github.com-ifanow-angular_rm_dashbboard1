@@ -219,15 +219,16 @@
       <div class="col-md-3">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input matInput autocomplete="off" appInputValueValidation
+            <!-- <input matInput autocomplete="off" appInputValueValidation
               [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" [maxLength]="20"
-              formControlName="transactionAmount" #transactionAmount
-              (keyup)="getIndexOfSelectedElement(transactionAmount.value,singleTransaction)" formControlName="Units"
-              type="number" maxlength="20" class="form-control br-0 rupess">
+              formControlName="transactionAmount" #trnAmt
+              (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)" formControlName="Units" type="number"
+              maxlength="20" class="form-control br-0 rupess"> -->
 
-            <!-- <input matInput autocomplete="off" type="number" #transactionAmount formControlName="transactionAmount"
-              class="form-control br-0 rupess" [maxLength]="8"
-              (keyup)="getIndexOfSelectedElement(transactionAmount.value,singleTransaction)"> -->
+            <input matInput autocomplete="off" type="number" appInputValueValidation
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #transactionAmount
+              formControlName="transactionAmount" class="form-control br-0 rupess" [maxLength]="20"
+              (keyup)="getIndexOfSelectedElement(transactionAmount.value,singleTransaction)">
             <mat-hint align="end" class="f-12">{{transactionAmount.value.length}}/20</mat-hint>
             <mat-error>
               This field is required

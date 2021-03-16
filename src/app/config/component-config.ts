@@ -318,6 +318,7 @@ export const appConfig = {
   MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/relative/performance',
   GET_KYC_DETAILS_OF_CLIENT: 'user/investor-kyc-remaining/count/get',
   HIDE_KYC_POPUP: 'user/investor-kyc-remaining/hide',
+  OTHER_FOLIO_DETAILS: 'user/client/contact-number-and-email/scheme-wise/get',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',

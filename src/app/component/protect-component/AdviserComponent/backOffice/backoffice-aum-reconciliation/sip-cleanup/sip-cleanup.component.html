@@ -167,12 +167,14 @@
                     <td mat-cell *matCellDef="let element" class="br">
                         <div *ngIf="filterForm.get('markUnmark').value==0 && !isLoading" class="d-flex">
                             <button mat-stroked-button class="btn-primary mr-8 f-12 h-20 lh-20 br-1 keep-sip-clenup"
-                                (click)="setKeepOrRemove(element,'keep')">
+                                (click)="setKeepOrRemove(element,'keep')"
+                                [ngClass]="element.disabled==0 ? 'disableClass':''">
                                 Keep
                             </button>
                             <button mat-stroked-button
                                 class="btn-danger text-white f-12 h-20 lh-20 br-1 remove-sip-clenup"
-                                (click)="setKeepOrRemove(element,'remove')">
+                                (click)="setKeepOrRemove(element,'remove')"
+                                [ngClass]="element.disabled==1 ? 'disableClass':''">
                                 Remove
                             </button>
                         </div>
