@@ -189,32 +189,32 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.fragmentData = { isSpinner: false };
     this.dataSource1 = [];
     //this.dataSource.data = [];
-    this.subscriber.add(
-      this.allocateOtherAssetService.refreshObservable.subscribe(() => {
-        this.loadAllGoals(false);
-      })
-    );
-    this.plansService.getClientId().subscribe(res => {
-      this.clientIdToClearStorage = res;
-    });
-    if (this.clientIdToClearStorage) {
-      if (this.clientIdToClearStorage != this.clientId) {
-        this.plansService.clearStorageGoal();
-      }
-    }
-    this.plansService.setClientId(this.clientId);
-    this.plansService.getGoalData()
-      .subscribe(res => {
-        this.storedData = '';
-        this.storedData = res;
-      });
+    // this.subscriber.add(
+    //   this.allocateOtherAssetService.refreshObservable.subscribe(() => {
+    //     this.loadAllGoals(false);
+    //   })
+    // );
+    // this.plansService.getClientId().subscribe(res => {
+    //   this.clientIdToClearStorage = res;
+    // });
+    // if (this.clientIdToClearStorage) {
+    //   if (this.clientIdToClearStorage != this.clientId) {
+    //     this.plansService.clearStorageGoal();
+    //   }
+    // }
+    // this.plansService.setClientId(this.clientId);
+    // this.plansService.getGoalData()
+    //   .subscribe(res => {
+    //     this.storedData = '';
+    //     this.storedData = res;
+    //   });
 
-    if (this.chekToCallApi()) {
-      this.loadAllGoals(false);
-    } else {
-      this.loadPlanRes(this.storedData, false);
-    }
-    //this.loadAllGoals(false);
+    // if (this.chekToCallApi()) {
+    //   this.loadAllGoals(false);
+    // } else {
+    //   this.loadPlanRes(this.storedData, false);
+    // }
+    this.loadAllGoals(false);
     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
   }
   chekToCallApi() {
@@ -664,12 +664,20 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         element.goalYear = new Date(element.goalStartDate).getFullYear()
       });
     } else {
+      goalData.goalTableValues.forEach(element => {
+        element.achievedPercent = parseInt(element.achievedPercent).toFixed(2)
+      });
+      if (goalData.goalTableValues.length > 0) {
+        this.goalTableValues = goalData.goalTableValues
+      } else {
+        this.goalTableValues = []
+      }
       this.isRetirementTab = false;
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
     if (this.dataSource.length > 0) {
       this.dataSource.forEach(element => {
-        element.achievedPercent = (element.achievedPercent).toFixed(2)
+        element.achievedPercent = parseInt(element.achievedPercent).toFixed(2)
       });
     }
     this.dataSource1 = goalData.remainingData.milestoneModels ? goalData.remainingData.milestoneModels : [];
