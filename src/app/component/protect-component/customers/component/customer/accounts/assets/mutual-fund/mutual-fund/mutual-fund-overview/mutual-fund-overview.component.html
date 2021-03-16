@@ -645,7 +645,7 @@
 
 
             <!-- || datasource1.data.length > 0 -->
-            <div class="card cashflow">
+            <div [ngClass]="{'card cashflow': showCashFlow,'d-none': !showCashFlow}">
                 <div class="pr-0  ">
                     <div class="bg-grey lter" *ngIf="showCashFlow || datasource1.data.length > 0">
                         <h5 class="m-0 wrapper-8 f-500 roboto pt-10 pb-10 b-a bb-0" *ngIf="showCashFlow">Cashflow status
