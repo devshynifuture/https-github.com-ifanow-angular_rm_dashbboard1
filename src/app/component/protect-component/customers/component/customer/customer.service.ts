@@ -1210,6 +1210,11 @@ export class CustomerService {
   hideKycPopup(data) {
     return this.http.put(apiConfig.USER + appConfig.HIDE_KYC_POPUP, data);
   }
+
+  OtherFolioDetails(data) {
+    return this.http.get(apiConfig.USER + appConfig.OTHER_FOLIO_DETAILS, data);
+  }
+
   setDocumentData(value) {
     this.documentData.next(value);
   }

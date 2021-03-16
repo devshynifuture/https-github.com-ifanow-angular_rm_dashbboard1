@@ -87,7 +87,12 @@ export class FactSheetComponent implements OnInit {
   yDivider: number;
   error: boolean;
   maxLengthError = false;
+  reportDate = new Date();
+  userInfo = AuthService.getUserInfo();
+  getOrgData = AuthService.getOrgDetails();
+  clientData = AuthService.getClientData();
   fragmentData = { isSpinner: false, date: null, time: '', size: '' };
+  clientNameToDisplay: any;
   constructor(private util: UtilService, protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
   formatMoney(value) {
@@ -108,6 +113,7 @@ export class FactSheetComponent implements OnInit {
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
     this.nav = this.data.nav;
+    this.clientNameToDisplay = this.data.clientName;
     this.getInvRet();
     this.getRatio();
     this.getDetails();

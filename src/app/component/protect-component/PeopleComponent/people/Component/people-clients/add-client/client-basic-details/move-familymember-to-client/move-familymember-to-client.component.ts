@@ -178,7 +178,27 @@ export class MoveFamilymemberToClientComponent implements OnInit {
             data => {
               this.showSpinnerOwner = false;
               if (data) {
-                data = data.filter(element => element.groupHeadId == this.value.clientId && element.familyId == this.value.familyMemberId);
+                let list = []
+                if (this.flag != "move") {
+                  if (this.fieldFlag == 'client') {
+                    list = data;
+                    const indexSearchMethod = (element) => element.groupHeadId == this.value.clientId && element.familyId == 0;
+                    console.log(list.findIndex(indexSearchMethod), list);
+                    list.splice(list.findIndex(indexSearchMethod), 1);
+                  } else {
+                    data.forEach(element => {
+                      if (element.familyId != this.value.familyMemberId) {
+                        list.push(element);
+                      }
+                    });
+                    const indexSearchMethod = (element) => element.groupHeadId == this.value.clientId && element.familyId == 0;
+                    console.log(list.findIndex(indexSearchMethod), list);
+                    list.splice(list.findIndex(indexSearchMethod), 1);
+                  }
+                } else {
+
+                }
+                data = list;
                 data.forEach(element => {
                   if (element.familyId > 0) {
                     element.showName = element.familyMemberName;
@@ -200,6 +220,7 @@ export class MoveFamilymemberToClientComponent implements OnInit {
         }
       );
   }
+
 
 
   mergeDuplicateFamilyMember() {

@@ -29,6 +29,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { map } from 'rxjs-compat/operator/map';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { OpenGalleryPlanComponent } from 'src/app/component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 
 
@@ -163,6 +164,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     public loaderFn: LoaderFunction,
     public roleService: RoleService,
+    private enumDataService: EnumDataService,
     public authService: AuthService,
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();

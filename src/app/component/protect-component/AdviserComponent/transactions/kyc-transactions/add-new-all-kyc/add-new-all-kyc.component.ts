@@ -55,7 +55,6 @@ export class AddNewAllKycComponent implements OnInit {
       this.data['btnFlag'] = 'Cancel'
     }
     this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : AuthService.getClientData().advisorId;
-    this.getAndReplaceAdvisorNameMobile();
     this.getSubjectTemplate();
     this.kycForm = this.fb.group({
       from: [, [Validators.required]],
@@ -177,6 +176,7 @@ export class AddNewAllKycComponent implements OnInit {
           data.body = data.body.replace('$member_profile_name', this.selectedClientData.name);
           // 
           this.emailBody = data.body;
+          this.getAndReplaceAdvisorNameMobile();
         } else {
         }
       }, err => {
