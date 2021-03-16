@@ -78,6 +78,7 @@ export class OverviewProfileComponent implements OnInit {
     this.enumDataService.getProofType();
     // this.enumDataService.getBank();
     this.enumDataService.getClientRole();
+    this.enumDataService.apiCallIsdCodesData();
     this.clientSuggeService.setEmptySuggestionList();
 
     if (this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.enabled) {

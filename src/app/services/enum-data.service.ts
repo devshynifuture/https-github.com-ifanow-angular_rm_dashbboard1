@@ -15,6 +15,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class EnumDataService {
+  IsdCodesData: any;
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
     private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
@@ -341,6 +342,26 @@ export class EnumDataService {
       this.clientAndFamilyData = data;
     }
   }
+
+  apiCallIsdCodesData() {
+    let obj = {};
+    this.peopleService.getIsdCode(obj).subscribe(
+      data => {
+        if (data) {
+          this.setIsdCodesData(data);
+        }
+      }
+    );
+  }
+
+  setIsdCodesData(data) {
+    this.IsdCodesData = data;
+  }
+
+  getIsdCodeData() {
+    return this.IsdCodesData;
+  }
+
 
   getClientAndFamilyData(value) {
     const filterValue = value.toLowerCase();
