@@ -430,7 +430,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       }
     }
 
-    // this.putSipCleanUpFolioKeepOrRemove(dataObjArr, 'single');
+    this.putSipCleanUpFolioKeepOrRemove(dataObjArr, 'single');
   }
 
   openRecordDeatils(data) {
