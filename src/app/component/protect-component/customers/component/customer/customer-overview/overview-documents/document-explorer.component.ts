@@ -24,7 +24,7 @@ import { RoleService } from 'src/app/auth-service/role.service';
   styleUrls: ['./document-explorer.component.scss']
 })
 
-export class DocumentExplorerComponent implements AfterViewInit, OnInit {
+export class DocumentExplorerComponent implements OnInit {
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   fileType = [
@@ -78,6 +78,9 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   previewDoc = false;
   shortUrl: any;
   selectedElement: any;
+  storedData: any;
+  clientIdToClearStorage: any;
+  LoadCount: number;
 
   constructor(private eventService: EventService, private http: HttpService, private _bottomSheet: MatBottomSheet,
     private custumService: CustomerService, public subInjectService: SubscriptionInject,
@@ -101,11 +104,11 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
   getSort: any;
   viewMode;
 
-  ngAfterViewInit(): void {
-    this.commonFileFolders = new MatTableDataSource(this.data);
-    this.commonFileFolders.sort = this.sort;
-    console.log('sorted', this.commonFileFolders);
-  }
+  // ngAfterViewInit(): void {
+  //   this.commonFileFolders = new MatTableDataSource(this.data);
+  //   this.commonFileFolders.sort = this.sort;
+  //   console.log('sorted', this.commonFileFolders);
+  // }
 
   ngOnInit() {
     const tabValue = 'Documents';
@@ -113,8 +116,32 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     this.backUpfiles = [];
     this.openFolderName = [];
     this.isAdvisor = this.authService.isAdvisor()
-    this.getAllFileList(tabValue, 'init');
+    this.custumService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.custumService.clearStorage();
+      }
+    }
+    this.custumService.setClientId(this.clientId);
+
+    this.custumService.getDocumentData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getAllFileList(tabValue, 'init')
+    } else {
+      this.getAllFilesRes(this.storedData, 'value');
+    }
+    // this.getAllFileList(tabValue, 'init');
     this.getCount()
+  }
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
   }
   getCount() {
     const obj = {
@@ -341,6 +368,7 @@ export class DocumentExplorerComponent implements AfterViewInit, OnInit {
     } else {
       this.showMsg = false;
     }
+    this.custumService.setDocumentData(data)
     this.allFiles = data.files;
     this.AllDocs = data.folders;
     this.dataToCommon = data.folders;

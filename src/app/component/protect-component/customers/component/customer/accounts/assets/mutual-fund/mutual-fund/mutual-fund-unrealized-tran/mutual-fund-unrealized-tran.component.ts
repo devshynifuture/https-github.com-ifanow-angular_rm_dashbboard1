@@ -1950,31 +1950,31 @@ export class MutualFundUnrealizedTranComponent {
   generatePdfBulk() {
     this.excelDownload = false
     this.loadingDone = true;
-    setTimeout(() => {
-      const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
-      const para = this.unrealizedTranTemplate.nativeElement.innerHTML;
-      if (this.viewMode == 'Unrealized Transactions') {
-        this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML;
-      } else {
-        this.header = this.allTranTemplateHeader.nativeElement.innerHTML;
-      }
-      const obj = {
-        htmlInput: para,
-        header: this.header,
-        name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
-        landscape: true,
-        key: 'showPieChart',
-        clientId: this.clientId,
-        advisorId: this.advisorId,
-        fromEmail: this.clientDetails.advisorData.email,
-        toEmail: this.clientData.email,
-        mfBulkEmailRequestId: this.mfBulkEmailRequestId,
-        // fromEmail: 'devshyni@futurewise.co.in',
-        // toEmail: 'devshyni@futurewise.co.in'
-      };
-      this.utilService.bulkHtmlToPdf(obj);
-      // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
-    }, 200);
+    this.cd.detectChanges();
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+    const para = this.unrealizedTranTemplate.nativeElement.innerHTML;
+    if (this.viewMode == 'Unrealized Transactions') {
+      this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML;
+    } else {
+      this.header = this.allTranTemplateHeader.nativeElement.innerHTML;
+    }
+    const obj = {
+      htmlInput: para,
+      header: this.header,
+      name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
+      landscape: true,
+      key: 'showPieChart',
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      fromEmail: this.clientDetails.advisorData.email,
+      toEmail: this.clientData.email,
+      mfBulkEmailRequestId: this.mfBulkEmailRequestId,
+      // fromEmail: 'devshyni@futurewise.co.in',
+      // toEmail: 'devshyni@futurewise.co.in'
+    };
+    this.utilService.bulkHtmlToPdf(obj);
+    // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
+
   }
 
   getDetails() {

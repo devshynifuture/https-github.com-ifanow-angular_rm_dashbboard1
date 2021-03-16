@@ -108,6 +108,9 @@ export class SingleGoalYearComponent implements OnInit {
     this.setMinMaxAgeOrYear(value);
     this.singleYearGoalForm.get('age').setValidators([Validators.required, Validators.min(this.minAgeYear), Validators.max(this.maxAgeYear)])
     this.singleYearGoalForm.get('age').setValue(this.minAgeYear + this.goalTypeData.defaults.ageIncreament);
+    if (this.goalTypeData.goalTypeId == 1) {
+      this.singleYearGoalForm.get('age').setValue(60);
+    }
     this.singleYearGoalForm.updateValueAndValidity();
   }
 
