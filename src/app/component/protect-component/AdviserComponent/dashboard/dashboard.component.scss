@@ -285,3 +285,9 @@
 .h-160 {
   height: 160px !important;
 }
+
+.mwx-100{
+  .mat-tab-label{
+    min-width: 100% !important;
+  }
+}
