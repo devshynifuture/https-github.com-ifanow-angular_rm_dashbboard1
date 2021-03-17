@@ -32,6 +32,7 @@ export class SendNowReportsComponent implements OnInit {
   date: any;
   default: any;
   sendNow: any;
+  disabledProcess: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -111,6 +112,7 @@ export class SendNowReportsComponent implements OnInit {
     if (reportType == 'overview') {
       if (flag == true) {
         this.overview = false
+        this.disabledProcess = true
       } else {
         this.overview = true
         this.summary = false
@@ -118,12 +120,13 @@ export class SendNowReportsComponent implements OnInit {
         this.unrealisedTransactions = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'summary') {
       if (flag == true) {
         this.summary = false
+        this.disabledProcess = true
       } else {
         this.summary = true
         this.allTransactions = false
@@ -131,12 +134,13 @@ export class SendNowReportsComponent implements OnInit {
         this.overview = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'allTransactions') {
       if (flag == true) {
         this.allTransactions = false
+        this.disabledProcess = true
       } else {
         this.allTransactions = true
         this.summary = false
@@ -144,12 +148,13 @@ export class SendNowReportsComponent implements OnInit {
         this.overview = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'unrealisedTransactions') {
       if (flag == true) {
         this.unrealisedTransactions = false
+        this.disabledProcess = true
       } else {
         this.unrealisedTransactions = true
         this.summary = false
@@ -157,12 +162,13 @@ export class SendNowReportsComponent implements OnInit {
         this.overview = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainDetails') {
       if (flag == true) {
         this.capitalGainDetails = false
+        this.disabledProcess = true
       } else {
         this.capitalGainDetails = true
         this.summary = false
@@ -170,11 +176,13 @@ export class SendNowReportsComponent implements OnInit {
         this.unrealisedTransactions = false
         this.capitalGainSummary = false
         this.overview = false
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainSummary') {
       if (flag == true) {
         this.capitalGainSummary = false
+        this.disabledProcess = true
       } else {
         this.capitalGainSummary = true
         this.summary = false
@@ -182,6 +190,7 @@ export class SendNowReportsComponent implements OnInit {
         this.unrealisedTransactions = false
         this.overview = false
         this.capitalGainDetails = false
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     }

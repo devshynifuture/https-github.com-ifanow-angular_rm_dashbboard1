@@ -232,6 +232,7 @@ export class MutualFundUnrealizedTranComponent {
   excelDownload: boolean = false;
   ninethArrayTran: any;
   ninethArrayTotalTran: any;
+  showSummaryTable: boolean = true;
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -517,9 +518,11 @@ export class MutualFundUnrealizedTranComponent {
           this.saveFilterData = {
             transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
+            showSummary: (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected),
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           };
+          //this.setDefaultFilterData.showSummary = this.saveFilterData.showSummary
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
@@ -1217,8 +1220,11 @@ export class MutualFundUnrealizedTranComponent {
         // }
         if (this.viewMode == 'All Transactions') {
           this.isTableShow = false;
+          this.showSummaryTable = false
         } else {
           this.isTableShow = true;
+          this.showSummaryTable = this.setDefaultFilterData.showSummary
+          console.log('showSummaryTable', this.showSummaryTable)
         }
         if (this.isBulkEmailing && this.fromDate && this.toDate) {
           this.isTableShow = false;
@@ -1581,6 +1587,7 @@ export class MutualFundUnrealizedTranComponent {
       // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
       showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
+      showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : ((this.saveFilterData) ? this.saveFilterData.showSummary : this.setDefaultFilterData.showSummary),
       fromDate: this.setDefaultFilterData.fromDate,
       toDate: this.setDefaultFilterData.toDate,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
@@ -1602,6 +1609,7 @@ export class MutualFundUnrealizedTranComponent {
             this.setUnrealizedDataSource([]);
             this.isLoading = true;
             this.isTableShow = true;
+            this.showSummaryTable = true
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;

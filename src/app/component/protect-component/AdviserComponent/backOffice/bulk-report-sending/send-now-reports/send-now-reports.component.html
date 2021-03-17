@@ -140,8 +140,8 @@
                     <h5 class="m-0">Report as on</h5>
                     <div class="form-group m-0">
                         <mat-form-field class="ba-date">
-                            <input class="form-control br-0 b-0" matInput [matDatepicker]="picker3" readonly
-                                [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'reportASOn')">
+                            <input class="form-control br-0 b-0" [max]="maxDate" matInput [matDatepicker]="picker3"
+                                readonly [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'reportASOn')">
                             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                             <mat-datepicker #picker3></mat-datepicker>
                         </mat-form-field>
@@ -254,7 +254,7 @@
         </div>
 
         <div class="col-md-8 text-right">
-            <button class="btn-primary f-14 ml-12" (click)="proceed()" mat-stroked-button
+            <button class="btn-primary f-14 ml-12" [disabled]="disabledProcess" (click)="proceed()" mat-stroked-button
                 cdkFocusInitial>PROCEED</button>
         </div>
     </div>

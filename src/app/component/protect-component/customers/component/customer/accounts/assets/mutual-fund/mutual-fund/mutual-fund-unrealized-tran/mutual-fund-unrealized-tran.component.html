@@ -36,7 +36,8 @@
       <div class="col-md-12 p-0 mb-8">
          <div *ngIf="dataSource?.data?.length>0">
             <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-               class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table *ngIf="isTableShow">
+               class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table
+               *ngIf="isTableShow && showSummaryTable == true">
                <ng-container matColumnDef="categoryName">
                   <th *matHeaderCellDef class="br" mat-header-cell>
                      {{(columnHeader) ? columnHeader : 'Sub Category Name'}}
@@ -184,7 +185,7 @@
 
 
    <div class="row secoundTable">
-      <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
+      <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 pt-12">
          <!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
 
          <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"
