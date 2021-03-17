@@ -1978,8 +1978,9 @@ export class DashboardComponent implements OnInit {
     this.isKeyMatrix = false;
     data.mfAum = UtilService.getNumberToWord(data.mfAum);
     data.sipBook = UtilService.getNumberToWord(data.sipBook);
-    delete data['mfAum'];
+    // delete data['mfAum'];
     this.keyMetricJson = data;
+    this.mfAumValue = data.mfAum;
     // this.keyMetricJson.mfAum = '';
     this.loaderFun();
   }
@@ -2073,8 +2074,7 @@ export class DashboardComponent implements OnInit {
     }
   }
   getMisDataRes(data) {
-    this.keyMetricJson.mfAum = data.totalAumRupees;
-    this.mfAumValue = data.totalAumRupees;
+    // this.keyMetricJson.mfAum = data.totalAumRupees;
   }
   loaderFun() {
     if (!this.isKeyMatrix && !this.mfDataflag) {

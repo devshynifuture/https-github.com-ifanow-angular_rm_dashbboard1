@@ -164,7 +164,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     public loaderFn: LoaderFunction,
     public roleService: RoleService,
-    private enumDataService: EnumDataService,
+    public enumDataService: EnumDataService,
     public authService: AuthService,
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
