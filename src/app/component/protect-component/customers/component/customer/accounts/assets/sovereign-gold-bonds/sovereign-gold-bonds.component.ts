@@ -66,7 +66,9 @@ export class SovereignGoldBondsComponent implements OnInit {
 
 
   }
-  displayedColumns3 = ['no', 'owner', 'units', 'cvalue', 'interest', 'amountInvested', 'issueDate', 'mvalue', 'mdate', 'bondseries', 'xirrDate', 'status', 'icons'];
+  // displayedColumns3 = ['no', 'owner', 'units', 'cvalue', 'interest', 'amountInvested', 'issueDate', 'mvalue', 'mdate', 'bondseries', 'xirrDate', 'status', 'icons'];
+
+  displayedColumns3 = ['no', 'owner', 'units', 'cvalue', 'interest', 'bondseries', 'xirrDate', 'description', 'status', 'icons'];
 
   ngOnInit() {
     this.reportDate = new Date();

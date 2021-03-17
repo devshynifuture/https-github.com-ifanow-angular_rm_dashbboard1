@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,mBAAmB,CAAC;EAChB,QAAQ,EAAE,QAAQ;EAClB,MAAM,EAAE,IAAI;CACf;;AAED,AAAA,iBAAiB,CAAC;EACd,QAAQ,EAAE,QAAQ;EAClB,MAAM,EAAE,GAAG;EACX,KAAK,EAAE,GAAG;CACb;;AAED,AAAA,WAAW,CAAC;EACR,UAAU,EAAE,IAAI;EAChB,YAAY,EAAE,WAAW;EACzB,cAAc,EAAE,SAAS;CAC5B;;AACD,AAAA,UAAU,CAAC;EACP,MAAM,EAAE,KAAK;EACb,UAAU,EAAE,MAAM;CACrB",
-    "sources": [
-        "open-send-report-popup.component.scss"
-    ],
-    "names": [],
-    "file": "open-send-report-popup.component.css"
-}
