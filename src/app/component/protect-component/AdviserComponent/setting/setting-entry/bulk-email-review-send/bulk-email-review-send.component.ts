@@ -210,7 +210,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         if (data) {
           console.log(data);
           this.templateObj = data;
-          this.templateObj.fromEmail != "N/A" ? this.selectedFromEmail.setValue(this.templateObj.fromEmail) : this.selectedFromEmail.setValue(this.templateObj.fromEmail);
+          this.templateObj.fromEmail != "N/A" ? this.selectedFromEmail.setValue(this.templateObj.fromEmail) : this.selectedFromEmail.setValue(this.verifiedAccountsList[0].emailAddress);
           this.subject.setValue(data.subject);
         } else {
           this.subject.setValue('Your new money management account is created!')
