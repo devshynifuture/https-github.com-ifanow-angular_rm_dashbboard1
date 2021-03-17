@@ -692,12 +692,13 @@
                   <td style="padding-top: 5px;padding-bottom: 5px;">{{element.rating ? element.rating :'-'}}</td>
                   <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;color: #212121;">
                     {{element.holdPercentage | number:'1.2-2'}}{{isLoading ? '' :'%'}}</td>
-                  <td style="padding-left: 20px;">
-                    <div style="background:rgb(192, 192, 192);width: 100%">
+                  <td style="padding-left: 20px;width: 100px;background:white;">
+                    <div style="background:white">
+                      <!-- {{element.holdPercentage}} -->
                       <div style="background:#007bff ;height: 15px;" [ngStyle]="{'width':element.holdPercentage+'%' }">
                       </div>
                     </div>
-                    <!-- <div style="height: 15px;background-color: #008FFF;width: 110px;"></div> -->
+                    <!-- <div style="height: 15px;background-color: #008FFF;" [ngStyle]="{'width':element.holdPercentage+'%' }></div> -->
                   </td>
                   <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;padding-right: 5px;color: #212121;">
                     <span appFormatNumber>{{!isLoading ? (element.mktValue ? element.mktValue : '-')
@@ -796,18 +797,36 @@
           <tr>
             <td style="text-align: center;background-color: #fff;font-size: 18px;padding-bottom: 4px;padding-top: 8px;"
               colspan="2">
-              <span style="padding-right: 20px;"
-                [ngStyle]="{'border-bottom': demo1TabIndex == 0 ? '2px solid #2680eb !important' : 'none' }">3m</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 1 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">6m</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 2 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">1y</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 3 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">3y</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 4 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">5y</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 5 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 0px;">all</span>
+              <span style="padding-right: 20px;">
+                <img *ngIf="selectedItem.value== '1'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                <img *ngIf="selectedItem.value!= '1'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                3m</span>
+              <span style="padding-right: 20px;">
+                <img *ngIf="selectedItem.value== '2'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                <img *ngIf="selectedItem.value!= '2'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                6m</span>
+              <span style="padding-right: 20px;">
+                <img *ngIf="selectedItem.value== '3'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                <img *ngIf="selectedItem.value!= '3'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                1y</span>
+              <span style="padding-right: 20px;">
+                <img *ngIf="selectedItem.value== '4'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                <img *ngIf="selectedItem.value!= '4'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">3y</span>
+              <span style="padding-right: 20px;">
+                <img *ngIf="selectedItem.value== '5'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                <img *ngIf="selectedItem.value!= '5'"
+                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                5y</span>
+
             </td>
           </tr>
         </table>

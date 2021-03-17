@@ -96,7 +96,7 @@
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
-        <ng-container matColumnDef="amountInvested">
+        <!-- <ng-container matColumnDef="amountInvested">
           <th mat-sort-header="investmentAmountToShow" mat-header-cell *matHeaderCellDef
             class="br w-12 right-hc text-right hide-arrow">
             Invested amount
@@ -107,8 +107,8 @@
                 [value]="element.investmentAmountToShow" appFormatNumber>{{element.investmentAmountToShow}}</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
-        </ng-container>
-        <ng-container matColumnDef="issueDate">
+        </ng-container> -->
+        <!-- <ng-container matColumnDef="issueDate">
           <th mat-sort-header="investmentOrIssueDate" mat-header-cell *matHeaderCellDef
             class="br  right-hc text-right hide-arrow">
             Investment date
@@ -119,8 +119,8 @@
             </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
-        </ng-container>
-        <ng-container matColumnDef="mvalue">
+        </ng-container> -->
+        <!-- <ng-container matColumnDef="mvalue">
           <th mat-sort-header="maturityValue" mat-header-cell *matHeaderCellDef
             class="br right-hc text-right hide-arrow">
             Maturity value
@@ -131,8 +131,8 @@
                 [value]="element.maturityValue" appFormatNumber>{{element.maturityValue}}</span></div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
-        </ng-container>
-        <ng-container matColumnDef="mdate">
+        </ng-container> -->
+        <!-- <ng-container matColumnDef="mdate">
           <th mat-sort-header="maturityDate" mat-header-cell *matHeaderCellDef
             class="br  right-hc text-right hide-arrow">
             Maturity date
@@ -142,7 +142,7 @@
             <div class="bar" *ngIf="element.maturityDate">{{element.maturityDate | date:'dd/MM/yyyy'}}</div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="bondseries">
           <th mat-sort-header="bondNameAndSeries" mat-header-cell *matHeaderCellDef class="br w-25">
             Bond name & series
@@ -157,13 +157,22 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="xirrDate">
-          <th mat-sort-header="xirr" mat-header-cell *matHeaderCellDef class="br w-12 right-hc text-right hide-arrow">
-            XIRR
+          <th mat-sort-header="xirr" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
+            XIRR%
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br  amt text-right">
             <div class="bar" *ngIf="element.xirr == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.xirr != 0"><span>{{element.xirr}}</span>{{!isLoading
               ? "%" : ""}}</div>
+          </td>
+          <td *matFooterCellDef mat-footer-cell class=" "></td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Description</th>
+          <td *matCellDef="let element" class="br" mat-cell>
+            <div class="bar">
+              {{!isLoading ? (element.description && element.description != 'null' ? element.description : '-') : ''}}
+            </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
@@ -172,10 +181,6 @@
           <td *matCellDef="let element" class="br   text-primary" mat-cell>
             <div class="bar">
               {{element.status}}
-              <!-- <span *ngIf="element.status == 1">{{isLoading ? '' : 'LIVE' }}</span>
-              <span *ngIf="element.status == 2">{{isLoading ? '' : 'Mature' }}</span>
-              <span *ngIf="element.status == 3">{{isLoading ? '' : 'Partially withdrawn' }}</span>
-              <span *ngIf="element.status == 4">{{isLoading ? '' : 'Redeemed' }}</span> -->
             </div>
           </td>
           <td *matFooterCellDef mat-footer-cell class=" "></td>
