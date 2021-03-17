@@ -67,8 +67,7 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox (change)="selectAll($event,'scheme')" [(ngModel)]="selectUnselctAllFlagScheme"
-                    name="selectAll"><span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagScheme}">{{(selectUnselctAllFlagScheme) ?
+                    name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlagScheme}">{{(selectUnselctAllFlagScheme) ?
                         'Uncheck all' : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of scheme">
@@ -92,8 +91,7 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox (change)="selectAll($event,'folio')" [(ngModel)]="selectUnselctAllFlagFolio"
-                    name="selectAll"><span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagFolio}">{{(selectUnselctAllFlagFolio) ? 'Uncheck
+                    name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlagFolio}">{{(selectUnselctAllFlagFolio) ? 'Uncheck
                         all' : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of folio">
@@ -117,8 +115,7 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox (change)="selectAll($event,'category')" [(ngModel)]="selectUnselctAllFlagCategory"
-                    name="selectAll"><span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagCategory}">{{(selectUnselctAllFlagCategory) ?
+                    name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlagCategory}">{{(selectUnselctAllFlagCategory) ?
                         'Uncheck all' : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of category">
@@ -391,6 +388,18 @@
             </mat-radio-group>
 
         </div>
+        <!-- <div class="col-md-6 pl-0" *ngIf="_data.name == 'UNREALIZED TRANSACTION REPORT'">
+            <h5 class="m-0 pb-8">Show Summary?</h5>
+            <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showSummary">
+                <mat-radio-button value="1"
+                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showSummary').value=='1','text-primary':summaryFilerForm.get('showSummary').value=='1','b-a':summaryFilerForm.get('showSummary').value=='2'}">
+                    Yes</mat-radio-button>
+                <mat-radio-button value="2"
+                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showSummary').value=='2','text-primary':summaryFilerForm.get('showSummary').value=='2','b-a':summaryFilerForm.get('showSummary').value=='1'}">
+                    No</mat-radio-button>
+            </mat-radio-group>
+
+        </div> -->
         <div class="col-md-6 pl-0"
             *ngIf=" _data.name=='CAPITAL GAIN REPORT' && this.showGrandfathering && ((this._data.capitalGainData) ? (this._data.capitalGainData.fromDateYear >= 2018) : '')">
             <h5 class="m-0 pb-8">Grandfathering?</h5>

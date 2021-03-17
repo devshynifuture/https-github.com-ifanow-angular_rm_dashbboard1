@@ -428,6 +428,7 @@ export class MfServiceService {
       fromDate: dataForFilter.fromDate,
       toDate: dataForFilter.toDate,
       showFolio: dataForFilter.showFolio,
+      showSummary: dataForFilter.showSummary,
       reportType: dataForFilter.reportType,
       transactionView: dataForFilter.transactionView,
       overviewFilter: dataForFilter.overviewFilter,

@@ -270,6 +270,7 @@ export class RightFilterDuplicateComponent implements OnInit {
       fromDate: [data.fromDate ? new Date(data.fromDate) : null, [Validators.required]],
       toDate: [data.toDate ? new Date(data.toDate) : null, [Validators.required]],
       showFolios: [(data.showFolio) ? data.showFolio + '' : '2', [Validators.required]],
+      showSummary: [(data.showSummary) ? data.showSummary + '' : '1', [Validators.required]],
       grandfathering: [(data.filterDataForCapital) ? data.filterDataForCapital.grandfathering + '' : '2', [Validators.required]],
     });
   }
@@ -1428,6 +1429,7 @@ export class RightFilterDuplicateComponent implements OnInit {
           reportType: (this.reportTypeobj.length > 0) ? this.reportTypeobj[0].name : 'Sub Category wise',
           transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' : '-',
           showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
+          showSummary: (this.summaryFilerForm.controls.showSummary.value == '1') ? 'true' : 'false',
           reportId,
         };
         ReportFilterConfigModel.push(obj);
@@ -1443,6 +1445,7 @@ export class RightFilterDuplicateComponent implements OnInit {
           reportType: (this.reportTypeobj.length > 0) ? this.reportTypeobj[0].name : 'Sub Category wise',
           transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' : '-',
           showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
+          showSummary: (this.summaryFilerForm.controls.showSummary.value == '1') ? 'true' : 'false',
           reportId,
         };
         ReportFilterConfigModel.push(obj);
@@ -1745,6 +1748,7 @@ export class RightFilterDuplicateComponent implements OnInit {
       fromDate: this.datePipe.transform(this.summaryFilerForm.controls.fromDate.value, 'yyyy-MM-dd'),
       toDate: this.datePipe.transform(this.summaryFilerForm.controls.toDate.value, 'yyyy-MM-dd'),
       showFolio: parseInt(this.summaryFilerForm.controls.showFolios.value),
+      showSummary: this.summaryFilerForm.controls.showSummary.value == 1 ? true : false,
       grandfathering: parseInt(this.summaryFilerForm.controls.grandfathering.value),
       capitalGainData: this._data.capitalGainData,
       name: this._data.name,
