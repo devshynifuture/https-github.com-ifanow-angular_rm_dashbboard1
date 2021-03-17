@@ -1452,6 +1452,7 @@ export class RightFilterDuplicateComponent implements OnInit {
       });
       if (this.summaryFilerForm.controls.showSummary.value && this._data.name == 'UNREALIZED TRANSACTION REPORT') {
         this.objSend.reportType = 'showSummary'
+        this.objSend.columnName = 'showSummary'
         this.objSend.selected = (this.summaryFilerForm.controls.showSummary.value == '1') ? true : false
         ReportFilterConfigModel.push(this.objSend);
       }
