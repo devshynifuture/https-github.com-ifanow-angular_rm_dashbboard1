@@ -1564,7 +1564,7 @@
 
   <div class="col-lg-3 col-md-3  mt-0 p-0 bg-lter lter">
     <div class="sticky-top z-0 bg-4-todo">
-      <mat-tab-group animationDuration="0ms" id="advisor-radio">
+      <mat-tab-group [ngClass]="{'mwx-100': enumDataService.PRODUCTION}" animationDuration="0ms" id="advisor-radio">
         <mat-tab *ngIf="roleService.dashboardPermission.dashboardCapability.To_do" label="To-do">
           <div class="max-scroll " *ngIf="todoListData">
             <div class="pt-12 pb-12 ">
@@ -1690,7 +1690,7 @@
 
 
         </mat-tab>
-        <mat-tab label="Calendar">
+        <mat-tab *ngIf="!enumDataService.PRODUCTION" label="Calendar">
           <div class="max-scroll">
             <app-google-connect (googleConnected)="mailConnect($event)" *ngIf="!excessAllow"></app-google-connect>
             <div *ngIf="excessAllow">
