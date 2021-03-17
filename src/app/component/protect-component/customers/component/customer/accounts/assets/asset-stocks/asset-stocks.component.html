@@ -198,7 +198,7 @@
                         </div>
 
                         <div #categoriesL *ngIf="!isLoading"
-                            class=" b-a p-0 height227 d-flex justify-content-center flex-column"
+                            class=" b-a p-0 height227 bl-0 d-flex justify-content-center flex-column"
                             [ngClass]="chartData.length > 0?'col-md-8':'col-md-12'"
                             [ngStyle]="{'border-left':chartData.length > 0? 'none':''}">
 
@@ -270,7 +270,8 @@
                             <td *matCellDef="let element" class="br bl" mat-cell>
                                 <div class="bar"><span
                                         *ngIf="element.stockType != 1">{{isLoading?'':element.scripName}}</span>
-                                    <span *ngIf="element.stockType == 1">{{isLoading?'':'Portfolio'}}</span></div>
+                                    <span *ngIf="element.stockType == 1">{{isLoading?'':'Portfolio'}}</span>
+                                </div>
                             </td>
                             <th *matFooterCellDef class="br bl proximaFont amt text-right f-600 p-8" mat-header-cell
                                 style="background-color: #fff !important;"> Total
@@ -362,12 +363,14 @@
 
                             <td *matCellDef="let element" class="br text-right" mat-cell>
                                 <div class="bar">
-                                    <span>{{isLoading?'':element.absoluteReturn}}{{element.absoluteReturn && !isLoading?'%':''}}</span>
+                                    <span>{{isLoading?'':element.absoluteReturn}}{{element.absoluteReturn &&
+                                        !isLoading?'%':''}}</span>
                                 </div>
                             </td>
                             <td *matFooterCellDef class="br proximaFont text-right f-600 p-8" mat-footer-cell>
                                 <span *ngIf="!isLoading" [stockValue]="singlePortfolio.totalAbsoluteReturn"
-                                    appFormatNumber>{{isLoading?'':singlePortfolio.absoluteReturn}}{{singlePortfolio.absoluteReturn && !isLoading?'%':''}}</span>{{isLoading?'':'%'}}
+                                    appFormatNumber>{{isLoading?'':singlePortfolio.absoluteReturn}}{{singlePortfolio.absoluteReturn
+                                    && !isLoading?'%':''}}</span>{{isLoading?'':'%'}}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="dividend">
@@ -511,11 +514,12 @@
                             <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
                                     Number:</strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
                                     Email:</strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
                                     {{'Stock Summary'}}</strong>
@@ -757,7 +761,8 @@
                         <td *ngIf="element.id"
                             style="border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7; padding: 10px;">
                             <span *ngIf="element.stockType != 1">{{element.scripName}}</span>
-                            <span *ngIf="element.stockType == 1">Portfolio</span></td>
+                            <span *ngIf="element.stockType == 1">Portfolio</span>
+                        </td>
                         <td *ngIf="element.id"
                             style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             ₹<span appFormatNumber
@@ -788,7 +793,8 @@
                                 [stockValue]="element.scripCurrentValue">{{element.scripCurrentValue}}</span></td>
                         <td *ngIf="element.id"
                             style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            <span>{{isLoading?'':element.absoluteReturn}}{{element.absoluteReturn && !isLoading?'%':''}}</span>
+                            <span>{{isLoading?'':element.absoluteReturn}}{{element.absoluteReturn &&
+                                !isLoading?'%':''}}</span>
                         </td>
                         <td *ngIf="element.id"
                             style="padding: 10px; text-align: right;   border-bottom: 1px solid #dee5e7;">
@@ -818,7 +824,8 @@
                         <td style="padding: 10px; text-align: right;    border-right: 1px solid #dee5e7; "> </td>
                         <td
                             style="padding: 10px; text-align: right; border-right: 1px solid #dee5e7;   font-weight: 600;">
-                            <span>{{isLoading?'':singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn && !isLoading?'%':''}}
+                            <span>{{isLoading?'':singlePortfolio.totalAbsoluteReturn}}</span>{{singlePortfolio.totalAbsoluteReturn
+                            && !isLoading?'%':''}}
                         </td>
                         <td style="padding: 10px; text-align: right;   "> </td>
                     </tr>
