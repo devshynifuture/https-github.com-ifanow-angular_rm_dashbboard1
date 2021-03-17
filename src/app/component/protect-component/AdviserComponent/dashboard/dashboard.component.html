@@ -407,9 +407,9 @@
 
 
 
-      <div class="row pt-40">
+      <div class="row pt-40" *ngIf="birthdayAnniList && birthdayAnniList.length>0">
         <div class="col-md-12 p-0 overflow-myfeed">
-          <h5 *ngIf="birthdayAnniList && birthdayAnniList.length>0" class="f-500 roboto text-black m-0 pb-10">Birthdays
+          <h5 class="f-500 roboto text-black m-0 pb-10">Birthdays
             & Anniversaries</h5>
 
           <!-- <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel"> -->
