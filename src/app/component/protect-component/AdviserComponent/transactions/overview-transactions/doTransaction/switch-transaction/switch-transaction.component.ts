@@ -539,7 +539,7 @@ export class SwitchTransactionComponent implements OnInit {
     Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
     this.scheme.schemeName = this.schemeName
     this.scheme.mutualFundSchemeMasterId = this.mutualFundData.schemeId
-    this.scheme.amcId = this.mutualFundData.schemeId
+    this.scheme.amcId = this.mutualFundData.amcId
     const obj1 = {
       mutualFundSchemeMasterId: this.mutualFundData.schemeId,
       aggregatorType: this.mfDefault.defaultClient.aggregatorType,

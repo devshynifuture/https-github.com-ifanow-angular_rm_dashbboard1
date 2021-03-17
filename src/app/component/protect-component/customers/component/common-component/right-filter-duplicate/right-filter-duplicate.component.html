@@ -388,7 +388,7 @@
             </mat-radio-group>
 
         </div>
-        <!-- <div class="col-md-6 pl-0" *ngIf="_data.name == 'UNREALIZED TRANSACTION REPORT'">
+        <div class="col-md-6 pl-0" *ngIf="_data.name == 'UNREALIZED TRANSACTION REPORT'">
             <h5 class="m-0 pb-8">Show Summary?</h5>
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showSummary">
                 <mat-radio-button value="1"
@@ -399,7 +399,7 @@
                     No</mat-radio-button>
             </mat-radio-group>
 
-        </div> -->
+        </div>
         <div class="col-md-6 pl-0"
             *ngIf=" _data.name=='CAPITAL GAIN REPORT' && this.showGrandfathering && ((this._data.capitalGainData) ? (this._data.capitalGainData.fromDateYear >= 2018) : '')">
             <h5 class="m-0 pb-8">Grandfathering?</h5>

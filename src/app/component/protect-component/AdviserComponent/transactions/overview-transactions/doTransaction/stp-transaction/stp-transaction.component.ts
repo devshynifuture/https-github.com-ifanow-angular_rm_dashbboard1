@@ -609,7 +609,7 @@ export class StpTransactionComponent implements OnInit {
     this.stpTransaction.controls['schemeStp'].disable();
     this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
     Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-    this.scheme.amcId = this.mutualFundData.schemeId
+    this.scheme.amcId = this.mutualFundData.amcId
     this.scheme.mutualFundSchemeMasterId = this.mutualFundData.schemeId
     const obj1 = {
       mutualFundSchemeMasterId: this.mutualFundData.schemeId,

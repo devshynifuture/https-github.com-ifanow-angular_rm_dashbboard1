@@ -32,6 +32,7 @@ export class SendNowReportsComponent implements OnInit {
   date: any;
   default: any;
   sendNow: any;
+  disabledProcess: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -55,8 +56,18 @@ export class SendNowReportsComponent implements OnInit {
     this.default = { 'from': 2019, 'to': 2020, 'selected': true, 'disabled': true }
     this.fromDate.setFullYear(this.fromDate.getFullYear() - 1);
     this.toDate = new Date();
-    this.financialYears = [{ 'from': 2010, 'to': 2011, 'selected': true, 'disabled': true }, { 'from': 2011, 'to': 2012, 'selected': true, 'disabled': true }, { 'from': 2012, 'to': 2013, 'selected': true, 'disabled': true }, { 'from': 2013, 'to': 2014, 'selected': true, 'disabled': true }, { 'from': 2014, 'to': 2015, 'selected': true, 'disabled': true },
-    { 'from': 2015, 'to': 2016, 'selected': true, 'disabled': true }, { 'from': 2016, 'to': 2017, 'selected': true, 'disabled': true }, { 'from': 2017, 'to': 2018, 'selected': true, 'disabled': true }, { 'from': 2018, 'to': 2019, 'selected': true, 'disabled': true }, { 'from': 2019, 'to': 2020, 'selected': true, 'disabled': true }, { 'from': 2020, 'to': 2021, 'selected': true, 'disabled': true }]
+    this.financialYears = [
+      { 'from': 2020, 'to': 2021, 'selected': true, 'disabled': true },
+      { 'from': 2019, 'to': 2020, 'selected': true, 'disabled': true },
+      { 'from': 2018, 'to': 2019, 'selected': true, 'disabled': true },
+      { 'from': 2017, 'to': 2018, 'selected': true, 'disabled': true },
+      { 'from': 2016, 'to': 2017, 'selected': true, 'disabled': true },
+      { 'from': 2015, 'to': 2016, 'selected': true, 'disabled': true },
+      { 'from': 2014, 'to': 2015, 'selected': true, 'disabled': true },
+      { 'from': 2013, 'to': 2014, 'selected': true, 'disabled': true },
+      { 'from': 2012, 'to': 2013, 'selected': true, 'disabled': true },
+      { 'from': 2011, 'to': 2012, 'selected': true, 'disabled': true },
+      { 'from': 2010, 'to': 2011, 'selected': true, 'disabled': true },]
     this.financialYears.filter(function (element) {
       if (element.from == 2020 && element.to == 2021) {
         element.selected = true;
@@ -111,6 +122,7 @@ export class SendNowReportsComponent implements OnInit {
     if (reportType == 'overview') {
       if (flag == true) {
         this.overview = false
+        this.disabledProcess = true
       } else {
         this.overview = true
         this.summary = false
@@ -118,12 +130,13 @@ export class SendNowReportsComponent implements OnInit {
         this.unrealisedTransactions = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'summary') {
       if (flag == true) {
         this.summary = false
+        this.disabledProcess = true
       } else {
         this.summary = true
         this.allTransactions = false
@@ -131,12 +144,13 @@ export class SendNowReportsComponent implements OnInit {
         this.overview = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'allTransactions') {
       if (flag == true) {
         this.allTransactions = false
+        this.disabledProcess = true
       } else {
         this.allTransactions = true
         this.summary = false
@@ -144,12 +158,13 @@ export class SendNowReportsComponent implements OnInit {
         this.overview = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'unrealisedTransactions') {
       if (flag == true) {
         this.unrealisedTransactions = false
+        this.disabledProcess = true
       } else {
         this.unrealisedTransactions = true
         this.summary = false
@@ -157,12 +172,13 @@ export class SendNowReportsComponent implements OnInit {
         this.overview = false
         this.capitalGainDetails = false
         this.capitalGainSummary = false
-
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainDetails') {
       if (flag == true) {
         this.capitalGainDetails = false
+        this.disabledProcess = true
       } else {
         this.capitalGainDetails = true
         this.summary = false
@@ -170,11 +186,13 @@ export class SendNowReportsComponent implements OnInit {
         this.unrealisedTransactions = false
         this.capitalGainSummary = false
         this.overview = false
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainSummary') {
       if (flag == true) {
         this.capitalGainSummary = false
+        this.disabledProcess = true
       } else {
         this.capitalGainSummary = true
         this.summary = false
@@ -182,6 +200,7 @@ export class SendNowReportsComponent implements OnInit {
         this.unrealisedTransactions = false
         this.overview = false
         this.capitalGainDetails = false
+        this.disabledProcess = false
         this.selectedReportType = reportType
       }
     }

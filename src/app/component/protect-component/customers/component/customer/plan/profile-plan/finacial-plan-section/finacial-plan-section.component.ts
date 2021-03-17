@@ -606,6 +606,17 @@ export class FinacialPlanSectionComponent implements OnInit {
     } else {
       this.isLoading = false
       this.clientDetails = []
+      this.getListFamilyMem();
+      this.getGoalSummaryValues();
+      this.getInsuranceList();
+      this.getAssetCountGlobalData()
+      this.getCountPortfolioInsurance()
+      this.getIncome()
+      this.getBuget()
+      this.getLibilities()
+      this.riskHistory();
+      this.getNotes();
+      this.getTemplateSection()
       this.hideTable = true
     }
 

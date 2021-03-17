@@ -36,7 +36,8 @@
       <div class="col-md-12 p-0 mb-8">
          <div *ngIf="dataSource?.data?.length>0">
             <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-               class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table *ngIf="isTableShow">
+               class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table
+               *ngIf="isTableShow && showSummaryTable == true">
                <ng-container matColumnDef="categoryName">
                   <th *matHeaderCellDef class="br" mat-header-cell>
                      {{(columnHeader) ? columnHeader : 'Sub Category Name'}}
@@ -184,7 +185,7 @@
 
 
    <div class="row secoundTable">
-      <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
+      <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 pt-12">
          <!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
 
          <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"
@@ -702,7 +703,7 @@
          </td>
 
       </tr>
-      <div *ngIf="isTableShow && unrealisedData">
+      <div *ngIf="isTableShow && unrealisedData && showSummaryTable">
          <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
                style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
