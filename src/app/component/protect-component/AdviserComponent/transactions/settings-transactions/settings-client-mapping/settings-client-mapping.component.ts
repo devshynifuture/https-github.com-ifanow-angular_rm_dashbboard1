@@ -62,7 +62,7 @@ export class SettingsClientMappingComponent implements OnInit {
             data => this.getFilterOptionDataRes(data), error => {
                 this.isLoading = false;
                 this.dataSource.data = [];
-                this.noData = 'sNo credentials found';
+                this.noData = 'No credentials found';
                 this.eventService.openSnackBar(error, 'Dismiss');
             }
         );
