@@ -470,14 +470,18 @@ export class MutualFundUnrealizedTranComponent {
                 displayName: element.columnName,
                 selected: element.selected
               };
-              allClient.push(obj);
+              if (element.reportType != 'showSummary') {
+                allClient.push(obj);
+              }
             } else {
               const obj = {
                 displayName: element.columnName,
                 selected: element.selected
               };
               getList.push(element);
-              currentClient.push(obj);
+              if (element.reportType != 'showSummary') {
+                currentClient.push(obj);
+              }
             }
           });
           if (getList.length > 0) {
