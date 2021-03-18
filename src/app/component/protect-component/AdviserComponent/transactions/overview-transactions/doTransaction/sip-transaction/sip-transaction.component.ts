@@ -562,6 +562,7 @@ export class SipTransactionComponent implements OnInit {
         data.forEach(element => {
           if (element.statusString == 'ACCEPTED' || element.statusString == 'APPROVED') {
             this.acceptedMandate.push(element);
+            this.selectedMandate = element
             Object.assign(this.transactionSummary, { showUmrnEdit: true });
             Object.assign(this.transactionSummary, { acceptedMandate: this.acceptedMandate });
             if (element.statusString == 'APPROVED') {
