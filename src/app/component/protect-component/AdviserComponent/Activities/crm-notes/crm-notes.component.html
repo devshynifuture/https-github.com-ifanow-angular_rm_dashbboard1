@@ -1,339 +1,329 @@
-<div id="ui-goal" [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
-
-    <div id="ui-activies" [ngStyle]="{'display': finPlanObj?.hideForFinPlan ? 'none' : '' }">
-        <div class="row main-header">
-            <div class="col-md-12 p-0">
-                <h3 class="m-0 p-20">Notes</h3>
-            </div>
+<div id="ui-activies" [ngStyle]="{'display': finPlanObj?.hideForFinPlan ? 'none' : '' }">
+    <div class="row main-header">
+        <div class="col-md-12 p-0">
+            <h3 class="m-0 p-20">Notes</h3>
         </div>
-        <div class="wrapper-20 pt-64" [formGroup]="notes">
-            <div class="fixedClass pt-20 w-81 ">
-                <div class="row">
-                    <div class="col-md-3 p-0">
-                        <div class="row b-b pb-10 d-flex align-items-center">
-                            <div [ngClass]="showCheckBox == true ? 'col-md-8': 'col-md-10' " class=" p-0">
-                                <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="clearNote()">
-                                    <img alt="" src="/assets/images/svg/plus.svg" class="pr-12">Add a note</button>
-                            </div>
-                            <div class="col-md-2 c-p d-flex justify-content-end align-items-center "
-                                *ngIf="showCheckBox == true && listOfNotes.length > 0">
-                                <i (click)="deleteNotes('')" title="Remove"
-                                    class="material-icons deleteIconNote   ml-10 c-p">
-                                    delete </i>
-                            </div>
-                            <div [matMenuTriggerFor]="menu" *ngIf="listOfNotes.length > 0"
-                                class="col-md-2 c-p d-flex justify-content-end align-items-center pl-0">
-                                <img class="c-p" src="/assets/images/svg/dot-menu.svg">
-
-                                <mat-menu #menu="matMenu">
-                                    <button mat-menu-item>
-                                        <mat-checkbox class="example-margin" (change)="selectAll($event)">
-                                        </mat-checkbox>
-                                        <span class="pl-4"> Select multiple</span>
-                                    </button>
-
-
-                                </mat-menu>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-md-9 pr-0">
-                        <div class="row">
-                            <div [ngClass]="hideOwner == false ? 'col-md-4': 'col-md-6' " class=" remove-top  pl-0">
-                                <mat-form-field appearance="standard">
-                                    <input class="form-control br-0" placeholder="Enter subject" matInput #subject
-                                        [maxLength]="50" formControlName="subject">
-                                    <mat-hint align="end" class="f-12">{{subject.value.length}}/50</mat-hint>
-                                    <mat-error class="f-12">
-                                        This field is required
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="col-md-5  remove-top p-0" *ngIf="hideOwner == false">
-                                <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
-                                    <input #searchClient (input)="checkOwnerList(searchClient.value)"
-                                        [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
-                                        aria-label="client" class="form-control pl-8" matInput
-                                        placeholder="Start typing to see investor names">
-                                    <mat-autocomplete #auto1="matAutocomplete" autoFocus>
-                                        <mat-option (onSelectionChange)="selectClient(f)"
-                                            *ngFor="let f of filteredStates " [value]="f.name">
-                                            <div class="row">
-                                                <div class="col-md-1 p-0 d-flex align-items-center">
-                                                    <i class="material-icons"> person </i>
-                                                </div>
-                                                <div class="col-md-6 pl-0 d-flex align-items-center">
-                                                    <p class="t-left m-0">{{f.name}}</p>
-                                                </div>
-                                                <div class="col-md-5 p-0 text-right">
-                                                    <button *ngIf="f.userType==3"
-                                                        class="small-primitive memberBtnNotes " mat-stroked-button>
-                                                        FAMILY MEMBER
-                                                    </button>
-                                                    <button *ngIf="f.userType==2" class="small-primitive memberBtnNotes"
-                                                        mat-stroked-button>CLIENT
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                    <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
-                                        This family member does not exist
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-
-                            <div [ngClass]="hideOwner == false ? 'col-md-3': 'col-md-6' "
-                                class=" d-flex justify-content-end align-items-center p-0">
-                                <div class="text-right">
-                                    <mat-checkbox (change)="showToClient($event)" [checked]="checkAdmin"
-                                        class="example-margin">For
-                                        admin
-                                    </mat-checkbox>
-
-                                    <button mat-flat-button class="downloadPdfIcon ml-10" *ngIf="selectedNote"
-                                        (click)="download('template1','Notes')">
-                                        <img src="assets/images/svg/mf-donwload.svg">
-                                    </button>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-80">
+    </div>
+    <div class="wrapper-20 pt-64" [formGroup]="notes">
+        <div class="fixedClass pt-20 w-81 ">
+            <div class="row">
                 <div class="col-md-3 p-0">
+                    <div class="row b-b pb-10 d-flex align-items-center">
+                        <div [ngClass]="showCheckBox == true ? 'col-md-8': 'col-md-10' " class=" p-0">
+                            <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="clearNote()">
+                                <img alt="" src="/assets/images/svg/plus.svg" class="pr-12">Add a note</button>
+                        </div>
+                        <div class="col-md-2 c-p d-flex justify-content-end align-items-center "
+                            *ngIf="showCheckBox == true && listOfNotes.length > 0">
+                            <i (click)="deleteNotes('')" title="Remove"
+                                class="material-icons deleteIconNote   ml-10 c-p">
+                                delete </i>
+                        </div>
+                        <div [matMenuTriggerFor]="menu" *ngIf="listOfNotes.length > 0"
+                            class="col-md-2 c-p d-flex justify-content-end align-items-center pl-0">
+                            <img class="c-p" src="/assets/images/svg/dot-menu.svg">
 
-                    <div class="row pt-10 pb-10" *ngIf="listOfNotes.length > 0">
-                        <div class="col-md-12 p-0 remove-top">
-                            <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
-                                <input (keyup)="onSearchChange($event.target.value)" autocomplete="off"
-                                    class="form-control br-0" matInput placeholder="Type to search data">
-                            </mat-form-field>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item>
+                                    <mat-checkbox class="example-margin" (change)="selectAll($event)"> </mat-checkbox>
+                                    <span class="pl-4"> Select multiple</span>
+                                </button>
+
+
+                            </mat-menu>
                         </div>
                     </div>
 
 
-                    <div *ngIf="isLoading" class="skeletonAnimation" [appSkeletonLoading]="isLoading"
-                        appSkeletonLoading>
-                        <div class="b-b overflow-hidden pt-10 pb-10">
-                            <div class="row">
-                                <div class="col-md-12 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-7 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="b-b overflow-hidden pt-10 pb-10">
-                            <div class="row">
-                                <div class="col-md-12 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-7 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="b-b overflow-hidden pt-10 pb-10">
-                            <div class="row">
-                                <div class="col-md-12 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-7 mb-4 p-0 relClass">
-                                    <div class="bar height24"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="notesScroll" *ngIf="listOfNotes.length > 0 && !isLoading">
-                        <ul class="block">
-                            <li *ngFor="let note of listOfNotes">
-                                <div class="d-flex p-10"
-                                    [ngClass]="note.activeOnSelect == true ? 'activeSlectNotes': '' ">
-                                    <mat-checkbox *ngIf="showCheckBox == true" class="example-margin mr-10"
-                                        [checked]="note.checked" (change)="selectForDelete($event,note)">
-                                    </mat-checkbox>
-                                    <div class="w-90" (click)="selectNote(note)">
-                                        <h5 class="m-0 f-500"> {{note.subject}} </h5>
-                                        <p class="m-0  ">{{note.clientName}}</p>
-                                        <p class="m-0   text-primitive">
-                                            {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} </p>
-                                        <p id="pdf" class="m-0 text-truncate text-primitive"> {{note.showContent}}</p>
-                                    </div>
-                                    <div *ngIf="showCheckBox == false">
-                                        <i (click)="deleteNotes(note)" title="Remove"
-                                            class="material-icons deleteIconNote   ml-10 c-p">
-                                            delete </i>
-                                    </div>
-                                </div>
-
-                            </li>
-                        </ul>
-
-                    </div>
-
-                    <div class="text-center mt-10" *ngIf="listOfNotes.length == 0 && !isLoading">
-                        <p> No notes exist ! </p>
-                        <p> This is the perfect place to add
-                            some quick notes like minutes of the meeting,
-                            thoughts, notes etc. </p>
-                        <p> Go ahead, add something. </p>
-                        <img class="mt-20" src="assets/images/svg/to-do-emptyimg.svg">
-                    </div>
                 </div>
-
                 <div class="col-md-9 pr-0">
                     <div class="row">
-                        <div class="col-md-12 p-0 mt-10 froala-edit-class">
-                            <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
+                        <div [ngClass]="hideOwner == false ? 'col-md-4': 'col-md-6' " class=" remove-top  pl-0">
+                            <mat-form-field appearance="standard">
+                                <input class="form-control br-0" placeholder="Enter subject" matInput #subject
+                                    [maxLength]="50" formControlName="subject">
+                                <mat-hint align="end" class="f-12">{{subject.value.length}}/50</mat-hint>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-5  remove-top p-0" *ngIf="hideOwner == false">
+                            <mat-form-field *ngIf="isAdvisorSection" appearance="standard" floatLabel="never">
+                                <input #searchClient (input)="checkOwnerList(searchClient.value)"
+                                    [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective
+                                    aria-label="client" class="form-control pl-8" matInput
+                                    placeholder="Start typing to see investor names">
+                                <mat-autocomplete #auto1="matAutocomplete" autoFocus>
+                                    <mat-option (onSelectionChange)="selectClient(f)" *ngFor="let f of filteredStates "
+                                        [value]="f.name">
+                                        <div class="row">
+                                            <div class="col-md-1 p-0 d-flex align-items-center">
+                                                <i class="material-icons"> person </i>
+                                            </div>
+                                            <div class="col-md-6 pl-0 d-flex align-items-center">
+                                                <p class="t-left m-0">{{f.name}}</p>
+                                            </div>
+                                            <div class="col-md-5 p-0 text-right">
+                                                <button *ngIf="f.userType==3" class="small-primitive memberBtnNotes "
+                                                    mat-stroked-button>
+                                                    FAMILY MEMBER
+                                                </button>
+                                                <button *ngIf="f.userType==2" class="small-primitive memberBtnNotes"
+                                                    mat-stroked-button>CLIENT
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
+                                    This family member does not exist
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div [ngClass]="hideOwner == false ? 'col-md-3': 'col-md-6' "
+                            class=" d-flex justify-content-end align-items-center p-0">
+                            <div class="text-right">
+                                <mat-checkbox (change)="showToClient($event)" [checked]="checkAdmin"
+                                    class="example-margin">For
+                                    admin
+                                </mat-checkbox>
+
+                                <button mat-flat-button class="downloadPdfIcon ml-10" *ngIf="selectedNote"
+                                    (click)="download('template1','Notes')">
+                                    <img src="assets/images/svg/mf-donwload.svg">
+                                </button>
+                            </div>
+
                         </div>
 
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-80">
+            <div class="col-md-3 p-0">
 
-                    <div class="row">
-                        <div class="col-md-12 p-0 text-right">
-                            <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
-                                (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
-                                Save
-                            </button>
+                <div class="row pt-10 pb-10" *ngIf="listOfNotes.length > 0">
+                    <div class="col-md-12 p-0 remove-top">
+                        <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
+                            <input (keyup)="onSearchChange($event.target.value)" autocomplete="off"
+                                class="form-control br-0" matInput placeholder="Type to search data">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
+                <div *ngIf="isLoading" class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                    <div class="b-b overflow-hidden pt-10 pb-10">
+                        <div class="row">
+                            <div class="col-md-12 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-10 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b-b overflow-hidden pt-10 pb-10">
+                        <div class="row">
+                            <div class="col-md-12 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="b-b overflow-hidden pt-10 pb-10">
+                        <div class="row">
+                            <div class="col-md-12 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 mb-4 p-0 relClass">
+                                <div class="bar height24"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notesScroll" *ngIf="listOfNotes.length > 0 && !isLoading">
+                    <ul class="block">
+                        <li *ngFor="let note of listOfNotes">
+                            <div class="d-flex p-10" [ngClass]="note.activeOnSelect == true ? 'activeSlectNotes': '' ">
+                                <mat-checkbox *ngIf="showCheckBox == true" class="example-margin mr-10"
+                                    [checked]="note.checked" (change)="selectForDelete($event,note)">
+                                </mat-checkbox>
+                                <div class="w-90" (click)="selectNote(note)">
+                                    <h5 class="m-0 f-500"> {{note.subject}} </h5>
+                                    <p class="m-0  ">{{note.clientName}}</p>
+                                    <p class="m-0   text-primitive">
+                                        {{note.updatedTime | date:'dd/LL/yyyy hh:mm aaa'}} </p>
+                                    <p id="pdf" class="m-0 text-truncate text-primitive"> {{note.showContent}}</p>
+                                </div>
+                                <div *ngIf="showCheckBox == false">
+                                    <i (click)="deleteNotes(note)" title="Remove"
+                                        class="material-icons deleteIconNote   ml-10 c-p">
+                                        delete </i>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="text-center mt-10" *ngIf="listOfNotes.length == 0 && !isLoading">
+                    <p> No notes exist ! </p>
+                    <p> This is the perfect place to add
+                        some quick notes like minutes of the meeting,
+                        thoughts, notes etc. </p>
+                    <p> Go ahead, add something. </p>
+                    <img class="mt-20" src="assets/images/svg/to-do-emptyimg.svg">
+                </div>
+            </div>
+
+            <div class="col-md-9 pr-0">
+                <div class="row">
+                    <div class="col-md-12 p-0 mt-10 froala-edit-class">
+                        <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
                     </div>
 
                 </div>
 
+                <div class="row">
+                    <div class="col-md-12 p-0 text-right">
+                        <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
+                            (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
+                            Save
+                        </button>
+                    </div>
+                </div>
+
             </div>
+
         </div>
-
-
-
-        <!-- ------------------------------------------------ pdf design ---------------------------------------- -->
-
-        <table #tableEl id="template1"
-            style="width: 95%; display: none;  font-family: 'Roboto', sans-serif; margin: 0px auto;">
-            <tr>
-                <td>
-                    <table style="width: 100%;">
-                        <tbody>
-                            <tr>
-                                <td style="text-align: left; vertical-align: top; width: 50%;">
-
-                                    <div style="width: 200px;"
-                                        *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                                        <img style="max-width: 100%;" *ngIf="getOrgData"
-                                            [src]="getOrgData.reportLogoUrl">
-                                    </div>
-                                    <div style="width: 200px;"
-                                        *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                                        <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                                    </div>
-                                </td>
-
-                                <td style=" text-align: right; width: 50%;">
-                                    <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
-                                        {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
-                                    </p>
-                                    <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
-                                        <strong> Number: </strong>
-                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
-                                userInfo.mobile}}
-                                    </p>
-                                    <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
-                                        <strong> Email: </strong>
-                                        {{getOrgData.email ? getOrgData.email : userInfo.email}}
-                                    </p>
-
-                                    <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;">
-                                        <strong>
-                                            Report as on: {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td>
-                    <table align="center"
-                        style=" width: 95%; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
-                        <tr>
-                            <td style="text-align: left; vertical-align: top; width: 50%;">
-
-                            </td>
-
-                            <td style="text-align: right; vertical-align: top; width: 50%;">
-                                <p style="margin: 0px 0px 5px 0px; font-size: 16px;">
-                                    Prepared by
-                                </p>
-                                <h3 style="margin: 0px; font-size: 18px;">
-                                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
-                                </h3>
-                            </td>
-
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <table style="width: 95%; margin: 20px auto 0px;">
-                        <tr>
-                            <td>
-                                <p style="font-size: 14px;"> <span style="font-weight: 600;"> Client name: </span>
-                                    {{clientName}}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h1 style="font-size: 20px; margin-top: 10px; font-weight: 600; text-align: center;">
-                                    {{subjectPDF}} </h1>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px;">
-                                <p style="font-size: 16px; line-height: 20px;">
-                                    %**TEXT%**REPLACE
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-
-        </table>
     </div>
 </div>
+
+
+<!-- ------------------------------------------------ pdf design ---------------------------------------- -->
+
+<table #tableEl id="template1" style="width: 95%; display: none;  font-family: 'Roboto', sans-serif; margin: 0px auto;">
+    <tr>
+        <td>
+            <table style="width: 100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 50%;">
+
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                        </td>
+
+                        <td style=" text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                                <strong> Number: </strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px;padding-top: 12px;">
+                                <strong> Email: </strong>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}
+                            </p>
+
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
+                                    Report as on: {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+
+    <tr>
+        <td>
+            <table align="center"
+                style=" width: 95%; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
+                <tr>
+                    <td style="text-align: left; vertical-align: top; width: 50%;">
+
+                    </td>
+
+                    <td style="text-align: right; vertical-align: top; width: 50%;">
+                        <p style="margin: 0px 0px 5px 0px; font-size: 16px;">
+                            Prepared by
+                        </p>
+                        <h3 style="margin: 0px; font-size: 18px;">
+                            {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}
+                        </h3>
+                    </td>
+
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table style="width: 95%; margin: 20px auto 0px;">
+                <tr>
+                    <td>
+                        <p style="font-size: 14px;"> <span style="font-weight: 600;"> Client name: </span>
+                            {{clientName}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h1 style="font-size: 20px; margin-top: 10px; font-weight: 600; text-align: center;">
+                            {{subjectPDF}} </h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;">
+                        <p style="font-size: 16px; line-height: 20px;">
+                            %**TEXT%**REPLACE
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

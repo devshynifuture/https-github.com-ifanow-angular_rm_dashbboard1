@@ -70,6 +70,7 @@ export class StatusReportComponent implements OnInit {
         element.checked = true
       });
     } else {
+      this.showResend = false
       this.clientDetails.forEach(element => {
         element.checked = false
       });
