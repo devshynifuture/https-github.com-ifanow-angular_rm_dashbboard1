@@ -151,8 +151,6 @@ export class CustomiseSettingComponent implements OnInit {
       this.dataSource.data = data
     }
     if (!data) {
-      this.dataSource.data = []
-    } else {
       this.dataSource.data.forEach(element => {
         if (element.overview == true && element.id != 0) {
           this.count++
@@ -186,6 +184,8 @@ export class CustomiseSettingComponent implements OnInit {
           }
         }
       });
+    } else if (!data && offset == 0) {
+      this.dataSource.data = []
     }
     console.log('dataSource bulk email', data)
     this.infiniteScrollingFlag = false;

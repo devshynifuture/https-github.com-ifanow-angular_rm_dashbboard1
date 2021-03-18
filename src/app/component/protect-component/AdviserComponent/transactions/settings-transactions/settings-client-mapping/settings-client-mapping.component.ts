@@ -38,6 +38,8 @@ export class SettingsClientMappingComponent implements OnInit {
     @ViewChild(MatSort, { static: false }) sort: MatSort;
     credentialsData: any;
     noData: string;
+    filterData1: any;
+    filterData2: any;
 
     constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
         private eventService: EventService, private utilService: UtilService,
@@ -72,8 +74,15 @@ export class SettingsClientMappingComponent implements OnInit {
         if (data) {
             this.credentialsData = data;
             this.filterData = TransactionEnumService.setPlatformEnum(data);
+            this.filterData1 = this.filterData.filter((x) => x.aggregatorType == 1);
+            this.filterData2 = this.filterData.filter((x) => x.aggregatorType == 2);
             this.type = '2';
             this.selectedBrokerCode = data[0];
+            if (this.selectedBrokerCode.aggregatorType == 1) {
+                this.filterData = this.filterData1
+            } else {
+                this.filterData = this.filterData2
+            }
             this.selectedPlatform = String(data[0].aggregatorType);
             this.dataSource.data = [{}, {}, {}];
             this.sortDataFilterWise();
@@ -125,12 +134,16 @@ export class SettingsClientMappingComponent implements OnInit {
     }
 
     chnageBrokerCode(value) {
+        this.selectedBrokerCode = value
         this.selectedPlatform = String(value.aggregatorType);
         this.sortDataFilterWise();
     }
 
     changePlatform(value) {
         // this.selectedBrokerCode.aggregatorType = value;
+        this.filterData = (value == '1') ? this.filterData1 : this.filterData2
+        this.selectedBrokerCode = this.filterData[0]
+
         this.sortDataFilterWise();
     }
 
