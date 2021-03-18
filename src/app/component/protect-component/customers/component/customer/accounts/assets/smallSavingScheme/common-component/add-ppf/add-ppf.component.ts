@@ -345,7 +345,7 @@ export class AddPpfComponent implements OnInit {
       futureContribution: [data.futureApproxcontribution, [Validators.required, Validators.max(150000)]],
       extenMaturity: [''],
       ppfNo: [data.ppfNumber],
-      frquency: [(data.frequency == undefined) ? "1" : String(data.frequency), [Validators.required]],
+      frquency: [(data.frequency == undefined) ? "2" : String(data.frequency), [Validators.required]],
       description: [data.description],
       bankName: [data.userBankMappingId],
       linkedBankAccount: [data.linkedBankAccount],
