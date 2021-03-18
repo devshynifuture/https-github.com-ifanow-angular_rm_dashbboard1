@@ -199,7 +199,7 @@ export class SupportService {
   }
 
   saveStockScrip(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.ADD_SCRIP_STOCK, data);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SCRIP_STOCK, data);
   }
 
 }

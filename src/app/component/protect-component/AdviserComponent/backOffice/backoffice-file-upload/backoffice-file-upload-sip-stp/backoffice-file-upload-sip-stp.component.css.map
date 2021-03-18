@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACP,MAAM,EAAE,GAAG;EAEX,UAAU,EAAE,SAAS;CACxB;;AAED,AAAA,YAAY,CAAC;EACT,MAAM,EAAE,IAAI;EACZ,QAAQ,EAAE,MAAM;CACnB;;AAGD,MAAM,CAAC,MAAM,MAAM,SAAS,EAAE,KAAK,OAAO,SAAS,EAAE,KAAK;EACtD,AAAA,UAAU,CAAC;IACP,MAAM,EAAE,GAAG;IACX,KAAK,EAAE,KAAK;IACZ,OAAO,EAAE,YAAY;IACrB,UAAU,EAAE,SAAS;GACxB;EAED,AAAA,YAAY,CAAC;IACT,MAAM,EAAE,IAAI;IACZ,QAAQ,EAAE,IAAI;GACjB",
+    "sources": [
+        "backoffice-file-upload-sip-stp.component.scss"
+    ],
+    "names": [],
+    "file": "backoffice-file-upload-sip-stp.component.css"
+}

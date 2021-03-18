@@ -60,6 +60,7 @@
   </mat-icon>
   </a> -->
           <!-- *ngIf="!enumDataService.PRODUCTION&&roleService.subscriptionPermission.enabled" -->
+          <!-- [matMenuTriggerFor]="rightactivities" -->
           <mat-accordion class="menuAccordion">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
@@ -104,6 +105,10 @@
 
             </mat-expansion-panel>
           </mat-accordion>
+          <!-- <mat-menu #rightactivities="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+          </mat-menu> -->
 
           <a class="sidenav-link" *ngIf="roleService.transactionPermission.enabled"
             [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
@@ -172,6 +177,10 @@
               <a class="sidenav-link" *ngIf="roleService.backofficePermission.subModule.foliomapping.enabled"
                 routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/folio-mapping">
                 <span *ngIf="showTabs" class="title" mat-line>Folio Mapping</span>
+              </a>
+
+              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/reminder">
+                <span *ngIf="showTabs" class="title" mat-line>Reminder</span>
               </a>
 
               <!--<a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
@@ -382,7 +391,7 @@
                     <img src="/assets/images/svg/new.svg" class="v-super">
                   </div>
                   <div class="col-md-10 p-0">
-                    <a href="https://www.ifanow.com/client/roadmap" target="_blank">
+                    <a href="https://www.ifanow.com/roadmap" target="_blank">
                       <p class="m-0 text-black roboto">IFANOW roadmap</p>
                       <p class="text-custom m-0 roboto">All release notes & updates in one place</p>
                     </a>

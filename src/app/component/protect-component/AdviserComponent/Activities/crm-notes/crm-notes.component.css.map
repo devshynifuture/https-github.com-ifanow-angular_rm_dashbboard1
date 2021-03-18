@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,SADK,CAAC,kBAAkB,CACxB,OAAO,AAAA,SAAS,CAAC,WAAW,CAAA;EACxB,UAAU,EAAE,gBAAgB;EAChC,aAAa,EAAE,eAAe;CAC7B;;AAGL,AAAA,eAAe,CAAC;EACZ,SAAS,EAAE,IAAI;EACf,OAAO,EAAE,OAAO;CACnB",
+    "sources": [
+        "crm-notes.component.scss"
+    ],
+    "names": [],
+    "file": "crm-notes.component.css"
+}

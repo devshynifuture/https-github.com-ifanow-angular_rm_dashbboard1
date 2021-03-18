@@ -1,0 +1,156 @@
+.chatBox {
+  padding-left: 10px;
+  position: relative;
+  overflow: auto;
+}
+
+.userOne {
+  width: 80%;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.userOne .avatar {
+  margin-right: 10px;
+}
+
+.userOne .avatar img {
+  width: 35px;
+  height: 35px;
+  margin-top: 8px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+
+.userOne .chatMsgBox {
+  width: 100%;
+  overflow-wrap: break-word;
+  background: #edffff;
+  padding-left: 10px;
+}
+
+.userOne .chatMsgBox p {
+  margin: 0px;
+  font-size: 13px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.userOne .chatMsgBox p span {
+  float: right;
+  text-align: right;
+  font-size: 11px;
+}
+
+.userOne .chatMsgBox h2 {
+  font-size: 13px;
+  margin: 0px;
+  font-weight: 400;
+  color: #000;
+}
+
+.userOne .chatMsgBox h2 span {
+  font-size: 10px;
+  color: #838884;
+}
+
+.typeMessageBox {
+  position: fixed;
+  bottom: 0px;
+  width: 67%;
+}
+
+.typeMessageBox .example-width {
+  background: #fff;
+}
+
+.typeMessageBox .enterButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #25753b;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.typeMessageBox .enterButton i {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  font-size: 23px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.userTwo {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.userTwo .avatar {
+  margin-right: 10px;
+}
+
+.userTwo .avatar img {
+  width: 35px;
+  height: 35px;
+  margin-top: 8px;
+  border-radius: 50%;
+}
+
+.userTwo .chatMsgBox {
+  width: 100%;
+  overflow-wrap: break-word;
+  background: #edffff;
+  padding-left: 10px;
+}
+
+.userTwo .chatMsgBox p,
+.userTwo .chatMsgBox div {
+  margin: 0px;
+  font-size: 13px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: left;
+}
+
+.userTwo .chatMsgBox p span,
+.userTwo .chatMsgBox div span {
+  float: right;
+  text-align: right;
+}
+
+.userTwo .chatMsgBox p div,
+.userTwo .chatMsgBox div div {
+  margin: 0px;
+  font-size: 13px;
+  background: #edffff;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: left;
+}
+
+.userTwo .chatMsgBox h2 {
+  font-size: 13px;
+  margin: 0px;
+  font-weight: 400;
+  color: #000;
+}
+
+.userTwo .chatMsgBox h2 span {
+  font-size: 10px;
+  color: #838884;
+}
+
+.border-background {
+  background: #fff !important;
+  margin: 5px 0px !important;
+  border: 1px solid #ccc !important;
+}
+/*# sourceMappingURL=email-view.component.css.map */

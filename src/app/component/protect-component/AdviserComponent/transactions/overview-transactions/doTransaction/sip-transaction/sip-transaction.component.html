@@ -77,12 +77,12 @@
                         <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option"
                             class="bigRadio" formControlName="schemeSelection">
                             <mat-radio-button
-                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==1,'text-primary':sipTransaction.get('schemeSelection').value==1,'radio-border':sipTransaction.get('schemeSelection').value==2}"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value=='1','text-primary':sipTransaction.get('schemeSelection').value==1,'radio-border':sipTransaction.get('schemeSelection').value==2}"
                                 class="b-a-custom radioBtn text-primary custom-radio bor_top_tb_left" value="1">
                                 Invest in existing scheme
                             </mat-radio-button>
                             <mat-radio-button
-                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value==2,'text-primary':sipTransaction.get('schemeSelection').value==2,'radio-border':sipTransaction.get('schemeSelection').value==1}"
+                                [ngClass]="{'b-a-custom': sipTransaction.get('schemeSelection').value=='2','text-primary':sipTransaction.get('schemeSelection').value==2,'radio-border':sipTransaction.get('schemeSelection').value==1}"
                                 class="bor_top_tb_right radio-border radioBtn " value="2">
                                 Select a new scheme
                             </mat-radio-button>
@@ -111,8 +111,8 @@
                                     </mat-option>
                                 </mat-autocomplete>
                                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">
-                                    Last closing NAV: {{navOfSelectedScheme}} as
-                                    on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
+                                    Last closing NAV: {{scheme.nav}} as
+                                    on:{{(scheme)?scheme.navDate:'-'}}
                                 </mat-hint>
                                 <mat-error *ngIf="sipTransaction.get('schemeSip').errors?.required" class="f-12 pt-4">
                                     This field is required
@@ -258,7 +258,7 @@
                         <mat-form-field>
                             <mat-select class="form-control" formControlName="date">
                                 <mat-option disabled value=''>Select 1st SIP date</mat-option>
-                                <mat-option *ngFor="let date of dateDisplay" [value]="date.dateToDisplay">
+                                <mat-option *ngFor="let date of dateDisplay" [value]="date">
                                     {{date.dateToDisplay}}</mat-option>
                             </mat-select>
                             <mat-error class="f-12 pt-4">

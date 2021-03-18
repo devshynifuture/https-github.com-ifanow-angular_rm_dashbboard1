@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,SADK,CAAC,kBAAkB,CACxB,OAAO,AAAA,SAAS,CAAC,WAAW,CAAA;EACxB,UAAU,EAAE,gBAAgB;EAChC,aAAa,EAAE,eAAe;CAC7B",
+    "sources": [
+        "notes-activity.component.scss"
+    ],
+    "names": [],
+    "file": "notes-activity.component.css"
+}

@@ -28,9 +28,9 @@
   </div>
 </div>
 
-<div class="row pt-135 pb-28" id="ui-dashboard-advisor">
+<div class="row pt-125 " id="ui-dashboard-advisor">
 
-  <div class="col-lg-3 col-md-3  pl-20 pr-20 mt-44 new-grid-842">
+  <div class="col-lg-3 col-md-3  pl-20 pr-20 mt-44 new-grid-842 pb-28" id="keyMetrics">
     <div class="sticky-top z-0">
       <h5 *ngIf="roleService.dashboardPermission.dashboardCapability.Key_metrics" class="m-0 roboto f-500 pb-16">Key
         metrics</h5>
@@ -82,8 +82,8 @@
           <h3 class="m-0 roboto f-400 text-black pt-8">
             <div class="relClass">
               <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
-                <span
-                  *ngIf="!keyMatrixFlag">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</span>
+                <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount :
+                  '0'}}</span>
               </div>
             </div>
 
@@ -153,8 +153,9 @@
 
             <div class="relClass">
               <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
-                <span
-                  *ngIf="!subOverviewFlag">{{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
+                <span *ngIf="!subOverviewFlag">{{ (dataSourceClientWithSub &&
+                  dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer :
+                  0}}
                   %</span>
               </div>
             </div>
@@ -200,7 +201,7 @@
       <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
         class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
         <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
-          <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
+          <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family<br>members</p>
           <h3 class="m-0 roboto f-400 text-black pt-8">
             <div class="relClass">
               <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
@@ -244,7 +245,7 @@
   </div>
 
 
-  <div class="col-lg-6 col-md-6  bl-1 br p-0">
+  <div class="col-lg-6 col-md-6  bl-1 br p-0 pt-24 pb-28">
     <div class="pl-24 pr-24 plr-16-992">
       <div class="advisor-status pl-20 mb-24">
         <h3 class="m-0 roboto f-500 roboto text-black pt-20">{{greeting}} {{advisorName}}</h3>
@@ -366,8 +367,8 @@
               <div class="chart-data d-flex" *ngFor="let data of newchartData">
                 <span class="pointNumber" [style.background-color]="data.color">
                 </span>
-                <span class="f-12 lh-12 roboto f-400 m-0"
-                  appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                <span class="f-12 lh-12 roboto f-400 m-0" appFormatNumber>{{(data.y/chartTotal*100) | number :
+                  '0.2-2'}}%</span>
                 <p class="f-12  lh-12 roboto text-custom m-0 f-400 mb-10 ml-10">{{data.name}}</p>
 
               </div>
@@ -406,9 +407,9 @@
 
 
 
-      <div class="row pt-40">
+      <div class="row pt-40" *ngIf="birthdayAnniList && birthdayAnniList.length>0">
         <div class="col-md-12 p-0 overflow-myfeed">
-          <h5 *ngIf="birthdayAnniList && birthdayAnniList.length>0" class="f-500 roboto text-black m-0 pb-10">Birthdays
+          <h5 class="f-500 roboto text-black m-0 pb-10">Birthdays
             & Anniversaries</h5>
 
           <!-- <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel"> -->
@@ -430,11 +431,10 @@
                     {{singleMember.name}}
                   </h5>
                 </div>
-                <div class="col-md-3 p-0">
-                  <button *ngIf="singleMember.birthDayOrAnniversary==2" mat-stroked-button
-                    class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
+                <!-- <div class="col-md-2 p-0">
+                  <button mat-stroked-button class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
                   </button>
-                </div>
+                </div> -->
               </div>
 
               <div class="row">
@@ -666,7 +666,7 @@
           <div *ngIf="dataSource2.data == null" class="ba-primitive br-4 p-18">
             <div class="row column-reverse-992 text-center-992">
               <div class="col-xl-7 col-lg-7 col-md-12 p-0">
-                <h3 class="f-16 roboto f-600"> No tasks added yet </h3>
+                <h3 class="f-16 roboto f-600"> No today's tasks added yet </h3>
                 <p class="f-14"> In order to collaborate with your team in an efficient way, you can create tasks and
                   track them here. </p>
                 <button [routerLink]="['/admin/activies/tasks']" class="btn-primary btn40" mat-button>
@@ -690,7 +690,7 @@
           <h5 class="m-0 f-500 roboto text-black">Transaction - Pending & Rejections</h5>
         </div>
         <div class="col-md-4 p-0 text-right">
-          <p class="m-0 f-400 roboto text-black">Last 7 days</p>
+          <p class="m-0 f-400 roboto text-black f-12">Last 7 days</p>
         </div>
         <div class="col-md-12 p-0 pt-10">
           <table mat-table [appSkeletonLoading]="last7DaysFlag" appSkeletonLoading class="skeletonAnimation"
@@ -757,7 +757,8 @@
               <th mat-header-cell *matHeaderCellDef class="br"> IIN</th>
               <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar w-100">
-                  <span *ngIf="!last7DaysFlag"> {{element.InnOrUcc ? element.InnOrUcc : 0}}</span></div>
+                  <span *ngIf="!last7DaysFlag"> {{element.InnOrUcc ? element.InnOrUcc : 0}}</span>
+                </div>
 
               </td>
             </ng-container>
@@ -774,7 +775,8 @@
               <th mat-header-cell *matHeaderCellDef class="br"> Transaction</th>
               <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar w-100">
-                  <span *ngIf="!last7DaysFlag"> {{element.transact ? element.transact : 0}}</span></div>
+                  <span *ngIf="!last7DaysFlag"> {{element.transact ? element.transact : 0}}</span>
+                </div>
               </td>
             </ng-container>
 
@@ -807,32 +809,32 @@
           <div class="d-flex">
             <div class="fundBox bg-white slide" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts">
               <div class="row">
-                <div class="col-md-9   pr-0">
-                  <h5 class="m-0 f-400 roboto text-black f-14 pl-10 lh-16">
+                <div class="col-md-9   p-0">
+                  <h5 class="m-0 f-400 roboto text-black f-14  lh-16">
                     UCC
                   </h5>
-                  <h5 class="m-0 f-400 f-14 roboto text-black pt-10 pl-10 lh-16">
+                  <h5 class="m-0 f-400 f-14 roboto text-black pt-10  lh-16">
                     {{singleAccount.clientName}}
                   </h5>
                 </div>
-                <div class="col-md-3 pl-0 d-flex justify-content-end">
+                <div class="col-md-3 pl-0 d-flex justify-content-end f-14 pr-0 text-primitive">
                   BSE
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-6">
+              <div class="row pt-16">
+                <div class="col-md-6 pr-8 pl-0">
                   <p class="m-0 text-primitive f-12"> Individual</p>
                 </div>
-                <div class="col-md-6">
-                  <p class="m-0 text-primitive f-12">
+                <div class="col-md-6 pr-0 pl-0 text-right">
+                  <p class="m-0 text-primitive f-12 lh-12 pt-4 ws-nowrap">
                     Anyone or survivor
                   </p>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-12">
+              <div class="row pt-16">
+                <div class="col-md-12 pl-0">
                   <button mat-stroked-button class="btn-success-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">INVESTMENT
                     READY
                   </button>
@@ -947,15 +949,34 @@
         </div>
 
 
-        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0"
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0 && !credentialsAdded"
           class="ba-primitive br-4 p-18">
           <div class="row column-reverse-992 text-center-992">
             <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
               <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can open client’s investmetn
                 accounts from here and track their real time status.</p>
-              <button [routerLink]="['/admin/transactions/overview']" class="btn-primary btn40" mat-button>
+              <button (click)="openAddCredential('addCredentials','')" class="btn-primary btn40" mat-button>
                 Add NSE/BSE credentials
+              </button>
+              <div class="d-block">
+                <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
+              </div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
+              <img src="assets/images/svg/recent-investment-accounts.svg">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0 && credentialsAdded"
+          class="ba-primitive br-4 p-18">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
+              <h3 class="f-16 roboto f-600">Not recent investment accounts</h3>
+              <p class="f-14">Please add new investors by clicking on the button below</p>
+              <button class="btn-primary btn40" (click)="openNewCustomerIIN()" mat-button>
+                Add New Investor
               </button>
               <div class="d-block">
                 <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
@@ -987,47 +1008,49 @@
           #slickModal="slick-carousel"> -->
         <div class="overflow-myfeed">
           <div class="d-flex">
-            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide  ">
+            <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide h-160 ">
               <div class="row">
                 <div class="col-md-9 p-0">
-                  <p class="mb-0 f-400 roboto text-black ml-10 lh-16">
-                    {{singleTransaction.transactionTypeString}}</p>
+                  <p class="mb-0 f-400 roboto text-black lh-16">
+                    {{singleTransaction.transactionType}}</p>
                 </div>
                 <div class="col-md-3 p-0">
                   <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row pt-12">
                 <div class="col-md-6 p-0 ">
-                  <p class="ml-10 f-400 roboto text-black  f-20 lh-16">
-                    {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
+                  <p class="f-400 roboto text-black mb-0 f-18 lh-16">
+                    <!-- // {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : '₹'}} -->
+                    {{singleTransaction.amount ? '₹' : ''}} {{singleTransaction.amount}}
+                  </p>
                 </div>
-                <div class="col-md-6 p-0 ">
+                <div class="col-md-6 p-0 text-right">
                   <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}
                   </p>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
+              <div class="row pt-12">
+                <div class="col-md-12 p-0" matTooltip="{{singleTransaction.schemeName}}">
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12 text-truncate">{{singleTransaction.schemeName}}</p>
                 </div>
               </div>
 
 
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
+              <div class="row pt-16">
+                <div class="col-md-12 p-0">
+                  <p class="m-0 text-black f-400 roboto lh-16 pb-6">{{singleTransaction.clientName}}</p>
                 </div>
-                <div class="col-md-12">
-                  <button mat-stroked-button
-                    class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">{{getTnxStatus(singleTransaction.status)}}
+                <div class="col-md-12 p-0">
+                  <button mat-stroked-button class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12 t-u"
+                    *ngIf="getTnxStatus(singleTransaction.status) != 'Pending Authorization' ">{{getTnxStatus(singleTransaction.status)}}
                   </button>
-                  <!-- <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
-                  class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
-                  AUTHORISATION
-                </button> -->
+                  <button *ngIf="getTnxStatus(singleTransaction.status) =='Pending Authorization'" mat-stroked-button
+                    class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
+                    AUTHORISATION
+                  </button>
                 </div>
               </div>
 
@@ -1037,16 +1060,37 @@
         </div>
 
 
-        <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0" class="ba-primitive br-4 p-18">
+        <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0 && !credentialsAdded"
+          class="ba-primitive br-4 p-18">
           <div class="row column-reverse-992 text-center-992">
             <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
               <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can initiate online
                 transactions from here and track their real time status.</p>
-              <button [routerLink]="['/admin/transactions/overview']" class="btn-primary btn40" mat-button>
+              <button class="btn-primary btn40" id="nse/bse" (click)="openAddCredential('addCredentials','')"
+                mat-button>
                 Add NSE/BSE credentials
               </button>
               <div class="d-block mt-8">
+                <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
+              </div>
+            </div>
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
+              <img src="assets/images/svg/recent-online-transactions(MF).svg">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0 && credentialsAdded"
+          class="ba-primitive br-4 p-18">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
+              <h3 class="f-16 roboto f-600">No recent online transactions</h3>
+              <p class="f-14">Please add new transactions by clicking on the button below</p>
+              <button (click)="openTransaction()" class="btn-primary btn40" mat-button>
+                Add New Transaction
+              </button>
+              <div class="d-block">
                 <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
               </div>
             </div>
@@ -1185,15 +1229,15 @@
           </div>
         </div>
 
-        <div class="col-md-12 p-0" *ngIf="dataSource5.length > 0">
+        <div class="col-md-12 p-0 pt-10" *ngIf="dataSource5.length > 0">
           <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10"
             [appSkeletonLoading]="last7DaysLoading" appSkeletonLoading class="skeletonAnimation">
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme</th>
               <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
-                  {{element.ownerName}}<br> <span
-                    class="text-custom">{{element.schemeName}}{{element.folioNumber ? " | " + element.folioNumber : ""}}</span>
+                  {{element.ownerName}}<br> <span class="text-custom">{{element.schemeName}}{{element.folioNumber ? " |
+                    " + element.folioNumber : ""}}</span>
                 </div>
               </td>
             </ng-container>
@@ -1265,8 +1309,8 @@
               <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme</th>
               <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar">
-                  {{element.ownerName}}<br> <span
-                    class="text-custom">{{element.schemeName}}{{element.folioNumber ? " | " + element.folioNumber : ""}}</span>
+                  {{element.ownerName}}<br> <span class="text-custom">{{element.schemeName}}{{element.folioNumber ? " |
+                    " + element.folioNumber : ""}}</span>
                 </div>
               </td>
             </ng-container>
@@ -1391,7 +1435,7 @@
         <div *ngIf="dashBoardSummary.length ==0" class="ba-primitive br-4 p-18">
           <div class="row column-reverse-992 text-center-992">
             <div class="col-xl-7 col-lg-7 col-md-12 p-0">
-              <h3 class="f-16 roboto f-600">No subscriptions added yet</h3>
+              <h3 class="f-16 roboto f-600">No upcoming subscription added yet</h3>
               <p class="f-14">
                 Subscriptions is carefully designed for RIAs. You can define your core offerings, fee structure,
                 deliverables, agreements and automate the whole process around it. This will act as a foundation for
@@ -1409,15 +1453,16 @@
             </div>
           </div>
         </div>
-        <div *ngIf="dashBoardSummary.length > 4" class="col-md-12 text-right pt-8">
-          <div (click)="changeParentsTab(3)" class="c-p">View all</div>
+        <div *ngIf="dashBoardSummary.length > 4" class="col-md-12 text-right pt-8 pr-0">
+          <!-- <div (click)="changeParentsTab(3)" class="c-p">View all</div> -->
+          <button (click)="changeParentsTab(3)" mat-stroked-button class="advisor-view-all">View All</button>
         </div>
 
       </div>
 
       <div class=" dasBoradBox mt-40">
         <div class="row">
-          <div class="col-md-9 p-0">
+          <div class="col-md-9 p-0 d-flex align-items-center">
             <h5 class="mb-8 f-500 text-black roboto mt-8">Latest AUM Reconciliation report</h5>
           </div>
 
@@ -1475,7 +1520,8 @@
                 <th mat-header-cell *matHeaderCellDef> Report</th>
                 <td mat-cell *matCellDef="let element" class="text-primary">
                   <div class="bar">
-                    <span *ngIf="!aumFlag">Report</span></div>
+                    <span *ngIf="!aumFlag">Report</span>
+                  </div>
                 </td>
               </ng-container>
 
@@ -1516,68 +1562,91 @@
   </div>
 
 
-  <div class="col-lg-3 col-md-3  mt-44">
-    <div class="sticky-top z-0">
-      <mat-tab-group animationDuration="0ms" id="advisor-radio">
+  <div class="col-lg-3 col-md-3  mt-0 p-0 bg-lter lter">
+    <div class="sticky-top z-0 bg-4-todo">
+      <mat-tab-group [ngClass]="{'mwx-100': enumDataService.PRODUCTION}" animationDuration="0ms" id="advisor-radio">
         <mat-tab *ngIf="roleService.dashboardPermission.dashboardCapability.To_do" label="To-do">
           <div class="max-scroll " *ngIf="todoListData">
-            <div class="pt-12">
+            <div class="pt-12 pb-12 ">
               <div class="row">
-                <div class="col-md-12 pl-0 addTo-DO">
-                  <div (click)="showInput=true" class="d-flex mt-10 mb-8 c-p">
+                <div class="col-md-12 p-0 addTo-DO">
+                  <!-- <div (click)="showInput=true" class="d-flex mt-10 mb-8 c-p">
                     <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
                     <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
-                  </div>
+                  </div> -->
+                  <button (click)="showInput=true" *ngIf="showInput==false" mat-stroked-button
+                    class="btn-primary pr-8 pl-8 right mr-12">Add a to-do</button>
+
                   <div class="todo-wrraper">
                     <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
                       #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
                     <div class="todo-btn">
-                      <span *ngIf="showInput" (click)="addTodoList(todoDescription)" class="material-icons f-20 c-p">
+                      <span *ngIf="showInput" (click)="addTodoList(todoDescription)"
+                        class="material-icons text-primitive f-20 c-p">
                         done
                       </span>
-                      <span *ngIf="showInput" class="material-icons f-20 c-p pl-8"
+                      <span *ngIf="showInput" class="material-icons f-20 c-p pl-8 text-primitive"
                         (click)="showInput=false;todoDescription=''">
                         clear
                       </span>
                     </div>
+
+
+
                   </div>
+
                 </div>
 
               </div>
             </div>
             <div class="radio-buttons-advisor">
               <mat-radio-group [formControl]="selectedItem" aria-label="Select an option">
-                <div *ngFor="let singleNote of todoListData;index as i" class="pt-12">
-                  <span class="f-14" *ngIf="singleNote.createdDate==0">Today</span>
-                  <span class="f-14" *ngIf="singleNote.createdDate==1">Yesterday</span>
-                  <span class="f-14"
+                <div *ngFor="let singleNote of todoListData;index as i" class="pt-12 pb-12 bt-1 ">
+                  <span class="f-16 pl-20 f-500" *ngIf="singleNote.createdDate==0">Today</span>
+                  <span class="f-16 f-500 pl-20" *ngIf="singleNote.createdDate==1">Yesterday</span>
+                  <span class="f-16 f-500 pl-20"
                     *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
-                  <div class="row align-items-baseline">
-                    <div *ngIf="singleNote.update==false" class="col-md-2 pl-0">
+                  <div class="row align-items-baseline pt-12 pb-0 my-custom-todo">
+                    <div *ngIf="singleNote.update==false" class="col-md-1 pl-12">
                       <mat-radio-button value={{singleNote.id}}>
                       </mat-radio-button>
                     </div>
-                    <div class="col-md-7 pl-0">
-                      <span *ngIf="singleNote.update==false" (dblclick)="doubleClick(singleNote)"
-                        class="text-break c-p f-14">{{singleNote.activityName}}</span>
-                      <div class="pb-8 pt-8">
-                        <input *ngIf="singleNote.update" matInput class="form-control" [formControl]="updateNote"
-                          autofocus={{singleNote.update}} (focusout)="focusOutFunction(singleNote)"
-                          (keyup.enter)="updateTodoList(singleNote)" placeholder="Enter note">
+                    <div [ngClass]="{'col-md-8': singleNote.update==false,'col-md-12': singleNote.update}" class="pr-0">
+                      <p *ngIf="singleNote.update==false" class="text-break c-p f-14 pl-10 roboto f-400 mb-0">
+                        {{singleNote.activityName}}
+
+
+
+                      </p>
+                      <div class="pb-8 pt-0 pl-10 d-flex align-items-center" *ngIf="singleNote.update">
+                        <input appAutofocus matInput class="form-control" [formControl]="updateNote"
+                          autofocus={{singleNote.update}} placeholder="Enter note">
+                        <span class="material-icons f-20 c-p pl-8 text-primitive" (click)="updateTodoList(singleNote)">
+                          done
+                        </span>
                       </div>
                     </div>
-                    <div class="col-md-3 pl-0 d-flex">
-                      <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                        (click)="deleteTodoList(singleNote,i)" class="material-icons f-20 c-p">
-                        done
-                      </span>
-                      <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                        class="material-icons f-20 c-p pl-8" (click)="deleteTodoList(singleNote,i)">
-                        delete
+                    <div *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
+                      class="col-md-2 text-center pl-0 pr-4 d-flex">
+                      <div class="d-flex">
+                        <span (click)="deleteTodoList(singleNote,i)" class="material-icons text-primitive f-20 c-p">
+                          done
+                        </span>
+                        <span class="material-icons f-20 c-p pl-8 text-primitive"
+                          (click)="deleteTodoList(singleNote,i)">
+                          delete
+                        </span>
+                      </div>
+
+
+                    </div>
+                    <div class="col-md-2" *ngIf="selectedItem.value!=singleNote.id && singleNote.update==false">
+                      <span class="edit-todo-icons material-icons c-p text-primitive" (click)="doubleClick(singleNote)">
+                        mode_edit
                       </span>
                     </div>
                   </div>
-                  <hr class="ad">
+                  <!-- <hr class="ad"> -->
                 </div>
               </mat-radio-group>
 
@@ -1590,12 +1659,14 @@
               This is the perfect place to add
               some quick tasks, thoughts, notes etc.
               <br><br>
-              Go ahead, add something.</p>
+              Go ahead, add something.
+            </p>
 
             <div class="col-md-12 mt-20 mb-8 pl-0 addTo-DO">
               <div (click)="showInput=true" class="d-flex justify-content-center align-items-center mt-10 mb-8 c-p">
-                <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
-                <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
+                <!-- <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
+                <p  class="m-0 text-black pl-12 lh-20"></p> -->
+                <button mat-stroked-button class="btn-primary" *ngIf="showInput==false">Add a to-do</button>
               </div>
               <div class="todo-wrraper">
                 <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
@@ -1619,7 +1690,7 @@
 
 
         </mat-tab>
-        <mat-tab label="Calendar">
+        <mat-tab *ngIf="!enumDataService.PRODUCTION" label="Calendar">
           <div class="max-scroll">
             <app-google-connect (googleConnected)="mailConnect($event)" *ngIf="!excessAllow"></app-google-connect>
             <div *ngIf="excessAllow">

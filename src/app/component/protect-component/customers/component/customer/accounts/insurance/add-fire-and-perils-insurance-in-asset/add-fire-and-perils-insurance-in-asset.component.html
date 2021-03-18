@@ -232,8 +232,7 @@
                 <input (focus)="policyStartDatePicker.open()"
                     (ngModelChange)="dateChange(policyStartDate.value,'policyStartDate',policyExpiryDate.value)"
                     (input)="preventDefault($event)" [matDatepicker]="policyStartDatePicker" [min]="minDate"
-                    [max]="maxDate" class="form-control br-0 b-0" #policyStartDate formControlName="policyStartDate"
-                    matInput>
+                    class="form-control br-0 b-0" #policyStartDate formControlName="policyStartDate" matInput>
                 <mat-datepicker-toggle [for]="policyStartDatePicker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #policyStartDatePicker></mat-datepicker>
                 <mat-error>This field is required

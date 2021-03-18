@@ -63,12 +63,13 @@ export class AddStockScripComponent implements OnInit {
       nseSymbol: this.stockScripForm.get('nseSymbol').value,
       isin: this.stockScripForm.get('isin').value,
       stockCategoryMasterId: parseInt(this.stockScripForm.get('stockCategoryMasterId').value),
-      nav: parseFloat(this.stockScripForm.get('nav').value)
+      nav: this.stockScripForm.get('nav').value
     }
     this.supportService.saveStockScrip(obj).subscribe(
       data => {
         this.barButtonOptions.active = false;
         this.eventService.openSnackBar("Added sucessfully", "Dismiss");
+        this.dialogClose(false);
       }, err => {
         this.barButtonOptions.active = false;
         this.eventService.openSnackBar(err, "Dimiss");

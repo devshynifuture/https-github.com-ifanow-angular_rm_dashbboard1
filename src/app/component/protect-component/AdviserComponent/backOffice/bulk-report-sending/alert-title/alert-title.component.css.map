@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "alert-title.component.scss"
+    ],
+    "names": [],
+    "file": "alert-title.component.css"
+}

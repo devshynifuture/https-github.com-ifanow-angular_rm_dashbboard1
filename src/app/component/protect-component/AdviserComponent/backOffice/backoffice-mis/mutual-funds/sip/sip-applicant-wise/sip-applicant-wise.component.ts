@@ -30,7 +30,7 @@ export class SipApplicantWiseComponent implements OnInit {
   isLoading = false;
   @Output() changedValue = new EventEmitter();
   @Input() data;
-
+  subcategory;
   propertyName: any;
   propertyName2: any;
   reverse = true;

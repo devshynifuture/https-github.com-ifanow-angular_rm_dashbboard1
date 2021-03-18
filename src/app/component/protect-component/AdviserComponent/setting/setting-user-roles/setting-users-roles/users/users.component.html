@@ -31,7 +31,7 @@
                                 <h5 class="m-0 text-black" *ngIf="user.fullName.length > 13" [title]="user.fullName">
                                     {{user.fullName}}</h5>
 
-                                <p class="text-custom roboto m-0 f-400">{{user.role.roleName}}</p>
+                                <p *ngIf="user.role" class="text-custom roboto m-0 f-400">{{user.role.roleName}}</p>
                             </div>
                         </div>
                         <div class="col-md-1 c-p  p-0" [matMenuTriggerFor]="menu">
@@ -47,7 +47,7 @@
                                     password</button>
                                 <!-- role type 1 is admin, dont allow admin to kill himself -->
                                 <button (click)="deleteUser(user)" mat-menu-item
-                                    *ngIf="user.role.advisorOrClientRole != 1">Delete</button>
+                                    *ngIf="user.role && user.role.advisorOrClientRole != 1">Delete</button>
                             </mat-menu>
                         </div>
 
@@ -55,8 +55,8 @@
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height_23': isLoading}">
                             <!-- [routerLink]="['/admin/people/clients']"  c-p txt-underline hide routerLink-->
-                            <h3 *ngIf="!isLoading" routerLinkActive="router-link-active"
-                                class="m-0 f-400 text-primary f-18 pt-16">
+                            <h3 *ngIf="!isLoading" (click)="openDialog(user)" routerLinkActive="router-link-active"
+                                class="m-0 f-400 text-primary f-18 pt-16 c-p">
                                 {{user.clientCount}}<span *ngIf="user.clientCount==0"> client</span> <span
                                     *ngIf="user.clientCount>1"> clients</span></h3>
                         </div>

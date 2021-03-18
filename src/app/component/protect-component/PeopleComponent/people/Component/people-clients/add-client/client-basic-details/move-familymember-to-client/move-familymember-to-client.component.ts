@@ -13,6 +13,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Subscription, Observable } from 'rxjs';
+import { BackofficeFolioMappingService } from 'src/app/component/protect-component/AdviserComponent/backOffice/backoffice-folio-mapping/bckoffice-folio-mapping.service';
 
 @Component({
   selector: 'app-move-familymember-to-client',
@@ -47,74 +48,56 @@ export class MoveFamilymemberToClientComponent implements OnInit {
   value: any;
   flag: any;
   fieldFlag: any;
+  advisorId: any;
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
+  isLoading: boolean;
+  headerFlag: string;
   constructor(private peopleService: PeopleService,
     private datePipe: DatePipe,
     private enumDataService: EnumDataService,
     private subInjectService: SubscriptionInject,
     private fb: FormBuilder,
-    private eventService: EventService) { }
+    private eventService: EventService,
+    private backOfcFolioMappingService: BackofficeFolioMappingService) { }
   stateCtrl = new FormControl('', [Validators.required]);
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
     this.value = this.data.value;
     this.flag = this.data.flag;
     this.fieldFlag = this.data.fieldFlag;
     this.barButtonOptions.text = this.flag;
-    if (this.flag == 'Move') {
-      this.clientList = this.enumDataService.getEmptySearchStateData().filter(element => element.clientId != this.data.clientId);
-      this.filteredStates = this.stateCtrl.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => typeof value === 'string' ? value : value.name),
-          map(state => {
-            if (state) {
-              const filterValue = state.toLowerCase();
-              const list = this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
-              if (list.length == 0) {
-                this.showSuggestion = true;
-                this.stateCtrl.setErrors({ invalid: true });
-                this.stateCtrl.markAsTouched();
-              }
-              return this.clientList.filter(state => state.name.toLowerCase().includes(filterValue));
-            } else {
-              return this.clientList;
-            }
-          }),
-        );
+    if (this.fieldFlag == 'familyMember') {
+      this.headerFlag = "Merge duplicate family member";
+    } else {
+      this.headerFlag = "Merge duplicate client";
     }
   }
 
-  optionSelected(value) {
-    this.stateCtrl.setValue(value.name)
-    this.selectedClient = value;
-    this.selectedClientFormGroup = this.fb.group({
-      relation: ['', [Validators.required]],
-      gender: ['', [Validators.required]]
-    })
-    this.getClientData(value)
-  }
 
   mergeOptionSelected(value) {
-    this.stateCtrl.setValue(value.name)
+    this.stateCtrl.setValue(value.showName)
     this.selectedClient = value;
     this.selectedClientFormGroup = this.fb.group({
       relation: ['', [Validators.required]],
       gender: ['', [Validators.required]]
     })
-    if (value.familyMemberId == 0) {
+    if (value.familyId == 0) {
       this.getClientData(value);
     } else {
-      value.genderString = UtilService.getGenderStringFromGenderId(value.genderId);
-      value.dateOfBirth = (value.dateOfBirth) ? this.datePipe.transform(value.dateOfBirth, 'dd/MM/yyyy') : '-'
+      // value.genderString = UtilService.getGenderStringFromGenderId(value.genderId);
+      value.dateOfBirth = (value.birthDate) ? this.datePipe.transform(value.birthDate, 'dd/MM/yyyy') : '-'
       this.selectedClientData = value;
       this.showSuggestion = false
     }
   }
 
 
+
   getClientData(data) {
     this.showSpinnerOwner = true;
     const obj = {
-      clientId: data.clientId
+      clientId: data.groupHeadId
     };
     this.peopleService.getClientOrLeadData(obj).subscribe(
       responseData => {
@@ -150,7 +133,7 @@ export class MoveFamilymemberToClientComponent implements OnInit {
     // }
     const obj = {
       familyMemberId: this.value.familyMemberId,
-      newClientId: this.selectedClient.clientId
+      newClientId: this.selectedClient.groupHeadId
     }
     this.barButtonOptions.active = true;
     this.peopleService.moveFamilyMemberFromOnceToOther(obj).subscribe(
@@ -165,8 +148,6 @@ export class MoveFamilymemberToClientComponent implements OnInit {
     )
   }
 
-  familyOutputSubscription: Subscription;
-  familyOutputObservable: Observable<any> = new Observable<any>();
   searchClientFamilyMember(value) {
     if (value.length <= 2) {
       // this.showDefaultDropDownOnSearch = false;
@@ -189,33 +170,57 @@ export class MoveFamilymemberToClientComponent implements OnInit {
       debounceTime(700)).subscribe(
         data => {
           this.showSpinnerOwner = true;
-          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
-            if (responseArray) {
+          const obj = {
+            parentId: this.advisorId,
+            searchQuery: value,
+          };
+          this.backOfcFolioMappingService.getUserDetailList(obj).subscribe(
+            data => {
               this.showSpinnerOwner = false;
-              if (value.length >= 0) {
-                this.clientList = responseArray;
-                // this.showDefaultDropDownOnSearch = false;
-                // this.isLoding = false;
+              if (data) {
+                let list = []
+                if (this.flag != "move") {
+                  if (this.fieldFlag == 'client') {
+                    list = data;
+                    const indexSearchMethod = (element) => element.groupHeadId == this.value.clientId && element.familyId == 0;
+                    console.log(list.findIndex(indexSearchMethod), list);
+                    list.splice(list.findIndex(indexSearchMethod), 1);
+                  } else {
+                    data.forEach(element => {
+                      if (element.familyId != this.value.familyMemberId) {
+                        list.push(element);
+                      }
+                    });
+                    const indexSearchMethod = (element) => element.groupHeadId == this.value.clientId && element.familyId == 0;
+                    console.log(list.findIndex(indexSearchMethod), list);
+                    list.splice(list.findIndex(indexSearchMethod), 1);
+                  }
+                } else {
+
+                }
+                data = list;
+                data.forEach(element => {
+                  if (element.familyId > 0) {
+                    element.showName = element.familyMemberName;
+                  } else {
+                    element.showName = element.clientName;
+                  }
+                });
+                this.clientList = data;
               } else {
-                // this.showDefaultDropDownOnSearch = undefined;
-                // this.isLoding = undefined;
                 this.stateCtrl.setErrors({ invalid: true })
                 this.clientList = undefined;
               }
-            } else {
+            }, (err) => {
               this.showSpinnerOwner = false;
-              // this.showDefaultDropDownOnSearch = true;
-              // this.isLoding = false;
               this.clientList = undefined;
             }
-          }, error => {
-            this.showSpinnerOwner = false;
-            this.clientList = undefined;
-            console.log('getFamilyMemberListRes error : ', error);
-          });
+          )
+
         }
       );
   }
+
 
 
   mergeDuplicateFamilyMember() {
@@ -228,7 +233,7 @@ export class MoveFamilymemberToClientComponent implements OnInit {
       if (this.selectedClientData.familyMemberId == 0) {
         obj = {
           familyMemberId: this.value.familyMemberId,
-          duplicateClientId: this.selectedClient.clientId
+          duplicateClientId: this.selectedClient.groupHeadId
         }
       } else {
         obj = {
@@ -240,12 +245,12 @@ export class MoveFamilymemberToClientComponent implements OnInit {
       if (this.selectedClientData.familyMemberId == 0) {
         obj = {
           clientId: this.value.clientId,
-          duplicateClientId: this.selectedClient.clientId
+          duplicateClientId: this.selectedClient.groupHeadId
         }
       } else {
         obj = {
           clientId: this.value.clientId,
-          duplicateFamilyMemberId: this.selectedClient.familyMemberId
+          duplicateFamilyMemberId: this.selectedClient.familyId
         }
       }
     }

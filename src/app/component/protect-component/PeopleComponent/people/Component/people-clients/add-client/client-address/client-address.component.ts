@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, NgZone } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, NgZone, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -8,7 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatInput } from '@angular/material';
 // import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps'
 import { from } from 'rxjs';
@@ -66,6 +66,7 @@ export class ClientAddressComponent implements OnInit {
   valueChangeFlag: any;
   @ViewChild('placeSearch', { static: true }) placeSearch: ElementRef;
   keyInfoCapability: any = {};
+  addressTypeText: string;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private postalService: PostalService,
     private peopleService: PeopleService, private eventService: EventService,
@@ -135,7 +136,7 @@ export class ClientAddressComponent implements OnInit {
       data.address3 = thirdLine;
     };
     this.addressForm = this.fb.group({
-      // addressType: [(data.addressType) ? String(data.addressType) : '1'],
+      addressType: [(data.addressType) ? data.addressType : 1],
       addProofType: [(this.userMappingIdFlag == false) ? '' : (data.proofType) ? String(data.proofType) : ''],
       proofIdNum: [(this.userMappingIdFlag == false) ? '' : data.proofIdNumber],
       addressLine1: [data.address1, [Validators.required]],
@@ -146,7 +147,6 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
-
     (data) ? this.proofTypeData = data : '';
     let regexPattern;
     if (data.proofType == '1') {
@@ -260,6 +260,9 @@ export class ClientAddressComponent implements OnInit {
   }
 
   getAddressList(data) {
+    if (this.userData.flag && this.userData.flag.includes('Add')) {
+      return;
+    }
     const obj = {
       userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
       userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
@@ -302,8 +305,19 @@ export class ClientAddressComponent implements OnInit {
   addMore() {
     this.addressForm.reset();
   }
+  @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   saveNext(flag) {
+    this.addressForm.markAllAsTouched();
+    for (let element in this.addressForm.controls) {
+      console.log(element)
+      if (this.addressForm.get(element).invalid) {
+        this.inputs.find(input => !input.ngControl.valid) ? this.inputs.find(input => !input.ngControl.valid).focus() : '';
+        this.addressForm.controls[element].markAsTouched();
+        document.getElementById(element).scrollIntoView();
+        return;
+      }
+    }
     if (this.addressForm.invalid) {
       this.addressForm.markAllAsTouched();
       return;
@@ -321,7 +335,7 @@ export class ClientAddressComponent implements OnInit {
         country: this.addressForm.get('country').value,
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
-        // addressType: this.addressForm.get('addressType').value,
+        addressType: this.addressForm.get('addressType').value,
         proofType: (this.addressForm.get('addProofType').value == '') ? undefined : this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').invalid ? undefined : this.addressForm.get('proofIdNum').value,
         userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.userMappingIdFlag) ? this.addressList.userAddressMappingId : undefined,

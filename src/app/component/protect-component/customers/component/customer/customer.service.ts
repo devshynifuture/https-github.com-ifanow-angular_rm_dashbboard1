@@ -4,11 +4,16 @@ import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UtilService } from '../../../../../services/util.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
+
+  private documentData = new BehaviorSubject('')
+  private clientId = new BehaviorSubject('')
+
   constructor(private http: HttpService, private httpService: HttpClient) {
   }
 
@@ -36,8 +41,8 @@ export class CustomerService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_INSURANCE + 'otherInsuranceId=' + data, '');
   }
   getOtherInsurance(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHER_INSURANCE, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHER_INSURANCE, UtilService.getHttpParam(data));
   }
   deleteOtherAddonInsurance(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_OTHER_ADDON + 'otherInsuranceAddOnId=' + data, '');
@@ -100,8 +105,8 @@ export class CustomerService {
   }
 
   getGeneralInsuranceData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('id', data.id).set('clientId', data.clientId).set('insuranceSubTypeId', data.insuranceSubTypeId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GENERAL_INSURANCE, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('id', data.id).set('clientId', data.clientId).set('insuranceSubTypeId', data.insuranceSubTypeId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GENERAL_INSURANCE, UtilService.getHttpParam(data));
   }
 
   getInsuranceGlobalData(data) {
@@ -164,30 +169,29 @@ export class CustomerService {
   }
 
   getSmallSavingSchemePPFData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PPF, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PPF, UtilService.getHttpParam(data));
   }
 
 
 
   getSmallSavingSchemeNSCData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_NSC, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_NSC, UtilService.getHttpParam(data));
   }
 
   getSmallSavingSchemeSSYData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_SSY, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_SSY, UtilService.getHttpParam(data));
   }
 
   getSmallSavingSchemeKVPData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_KVP, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_KVP, UtilService.getHttpParam(data));
   }
 
   getSmallSavingSchemeSCSSData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_SCSS, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_SCSS, UtilService.getHttpParam(data));
   }
 
   getSmallSavingSchemePOSAVINGData(data) {
@@ -196,18 +200,18 @@ export class CustomerService {
   }
 
   getSmallSavingSchemePORDData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('requiredDate', data.requiredDate);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_RD, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('requiredDate', data.requiredDate);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_RD, UtilService.getHttpParam(data));
   }
 
   getSmallSavingSchemePOTDData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_TD, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_TD, UtilService.getHttpParam(data));
   }
 
   getSmallSavingSchemePOMISData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_SMALL_SAVING_SCHEME_PO_MIS, UtilService.getHttpParam(data));
   }
 
   getRealEstate(data) {
@@ -216,8 +220,8 @@ export class CustomerService {
   }
 
   getOthersAssets(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHERS_ASSETS, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_OTHERS_ASSETS, UtilService.getHttpParam(data));
   }
 
   getEPF_EPS(data) {
@@ -336,8 +340,8 @@ export class CustomerService {
   }
 
   getGoldBondsData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SOVEREIGN_GOLD_BOND, httpParams);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SOVEREIGN_GOLD_BOND, UtilService.getHttpParam(data));
   }
 
   editSovereignGoldBond(data) {
@@ -538,8 +542,8 @@ export class CustomerService {
   }
 
   getInsuranceData(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('insuranceTypeId', data.insuranceTypeId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_INSURANCE, data);
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('insuranceTypeId', data.insuranceTypeId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_INSURANCE, UtilService.getHttpParam(data));
   }
 
   deleteRealEstate(data) {
@@ -783,7 +787,7 @@ export class CustomerService {
   }
 
   getReportWiseCalculations(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, { report: data.request });
+    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId + '&timePeriod=' + data.timePeriod + '&type=' + data.type, { report: data.request });
   }
 
   getMfUnrealizedTransactions(data) {
@@ -813,7 +817,9 @@ export class CustomerService {
   getMfFolioMaster(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);
   }
-
+  getBankDetails(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_BANK_DETAILS, data)
+  }
   getMfSipDetails(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_DETAILS, data);
   }
@@ -1115,6 +1121,12 @@ export class CustomerService {
   unmapFamilyMembers(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.UNMAP_FAMILY_MEMBER, data);
   }
+
+  makeMinorToMajor(data) {
+    const httpParams = new HttpParams().set('familyMemberId', data.familyMemberId).set('familyMemberType', data.familyMemberType);
+    return this.http.putParam(apiConfig.USER + appConfig.CONVERT_MINOR_TO_MAJOR, data, httpParams);
+  }
+
   getSubAdvisorListValues(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
   }
@@ -1156,11 +1168,68 @@ export class CustomerService {
   }
 
   getFolioSchemeWiseNomineeDetails(data) {
-    return this.http.getHttpClient(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA + `?folioNumber=${data.folioNumber}&schemeCode=${data.schemeCode}`);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA, data);
   }
 
   deleteCasFile(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CAS_FILE, data);
+  }
+
+  getFactSheetAllocation(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_ALLOCATION, data);
+  }
+
+  getFactSheetRiskometer(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RISKOMETER, data);
+  }
+
+  getFactSheetHistoricalNav(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_NAV, data);
+  }
+
+  getFactSheetCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_COUNT, data);
+  }
+
+  getFactSheetDetails(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_SCHEME_DETAILS, data);
+  }
+
+  getFactInvRet(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_INV_RET, data);
+  }
+
+  getFactRatio(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RATIO_GRAPH, data);
+  }
+
+  getKycDetailsOfClient(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_KYC_DETAILS_OF_CLIENT, data);
+  }
+
+  hideKycPopup(data) {
+    return this.http.put(apiConfig.USER + appConfig.HIDE_KYC_POPUP, data);
+  }
+
+  OtherFolioDetails(data) {
+    return this.http.get(apiConfig.USER + appConfig.OTHER_FOLIO_DETAILS, data);
+  }
+
+  setDocumentData(value) {
+    this.documentData.next(value);
+  }
+  getDocumentData() {
+    return this.documentData.asObservable();
+  }
+
+  setClientId(value) {
+    this.clientId.next(value);
+  }
+  getClientId() {
+    return this.clientId.asObservable();
+  }
+  clearStorage() {
+    this.setDocumentData('');
   }
 }
 

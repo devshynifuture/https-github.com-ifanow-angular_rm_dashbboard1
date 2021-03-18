@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACV,MAAM,EAAE,KAAK;CAChB;;AAEA,AAAA,SAAS,CAAC,aAAa,CAAC;EACrB,KAAK,EAAE,CAAC;EACR,QAAQ,EAAE,KAAK;EACf,YAAY,EAAE,IAAI;CACrB;;AAED,AAAA,YAAY,CAAC;EACT,SAAS,EAAE,gBAAgB;CAC9B;;AAED,AAAA,WAAW,CAAC;EACR,SAAS,EAAE,eAAe;CAC7B;;AAED,AAAA,WAAW,CAAC;EACR,SAAS,EAAE,eAAe;CAC7B",
+    "sources": [
+        "leftsidebar-setting.component.scss"
+    ],
+    "names": [],
+    "file": "leftsidebar-setting.component.css"
+}

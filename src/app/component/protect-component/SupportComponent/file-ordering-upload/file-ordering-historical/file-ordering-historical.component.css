@@ -1,0 +1,16 @@
+.h-22 {
+  height: 22px !important;
+}
+
+.back-office-table #table-low tr.mat-header-row {
+  height: 40px !important;
+}
+
+::ng-deep .back-office-table {
+  overflow: auto;
+}
+
+::ng-deep .back-office-table #table-low th {
+  top: -2px;
+}
+/*# sourceMappingURL=file-ordering-historical.component.css.map */

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,OAAO,CAAC;EACJ,gBAAgB,EAAE,kBAAkB;EACpC,KAAK,EAAE,kBAAkB;CAC5B;;AAED,AAAA,uBAAuB,CAAC,aAAa,AAAA,YAAY,CAAC;EAC9C,SAAS,EAAE,gBAAgB;CAC9B",
+    "sources": [
+        "customer-transact.component.scss"
+    ],
+    "names": [],
+    "file": "customer-transact.component.css"
+}

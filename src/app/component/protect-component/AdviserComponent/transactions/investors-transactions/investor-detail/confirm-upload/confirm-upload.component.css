@@ -1,0 +1,9 @@
+.uploadInput {
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  display: none;
+  top: 0;
+}
+/*# sourceMappingURL=confirm-upload.component.css.map */

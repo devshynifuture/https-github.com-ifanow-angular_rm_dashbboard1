@@ -8,6 +8,7 @@ export class AdviceUtilsService {
   private allAdviceData = new BehaviorSubject('');
   private clientId = new BehaviorSubject('')
   private familyList = new BehaviorSubject('');
+  private adviceLoad = new BehaviorSubject('');
 
   constructor() { }
 
@@ -54,6 +55,12 @@ export class AdviceUtilsService {
   }
   getFamilyMemberList() {
     return this.familyList.asObservable();
+  }
+  setAdviceLoading(value) {
+    this.adviceLoad.next(value);
+  }
+  getAdviceLoading() {
+    return this.adviceLoad.asObservable();
   }
   clearStorage() {
     this.setStoredAdviceData({});

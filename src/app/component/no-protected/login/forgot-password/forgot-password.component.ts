@@ -45,6 +45,7 @@ export class ForgotPasswordComponent implements OnInit {
   @ViewChild('countDown', { static: true }) elemRef: ElementRef;
   resendOtpFlag: boolean = false;
   logoUrl: any;
+  forgotPass: boolean;
   constructor(private loginService: LoginService, private eventService: EventService,
     private router: Router, private fb: FormBuilder, private peopleService: PeopleService) {
   }
@@ -145,16 +146,43 @@ export class ForgotPasswordComponent implements OnInit {
           // this.saveVerifyData.email = data.emailList[0].email;
           // this.saveVerifyData.mobileNo = data.mobileList[0].mobileNo;
           // this.saveVerifyData['userData'] = data
-          this.isVerify = true;
+          if (!this.saveVerifyData.email && this.saveVerifyData.mobileNo && this.saveVerifyData.mobileNo == 0) {
+            this.eventService.openSnackBar('Please contact your advisor for more details');
+            return;
+          }
+          if (this.saveVerifyData.email && this.saveVerifyData.mobileNo && this.saveVerifyData.mobileNo != 0) {
+            this.isVerify = true;
+            this.forgotPass = true;
+            this.verifyFlag = 'Email';
+            // this.verify('Email', false);
+            this.resendOtpFlag = false;
+            this.otpResendCountDown();
+            const obj1 = {
+              email: this.saveVerifyData.email,
+              userType: this.saveVerifyData.userType,
+              otp: null,
+              advisorId: this.saveVerifyData.advisorId,
+              mobileNo: this.saveVerifyData.mobileNo
+            }
+            this.barButtonOptions.active = true;    //// verify email or mobileNo with credentials
+            this.loginService.generateOtp(obj1).subscribe(
+              data => {
+                this.barButtonOptions.active = false;
+                this.otpResponse = data;
+                this.isVerify = true;
+              },
+              err => this.eventService.openSnackBar(err, 'Dismiss')
+            );
+            return;
+          }
           if (this.saveVerifyData.email) {
             this.verifyFlag = 'Email';
             this.verify('Email', false);
           } else if (this.saveVerifyData.mobileNo != 0) {
             this.verifyFlag = 'Mobile';
             this.verify('Mobile', false);
-          } else {
-            this.eventService.openSnackBar('Please contact your advisor for more details');
           }
+          // }
         }
         else {
           this.userName.setErrors({ incorrect: true });
@@ -170,6 +198,31 @@ export class ForgotPasswordComponent implements OnInit {
           this.eventService.openSnackBar(err, 'Dismiss');
         }
       }
+    );
+  }
+
+  verifyEmailAndMobilePassword() {
+    this.isVerify = true;
+    this.forgotPass = true;
+    this.verifyFlag = 'Email';
+    // this.verify('Email', false);
+    this.resendOtpFlag = false;
+    this.otpResendCountDown();
+    const obj1 = {
+      email: this.saveVerifyData.email,
+      userType: this.saveVerifyData.userType,
+      otp: null,
+      advisorId: this.saveVerifyData.advisorId,
+      mobileNo: this.saveVerifyData.mobileNo
+    }
+    this.barButtonOptions.active = true;    //// verify email or mobileNo with credentials
+    this.loginService.generateOtp(obj1).subscribe(
+      data => {
+        this.barButtonOptions.active = false;
+        this.otpResponse = data;
+        this.isVerify = true;
+      },
+      err => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 

@@ -1,0 +1,104 @@
+#ui-dashboard {
+  padding-top: 130px;
+}
+
+#ui-dashboard .subscription-summary p {
+  color: #000000;
+}
+
+#ui-dashboard h4, #ui-dashboard h2 {
+  font-family: "proxima-nova", sans-serif;
+}
+
+hr {
+  border-bottom: 1px solid #DADCE0;
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+}
+
+.bg-red {
+  background-color: #FFD8D8;
+}
+
+.btn-red {
+  background-color: #D01010;
+  color: #FFD5D5 !important;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.2px;
+}
+
+h1 {
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: normal;
+  padding-top: 16px;
+  line-height: 40px;
+  letter-spacing: 0.2px;
+  margin-bottom: 0;
+}
+
+p {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 130%;
+  letter-spacing: 0.2px;
+  color: #004164;
+}
+
+.btn-red .material-icons {
+  margin-left: 2px;
+  padding-top: 2px;
+}
+
+.dashboard-img {
+  position: relative;
+  margin-top: -85px;
+}
+
+#ui-subscription-completeness {
+  padding-top: 50px;
+}
+
+#ui-subscription-completeness .done-icons {
+  background: #02B875;
+  border-radius: 50%;
+  padding: 5px;
+  color: #fff;
+  font-size: 30px;
+  margin-top: 2px;
+  text-align: center;
+}
+
+#ui-subscription-completeness .default-icons {
+  background: #BCC6CA;
+  border-radius: 50%;
+  padding: 5px;
+  color: #fff;
+  font-size: 30px;
+  margin-top: 2px;
+  text-align: center;
+}
+
+#ui-subscription-completeness .mat-card:not([class*=mat-elevation-z]) {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0;
+}
+
+#ui-subscription-completeness .w-110 {
+  width: 110px !important;
+}
+
+#ui-tc-insert h5, #ui-tc-insert p {
+  font-family: "Roboto",sans-serif;
+}
+
+::ng-deep .copy:hover {
+  background-color: lightgrey;
+}
+/*# sourceMappingURL=terms-agreement.component.css.map */

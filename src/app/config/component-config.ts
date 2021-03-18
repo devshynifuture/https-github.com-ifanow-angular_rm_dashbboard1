@@ -283,6 +283,7 @@ export const appConfig = {
   REPORT_WISE_CALCULATION: 'mutual-fund/reportwise/calculation/get',
   MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST: 'mutual-fund/transaction/type/list/get',
   FOLIO_MASTER_DETAILS: 'mutual-fund/folioMasterDetails/list/get',
+  GET_BANK_DETAILS: 'user/client/bank-detail/scheme-wise/get',
   SIP_DETAILS: 'mutual-fund/sipDetails/list/get',
   UNREALIZED_TRANSACTION_GET: 'mutual-fund/unrealized/transaction/list/get',
   CAPITAL_GAIN_GET: 'mutual-fund/capital/gains/grandfathering/get',
@@ -308,7 +309,18 @@ export const appConfig = {
   EDIT_NOTES_ACTIVITY: 'activity/note/edit',
   DELETE_NOTES_ACTIVITY: 'activity/note/multi/delete',
   DELETE_CAS_FILE: 'mutual-fund/cas-file/data/delete',
+  MF_FACT_SHEET_RISKOMETER: 'mutual-fund/scheme/riskometer',
+  MF_FACT_SHEET_ALLOCATION: 'mutual-fund/scheme/company/percentage/allocation',
+  MF_FACT_SHEET_NAV: 'mutual-fund/scheme/historical/nav',
+  MF_FACT_SHEET_COUNT: 'mutual-fund/scheme/timeframe',
+  MF_FACT_SHEET_SCHEME_DETAILS: 'mutual-fund/scheme/details',
+  MF_FACT_SHEET_INV_RET: 'mutual-fund/scheme/invesment/returns',
+  MF_FACT_SHEET_RATIO_GRAPH: 'mutual-fund/scheme/relative/performance',
+  GET_KYC_DETAILS_OF_CLIENT: 'user/investor-kyc-remaining/count/get',
+  HIDE_KYC_POPUP: 'user/investor-kyc-remaining/hide',
+  OTHER_FOLIO_DETAILS: 'user/client/contact-number-and-email/scheme-wise/get',
   ////////////////////////////////plan////////////////////////////
+  ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',
   SUBMIT_RISK: 'plan/risk-assessment/add',
   GET_GLOBAL_GOAL_DATA: 'goal-planning/goal/global-data/get',
@@ -560,7 +572,7 @@ export const appConfig = {
   SAVE_PLAN_SECTION: "plan/financial-plan/save",
   GET_PLAN_SECTION: "plan/financial-plan/list/get",
   DELETE_FP_SECTION: 'plan/financial-plan/delete',
-  GET_TEMPLATES: 'plan/financial-plan/template/list/get',
+  GET_TEMPLATES: 'plan/financial-plan/advisor-template/list/get',
   GET_PREVIEW: 'plan/financial-plan/pdf-url/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/advice/list/filter/get',
@@ -624,6 +636,7 @@ export const appConfig = {
   GET_MAPPED_CLIENTS_FILTER: 'user/client/mapped/filter/client-wise/view',
   UPDATE_ALL_NSE_CLIENTS: 'nse/iin/all/update',
   AUTO_REMAP_CLIENT: 'user/clients/remap/auto',
+  GET_KYC_TRANASCTION_MATRIX: 'user/advisor/kyc-metrics/get',
 
 
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
@@ -652,13 +665,14 @@ export const appConfig = {
   GET_MANDATE_LIST: 'report/ach-mandate/get',
   GET_REGISTRATION_UCC_IIN: 'user/register/detail/get',
   MAPPED_EXSTING_USER: 'nse/iin/mapping/update',
+  UPLOAD_NEW_FATACA: 'user/register/fatca/change/upload',
   // GET_CLIENT_FM_LIST,: 'user/client/family/filter/get',
   CREATE_IIN_UCC: 'user/register/create',
   GET_TOKEN: 'user/bse/upload/password',
   BANK_MANDTAE: 'nse/iin/bank/detail/get',
   TAX_MASTER: 'user/tax-master/get',
   COUNTRY_MASTER: 'user/register/country-code/all/get',
-
+  INVESTER_KYC_LIST_GET: 'user/investor-with-kyc/list/get',
   INVESTOR_FORM_UPLOAD_DETAIL: 'user/register/upload/all/get',
   INVESTOR_STATUS_CHECK: 'user/register/status/check/update',
 
@@ -751,7 +765,7 @@ export const appConfig = {
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
   GET_SCHEMES_DETAILS: 'rmdashboard/get/scheme/details',
   MF_LIST_UNFREEZE: 'mutual-fund/mf-list/unfreeze',
-
+  EDIT_SIP_AMOUNT: 'backoffice/sip-cleanup/sip-amount/edit',
   /********************************* TASKS Section ****************************************/
 
   ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',
@@ -826,6 +840,7 @@ export const appConfig = {
   GET_RETURNS: 'plan/config/return-inflation/get',
   GET_KEY_PARAMETERS: 'goal-planning/key-parameters/get',
   UPLOAD_PLAN_GALLERY: 'goal-planning/goal-gallery/add',
+  UPLAOD_INDIVIDUAL_GOAL_IMG: 'goal-planning/image-url/update',
   UPLOAD_KEY_PARAMETER: 'goal-planning/advisor-plan-configuration/add',
   UPDATE_ASSET_ALLOCATION: 'goal-planning/static-allocation/put',
   GET_TASK_TEMPLATE: 'setting/task/template/list/get',
@@ -856,6 +871,7 @@ export const appConfig = {
   DOMAIN_LIST: 'account/asset/domain-provider/detail/get',
   REMOVE_EMAIL: 'setting/preference/email/category/from/email/remove',
   CHECK_WHITE_LABEL_AND_UPDATE: 'setting/white-label/check',
+  GET_BULK_EMAIL_SUBJECT_TEMPLATE: 'setting/preference-email/template/get',
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',
@@ -877,6 +893,7 @@ export const appConfig = {
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
   UNMAP_FAMILY_MEMBER: 'user/family-member/split',
+  CONVERT_MINOR_TO_MAJOR: 'user/family-member/family-member-type/update',
   GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   GET_PEOPLE_CLIENT_FILTER_FOR_BULK_EMAIL_REVIEW: 'user/client/filter/details/get',
   ADD_CLIENT: 'user/client/add',
@@ -916,7 +933,7 @@ export const appConfig = {
   GET_CLIENT_FAMILY_MEMBERS: 'user/family-member/nominee/list/get',
   GET_CLIENT_FAMILY_MEMBER_LIST: 'user/client/family/filter/get',
   GET_CLIENT_SEARCH_LIST: 'user/client/filter/details/get',
-  GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list/get',
+  GET_CLIENT_FAMILY_MEMBER_LIST_ASSET: 'user/family-member/list',
   GET_TEAM_MEMBER_INFO: 'user/info/get',
   CHECK_VALID_USERNAME: 'user/username/update',
   // CLIENT_SEARCH: 'user/client/all/names/get',
@@ -936,6 +953,11 @@ export const appConfig = {
   MOVE_FAMILY_MEMBER: 'user/family-member/move',
   MERGE_DUPLICATE_FAMILY_MEMBER: 'user/client/merge/duplicate',
   PROMOTE_TO_CLIENT: 'user/family-member/promote',
+  KYC_LINK_SEND: 'user/client/kyc-link/send',
+  KYC_LINK_GET: 'user/client/kyc-link/get',
+  KYC_STATUS_UPDATE: 'user/client/kyc-status/update',
+  KYC_STATUS_OF_PAN: 'user/kyc-status/get',
+  GET_ADVSOR_NAME_MOBILE: 'user/advisor/name-mobile/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/login/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -948,6 +970,12 @@ export const appConfig = {
   GET_CLIENT_LOGO: 'setting/organisation/domain/data/get',
   GET_BULK_EMAIL_PASSWORD_HISTORY: 'setting/bulk/welcome-email/log-list/get',
   ADD_CALL_BACK_MOB: 'advisor-callback-detail/add',
+  GET_TEMPLATE_LIST: 'plan/setting/financial-plan/advisor-template/list/get',
+  ADD_TEMPLATE: 'plan/financial-plan/template/add',
+  EDIT_TEMPLATE: 'plan/financial-plan/template/edit',
+  SET_VISIBILITY: 'plan/financial-plan/template/visibility/edit',
+  RESET_TEMPLATE: 'plan/financial-plan/advisor-template/reset',
+  DELETE_TEMPLATE: 'plan/financial-plan/template/delete',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
@@ -969,6 +997,7 @@ export const appConfig = {
   GET_ARN_RIA_GLOBAL_LIST: 'setting/arn-ria/global/data/get',
 
   GET_ARN_RIA_LIST: 'setting/arn-ria/list/get',
+  GET_ARN_RIA_LIST_CHANGE: 'setting/arn-ria/list/get/file/upload',
   ADD_ARN_RIA: 'setting/back-office/arn-ria/add',
   EDIT_ARN_RIA: 'setting/back-office/arn-ria/edit',
   GET_MF_RTA_LIST: 'setting/arn-ria/rta/list/get',
@@ -1012,7 +1041,6 @@ export const appConfig = {
   RESET_TEAM_MEMBER_PASSWORD: 'user/advisor/reset/password',
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
-
   //////////////////////////////////customer-overview-myfeeds-profile//////////////////////
   GET_FEEDS_MF_DATA: 'mutual-fund/latest/transaction/list/get',
   GET_DOCUMENTS_FEED: 'document/account/document/total-count-and-size/get',
@@ -1059,8 +1087,10 @@ export const appConfig = {
   //////////////////////////// Lead interaction ///////////////////////
   POST_LEAD_INTERACTION_RESPONSE: 'lead-first-interaction/add',
   REFERRED_USERS: 'user/advisor/referrals/get',
-  FROALA_UPLOAD_URL: 'user/advisor/froala/file-upload?advisorId='
+  FROALA_UPLOAD_URL: 'user/advisor/froala/file-upload?advisorId=',
+  //////////////////////////////////////////////////////////////////////////
 
+  GLOBAL_REMINDER_FILTER: '/reminder/global-data/get'
 };
 
 

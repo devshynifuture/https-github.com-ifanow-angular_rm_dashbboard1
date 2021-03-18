@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC,EAAE,CAAC;EACV,OAAO,EAAE,kBAAkB;EAC3B,WAAW,EAAE,GAAG;EAChB,SAAS,EAAE,eAAe;CAC7B",
+    "sources": [
+        "small-saving-scheme.component.scss"
+    ],
+    "names": [],
+    "file": "small-saving-scheme.component.css"
+}

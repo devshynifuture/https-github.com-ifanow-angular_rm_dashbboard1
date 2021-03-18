@@ -16,8 +16,14 @@ export class PeopleService {
     private authService: AuthService) {
   }
   clientList;
+  teamMembers;
+  nomineeList;
   // commmented code which are giving error =>>>>>>>>>>>
 
+  clearCacheData() {
+    // this.clientList = undefined;
+    this.teamMembers = undefined;
+  }
 
   getClientList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_PEOPLE_CLIENT_LIST, data, 1);
@@ -233,5 +239,23 @@ export class PeopleService {
   }
   checkValidUsername(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.CHECK_VALID_USERNAME, data);
+  }
+  getKYCDetailsData(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_FAMILY_MEMBER_LIST_ASSET, data);
+  }
+  sendKYCLink(data) {
+    return this.http.post(apiConfig.USER + appConfig.KYC_LINK_SEND, data);
+  }
+  doKYCNow(data) {
+    return this.http.post(apiConfig.USER + appConfig.KYC_LINK_GET, data);
+  }
+  kycStatusUpdate(data) {
+    return this.http.put(apiConfig.USER + appConfig.KYC_STATUS_UPDATE, data);
+  }
+  kycStatusOfPan(data) {
+    return this.http.get(apiConfig.USER + appConfig.KYC_STATUS_OF_PAN, data);
+  }
+  getAdvisorNameMobile(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_ADVSOR_NAME_MOBILE, data);
   }
 }

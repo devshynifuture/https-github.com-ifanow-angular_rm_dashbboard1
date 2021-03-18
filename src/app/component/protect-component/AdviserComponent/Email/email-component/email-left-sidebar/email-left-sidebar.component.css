@@ -1,0 +1,16 @@
+.btn-custom-compose {
+  background: #51a2ff;
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-custom-compose p {
+  color: white;
+}
+
+.btn-custom-compose:hover, .btn-custom-compose:active, .btn-custom-compose:focus {
+  color: white;
+  background: #51a2ff;
+}
+/*# sourceMappingURL=email-left-sidebar.component.css.map */

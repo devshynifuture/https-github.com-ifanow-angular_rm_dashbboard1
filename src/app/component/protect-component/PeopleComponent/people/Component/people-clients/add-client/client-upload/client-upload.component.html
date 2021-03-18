@@ -57,7 +57,8 @@
                         <mat-select class="form-control" [(ngModel)]="selectedBank"
                             (selectionChange)="checkSelected('proof-type1', false)">
                             <mat-option disabled value="">Select bank</mat-option>
-                            <mat-option [value]="bank.bankId" *ngFor="let bank of bankList">{{bank.bankName}}
+                            <mat-option [value]="bank.bankId" *ngFor="let bank of bankList">
+                                {{bank.bankNameAndLast4Digit}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

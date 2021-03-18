@@ -89,7 +89,10 @@ export class OrgSettingServiceService {
   uploadPlanPhoto(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_PLAN_GALLERY, data);
   }
+  uploadIndividualGoal(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPLAOD_INDIVIDUAL_GOAL_IMG, data);
 
+  }
   updateKeyParameter(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UPLOAD_KEY_PARAMETER, data);
   }
@@ -207,4 +210,7 @@ export class OrgSettingServiceService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.CHECK_WHITE_LABEL_AND_UPDATE, data);
   }
 
+  getEmailBulkSubjectTemplate(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_EMAIL_SUBJECT_TEMPLATE, data);
+  }
 }

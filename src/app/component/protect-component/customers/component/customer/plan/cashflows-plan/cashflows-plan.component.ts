@@ -14,6 +14,12 @@ import { AuthService } from 'src/app/auth-service/authService';
 export class CashflowsPlanComponent implements OnInit {
 
   displayedColumns: string[] = ['year', 'groupHeadAge', 'spouseAge', 'monthlyIncome', 'view'];
+  displayedColumnsIncome: string[] = ['position', 'name', 'weight', 'symbol', 'symbol2', 'symbol3', 'symbol4', 'symbol5', 'symbol6', 'symbol7', 'symbol8', 'symbol9', 'symbol10', 'total'];
+  dataSourceIncomes = ELEMENT_DATAIncome;
+  displayedColumnsAsset: string[] = ['position', 'name', 'weight', 'symbol', 'symbol2', 'symbol3', 'symbol4', 'symbol5', 'symbol6', 'symbol7', 'symbol8', 'symbol9', 'symbol10', 'total'];
+  dataSourceAsset = ELEMENT_DATAAsset;
+  displayedColumnsAsset1: string[] = ['position', 'name', 'weight', 'symbol', 'symbol2', 'symbol3', 'symbol4', 'symbol5', 'symbol6', 'symbol7', 'symbol8', 'symbol9', 'symbol10', 'total'];
+  dataSourceAsset1 = ELEMENT_DATAAsset1;
   dataSource;
   dataSourceIncome;
   dataSourceExpense;
@@ -245,3 +251,84 @@ const ELEMENT_DATA6: IncomeTableI[] = [
   { year: '2026', age: '31', age2: '27', total: '2,200', view: 'view' },
 ];
 
+export interface PeriodicElementIncome {
+  name: string;
+  position: string;
+  weight: string;
+  symbol: string;
+  symbol2: string;
+  symbol3: string;
+  symbol4: string;
+  symbol5: string;
+  symbol6: string;
+  symbol7: string;
+  symbol8: string;
+  symbol9: string;
+  symbol10: string;
+  total: string;
+}
+
+const ELEMENT_DATAIncome: PeriodicElementIncome[] = [
+  {
+    position: 'Salary', name: '40,000', weight: '40,000', symbol: '40,000', symbol2: '40,000', symbol3: '40,000',
+    symbol4: '40,000', symbol5: '40,000', symbol6: '40,000', symbol7: '40,000', symbol8: '40,000', symbol9: '40,000', symbol10: '40,000', total: '40,00,00'
+  },
+  {
+    position: 'Rental', name: '40,000', weight: '40,000', symbol: '40,000', symbol2: '40,000', symbol3: '40,000',
+    symbol4: '40,000', symbol5: '40,000', symbol6: '40,000', symbol7: '40,000', symbol8: '40,000', symbol9: '40,000', symbol10: '40,000', total: '40,00,00'
+  },
+];
+export interface PeriodicElementAsset {
+  name: string;
+  position: string;
+  weight: string;
+  symbol: string;
+  symbol2: string;
+  symbol3: string;
+  symbol4: string;
+  symbol5: string;
+  symbol6: string;
+  symbol7: string;
+  symbol8: string;
+  symbol9: string;
+  symbol10: string;
+  total: string;
+}
+
+const ELEMENT_DATAAsset: PeriodicElementAsset[] = [
+  {
+    position: 'Salary', name: '40,000', weight: '40,000', symbol: '40,000', symbol2: '40,000', symbol3: '40,000',
+    symbol4: '40,000', symbol5: '40,000', symbol6: '40,000', symbol7: '40,000', symbol8: '40,000', symbol9: '40,000', symbol10: '40,000', total: '40,00,00'
+  },
+  {
+    position: 'Rental', name: '40,000', weight: '40,000', symbol: '40,000', symbol2: '40,000', symbol3: '40,000',
+    symbol4: '40,000', symbol5: '40,000', symbol6: '40,000', symbol7: '40,000', symbol8: '40,000', symbol9: '40,000', symbol10: '40,000', total: '40,00,00'
+  },
+];
+export interface PeriodicElementAsset1 {
+  name: string;
+  position: string;
+  weight: string;
+  symbol: string;
+  symbol2: string;
+  symbol3: string;
+  symbol4: string;
+  symbol5: string;
+  symbol6: string;
+  symbol7: string;
+  symbol8: string;
+  symbol9: string;
+  symbol10: string;
+  total: string;
+}
+
+const ELEMENT_DATAAsset1: PeriodicElementAsset1[] = [
+  {
+    position: 'Salary', name: '40,000', weight: '40,000', symbol: '40,000', symbol2: '40,000', symbol3: '40,000',
+    symbol4: '40,000', symbol5: '40,000', symbol6: '40,000', symbol7: '40,000', symbol8: '40,000', symbol9: '40,000', symbol10: '40,000', total: '40,00,00'
+  },
+  {
+    position: 'Rental', name: '40,000', weight: '40,000', symbol: '40,000', symbol2: '40,000', symbol3: '40,000',
+    symbol4: '40,000', symbol5: '40,000', symbol6: '40,000', symbol7: '40,000', symbol8: '40,000', symbol9: '40,000', symbol10: '40,000', total: '40,00,00'
+  },
+];

@@ -64,8 +64,6 @@
                     <div class="row pb-20" *ngIf="data.goalType == 5">
                         <div class="col-md-4 pl-0  d-flex align-items-center justify-content-end ">
                             <p class="roboto mb-0 ">Frequency
-                                <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
@@ -107,8 +105,6 @@
                     <div class="row pt-20 btl-1">
                         <div class="col-md-4 pl-0  d-flex align-items-center justify-content-end ">
                             <p class="roboto mb-0 ">Savings start date
-                                <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
@@ -135,14 +131,15 @@
                             </div>
                         </div>
                         <div class="col-md-12" *ngIf="savingsSDError">
-                            <mat-error>Savings start date cannot be greater than savings end date</mat-error>
+                            <mat-error>Savings start date cannot be same or greater than savings end date</mat-error>
+                        </div>
+                        <div class="col-md-12" *ngIf="goalError">
+                            <mat-error>Savings start date cannot be same or greater than goal start date</mat-error>
                         </div>
                     </div>
                     <div class="row pt-20 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0 ">Savings end date
-                                <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
@@ -162,30 +159,30 @@
                                 <mat-form-field>
                                     <mat-select class="form-control  " formControlName="savingEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year"
-                                            [disabled]="year < (goalDetailsFG.get('savingStartDateYear').value)+1"
-                                            *ngFor="let year of yearsEnd" (click)="changeDate(year)">{{year}}
+                                        <mat-option [value]="year" *ngFor="let year of yearsEnd"
+                                            (click)="changeDate(year)">{{year}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
+                        <div class="col-md-12" *ngIf="goalRError">
+                            <mat-error>Savings end date cannot be greater than retirement date</mat-error>
+                        </div>
                         <div class="col-md-12" *ngIf="savingsEDError">
-                            <mat-error>Savings end date cannot be greater than goal end date</mat-error>
+                            <mat-error>Savings end date cannot be greater than goal start date</mat-error>
                         </div>
                     </div>
                     <div class="row pt-20 pb-20 btl-1">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
                             *ngIf="data.goalType!=1">
                             <p class="roboto mb-0  ">Goal start date
-                                <img src="/assets/images/svg/info.svg">
                             </p>
                         </div>
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
                             *ngIf="data.goalType==1">
                             <p class="roboto mb-0  ">Retirement age
-                                <img src="/assets/images/svg/info.svg">
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
@@ -212,7 +209,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-md-12" *ngIf="goalSDError">
+                        <div class="col-md-12" *ngIf="goalSDrror">
                             <mat-error>Goal start date cannot be greater than goal end date</mat-error>
                         </div>
                     </div>
@@ -220,13 +217,11 @@
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
                             *ngIf="data.goalType != 1">
                             <p class="roboto mb-0 ">Goal end date
-                                <img src="/assets/images/svg/info.svg">
                             </p>
                         </div>
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end"
                             *ngIf="data.goalType == 1">
                             <p class="roboto mb-0 ">Life expectancy
-                                <img src="/assets/images/svg/info.svg">
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
@@ -246,9 +241,7 @@
                                 <mat-form-field>
                                     <mat-select class="form-control br-0" formControlName="goalEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year"
-                                            [disabled]="year < (goalDetailsFG.get('savingEndDateYear').value)"
-                                            *ngFor="let year of yearsEnd">{{year}}
+                                        <mat-option [value]="year" *ngFor="let year of yearsEnd">{{year}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
@@ -259,16 +252,13 @@
                     <div class="row pt-0 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0  ">Goal addition date
-                                <img src="/assets/images/svg/info.svg"
-                                    matTooltip="This is the date from which the goal calculations begin. by default, this is the date when the goal was first saved. This date cannot be greater than the goal start date. You should ideally change this date only if a goal has been reset and calculations need to be redone."
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0 remove-top">
                                 <mat-form-field class="ba-date " appearance="standard" floatLabel="never">
                                     <input class="form-control br-0 b-0" formControlName="goalAdditionDate"
-                                        (input)="setEndDate($event)" (focus)="picker.open()" matInput
+                                        (input)="setEndDate()" (focus)="picker.open()" matInput
                                         [matDatepicker]="picker">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
@@ -277,7 +267,6 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-
                             <!-- <div class="form-group">
                                 <mat-form-field class="ba-date">
                                     <input class="form-control b-0" (click)="picker.open()" (dateChange)="setEndDate()"
@@ -288,15 +277,14 @@
                                 </mat-form-field>
                             </div> -->
                         </div>
-
+                        <div class="col-md-12" *ngIf="goalAddError">
+                            <mat-error>Goal addition date cannot be greater than goal start date</mat-error>
+                        </div>
                     </div>
 
                     <div class="row pt-20 pb-20 btl-1">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0 ">Saving status
-                                <img src="/assets/images/svg/info.svg"
-                                    matTooltip="When “Group all years together” is selected, we assume that you are saving for all goal years together. When Save for individual years is selected, we assume that you will save individually for each year and focus will be for saving for goal which is nearest. E.g. for a goal which is between 2023 - 2035 we will first calculate savings requirement for 2023 year only. Come 2023, we will calculate savings requirement for the 2024 year’s goal amount only."
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
                             </p>
                         </div>
                         <div class="col-md-8 p-0">
@@ -343,9 +331,6 @@
                     <div class="row pt-10 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
                             <p class="roboto mb-0 ">Freeze calculations
-                                <img src="/assets/images/svg/info.svg"
-                                    matTooltip="When “Group all years together” is selected, we assume that you are saving for all goal years together. When Save for individual years is selected, we assume that you will save individually for each year and focus will be for saving for goal which is nearest. E.g. for a goal which is between 2023 - 2035 we will first calculate savings requirement for 2023 year only. Come 2023, we will calculate savings requirement for the 2024 year’s goal amount only."
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
                             </p>
                         </div>
                         <div class="col-md-1 p-0 mt-6">
@@ -388,17 +373,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-0 pb-20">
+                    <!-- <div class="row pt-0 pb-20">
                         <div class="col-md-4 pl-0 d-flex align-items-center justify-content-end">
-                            <p class="roboto mb-0 pt-16">Archive goal<img src="/assets/images/svg/info.svg"
-                                    matTooltip="When “Group all years together” is selected, we assume that you are saving for all goal years together. When Save for individual years is selected, we assume that you will save individually for each year and focus will be for saving for goal which is nearest. E.g. for a goal which is between 2023 - 2035 we will first calculate savings requirement for 2023 year only. Come 2023, we will calculate savings requirement for the 2024 year’s goal amount only."
-                                    aria-label="Button that displays a tooltip when focused or hovered over"></p>
+                            <p class="roboto mb-0 pt-16">Archive goal</p>
                         </div>
 
                         <div class="col-md-8 p-0 pt-16">
                             <mat-checkbox formControlName="archiveGoal"></mat-checkbox>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </mat-tab>
             <mat-tab label="Asset allocation">
@@ -541,7 +524,7 @@
                                     <div class="col-md-3 pr-0">
                                         <div class="form-group mb-0">
                                             <mat-form-field class="w-100">
-                                                <input matInput type="text" class="form-control br-0" 
+                                                <input matInput type="text" class="form-control br-0"
                                                 (change)="setOtherBifurcation(bifurcation.get('equityAllocation'), bifurcation.get('debtAllocation'))"
                                                 formControlName="equityAllocation">
                                             </mat-form-field>
@@ -550,7 +533,7 @@
                                     <div class="col-md-3 pr-0">
                                         <div class="form-group mb-0">
                                             <mat-form-field class="w-100">
-                                                <input matInput type="text" class="form-control br-0" 
+                                                <input matInput type="text" class="form-control br-0"
                                                 (change)="setOtherBifurcation(bifurcation.get('equityAllocation'), bifurcation.get('debtAllocation'))"
                                                 formControlName="debtAllocation">
                                             </mat-form-field>

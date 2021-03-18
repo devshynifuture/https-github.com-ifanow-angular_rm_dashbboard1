@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAA;EACD,MAAM,EAAE,eAAe;CAC1B;;AACD,AAAA,SAAS,CAAC,mCAAmC,CAAC,oBAAoB,CAAC;EACnE,WAAW,EAAE,cAAc;CAC1B;;AAED,AAAA,eAAe,CAAA;EACX,QAAQ,EAAE,QAAQ;EAClB,IAAI,EAAE,GAAG;EACT,GAAG,EAAE,GAAG;CACX;;AAED,AAAA,KAAK,CAAA;EACD,OAAO,EAAE,GAAG;EACZ,MAAM,EAAE,IAAI;CACf",
+    "sources": [
+        "folio-query.component.scss"
+    ],
+    "names": [],
+    "file": "folio-query.component.css"
+}

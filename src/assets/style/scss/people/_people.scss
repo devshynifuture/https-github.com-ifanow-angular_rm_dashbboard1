@@ -12,17 +12,37 @@
     height: 31px !important;
   }
 
-  #tbs {
-    tr.mat-row {
-      height: 34px !important;
-    }
+  // #tbs {
+  //   tr.mat-row {
+  //     height: 34px !important;
+  //     transition: transform .2s;
 
-    tbody td {
-      padding: 4px 8px !important;
-    }
-  }
+  //     &:hover {
+  //       transform: scale(1.011);
+  //       transform-origin: 50% 50%;
+  //     }
+  //   }
+
+  //   tbody td {
+  //     padding: 4px 8px !important;
+
+  //   }
+  // }
 }
- 
+
+// .people-leads {
+//   #table-low {
+//     tr.mat-row {
+
+//       transition: transform .2s;
+
+//       &:hover {
+//         transform: scale(1.011);
+//         transform-origin: 50% 50%;
+//       }
+//     }
+//   }
+// }
 
 .people-leads,
 .merge-client-family-member {

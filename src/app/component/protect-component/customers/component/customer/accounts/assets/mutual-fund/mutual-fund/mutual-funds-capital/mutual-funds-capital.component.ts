@@ -69,7 +69,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     rightFilterData: any;
     fromDateYear: any;
     toDateYear: any;
-    grandFatheringEffect: boolean;
+    grandFatheringEffect = true;
     objSendToDetailedCapital: any;
     redemption: any[];
     mutualFundList: any[];
@@ -94,13 +94,20 @@ export class MutualFundsCapitalComponent implements OnInit {
     criteriaDate: Date;
     loadingDone: boolean = false;
     mfCaptialGainCapability: any = {};
+    clientNameToDisplay: any;
+    excelDownload: boolean = false;
     // capitalGainData: any;
     constructor(private cd: ChangeDetectorRef, private pdfGen: PdfGenService,
         public routerActive: ActivatedRoute,
         private datePipe: DatePipe,
         private route: Router,
         private backOfficeService: BackOfficeService,
-        private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject,
+        private excel: ExcelGenService, private UtilService: UtilService,
+        private custumService: CustomerService,
+        private eventService: EventService,
+        private reconService: ReconciliationService,
+        private MfServiceService: MfServiceService,
+        private subInjectService: SubscriptionInject,
         public roleService: RoleService) {
 
 
@@ -138,6 +145,7 @@ export class MutualFundsCapitalComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
         this.mfCaptialGainCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList
         this.MfServiceService.getadvisorList()
             .subscribe(res => {
@@ -158,7 +166,9 @@ export class MutualFundsCapitalComponent implements OnInit {
                 const obj = {
                     id: this.familyMemberId
                 }
-                this.familyList.push(obj)
+                if (param1.familyMemberId) {
+                    this.familyList.push(obj)
+                }
                 this.fromDateYear = (param1.from);
                 this.toDateYear = (param1.to);
                 console.log('2423425', param1)
@@ -182,8 +192,8 @@ export class MutualFundsCapitalComponent implements OnInit {
             this.fromDateYear = this.bulkData.from;
             this.toDateYear = this.bulkData.to;
         } else {
-            this.fromDateYear = 2019;
-            this.toDateYear = 2020;
+            this.fromDateYear = 2020;
+            this.toDateYear = 2021;
         }
         this.fromDate = new Date(this.fromDateYear, 3, 1);
         this.toDate = new Date(this.toDateYear, 2, 31);
@@ -341,17 +351,20 @@ export class MutualFundsCapitalComponent implements OnInit {
         );
     }
     generatePdf() {
+        this.excelDownload = false
         this.fragmentData.isSpinner = true
+        this.cd.detectChanges();
         const para = document.getElementById('template');
         // let header = null
         const header = document.getElementById('templateHeader');
-        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '', true);
+        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
     }
     calculateCapitalGain(data) {
         this.isLoading = false;
         let equityData = [];
         this.changeInput.emit(false);
         if (data) {
+            this.checkFamMember()
             const myArray = data
             const list = [];
             this.capitalGainData = [];
@@ -447,7 +460,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         Object.keys(data).map(key => {
             if (data[key][0].category == 'OTHER') {
                 data[key][0].mutualFund.forEach(element => {
-                    if (element.subCategoryName == 'FoFs (Overseas)' || element.subCategoryName == 'FoFs (Overseas)') {
+                    if (element.subCategoryName == 'FoFs (Domestic) - Debt Oriented' || element.subCategoryName == 'FoFs (Overseas)' || element.subCategoryName == 'FoFs (Overseas)') {
                         debtFund.push(element);
                     }
                 });
@@ -547,6 +560,7 @@ export class MutualFundsCapitalComponent implements OnInit {
                 mutualFund = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
             }
             mutualFund = this.MfServiceService.sorting(mutualFund, 'schemeName');
+            mutualFund = [...new Map(mutualFund.map(item => [item.id, item])).values()];
             mutualFund.forEach(element => {
                 if (element.dividendTransactions) {
                     element.dividendTransactions.forEach(ele => {
@@ -822,6 +836,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         // this.excel.generateExcel(rows, tableTitle)
         // let rows3 = this.tableEl._elementRef.nativeElement.rows;
         // this.excel.generateExcel(rows, tableTitle)
+        this.excelDownload = true
         setTimeout(() => {
             var blob = new Blob([document.getElementById('template').innerHTML], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
@@ -834,11 +849,12 @@ export class MutualFundsCapitalComponent implements OnInit {
 
         let para = document.getElementById('template');
         // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-        this.UtilService.htmlToPdf('', para.innerHTML, 'MF capital gain summary', 'true', this.fragmentData, '', '', true);
+        this.UtilService.htmlToPdf('', para.innerHTML, 'MF capital gain summary', 'true', this.fragmentData, '', '', true, null);
         // let rows = this.tableEl._elementRef.nativeElement.rows;
         // this.pdfGen.generatePdf(rows, tableTitle);
     }
     generatePdfBulk() {
+        this.excelDownload = false
         this.loadingDone = true
         const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
         setTimeout(() => {
@@ -864,6 +880,19 @@ export class MutualFundsCapitalComponent implements OnInit {
         }, 200);
 
 
+    }
+    checkFamMember() {
+        this.clientNameToDisplay = null;
+        if (this.rightFilterData) {
+            let famMember = this.rightFilterData.family_member_list.filter(d => d.selected == true);
+            if (famMember.length == 1) {
+                this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+            } else {
+                this.clientNameToDisplay = this.clientData.name
+            }
+        } else {
+            this.clientNameToDisplay = this.clientData.name
+        }
     }
     getDetails() {
         const obj = {

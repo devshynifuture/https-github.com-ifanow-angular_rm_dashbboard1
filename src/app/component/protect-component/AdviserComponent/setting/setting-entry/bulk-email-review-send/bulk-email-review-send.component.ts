@@ -1,6 +1,6 @@
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { PeopleService } from './../../../../PeopleComponent/people.service';
-import { AfterViewInit, Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { element } from 'protractor';
+import { HowToUseDialogComponent } from '../../../Subscriptions/subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -82,6 +83,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   searchName: string;
   selectedClientArray = [];
   tempData: any = [];
+  templateObj: any;
 
   constructor(
     public authService: AuthService,
@@ -90,13 +92,33 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     private orgSetting: OrgSettingServiceService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private peopleService: PeopleService
+    private peopleService: PeopleService,
+    private render: Renderer2
   ) {
   }
 
 
   logoText = 'Your Logo here';
-  smsBody = '';
+  smsBody =
+    `
+    <html>
+    <head></head>
+    <body>
+        <p>
+            <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;  text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Dear
+                $name,</span></p>
+        <p style="margin: 0px">
+            <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;  text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Your username is: $username</span></p>
+        <p style="margin: 0px;">
+            <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;  text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">You can click on this link here to set your password :$link
+                below.</span></p>
+                <p style="margin-bottom: 0px">
+                <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;  text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Regards,
+                    below.</span></p>
+                    <span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;  text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">$advisor
+                    </span></p>
+    </body>
+    </html>`;
   emailBody = `
   <html>
   <head></head>
@@ -146,7 +168,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.mailForm = this.fb.group({
       mail_body: [''],
     });
-    this.data == 'Email' ? this.subject.setValue('Your new money management account is created!') : this.subject.setValue("IFANOW");
+    this.data == 'Sms' ? this.subject.setValue("IFANOW") : this.getSubjectTemplate();
 
     this.searchFC.valueChanges.pipe(
       debounceTime(700),
@@ -180,6 +202,55 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getSubjectTemplate() {
+    const obj = {
+      advisorId: this.advisorId,
+      templateId: 8
+    }
+    this.orgSetting.getEmailBulkSubjectTemplate(obj).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.templateObj = data;
+          this.templateObj.fromEmail != "N/A" ? this.selectedFromEmail.setValue(this.templateObj.fromEmail) : this.selectedFromEmail.setValue(this.verifiedAccountsList[0].emailAddress);
+          this.subject.setValue(data.subject);
+        } else {
+          this.subject.setValue('Your new money management account is created!')
+        }
+      }, err => {
+        this.subject.setValue('Your new money management account is created!')
+      }
+    )
+  }
+
+  copyName(value) {
+    const tag = this.render.createElement('input');
+    tag.value = value;
+    document.body.appendChild(tag);
+    tag.focus();
+    tag.select();
+    document.execCommand('copy');
+    document.body.removeChild(tag);
+    this.eventService.openSnackBar('Text copied', 'Dismiss');
+  }
+
+  openDialog(data) {
+    const Fragmentdata = {
+      flag: data,
+    };
+    const dialogRef = this.dialog.open(HowToUseDialogComponent, {
+      width: '30%',
+      data: Fragmentdata,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
+  }
+
   getClientListValue(offset) {
     let obj = {
       advisorId: this.advisorId,
@@ -207,6 +278,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         }
         if (singleData.mobileList && singleData.mobileList.length > 0) {
           singleData.mobile = singleData.mobileList[0].mobileNo;
+        }
+
+        if (singleData.mobileList && singleData.mobileList.length > 0) {
+          singleData.isdCode = singleData.mobileList[0].isdCodeId;
         }
         singleData.selected = false;
         singleData.ownerName = '';
@@ -263,7 +338,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         if (this.isLoading) {
           this.isLoading = false;
         }
+        setTimeout(() => {
+          this.hasEndReached = false;
 
+        }, 1000);
       } else {
         this.dataSource.data = (this.infiniteScrollClientList.length > 0) ? this.infiniteScrollClientList : null;
         this.dataSource.sort = this.sort;
@@ -280,7 +358,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         }
         this.dataSource.filteredData = [];
         this.eventService.openSnackBar('No More Data Found', "DISMISS");
-        this.hasEndReached = true;
+        setTimeout(() => {
+          this.hasEndReached = false;
+
+        }, 1000);
       }
     }
 
@@ -290,9 +371,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
     console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
     let tableOffsetTop = this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop;
-    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 38);
+    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 37);
     if (tableOffsetTop <= tableOffsetHeight) {
       if (!this.hasEndReached) {
+        this.hasEndReached = true;
         console.log("on entering inside", this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
         // this.infiniteScrollingFlag = true;
         if (!this.fromSearch && !this.infiniteScrollingFlag) {
@@ -361,7 +443,12 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
       this.selectedClientsCount = 0;
       this.dataSource.filteredData.forEach((element: any) => {
         element.selected = event.checked;
-        if (element.selected && element.email) {
+        if (this.data == 'Email' && element.selected && element.email) {
+          this.selectedClientArray.push(element.clientId)
+          this.selectedClientsCount++;
+          this.dataCount++;
+        }
+        if (this.data == 'Sms' && element.selected && element.mobile != 0) {
           this.selectedClientArray.push(element.clientId)
           this.selectedClientsCount++;
           this.dataCount++;
@@ -451,12 +538,22 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
     }
 
+    let email;
 
+    if (this.verifiedAccountsList.length == 0) {
+      email = 'no-reply@my-planner.in'
+    } else if (this.templateObj.fromEmail == 'N/A' && this.verifiedAccountsList.length == 1) {
+      email = this.verifiedAccountsList[0].emailAddress;
+    } else if (this.templateObj.fromEmail != 'N/A' && this.verifiedAccountsList.length == 1) {
+      email = this.templateObj.fromEmail
+    } else {
+      email = this.selectedFromEmail.value;
+    }
 
     const obj = {
       advisorId: this.advisorId,
       clientIds: arr,
-      fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : this.selectedFromEmail.value,
+      fromEmail: email,
       subject: this.subject.value,
       messageBody: this.emailBody
     };

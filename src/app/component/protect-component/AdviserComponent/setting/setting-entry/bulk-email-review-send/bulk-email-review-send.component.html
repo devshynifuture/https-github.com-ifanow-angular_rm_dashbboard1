@@ -10,8 +10,8 @@
             <p class="f-16 mb-0">
                 Bulk welcome email- Review & Send</p>
         </div>
-        <div class="col-md-2 text-right">
-            <i (click)="close(false)" class="material-icons pt-16 c-p pr-16">
+        <div class="col-md-2 full-end pr-24">
+            <i (click)="close(false)" class="material-icons c-p">
                 clear
             </i>
         </div>
@@ -24,7 +24,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="d-flex align-items-center">
-                    <div class="numBox">
+                    <div class="numBox mr-10">
                         <span class="">1</span>
                     </div>
                     <div class="contBox">
@@ -57,10 +57,10 @@
                         selected out of {{tempData.length}}
                     </p>
                     <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container"
-                        [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
+                        (scroll)="onWindowScroll($event)">
                         <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
                             [appSkeletonLoading]="isLoading" #clientTableSort="matSort" #tableEl>
-                            <ng-container matColumnDef="checkbox" sticky>
+                            <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="br">
                                     <mat-checkbox (change)="selectAll($event)" name="selectAll" *ngIf="!isLoading"
                                         [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
@@ -102,7 +102,7 @@
                             <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                         </table>
-                        <div class="row relClass" *ngIf="infiniteScrollingFlag">
+                        <!-- <div class="row relClass" *ngIf="infiniteScrollingFlag">
                             <div class="col-md-12 p-0">
                                 <div class="bar height24">
                                 </div>
@@ -115,6 +115,9 @@
                                 <div class="bar height24">
                                 </div>
                             </div>
+                        </div> -->
+                        <div *ngIf="infiniteScrollingFlag" class="full-center">
+                            <mat-spinner class="spinnerClass" [diameter]="30"></mat-spinner>
                         </div>
                     </div>
 
@@ -185,7 +188,7 @@
                         [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
                         <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
                             [appSkeletonLoading]="isLoading" #clientTableSort="matSort" #tableEl>
-                            <ng-container matColumnDef="checkbox" sticky>
+                            <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="br">
                                     <mat-checkbox (change)="selectAll($event)" name="selectAll" *ngIf="!isLoading"
                                         [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
@@ -194,7 +197,7 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element;index as i" class="c-p br">
                                     <mat-checkbox name="selectedData" [(ngModel)]="element.selected"
-                                        (change)="changeSelect(element,i)" *ngIf="!isLoading && element.email">
+                                        (change)="changeSelect(element,i)" *ngIf="!isLoading && element.mobile">
                                     </mat-checkbox>
                                 </td>
                             </ng-container>
@@ -218,20 +221,23 @@
                             <tr *matHeaderRowDef="displayedColumns1; sticky: true" mat-header-row></tr>
                             <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
                         </table>
-                        <div class="row relClass" *ngIf="infiniteScrollingFlag">
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
+                        <div *ngIf="infiniteScrollingFlag" class="full-center">
+                            <mat-spinner class="spinnerClass" [diameter]="30"></mat-spinner>
                         </div>
+                        <!-- <div class="row relClass" *ngIf="infiniteScrollingFlag">
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
 
                     <div class="text-center" *ngIf="!isLoading && dataSource === null">
@@ -275,10 +281,14 @@
                 <div class="d-flex align-items-center justify-content-between mb-24">
                     <p class="mb-0">Since your email is <span *ngIf="verifiedAccountsList.length==0">not verified</span>
                         <span *ngIf="verifiedAccountsList.length>0">verified</span>, the bulk email will be sent from
-                        <span *ngIf="verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span
+                            *ngIf="templateObj.fromEmail=='N/A' && verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span
+                            *ngIf="templateObj.fromEmail!='N/A' && verifiedAccountsList.length==1">{{templateObj.fromEmail}}</span>
                         <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
                             *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
-                            (click)="bulkEmail('')">Change</span> </p>
+                            (click)="bulkEmail('')">Change</span>
+                    </p>
                     <mat-form-field class="w-200" *ngIf="verifiedAccountsList.length>1">
                         <mat-select class="form-control" [formControl]="selectedFromEmail">
                             <mat-option *ngFor="let singleClient of verifiedAccountsList"
@@ -305,16 +315,16 @@
                     <div class="col-md-1 p-0 d-flex align-items-center">
                         <h5 class="f-14 mb-0">Subject</h5>
                     </div>
-                    <div class="col-md-11 pr-0 eventPadd event-none">
+                    <div class="col-md-11 pr-0 eventPadd ">
                         <mat-form-field appearance="standard" floatLabel="never">
                             <input [formControl]="subject" matInput class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row pt-20">
-                    <div class="col-md-12 p-0">
+                    <div class="col-md-12 p-0 bulk-email-review-send">
                         <form [formGroup]="mailForm">
-                            <app-froala class="event-none" [(model)]="emailBody"></app-froala>
+                            <app-froala [(model)]="emailBody"></app-froala>
                         </form>
                     </div>
                 </div>
@@ -324,6 +334,48 @@
 
         </div>
         <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12 p-0" id="ui-tc-insert">
+                    <h5 class="m-0 pb-8 roboto pt-24">Insert placeholders</h5>
+                    <div class="b-a">
+                        <div class="row">
+                            <div class="col-md-12" (click)="openDialog('howToUse')">
+                                <p class="text-primary m-0 pt-8 pb-8 c-p roboto f-400">How to use?</p>
+                            </div>
+                        </div>
+                        <div class="placeholder-scroll">
+                            <div *ngFor="let singlePlaceholder of templateObj.placeholderTemplateList">
+                                <div class="pl-16 pb-16">
+                                    <div class="row b-a mb-16">
+                                        <div class="col-md-12 p-0 borderlightPlaceholders">
+                                            <div class="bg-grey lter wrapper-12 pt-16">
+                                                <p class="m-0 text-black wb">{{singlePlaceholder.name}}</p>
+                                            </div>
+                                            <div class="bg-white wrapper-12 c-p">
+                                                <p class="m-0 text-black wb"
+                                                    (click)="copyName(singlePlaceholder.value)">
+                                                    {{singlePlaceholder.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="wrapper-16">
+                                <div class="row b-a">
+                                    <div class="col-md-12 p-0">
+                                        <div class="bg-grey lter wrapper-12 pt-16">
+                                            <p class="m-0 text-black">Client name</p>
+                                        </div>
+                                        <div class="bg-white wrapper-12">
+                                            <p class="m-0 text-black">client name</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
             <p class="mb-0 posP text-primary" *ngIf="!isAllSelected">Email will be sent to {{selectedClientsCount}}
                 <span *ngIf="selectedClientsCount==1">client</span><span *ngIf="selectedClientsCount>1">clients</span>
             </p>

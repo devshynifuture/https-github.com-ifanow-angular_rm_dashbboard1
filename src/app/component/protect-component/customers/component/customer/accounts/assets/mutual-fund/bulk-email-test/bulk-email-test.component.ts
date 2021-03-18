@@ -91,7 +91,7 @@ export class BulkEmailTestComponent implements OnInit {
       key: 'showPieChart',
       svg: this.svg
     }
-    this.UtilService.htmlToPdf('',para.innerHTML, 'Overview', false, this.fragmentData, '', '',true)
+    this.UtilService.htmlToPdf('', para.innerHTML, 'Overview', false, this.fragmentData, '', '', true, null)
     return obj
 
   }

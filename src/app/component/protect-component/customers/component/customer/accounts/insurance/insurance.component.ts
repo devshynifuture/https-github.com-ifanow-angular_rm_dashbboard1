@@ -262,7 +262,7 @@ export class InsuranceComponent implements OnInit {
       case 'Fire & special perils':
         this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 10);
         break;
-      case 'Others':
+      case 'Others Insurance':
         this.getInsuranceSubTypeData(this.advisorId, this.clientId, 2, 11);
         break;
       default:
@@ -780,7 +780,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
       this.lifeInsuranceFilter = this.dataSource.data;
-      this.getCount();
+      //this.getCount();
       // this.getStatusId(this.dataSource.data);
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
@@ -804,7 +804,7 @@ export class InsuranceComponent implements OnInit {
         }
       });
     } else {
-      this.getCount();
+      //this.getCount();
 
 
       this.dataSource.data = [];
@@ -989,7 +989,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.dataSource.sort = this.sort;
       this.lifeInsuranceFilter = this.dataSource.data;
-      this.getCount();
+      //this.getCount();
       // this.getStatusId(this.dataSource.data);
       this.totalCurrentValue = 0;
       this.totalPremiunAmountLifeIns = 0;
@@ -1052,7 +1052,7 @@ export class InsuranceComponent implements OnInit {
       this.dataSourceGeneralInsurance.sort = this.sort;
       this.generalInsuranceDataFilter = this.dataSourceGeneralInsurance.data;
       this.getStatusId(this.dataSourceGeneralInsurance.data);
-      this.getCount();
+      //this.getCount();
       this.totalSumAssured = 0;
       this.totalPremiunAmount = 0;
       this.dataSourceGeneralInsurance.data.forEach(element => {
@@ -1159,10 +1159,10 @@ export class InsuranceComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     if (this.insuranceTypeId == 1) {
       let para = document.getElementById('templateIns');
-      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false, null);
     } else {
       let para = document.getElementById('templateGen');
-      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false);
+      this.utils.htmlToPdf('', para.innerHTML, tableTitle, 'true', this.fragmentData, '', '', false, null);
 
     }
 

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACR,SAAS,EAAE,IAAI;EACf,aAAa,EAAE,eAAe;EAC9B,YAAY,EAAE,IAAI;CACrB",
+    "sources": [
+        "setting-scheme-details.component.scss"
+    ],
+    "names": [],
+    "file": "setting-scheme-details.component.css"
+}

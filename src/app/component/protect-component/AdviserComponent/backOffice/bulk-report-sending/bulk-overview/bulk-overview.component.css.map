@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACA,AAAA,mBAAmB,CAAC;EAChB,MAAM,EAAE,KAAK;EACb,KAAK,EAAE,KAAK;CACf",
+    "sources": [
+        "bulk-overview.component.scss"
+    ],
+    "names": [],
+    "file": "bulk-overview.component.css"
+}

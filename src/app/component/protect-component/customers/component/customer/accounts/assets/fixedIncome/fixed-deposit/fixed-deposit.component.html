@@ -5,10 +5,10 @@
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
         </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
-            </div>
+        <div class="col-md-4 full-end pr-24">
+
+            <i class="material-icons c-p " (click)="Close(false)"> clear</i>
+
         </div>
     </div>
 </div>
@@ -218,7 +218,8 @@
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                     <mat-error class="f-12 pt-4 w-s">
-                        {{fixedDeposit.get('maturityDate').value == "Invalid Date"? 'This field is required':'Maturity date should be greater than commencement date'}}
+                        {{fixedDeposit.get('maturityDate').value == "Invalid Date"? 'This field is required':'Maturity
+                        date should be greater than commencement date'}}
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -246,7 +247,8 @@
         </div>
         <div class="col-md-3 pr-0">
             <mat-form-field>
-                <mat-select #payOpt formControlName="payOpt" class="form-control br-0" (change)="getIntPayout()">
+                <mat-select #payOpt formControlName="payOpt" class="form-control br-0"
+                    (selectionChange)="getIntPayout()">
                     <mat-option value="" disabled> Select option</mat-option>
                     <mat-option [value]="1"> Cumulative</mat-option>
                     <mat-option [value]="2">Interest payout</mat-option>
@@ -285,14 +287,14 @@
         <div class="col-xl-6 col-lg-7 pr-0 fddate">
             <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="interestType">
                 <mat-radio-button value="1" class="b-ua radioBtn text-custom"
-                    [checked]="fixedDeposit.get('interestType').value==1"
-                    [ngClass]="{'b-a-custom': fixedDeposit.get('interestType').value==1,'text-primary':fixedDeposit.get('interestType').value==1,'borderRadio':fixedDeposit.get('interestType').value==2}">
+                    [checked]="fixedDeposit.get('interestType').value=='1'"
+                    [ngClass]="{'b-a-custom': fixedDeposit.get('interestType').value=='1','text-primary':fixedDeposit.get('interestType').value=='1','borderRadio':fixedDeposit.get('interestType').value=='2'}">
                     Nominal
                 </mat-radio-button>
 
                 <mat-radio-button class="  pr-10 radioBtn" value="2"
-                    [checked]="fixedDeposit.get('interestType').value==2"
-                    [ngClass]="{'b-a-custom': fixedDeposit.get('interestType').value==2,'text-primary':fixedDeposit.get('interestType').value==2,'borderRadio text-custom':fixedDeposit.get('interestType').value==1}">
+                    [checked]="fixedDeposit.get('interestType').value=='2'"
+                    [ngClass]="{'b-a-custom': fixedDeposit.get('interestType').value=='2','text-primary':fixedDeposit.get('interestType').value=='2','borderRadio text-custom':fixedDeposit.get('interestType').value=='1'}">
                     Effective
                 </mat-radio-button>
             </mat-radio-group>

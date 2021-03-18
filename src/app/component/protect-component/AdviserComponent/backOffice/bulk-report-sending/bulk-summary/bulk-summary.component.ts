@@ -60,7 +60,7 @@ export class BulkSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.triggerBack = this.sendData
-    console.log('dokyala tap ahe hya data cha',this.triggerBack)
+    console.log('dokyala tap ahe hya data cha', this.triggerBack)
     this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
@@ -99,13 +99,13 @@ export class BulkSummaryComponent implements OnInit {
       name: 'Summary`s',
       landscape: true,
       key: 'showPieChart',
-      clientId : this.triggerBack.clientId,
-      advisorId : AuthService.getAdvisorId(),
+      clientId: this.triggerBack.clientId,
+      advisorId: AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'
     }
     this.utilService.bulkHtmlToPdf(obj)
-    this.utilService.htmlToPdf('',para.innerHTML, 'Summary', false, this.fragmentData, '', '',true)
+    this.utilService.htmlToPdf('', para.innerHTML, 'Summary', false, this.fragmentData, '', '', true, null)
     return obj
 
   }

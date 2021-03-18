@@ -27,7 +27,7 @@
               [callMethod]='callMethod'>
               <mat-option value='' disabled>Select family members</mat-option>
               <mat-option *ngFor="let f of nomineesListFM"
-                [hidden]="f.disable || f.genderId != 2||f.familyMemberAge >= 18 " [value]="f.userName">
+                [hidden]="f.disable || f.genderId != 2||f.familyMemberAge >= 21 " [value]="f.userName">
                 <span>{{f.userName}}</span>
               </mat-option>
             </mat-select>

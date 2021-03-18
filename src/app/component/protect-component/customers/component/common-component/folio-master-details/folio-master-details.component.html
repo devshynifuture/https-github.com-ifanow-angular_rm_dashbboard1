@@ -13,7 +13,7 @@
 <div class="row ptb-100">
     <div class="col-md-12" *ngIf="!isLoading">
         <mat-tab-group animationDuration="0ms" id="ui-foliomaster" (selectedTabChange)="onTabChanged($event)">
-            <mat-tab label="Scheme details">
+            <mat-tab label="Investor details">
                 <div *ngFor="let item of folioDetails">
                     <div class="ba-light mt-20">
                         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -141,7 +141,7 @@
                 </div>
             </mat-tab>
             <mat-tab label="Bank details">
-                <div class="ba-light mt-20" *ngFor="let item of folioDetails">
+                <div class="ba-light mt-20" *ngFor="let item of bankDetails">
                     <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
                         <div class="col-md-4 p-0">
                             <p class="m-0 roboto">Bank name</p>
@@ -192,7 +192,7 @@
                             <p class="m-0 roboto">Bank city</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.bankCity)?item.bankCity:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.address.city)?item.address.city:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row pt-8 pb-8 pl-4 pr-4">
@@ -200,7 +200,7 @@
                             <p class="m-0 roboto">Bank PIN code</p>
                         </div>
                         <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.bankPin)?item.bankPin:'N.A.'}}</p>
+                            <p class="m-0 roboto">{{(item.address.pinCode)?item.address.pinCode:'N.A.'}}</p>
                         </div>
                     </div>
                     <div class="row pt-4">
@@ -209,12 +209,22 @@
                         </div>
                     </div>
                 </div>
-                <div *ngIf="!isLoading && folioDetails.length == 0" class="d-flex flex-column align-items-center">
+                <div *ngIf="!isLoading && bankDetails.length == 0 && inputData.rtMasterId !=3"
+                    class="d-flex flex-column align-items-center">
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>
+                <div *ngIf="!isLoading && bankDetails.length == 0 && inputData.rtMasterId ==3"
+                    class="d-flex flex-column align-items-center">
+                    <img src="assets/images/svg/documents-empty-states.svg">
+                    <p class="text-center m-0 roboto pt-12 mt-40"> We haven't been able to identify the bank account
+                        associated
+                        with
+                        this scheme, because franklin doesn't provide scheme code in folio files hence, we are showing
+                        all the accounts related to this folio.</p>
+                </div>
             </mat-tab>
-            <mat-tab label="Nominee details">
+            <!-- <mat-tab label="Nominee details">
                 <div *ngFor="let item of nomineeArray; index as i">
                     <div class="ba-light mt-20">
                         <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
@@ -245,7 +255,6 @@
                     </div>
                     <div class="row pt-4">
                         <div class="col-md-12 p-0 text-right">
-                            <!-- <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p> -->
                         </div>
                     </div>
                 </div>
@@ -261,6 +270,66 @@
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>
+            </mat-tab> -->
+            <mat-tab label="Nominee details">
+                <div *ngFor="let item of nomineeArray; index as i">
+                    <div>
+                        <div class="ba-light mt-20">
+                            <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 roboto">{{(i+1|namedNumber)|titlecase}} nominee name</p>
+                                </div>
+                                <div class="col-md-8 p-0 text-right">
+                                    <p class="m-0 roboto">{{(item.name)?item.name:'N.A.'}}</p>
+                                </div>
+                            </div>
+                            <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 roboto"> Percentage allocated</p>
+                                </div>
+                                <div class="col-md-8 p-0 text-right">
+                                    <p class="m-0 roboto">{{(item.percentageAllocated)?item.percentageAllocated +
+                                        '%':'N.A.'}}</p>
+                                </div>
+                            </div>
+                            <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 roboto"> Nominee relation</p>
+                                </div>
+                                <div class="col-md-8 p-0 text-right">
+                                    <p class="m-0 roboto">{{(item.relation)?item.relation:'N.A.'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-4">
+                            <div class="col-md-12 p-0 text-right">
+                                <!-- <p class="m-0 f-12 text-primitive roboto">Updated: 04/09/2019</p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div *ngIf="isNomineeLoading" class="skeletonAnimation">
+                    <div class="relClass">
+                        <div class="bar height24 mb-10"></div>
+                        <div class="bar height24 mb-10"></div>
+                        <div class="bar height24 mb-10"></div>
+                    </div>
+                </div> -->
+                <div *ngIf="!isNomineeLoading && nomineeArray && nomineeArray.length == 0"
+                    class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div>
+                <div *ngIf="isNomineeLoading" class="bg-white p-20 h-90vh full-center w-100 text-center">
+
+                    <p class="m-0"> Loading data...</p>
+
+                </div>
+                <!-- <div *ngIf="!isNomineeLoading && nomineeArray.length == 0"
+                    class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div> -->
             </mat-tab>
             <mat-tab label="Broker details">
                 <div class="ba-light mt-20" *ngFor="let item of folioDetails">
@@ -299,127 +368,150 @@
                     <h4 class="text-center pt-12"> No data found</h4>
                 </div>
             </mat-tab>
-            <mat-tab label="Investor details">
-                <div class="ba-light mt-20" *ngFor="let item of folioDetails">
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Address</p>
+            <mat-tab label="Other details">
+                <div *ngIf="!isLoadingOthers">
+                    <div class="ba-light mt-20" *ngFor="let item of folioDetails">
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Address</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.address1)?item.address1:'N.A.'}} ,
+                                    {{(item.address2)?item.address2:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.address1)?item.address1:'N.A.'}} ,
-                                {{(item.address2)?item.address2:'N.A.'}}</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">City</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.city)?item.city:'N.A.'}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">City</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">PIN</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.pincode)?item.pincode:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.city)?item.city:'N.A.'}}</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Email</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{othersData ? ((emailList[0]?.email)?emailList[0]?.email:'N.A.')
+                                    :
+                                    'N.A.'}}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">PIN</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Date of birth</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.invDob)?(item.invDob | date:'dd/MM/yyyy'):'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.pincode)?item.pincode:'N.A.'}}</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Mobile number</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{othersData ?
+                                    ((mobileList[0]?.contactNumber)?mobileList[0]?.contactNumber:'N.A.') : 'N.A.'}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Email</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Aadhar number</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.aadharCard)?item.aadharCard:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.email)?item.email:'N.A.'}}</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Occupation</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.occupation)?item.occupation:'N.A.'}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Date of birth</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Office phone</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{othersData ?
+                                    ((mobileList[3]?.contactNumber)?mobileList[3]?.contactNumber:'N.A.') : 'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.invDob)?(item.invDob | date:'dd/MM/yyyy'):'N.A.'}}</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Residence phone</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{othersData ?
+                                    ((mobileList[2]?.contactNumber)?mobileList[2]?.contactNumber:'N.A.') : 'N.A.'}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Mobile number</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Tax status</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.taxStatus)?item.taxStatus:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.mobileNumber)?item.mobileNumber:'N.A.'}}</p>
+                        <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">DP ID</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.dpId)?item.dpId:'N.A.'}}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Aadhar number</p>
+                        <div class="row pt-8 pb-8 pl-4 pr-4">
+                            <div class="col-md-4 p-0">
+                                <p class="m-0 roboto">Demat</p>
+                            </div>
+                            <div class="col-md-8 p-0 text-right">
+                                <p class="m-0 roboto">{{(item.demat)?item.demat:'N.A.'}}</p>
+                            </div>
                         </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.aadharCard)?item.aadharCard:'N.A.'}}</p>
-                        </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Occupation</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.occupation)?item.occupation:'N.A.'}}</p>
-                        </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Office phone</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.phoneOffice)?item.phoneOffice:'N.A.'}}</p>
-                        </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Residence phone</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.phoneResidential)?item.phoneResidential:'N.A.'}}</p>
-                        </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Tax status</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.taxStatus)?item.taxStatus:'N.A.'}}</p>
-                        </div>
-                    </div>
-                    <div class="row bb-1 pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">DP ID</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.dpId)?item.dpId:'N.A.'}}</p>
-                        </div>
-                    </div>
-                    <div class="row pt-8 pb-8 pl-4 pr-4">
-                        <div class="col-md-4 p-0">
-                            <p class="m-0 roboto">Demat</p>
-                        </div>
-                        <div class="col-md-8 p-0 text-right">
-                            <p class="m-0 roboto">{{(item.demat)?item.demat:'N.A.'}}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 p-0 text-right">
-                            <!-- <p class="m-0 f-12 roboto text-primitive">Updated: 04/09/2019</p> -->
+                        <div class="row">
+                            <div class="col-md-12 p-0 text-right">
+                                <!-- <p class="m-0 f-12 roboto text-primitive">Updated: 04/09/2019</p> -->
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="!isLoading && folioDetails?.length == 0" class="d-flex flex-column align-items-center">
+                <div *ngIf="!isLoadingOthers && folioDetails?.length == 0"
+                    class="d-flex flex-column align-items-center">
                     <img class="width300" src="assets/images/svg/noDataFound.svg">
                     <h4 class="text-center pt-12"> No data found</h4>
+                </div>
+                <!-- <div *ngIf="!isLoadingOthers && othersData == null" class="d-flex flex-column align-items-center">
+                    <img class="width300" src="assets/images/svg/noDataFound.svg">
+                    <h4 class="text-center pt-12"> No data found</h4>
+                </div> -->
+                <div *ngIf="isLoadingOthers" class="bg-white p-20 h-90vh full-center w-100 text-center">
+
+                    <p class="m-0"> Loading data...</p>
+
                 </div>
             </mat-tab>
         </mat-tab-group>
     </div>
-    <div *ngIf="isLoading" class="bg-white p-20">Loading data...</div>
+
+    <div *ngIf="isLoading" class="bg-white p-20 h-90vh full-center w-100 text-center">
+
+        <p class="m-0"> Loading data...</p>
+
+    </div>
 </div>
 <div class="bottom-fixed wrapper-12 w-45">
     <div class="row">

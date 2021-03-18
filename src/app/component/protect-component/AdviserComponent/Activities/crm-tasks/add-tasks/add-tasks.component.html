@@ -1,5 +1,5 @@
 <div class="popup-header-fix-50">
-    <div class="row bb-1 pt-18 pb-16">
+    <div class="row bb-1 pt-12 pb-12">
         <div class="col-md-10 d-flex align-items-center f-18">
             <span *ngIf="data !== null">
                 <span class="b-primitive p-5 f-14 pr-12 pl-12 d-flex align-items-center br-4 c-p"
@@ -47,7 +47,7 @@
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
 
                 <!-- <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12"> -->
-                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteTask(null)"
+                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteTaskModal('TASK',data)"
                     class="c-p ml-12">
                 <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
@@ -78,7 +78,9 @@
                         <mat-option value='' disabled>Select task template</mat-option>
                         <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
                             (click)="prefillValues(item)">
-                            {{ (item.categoryName ? item.categoryName  + ' - ' : '') + (item.subCategoryName ? item.subCategoryName  + ' - ' : '') + (item.subSubCategoryName ? item.subSubCategoryName + ' - ' : '')+ item.taskDescription }}
+                            {{ (item.categoryName ? item.categoryName + ' - ' : '') + (item.subCategoryName ?
+                            item.subCategoryName + ' - ' : '') + (item.subSubCategoryName ? item.subSubCategoryName + '
+                            - ' : '')+ item.taskDescription }}
                         </mat-option>
                         <mat-option value="-1" class="d-flex align-items-center">
                             <span class="d-flex align-items-center">
@@ -201,7 +203,7 @@
                         [ngClass]="isTaskDone ? 'disabled-cursor': ''">
                         <mat-option value='' disabled>Select team member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                            (click)="setTeamMember(item)">
+                            (click)="setTeamMember(item,true)">
                             {{ item.fullName }}
                         </mat-option>
                     </mat-select>
@@ -343,13 +345,14 @@
             <div class="col-md-12 pl-20">
                 <div class="row pt-5 pb-5 bt-1" [ngClass]="{'bb': i==(subTaskList.length-1)}">
                     <div class="col-md-1 pl-10">
-                        <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
+                        <mat-checkbox [checked]="item.status == 1" [(ngModel)]="item.checked" #subTaskCompleteCheckbox
                             (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
                     </div>
-                    <div class="col-md-5 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
+                    <div (click)="changeTabState(item, 2)" class="col-md-5 pl-0 f-14"
+                        [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
                         {{ item.description }}
                     </div>
-                    <div class="col-md-6 text-right pr-0">
+                    <div (click)="changeTabState(item, 2)" class="col-md-6 text-right pr-0">
                         <div class="full-end">
 
                             <span *ngIf="!!item.completionDate" class="pr-10">
@@ -373,8 +376,8 @@
                             </span> -->
 
                             <span class="pr-10">
-                                <img src="/assets/images/svg/delete.svg" alt="delete sub task"
-                                    (click)="removeItemFromSubTask(item, i)">
+                                <!-- <img src="/assets/images/svg/delete.svg" alt="delete sub task"
+                                    (click)="removeItemFromSubTask(item, i)"> -->
                             </span>
                             <span class="pr-10" *ngIf="item.commentsCount !== 0">
                                 {{ item.commentsCount }}
@@ -382,8 +385,7 @@
                             <span class="pr-10">
                                 <img src="assets/images/svg/msg-chart.svg" class="c-p">
                             </span>
-                            <span class="material-icons c-p" (click)="changeTabState(item, 2)"
-                                *ngIf="item.status !== 1">
+                            <span class="material-icons c-p">
                                 keyboard_arrow_right
                             </span>
                         </div>
@@ -430,7 +432,8 @@
 
                     <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
                         <img class="img-pos-two" src="/assets/images/svg/people.svg">
-                        <mat-select class="form-control" formControlName="assignedTo">
+                        <mat-select class="form-control" formControlName="assignedTo"
+                            (selectionChange)="selectionChange($event,i)">
                             <mat-option value="" disabled>
                                 Team member
                             </mat-option>
@@ -449,7 +452,7 @@
                     <i class="material-icons c-p mt-4 mr-3" [matMenuTriggerFor]="menu3" *ngIf="i === subTask.length-1">
                         add
                     </i>
-                    <i class="material-icons c-p mt-4" (click)="removeSubTask(i)">
+                    <i class="material-icons c-p mt-4" (click)="removeSubTask(i,item)">
                         remove
                     </i>
                 </div>
@@ -570,7 +573,7 @@
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <p class="f-14 m-0" *ngIf="!item.editMode">
-                                {{  item.commentMsg }}
+                                {{ item.commentMsg }}
                             </p>
                             <p class="f-14 form-group" *ngIf="item.editMode">
                                 <input type="text" [formControl]="commentTaskFC" class="form-control"
@@ -596,8 +599,8 @@
                                     <div class="col-md-8" *ngIf="item.showReplyText">
                                         <h5 class="f-500 roboto">
                                             {{ replyItem.name }}
-                                            <span
-                                                class="text-primitive f-12">{{ replyItem.commentTime | dateAgo }}</span>
+                                            <span class="text-primitive f-12">{{ replyItem.commentTime | dateAgo
+                                                }}</span>
                                         </h5>
                                         <p class="f-14 m-0" *ngIf="!replyItem.editMode">{{ replyItem.commentMsg }}</p>
                                         <p class="f-14 form-group" *ngIf="replyItem.editMode">
@@ -639,7 +642,7 @@
                     (click)="taskFileInput.click()">
                 <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
                 <!-- <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12"> -->
-                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteSubTask()"
+                <img src="assets/images/svg/delect-icon.svg" *ngIf="data!==null" (click)="deleteModal('SUBTASK')"
                     class="c-p ml-12">
                 <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <mat-icon>more_vert</mat-icon>
@@ -684,7 +687,7 @@
                     <mat-select class="form-control br-0" formControlName="assignedTo">
                         <mat-option value="" disabled>Team Member</mat-option>
                         <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                            (click)="setTeamMember(item)">
+                            (click)="setTeamMember(item,true)">
                             {{ item.fullName }}
                         </mat-option>
                     </mat-select>
@@ -886,7 +889,7 @@
             class="row pt-10">
             <div class="w-10">
             </div>
-            <div class="w-90 f-14 p-0 pb-16">
+            <div class="w-90 f-14 p-0 pb-16 pt-12">
                 Collaborators
                 <span *ngFor="let item of collaboratorList">
                     <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"

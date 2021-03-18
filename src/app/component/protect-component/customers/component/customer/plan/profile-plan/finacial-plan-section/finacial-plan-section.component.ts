@@ -50,6 +50,8 @@ import { OverviewRiskProfileComponent } from '../../../customer-overview/overvie
 import { RoleService } from 'src/app/auth-service/role.service';
 import { OthersAssetsComponent } from '../../../accounts/assets/others-assets/others-assets.component';
 import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component';
+import { PortfolioSummaryComponent } from '../../../accounts/portfolio-summary/portfolio-summary.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 // import { InsuranceComponent } from '../../../accounts/insurance/insurance.component';
 
@@ -89,7 +91,8 @@ import { SummaryPlanComponent } from '../../summary-plan/summary-plan.component'
     MfCapitalDetailedComponent,
     CrmNotesComponent,
     OverviewRiskProfileComponent,
-    SummaryPlanComponent
+    SummaryPlanComponent,
+    PortfolioSummaryComponent
   ]
 })
 export class FinacialPlanSectionComponent implements OnInit {
@@ -147,6 +150,12 @@ export class FinacialPlanSectionComponent implements OnInit {
   storeResult: any;
   searchQuery: any;
   listOfNotes: any;
+  svg1: any;
+  svg2: any;
+  svg3: any;
+  storedData: string;
+  clientIdToClearStorage: any;
+  LoadCount: number;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -158,6 +167,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     private planService: PlanService,
     private peopleService: PeopleService,
     private subInjectService: SubscriptionInject,
+    public enumDataService: EnumDataService,
     public roleService: RoleService) {
     this.advisorId = AuthService.getAdvisorId(),
       this.clientId = AuthService.getClientId()
@@ -173,24 +183,34 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.count = 0;
     this.moduleAdded = [];
     this.clientDetails = [{}, {}, {}];
-    this.getListFamilyMem();
-    this.getGoalSummaryValues();
-    this.getInsuranceList();
-    this.getAssetCountGlobalData()
-    this.getCountPortfolioInsurance()
-    this.getIncome()
-    //this.getExpense()
-    this.getBuget()
-    this.getTemplateSection()
-    this.getPlanSection()
-    this.getLibilities()
-    this.riskHistory();
-    this.getNotes();
-    this.isLoading = true
+    this.planService.getClientId().subscribe(res => {
+      this.clientIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage) {
+      if (this.clientIdToClearStorage != this.clientId) {
+        this.planService.clearStorage();
+      }
+    }
+    this.planService.setClientId(this.clientId);
+
+    this.planService.getPlanData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getPlanSection()
+    } else {
+      this.getPlanSectionRes(this.storedData);
+    }
     this.emailBody = '<html><body><img src="https://res.cloudinary.com/futurewise/image/upload/v1491912047/fp-templates-uploads/index.jpg" width="965px" height="1280px"><div style="position: absolute;top: 18px;left: 16px;font-size: 20;padding-left:15px;"> <b>Date: ' + this.datePipe.transform(new Date(), 'dd-MM-yyyy') + '</b></div><div style="position: absolute;top: 18px;right: 18px;padding-right:15px;"> <img _ngcontent-hwm-c87="" width="140px" src=' + this.getOrgData.logoUrl + ' class="ng-star-inserted"></div><div style="position: absolute;top: 200px;right: 18px;font-size: 20; padding-right:15px;"> <b>Prepared by: ' + this.userInfo.name + '</b></div><div style="position: absolute;top: 280px;right: 18px;font-size: 20;padding-right:15px"> <b>' + this.clientData.name + '`s Plan</b></div></body></html>'
     //this.pdfFromImage()
     console.log('clientData', this.clientData)
     console.log('clientData', this.getOrgData)
+  }
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
   }
   viewRiskResult(value: any, sectionName: any, obj: any, displayName: any, flag: any, array) {
     this.viewResult(value, sectionName, obj, displayName, flag, array)
@@ -408,6 +428,17 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   addNew() {
     this.hideTable = true
+    this.getListFamilyMem();
+    this.getGoalSummaryValues();
+    this.getInsuranceList();
+    this.getAssetCountGlobalData()
+    this.getCountPortfolioInsurance()
+    this.getIncome()
+    this.getBuget()
+    this.getLibilities()
+    this.riskHistory();
+    this.getNotes();
+    this.getTemplateSection()
   }
 
   deletePlanSection(value, data) {
@@ -485,7 +516,7 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   pdfFromImage(element, list, i) {
-    if (list.name == "Miscellaneous") {
+    if (list.name == "Miscellaneous" && element.manual == false) {
       this.uploadImageSetText(element)
     } else {
       if (element.add == true) {
@@ -522,8 +553,10 @@ export class FinacialPlanSectionComponent implements OnInit {
   }
 
   getTemplateSection() {
-
-    this.planService.getTemplates('').subscribe(
+    let obj = {
+      advisorId: AuthService.getAdvisorId()
+    }
+    this.planService.getTemplates(obj).subscribe(
       data => this.getTemplatesRes(data),
       err => {
         console.error(err);
@@ -563,6 +596,7 @@ export class FinacialPlanSectionComponent implements OnInit {
 
   getPlanSectionRes(data) {
     if (data) {
+      this.planService.setPlanData(data);
       this.isLoading = false
       console.log('get plan section data', data)
       this.clientDetails = data
@@ -572,6 +606,17 @@ export class FinacialPlanSectionComponent implements OnInit {
     } else {
       this.isLoading = false
       this.clientDetails = []
+      this.getListFamilyMem();
+      this.getGoalSummaryValues();
+      this.getInsuranceList();
+      this.getAssetCountGlobalData()
+      this.getCountPortfolioInsurance()
+      this.getIncome()
+      this.getBuget()
+      this.getLibilities()
+      this.riskHistory();
+      this.getNotes();
+      this.getTemplateSection()
       this.hideTable = true
     }
 
@@ -581,8 +626,14 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     // let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false);
-
+    if (sectionName == 'portfolioSummary') {
+      let svgs = [{ key: "$showpiechart1", svg: this.svg1 ? this.svg : '' },
+      { key: "$showpiechart2", svg: this.svg2 ? this.svg2 : '' },
+      { key: "$showpiechart3", svg: this.svg3 ? this.svg3 : '' }]
+      this.util.htmlToPdfPort('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
+    } else {
+      this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false, null);
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -741,10 +792,14 @@ export class FinacialPlanSectionComponent implements OnInit {
         case 'Travel insurance':
         case 'Home insurance':
         case 'Fire & special perils':
+        case 'Others Insurance':
           factory = this.resolver.resolveComponentFactory(InsuranceComponent);
           break;
         case 'Summary':
           factory = this.resolver.resolveComponentFactory(SummaryPlanComponent);
+          break;
+        case 'portfolioSummary':
+          factory = this.resolver.resolveComponentFactory(PortfolioSummaryComponent);
           break;
         case 'Mutual fund summary':
           factory = this.resolver.resolveComponentFactory(MutualFundSummaryComponent);
@@ -855,7 +910,27 @@ export class FinacialPlanSectionComponent implements OnInit {
             console.log('svg', this.svg)
             svg.unsubscribe();
           });
-      } else if (sectionName == "RiskProfile") {
+      } else if (sectionName == "portfolioSummary") {
+        var svg1 = pdfContent.loadsvg1
+          .subscribe(data => {
+            this.svg1 = data
+            console.log('svg', this.svg1)
+            svg1.unsubscribe();
+          });
+        var svg2 = pdfContent.loadsvg2
+          .subscribe(data => {
+            this.svg2 = data
+            console.log('svg', this.svg2)
+            svg2.unsubscribe();
+          });
+        var svg3 = pdfContent.loadsvg3
+          .subscribe(data => {
+            this.svg3 = data
+            console.log('svg', this.svg3)
+            svg3.unsubscribe();
+          });
+      }
+      else if (sectionName == "RiskProfile") {
         var svg = pdfContent.loadsvg
           //.pipe(delay(1))
           .subscribe(data => {
@@ -910,8 +985,18 @@ export class FinacialPlanSectionComponent implements OnInit {
       htmlInput: String(innerHtmlData.innerHTML),
       svg: this.svg,
       key: 'showPieChart',
+      svgs: null
     };
     this.sectionName = sectionName
+    if (sectionName == 'Mutual fund overview') {
+
+    }
+    if (sectionName == 'portfolioSummary') {
+      let svgs = [{ key: "$showpiechart1", svg: this.svg1 ? this.svg1 : '' },
+      { key: "$showpiechart2", svg: this.svg2 ? this.svg2 : '' },
+      { key: "$showpiechart3", svg: this.svg3 ? this.svg3 : '' }]
+      obj.svgs = svgs
+    }
     this.planService.getFinPlanFileUploadUrl(obj).subscribe(
       data => this.uploadFileRes(data, displayName, flag, array)
     );
@@ -962,6 +1047,7 @@ export class FinacialPlanSectionComponent implements OnInit {
               }
 
               arr.push({
+                goalValueObj: goalValueObj,
                 details: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 goalName: !!goalValueObj.goalName ? goalValueObj.goalName : '',
                 goalType: goalValueObj.goalType,
@@ -979,7 +1065,8 @@ export class FinacialPlanSectionComponent implements OnInit {
                 lump_equity: this.getSumOfJsonMap(goalValueObj.lumpSumAmountEquity) || 0,
                 lump_debt: this.getSumOfJsonMap(goalValueObj.lumpSumAmountDebt) || 0,
                 goalAssetAllocation: item.goalAssetAllocation,
-                retirementTableValue: goalValueObj.retirementTableValue
+                retirementTableValue: goalValueObj.retirementTableValue,
+                notes: goalValueObj.notes
               });
             } else if (!!item.singleOrMulti && item.singleOrMulti === 2) {
               let goalValueObj = item.multiYearGoalPlan,
@@ -1029,6 +1116,7 @@ export class FinacialPlanSectionComponent implements OnInit {
                 });
               }
               arr.push({
+                goalValueObj: goalValueObj,
                 details: goalValueObj.name,
                 goalName: goalValueObj.name,
                 month,
@@ -1045,7 +1133,9 @@ export class FinacialPlanSectionComponent implements OnInit {
                 lump_equity: this.getSumOfJsonMap(goalValueObj.lumpSumAmountEquity) || 0,
                 lump_debt: this.getSumOfJsonMap(goalValueObj.lumpSumAmountDebt) || 0,
                 goalAssetAllocation: item.goalAssetAllocation,
-                retirementTableValue: goalValueObj.retirementTableValue
+                retirementTableValue: goalValueObj.retirementTableValue,
+                notes: goalValueObj.notes
+
               });
             }
           });

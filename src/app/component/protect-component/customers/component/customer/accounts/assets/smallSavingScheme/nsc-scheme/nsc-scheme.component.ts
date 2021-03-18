@@ -145,7 +145,7 @@ export class NscSchemeComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
@@ -282,19 +282,22 @@ export class NscSchemeComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if (!this.dataList) {
-              this.dataList = { assetList: [sideBarData.data] };
-              this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
-              this.dataList['sumOfMaturityValue'] += sideBarData.data.maturityValue;
-            }
-            else {
-              if (sideBarData.data) {
-                this.dataList.assetList.push(sideBarData.data);
-                this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
-                this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
-              }
-            }
-            this.getNscSchemedataResponse(this.dataList);
+            // if (!this.dataList) {
+            //   this.dataList = { assetList: [sideBarData.data] };
+            //   this.dataList['sumOfCurrentValue'] = sideBarData.data.currentValue;
+            //   this.dataList['sumOfMaturityValue'] += sideBarData.data.maturityValue;
+            // }
+            // else {
+            //   if (sideBarData.data) {
+            //     this.dataList.assetList.push(sideBarData.data);
+            //     this.dataList.sumOfCurrentValue += sideBarData.data.currentValue;
+            //     this.dataList.sumOfMaturityValue += sideBarData.data.maturityValue;
+            //   } else {
+            //     return;
+            //   }
+            // }
+            // this.getNscSchemedataResponse(this.dataList);
+            this.getNscSchemedata();
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
 
           }

@@ -1,0 +1,195 @@
+@charset "UTF-8";
+ul {
+  display: block;
+}
+
+li {
+  text-align: left !important;
+  padding-left: 16px;
+  font-size: 14px;
+}
+
+ul > li:before {
+  content: "–";
+  /* en dash here */
+  position: absolute;
+  margin-left: -1.1em;
+}
+
+::ng-deep .in-btn {
+  font-size: 12px !important;
+  color: #008FFF;
+  border-radius: 2px;
+  height: 40px;
+  width: 138px;
+}
+
+.mat-stroked-button:not([disabled]) {
+  border-color: #008FFF;
+}
+
+.col-width-21 {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 21.0%;
+          flex: 0 0 21.0%;
+  max-width: 21.0%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.col-width-79 {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 79.0%;
+          flex: 0 0 79.0%;
+  max-width: 79.0%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.insuranceAddBtn {
+  width: 105px;
+  padding: 0px;
+}
+
+.col-width-69 {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 69.0%;
+          flex: 0 0 69.0%;
+  max-width: 69.0%;
+}
+
+.col-width-31 {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 31.0%;
+          flex: 0 0 31.0%;
+  max-width: 31.0%;
+  padding-left: 15px;
+}
+
+::ng-deep .insuranceTable tr.mat-header-row {
+  height: 40px !important;
+}
+
+.btn140 {
+  width: 140px;
+  padding: 0px;
+}
+
+.pt26 {
+  padding-top: 26px;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #008FFF !important;
+}
+
+.insuListFixedHeader {
+  position: fixed;
+  width: 20.2%;
+  z-index: 1;
+  background: #fff;
+}
+
+.zIndex2 {
+  position: relative;
+  z-index: 2;
+}
+
+.leftScroll {
+  height: 520px;
+  overflow-x: auto;
+}
+
+.leftScroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.leftScroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.leftScroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.skeletonAnimation .relClass {
+  position: relative;
+}
+
+.skeletonAnimation .relClass .bar82 {
+  background-color: #E7E7E7;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass .bar82:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 82px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 82px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+
+.skeletonAnimation .relClass .bar289 {
+  background-color: #E7E7E7;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass .bar289:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 289px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 289px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+
+.skeletonAnimation .relClass .bar36 {
+  background-color: #E7E7E7;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass .bar36:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 36px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 36px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+
+.height105 {
+  height: 105px;
+}
+
+.height24 {
+  height: 24px;
+}
+/*# sourceMappingURL=all-insurancelist.component.css.map */

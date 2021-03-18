@@ -57,11 +57,13 @@ export class OverviewProfileComponent implements OnInit {
   clientList: any;
   relationList: any;
   keyInfoCapability: any = {};
+  addressLength: number;
+  selectedAddress: any;
 
   constructor(private peopleService: PeopleService, private authService: AuthService,
     public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private cusService: CustomerService, private eventService: EventService,
-    private utils: UtilService, private enumDataService: EnumDataService,
+    private utils: UtilService, public enumDataService: EnumDataService,
     private route: ActivatedRoute, private cancelFlagService: CancelFlagService,
     private clientSuggeService: ClientSggestionListService,
     public roleService: RoleService,
@@ -69,21 +71,18 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
+    this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList;
     this.enumDataService.setBankAccountTypes();
     this.clientData = AuthService.getClientData();
     this.enumDataService.getRoles();
     this.enumDataService.getProofType();
     // this.enumDataService.getBank();
     this.enumDataService.getClientRole();
+    this.enumDataService.apiCallIsdCodesData();
     this.clientSuggeService.setEmptySuggestionList();
-    this.route.queryParams.subscribe((params) => {
-      if (params.Tab) {
-        this.Tab = params.Tab;
-      }
-    });
+
     if (this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.enabled) {
-      this.Tab = "Tab1"
+      this.Tab = 'Tab1';
       this.letsideBarLoader = true;
       !this.customerOverview.clientData ? this.getClientData(this.clientData) : this.getClientDataResponse(this.customerOverview.clientData);
       !this.customerOverview.addressList ? this.getAddressList(this.clientData) : this.getAddressListResponse(this.customerOverview.addressList);
@@ -93,10 +92,15 @@ export class OverviewProfileComponent implements OnInit {
       !this.customerOverview.familyMemberList ? this.getFamilyMembersList(this.clientData) : this.getFamilyMembersListRes(this.customerOverview.familyMemberList);
       this.enumDataService.searchClientList();
     } else {
-      this.Tab = "Tab2"
+      this.Tab = 'Tab2';
     }
+    this.route.queryParams.subscribe((params) => {
+      if (params.Tab) {
+        this.Tab = params.Tab;
+      }
+    });
     // console.log(sessionStorage.getItem('clientData'));
-    // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData')); 
+    // this.clientOverviewData = JSON.parse(sessionStorage.getItem('clientData'));
   }
 
   getClientData(data) {
@@ -130,7 +134,7 @@ export class OverviewProfileComponent implements OnInit {
           mobileNo: data.mobileNo
         };
         if (this.customerOverview.suggestedClientListUsingMobile) {
-          this.clientSuggeService.setSuggestionListUsingMobileRes(this.customerOverview.suggestedClientListUsingMobile)
+          this.clientSuggeService.setSuggestionListUsingMobileRes(this.customerOverview.suggestedClientListUsingMobile);
         } else {
           this.clientSuggeService.setSuggestionListUsingMobile(obj);
         }
@@ -142,7 +146,7 @@ export class OverviewProfileComponent implements OnInit {
           email: data.email
         };
         if (this.customerOverview.suggestedClientListUsingEmail) {
-          this.clientSuggeService.setSuggestionListUsingEmailRes(this.customerOverview.suggestedClientListUsingEmail)
+          this.clientSuggeService.setSuggestionListUsingEmailRes(this.customerOverview.suggestedClientListUsingEmail);
         } else {
           this.clientSuggeService.setSuggestionListUsingEmail(obj);
         }
@@ -209,6 +213,7 @@ export class OverviewProfileComponent implements OnInit {
       });
       this.familyMemberList = data;
       this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+      this.familyMemberList = UtilService.getImageOfFamilyMember(data);
       console.log(this.familyMemberList);
     } else {
       this.familyMemberList = undefined;
@@ -238,10 +243,19 @@ export class OverviewProfileComponent implements OnInit {
     if (data && data.length > 0) {
       this.customerOverview.addressList = data;
       this.addressList = data;
+      this.selectedAddress = data[0];
     } else {
       this.addressList == undefined;
     }
     this.adressFlag = false;
+  }
+
+  previousAddress(index) {
+    (index > 0) ? this.selectedAddress = this.addressList[index - 1] : '';
+  }
+
+  nextAddress(index) {
+    (index < this.addressList.length - 1) ? this.selectedAddress = this.addressList[index + 1] : '';
   }
 
   getDematList(data) {
@@ -338,13 +352,14 @@ export class OverviewProfileComponent implements OnInit {
   open(value, data) {
 
     if (window.innerWidth <= 1024) {
-      this.tabviewshow = 'open80'
+      this.tabviewshow = 'open80';
+    } else {
+      this.tabviewshow = 'open50';
     }
-    else { this.tabviewshow = 'open50' }
 
 
     if (!this.keyInfoCapability.Edit) {
-      return
+      return;
     }
     this.enumDataService.setRelationShipStatus();
     let component;
@@ -472,6 +487,7 @@ export class OverviewProfileComponent implements OnInit {
       clientData.bankData = data;
     } else {
       component = ClientDematComponent;
+      clientData.bankList = this.bankList;
       clientData.dematData = data;
     }
     clientData.headerFlag = headerFlag;

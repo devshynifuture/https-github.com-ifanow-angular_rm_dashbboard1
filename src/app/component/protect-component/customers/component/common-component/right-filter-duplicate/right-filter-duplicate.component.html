@@ -1,7 +1,9 @@
 <div class="row bb-1 popup-header-fix-35">
     <div class="col-md-10 p-0">
         <h3 class="m-0 wrapper-16"> Select filters -
-            {{(_data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (_data.name == 'SUMMARY REPORT') ? 'Summary report' : (_data.name == 'Overview Report') ? 'Overview report' : (_data.name == 'ALL TRANSACTION REPORT') ? 'All transaction report' : (_data.name == 'CAPITAL GAIN REPORT') ? 'Capital gain report' : '-'}}
+            {{(_data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (_data.name == 'SUMMARY REPORT') ?
+            'Summary report' : (_data.name == 'Overview Report') ? 'Overview report' : (_data.name == 'ALL TRANSACTION
+            REPORT') ? 'All transaction report' : (_data.name == 'CAPITAL GAIN REPORT') ? 'Capital gain report' : '-'}}
         </h3>
     </div>
     <div class="col-md-2">
@@ -23,7 +25,8 @@
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox *ngIf="_data.name!='CAPITAL GAIN REPORT'" (change)="selectAll($event,'family')"
                     [(ngModel)]="selectUnselctAllFlagFam" name="selectAll"><span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagFam}">{{(selectUnselctAllFlagFam) ? 'Uncheck all' : 'Check all' }}</span>
+                        [ngClass]="{'text-custom': selectUnselctAllFlagFam}">{{(selectUnselctAllFlagFam) ? 'Uncheck all'
+                        : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of familyMember">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFamily()">{{item.name}}
@@ -42,8 +45,8 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox (change)="selectAll($event,'amc')" [(ngModel)]="selectUnselctAllFlagAmc" name="selectAll">
-                    <span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagAmc}">{{(selectUnselctAllFlagAmc) ? 'Uncheck all' : 'Check all' }}</span>
+                    <span [ngClass]="{'text-custom': selectUnselctAllFlagAmc}">{{(selectUnselctAllFlagAmc) ? 'Uncheck
+                        all' : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of amc">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterAmc()">{{item.amc_name}}
@@ -64,8 +67,8 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox (change)="selectAll($event,'scheme')" [(ngModel)]="selectUnselctAllFlagScheme"
-                    name="selectAll"><span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagScheme}">{{(selectUnselctAllFlagScheme) ? 'Uncheck all' : 'Check all' }}</span>
+                    name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlagScheme}">{{(selectUnselctAllFlagScheme) ?
+                        'Uncheck all' : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of scheme">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterScheme()" class="wb">
@@ -88,8 +91,8 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox (change)="selectAll($event,'folio')" [(ngModel)]="selectUnselctAllFlagFolio"
-                    name="selectAll"><span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagFolio}">{{(selectUnselctAllFlagFolio) ? 'Uncheck all' : 'Check all' }}</span>
+                    name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlagFolio}">{{(selectUnselctAllFlagFolio) ? 'Uncheck
+                        all' : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of folio">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterFolio()">{{item.folioNumber}}
@@ -112,8 +115,8 @@
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
                 <mat-checkbox (change)="selectAll($event,'category')" [(ngModel)]="selectUnselctAllFlagCategory"
-                    name="selectAll"><span
-                        [ngClass]="{'text-custom': selectUnselctAllFlagCategory}">{{(selectUnselctAllFlagCategory) ? 'Uncheck all' : 'Check all' }}</span>
+                    name="selectAll"><span [ngClass]="{'text-custom': selectUnselctAllFlagCategory}">{{(selectUnselctAllFlagCategory) ?
+                        'Uncheck all' : 'Check all' }}</span>
                 </mat-checkbox>
                 <mat-list-item role="listitem" *ngFor="let item of category">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">
@@ -148,7 +151,23 @@
                                 <span class="material-icons f-20 mr-8">
                                     menu
                                 </span>
-                                {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName == 'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName == 'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date':(item.displayName == 'sipAmount')?'Sip Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName == 'icons')?'Icons':item.displayName}}
+                                {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName ==
+                                'transactionDate')?'Transaction date':(item.displayName ==
+                                'transactionAmount')?'Transaction amount':(item.displayName ==
+                                'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance
+                                units':(item.displayName == 'no')?'No.':(item.displayName ==
+                                'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend
+                                reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName ==
+                                'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total
+                                amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName ==
+                                'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName ==
+                                'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName ==
+                                'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized
+                                profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName ==
+                                'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date': (item.displayName
+                                == 'lockPeriod')?'Unlock date' : (item.displayName == 'sipAmount')?'Sip
+                                Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName ==
+                                'icons')?'Icons':item.displayName}}
                             </a>
 
 
@@ -365,6 +384,18 @@
                     Yes</mat-radio-button>
                 <mat-radio-button value="2"
                     [ngClass]="{'b-a-custom': summaryFilerForm.get('showFolios').value=='2','text-primary':summaryFilerForm.get('showFolios').value=='2','b-a':summaryFilerForm.get('showFolios').value=='1'}">
+                    No</mat-radio-button>
+            </mat-radio-group>
+
+        </div>
+        <div class="col-md-6 pl-0" *ngIf="_data.name == 'UNREALIZED TRANSACTION REPORT'">
+            <h5 class="m-0 pb-8">Show Summary?</h5>
+            <mat-radio-group aria-label="Select an option" id="custom-radio" formControlName="showSummary">
+                <mat-radio-button value="1"
+                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showSummary').value=='1','text-primary':summaryFilerForm.get('showSummary').value=='1','b-a':summaryFilerForm.get('showSummary').value=='2'}">
+                    Yes</mat-radio-button>
+                <mat-radio-button value="2"
+                    [ngClass]="{'b-a-custom': summaryFilerForm.get('showSummary').value=='2','text-primary':summaryFilerForm.get('showSummary').value=='2','b-a':summaryFilerForm.get('showSummary').value=='1'}">
                     No</mat-radio-button>
             </mat-radio-group>
 

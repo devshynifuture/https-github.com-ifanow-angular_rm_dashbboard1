@@ -1,0 +1,434 @@
+.login_window_wrapper {
+  float: left;
+  width: 100%;
+  background-color: #cccccc;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login_window_container {
+  width: 25%;
+  display: block;
+  margin: 40px auto;
+  padding: 30px;
+  height: 320px;
+  background-color: #fff;
+}
+
+.errorM {
+  color: red;
+  font-size: 14px;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0s, opacity 0.5s linear;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.m-b-xs {
+  margin-bottom: 10px;
+}
+
+.form_container_btn_wrapper {
+  float: right;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.width_100 {
+  width: 100%;
+}
+
+.register_text {
+  text-align: center;
+  text-decoration: none;
+  margin-top: 15px;
+}
+
+input.mat-input-element {
+  line-height: 1.2;
+}
+
+.register_text:focus {
+  text-decoration: none;
+}
+
+@media (max-width: 1062px) {
+  .login_window_container {
+    width: 30%;
+  }
+}
+
+@media (max-width: 862px) {
+  .login_window_container {
+    width: 40%;
+  }
+}
+
+@media (max-width: 672px) {
+  .login_window_container {
+    width: 50%;
+  }
+}
+
+@media (max-width: 490px) {
+  .login_window_container {
+    width: 60%;
+  }
+}
+
+.animationBox {
+  display: block;
+  background-color: lightskyblue;
+  width: 0%;
+}
+
+.loginBox {
+  width: 60%;
+  margin-top: 45px;
+}
+
+.loginBoxverifyOtp {
+  width: 60%;
+  margin-top: 45px;
+}
+
+.advisorLogo {
+  width: auto;
+  min-height: 60px;
+}
+
+.form_container_new_wrapper {
+  width: 80%;
+}
+
+.form_container_new_wrapper .form-group {
+  margin-bottom: 22px !important;
+}
+
+.namebtn button.mainloginBtn {
+  width: 100% !important;
+}
+
+.imgBoxlogin {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.flexLogin {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+  padding-top: 0px !important;
+}
+
+.eyesPassword {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.otpBox {
+  background: #FF7272;
+  width: 176px;
+  height: 40px;
+  border-radius: 4px;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  font-weight: 500;
+  margin-bottom: 87px;
+}
+
+.lightRead {
+  color: #FF7272;
+}
+
+.verifyDiv {
+  width: 35px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.iconPosition {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
+
+.verifyBtn {
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.imgLogin {
+  display: none;
+}
+
+.ds-none-login {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .mobileNone {
+    display: none;
+  }
+  .submitBtnMobile {
+    width: 100%;
+  }
+  .ds-none-login {
+    display: block;
+    width: 100%;
+    text-align: right;
+    margin-top: 8px;
+  }
+  .mobileLoginUi {
+    background: #F2F2F2 !important;
+    display: block;
+  }
+  .mobileLoginUi .loginBox {
+    width: 100%;
+    margin-top: 0px;
+  }
+  .mobileLoginUi .loginBox .form_container_new_wrapper {
+    width: 100% !important;
+    clear: both;
+  }
+  .mobileLoginUi .loginBox .form_container_new_wrapper .form-group {
+    margin-bottom: 25px !important;
+  }
+  .mobileLoginUi .imgLogin {
+    position: relative;
+    float: right;
+    display: block;
+    margin-bottom: 30px;
+  }
+  .mobileLoginUi .imgLogin .bitmapImg {
+    position: absolute;
+    left: -15px;
+    top: 235px;
+  }
+  .mobileLoginUi .loginTitleName {
+    font-size: 18px;
+    margin-left: 55px;
+    margin-bottom: 30px;
+  }
+  .mobileLoginUi .mobileUserBox {
+    width: 83%;
+    margin: 0px auto;
+  }
+  .mobileLoginUi .mobileUserBox .form-control {
+    background: #FFFFFF;
+    -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
+    border-radius: 30px !important;
+    padding-left: 25px !important;
+    border: transparent !important;
+  }
+  .mobileLoginUi .mobileUserBox .verifyDiv {
+    width: 40px;
+    padding-left: 0px !important;
+  }
+  .mobileLoginUi .mobileUserBox .mobSubmit {
+    font-size: 16px;
+    background: #939393;
+    border-radius: 40px !important;
+    width: 125px;
+    height: 50px;
+    color: #ffffff;
+  }
+  .mobileLoginUi .mobileScreen {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
+  .mobileLoginUi .mobilerightText {
+    text-align: right;
+  }
+  .mobileLoginUi .otpBox {
+    margin-bottom: 10px;
+    width: 145px;
+  }
+  .mobileLoginUi .contentText {
+    color: #878787;
+    margin-bottom: 25px;
+  }
+  .mobileLoginUi .mobileFlex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .mobileLoginUi .mobileCenter {
+    text-align: center;
+    width: 100%;
+  }
+  .mobileLoginUi .mobilebuttonColor .bg-primary {
+    font-size: 16px;
+    background: #939393 !important;
+    border-radius: 40px !important;
+    width: 100%;
+    height: 50px;
+    color: #ffffff;
+    margin-bottom: 6px !important;
+  }
+}
+
+.disbleResend {
+  pointer-events: none;
+  color: lightgray;
+}
+
+.posRelative {
+  position: relative;
+  display: inline-block;
+  width: auto;
+}
+
+.hourglass {
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  -webkit-transform-origin-y: 85px;
+  -webkit-transform-origin-x: 175px;
+  display: block;
+  width: 40px;
+  height: 30px;
+  background: #574D35;
+  border-radius: 0px 0px 50px 50px;
+  margin: 40px auto 30px;
+  -webkit-animation: hglasstop 8s infinite;
+          animation: hglasstop 8s infinite;
+  position: absolute;
+  z-index: 99;
+  right: 0;
+  top: 6px;
+}
+
+.hourglass .two {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 30px;
+  background: #727142;
+  border-radius: 50px 50px 0px 0px;
+  position: absolute;
+  top: 30px;
+  -webkit-animation: hglass 8s infinite;
+          animation: hglass 8s infinite;
+}
+
+.hourglass1 {
+  display: block;
+  width: 1.6em;
+  height: 2.2em;
+  -webkit-animation: hourglass1 2s linear infinite;
+          animation: hourglass1 2s linear infinite;
+  position: absolute;
+  margin-top: -8px;
+  right: -46px;
+  top: 0;
+  z-index: 99;
+}
+
+.hourglass1 .outer {
+  fill: #008FFF;
+}
+
+.hourglass1 .middle {
+  fill: #fff;
+}
+
+@-webkit-keyframes hourglass1 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-box-shadow: inset #008FFF 0 0em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -4em 0 0;
+            box-shadow: inset #008FFF 0 0em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -4em 0 0;
+  }
+  80% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+            box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+            box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+  }
+}
+
+@keyframes hourglass1 {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-box-shadow: inset #008FFF 0 0em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -4em 0 0;
+            box-shadow: inset #008FFF 0 0em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -4em 0 0;
+  }
+  80% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+    -webkit-box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+            box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+  }
+  100% {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+    -webkit-box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+            box-shadow: inset #008FFF 0 -2em 0 0, inset #fff 0 -2em 0 0, inset #008FFF 0 -2em 0 0;
+  }
+}
+
+@media (max-width: 1250px) {
+  .loginBox {
+    width: 70%;
+  }
+}
+
+@media (max-width: 1124px) {
+  .loginBox {
+    width: 80%;
+  }
+}
+/*# sourceMappingURL=login.component.css.map */

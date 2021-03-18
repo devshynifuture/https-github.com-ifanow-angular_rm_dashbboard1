@@ -77,6 +77,7 @@
                 </div>
                 <div class="col-md-12 form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
+                        <!-- [disabled]="!typeMF" -->
                         <mat-select class="form-control" [(ngModel)]="arnRiaId">
                             <mat-option value="">Select ARN/RIA </mat-option>
                             <mat-option *ngFor="let item of arnRiaList" [value]="item.id">

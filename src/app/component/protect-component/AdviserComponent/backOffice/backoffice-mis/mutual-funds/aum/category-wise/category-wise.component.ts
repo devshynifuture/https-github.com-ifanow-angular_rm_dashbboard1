@@ -254,7 +254,7 @@ export class CategoryWiseComponent implements OnInit {
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
-      parentId: (this.data) ? this.data.parentId : -1
+      parentId: (this.parentId) ? this.parentId : -1,
     };
     if (this.aumIdList && this.aumIdList.length >= 0) {
       obj['rtId'] = this.aumIdList;
@@ -362,28 +362,30 @@ export class CategoryWiseComponent implements OnInit {
   getFileResponseDataForSubSchemeName(data) {
     this.isLoading = false;
     this.showLoader = false;
+    this.totalCurrentValue = 0;
     if (data) {
       this.category = data.categories;
       this.totalAumForSubSchemeName = data.totalAum;
       // excel init
+      this.category.forEach(o => {
+        o.showCategory = true;
+        this.totalCurrentValue += o.totalAum;
+        this.totalWeight += o.weightInPercentage;
+        this.subCategoryList.push(o.subCategoryList);
+
+        // o.subCategoryList.forEach(sub => {
+        //   sub.showSubCategory = true;
+        // });
+
+
+      });
       this.excelInitOfCategories();
     } else {
       this.category = [];
     }
 
     // this.excelSheetInitialization();
-    this.category.forEach(o => {
-      o.showCategory = true;
-      this.totalCurrentValue += o.totalAum;
-      this.totalWeight += o.weightInPercentage;
-      this.subCategoryList.push(o.subCategoryList);
 
-      // o.subCategoryList.forEach(sub => {
-      //   sub.showSubCategory = true;
-      // });
-
-
-    });
 
 
     let totalAumObj: any = {};
@@ -392,7 +394,7 @@ export class CategoryWiseComponent implements OnInit {
       console.log('totalAumObj : ', totalAumObj);
       console.log('sumAumTotal : ', this.totalCurrentValue);
       console.log('sumWeightInPercTotal : ', this.totalWeight);
-      this.totalCurrentValue = totalAumObj.totalAum;
+      this.totalCurrentValue = totalAumObj.totalAum ? totalAumObj.totalAum : this.totalCurrentValue;
       this.totalWeight = 100;
     }
 
@@ -551,7 +553,7 @@ export class CategoryWiseComponent implements OnInit {
     let totalAumObj: any = {};
     if (this.data && this.data.totalAumObj) {
       totalAumObj = this.data.totalAumObj;
-      this.categoryWiseTotalArr = ['Total', '', totalAumObj.totalAum, 100];
+      this.categoryWiseTotalArr = ['Total', '', totalAumObj.totalAum ? totalAumObj.totalAum : this.totalCurrentValue, 100];
     }
     console.log('totalAumObj : ', totalAumObj);
     console.log('sumAumTotal : ', sumAumTotal);

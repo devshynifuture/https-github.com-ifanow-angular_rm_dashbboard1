@@ -1,0 +1,202 @@
+<div class="row bb popup-header-fix w-50">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 wrapper-20 lh-23">Send KYC link to an Investor</h4>
+    </div>
+    <div class="col-md-2 full-end pr-24">
+        <i (click)="close(false)" class="material-icons c-p">
+            clear
+        </i>
+    </div>
+</div>
+<div class="pt-90 pb-44 pl-20 pr-20">
+    <div *ngIf="step1">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <h5 class="m-0 roboto f-400 pb-10 f-16">Select an investor from the search box below...</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 p-0 remove-top">
+
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #searchClient (input)="searchClientFamilyMember(searchClient.value)"
+                        [formControl]="stateCtrl" [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client"
+                        class="form-control pl-8" matInput placeholder="Start typing to see investor names">
+                    <mat-autocomplete #auto1="matAutocomplete"
+                        (optionSelected)="mergeOptionSelected($event.option.value)">
+                        <mat-option *ngFor="let f of clientList " [value]="f">
+                            <div class="row">
+                                <div class="col-md-7 d-flex align-items-center">
+                                    <p class="t-left m-0">{{f.name}}</p>
+                                </div>
+                                <div class="col-md-5 d-flex ">
+                                    <button class="small-primitive" *ngIf="f.userType==3" mat-stroked-button>FAMILY
+                                        MEMBER
+                                    </button>
+                                    <button class="small-primitive" *ngIf="f.userType==2" mat-stroked-button>Group head
+                                    </button>
+                                </div>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <mat-error *ngIf="transactionAddForm.get('ownerName').errors?.required" class="f-12 pt-4">
+            This field is required
+        </mat-error> -->
+                    <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
+                        Member does not exist
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2 pr-0 ">
+                <mat-spinner *ngIf="isLoding" [diameter]="30"></mat-spinner>
+            </div>
+        </div>
+        <div *ngIf="selectedClientData">
+            <h5 class="m-0 roboto f-500 pt-60 pb-10">Following are the details of {{selectedClientData.name}}</h5>
+            <div class="ba-light">
+                <div class="row pt-6 pb-6 bb">
+                    <div class="col-md-6 pl-8 pr-0">
+                        <p class="m-0 roboto f-400">Full name</p>
+
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <p class="m-0 roboto f-400"> {{selectedClientData.name}}</p>
+                    </div>
+                </div>
+                <div class="row pt-6 pb-6 bb">
+                    <div class="col-md-6 pl-8 pr-0">
+                        <p class="m-0 roboto f-400">Date of birth</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <p class="m-0 roboto f-400"> {{selectedClientData.birthDate?selectedClientData.birthDate:'N/A'}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row pt-6 pb-6 bb">
+                    <div class="col-md-6 pl-8 pr-0">
+                        <p class="m-0 roboto f-400">PAN</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <p class="m-0 roboto f-400"> {{selectedClientData.pan?selectedClientData.pan:'N/A'}}</p>
+                    </div>
+                </div>
+                <div class="row pt-6 pb-6 bb">
+                    <div class="col-md-6 pl-8 pr-0">
+                        <p class="m-0 roboto f-400">KYC Status</p>
+                    </div>
+
+                    <div class="col-md-6 text-right ">
+                        <span class="text-danger" *ngIf="selectedClientData.kycComplaint==0">Not verified</span>
+                        <span class="text-primary" *ngIf="selectedClientData.kycComplaint==1">KYC verified</span>
+                        <span *ngIf="selectedClientData.kycComplaint==2">Applied</span>
+                        <span *ngIf="selectedClientData.kycComplaint==3">Accepted</span>
+                        <span *ngIf="selectedClientData.kycComplaint==4">Rejected</span>
+                    </div>
+                </div>
+                <div class="row pt-6 pb-6 bb">
+                    <div class="col-md-6 pl-8 pr-0">
+                        <p class="m-0 roboto f-400">Mobile number</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <p class="m-0 roboto f-400"> {{selectedClientData.mobileNo?selectedClientData.mobileNo:'N/A'}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row pt-6 pb-6">
+                    <div class="col-md-6 pl-8 pr-0">
+                        <p class="m-0 roboto f-400">Email</p>
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <p class="m-0 roboto f-400 t-l"> {{selectedClientData.email?selectedClientData.email:'N/A'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20">
+                <button
+                    *ngIf="(selectedClientData.kycComplaint==0 || selectedClientData.kycComplaint==4) && selectedClientData.email && selectedClientData.mobileNo && selectedClientData.pan && selectedClientData.familyMemberType!=2"
+                    (click)="previewEmail();data['btnFlag'] = 'Back'" mat-stroked-button class="btn-primary">PREVIEW
+                    EMAIL & SEND KYC
+                    LINK</button>
+                <p *ngIf="selectedClientData.familyMemberType==2" class="m-0  roboto f-400  text-danger">Ineligible
+                    for KYC, as selected investor is a minor.</p>
+                <p *ngIf="(!selectedClientData.email || !selectedClientData.mobileNo || !selectedClientData.pan) && selectedClientData.familyMemberType!=2"
+                    class="m-0 roboto f-400  text-danger">Please provide <span
+                        *ngIf="!selectedClientData.pan">PAN,</span><span *ngIf="!selectedClientData.mobileNo">
+                        Mobile,</span> <span *ngIf="!selectedClientData.email">Email</span> to proceed with KYC.</p>
+            </div>
+        </div>
+    </div>
+    <div [formGroup]="kycForm" *ngIf="!step1">
+        <div class="row">
+            <div class="col-md-12 p-0">
+                <h3 class="m-0 f-400 roboto">Preview of KYC Link Invitation Email</h3>
+            </div>
+        </div>
+        <div class="row pt-36">
+            <div class="col-md-2 pl-0 full-end">
+                <h5 class="m-0 roboto f-400">From </h5>
+            </div>
+            <div class="col-md-10 p-0" id="new-mail-chips">
+                <mat-form-field>
+                    <input readonly matInput formControlName="from" class="form-control">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-md-2 pl-0 text-right">
+                <h5 class="m-0 roboto f-400">To </h5>
+            </div>
+            <div class="col-md-10 p-0" id="new-mail-chips">
+                <mat-form-field class="event-none h-auto">
+                    <mat-form-field class="form-control h-auto">
+                        <mat-chip-list #chipList aria-label="Fruit selection">
+                            <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
+                                (removed)="remove(fruit)">
+                                {{fruit.name}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input readonly [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                (matChipInputTokenEnd)="add($event)" class="b-0">
+                        </mat-chip-list>
+                    </mat-form-field>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-md-2 pl-0 full-end">
+                <h5 class="m-0 roboto f-400">Subject </h5>
+            </div>
+            <div class="col-md-10 p-0">
+                <mat-form-field>
+                    <input readonly matInput formControlName="subject" class="form-control">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-24" id="ui-add-new-all-kyc-froala">
+            <div class="col-md-12 p-0">
+                <app-froala class="event-none" [(model)]="emailBody"></app-froala>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-50 d-flex align-items-center">
+    <div class="row w-100">
+        <div class="col-md-4">
+            <h5 (click)="data.btnFlag=='Cancel'?close('close'):back()" class="mb-0 pt-8 text-white c-p">
+                {{data.btnFlag}}</h5>
+            <!-- <h5 *ngIf="step1==false" (click)="back()" class="mb-0 pt-8 text-white c-p">Back -->
+            <!-- </h5> -->
+        </div>
+        <div class="col-md-8 d-flex align-items-end justify-content-end">
+            <app-progress-button (btnClick)="kycAdvisorSectionMethod()" *ngIf="!step1" class="br-0 text-inherit ml-12"
+                [options]="barButtonOptions">
+            </app-progress-button>
+        </div>
+
+    </div>
+</div>

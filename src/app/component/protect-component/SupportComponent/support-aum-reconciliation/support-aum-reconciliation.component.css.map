@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,MAAM,EAAE,KAAK;CACd",
+    "sources": [
+        "support-aum-reconciliation.component.scss"
+    ],
+    "names": [],
+    "file": "support-aum-reconciliation.component.css"
+}

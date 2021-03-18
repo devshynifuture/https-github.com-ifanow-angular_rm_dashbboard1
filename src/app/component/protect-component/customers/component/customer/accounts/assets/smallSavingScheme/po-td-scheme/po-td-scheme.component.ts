@@ -144,7 +144,7 @@ export class PoTdSchemeComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
@@ -241,10 +241,10 @@ export class PoTdSchemeComponent implements OnInit {
             this.dataList.sumOfAmountInvested += element.amountInvested;
             this.dataList.sumOfMaturityValue += element.maturityValue;
             this.customerOverview.portFolioData = null;
-            this.customerOverview.summaryLeftsidebarData=null;
-            this.customerOverview.aumGraphdata=null;
-            this.customerOverview.assetAllocationChart=null;
-            this.customerOverview.summaryCashFlowData=null;
+            this.customerOverview.summaryLeftsidebarData = null;
+            this.customerOverview.aumGraphdata = null;
+            this.customerOverview.assetAllocationChart = null;
+            this.customerOverview.summaryCashFlowData = null;
             this.customerOverview.assetAllocationChart = null;
             this.getPoTdSchemedataResponse(this.dataList);
           },

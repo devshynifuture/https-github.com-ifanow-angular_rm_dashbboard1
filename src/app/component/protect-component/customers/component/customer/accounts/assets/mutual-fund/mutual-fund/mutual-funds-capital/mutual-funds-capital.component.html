@@ -90,8 +90,8 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.stGain == 0) ? (element.stGain) : (element.stGain) }}</span>
+                                    <span appFormatNumber>{{(element.stGain == 0) ? (element.stGain) : (element.stGain)
+                                        }}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -106,8 +106,8 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss)}}</span>
+                                    <span appFormatNumber>{{(element.stLoss == 0 ) ? (element.stLoss) :
+                                        (element.stLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -122,8 +122,8 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain)}}</span>
+                                    <span appFormatNumber>{{(element.ltGain == 0 ) ? (element.ltGain) :
+                                        (element.ltGain)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -138,8 +138,8 @@
                                 Indexed gain </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain)}}</span>
+                                    <span appFormatNumber>{{(element.indexGain == 0 ) ? (element.indexGain) :
+                                        (element.indexGain)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -170,8 +170,8 @@
                                 Indexed loss </th>
                             <td class="text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss)}}</span>
+                                    <span appFormatNumber>{{(element.indexLoss == 0 ) ? (element.indexLoss) :
+                                        (element.indexLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -251,8 +251,8 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.stGain == 0) ? (element.stGain) : (element.stGain) }}</span>
+                                    <span appFormatNumber>{{(element.stGain == 0) ? (element.stGain) : (element.stGain)
+                                        }}</span>
 
                                 </div>
                             </td>
@@ -301,8 +301,8 @@
                                 Indexed gain </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain)}}</span>
+                                    <span appFormatNumber>{{(element.indexGain == 0 ) ? (element.indexGain) :
+                                        (element.indexGain)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -317,8 +317,8 @@
                             </th>
                             <td class="br text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss)}}</span>
+                                    <span appFormatNumber>{{(element.ltLoss == 0 ) ? (element.ltLoss) :
+                                        (element.ltLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -333,8 +333,8 @@
                                 Indexed loss </th>
                             <td class="text-right" mat-cell *matCellDef="let element">
                                 <div class="bar">
-                                    <span
-                                        appFormatNumber>{{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss)}}</span>
+                                    <span appFormatNumber>{{(element.indexLoss == 0 ) ? (element.indexLoss) :
+                                        (element.indexLoss)}}</span>
                                 </div>
                             </td>
                             <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -478,39 +478,48 @@
         <tr *ngIf="dataSource.data.length > 0">
             <td
                 style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b>Scheme name </b> </td>
+                <b>Scheme name </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Folio number </b> </td>
+                <b> Folio number </b>
+            </td>
 
             <td
                 style="width:12%;text-align: left; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Investor name </b> </td>
+                <b> Investor name </b>
+            </td>
 
             <td
                 style="width:5%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> ST gain </b> </td>
+                <b> ST gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> ST loss </b> </td>
+                <b> ST loss </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> LT gain </b> </td>
+                <b> LT gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Indexed gain </b> </td>
+                <b> Indexed gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> LT loss </b> </td>
+                <b> LT loss </b>
+            </td>
 
             <td
                 style="width:12%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Indexed loss </b> </td>
+                <b> Indexed loss </b>
+            </td>
 
         </tr>
     </table>
@@ -520,7 +529,7 @@
     <table cellpadding="0" width="100%" cellspacing="0" border="0"
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
         <tr>
-            <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData && excelDownload != true">
                 <div style="width: 200px; padding-top: 20px;"
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -542,7 +551,7 @@
                     </strong>
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                    {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Capital Gain Summary
                         Report</strong>
                 </p>
@@ -556,7 +565,7 @@
         <tr>
             <td style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">
                 Client name:
-                <span> {{(clientData.name) ? clientData.name : '-'}}</span>
+                <span> {{clientNameToDisplay ? clientNameToDisplay : this.clientData.name}}</span>
             </td>
 
         </tr>
@@ -576,39 +585,48 @@
         <tr *ngIf="dataSource.data.length > 0">
             <td
                 style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b>Scheme name </b> </td>
+                <b>Scheme name </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Folio number </b> </td>
+                <b> Folio number </b>
+            </td>
 
             <td
                 style="width:12%;text-align: left; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Investor name </b> </td>
+                <b> Investor name </b>
+            </td>
 
             <td
                 style="width:5%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> ST gain </b> </td>
+                <b> ST gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> ST loss </b> </td>
+                <b> ST loss </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> LT gain </b> </td>
+                <b> LT gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Indexed gain </b> </td>
+                <b> Indexed gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> LT loss </b> </td>
+                <b> LT loss </b>
+            </td>
 
             <td
                 style="width:12%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Indexed loss </b> </td>
+                <b> Indexed loss </b>
+            </td>
 
         </tr>
 
@@ -733,39 +751,48 @@
         <tr *ngIf="dataSource1.data.length > 0" style="background: #f5f7f7;">
             <td
                 style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b>Scheme name </b> </td>
+                <b>Scheme name </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b> Folio number </b> </td>
+                <b> Folio number </b>
+            </td>
 
             <td
                 style="width:12%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b> Investor name </b> </td>
+                <b> Investor name </b>
+            </td>
 
             <td
                 style="width:5%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b> ST gain </b> </td>
+                <b> ST gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b> ST loss </b> </td>
+                <b> ST loss </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b> LT gain </b> </td>
+                <b> LT gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b> Indexed gain </b> </td>
+                <b> Indexed gain </b>
+            </td>
 
             <td
                 style="width:8%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
-                <b> LT loss </b> </td>
+                <b> LT loss </b>
+            </td>
 
             <td
                 style="width:12%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Indexed loss </b> </td>
+                <b> Indexed loss </b>
+            </td>
 
         </tr>
 
@@ -894,23 +921,28 @@
         <tr *ngIf="dataSource2.data.length > 0" style="background: #f5f7f7;">
             <td
                 style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b>Scheme name </b> </td>
+                <b>Scheme name </b>
+            </td>
 
             <td
                 style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; ">
-                <b> Folio number </b> </td>
+                <b> Folio number </b>
+            </td>
 
             <td
                 style="width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
-                <b> Dividend payout </b> </td>
+                <b> Dividend payout </b>
+            </td>
 
             <td
                 style="width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
-                <b> Dividend reinvestment </b> </td>
+                <b> Dividend reinvestment </b>
+            </td>
 
             <td
                 style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                <b> Total reinvesment </b> </td>
+                <b> Total reinvesment </b>
+            </td>
 
         </tr>
 

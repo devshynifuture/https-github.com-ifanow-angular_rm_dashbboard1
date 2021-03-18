@@ -77,6 +77,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     name: 'Motor',
     id: 4
   }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
+  adviceSectionLoading: string;
   constructor(private adviceUtilService: AdviceUtilsService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService) { }
   globalObj: {};
   clientIdToClearStorage: string;
@@ -84,6 +85,9 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     // this.getAllCategory();
+    this.adviceUtilService.getAdviceLoading().subscribe(res => {
+      this.adviceSectionLoading = res;
+    });
     this.adviceUtilService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
@@ -102,13 +106,16 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
           this.globalObj = res;
         }
       });
-    // if (this.chekToCallApi()) {
-    this.getAdviceByAsset();
-    // } else {
-    //   this.GIData = this.globalObj['GIData'];
-    //   this.getAllSchemeResponse(this.globalObj['AllAdviceGeneralInsurance']);
-    //   this.displayList = this.globalObj['displayList'];
-    // }
+    if (this.adviceSectionLoading) {
+      this.getAdviceByAsset();
+      this.adviceUtilService.setAdviceLoading(false);
+    } else if (this.chekToCallApi()) {
+      this.getAdviceByAsset();
+    } else {
+      this.GIData = this.globalObj['GIData'];
+      this.getAllSchemeResponse(this.globalObj['AllAdviceGeneralInsurance']);
+      this.displayList = this.globalObj['displayList'];
+    }
 
   }
   chekToCallApi() {
@@ -408,7 +415,7 @@ export class AllAdviceGeneralInsuranceComponent implements OnInit {
     console.log(this.selectedAssetId)
   }
 
-  checkAll(flag, tableDataList, tableFlag, ) {
+  checkAll(flag, tableDataList, tableFlag,) {
     console.log(flag, tableDataList)
     const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId, '');
     this.getFlagCount(tableFlag, count)

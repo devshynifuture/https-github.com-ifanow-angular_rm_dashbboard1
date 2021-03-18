@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAA;EACD,KAAK,EAAE,IAAI;CACd;;AAED,AAAA,kBAAkB,CAAA;EACd,MAAM,EAAE,KAAK;EACb,QAAQ,EAAE,IAAI;CACjB;;AAED,AAAA,SAAS,CAAA;EACL,QAAQ,EAAE,mBAAmB;EAC7B,MAAM,EAAE,cAAc;CACzB",
+    "sources": [
+        "email-list.component.scss"
+    ],
+    "names": [],
+    "file": "email-list.component.css"
+}

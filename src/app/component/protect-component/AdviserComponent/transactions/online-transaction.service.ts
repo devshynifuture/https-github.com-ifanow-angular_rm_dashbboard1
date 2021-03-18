@@ -225,6 +225,17 @@ export class OnlineTransactionService {
   mappedExistingUser(data) {
     return this.http.post(apiConfig.TRANSACT + appConfig.MAPPED_EXSTING_USER, data);
   }
+  uploadNewFatacaDetails(data) {
+    return this.http.postEncoded(apiConfig.TRANSACT + appConfig.UPLOAD_NEW_FATACA, data);
+  }
+
+  getKycListData(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.INVESTER_KYC_LIST_GET, data);
+  }
+
+  getKycTransactionDashboardMetrix(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_KYC_TRANASCTION_MATRIX, data);
+  }
   //
   // sipBSE(data){
   //   return this.http.postEncoded(apiConfig.TRANSACT + appConfig.SIP_BSE, data)

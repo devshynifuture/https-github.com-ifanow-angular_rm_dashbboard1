@@ -48,7 +48,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     rightFilterData: any;
     fromDateYear: number = 0;
     toDateYear: number;
-    grandFatheringEffect = false;
+    grandFatheringEffect = true;
     redemption: any[];
     objSendToDetailedCapital: any;
     mutualFundList: any[];
@@ -75,6 +75,8 @@ export class MfCapitalDetailedComponent implements OnInit {
     parentId: any;
     loadingDone: boolean = false;
     isShow = true;
+    clientNameToDisplay: any;
+    excelDownload: boolean = false;
     constructor(private MfServiceService: MfServiceService,
         public routerActive: ActivatedRoute,
         private backOfficeService: BackOfficeService,
@@ -97,7 +99,9 @@ export class MfCapitalDetailedComponent implements OnInit {
                 const obj = {
                     id: this.familyMemberId
                 }
-                this.familyList.push(obj)
+                if (param1.familyMemberId) {
+                    this.familyList.push(obj)
+                }
             }
             else {
                 this.advisorId = AuthService.getAdvisorId();
@@ -138,6 +142,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
     }
     ngOnInit() {
+        this.criteriaDate = new Date(2018, 0, 31); // this date is used for criteria if the transactions happens before this date then only grandfathering effect is applied otherwise data remain as it is
         this.isShow = true;
         this.MfServiceService.getadvisorList()
             .subscribe(res => {
@@ -178,9 +183,9 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.setCapitaDetails.GTReinvesment = {}
         this.isLoading = true;
         if (this.finPlanObj) {
-            this.fromDateYear = 2019;
+            this.fromDateYear = 2020;
             this.fromDate = new Date(this.fromDateYear, 3, 1);
-            this.toDateYear = 2020;
+            this.toDateYear = 2021;
             this.toDate = new Date(this.toDateYear, 2, 31);
             this.grandFatheringEffect = true;
             this.teamMemberListGet();
@@ -259,6 +264,19 @@ export class MfCapitalDetailedComponent implements OnInit {
             }
         );
     }
+    checkFamMember() {
+        this.clientNameToDisplay = null;
+        if (this.rightFilterData) {
+            let famMember = this.rightFilterData.family_member_list.filter(d => d.selected == true);
+            if (famMember.length == 1) {
+                this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+            } else {
+                this.clientNameToDisplay = this.clientData.name
+            }
+        } else {
+            this.clientNameToDisplay = this.clientData.name
+        }
+    }
     getDetailedData(data) {
         let equityData = [];
         this.total_stGain = 0;
@@ -272,6 +290,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.total_stt = 0;
         this.changeInput.emit(false);
         if (data) {
+            this.checkFamMember();
             const myArray = data
             const list = [];
             myArray.forEach(val => list.push(Object.assign({}, val)));
@@ -364,7 +383,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         Object.keys(data).map(key => {
             if (data[key][0].category == 'OTHER') {
                 data[key][0].mutualFund.forEach(element => {
-                    if (element.subCategoryName == 'FoFs (Overseas)' || element.subCategoryName == 'FoFs (Overseas)') {
+                    if (element.subCategoryName == 'FoFs (Domestic) - Debt Oriented' || element.subCategoryName == 'FoFs (Overseas)' || element.subCategoryName == 'FoFs (Overseas)') {
                         debtFund.push(element);
                     }
                 });
@@ -569,6 +588,7 @@ export class MfCapitalDetailedComponent implements OnInit {
 
                                     if (ind == 0) {
                                         ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
+                                        obj = this.checkTransactiontype(obj);
                                         ele.transactionType = (obj.fwTransactionType) ? obj.fwTransactionType : 0;
                                         ele.redeemAmount = (obj.amount) ? obj.amount : 0;
                                         ele.redeemStt = (obj.stt) ? obj.stt : 0;
@@ -639,6 +659,15 @@ export class MfCapitalDetailedComponent implements OnInit {
     // getArrayForFinalValue(){
     // this.dataSource4=['Grand total', '-', this.redeemAmount, this.total_stt, '-', '-', '-', 'amtPurchase', this.purchaseAmount, '-', '-', this.total_stGain, this.total_stLoss, this.total_ltGain, this.total_ltLoss, this.total_indexGain, this.total_indexLoss];
     // }
+    checkTransactiontype(obj) {
+        if (obj.rtTypeId == 6 && !obj.fwTransactionType.includes("CAS")) {
+            obj.fwTransactionType = obj.fwTransactionType + '(CAS)'
+        }
+        if (obj.rtTypeId == 14 && !obj.fwTransactionType.includes("*")) {
+            obj.fwTransactionType = obj.fwTransactionType + '*'
+        }
+        return obj;
+    }
     getFilteredValues(data, category) {
         let days;
         let gainLossBasedOnGrandfathering;
@@ -775,6 +804,7 @@ export class MfCapitalDetailedComponent implements OnInit {
                 mutualFund = this.MfServiceService.filterArray(this.mutualFund, 'familyMemberId', this.familyList, 'id');
             }
             mutualFund = this.MfServiceService.sorting(mutualFund, 'schemeName');
+            mutualFund = [...new Map(mutualFund.map(item => [item.id, item])).values()];
             mutualFund.forEach(element => {
                 if (element.dividendTransactions) {
                     element.dividendTransactions.forEach(ele => {
@@ -825,16 +855,18 @@ export class MfCapitalDetailedComponent implements OnInit {
     isSimpleRow = (index, item) => item.totalAmt;
 
     generatePdf() {
+        this.excelDownload = false
         this.fragmentData.isSpinner = true
         const para = document.getElementById('template');
         // const header = document.getElementById('templateHeader');
         const header = document.getElementById('templateHeader');
 
         // let header = null
-        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '', true);
+        this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
 
     }
     Excel(tableTitle) {
+        this.excelDownload = true
         this.showDownload = true
         setTimeout(() => {
             var blob = new Blob([document.getElementById('template').innerHTML], {
@@ -848,6 +880,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     }
     generatePdfBulk() {
         this.loadingDone = true
+        this.excelDownload = false
         const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
         setTimeout(() => {
             let para = this.mfCapitalTemplateDetailed.nativeElement.innerHTML
@@ -861,7 +894,8 @@ export class MfCapitalDetailedComponent implements OnInit {
                 clientId: this.clientId,
                 advisorId: this.advisorId,
                 fromEmail: this.clientDetails.advisorData.email,
-                toEmail: this.clientData.email
+                toEmail: this.clientData.email,
+                mfBulkEmailRequestId: this.mfBulkEmailRequestId
             }
             this.UtilService.bulkHtmlToPdf(obj)
             //this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Detailed', true, this.fragmentData, '', '')

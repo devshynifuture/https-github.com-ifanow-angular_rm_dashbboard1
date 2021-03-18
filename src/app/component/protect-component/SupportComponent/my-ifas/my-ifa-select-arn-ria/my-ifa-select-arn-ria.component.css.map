@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,OAAO,CAAA;EACH,OAAO,EAAE,QAAQ;CACpB",
+    "sources": [
+        "my-ifa-select-arn-ria.component.scss"
+    ],
+    "names": [],
+    "file": "my-ifa-select-arn-ria.component.css"
+}

@@ -16,6 +16,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { CredentialsErrorPopupComponent } from './credentials-error-popup/credentials-error-popup.component';
 import { AccountAndBillingComponent } from '../component/protect-component/AdviserComponent/account-and-billing/account-and-billing/account-and-billing.component';
 import { ChangeClientPasswordComponent } from '../component/protect-component/customers/component/customer/customer-overview/overview-profile/change-client-password/change-client-password.component';
+import { ProgessButtonWhiteComponent } from './progess-button-white/progess-button-white.component';
 
 // import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
 // import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
@@ -32,7 +33,8 @@ import { ChangeClientPasswordComponent } from '../component/protect-component/cu
     DashEvent,
     CredentialsErrorPopupComponent,
     AccountAndBillingComponent,
-    ChangeClientPasswordComponent
+    ChangeClientPasswordComponent,
+    ProgessButtonWhiteComponent
   ],
   imports: [
     MaterialModule,
@@ -53,7 +55,8 @@ import { ChangeClientPasswordComponent } from '../component/protect-component/cu
     GoogleConnectComponent,
     CalendarScheduleComponent,
     DashEvent,
-    ChangeClientPasswordComponent
+    ChangeClientPasswordComponent,
+    ProgessButtonWhiteComponent
   ],
   entryComponents: [LinkBankComponent, RealEstatePropertyComponent, DashEvent, CredentialsErrorPopupComponent, ChangeClientPasswordComponent]
 })

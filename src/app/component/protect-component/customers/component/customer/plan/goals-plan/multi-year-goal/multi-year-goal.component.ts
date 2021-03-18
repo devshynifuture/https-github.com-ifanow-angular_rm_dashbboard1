@@ -12,6 +12,8 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import { OpenGalleryPlanComponent } from 'src/app/component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-multi-year-goal',
@@ -54,6 +56,7 @@ export class MultiYearGoalComponent implements OnInit {
   };
   organizationLogo;
   imgURL: any;
+  defaultGallery: any;
   constructor(
     public authService: AuthService,
     private eventService: EventService,
@@ -62,7 +65,7 @@ export class MultiYearGoalComponent implements OnInit {
     private datePipe: DatePipe,
     private utilService: UtilService,
     private orgSetting: OrgSettingServiceService,
-
+    private dialog: MatDialog,
   ) { }
 
   @Input() goalTypeData: any = {};
@@ -327,7 +330,6 @@ export class MultiYearGoalComponent implements OnInit {
       }, 300);
     }
   }
-
   goBack() {
     this.output.emit();
   }

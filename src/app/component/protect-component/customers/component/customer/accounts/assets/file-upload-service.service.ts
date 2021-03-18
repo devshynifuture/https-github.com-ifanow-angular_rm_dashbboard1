@@ -87,7 +87,7 @@ export class FileUploadServiceService {
           console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
           if (responseData == null) {
             // this.addDocumentUsers(fileName, this.imageType, fileuploadurl);
-            this.addDocumentUsers(fileuploadurl);
+            //this.addDocumentUsers(fileuploadurl); remove for all assets
             DashboardService.dashDocumentTotalSize = null;
             this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
             this.fileUploadSuccsess = true

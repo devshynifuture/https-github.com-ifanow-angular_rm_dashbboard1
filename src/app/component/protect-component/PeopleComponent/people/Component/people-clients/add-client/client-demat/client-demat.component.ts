@@ -69,7 +69,7 @@ export class ClientDematComponent implements OnInit {
   clientName: any;
   nomineesListFM1: any = [];
   callMethod1: { methodName: string; ParamValue: any; disControl: any; };
-  bankList: any = [];
+  @Input() bankList;
   keyInfoCapability: any = {};
   mobileEditedData: any[];
 
@@ -276,14 +276,14 @@ export class ClientDematComponent implements OnInit {
     this.dematForm = this.fb.group({
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
       // holderName: [(data.modeOfHolding == '1') ? (data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : '' : ''],
-      depositoryPartName: [data.depositoryParticipantName],
-      depositoryPartId: [data.depositoryParticipantId],
-      dematClientId: [data.dematClientId],
-      brekerName: [data.brokerName],
-      brokerAddress: [data.brokerAddress],
+      depositoryPartName: [data.depositoryParticipantName ? data.depositoryParticipantName : ''],
+      depositoryPartId: [data.depositoryParticipantId ? data.depositoryParticipantId : ''],
+      dematClientId: [data.dematClientId ? data.dematClientId : ''],
+      brekerName: [data.brokerName ? data.brokerName : ''],
+      brokerAddress: [data.brokerAddress ? data.brokerAddress : ''],
       linkedBankAccount: [data.userBankMappingId && data.userBankMappingId != 0 ? data.userBankMappingId : '', [Validators.required]],
-      powerOfAttName: [data.powerOfAttorneyName],
-      powerOfAttMasId: [data.powerOfAttorneyMasterId],
+      powerOfAttName: [data.powerOfAttorneyName ? data.powerOfAttorneyName : ''],
+      powerOfAttMasId: [data.powerOfAttorneyMasterId ? data.powerOfAttorneyMasterId : ''],
       getNomineeName: this.fb.array([this.fb.group({
         name: [],
         sharePercentage: [0],
@@ -337,6 +337,9 @@ export class ClientDematComponent implements OnInit {
   }
 
   getDematList(data) {
+    if (this.userData.flag && this.userData.flag.includes('Add')) {
+      return;
+    }
     let obj;
     if (this.dialogRef) {
       obj = {
@@ -375,6 +378,7 @@ export class ClientDematComponent implements OnInit {
       this.createDematForm(null);
       this.getDematList(this.userData);
     } else {
+      this.bankList = this.userData.bankList;
       this.holdingMode = (this.userData.dematData) ? String(this.userData.dematData.modeOfHolding) : '1';
       (this.userData.dematData) ? this.dematList = this.userData.dematData : this.dematList = {};
       this.barButtonOptions.text = 'SAVE & CLOSE';
@@ -382,7 +386,7 @@ export class ClientDematComponent implements OnInit {
     }
     this.keyInfoCapability = this.roleService.overviewPermission.subModules.profile.subModule.keyInfo.capabilityList
     if (!this.dialogRef) {
-      this.getBankList();
+      // this.getBankList();
     }
     else {
       this.bankList = this.dialogData.bankList;
@@ -393,28 +397,6 @@ export class ClientDematComponent implements OnInit {
       this.barButtonOptions.text = 'SAVE';
     }
 
-  }
-
-  getBankList() {
-    const obj = [{
-      userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
-      userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3
-    }];
-    this.cusService.getBankList(obj).subscribe(
-      data => {
-        console.log(data);
-        (data == 0) ? data = undefined : '';
-        if (data && data.length > 0) {
-          this.bankList = data;
-        } else {
-          this.bankList = [];
-        }
-      },
-      err => {
-        this.bankList = [];
-      }
-      // this.eventService.openSnackBar(err, "Dismiss")
-    );
   }
 
   getHolderList(data) {

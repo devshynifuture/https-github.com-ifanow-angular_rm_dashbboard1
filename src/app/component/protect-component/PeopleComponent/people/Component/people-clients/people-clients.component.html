@@ -42,7 +42,7 @@
                 appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
 
                 <ng-container matColumnDef="position">
-                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br sticky w-20"> Group head
+                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br sticky w-18"> Group head
                         name
                     </th>
                     <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br">
@@ -64,7 +64,7 @@
                     <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br" sticky> Registered email
                     </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.email}}</div>
+                        <div class="bar t-l"> {{element.email}}</div>
                     </td>
                 </ng-container>
                 <!-- Symbol Column -->
@@ -74,6 +74,19 @@
                         <div class="bar"> {{element.pan}}</div>
                     </td>
                 </ng-container>
+                <!-- <ng-container matColumnDef="kyc">
+                    <th mat-sort-header="kyc" mat-header-cell *matHeaderCellDef class="br" sticky>KYC status </th>
+                    <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading ">
+                                <span class="text-danger"
+                                    *ngIf="element.kycRemainCount!=0">{{element.kycRemainCount!=1?element.kycRemainCount:''}}
+                                    Not Verified</span>
+                                <span class="text-sucess" *ngIf="element.kycRemainCount==0">All Verified</span>
+                            </span>
+                        </div>
+                    </td>
+                </ng-container> -->
                 <ng-container matColumnDef="member">
                     <th mat-sort-header="count" mat-header-cell *matHeaderCellDef class="br" sticky> Members </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
@@ -121,6 +134,9 @@
                             <button *ngIf="roleService.peoplePermission.subModule.clientsCapability.edit"
                                 (click)="addClient(element)" mat-menu-item>
                                 <span>Edit</span>
+                            </button>
+                            <button *ngIf="!enumDataService.PRODUCTION" (click)="manageKYC(element)" mat-menu-item>
+                                <span>Manage KYC</span>
                             </button>
                             <button (click)="resetPassword('',element)" mat-menu-item>
                                 <span>Reset password</span>
@@ -206,7 +222,8 @@
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email != '-' ? getOrgData.email:userInfo.emailList.length > 0?userInfo.emailList[0].email : userInfo.email}}
+                                {{getOrgData.email != '-' ? getOrgData.email:userInfo.emailList.length >
+                                0?userInfo.emailList[0].email : userInfo.email}}
                             </p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>

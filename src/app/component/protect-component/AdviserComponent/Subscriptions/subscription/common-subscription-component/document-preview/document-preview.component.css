@@ -1,0 +1,34 @@
+.preview {
+  padding: 15px;
+}
+
+.bg-black {
+  background-color: black;
+}
+
+.bg-gray {
+  background-color: grey;
+}
+
+.height-preview {
+  height: 100vh;
+}
+
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  height: 50px;
+}
+
+.color-white {
+  color: white;
+}
+
+.downloadPdf {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  border: 1px solid #757575 !important;
+  cursor: pointer;
+  text-align: center;
+}
+/*# sourceMappingURL=document-preview.component.css.map */

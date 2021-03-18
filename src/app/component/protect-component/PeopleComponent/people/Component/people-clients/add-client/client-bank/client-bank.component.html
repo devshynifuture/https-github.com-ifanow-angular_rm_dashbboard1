@@ -124,7 +124,7 @@
         <i *ngIf=" pointIndex+1==bankForm.value.getNomineeName.length && pointIndex<2" class=" material-icons
         text-primitive c-p" (click)="addNewNominee(undefined)">add</i>
         <i *ngIf=" bankForm.value.getNomineeName.length>1" class=" material-icons
-                    text-primitive c-p" (click)="removeNewNominee(pointIndex)">remove</i>
+                    text-primitive c-p pl-12" (click)="removeNewNominee(pointIndex)">remove</i>
       </div>
 
     </div>
@@ -285,8 +285,9 @@
       </button> -->
       <!-- <button mat-stroked-button (click)="saveNext('Save')" class="btn-bottom br-0 text-inherit">SAVE & CLOSE
       </button> -->
-      <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit ml-12" [options]="barButtonOptions1">
-      </app-progress-button>
+      <app-progess-button-white *ngIf="fieldFlag" (btnClick)="saveNext('Next')" class="br-0 text-inherit ml-12"
+        [options]="barButtonOptions1">
+      </app-progess-button-white>
       <app-progress-button (btnClick)="saveNext('Save')" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
       </app-progress-button>
     </div>

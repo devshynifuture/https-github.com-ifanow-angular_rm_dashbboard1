@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,MAAM,EAAC,SAAS,EAAE,KAAK;EACtB,AAAA,SAAS,CAAC,2BAA2B,CAAA;IACnC,gBAAgB,EAAE,WAAW;IAC7B,UAAU,EAAE,IAAI;GAEjB;EACD,AAAA,SAAS,CAAC,2BAA2B,CAAA;IACpC,WAAW,EAAE,iBAAiB;IAC9B,UAAU,EAAE,IAAI;GAChB",
+    "sources": [
+        "transaction-bottom-button.component.scss"
+    ],
+    "names": [],
+    "file": "transaction-bottom-button.component.css"
+}

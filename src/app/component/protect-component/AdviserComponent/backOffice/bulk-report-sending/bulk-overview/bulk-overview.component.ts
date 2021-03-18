@@ -47,18 +47,18 @@ export class BulkOverviewComponent implements OnInit {
   triggerBack: any;
 
   constructor(public overview: MutualFundOverviewComponent,
-    private utilService : UtilService,
+    private utilService: UtilService,
     public mfService: MfServiceService) { }
   @ViewChild('mfOverviewTemplate', { static: false }) mfOverviewTemplate: ElementRef;
   @Input()
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of proceed ', data);
-    if(data){
+    if (data) {
       this.clientId = data.clientId;
       this.sendData = data
-      this.userInfo =  (data.userInfo)? data.userInfo.advisorData: '-';
-      this.clientData = (data.userInfo)?  data.userInfo.clientData: '-';
+      this.userInfo = (data.userInfo) ? data.userInfo.advisorData : '-';
+      this.clientData = (data.userInfo) ? data.userInfo.clientData : '-';
       this.ngOnInit()
     }
   }
@@ -67,7 +67,7 @@ export class BulkOverviewComponent implements OnInit {
   }
   ngOnInit() {
     this.triggerBack = this.sendData
-    console.log('dokyala tap ahe hya data cha',this.triggerBack)
+    console.log('dokyala tap ahe hya data cha', this.triggerBack)
     this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
@@ -84,7 +84,7 @@ export class BulkOverviewComponent implements OnInit {
 
   ngAfterViewInit() {
     let para = document.getElementById('templateOver');
-    if(para.innerHTML){
+    if (para.innerHTML) {
       this.pieChart('piechartMutualFund');
       this.generatePdf()
     }
@@ -116,13 +116,13 @@ export class BulkOverviewComponent implements OnInit {
       landscape: true,
       key: 'showPieChart',
       svg: this.svg,
-      clientId : this.triggerBack.clientId,
-      advisorId : AuthService.getAdvisorId(),
+      clientId: this.triggerBack.clientId,
+      advisorId: AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'
     }
     this.utilService.bulkHtmlToPdf(obj)
-    //this.utilService.htmlToPdf('',para.innerHTML, 'Overview', false, this.fragmentData, '', '',true)
+    //this.utilService.htmlToPdf('',para.innerHTML, 'Overview', false, this.fragmentData, '', '',true,null)
     return obj
 
   }

@@ -19,6 +19,7 @@ import { ExcelClientListService } from 'src/app/services/excel-client-list.servi
 import { RoleService } from 'src/app/auth-service/role.service';
 import { element } from 'protractor';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { ManageKycComponent } from './add-client/manage-kyc/manage-kyc.component';
 
 @Component({
   selector: 'app-people-clients',
@@ -26,6 +27,20 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
   styleUrls: ['./people-clients.component.scss']
 })
 export class PeopleClientsComponent implements OnInit {
+
+  constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
+    private utilService: UtilService,
+    private subInjectService: SubscriptionInject, public eventService: EventService,
+    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelClientListService,
+    public roleService: RoleService,
+    private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, public enumDataService: EnumDataService,
+    private enumService: EnumServiceService,
+    private auth: AuthService
+  ) {
+    this.clientInfo = AuthService.getClientData();
+    this.userInfo = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
+  }
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'member', 'owner',
     'login', /*'status', *//*'icons',*/ 'icons1'];
   dataSource;
@@ -40,25 +55,15 @@ export class PeopleClientsComponent implements OnInit {
   finalClientList = [];
   familyOutputSubscription: Subscription;
   familyOutputObservable: Observable<any> = new Observable<any>();
-  downloadLoader: boolean = false;
+  downloadLoader = false;
   clientInfo: any;
   getOrgData: any;
   userInfo: any;
   tabviewshow: any;
   reportDate = new Date();
-  constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
-    private utilService: UtilService,
-    private subInjectService: SubscriptionInject, public eventService: EventService,
-    private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelClientListService,
-    public roleService: RoleService,
-    private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, private enumDataService: EnumDataService,
-    private enumService: EnumServiceService,
-    private auth: AuthService
-  ) {
-    this.clientInfo = AuthService.getClientData();
-    this.userInfo = AuthService.getUserInfo();
-    this.getOrgData = AuthService.getOrgDetails();
-  }
+
+  fragmentData = { isSpinner: false };
+  returnValue: any;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -88,7 +93,7 @@ export class PeopleClientsComponent implements OnInit {
             this.clientDatasource.sort = this.clientTableSort;
           }
         }
-      )
+      );
     } else {
       this.hasEndReached = true;
       this.clientDatasource.data = [{}, {}, {}];
@@ -96,7 +101,6 @@ export class PeopleClientsComponent implements OnInit {
       this.getClientList(0);
     }
   }
-
 
 
   // @HostListener('window:scroll', [])
@@ -129,7 +133,7 @@ export class PeopleClientsComponent implements OnInit {
         (this.finalClientList.length > 0) ? '' : this.isLoading = false;
         this.isLoading = false;
         if (data && data.length > 0) {
-          data = this.formatEmailAndMobile(data)
+          data = this.formatEmailAndMobile(data);
           this.finalClientList = this.finalClientList.concat(data);
           this.clientDatasource.data = this.finalClientList;
           this.clientDatasource.sort = this.clientTableSort;
@@ -160,7 +164,7 @@ export class PeopleClientsComponent implements OnInit {
         singleData.email = singleData.emailList[0].email;
       }
     });
-    return data
+    return data;
   }
 
   Excel(title, flag) {
@@ -169,16 +173,13 @@ export class PeopleClientsComponent implements OnInit {
     this.getFullClientList(title, flag);
   }
 
-  fragmentData = { isSpinner: false };
-  returnValue: any;
-
   pdf(template, tableTitle) {
     // const rows = this.tableEl._elementRef.nativeElement.rows;
     // this.pdfGen.generatePdf(rows, tableTitle);
     // this.getFullClientList(title, flag);
 
 
-    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const rows = this.tableEl._elementRef.nativeElement.rows;
     this.fragmentData.isSpinner = true;
     const para = document.getElementById(template);
     const obj = {
@@ -188,15 +189,15 @@ export class PeopleClientsComponent implements OnInit {
       key: '',
       svg: ''
     };
-    let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    const header = null;
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
   }
 
   getFullClientList(title, flag) {
-    this.eventService.openSnackBar(`Downloading ${flag} will take some time!`, "Dismiss");
-    this.downloadLoader = true
+    this.eventService.openSnackBar(`Downloading ${flag} will take some time!`, 'Dismiss');
+    this.downloadLoader = true;
     const obj = {
       advisorId: this.advisorId,
       status: 1,
@@ -207,32 +208,64 @@ export class PeopleClientsComponent implements OnInit {
     this.peopleService.getClientList(obj).subscribe(
       data => {
         if (data && data.length > 0) {
-          this.downloadLoader = false
+          this.downloadLoader = false;
           data = this.formatEmailAndMobile(data);
-          let tableData = [];
+          const tableData = [];
           data.forEach(element => {
             element.mobileNo = element.mobileNo == 0 ? 'N/A' : element.mobileNo;
             element.lastLoginString = element.loginEnable ? element.lastLoginString : 'DISABLED';
             tableData.push([element.name, String(element.mobileNo), element.email, element.pan, String(element.count), element.ownerName, element.lastLoginString, String(element.status)]);
           });
-          const header = ["Group head name", "Registered mobile", "Registered email", "PAN", "Members", "Client owner", "Last login", "Status"];
-          (flag == 'excel') ? this.excel.generateExcel(title, header, tableData) : this.pdfGen.generatePdfWithoutHtml(title, header, tableData);;
+          const header = ['Group head name', 'Registered mobile', 'Registered email', 'PAN', 'Members', 'Client owner', 'Last login', 'Status'];
+          (flag == 'excel') ? this.excel.generateExcel(title, header, tableData) : this.pdfGen.generatePdfWithoutHtml(title, header, tableData);
+
         }
       },
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
-        this.downloadLoader = false
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.downloadLoader = false;
+      }
+    );
+  }
+
+  manageKYC(data) {
+    if (window.innerWidth <= 1024) {
+      this.tabviewshow = 'open80';
+    } else {
+      this.tabviewshow = 'open50';
+    }
+    const fragmentData = {
+      flag: 'Manage KYC',
+      id: 1,
+      data,
+      state: this.tabviewshow,
+      componentName: ManageKycComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
+            this.cancelFlagService.setCancelFlag(undefined);
+            this.finalClientList = [];
+            this.peopleService.clientList = undefined;
+            this.getClientList(0);
+          }
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
+        }
       }
     );
   }
 
 
-
   addClient(data) {
     if (window.innerWidth <= 1024) {
-      this.tabviewshow = 'open80'
+      this.tabviewshow = 'open80';
+    } else {
+      this.tabviewshow = 'open50';
     }
-    else { this.tabviewshow = 'open50' }
     if (data == null) {
       data = { flag: 'Add client', fieldFlag: 'client' };
     } else {
@@ -285,15 +318,14 @@ export class PeopleClientsComponent implements OnInit {
   }
 
 
-
   deleteModal(value, data) {
     const obj = {
       advisorId: this.advisorId,
       clientId: data.clientId
-    }
+    };
     this.peopleService.getClientAllAssetCount(obj).subscribe(
       res => {
-        let msg = (res && res != 0) ? `There are ${res} assets mapped against this client. Are you sure you want to delete?` : 'Are you sure you want to delete?';
+        const msg = (res && res != 0) ? `There are ${res} assets mapped against this client. Are you sure you want to delete?` : 'Are you sure you want to delete?';
         const dialogData = {
           data: value,
           header: 'DELETE',
@@ -337,7 +369,7 @@ export class PeopleClientsComponent implements OnInit {
 
         });
       }
-    )
+    );
 
   }
 
@@ -379,6 +411,7 @@ export class PeopleClientsComponent implements OnInit {
 
     });
   }
+
   DisableClientLogin(value, data) {
     const dialogData = {
       data: value,
@@ -394,7 +427,7 @@ export class PeopleClientsComponent implements OnInit {
         };
         this.peopleService.DisableLogin(obj).subscribe(
           responseData => {
-            let status = data.loginEnable ? 'Enable' : 'Disable';
+            const status = data.loginEnable ? 'Enable' : 'Disable';
             this.eventService.openSnackBar(status + 'client successfully!', 'Dismiss');
             dialogRef.close();
             this.finalClientList = [];
@@ -420,12 +453,13 @@ export class PeopleClientsComponent implements OnInit {
 
     });
   }
+
   searchClientFamilyMember(value) {
     if (value.length == 0) {
       this.hasEndReached = true;
       this.clientDatasource.data = [{}, {}, {}];
       this.isLoading = true;
-      this.getClientList(0)
+      this.getClientList(0);
     }
     if (value.length <= 2) {
       // this.showDefaultDropDownOnSearch = false;
@@ -452,20 +486,20 @@ export class PeopleClientsComponent implements OnInit {
         data => {
           this.peopleService.getClientsSearchList(obj).subscribe(responseArray => {
             if (responseArray) {
-              responseArray = this.formatEmailAndMobile(responseArray)
+              responseArray = this.formatEmailAndMobile(responseArray);
               responseArray = responseArray.filter(element => element.userType == 2);
-              this.finalClientList = responseArray
+              this.finalClientList = responseArray;
               this.clientDatasource.data = responseArray;
               this.hasEndReached = false;
               this.infiniteScrollingFlag = false;
-              this.isLoading = false
+              this.isLoading = false;
             } else {
               this.isLoading = false;
               this.infiniteScrollingFlag = false;
               this.clientDatasource.data = [];
             }
           }, error => {
-            this.eventService.openSnackBar(error, "Dimiss")
+            this.eventService.openSnackBar(error, 'Dimiss');
             console.log('getFamilyMemberListRes error : ', error);
           });
         }

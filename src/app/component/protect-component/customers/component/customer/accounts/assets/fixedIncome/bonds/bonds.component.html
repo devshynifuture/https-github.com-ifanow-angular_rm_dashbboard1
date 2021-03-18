@@ -4,10 +4,10 @@
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">{{popupHeaderText}}</h4>
         </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
-            </div>
+        <div class="col-md-4 full-end pr-24">
+
+            <i class="material-icons c-p" (click)="Close(false)"> clear</i>
+
         </div>
     </div>
 </div>
@@ -135,30 +135,40 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
-            <h5 class="m-0 pt-12">Tenure (in Years)</h5>
+            <h5 class="m-0 pt-12">Tenure </h5>
         </div>
         <div class="col-md-3">
+            <p class="m-0 roboto f-400">Years</p>
             <div class="form-group noneTopPadding mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" matInput autocomplete="off" formControlName="tenure" placeholder="E.g. 30"
-                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenure type="text"
-                        maxlength="3" class="form-control br-0">
-                    <!-- <mat-select formControlName="tenure" class="form-control br-0">
-                            <mat-option [value]="">Months</mat-option>
-                            <mat-option *ngFor="let M of fdMonths" [value]="M">
-                                <span>{{M}}</span>
-                            </mat-option>
-                        </mat-select> -->
-                    <!-- <mat-error class="f-12 pt-4" [ngClass]="{'v-h':!(isTenure && getFormControl().tenure.invalid || getFormControl().interestRate.touched && getFormControl().tenure.invalid)}">
-                            This field is required
-                        </mat-error> -->
-                    <mat-error *ngIf="bonds.get('tenure').errors?.required && bonds.get('tenure').touched"
+                    <input autocomplete="off" matInput autocomplete="off" formControlName="tenureInYear"
+                        placeholder="E.g. 30" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        #tenureInYear type="text" maxlength="3" class="form-control br-0">
+                    <mat-error *ngIf="bonds.get('tenureInYear').errors?.required && bonds.get('tenureInYear').touched"
                         class="f-12 pt-4">
-                        This field is required
+                        Please fill either years or months
                     </mat-error>
-                    <mat-error *ngIf="bonds.get('tenure').errors?.max || bonds.get('tenure').errors?.min"
+                    <mat-error *ngIf="bonds.get('tenureInYear').errors?.max || bonds.get('tenureInYear').errors?.min"
                         class="f-12 pt-4">
                         Should be between than 1 to 120
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <p class="m-0 roboto f-400">Months</p>
+            <div class="form-group noneTopPadding mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" matInput autocomplete="off" formControlName="tenureInMonth"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" #tenureInMonth type="text"
+                        maxlength="3" class="form-control br-0">
+                    <mat-error *ngIf="bonds.get('tenureInMonth').errors?.required && bonds.get('tenureInMonth').touched"
+                        class="f-12 pt-4">
+                        Please fill either years or months
+                    </mat-error>
+                    <mat-error *ngIf="bonds.get('tenureInMonth').errors?.max || bonds.get('tenureInMonth').errors?.min"
+                        class="f-12 pt-4">
+                        Should be between than 1 to 12
                     </mat-error>
                 </mat-form-field>
             </div>

@@ -11,6 +11,7 @@ import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { CustomerOverviewService } from '../../customer-overview.service';
+import { element } from 'protractor';
 more(Highcharts);
 
 @Component({
@@ -65,6 +66,7 @@ export class OverviewRiskProfileComponent implements OnInit {
   @Input() finPlanObj: any;
   dateOfTest: any;
   riskProfileCapability: any = {};
+  selectedManualRiskProfile: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -136,7 +138,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       svg: this.svg
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', this.svg, true);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', this.svg, true, null);
     console.log('return value ====', this.returnValue);
     return obj;
   }
@@ -260,6 +262,31 @@ export class OverviewRiskProfileComponent implements OnInit {
     };
   }
 
+  addRiskProfileManually() {
+    if (this.selectedManualRiskProfile.id == undefined) {
+      this.eventService.openSnackBar("Please select risk profile", 'Dismiss');
+      return;
+    }
+    let avgScore = (this.selectedManualRiskProfile.scoreLowerLimit + this.selectedManualRiskProfile.scoreUpperLimit) / 2
+    const obj = {
+      "clientId": this.clientId,
+      "advisorId": this.advisorId,
+      "riskAssessmentId": 1,
+      "riskAssessmentScore": Math.round(avgScore)
+    }
+    this.planService.addManuallyRiskProfile(obj).subscribe(
+      data => {
+        this.selectManually = false;
+        this.resetGlobalRiskProfile();
+        this.submitRiskRes(data);
+      }, error => {
+        this.showErrorMsg = true;
+        this.eventService.openSnackBar(error, "Dismiss")
+        //this.submitRiskRes(data);
+      }
+    );
+  }
+
   getRiskProfilRes(data, flag) {
     this.showButton = true
     this.loaderFn.decreaseCounter();
@@ -270,6 +297,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.riskAssessmentQuestionList.forEach(element => {
       element.done = false
     });
+    this.selectManually = false;
     this.showQuestionnaire = true;
     this.isEmpty = false;
     this.showRetakeTestsButton = false;
@@ -277,6 +305,8 @@ export class OverviewRiskProfileComponent implements OnInit {
   }
 
   takeTests() {
+    this.selectManually = false;
+    this.selectedManualRiskProfile = {}
     this.getRiskProfileList(true);
   }
 
@@ -313,11 +343,18 @@ export class OverviewRiskProfileComponent implements OnInit {
     }
   }
 
+  resetGlobalRiskProfile() {
+    this.globalRiskProfile.forEach(element => {
+      element.selected = false;
+    })
+  }
+
   submitRiskRes(data) {
     this.customerOverview.riskProfileData = undefined;
     this.isLoading = false
     this.showResults = true;
     this.isEmpty = false;
+    this.resetGlobalRiskProfile();
     this.showQuestionnaire = false;
     if (data) {
       this.mergeRiskProfile(data);
@@ -395,11 +432,26 @@ export class OverviewRiskProfileComponent implements OnInit {
     })
   }
 
+  selectRiskProfile(data) {
+    this.globalRiskProfile.forEach(element => {
+      if (data.id == element.id) {
+        this.selectedManualRiskProfile = data;
+        element.selected = true;
+      } else {
+        element.selected = false;
+      }
+    })
+  }
+
+
   loadGlobalRiskProfileRes(res) {
     this.customerOverview.globalRiskProfileData = res;
     if (res == null) {
       this.globalRiskProfile = [];
     } else {
+      res.forEach(element => {
+        element['selected'] = false;
+      });
       this.globalRiskProfile = res;
     }
     if (!this.customerOverview.riskProfileData) {
@@ -425,6 +477,13 @@ export class OverviewRiskProfileComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
+  }
+  selectManually: boolean;
+  retakeTest() {
+    this.isEmpty = true;
+    this.selectManually = false;
+    this.selectedManualRiskProfile = {};
+    this.resetGlobalRiskProfile();
   }
 
   loadRiskProfileRes(res) {

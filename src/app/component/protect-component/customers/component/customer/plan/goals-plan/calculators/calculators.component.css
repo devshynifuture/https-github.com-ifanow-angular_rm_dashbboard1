@@ -1,0 +1,9 @@
+::ng-deep .goal-calculators .mat-form-field-appearance-standard .mat-form-field-flex {
+  padding-top: 0px;
+}
+
+#piechartMutualFund {
+  height: 150px;
+  width: 150px;
+}
+/*# sourceMappingURL=calculators.component.css.map */

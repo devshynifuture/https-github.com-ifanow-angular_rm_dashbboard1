@@ -161,8 +161,9 @@ import { DetailedViewCashInHandMobComponent } from './component/customer/mobile/
 import { DetailedViewGoldMobComponent } from './component/customer/mobile/commodities-mob/add-gold-mob/detailed-view-gold-mob/detailed-view-gold-mob.component';
 import { DetailedViewOthersMobComponent } from './component/customer/mobile/commodities-mob/add-others-mob/detailed-view-others-mob/detailed-view-others-mob.component';
 import { DetailedViewRealEstateMobComponent } from './component/customer/mobile/real-estate-mob/add-real-estate-mob/detailed-view-real-estate-mob/detailed-view-real-estate-mob.component';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AssetAllocationPieChartComponent } from './component/customer/asset-allocation-pie-chart/asset-allocation-pie-chart.component';
+import { LearnMoreFactsheetComponent } from './component/common-component/fact-sheet/learn-more-factsheet/learn-more-factsheet.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -198,7 +199,7 @@ import { AssetAllocationPieChartComponent } from './component/customer/asset-all
     AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent,
     AddInsuranceMobComponent, AddHealthMobComponent, AddPersonalAccidentMobComponent, CriticalIllnesMobComponent,
     MotorInsuranceMobComponent, TravelInsuranceMobComponent, HomeInsuranceMobComponent, FireInsuranceMobComponent,
-    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent, DetailedViewBankAccMobComponent, DetailedViewCashInHandMobComponent, DetailedViewGoldMobComponent, DetailedViewOthersMobComponent, DetailedViewRealEstateMobComponent,AssetAllocationPieChartComponent],
+    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent, DetailedViewBankAccMobComponent, DetailedViewCashInHandMobComponent, DetailedViewGoldMobComponent, DetailedViewOthersMobComponent, DetailedViewRealEstateMobComponent, AssetAllocationPieChartComponent, LearnMoreFactsheetComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -232,7 +233,7 @@ import { AssetAllocationPieChartComponent } from './component/customer/asset-all
   entryComponents: [EntryComponentsModule.getComponentList(),
   AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
   PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),
-    UploadDocumentComponent, EditDocumentPopupComponent, AddTransactionMobComponent]
+    UploadDocumentComponent, EditDocumentPopupComponent, AddTransactionMobComponent, LearnMoreFactsheetComponent]
 })
 export class CustomersModule {
 }

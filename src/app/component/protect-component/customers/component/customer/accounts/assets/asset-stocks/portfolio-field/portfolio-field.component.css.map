@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,WAAW,CAAC,gBAAgB,CAAC;EACnC,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;CACtB",
+    "sources": [
+        "portfolio-field.component.scss"
+    ],
+    "names": [],
+    "file": "portfolio-field.component.css"
+}

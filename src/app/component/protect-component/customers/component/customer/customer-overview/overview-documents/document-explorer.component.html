@@ -290,11 +290,11 @@
                                 Select a file to see more details
                             </p>
                             <div
-                                *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
+                                *ngIf="selectedElement.fileType == 'jpg'|| selectedElement.fileType == 'JPG' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
                                 <img [src]="urlData" height="200" width="250"> <br />
                             </div>
                             <div
-                                *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
+                                *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'JPG' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
                                 <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
                                 </ngx-doc-viewer>
                             </div>
@@ -322,8 +322,10 @@
                             <img class="mb-32" src="/assets/images/svg/documents-empty-states.svg">
 
                             <p class="mb-10 f-14 f-500 roboto text-black"> Nothing to show here. </p>
-                            <p class="roboto text-center">To upload a new file or folder, click on the NEW button on top
-                                <br> Or visit the respective section and upload files from there.</p>
+                            <p class="roboto text-center f-400">To upload a new file or folder, click on the NEW button
+                                on top
+                                <br> Or visit the respective section and upload files from there.
+                            </p>
                         </div>
                         <div class="d-flex justify-content-center  flex-column align-items-center"
                             *ngIf="noResult == true">

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,eAAe,CAAC;EACtB,KAAK,EAAE,IAAI;CACd;;AAED,AAAA,SAAS,CAAC,iCAAiC,CAAC,qBAAqB,CAAC;EAC9D,OAAO,EAAE,GAAG;CACf",
+    "sources": [
+        "owner-component.component.scss"
+    ],
+    "names": [],
+    "file": "owner-component.component.css"
+}
