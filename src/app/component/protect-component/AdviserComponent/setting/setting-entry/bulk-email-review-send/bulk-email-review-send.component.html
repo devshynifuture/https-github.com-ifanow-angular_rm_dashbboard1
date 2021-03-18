@@ -10,8 +10,8 @@
             <p class="f-16 mb-0">
                 Bulk welcome email- Review & Send</p>
         </div>
-        <div class="col-md-2 text-right">
-            <i (click)="close(false)" class="material-icons pt-16 c-p pr-16">
+        <div class="col-md-2 full-end pr-24">
+            <i (click)="close(false)" class="material-icons c-p">
                 clear
             </i>
         </div>
@@ -24,7 +24,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="d-flex align-items-center">
-                    <div class="numBox">
+                    <div class="numBox mr-10">
                         <span class="">1</span>
                     </div>
                     <div class="contBox">
@@ -322,7 +322,7 @@
                     </div>
                 </div>
                 <div class="row pt-20">
-                    <div class="col-md-12 p-0">
+                    <div class="col-md-12 p-0 bulk-email-review-send">
                         <form [formGroup]="mailForm">
                             <app-froala [(model)]="emailBody"></app-froala>
                         </form>
@@ -334,6 +334,48 @@
 
         </div>
         <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12 p-0" id="ui-tc-insert">
+                    <h5 class="m-0 pb-8 roboto pt-24">Insert placeholders</h5>
+                    <div class="b-a">
+                        <div class="row">
+                            <div class="col-md-12" (click)="openDialog('howToUse')">
+                                <p class="text-primary m-0 pt-8 pb-8 c-p roboto f-400">How to use?</p>
+                            </div>
+                        </div>
+                        <div class="placeholder-scroll">
+                            <div *ngFor="let singlePlaceholder of templateObj.placeholderTemplateList">
+                                <div class="pl-16 pb-16">
+                                    <div class="row b-a mb-16">
+                                        <div class="col-md-12 p-0 borderlightPlaceholders">
+                                            <div class="bg-grey lter wrapper-12 pt-16">
+                                                <p class="m-0 text-black wb">{{singlePlaceholder.name}}</p>
+                                            </div>
+                                            <div class="bg-white wrapper-12 c-p">
+                                                <p class="m-0 text-black wb"
+                                                    (click)="copyName(singlePlaceholder.value)">
+                                                    {{singlePlaceholder.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="wrapper-16">
+                                <div class="row b-a">
+                                    <div class="col-md-12 p-0">
+                                        <div class="bg-grey lter wrapper-12 pt-16">
+                                            <p class="m-0 text-black">Client name</p>
+                                        </div>
+                                        <div class="bg-white wrapper-12">
+                                            <p class="m-0 text-black">client name</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
             <p class="mb-0 posP text-primary" *ngIf="!isAllSelected">Email will be sent to {{selectedClientsCount}}
                 <span *ngIf="selectedClientsCount==1">client</span><span *ngIf="selectedClientsCount>1">clients</span>
             </p>

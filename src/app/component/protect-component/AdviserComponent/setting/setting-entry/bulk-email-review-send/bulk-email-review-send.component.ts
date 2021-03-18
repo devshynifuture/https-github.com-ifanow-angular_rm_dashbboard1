@@ -1,6 +1,6 @@
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { PeopleService } from './../../../../PeopleComponent/people.service';
-import { AfterViewInit, Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { element } from 'protractor';
+import { HowToUseDialogComponent } from '../../../Subscriptions/subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -91,7 +92,8 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     private orgSetting: OrgSettingServiceService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private peopleService: PeopleService
+    private peopleService: PeopleService,
+    private render: Renderer2
   ) {
   }
 
@@ -219,6 +221,34 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         this.subject.setValue('Your new money management account is created!')
       }
     )
+  }
+
+  copyName(value) {
+    const tag = this.render.createElement('input');
+    tag.value = value;
+    document.body.appendChild(tag);
+    tag.focus();
+    tag.select();
+    document.execCommand('copy');
+    document.body.removeChild(tag);
+    this.eventService.openSnackBar('Text copied', 'Dismiss');
+  }
+
+  openDialog(data) {
+    const Fragmentdata = {
+      flag: data,
+    };
+    const dialogRef = this.dialog.open(HowToUseDialogComponent, {
+      width: '30%',
+      data: Fragmentdata,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
 
   getClientListValue(offset) {
