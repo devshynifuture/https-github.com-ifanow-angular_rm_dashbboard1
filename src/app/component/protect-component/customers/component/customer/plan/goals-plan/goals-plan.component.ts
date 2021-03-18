@@ -388,7 +388,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
     mapData.singleOrMulti = goal.singleOrMulti;
-    mapData.goalTableValues = goal.goalTableValues;
+    if (!this.finPlanObj) {
+      mapData.goalTableValues = goal.goalTableValues;
+    }
     mapData.goalAssetAllocation = goal.goalAssetAllocation;
     if (goal.singleOrMulti == 1) {
       const goalSubData = goal.singleGoalModel;
@@ -654,12 +656,18 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
         goalData.remainingData.retirementTableValue = this.finPlanObj.obj.retirementTableValue;
       goalData.remainingData.milestoneModels = this.finPlanObj.obj.milestoneModels;
+      goalData.goalTableValues = this.finPlanObj.obj.goalTableValues
     }
     // this.cd.markForCheck();
     // this.cd.detectChanges();
     console.log(this.selectedGoal)
     this.selectedGoalId = goalData.remainingData.id;
-    if (goalData.remainingData.retirementTableValue) {
+    if (this.selectedGoal.goalTableValues) {
+      this.goalTableValues = this.selectedGoal.goalTableValues
+    } else {
+      this.goalTableValues = []
+    }
+    if (goalData.remainingData.retirementTableValue && goalData.goalType == 1) {
       this.isRetirementTab = true;
       let goalTableData = goalData.remainingData.retirementTableValue;
       goalTableData.forEach(element => {

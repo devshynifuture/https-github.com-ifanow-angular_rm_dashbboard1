@@ -47,10 +47,46 @@
 
 </div>
 <div class="row">
+    <div class="col-md-12 full-end">
+        <button class="sendEmailBtn btn-primary" (click)="resendNow()" mat-stroked-button>Resend
+            Now</button>
+
+        <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
+            class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
+        </button>
+        <mat-menu #filterFixedIncomeTable>
+            <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''" (click)="filterData('ALL')">
+                All
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterData('SENT')">
+                SENT
+            </button>
+            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
+                (click)="filterData('NOT SENT')">
+                NOT SENT
+            </button>
+        </mat-menu>
+
+
+    </div>
+</div>
+<div class="row pt-20">
     <div class="col-md-12">
         <div class="people-table-scroll fitScreen">
             <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                 [appSkeletonLoading]="isLoading" id="tbs" class=" ">
+                <ng-container matColumnDef="checkbox">
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky> Check all
+                        <mat-checkbox *ngIf="!isLoading" [checked]="selectAll" (change)="selectAllData($event,element)"
+                            class="example-margin"></mat-checkbox>
+                    </th>
+                    <td class="br text-center" mat-cell *matCellDef="let element">
+                        <div class="bar c-p">
+                            <mat-checkbox *ngIf="!isLoading" [checked]="element.checked"
+                                (change)="selectToResend($event,element)" class="example-margin"></mat-checkbox>
+                        </div>
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="name">
                     <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
                     <td class="br" mat-cell *matCellDef="let element">
@@ -81,7 +117,6 @@
                         </div>
                     </td>
                 </ng-container>
-
                 <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
