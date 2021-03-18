@@ -48,7 +48,7 @@
 </div>
 <div class="row">
     <div class="col-md-12 full-end">
-        <button class="sendEmailBtn btn-primary" (click)="resendNow()" mat-stroked-button>Resend
+        <button class="sendEmailBtn btn-primary" *ngIf="showResend" (click)="resendNow()" mat-stroked-button>Resend
             Now</button>
 
         <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"

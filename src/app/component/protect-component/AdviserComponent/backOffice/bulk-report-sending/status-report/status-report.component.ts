@@ -16,6 +16,7 @@ export class StatusReportComponent implements OnInit {
   clientDetails = []
   isLoading: boolean;
   dataForFilter: any[];
+  showResend: boolean = false;
   selectAll: boolean = false
   constructor(
     private subInjectService: SubscriptionInject,
@@ -62,6 +63,7 @@ export class StatusReportComponent implements OnInit {
     );
   }
   selectAllData(event, data) {
+    this.showResend = true
     this.selectAll = event.checked
     if (this.selectAll == true) {
       this.clientDetails.forEach(element => {
@@ -74,6 +76,7 @@ export class StatusReportComponent implements OnInit {
     }
   }
   selectToResend(event, value) {
+    this.showResend = true
     value.checked = event.checked
   }
   filterData(type) {
