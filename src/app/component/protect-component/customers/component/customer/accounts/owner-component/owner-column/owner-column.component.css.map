@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "owner-column.component.scss"
+    ],
+    "names": [],
+    "file": "owner-column.component.css"
+}

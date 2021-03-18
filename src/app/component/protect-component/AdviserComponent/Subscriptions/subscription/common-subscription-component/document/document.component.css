@@ -1,0 +1,174 @@
+h2 {
+  color: #3F3F3F;
+  text-align: center;
+  padding: 16px 12px;
+  font-family: "Playfair Display";
+  letter-spacing: 0.2px;
+  line-height: 32px;
+}
+
+h3 {
+  font-family: "Playfair Display";
+  letter-spacing: 0.2px;
+  line-height: 32px;
+}
+
+.green {
+  text-align: right;
+  background: #02B875;
+  padding: 4px 5px;
+  font-size: 16px;
+  display: inline;
+}
+
+.blue {
+  background: #008FFF;
+  color: #fff;
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+.padder-80 {
+  padding-right: 80px;
+  padding-left: 80px;
+  padding-bottom: 50px;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+h3 p {
+  color: #757575;
+}
+
+.btn-primary {
+  border-radius: 0px !important;
+}
+
+.content {
+  position: relative;
+  right: 20%;
+}
+
+.box {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+label {
+  background: #004164;
+  border-radius: 4px;
+  letter-spacing: 0.2px;
+  color: #FFFFFF;
+  font-family: "Proxima Nova", sans-serif;
+  font-size: 14px;
+  line-height: 17px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 10px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.done-icons {
+  background: #02B875;
+  padding: 0px 0px 4px 4px;
+  color: #fff;
+  float: right;
+  text-align: right;
+  line-height: .9;
+}
+
+.bottom-fixed {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 222;
+  background-color: #757575;
+}
+
+#ui-service-documents .mat-card:not([class*=mat-elevation-z]) {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding: 0;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+.mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: #008FFF !important;
+}
+
+::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+  background-color: #008FFF !important;
+}
+
+.width200 {
+  width: 200px;
+  margin-top: 220px;
+}
+
+.width300 {
+  width: 300px;
+  margin-top: 100px;
+}
+
+::ng-deep .hide-card-text .mat-card-header-text {
+  margin: 0 !important;
+}
+
+.height180 {
+  height: 180px;
+  overflow: hidden;
+}
+
+.titleClass {
+  height: 70px;
+  padding-left: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.skeletonAnimation .relClass {
+  position: relative;
+}
+
+.skeletonAnimation .relClass .bar180 {
+  background-color: #E7E7E7;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass .bar180:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 180px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 180px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+
+.height24 {
+  height: 24px;
+}
+/*# sourceMappingURL=document.component.css.map */

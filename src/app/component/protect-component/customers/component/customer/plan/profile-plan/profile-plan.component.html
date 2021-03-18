@@ -1,6 +1,6 @@
 <div id="ui-profile-plan">
     <div class="row plan-profile-full-height">
-        <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
+        <div class="col-md-2 p-0 pt-28 pb-20 bg-grey lter">
             <ul class="vertical-menu">
                 <li (click)="viewMode ='tab1'"
                     *ngIf="roleService.planPermission.subModule.profile.subModule.income.enabled"
@@ -69,7 +69,7 @@
                 <app-income></app-income>
             </div>
             <div *ngSwitchCase="'tab2'">
-                <app-expenses></app-expenses>
+                <app-expenses [data]="paramsData"></app-expenses>
             </div>
             <div *ngSwitchCase="'tab3'">
                 <div class="d-flex justify-content-center mt-150">

@@ -24,7 +24,53 @@
             </div>
         </div>
 
+        <div *ngIf="multiTransact == true && childTransactions.length > 0" class="row pb-60 mt-20">
+            <div class="col-md-12 p-0 all-transactions">
+                <table #tableEl [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="tbs"
+                    mat-table>
+                    <ng-container matColumnDef="no">
+                        <th *matHeaderCellDef class="br w-4" mat-header-cell> No</th>
+                        <td *matCellDef="let element let i = index;" class="br w-4 " mat-cell>
+                            <div class="bar"> {{i + 1}} </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="folio">
+                        <th *matHeaderCellDef class="br w-16" mat-header-cell> Folio</th>
+                        <td *matCellDef="let element" class="br" mat-cell>
+                            <div class="bar"> {{element.folioNo}} </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ownerName">
+                        <th *matHeaderCellDef class="br" mat-header-cell> Scheme name</th>
+                        <td *matCellDef="let element" class="br" mat-cell>
+                            <div class="bar">
+                                {{element.schemeName}}
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="amount">
+                        <th *matHeaderCellDef class="br w-11 text-right" mat-header-cell> Amount</th>
+                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                            <div class="bar">₹{{element.orderVal}} </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="icons">
+                        <th *matHeaderCellDef class="t-2" mat-header-cell></th>
+                        <td *matCellDef="let element" class="t-2 c-p" mat-cell>
+                            <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                            <mat-menu #menubank="matMenu">
+                                <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
+                                <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
+                            </mat-menu>
 
+                        </td>
+                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
+                    </ng-container>
+                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
+                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                </table>
+            </div>
+        </div>
 
         <div class="row pt-20 pb-20">
             <div class="col-md-8 pl-0 pr-20">
@@ -34,13 +80,13 @@
                         <mat-radio-group (ngModelChange)="selectSchemeOption($event)" aria-label="Select an option"
                             class="bigRadio" formControlName="schemeSelection">
                             <mat-radio-button
-                                [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('schemeSelection').value==1,'text-primary':purchaseTransaction.get('schemeSelection').value==1,'radio-border':purchaseTransaction.get('schemeSelection').value==2}"
+                                [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('schemeSelection').value=='1','text-primary':purchaseTransaction.get('schemeSelection').value==1,'radio-border':purchaseTransaction.get('schemeSelection').value==2}"
                                 class="b-a-custom-outline radioBtn text-primary custom-radio bor_top_tb_left "
                                 value="1">
                                 Invest in existing scheme
                             </mat-radio-button>
                             <mat-radio-button
-                                [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('schemeSelection').value==2,'text-primary':purchaseTransaction.get('schemeSelection').value==2,'radio-border':purchaseTransaction.get('schemeSelection').value==1}"
+                                [ngClass]="{'b-a-custom-outline': purchaseTransaction.get('schemeSelection').value=='2','text-primary':purchaseTransaction.get('schemeSelection').value==2,'radio-border':purchaseTransaction.get('schemeSelection').value==1}"
                                 class="radio-border radioBtn bor_top_tb_right" value="2">
                                 Select a new scheme
                             </mat-radio-button>
@@ -76,8 +122,8 @@
                                     Selected scheme does not exist
                                 </mat-error>
                                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV:
-                                    {{navOfSelectedScheme}} as
-                                    on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
+                                    {{scheme.nav}} as
+                                    on:{{(scheme)?(scheme.navDate):''}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>
@@ -229,53 +275,7 @@
             </div>
         </div>
 
-        <div *ngIf="multiTransact == true && childTransactions.length > 0" class="row pb-60">
-            <div class="col-md-12 p-0 all-transactions">
-                <table #tableEl [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="tbs"
-                    mat-table>
-                    <ng-container matColumnDef="no">
-                        <th *matHeaderCellDef class="br w-4" mat-header-cell> No</th>
-                        <td *matCellDef="let element let i = index;" class="br w-4 " mat-cell>
-                            <div class="bar"> {{i + 1}} </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="folio">
-                        <th *matHeaderCellDef class="br w-16" mat-header-cell> Folio</th>
-                        <td *matCellDef="let element" class="br" mat-cell>
-                            <div class="bar"> {{element.folioNo}} </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="ownerName">
-                        <th *matHeaderCellDef class="br" mat-header-cell> Scheme name</th>
-                        <td *matCellDef="let element" class="br" mat-cell>
-                            <div class="bar">
-                                {{element.schemeName}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="amount">
-                        <th *matHeaderCellDef class="br w-11 text-right" mat-header-cell> Amount</th>
-                        <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">₹{{element.orderVal}} </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="icons">
-                        <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-                        <td *matCellDef="let element" class="t-2 c-p" mat-cell>
-                            <img [matMenuTriggerFor]="menubank" class="c-p" src="/assets/images/svg/dot-menu.svg">
-                            <mat-menu #menubank="matMenu">
-                                <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
-                                <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
-                            </mat-menu>
 
-                        </td>
-                        <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
-                    </ng-container>
-                    <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-                    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-                </table>
-            </div>
-        </div>
 
     </div>
 </div>

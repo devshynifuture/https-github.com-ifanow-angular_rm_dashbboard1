@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAAA,SAAS,CAAC,qBAAqB,CAAC;EAC5B,QAAQ,EAAE,MAAM;CACnB;;AAED,AAAA,aAAa,CAAC;EACV,QAAQ,EAAE,QAAQ;EAClB,MAAM,EAAE,OAAO;EACf,GAAG,EAAE,IAAI;EACT,KAAK,EAAE,IAAI;CACd;;AAED,MAAM,EAAC,SAAS,EAAE,MAAM;EACpB,AAAA,YAAY,CAAC;IACT,KAAK,EAAE,KAAK;IACZ,MAAM,EAAE,KAAK;GAChB",
+    "sources": [
+        "plan-gallery.component.scss"
+    ],
+    "names": [],
+    "file": "plan-gallery.component.css"
+}

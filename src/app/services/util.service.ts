@@ -406,7 +406,19 @@ export class UtilService {
 
     if (firstD === secondD) {
       return 0;
-    } else if (firstD > secondD) {
+    } else if (firstD >= secondD) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+  public static compareDatesFor(date1, date2) {
+    const firstD = new Date(date1).getTime();
+    const secondD = new Date(date2).getTime();
+
+    // if (firstD === secondD) {
+    //   return 0;
+    if (firstD >= secondD) {
       return -1;
     } else {
       return 1;
@@ -658,21 +670,14 @@ export class UtilService {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
-  htmlToPdf(header,
-    inputData,
-    pdfName,
-    landscape,
-    fragData: any = {},
-    key = null,
-    svg = null,
-    showFooter
-  ) {
+  htmlToPdf(header, inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null, showFooter, clientName) {
     this.client = AuthService.getClientData();
     if (fragData.isSubscription) {
       this.client = {
         name: fragData.clientName,
       };
     }
+    clientName = clientName ? clientName + '\'s ' : this.client.name + '\'s ';
     inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
@@ -704,7 +709,7 @@ export class UtilService {
         var date = new Date();
         fragData.time = date.toLocaleTimeString('en-US');
         // window.open(fileURL,"hello");
-        const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
+        const namePdf = clientName + pdfName + ' as on ' + date;
         const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
         a.download = namePdf + '.pdf';
@@ -713,7 +718,55 @@ export class UtilService {
         return this.fileURL ? this.fileURL : null;
       });
   }
-
+  htmlToPdfPort(header, inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null, showFooter, clientName, svgs) {
+    this.client = AuthService.getClientData();
+    if (fragData.isSubscription) {
+      this.client = {
+        name: fragData.clientName,
+      };
+    }
+    inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
+    clientName = clientName ? clientName + '\'s ' : this.client.name + '\'s ';
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+    const obj = {
+      htmlInput: inputData,
+      header: header,
+      name: pdfName,
+      showMfFooter: showFooter == false ? false : true,
+      landscape,
+      key,
+      svg,
+      svgs,
+    };
+    const browser = this.getBrowserName();
+    console.log(browser);
+    if (!this.client) {
+      this.client = {};
+      this.client.name = '';
+    }
+    return this.http
+      .post(
+        apiConfig.MAIN_URL + 'subscription/html-to-pdf',
+        obj,
+        { responseType: 'blob' }
+      )
+      .subscribe((data) => {
+        const file = new Blob([data], { type: 'application/pdf' });
+        fragData.isSpinner = false;
+        fragData.size = this.formatFileSize(data.size, 0);
+        fragData.date = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+        var date = new Date();
+        fragData.time = date.toLocaleTimeString('en-US');
+        // window.open(fileURL,"hello");
+        const namePdf = clientName + pdfName + ' as on ' + date;
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(file);
+        a.download = namePdf + '.pdf';
+        a.click();
+        // a.download = fileURL;
+        return this.fileURL ? this.fileURL : null;
+      });
+  }
   static convertArrayListToObject(list) {
     let obj = {}
     for (let i of list) {
@@ -975,6 +1028,47 @@ export class UtilService {
       }
     }
     return false;
+  }
+
+  static getImageOfFamilyMember(familyMemberList) {
+    familyMemberList.forEach(member => {
+      if ((member.relationshipId == 2) || (member.relationshipId == 4 && member.age > 18)) {
+        member['imgUrl'] = "/assets/images/svg/man-profile.svg";
+        member['width'] = "48px";
+      }
+      else if ((member.relationshipId == 3) || member.relationshipId == 5 && member.age > 18) {
+        member['imgUrl'] = "/assets/images/svg/women-profile-icon.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 4 && member.age <= 18) {
+        member['imgUrl'] = "/assets/images/svg/son-profile.svg";
+        member['width'] = "36px";
+      }
+      else if (member.relationshipId == 5 && member.age <= 18) {
+        member['imgUrl'] = "/assets/images/svg/daughter-profile.svg";
+        member['width'] = "36px";
+      }
+      else if (member.relationshipId == 7) {
+        member['imgUrl'] = "/assets/images/svg/mother-profile.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 6) {
+        member['imgUrl'] = "/assets/images/svg/father-profile.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 10 || member.relationshipId == 8 || member.relationshipId == 9 || member.relationshipId == 11 || member.relationshipId == 12 || member.relationshipId == 13 || member.relationshipId == 14 || member.relationshipId == 15 || member.relationshipId == 16 || member.relationshipId == 0) {
+        member['imgUrl'] = "/assets/images/svg/others.svg";
+        member['width'] = "48px";
+      }
+      else if (member.relationshipId == 17 || member.relationshipId == 18 || member.relationshipId == 19 || member.relationshipId == 23 || member.relationshipId == 24 || member.relationshipId == 25) {
+        member['imgUrl'] = "/assets/images/svg/office-building.svg";
+        member['width'] = "48px";
+      } else {
+        member['imgUrl'] = "/assets/images/svg/others.svg";
+        member['width'] = "48px";
+      }
+    });
+    return familyMemberList;
   }
 
   // do not use this function. use the loader function below

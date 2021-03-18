@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,oBAAoB,CAAC;EACjB,UAAU,EAAE,KAAK;EACjB,UAAU,EAAE,MAAM;EAClB,UAAU,EAAE,MAAM;CACrB;;AACD,AAAA,KAAK,CAAC;EACF,OAAO,EAAE,GAAG;CACf",
+    "sources": [
+        "customise-setting.component.scss"
+    ],
+    "names": [],
+    "file": "customise-setting.component.css"
+}

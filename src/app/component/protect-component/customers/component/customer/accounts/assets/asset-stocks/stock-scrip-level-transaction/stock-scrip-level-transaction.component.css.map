@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACnG,KAAK,EAAE,gBAAgB;CAC1B",
+    "sources": [
+        "stock-scrip-level-transaction.component.scss"
+    ],
+    "names": [],
+    "file": "stock-scrip-level-transaction.component.css"
+}

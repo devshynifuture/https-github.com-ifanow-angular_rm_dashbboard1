@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,iCAAiC,CAAC,sBAAsB,CAAC,mCAAmC,CAAC;EACnG,KAAK,EAAE,gBAAgB;CAC1B;;AAED,AACI,gBADY,CACZ,IAAI,CAAC;EACD,OAAO,EAAE,IAAI;EACb,SAAS,EAAE,IAAI;EACf,YAAY,EAAE,gBAAgB;EAC9B,WAAW,EAAE,gBAAgB;CAChC",
+    "sources": [
+        "add-fire-and-perils-insurance-in-asset.component.scss"
+    ],
+    "names": [],
+    "file": "add-fire-and-perils-insurance-in-asset.component.css"
+}

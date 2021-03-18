@@ -1,22 +1,22 @@
 import { AuthService } from './../../../../auth-service/authService';
-import { SubscriptionInject } from "./../../AdviserComponent/Subscriptions/subscription-inject.service";
-import { UtilService } from "./../../../../services/util.service";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { SubscriptionInject } from './../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from './../../../../services/util.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 // import { IfaDetailsComponent } from './ifa-details/ifa-details.component';
 
-import { IfasDetailsComponent } from "./ifas-details/ifas-details.component";
-import { MatSort, MatTableDataSource, MatDialog } from "@angular/material";
-import { OrderHistoricalFileComponent } from "./../order-historical-file/order-historical-file.component";
-import { SupportService } from "../support.service";
-import { EventService } from "src/app/Data-service/event.service";
+import { IfasDetailsComponent } from './ifas-details/ifas-details.component';
+import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { OrderHistoricalFileComponent } from './../order-historical-file/order-historical-file.component';
+import { SupportService } from '../support.service';
+import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
 import { ConvertToPaidComponent } from './convert-to-paid/convert-to-paid.component';
 import { RefreshMfComponent } from './refresh-mf/refresh-mf.component';
 
 @Component({
-  selector: "app-my-ifas",
-  templateUrl: "./my-ifas.component.html",
-  styleUrls: ["./my-ifas.component.scss"],
+  selector: 'app-my-ifas',
+  templateUrl: './my-ifas.component.html',
+  styleUrls: ['./my-ifas.component.scss'],
 })
 export class MyIfasComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -36,17 +36,17 @@ export class MyIfasComponent implements OnInit {
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   displayedColumns = [
-    "adminName",
-    "email",
-    "mobile",
-    "usingSince",
-    "lastLogin",
-    "accStatus",
-    "paidUpto",
-    "team",
-    "arn",
-    "logout",
-    "menu",
+    'adminName',
+    'email',
+    'mobile',
+    'usingSince',
+    'lastLogin',
+    'accStatus',
+    'paidUpto',
+    'team',
+    'arn',
+    'logout',
+    'menu',
   ];
 
   ngOnInit() {
@@ -54,15 +54,15 @@ export class MyIfasComponent implements OnInit {
   }
 
   getMyIfasList() {
-    let obj = {};
+    const obj = {};
     this.isLoading = true;
     this.supportService.getMyIFAValues(obj).subscribe(
       (data) => {
         console.log(data);
-        let today = new Date();
+        const today = new Date();
         if (data && data.length !== 0) {
           this.isLoading = false;
-          let tableArray = [];
+          const tableArray = [];
           data.forEach((element) => {
             tableArray.push({
               isLoader: false,
@@ -71,21 +71,21 @@ export class MyIfasComponent implements OnInit {
               mobile: element.mobileNo,
               usingSince:
                 element.usingSinceYear +
-                "Y " +
+                'Y ' +
                 element.usingSinceMonth +
-                "M",
-              lastLogin: element.last_login ? element.last_login : " - ",
+                'M',
+              lastLogin: element.last_login ? element.last_login : ' - ',
               accStatus: element.active == false ? 'Deactivate' : element.optedForTrial ? (element.optedForTrial && element.paidUpto != null ? 'Expired' : (new Date(element.trialExpiryDate) <= today) ? 'Expired' : 'Trial') : 'Paid',
               paidUpto: element.trialExpiryDate ? (new Date(element.trialExpiryDate) >= today ? element.trialExpiryDate : element.paidUpto) : element.paidUpto,
               active: element.active,
               // plan: element.plan ? element.plan : ' - ',
-              //nextBilling: element.next_billing ? element.next_billing : ' - ',
+              // nextBilling: element.next_billing ? element.next_billing : ' - ',
               team: element.teamMemberCount,
               optedForTrial: element.optedForTrial,
               arn: element.arnRiaDetailCount,
-              logout: element.logout ? element.logout : " - ",
+              logout: element.logout ? element.logout : ' - ',
               adminAdvisorId: element.adminAdvisorId,
-              menu: "",
+              menu: '',
               advisorId: element.advisorId
             });
           });
@@ -96,7 +96,7 @@ export class MyIfasComponent implements OnInit {
           this.dataSource.data = null;
         }
       },
-      (err) => this.eventService.openSnackBar(err, "Dismiss")
+      (err) => this.eventService.openSnackBar(err, 'Dismiss')
     );
   }
 
@@ -106,34 +106,34 @@ export class MyIfasComponent implements OnInit {
       .subscribe(res => {
         this.isMainLoading = false;
         if (res) {
-          console.log("merge query response::", res);
-          this.eventService.openSnackBarNoDuration("Merge scheme code done Successfully", "DISMISS");
+          console.log('merge query response::', res);
+          this.eventService.openSnackBarNoDuration('Merge scheme code done Successfully', 'DISMISS');
         } else {
-          this.eventService.openSnackBarNoDuration("Merge Scheme Code successful", "DISMISS")
+          this.eventService.openSnackBarNoDuration('Merge Scheme Code successful', 'DISMISS');
         }
       }, err => {
         this.isMainLoading = false;
         this.eventService.openSnackBar(err, 'DISMISS');
-      })
+      });
   }
 
   mergeSchemeCodeBulk() {
-    let data = [];
+    const data = [];
     this.tableData.forEach(item => {
       data.push(item.advisorId);
-    })
+    });
     this.supportService.postMergeSchemeCodeBulk(data)
       .subscribe(res => {
         if (res) {
           console.log(res);
-          this.eventService.openSnackBar("Bulk Scheme Code Merging done", "DISMISS");
+          this.eventService.openSnackBar('Bulk Scheme Code Merging done', 'DISMISS');
         } else {
           console.log(res);
-          this.eventService.openSnackBar("Bulk Scheme Code Merging done", "DISMISS");
+          this.eventService.openSnackBar('Bulk Scheme Code Merging done', 'DISMISS');
         }
       }, err => {
         console.error(err);
-        this.eventService.openSnackBar('Something went wrong', 'DISMISS');
+        this.eventService.showErrorMessage(err);
       });
   }
 
@@ -141,38 +141,38 @@ export class MyIfasComponent implements OnInit {
     this.supportService.recalculateBalanceUnitData({ parentId: data.advisorId })
       .subscribe(res => {
         if (res) {
-          console.log("recalculate balance unit response::", res);
-          this.eventService.openSnackBar("Recalculation of Balance Units is Done", "DISMISS");
+          console.log('recalculate balance unit response::', res);
+          this.eventService.openSnackBar('Recalculation of Balance Units is Done', 'DISMISS');
         } else {
-          this.eventService.openSnackBar("Recalculation of Balance Units Failed", "DISMISS");
+          this.eventService.openSnackBar('Recalculation of Balance Units Failed', 'DISMISS');
         }
-      })
+      });
   }
 
 
   openOrderHistoricalFile(data) {
     const fragmentData = {
-      flag: "ifaDetails",
+      flag: 'ifaDetails',
       data,
       id: 1,
-      state: "open50",
+      state: 'open50',
       componentName: OrderHistoricalFileComponent,
     };
     const rightSideDataSub = this.subInjectService
       .changeNewRightSliderState(fragmentData)
       .subscribe((sideBarData) => {
-        console.log("this is sidebardata in subs subs : ", sideBarData);
+        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          console.log("this is sidebardata in subs subs 2: ", sideBarData);
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       });
   }
 
   filterTableByName(event) {
-    let value = event.target.value;
+    const value = event.target.value;
     console.log(value);
-    if (value !== "") {
+    if (value !== '') {
       this.dataSource.data = this.tableData.filter((item) => {
         if (item.hasOwnProperty('adminName')) {
           return item.adminName.toLowerCase().includes(value.toLowerCase())
@@ -194,9 +194,9 @@ export class MyIfasComponent implements OnInit {
       btnNo: data.active ? 'DEACTIVATE' : 'ACTIVATE',
       positiveMethod: () => {
         const obj = {
-          "advisorId": data.advisorId,
-          "isActive": data.active ? false : true
-        }
+          advisorId: data.advisorId,
+          isActive: data.active ? false : true
+        };
         this.supportService.deactivateAccount(obj).subscribe(
           data => {
             console.log(data);
@@ -265,15 +265,15 @@ export class MyIfasComponent implements OnInit {
       positiveMethod: () => {
         const obj = {
           advisorId: advisorData.advisorId
-        }
+        };
         this.supportService.deleteSip(obj).subscribe(
           data => {
-            this.eventService.openSnackBar("SIP deleted sucessfully", "Dimiss");
+            this.eventService.openSnackBar('SIP deleted sucessfully', 'Dimiss');
             dialogRef.close();
           }, err => {
-            this.eventService.openSnackBar(err, "Dismiss");
+            this.eventService.openSnackBar(err, 'Dismiss');
           }
-        )
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -296,36 +296,36 @@ export class MyIfasComponent implements OnInit {
   refreshDashboard(advisorData) {
     const obj = {
       id: advisorData.advisorId
-    }
+    };
     advisorData.isLoader = true;
     this.supportService.refreshDashboard(obj).subscribe(data => {
       advisorData.isLoader = false;
-      this.eventService.openSnackBar("Refreshed sucessfully", "Dimiss")
+      this.eventService.openSnackBar('Refreshed sucessfully', 'Dimiss');
     }, err => {
       advisorData.isLoader = false;
-      this.eventService.openSnackBar(err, "Dimiss");
-    })
+      this.eventService.openSnackBar(err, 'Dimiss');
+    });
   }
 
   openIfaRightSilder(data) {
     const fragmentData = {
-      flag: "ifaDetails",
+      flag: 'ifaDetails',
       data,
       id: 1,
-      state: "open70",
+      state: 'open70',
       componentName: IfasDetailsComponent,
     };
     const rightSideDataSub = this.subInjectService
       .changeNewRightSliderState(fragmentData)
       .subscribe((sideBarData) => {
-        console.log("this is sidebardata in subs subs : ", sideBarData);
+        console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.dataSource.data = ELEMENT_DATA;
             this.getMyIfasList();
             this.filterName = '';
           }
-          console.log("this is sidebardata in subs subs 2: ", sideBarData);
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       });
@@ -333,45 +333,45 @@ export class MyIfasComponent implements OnInit {
 }
 const ELEMENT_DATA = [
   {
-    adminName: "",
-    email: "",
-    mobile: "",
-    usingSince: "",
-    lastLogin: "",
-    accStatus: "",
-    paidUpto: "",
-    team: "",
-    arn: "",
-    logout: "",
-    menu: "",
-    active: "",
+    adminName: '',
+    email: '',
+    mobile: '',
+    usingSince: '',
+    lastLogin: '',
+    accStatus: '',
+    paidUpto: '',
+    team: '',
+    arn: '',
+    logout: '',
+    menu: '',
+    active: '',
   },
   {
-    adminName: "",
-    email: "",
-    mobile: "",
-    usingSince: "",
-    lastLogin: "",
-    accStatus: "",
-    paidUpto: "",
-    team: "",
-    arn: "",
-    logout: "",
-    menu: "",
-    active: "",
+    adminName: '',
+    email: '',
+    mobile: '',
+    usingSince: '',
+    lastLogin: '',
+    accStatus: '',
+    paidUpto: '',
+    team: '',
+    arn: '',
+    logout: '',
+    menu: '',
+    active: '',
   },
   {
-    adminName: "",
-    email: "",
-    mobile: "",
-    usingSince: "",
-    lastLogin: "",
-    accStatus: "",
-    paidUpto: "",
-    team: "",
-    arn: "",
-    logout: "",
-    menu: "",
-    active: "",
+    adminName: '',
+    email: '',
+    mobile: '',
+    usingSince: '',
+    lastLogin: '',
+    accStatus: '',
+    paidUpto: '',
+    team: '',
+    arn: '',
+    logout: '',
+    menu: '',
+    active: '',
   },
 ];

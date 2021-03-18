@@ -1,22 +1,20 @@
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { ClientSggestionListService } from './../../../../../customer-overview/overview-profile/client-sggestion-list.service';
-import { CancelFlagService } from './../../../../../../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
-import { UtilService } from './../../../../../../../../../../services/util.service';
-import { AddClientComponent } from './../../../../../../../../PeopleComponent/people/Component/people-clients/add-client/add-client.component';
-import { AddFamilyMemberComponent } from './../../../../../customer-overview/overview-profile/add-family-member/add-family-member.component';
-import { EnumDataService } from './../../../../../../../../../../services/enum-data.service';
-import { SelectFolioMapComponent } from './../../../../../../../../AdviserComponent/backOffice/backoffice-folio-mapping/select-folio-map/select-folio-map.component';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { HttpHeaders } from '@angular/common/http';
-import { EventService } from './../../../../../../../../../../Data-service/event.service';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {ClientSggestionListService} from './../../../../../customer-overview/overview-profile/client-sggestion-list.service';
+import {CancelFlagService} from './../../../../../../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
+import {UtilService} from './../../../../../../../../../../services/util.service';
+import {AddFamilyMemberComponent} from './../../../../../customer-overview/overview-profile/add-family-member/add-family-member.component';
+import {EnumDataService} from './../../../../../../../../../../services/enum-data.service';
+import {SelectFolioMapComponent} from './../../../../../../../../AdviserComponent/backOffice/backoffice-folio-mapping/select-folio-map/select-folio-map.component';
+import {SelectionModel} from '@angular/cdk/collections';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {EventService} from './../../../../../../../../../../Data-service/event.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
 
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { SubscriptionInject } from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {AuthService} from './../../../../../../../../../../auth-service/authService';
+import {SubscriptionInject} from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mf-import-cas-file',
@@ -34,9 +32,10 @@ export class MfImportCasFileComponent implements OnInit {
   duplicateFlag: boolean;
   clientData = AuthService.getClientData();
   advisorId = AuthService.getAdvisorId();
-  matTabIndex: number = 0;
+  matTabIndex = 0;
   investorUnmappedCount: number;
   transactionUnmappedCount: number;
+
   constructor(
     private cusService: CustomerService,
     private fb: FormBuilder,
@@ -47,7 +46,8 @@ export class MfImportCasFileComponent implements OnInit {
     private cancelFlagService: CancelFlagService,
     private clientSuggeService: ClientSggestionListService,
     private mfService: MfServiceService
-  ) { }
+  ) {
+  }
 
   filename: any;
   successFileUpload: boolean;
@@ -84,13 +84,13 @@ export class MfImportCasFileComponent implements OnInit {
 
 
   getFamilyMemberList() {
-    this.cusService.getFamilyMemberListForCasMapping({ clientId: this.clientId })
+    this.cusService.getFamilyMemberListForCasMapping({clientId: this.clientId})
       .subscribe(res => {
         if (res) {
           this.familyMemberList = res;
           console.log('this is family member,', res);
         }
-      })
+      });
   }
 
   openAddNewFamilyMember(value, data) {
@@ -100,24 +100,24 @@ export class MfImportCasFileComponent implements OnInit {
 
       if (this.clientData.clientType == 1) {
         if (this.familyMemberList) {
-          let relationType = (this.clientData.genderId == 1) ? 3 : 2
+          const relationType = (this.clientData.genderId == 1) ? 3 : 2;
           this.duplicateFlag = this.familyMemberList.some(element => {
             if (element.relationshipId == relationType) {
-              return true
+              return true;
             } else {
-              return false
+              return false;
             }
-          })
+          });
         } else {
           this.duplicateFlag = false;
         }
       }
-      this.clientData['duplicateFlag'] = this.duplicateFlag;
+      this.clientData.duplicateFlag = this.duplicateFlag;
       component = AddFamilyMemberComponent;
 
       let ClientList = Object.assign([], this.enumDataService.getEmptySearchStateData());
       ClientList = ClientList.filter(element => element.userId != this.clientData.userId);
-      data = { flag: 'Add member', fieldFlag: 'familyMember', client: this.clientData, ClientList };
+      data = {flag: 'Add member', fieldFlag: 'familyMember', client: this.clientData, ClientList};
     }
     const fragmentData = {
       flag: value,
@@ -138,21 +138,19 @@ export class MfImportCasFileComponent implements OnInit {
             this.familyMemberList = undefined;
             if (this.clientData.mobileList && this.clientData.mobileList.length > 0) {
               this.clientData.mobileNo = this.clientData.mobileList[0].mobileNo;
-              const obj =
-              {
+              const obj = {
                 advisorId: AuthService.getAdvisorId(),
                 isdCodeId: this.clientData.mobileList[0].isdCodeId,
                 mobileNo: this.clientData.mobileNo
-              }
+              };
               this.clientSuggeService.setSuggestionListUsingMobile(obj);
             }
             if (this.clientData.emailList && this.clientData.emailList.length > 0) {
               this.clientData.email = this.clientData.emailList[0].email;
-              const obj =
-              {
+              const obj = {
                 advisorId: AuthService.getAdvisorId(),
                 email: this.clientData.email
-              }
+              };
               this.clientSuggeService.setSuggestionListUsingEmail(obj);
             }
           }
@@ -232,25 +230,25 @@ export class MfImportCasFileComponent implements OnInit {
     if (this.uploadCasFileForm.valid) {
       const formData = new FormData();
       formData.append('casFile', this.uploadCasFileForm.get('file').value, this.uploadCasFileForm.get('file').value.name);
-      let obj = {
+      const obj = {
         clientId: this.clientId,
         password: this.uploadCasFileForm.get('password').value
-      }
-      let clientExtras = JSON.stringify(obj);
+      };
+      const clientExtras = JSON.stringify(obj);
       formData.append('request', clientExtras);
 
       this.cusService.postUploadCasFile(formData)
-        .subscribe(res => {
+        .subscribe((res: any) => {
           if (res) {
             this.successFileUpload = true;
             console.log(res);
-            this.casFileUploadId = +atob(res['payLoad']);
+            this.casFileUploadId = +atob(res.payLoad);
             this.currentTabValue = 2;
           }
         }, err => {
           console.error(err);
-          this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-        })
+          this.eventService.showErrorMessage(err);
+        });
     } else {
       this.uploadCasFileForm.markAllAsTouched();
     }
@@ -265,14 +263,14 @@ export class MfImportCasFileComponent implements OnInit {
         }
       }, err => {
         console.error(err);
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
+        this.eventService.showErrorMessage(err);
       });
   }
 
   getClientLatestCasLog() {
-    let data = {
+    const data = {
       clientId: this.clientId
-    }
+    };
     this.cusService.getClientLatestCASFileLogs(data)
       .subscribe(res => {
         if (res) {
@@ -280,8 +278,8 @@ export class MfImportCasFileComponent implements OnInit {
         }
       }, err => {
         console.error(err);
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-      })
+        this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
+      });
   }
 
   changeCurrentTab(value, choice?): void {
@@ -331,11 +329,11 @@ export class MfImportCasFileComponent implements OnInit {
 
   getClientCASFileDetailData() {
     this.isLoading = true;
-    this.cusService.getClientCasFileDetailData({ casUploadLogId: this.currentCasFileObject.id })
+    this.cusService.getClientCasFileDetailData({casUploadLogId: this.currentCasFileObject.id})
       .subscribe(res => {
         this.isLoading = false;
         if (res) {
-          console.log("this is detailed data including investor", res);
+          console.log('this is detailed data including investor', res);
           this.unmappedInvestorList = [...res.unmappedInvestors];
           this.unmappedTransactionList = [...res.unmappedTransactions];
           this.unmappedSchemeList = [...res.unmappedSchemes];
@@ -343,7 +341,7 @@ export class MfImportCasFileComponent implements OnInit {
             this.unmappedInvestorList.map(o => {
               o.isMapped = false;
               o.mappedMemberName = '';
-            })
+            });
             this.dataSource.data = this.unmappedInvestorList;
             this.investorUnmappedCount = this.unmappedInvestorList.length;
           } else {
@@ -370,8 +368,8 @@ export class MfImportCasFileComponent implements OnInit {
       }, err => {
         this.isLoading = false;
         console.error(err);
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-      })
+        this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
+      });
   }
 
   deleteModal(value, element) {
@@ -385,7 +383,7 @@ export class MfImportCasFileComponent implements OnInit {
       positiveMethod: () => {
         const obj = {
           id: element.id
-        }
+        };
         this.cusService.deleteCasFile(obj).subscribe(
           data => {
             this.eventService.openSnackBar('Deleted successfully', 'Dismiss');
@@ -412,6 +410,7 @@ export class MfImportCasFileComponent implements OnInit {
 
     });
   }
+
   mapInvestor(item, choice, element) {
     let data = [];
     switch (choice) {
@@ -432,7 +431,7 @@ export class MfImportCasFileComponent implements OnInit {
             clientId: this.clientId,
             familyMemberId: item.familyMemberId,
             investorName: item.displayName
-          })
+          });
         });
         break;
     }
@@ -442,28 +441,28 @@ export class MfImportCasFileComponent implements OnInit {
           console.log(res);
           if (choice === 'single') {
             this.dataSource.data.map(item1 => {
-              if (item1['id'] === element.id) {
-                item1['isMapped'] = true;
-                item1['mappedMemberName'] = item.displayName;
+              if (item1.id === element.id) {
+                item1.isMapped = true;
+                item1.mappedMemberName = item.displayName;
               }
-            })
+            });
           } else if (choice === 'multiple') {
             this.selectionInvestor.selected.forEach(item2 => {
-              this.dataSource.data.find(item1 => item1['id'] === item2.id)['isMapped'] = true;
-              this.dataSource.data.find(item1 => item1['id'] === item2.id)['mappedMemberName'] = item.displayName;
-            })
+              this.dataSource.data.find(item1 => item1.id === item2.id).isMapped = true;
+              this.dataSource.data.find(item1 => item1.id === item2.id).mappedMemberName = item.displayName;
+            });
           }
           this.selectionInvestor.clear();
           this.investorUnmappedCount = 0;
           this.dataSource.data.forEach(item => {
-            if (!item['isMapped']) {
+            if (!item.isMapped) {
               this.investorUnmappedCount += 1;
             }
-          })
+          });
         }
       }, err => {
         console.error(err);
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
+        this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
       });
   }
 
@@ -480,7 +479,7 @@ export class MfImportCasFileComponent implements OnInit {
             assetMutualFundTransactionTypeMasterId: item.assetTypeTransactionId,
             advisorId: this.advisorId
           }
-        ]
+        ];
         break;
 
       case 'multiple':
@@ -493,7 +492,7 @@ export class MfImportCasFileComponent implements OnInit {
             assetMutualFundTransactionTypeMasterId: item.assetTypeTransactionId,
             advisorId: this.advisorId
           });
-        })
+        });
     }
 
     this.cusService.putMapTransaction(data)
@@ -502,54 +501,59 @@ export class MfImportCasFileComponent implements OnInit {
           console.log(res);
           if (choice == 'single') {
             this.dataSource2.data.map(item1 => {
-              if (item1['id'] === element.id) {
-                item1['isMapped'] = true;
-                item1['mappedTransactionTypeName'] = item.transactionType;
+              if (item1.id === element.id) {
+                item1.isMapped = true;
+                item1.mappedTransactionTypeName = item.transactionType;
               }
-            })
+            });
           } else if (choice === 'multiple') {
             this.selectionTransaction.selected.forEach(item1 => {
-              this.dataSource2.data.find(item2 => item2['id'] === item1.id)['isMapped'] = true;
-              this.dataSource2.data.find(item2 => item2['id'] === item1.id)['mappedTransactionTypeName'] = item.transactionType;
-            })
+              this.dataSource2.data.find(item2 => item2.id === item1.id).isMapped = true;
+              this.dataSource2.data.find(item2 => item2.id === item1.id).mappedTransactionTypeName = item.transactionType;
+            });
           }
           this.selectionTransaction.clear();
           this.transactionUnmappedCount = 0;
           this.dataSource2.data.forEach(item => {
-            if (!item['isMapped']) {
+            if (!item.isMapped) {
               this.transactionUnmappedCount += 1;
             }
-          })
+          });
         }
       }, err => {
         console.error(err);
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-      })
+        this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
+      });
   }
 
   getStatusOfPastFileUpload() {
     this.isLoading = true;
-    this.cusService.getStatusOfPastFileUpload({ clientId: this.clientId })
+    this.cusService.getStatusOfPastFileUpload({clientId: this.clientId})
       .subscribe(res => {
         if (res) {
           this.isLoading = false;
-          console.log("cas file status", res);
+          console.log('cas file status', res);
           res.map(item => {
             item.isLoading = false;
             switch (item.processStatus) {
-              case -1: item.status = 'Error';
+              case -1:
+                item.status = 'Error';
                 break;
 
-              case 0: item.status = 'In Queue';
+              case 0:
+                item.status = 'In Queue';
                 break;
 
-              case 1: item.status = 'File Imported';
+              case 1:
+                item.status = 'File Imported';
                 break;
 
-              case 2: item.status = 'Data Processed';
+              case 2:
+                item.status = 'Data Processed';
                 break;
 
-              case -2: item.status = 'Duplicate Data';
+              case -2:
+                item.status = 'Duplicate Data';
                 break;
             }
           });
@@ -562,8 +566,8 @@ export class MfImportCasFileComponent implements OnInit {
         this.isLoading = false;
         console.error(err);
         this.dataSource5.data = null;
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-      })
+        this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
+      });
   }
 
   changeViewToMappingTableAfterFileUpload() {
@@ -580,7 +584,7 @@ export class MfImportCasFileComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
 
-      data: { selectedFolios: data, type: 'casFileUpload' }
+      data: {selectedFolios: data, type: 'casFileUpload'}
     });
 
 
@@ -595,10 +599,10 @@ export class MfImportCasFileComponent implements OnInit {
   getCasFileLogOnRefresh(choice) {
     let data;
     if (choice === 'single') {
-      this.dataSource5.data.find(item => item['id'] === this.currentCasFileObject.id)['isLoading'] = true;
-      data = { casUploadLogId: this.currentCasFileObject.id };
+      this.dataSource5.data.find(item => item.id === this.currentCasFileObject.id).isLoading = true;
+      data = {casUploadLogId: this.currentCasFileObject.id};
     } else {
-      data = { casUploadLogId: this.casFileUploadId };
+      data = {casUploadLogId: this.casFileUploadId};
     }
     this.cusService.getCasFileLogOnRefresh(data)
       .subscribe(res => {
@@ -639,23 +643,28 @@ export class MfImportCasFileComponent implements OnInit {
 
           } else if (choice == 'single') {
             switch (res.processStatus) {
-              case -1: res.status = 'Error';
+              case -1:
+                res.status = 'Error';
                 break;
 
-              case 0: res.status = 'In Queue';
+              case 0:
+                res.status = 'In Queue';
                 break;
 
-              case 1: res.status = 'File Imported';
+              case 1:
+                res.status = 'File Imported';
                 break;
 
-              case 2: res.status = 'Data Processed';
+              case 2:
+                res.status = 'Data Processed';
                 break;
 
-              case -2: res.status = 'Duplicate Data';
+              case -2:
+                res.status = 'Duplicate Data';
                 break;
             }
-            let arr = [...this.dataSource5.data];
-            let index = this.dataSource5.data.findIndex(item => item['id'] === this.currentCasFileObject.id);
+            const arr = [...this.dataSource5.data];
+            const index = this.dataSource5.data.findIndex(item => item.id === this.currentCasFileObject.id);
             arr.splice(index, 1, res);
             // this.dataSource5.data.splice(index, 1, res);
             console.log(arr, this.dataSource5.data);
@@ -664,19 +673,19 @@ export class MfImportCasFileComponent implements OnInit {
         }
       }, err => {
         console.error(err);
-        this.eventService.openSnackBar('Something went wrong!', "DISMISS");
+        this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
       });
   }
 
   updateCasFileStatus() {
     if (
-      this.dataSource.data.every(item => item['isMapped'] == true) &&
-      this.dataSource2.data.every(item => item['isMapped'] == true)
+      this.dataSource.data.every(item => item.isMapped == true) &&
+      this.dataSource2.data.every(item => item.isMapped == true)
     ) {
-      let data = {
+      const data = {
         id: this.currentCasFileObject.id,
         processStatus: 2
-      }
+      };
 
       //     id of selected cas log obj,
       // processStatus 2 for Data processed after completion of all mapping
@@ -688,10 +697,10 @@ export class MfImportCasFileComponent implements OnInit {
           }
         }, err => {
           console.log(err);
-          this.eventService.openSnackBar('Something went wrong!', "DISMISS");
-        })
+          this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
+        });
     } else {
-      this.eventService.openSnackBar("Some are still unmapped");
+      this.eventService.openSnackBar('Some are still unmapped');
     }
   }
 
@@ -715,16 +724,18 @@ export class MfImportCasFileComponent implements OnInit {
   }
 
   close() {
-    let obj = {
-      state: 'close'
-    }
+    const obj = {
+      state: 'close',
+      refreshRequired: false
+    };
     if (this.successFileUpload) {
-      obj['refreshRequired'] = true;
+      obj.refreshRequired = true;
     }
     this.mfService.sendRefreshMFDataSignalOnObs(true);
     this.subInjectService.changeNewRightSliderState(obj);
   }
 }
+
 export interface PeriodicElement {
   position: string;
   name: string;
@@ -733,12 +744,13 @@ export interface PeriodicElement {
   member: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: '', name: '', weight: '', symbol: '', member: '' },
-  { position: '', name: '', weight: '', symbol: '', member: '' },
-  { position: '', name: '', weight: '', symbol: '', member: '' },
+const ELEMENT_DATA: any[] = [
+  {position: '', name: '', weight: '', symbol: '', member: ''},
+  {position: '', name: '', weight: '', symbol: '', member: ''},
+  {position: '', name: '', weight: '', symbol: '', member: ''},
 
 ];
+
 export interface PeriodicElement2 {
   name: string;
   position: string;
@@ -747,12 +759,12 @@ export interface PeriodicElement2 {
   member: string;
 }
 
-const ELEMENT_DATA2: PeriodicElement2[] = [
-  { position: '', name: '', weight: '', symbol: '', member: '' },
-  { position: '', name: '', weight: '', symbol: '', member: '' },
-  { position: '', name: '', weight: '', symbol: '', member: '' },
+const ELEMENT_DATA2: any[] = [
+  {position: '', name: '', weight: '', symbol: '', member: '', isMapped: false},
+  {position: '', name: '', weight: '', symbol: '', member: ''},
+  {position: '', name: '', weight: '', symbol: '', member: ''},
 
-]
+];
 
 export interface PeriodicElement3 {
   position: string;
@@ -761,20 +773,21 @@ export interface PeriodicElement3 {
 
 }
 
-const ELEMENT_DATA3: PeriodicElement3[] = [
-  { position: 'Aditya Birla Sun Life Frontline Equity Fund-Growth	', weight: 'B12' },
+const ELEMENT_DATA3: any[] = [
+  {position: 'Aditya Birla Sun Life Frontline Equity Fund-Growth	', weight: 'B12'},
 
-]
+];
+
 export interface PeriodicElement5 {
   fileName: string;
   uploadTime: string;
   status: string;
-
+  id: any;
 }
 
-const ELEMENT_DATA5: PeriodicElement5[] = [
-  { fileName: '', uploadTime: '', status: '' },
-  { fileName: '', uploadTime: '', status: '' },
-  { fileName: '', uploadTime: '', status: '' },
+const ELEMENT_DATA5: any[] = [
+  {fileName: '', uploadTime: '', status: '', id: null},
+  {fileName: '', uploadTime: '', status: '', id: null},
+  {fileName: '', uploadTime: '', status: '', id: null},
 
-]
+];

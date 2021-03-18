@@ -1,0 +1,47 @@
+.custom-chips-color {
+  background: #00FFA1 !important;
+  color: #000 !important;
+}
+
+.custom-chips-color .mat-icons {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.mat-standard-chip {
+  font-size: 13px !important;
+  cursor: pointer;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  /*click effect color change*/
+  background-color: #008FFF !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #008FFF !important;
+  /*inner circle color change*/
+}
+
+::ng-deep.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #008FFF !important;
+  /*outer ring color change*/
+}
+
+.min-39 {
+  min-height: 39px !important;
+}
+
+.pr-72 {
+  padding-right: 72px !important;
+}
+
+::ng-deep .form-group .brtb-0 {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+}
+
+::ng-deep .form-group .bltb-0 {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+}
+/*# sourceMappingURL=variable-fee.component.css.map */

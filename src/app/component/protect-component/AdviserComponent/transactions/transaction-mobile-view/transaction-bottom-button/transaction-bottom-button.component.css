@@ -1,0 +1,14 @@
+@media (max-width: 767px) {
+  ::ng-deep .mat-bottom-sheet-container {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+  ::ng-deep .cdk-global-overlay-wrapper {
+    -webkit-box-align: center !important;
+        -ms-flex-align: center !important;
+            align-items: center !important;
+    margin-top: 75px;
+  }
+}
+/*# sourceMappingURL=transaction-bottom-button.component.css.map */

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AbstractControl, ValidationErrors, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { LoginService } from 'src/app/component/no-protected/login/login.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { AppConstants } from 'src/app/services/app-constants';
-import { AuthService } from 'src/app/auth-service/authService';
-import { Input } from '@angular/core';
-import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import {Component, OnInit} from '@angular/core';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AbstractControl, ValidationErrors, FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {LoginService} from 'src/app/component/no-protected/login/login.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {AppConstants} from 'src/app/services/app-constants';
+import {AuthService} from 'src/app/auth-service/authService';
+import {Input} from '@angular/core';
+import {OrgSettingServiceService} from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-change-client-password',
@@ -42,10 +42,10 @@ export class ChangeClientPasswordComponent implements OnInit {
 
 
   constructor(private subInjectService: SubscriptionInject,
-    private loginService: LoginService,
-    private event: EventService,
-    private fb: FormBuilder,
-    private orgSettingService: OrgSettingServiceService) {
+              private loginService: LoginService,
+              private event: EventService,
+              private fb: FormBuilder,
+              private orgSettingService: OrgSettingServiceService) {
     this.formPlaceHolder = AppConstants.formPlaceHolders;
     // this.userData = AuthService.getClientData();
   }
@@ -57,8 +57,7 @@ export class ChangeClientPasswordComponent implements OnInit {
         newPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
         confirmPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX)]]
       });
-    }
-    else {
+    } else {
       this.setNewPasswordForm = this.fb.group({
         // oldPassword: ['', [Validators.required]],
         newPassword: ['', [Validators.required, Validators.pattern(this.validatorType.LOGIN_PASS_REGEX), this.checkUpperCase(), this.checkLowerCase(), this.checkSpecialCharacter()]],
@@ -93,10 +92,10 @@ export class ChangeClientPasswordComponent implements OnInit {
       };
       this.loginService.resetPasswordPostLoggedIn(obj).subscribe(data => {
         this.barButtonOptions.active = false;
-        this.event.openSnackBar(data, "Dismiss");
+        this.event.openSnackBar(data, 'Dismiss');
         this.Close();
       }, err => {
-        this.event.showErrorMessage(err);
+        this.event.openSnackBarNoDuration(err, 'Dismiss', null);
         this.barButtonOptions.active = false;
       });
     }
@@ -111,7 +110,7 @@ export class ChangeClientPasswordComponent implements OnInit {
       const obj = {
         password: this.setNewPasswordForm.controls.confirmPassword.value,
         // newPassword: this.setNewPasswordForm.controls.confirmPassword.value,
-        advisorId: this.userData.advisorId
+        advisorId: this.userData.id
       };
       this.orgSettingService.resetTeamMemberPassword(obj).subscribe(data => {
         this.barButtonOptions.active = false;
@@ -162,7 +161,7 @@ export class ChangeClientPasswordComponent implements OnInit {
     const confirm_new_password = this.setNewPasswordForm.get('confirmPassword').value;
     if (password !== '' && confirm_new_password !== '') {
       if (confirm_new_password !== password) {
-        this.setNewPasswordForm.get('confirmPassword').setErrors({ mismatch: true });
+        this.setNewPasswordForm.get('confirmPassword').setErrors({mismatch: true});
       } else {
         this.setNewPasswordForm.get('confirmPassword').setErrors(null);
       }
@@ -170,7 +169,7 @@ export class ChangeClientPasswordComponent implements OnInit {
   }
 
   Close() {
-    this.subInjectService.closeNewRightSlider({ state: 'close' });
+    this.subInjectService.closeNewRightSlider({state: 'close'});
   }
 
 }

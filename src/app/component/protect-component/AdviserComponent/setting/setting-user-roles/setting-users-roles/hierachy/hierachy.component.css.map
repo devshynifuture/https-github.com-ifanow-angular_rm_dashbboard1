@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACT,OAAO,EAAE,kBAAkB;EAC3B,MAAM,EAAE,IAAI;EACZ,WAAW,EAAE,IAAI;EACjB,aAAa,EAAE,cAAc;EAC7B,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,GAAG;EAChB,SAAS,EAAE,IAAI;CAChB",
+    "sources": [
+        "hierachy.component.scss"
+    ],
+    "names": [],
+    "file": "hierachy.component.css"
+}

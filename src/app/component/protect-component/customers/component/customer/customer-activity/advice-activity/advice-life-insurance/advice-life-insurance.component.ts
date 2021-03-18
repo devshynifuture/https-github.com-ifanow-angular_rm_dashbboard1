@@ -15,8 +15,9 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EditSuggestedAdviceComponent } from '../edit-suggested-advice/edit-suggested-advice.component';
 import { AddNewLifeInsComponent } from './add-new-life-ins/add-new-life-ins.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { defaultIfEmpty } from 'rxjs/operators';
+import { count, defaultIfEmpty } from 'rxjs/operators';
 import { DetailedViewInsurancePlanningComponent } from '../../../plan/insurance-plan/detailed-view-insurance-planning/detailed-view-insurance-planning.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-advice-life-insurance',
@@ -76,11 +77,19 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     name: 'Motor',
     id: 4
   }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
-  constructor(private peopleService: PeopleService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService, private adviceUtilService: AdviceUtilsService) { }
+  count: number;
+  adviceSectionLoading: string;
+  constructor(private router: Router, private peopleService: PeopleService, public dialog: MatDialog, private cusService: CustomerService, private subInjectService: SubscriptionInject, private activityService: ActiityService, private eventService: EventService, private adviceUtilService: AdviceUtilsService) { }
 
   ngOnInit() {
+    let url = this.router.url;
+    console.log(this.router.url);
+    this.count = 0;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.adviceUtilService.getAdviceLoading().subscribe(res => {
+      this.adviceSectionLoading = res;
+    });
     this.adviceUtilService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
@@ -103,13 +112,16 @@ export class AdviceLifeInsuranceComponent implements OnInit {
           this.globalObj = res;
         }
       });
-    // if (this.chekToCallApi()) {
-    this.getAdviceByAsset();
-    // } else {
-    //   this.getAllSchemeResponse(this.globalObj['adviceLifeInsurance']);
-    //   this.displayList = this.globalObj['displayList'];
-    // }
-    // this.getAllCategory();
+    if (this.adviceSectionLoading) {
+      this.getAdviceByAsset();
+      this.adviceUtilService.setAdviceLoading(false);
+    } else if (this.chekToCallApi()) {
+      this.getAdviceByAsset();
+    } else {
+      this.getAllSchemeResponse(this.globalObj['adviceLifeInsurance']);
+      this.displayList = this.globalObj['displayList'];
+    }
+    //this.getAllCategory();
   }
   chekToCallApi() {
     return this.globalObj && this.globalObj['adviceLifeInsurance'] && Object.keys(this.globalObj['adviceLifeInsurance']).length > 0 ? false : true;
@@ -244,6 +256,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     return filterdData;
   }
   getAllSchemeResponse(data) {
+    this.count++;
     this.isLoading = false;
     console.log('data', data)
     this.dataSource = data;
@@ -316,7 +329,7 @@ export class AdviceLifeInsuranceComponent implements OnInit {
     console.log(this.selectedAssetId)
   }
 
-  checkAll(flag, tableDataList, tableFlag, ) {
+  checkAll(flag, tableDataList, tableFlag,) {
     console.log(flag, tableDataList)
     const { selectedIdList, count } = AdviceUtilsService.selectAllIns(flag, tableDataList._data._value, this.selectedAssetId, this.familyMemberList);
     this.getFlagCount(tableFlag, count)

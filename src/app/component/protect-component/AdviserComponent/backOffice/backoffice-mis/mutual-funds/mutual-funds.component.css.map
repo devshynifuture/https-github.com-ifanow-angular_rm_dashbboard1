@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAMA,AAAA,aAAa,CAAC;EACV,MAAM,EAAE,GAAG,CAAC,KAAK,CAAC,mBAAmB;CACtC",
+    "sources": [
+        "mutual-funds.component.scss"
+    ],
+    "names": [],
+    "file": "mutual-funds.component.css"
+}

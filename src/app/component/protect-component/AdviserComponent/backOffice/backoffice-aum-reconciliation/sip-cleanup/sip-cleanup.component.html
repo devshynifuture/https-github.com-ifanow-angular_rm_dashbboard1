@@ -9,7 +9,7 @@
                     <mat-select class="form-control" formControlName="activeCeased">
                         <mat-option [value]="1">Active only</mat-option>
                         <mat-option [value]="2">Ceased only</mat-option>
-                        <mat-option [value]="-1">All records</mat-option>
+                        <!-- <mat-option [value]="-1">All records</mat-option> -->
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -123,7 +123,8 @@
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
                             <span *ngIf="!isLoading">{{element.type}} /
-                                &#8377;<span appFormatNumber [value]="element.amount">{{ element.amount }}</span></span>
+                                &#8377;<span appFormatNumber [value]="element.amount">{{ element.amount }}</span><span
+                                    class="f-10" *ngIf="element.amountEdited">(edited)</span></span>
                         </div>
                     </td>
                 </ng-container>
@@ -166,12 +167,14 @@
                     <td mat-cell *matCellDef="let element" class="br">
                         <div *ngIf="filterForm.get('markUnmark').value==0 && !isLoading" class="d-flex">
                             <button mat-stroked-button class="btn-primary mr-8 f-12 h-20 lh-20 br-1 keep-sip-clenup"
-                                (click)="setKeepOrRemove(element,'keep')">
+                                (click)="setKeepOrRemove(element,'keep')"
+                                [ngClass]="element.disabled==0 ? 'disableClass':''">
                                 Keep
                             </button>
                             <button mat-stroked-button
                                 class="btn-danger text-white f-12 h-20 lh-20 br-1 remove-sip-clenup"
-                                (click)="setKeepOrRemove(element,'remove')">
+                                (click)="setKeepOrRemove(element,'remove')"
+                                [ngClass]="element.disabled==1 ? 'disableClass':''">
                                 Remove
                             </button>
                         </div>
@@ -197,13 +200,14 @@
                 </ng-container>
                 <ng-container matColumnDef="menu">
                     <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element;index as i">
                         <span class="material-icons c-p" [matMenuTriggerFor]="menu">
                             more_vert
                         </span>
 
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openRecordDeatils(element)">Datailed view</button>
+                            <button mat-menu-item (click)="openRecordDeatils(element)">Detailed view</button>
+                            <button mat-menu-item (click)="openEditSIPPopup(element,i)">Edit SIP Amount</button>
                         </mat-menu>
                     </td>
                 </ng-container>

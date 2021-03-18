@@ -37,8 +37,8 @@ export class AssetStocksComponent implements OnInit {
   displayedColumns25 = ['scrip', 'amt', 'cvalue', 'gain', 'bal', 'price', 'mprice', 'ret',
     'dividend', 'icons'];
 
-  footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'bal',
-    'dividend', 'icons'];
+  // footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'bal',
+  //   'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
   advisorId: any;
   clientId: any;
@@ -200,7 +200,7 @@ export class AssetStocksComponent implements OnInit {
       svg: this.svg
     };
     let header = null
-    this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'Stock', false, this.fragmentData, 'showPieChart', this.svg, false);
+    this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'Stock', false, this.fragmentData, 'showPieChart', this.svg, false, null);
     console.log('return value ====', this.returnValue);
     return obj;
   }

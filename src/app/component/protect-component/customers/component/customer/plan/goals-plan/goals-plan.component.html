@@ -77,7 +77,7 @@
                             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                         </div>
                         <div class="col-md-6 text-right p-0" *ngIf="selectedGoal">
-                            <img (click)="generatePdf(null)" class=" c-p pr-16 h-24" matTooltip="Download PDF"
+                            <img (click)="generatePdf(null)" class=" c-p pr-16 h-22" matTooltip="Download PDF"
                                 src="assets/images/svg/download-pdf-blue.svg">
                             <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg" class="c-p">
                         </div>
@@ -507,8 +507,59 @@
                                 <th mat-header-cell *matHeaderCellDef class="br text-right">Percentage</th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
                                     <div class="bar">
-                                        <span appFormatNumber
-                                            [value]="element.achievedPercent ? element.achievedPercent : 0">{{!loaderFn.loading? "%" : ""}}
+                                        <span>
+                                            {{element.achievedPercent ? element.achievedPercent : 0}}%
+                                        </span>
+                                    </div>
+                                </td>
+
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+
+                    </div>
+                    <div class="row pt-40" *ngIf="!loaderFn.loading && !isRetirementTab && !enumDataService.PRODUCTION">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 pb-12">Goal year wise details</h5>
+                        </div>
+                    </div>
+
+                    <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden"
+                        *ngIf="!loaderFn.loading && !isRetirementTab && !enumDataService.PRODUCTION">
+                        <table mat-table [dataSource]="goalTableValues" id="tbs" class="skeletonAnimation"
+                            appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                            <ng-container matColumnDef="goalYear">
+                                <th *matHeaderCellDef class="br  " mat-header-cell> Goal Year</th>
+                                <td *matCellDef="let element; let i = index;" class="br" mat-cell>
+                                    <div class="bar"> {{element.goalYr | date: 'yyyy'}} </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="goalFv">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal FV </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber>
+                                            {{element.fvOnGoalDate}} </span></div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal present value</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}
+                                        <span appFormatNumber>
+                                            {{(element.yearlyGoalValue ? element.yearlyGoalValue : 0)}}
+                                        </span>
+                                    </div>
+                                </td>
+
+                            </ng-container>
+                            <ng-container matColumnDef="percentage">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right">Percentage</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">
+                                        <span>
+                                            {{element.achievedPercent ? element.achievedPercent : 0}}%
                                         </span>
                                     </div>
                                 </td>
@@ -772,6 +823,14 @@
                 <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
                     <tr>
                         <td>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div style="width: 200px;"
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
                             <h3 style="margin: 0px; font-size: 18px;">
                                 {{clientData?.displayName}}'s Financial Plan
                             </h3>
@@ -991,7 +1050,8 @@
                         <td>
                             <p style=" font-size: 18px; margin-bottom: 0px; font-weight: 600;"> Planner notes</p>
 
-                            <p style="margin: 0px; font-size: 16px; word-break:break-word;">
+                            <p
+                                style="margin: 0px; font-size: 16px; word-break:break-word;border:1px solid #dee5e7;padding: 5px;">
                                 {{singleGoalData?.remainingData?.notes}}.
                             </p>
                         </td>
@@ -1028,7 +1088,8 @@
                                 </tr>
 
                                 <tr *ngFor="let element of dataSource">
-                                    <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                         {{element.goalYear}} </td>
                                     <td
                                         style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
@@ -1040,7 +1101,8 @@
                                         ₹ <span appFormatNumber
                                             [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'> </span>
                                     </td>
-                                    <td style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                         {{element.achievedPercent}}% </td>
                                 </tr>
                             </table>
@@ -1050,7 +1112,55 @@
             </td>
         </tr>
 
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: auto;">
+                    <tr *ngIf="singleGoalData.goalType !=1 && !enumDataService.PRODUCTION">
+                        <td>
+                            <p style=" font-size: 18px; font-weight: 600;">
+                                Goal year wise details</p>
 
+                            <table cellpadding="0" cellspacing="0"
+                                style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;">
+                                <tr *ngIf="dataSource">
+                                    <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
+                                        Goal year</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal FV</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal present value</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Percentage</td>
+                                    <!-- <td style="padding: 8px;background: #f5f7f7;">Status</td> -->
+                                </tr>
+
+                                <tr *ngFor="let element of goalTableValues">
+                                    <td
+                                        style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        {{element.goalYr | date : 'yyyy'}} </td>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        ₹ <span appFormatNumber
+                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'> </span>
+                                    </td>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        ₹ <span appFormatNumber
+                                            [value]='(element.yearlyGoalValue ? element.yearlyGoalValue : 0)'> </span>
+                                    </td>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        {{element.achievedPercent}}% </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
 
 
         <tr *ngIf="singleGoalData.goalType == 1 && dataSource1.length>0">
@@ -1104,7 +1214,7 @@
 
         <tr *ngIf="singleGoalData.goalType ==5 || singleGoalData.goalType ==6">
             <td>
-                <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;">
+                <table cellpadding="0" cellspacing="0" style="margin-top: 25px; width: 100%;page-break-before:always;">
                     <tr>
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;"> Key info </p>

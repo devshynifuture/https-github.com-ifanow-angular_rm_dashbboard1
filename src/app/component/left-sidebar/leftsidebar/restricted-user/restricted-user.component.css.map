@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACb,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;EACvB,cAAc,EAAE,MAAM;EACtB,MAAM,EAAE,mBAAmB;CAC9B",
+    "sources": [
+        "restricted-user.component.scss"
+    ],
+    "names": [],
+    "file": "restricted-user.component.css"
+}

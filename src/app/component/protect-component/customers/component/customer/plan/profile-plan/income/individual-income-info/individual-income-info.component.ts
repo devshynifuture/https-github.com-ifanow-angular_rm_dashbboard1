@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {MatDialog, MatInput} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PlanService} from '../../../plan.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {MatDatepicker} from '@angular/material/datepicker';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { MatDialog, MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -15,11 +15,11 @@ import {MatDatepicker} from '@angular/material/datepicker';
 // the `default as` syntax.
 // tslint:disable-next-line:no-duplicate-imports
 import * as _moment from 'moment';
-import {default as _rollupMoment, Moment} from 'moment';
-import {DatePipe} from '@angular/common';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
-import {CustomerService} from '../../../../customer.service';
+import { default as _rollupMoment, Moment } from 'moment';
+import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { CustomerService } from '../../../../customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 const moment = _rollupMoment || _moment;
@@ -43,7 +43,7 @@ export const MY_FORMATS = {
   styleUrls: ['./individual-income-info.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
 export class IndividualIncomeInfoComponent implements OnInit {
@@ -61,12 +61,12 @@ export class IndividualIncomeInfoComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-};
+  };
 
   date = new FormControl(moment());
   bankList: any;
   id: any;
-  clientData: any;
+  clientData = { profilePicUrl: '' };
   individualIncomeData: any;
   finalIncomeAddList = [];
   addMoreFlag: boolean;
@@ -134,75 +134,75 @@ export class IndividualIncomeInfoComponent implements OnInit {
     entertainmentExpense: null,
     otherReimbursement: null
   };
-  retiralsObj = {id: null, incomeId: null, gratuity: null, superannuation: null, nps: null, pf: null};
-  othersObj = {id: null, incomeId: null, bonus: null, performancePay: null};
-  monthlyIncArr = [{name: 'Interest Income', disabled: false, value: '1'}, {
+  retiralsObj = { id: null, incomeId: null, gratuity: null, superannuation: null, nps: null, pf: null };
+  othersObj = { id: null, incomeId: null, bonus: null, performancePay: null };
+  monthlyIncArr = [{ name: 'Interest Income', disabled: false, value: '1' }, {
     name: 'Dividend Income',
     disabled: false,
     value: '2'
-  }, {name: 'Royalty Income', disabled: false, value: '3'}, {
+  }, { name: 'Royalty Income', disabled: false, value: '3' }, {
     name: 'Annuity Income',
     disabled: false,
     value: '4'
-  }, {name: 'Pension', disabled: false, value: '5'}
-    , {name: 'Income From Non Professional', disabled: false, value: '6'}, {
-      name: 'Income from part time job',
-      disabled: false,
-      value: '7'
-    }, {name: 'Investment Income', disabled: false, value: '8'}, {name: 'Alimony', disabled: false, value: '9'},
-    {name: 'Farming /Fishing Income', disabled: false, value: '10'}, {
-      name: 'Winning from lottery ',
-      disabled: false,
-      value: '11'
-    }, {name: 'others', disabled: false, value: '12'}];
-  basicSalaryArr = [{name: 'Basic', disabled: false, value: '1'}, {name: 'DA', disabled: false, value: '2'}];
-  perquisitesArr = [{name: 'Food Coupons', disabled: false, value: '1'}, {
+  }, { name: 'Pension', disabled: false, value: '5' }
+    , { name: 'Income From Non Professional', disabled: false, value: '6' }, {
+    name: 'Income from part time job',
+    disabled: false,
+    value: '7'
+  }, { name: 'Investment Income', disabled: false, value: '8' }, { name: 'Alimony', disabled: false, value: '9' },
+  { name: 'Farming /Fishing Income', disabled: false, value: '10' }, {
+    name: 'Winning from lottery ',
+    disabled: false,
+    value: '11'
+  }, { name: 'others', disabled: false, value: '12' }];
+  basicSalaryArr = [{ name: 'Basic', disabled: false, value: '1' }, { name: 'DA', disabled: false, value: '2' }];
+  perquisitesArr = [{ name: 'Food Coupons', disabled: false, value: '1' }, {
     name: 'Gift Vouchers',
     disabled: false,
     value: '2'
-  }, {name: 'Driver\'s Salary', disabled: false, value: '3'}, {name: 'Other', disabled: false, value: '4'}];
-  reimbursementsArr = [{name: 'Mobile/telephone', disabled: false, value: '1'}, {
+  }, { name: 'Driver\'s Salary', disabled: false, value: '3' }, { name: 'Other', disabled: false, value: '4' }];
+  reimbursementsArr = [{ name: 'Mobile/telephone', disabled: false, value: '1' }, {
     name: 'Car Charges',
     disabled: false,
     value: '2'
-  }, {name: 'Fuel & Maintenance', disabled: false, value: '3'}, {
+  }, { name: 'Fuel & Maintenance', disabled: false, value: '3' }, {
     name: 'Entertainment Expenses',
     disabled: false,
     value: '4'
-  }, {name: 'Other', disabled: false, value: '5'}];
-  allowancesArr = [{name: 'House Rent Allowance', disabled: false, value: '1'}, {
+  }, { name: 'Other', disabled: false, value: '5' }];
+  allowancesArr = [{ name: 'House Rent Allowance', disabled: false, value: '1' }, {
     name: 'Special Allowance',
     disabled: false,
     value: '2'
-  }, {name: 'Special Compensatory Allowance', disabled: false, value: '3'}, {
+  }, { name: 'Special Compensatory Allowance', disabled: false, value: '3' }, {
     name: 'Education Allowance',
     disabled: false,
     value: '4'
-  }, {name: 'Transport Allowance', disabled: false, value: '5'}, {
+  }, { name: 'Transport Allowance', disabled: false, value: '5' }, {
     name: 'Medical Allowance',
     disabled: false,
     value: '6'
   },
-    {name: 'Conveyance Allowance', disabled: false, value: '7'}, {
-      name: 'Leave Travel Allowance',
-      disabled: false,
-      value: '8'
-    }, {name: 'Uniform Allowance', disabled: false, value: '9'}, {
-      name: 'Car Maintenance Allowance',
-      disabled: false,
-      value: '10'
-    },
-    {name: 'Residual Choice pay', disabled: false, value: '11'}, {
-      name: 'Superannuation Allowance',
-      disabled: false,
-      value: '12'
-    }, {name: 'Other', disabled: false, value: '13'}];
-  retiralsArr = [{name: 'Gratuity', disabled: false, value: '1'}, {
+  { name: 'Conveyance Allowance', disabled: false, value: '7' }, {
+    name: 'Leave Travel Allowance',
+    disabled: false,
+    value: '8'
+  }, { name: 'Uniform Allowance', disabled: false, value: '9' }, {
+    name: 'Car Maintenance Allowance',
+    disabled: false,
+    value: '10'
+  },
+  { name: 'Residual Choice pay', disabled: false, value: '11' }, {
+    name: 'Superannuation Allowance',
+    disabled: false,
+    value: '12'
+  }, { name: 'Other', disabled: false, value: '13' }];
+  retiralsArr = [{ name: 'Gratuity', disabled: false, value: '1' }, {
     name: 'Superannuation\'s',
     disabled: false,
     value: '2'
-  }, {name: 'NPS', disabled: false, value: '3'}, {name: 'PF', disabled: false, value: '4'}];
-  othersArr = [{name: 'Bonus', disabled: false, value: '1'}, {name: 'Performance pay', disabled: false, value: '2'}];
+  }, { name: 'NPS', disabled: false, value: '3' }, { name: 'PF', disabled: false, value: '4' }];
+  othersArr = [{ name: 'Bonus', disabled: false, value: '1' }, { name: 'Performance pay', disabled: false, value: '2' }];
   incomeNetForm = this.fb.group({
     incomeOption: ['2', [Validators.required]],
     // monthlyAmount: [, [Validators.required]],
@@ -260,7 +260,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     // })])
   });
   @Output() previousStep = new EventEmitter();
-  ids =[];
+  ids = [];
 
   constructor(private custumService: CustomerService, private dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) {
   }
@@ -270,6 +270,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.inc;
       return;
     }
+    this.clientData = AuthService.getClientData();
     this.addMoreFlag = false;
     this.incomeOption = '2';
     console.log(data);
@@ -299,9 +300,10 @@ export class IndividualIncomeInfoComponent implements OnInit {
     } else {
       this.editApiData = data;
       this.id = data.id;
+      this.clientData = AuthService.getClientData();
       this.singleIndividualIncome = data;
       this.singleIndividualIncome.name = data.ownerName;
-      this.singleIndividualIncome.finalIncomeList = {incomeTypeList: data.incomeTypeId};
+      this.singleIndividualIncome.finalIncomeList = { incomeTypeList: data.incomeTypeId };
       this.addMoreFlag = false;
       this.incomeOption = String(data.incomeOption);
       // this.incomeNetForm.controls.incomeOption.setValue((data.incomeTypeId) ? String(data.incomeTypeId) : '2');
@@ -574,7 +576,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
       this.incomeNetForm.get('continousTillYear').setValidators([Validators.required]);
       this.incomeNetForm.get('continousTillYear').updateValueAndValidity();
-      this.incomeNetForm.controls.continousTillYear.setErrors({required: true});
+      this.incomeNetForm.controls.continousTillYear.setErrors({ required: true });
     } else {
       this.incomeNetForm.get('continousTillYear').setValidators(null);
       this.incomeNetForm.get('continousTillYear').updateValueAndValidity();
@@ -768,7 +770,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: {bankList: this.bankList, userInfo: true, ownerList: this.singleIndividualIncome.name}
+      data: { bankList: this.bankList, userInfo: true, ownerList: this.singleIndividualIncome.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -843,8 +845,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
       incomeEndDate = new Date((this.incomeNetForm.get('incomeEndDate').value._d) ? this.incomeNetForm.get('incomeEndDate').value._d : this.incomeNetForm.get('incomeEndDate').value).getTime();
       (incomeStartDate == undefined && incomeEndDate == undefined) ? ''
         : (incomeEndDate <= incomeStartDate)
-        ? this.showDateError = 'Due date should be greater than invoice date' :
-        this.showDateError = undefined;
+          ? this.showDateError = 'Due date should be greater than invoice date' :
+          this.showDateError = undefined;
     }
   }
 
@@ -1232,7 +1234,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
 
   submitIncomeFormRes(data) {
-    if(!this.editApiData){
+    if (!this.editApiData) {
       this.ids.push(data);
     }
     this.incomePosition++;
@@ -1244,13 +1246,13 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeOption = '2';
     } else {
       (this.editApiData) ? this.eventService.openSnackBar('Income is edited') : this.eventService.openSnackBar('Income is added');
-      const obj={
+      const obj = {
         // this.ids
         id: this.editApiData ? this.editApiData.id : this.ids,
-        isAdded : this.editApiData ? false : true
+        isAdded: this.editApiData ? false : true
       }
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true ,data:obj});
-      this.ids =[];
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true, data: obj });
+      this.ids = [];
     }
     this.barButtonOptions.active = false;
   }
@@ -1353,6 +1355,6 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
 
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

@@ -129,7 +129,7 @@ export class AddMandateComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, titile, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, titile, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
   }

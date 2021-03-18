@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC;EACN,MAAM,EAAE,IAAI;EACZ,aAAa,EAAE,GAAG;CACrB",
+    "sources": [
+        "run-sip-mapping-master.component.scss"
+    ],
+    "names": [],
+    "file": "run-sip-mapping-master.component.css"
+}

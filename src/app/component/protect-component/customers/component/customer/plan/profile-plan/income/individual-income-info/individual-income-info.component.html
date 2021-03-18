@@ -14,8 +14,8 @@
         <div class="col-md-3 d-flex pl-0">
             <div class="mr-28">
                 <div class="memberBorderBox">
-                    <img src="/assets/images/svg/man-profile.svg"
-                        *ngIf="singleIndividualIncome.relationshipId==2 ||singleIndividualIncome.relationshipId==1">
+                    <img [src]="clientData.profilePicUrl" class="w-90" *ngIf="singleIndividualIncome.relationshipId==1">
+                    <img src="/assets/images/svg/man-profile.svg" *ngIf="singleIndividualIncome.relationshipId==2 ">
                     <img src="/assets/images/svg/wife-profile.svg" *ngIf="singleIndividualIncome.relationshipId==3">
                     <img src="/assets/images/svg/son-profile.svg" *ngIf="singleIndividualIncome.relationshipId==4">
                     <img src="/assets/images/svg/daughter-profile.svg" *ngIf="singleIndividualIncome.relationshipId==5">
@@ -647,10 +647,12 @@
                     <div class="row pt-40">
                         <div class="col-md-5 pr-0 text-right">
                             <h5 class="m-0 pt-8">
-                                {{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'Next appraisal in' : 'Next Increase'}}
+                                {{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'Next appraisal in' :
+                                'Next Increase'}}
                             </h5>
                             <p class="m-0 f-12 text-custom">Enter
-                                {{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'next appraisal' : 'Next increase'}}
+                                {{singleIndividualIncome.finalIncomeList.incomeTypeList == 1 ? 'next appraisal' : 'Next
+                                increase'}}
                                 date.<br>Approx year & month should do
                             </p>
                         </div>
@@ -703,8 +705,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 pr-0 pl-4 pt-8">
-                                    <i class="material-icons c-p text-custom" (click)="addExpectedBonus()">add</i>
-                                    <i class="material-icons c-p text-custom" *ngIf="getBonusList.controls.length > 1"
+                                    <i class="material-icons c-p text-primitive" (click)="addExpectedBonus()">add</i>
+                                    <i class="material-icons c-p text-primitive"
+                                        *ngIf="getBonusList.controls.length > 1"
                                         (click)="removeExpectedBonus(i)">remove</i>
                                 </div>
                             </div>
@@ -754,7 +757,7 @@
 </div>
 <div class="bottom-fixed wrapper-16 pb-12 w-65">
     <div class="row">
-        <div *ngIf="editApiData==undefined" class="col-md-4 p-0">
+        <div *ngIf="editApiData==undefined" class="col-md-4 pr-0">
             <h5 class="mb-0 pt-8 text-white c-p text-left" (click)="cancel()">Previous</h5>
         </div>
         <div *ngIf="editApiData" class="col-md-4 p-0">

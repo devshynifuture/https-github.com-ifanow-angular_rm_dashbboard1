@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACI,oBADgB,CAChB,EAAE,CAAA;EACE,MAAM,EAAE,iBAAiB;CAC5B",
+    "sources": [
+        "refresh-mf.component.scss"
+    ],
+    "names": [],
+    "file": "refresh-mf.component.css"
+}

@@ -1,0 +1,251 @@
+h5 {
+  color: #212121;
+}
+
+span {
+  font-size: 12px;
+  float: right;
+  color: #A0AEB4;
+}
+
+.bottom-fixed {
+  z-index: 1 !important;
+}
+
+.form-control.is-invalid {
+  background-image: none !important;
+  border-color: red !important;
+}
+
+::ng-deep.event-none .mat-tab-header {
+  pointer-events: none !important;
+}
+
+.imgBox {
+  width: 230px;
+  height: 130px;
+}
+
+::ng-deep .right-line {
+  margin-right: 40px;
+  margin-top: 161px;
+  height: 0.4px;
+  background-color: rgba(233, 234, 236, 0);
+  width: 38%;
+  right: 0;
+  position: absolute;
+  padding-right: 20px;
+}
+
+.height75 {
+  height: 75px;
+}
+
+.height90 {
+  height: 90px;
+}
+
+.guideBackground {
+  background: url(/assets/images/svg/guide-bg.svg) no-repeat bottom !important;
+  height: 595px;
+}
+
+.headerGuideBox {
+  height: 199px;
+  position: relative;
+}
+
+.headerGuidename {
+  width: calc(100% - 150px);
+  margin: 0px auto 0px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 15px;
+}
+
+.lets-begin-guide {
+  width: 164px;
+  height: 48px;
+  font-size: 18px;
+  border-radius: 4px !important;
+}
+
+.content-guide {
+  width: calc(100% - 150px);
+  margin: 20px auto 0px;
+}
+
+.headerGuide {
+  width: calc(100% - 150px);
+  margin: 0px auto;
+}
+
+.contentGuideBox {
+  width: calc(100% - 150px);
+  margin: 0px auto;
+}
+
+#advisor-dashboard-popup .row {
+  margin-right: -15px !important;
+  margin-left: -15px !important;
+}
+
+#advisor-dashboard-popup .posRelative {
+  position: relative;
+}
+
+#advisor-dashboard-popup .headerRow {
+  position: absolute;
+  bottom: 24px;
+}
+
+#advisor-dashboard-popup .rta-section {
+  position: initial !important;
+  padding-top: 40px;
+}
+
+#advisor-dashboard-popup .creds-section {
+  position: initial !important;
+  padding-top: 90px;
+}
+
+#advisor-dashboard-popup .bg-advisor-modal {
+  background: url("/assets/images/bg-advsior-modal.png") no-repeat center;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 402px;
+}
+
+#advisor-dashboard-popup .bg-modal-height {
+  height: 402px;
+  position: relative;
+}
+
+#advisor-dashboard-popup .bg-modal-height .bottomFooterDasb {
+  position: absolute;
+  bottom: 30px;
+  width: calc(100% - 150px);
+}
+
+#advisor-dashboard-popup .boxDescribes {
+  position: relative;
+}
+
+#advisor-dashboard-popup .boxDescribes .bottomPost {
+  position: absolute;
+  bottom: 20px;
+}
+
+#advisor-dashboard-popup .select-active-border {
+  border: 1px solid #83959D;
+}
+
+#advisor-dashboard-popup .imgHeight {
+  height: 180px;
+  max-width: 100%;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon {
+  width: 85px;
+  height: 58px;
+  overflow: hidden;
+  position: absolute;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon::before,
+#advisor-dashboard-popup .topClickRadius .ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid #2980b9;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon span {
+  position: absolute;
+  display: block;
+  width: 100px;
+  padding: 15px 0;
+  background-color: #C4C4C4;
+  color: #fff;
+  font: 700 18px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon-bottom-right {
+  top: 0px;
+  right: 0px;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon-bottom-right::before,
+#advisor-dashboard-popup .topClickRadius .ribbon-bottom-right::after {
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon-bottom-right::before {
+  bottom: 0;
+  left: 0;
+  top: -6px;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon-bottom-right::after {
+  top: 0;
+  right: 0;
+}
+
+#advisor-dashboard-popup .topClickRadius .ribbon-bottom-right span {
+  bottom: 23px;
+  -webkit-transform: rotate(-144deg);
+          transform: rotate(-144deg);
+  right: -34px;
+}
+
+#advisor-dashboard-popup .topClickRadius img {
+  position: relative;
+  top: -5px;
+  -webkit-transform: rotate(152deg);
+          transform: rotate(152deg);
+}
+
+#advisor-dashboard-popup .btnRTA {
+  display: inline-block;
+  height: 30px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+#advisor-dashboard-popup .btnRTA .activeSpan {
+  border-bottom: 4px solid #008FFF;
+  color: #008FFF;
+  padding-bottom: 6px;
+}
+
+#advisor-dashboard-popup .image-cropper {
+  position: relative;
+}
+
+#advisor-dashboard-popup .zoomClassPosition {
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+}
+
+#advisor-dashboard-popup .textHeading {
+  text-align: right;
+}
+
+#advisor-dashboard-popup .profile-img img {
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+::ng-deep .primaryProgress .mat-progress-bar-fill::after {
+  background-color: #008FFF;
+}
+/*# sourceMappingURL=biller-profile-advisor.component.css.map */

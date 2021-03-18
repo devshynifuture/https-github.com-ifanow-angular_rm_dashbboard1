@@ -1,0 +1,154 @@
+<div class="folio-mapping-box">
+    <div class="row h-60">
+        <div class="col-md-12 d-flex align-items-center">
+            <h3 class="m-0">Reminder</h3>
+        </div>
+    </div>
+</div>
+
+<div class="pt-150">
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+
+            <!-- <button [matMenuTriggerFor]="menu1" class="ba-black borderLine br-0 mr-10" mat-stroked-button>
+                    Fixed deposit
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                    </mat-icon>
+                </button> -->
+            <!-- <mat-menu #menu1="matMenu">
+                    <div>
+                        <button mat-menu-item>asfdsad</button>
+                    </div>
+                </mat-menu> -->
+            <div class="row">
+                <div class="col-md-4 pl-0">
+
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select [formControl]="filterOptionControl" (selectionChange)="changeAssetType($event)"
+                            class="form-control br-0">
+                            <mat-option *ngFor="let assetType of assetTypeFilterList" [value]="assetType">
+                                {{assetType}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-4 pr-0">
+
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select (selectionChange)="changeSubAssetType($event)" [formControl]="selectedSubType"
+                            class="form-control br-0">
+                            <mat-option *ngFor="let asset of subTypeFilter" [value]="asset.reminderType">
+                                {{asset.reminderTypeString}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+                <div class="col-md-4 pr-0">
+
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <mat-select (selectionChange)="sortDateFilter($event)" [formControl]="selectedNextDate"
+                            class="form-control br-0">
+                            <mat-option value="7">Next 7 Day</mat-option>
+                            <mat-option value="15">Next 15 Day</mat-option>
+                            <mat-option value="30">Next 30 Day</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <div class="row pt-10 pb-24">
+        <div class="col-md-12">
+            <div class="mt-8 people-table-scroll">
+                <table #tableEl matSort mat-table [dataSource]="assetTypeList" id="tbs"
+                    [appSkeletonLoading]="isLoading">
+
+                    <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> Sr no </th>
+                        <td mat-cell class="c-p" *matCellDef="let element;index as i">
+                            <div class="bar">
+                                {{isLoading?'':i+1}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="schemeName">
+                        <th mat-header-cell *matHeaderCellDef> Client name </th>
+                        <td mat-cell class="c-p" *matCellDef="let element">
+                            <div class="bar">
+                                <div *ngFor="let owner of element.ownerList; let i = index">
+                                    <span *ngIf="i == 0">{{owner.name}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="number">
+                        <th mat-header-cell *matHeaderCellDef> Asset type </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{isLoading?'':filterOptionControl.value}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="investName">
+                        <th mat-header-cell *matHeaderCellDef> Amount </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="bar"> {{isLoading ? ' ' : '₹'}}
+                                <span appFormatNumber *ngIf="filterOptionControl.value!='SSY'">{{
+                                    element.maturityValue}}</span>
+                                <span appFormatNumber *ngIf="filterOptionControl.value=='SSY'">
+                                    {{element.accountBalance}}
+                                </span>
+                                <!-- <span *ngIf="selectedSubType!=1" appFormatNumber>{{
+                                        element.targetAmount}}</span> -->
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dueDate">
+                        <th mat-header-cell *matHeaderCellDef> Due date </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                <span>{{element.maturityDate | date:'dd/MM/yyyy'}}</span>
+                                <!-- <span *ngIf="selectedSubType!=2">{{element.targetDate | date:'dd/MM/yyyy'}}</span> -->
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+            </div>
+        </div>
+        <div class="col-md-12 text-center"
+            *ngIf="assetTypeList && assetTypeList.data && assetTypeList.data.length === 0  && !isLoading">
+            <h4 class="p-44 b-a">
+                No Data Found
+            </h4>
+        </div>
+        <!-- <div class="col-md-12" *ngIf="isInfiniteScrollLoading">
+        <div class="b-a p-44">
+          <mat-spinner [diameter]="30" class="pos-rel-left40"></mat-spinner>
+        </div>
+      </div> -->
+    </div>
+</div>

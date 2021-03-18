@@ -1,4 +1,4 @@
-<div id="scenariosPlan" class="pt-125">
+<!-- <div id="scenariosPlan" class="pt-125">
 
     <div class="row">
         <div class="col-md-5 br">
@@ -63,10 +63,6 @@
                     <button mat-stroked-button class="btn-cash-flow btn-primary-outline"
                         (click)="filterCashFlowTableUsing('liabilities')">
                         <img class="mr-12" src="/assets/images/svg/cash-flow-liabilites-icon.svg">Liabilities</button>
-
-                    <!-- <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('commited-outflows')">Committed
-                            outflows</button> -->
-                    <!-- <button mat-stroked-button class="btn-cash-flow" (click)="filterCashFlowTableUsing('goals')">Goals</button> -->
                     <button mat-stroked-button class="btn-cash-flow btn-primary-outline"
                         (click)="filterCashFlowTableUsing('surplus')">
                         <img class="mr-12" src="/assets/images/svg/cash-flow-surplus-icon.svg">Surplus</button>
@@ -76,4 +72,281 @@
         </div>
     </div>
 
+</div> -->
+
+
+<!-- cashflow/income screen -->
+
+<div class="pt-125" id="ui-cashflow-details-tables">
+    <div class="row pt-24 pb-24 bb-1">
+        <div class="col-md-12 full-center">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="c-p">keyboard_arrow_left</mat-icon>
+            <p class="m-0 text-center ml-44 mr-44 roboto f-400 f-16">2020 - 2021</p>
+            <mat-icon aria-hidden="false" aria-label="Example home icon" class="c-p">keyboard_arrow_right</mat-icon>
+        </div>
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-12">
+            <button mat-stroked-button class="text-primary">Rahul Jain</button>
+            <button mat-button class="text-black">Shilpa Jain</button>
+        </div>
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-12">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="text-center text-primary center-item">
+                            INCOME
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <table mat-table [dataSource]="dataSourceIncomes" id="table-low">
+
+                        <ng-container matColumnDef="position">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Apr-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="weight">
+                            <th mat-header-cell *matHeaderCellDef class="br"> May-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="symbol">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jun-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol2">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jul-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol2}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol3">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Aug-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol3}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol4">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Sep-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol4}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol5">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Oct-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol5}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol6">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Nov-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol6}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol7">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Dec-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol7}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol8">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jan-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol8}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol9">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Feb-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol9}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol10">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Mar-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol10}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="total">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Total </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.total}} </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsIncome"></tr>
+
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsIncome;"></tr>
+                    </table>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+
+        </div>
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-12">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header class="bg-white">
+                        <mat-panel-title class="text-center text-primary center-item">
+                            EXPENSES
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <table mat-table [dataSource]="dataSourceAsset" id="table-low">
+
+                        <ng-container matColumnDef="position">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Apr-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="weight">
+                            <th mat-header-cell *matHeaderCellDef class="br"> May-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="symbol">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jun-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol2">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jul-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol2}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol3">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Aug-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol3}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol4">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Sep-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol4}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol5">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Oct-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol5}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol6">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Nov-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol6}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol7">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Dec-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol7}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol8">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jan-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol8}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol9">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Feb-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol9}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol10">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Mar-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol10}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="total">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Total </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.total}} </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsAsset"></tr>
+
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsAsset;"></tr>
+                    </table>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+
+        </div>
+    </div>
+    <div class="row pt-12">
+        <div class="col-md-12">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header class="bg-white">
+                        <mat-panel-title class="text-center text-primary center-item">
+                            ASSETS
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <table mat-table [dataSource]="dataSourceAsset1" id="table-low">
+
+                        <ng-container matColumnDef="position">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Description </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Apr-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="weight">
+                            <th mat-header-cell *matHeaderCellDef class="br"> May-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="symbol">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jun-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol2">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jul-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol2}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol3">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Aug-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol3}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol4">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Sep-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol4}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol5">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Oct-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol5}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol6">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Nov-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol6}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol7">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Dec-20 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol7}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol8">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Jan-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol8}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol9">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Feb-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol9}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="symbol10">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Mar-21 </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.symbol10}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="total">
+                            <th mat-header-cell *matHeaderCellDef class="br"> Total </th>
+                            <td mat-cell *matCellDef="let element" class="br"> {{element.total}} </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsAsset1"></tr>
+
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsAsset1;"></tr>
+                    </table>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+
+        </div>
+    </div>
 </div>

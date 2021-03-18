@@ -46,7 +46,10 @@
         <ng-container matColumnDef="amount">
           <th *matHeaderCellDef class="br w-20" mat-header-cell> Amount</th>
           <td *matCellDef="let element" class="br" mat-cell>
-            <div class="bar"> {{element.orderVal}} </div>
+            <div *ngIf="!element.allUnits" class="bar">
+              {{element.amountType == 'Amount' ? '₹' + element.orderVal : element.orderVal + ' Unit'}}</div>
+            <div *ngIf="element.allUnits" class="bar"> All units</div>
+
           </td>
         </ng-container>
         <ng-container matColumnDef="icons">
@@ -60,7 +63,7 @@
               </i>
               <mat-menu #menubank="matMenu">
                 <button (click)="getdataForm(element,true)" mat-menu-item>Edit</button>
-                <button mat-menu-item>Delete</button>
+                <button (click)="deleteChildTran(element)" mat-menu-item>Delete</button>
               </mat-menu>
             </div>
           </td>
@@ -88,7 +91,9 @@
                   </mat-option>
                 </mat-autocomplete>
                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing
-                  NAV: {{navOfSelectedScheme}} as on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
+                  NAV: {{scheme.nav}} as
+                  on:{{(scheme)?scheme.navDate:'-'}}
+                  <!--                  {{(mutualFundData && mutualFundData.navDate) ? mutualFundData.navDate : scheme.navDate ? scheme.navDate : '-'|date:'dd/MM/yyyy'}}-->
                 </mat-hint>
                 <mat-error *ngIf="switchTransaction.get('schemeSwitch').errors?.required" class="f-12 pt-4">
                   This field is required
@@ -159,7 +164,6 @@
             </div>
           </div>
         </div>
-
 
 
         <div class="row pt-28">
@@ -303,7 +307,7 @@
       <!-- <button mat-button class="btn-green text-white ml-12" (click)="switch()">
 SAVE & PROCEED
 </button> -->
-      <app-progress-button (btnClick)="switch()" [options]="barButtonOptions" class="btn-green text-white">
+      <app-progress-button (btnClick)="switch()" [options]="barButtonOptions" class="btn-green text-white  ml-12">
       </app-progress-button>
     </div>
   </div>

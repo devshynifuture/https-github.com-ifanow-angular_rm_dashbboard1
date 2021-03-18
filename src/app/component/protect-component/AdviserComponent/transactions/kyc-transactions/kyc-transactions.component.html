@@ -1,0 +1,145 @@
+<div class="row pt-150">
+    <div class="col-md-4 d-flex align-items-center">
+        <h3 class="m-0 roboto f-400">All KYC</h3>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-2 p-0 full-end">
+
+            </div>
+            <div class="col-md-6 p-0 full-end">
+                <mat-form-field appearance=" standard" class="searchInputWidth" floatLabel="never">
+                    <input autocomplete="off" #inputSearch (input)="searchClientFamilyMember(inputSearch.value)"
+                        class="form-control br-0 pt-8 mb-0" matInput placeholder="Type to search investor">
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 p-0 full-end">
+                <button [matMenuTriggerFor]="menu1" class="btn-default addon" mat-stroked-button><i
+                        class="material-icons">filter_list</i>FILTERS
+                </button>
+                <mat-menu #menu1="matMenu">
+                    <div class="p-8" *ngFor="let singleObj of filterList;index as i">
+                        <mat-checkbox (change)="filterIDWise($event,singleObj,i)" [checked]="singleObj.checked">
+                            {{singleObj.name}}</mat-checkbox>
+                    </div>
+
+                </mat-menu>
+                <button mat-stroked-button class="btn-primary ml-10" (click)="openAddAllkyc({},'TEst')">ADD
+                    NEW</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="row pt-10">
+    <div *ngIf="dataSource.data.length > 0" class=" col-md-12 kyc-transctions">
+        <div class="ox-hide kyc-transctions-scroll" (scroll)="onWindowScroll($event)">
+            <table #tableEl matSort #clientTableSort="matSort" mat-table appSkeletonLoading
+                [appSkeletonLoading]="isLoading" class="skeletonAnimation " [dataSource]="dataSource" id="table-low">
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Group head name </th>
+                    <td mat-cell *matCellDef="let element" class="br ">
+                        <div class="bar">{{element.groupHead}}</div>
+                    </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{element.name}}</div>
+                    </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> PAN </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">{{element.pan}} </div>
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Registered mobile </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"><span *ngIf="!isLoading">{{element.mobileNo
+                                ?element.mobileNo:'N/A'}}</span></div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Registered email </th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> <span *ngIf="!isLoading"
+                                class="t-l">{{element.email?element.email:'N/A'}}</span></div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="kycStatus">
+                    <th mat-header-cell *matHeaderCellDef class="br"> KYC status</th>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar">
+                            <span *ngIf="!isLoading && element.email && element.mobileNo && element.pan">
+                                <span class="text-danger" *ngIf="element.kycComplaint==0">Not verified</span>
+                                <span class="text-primary" *ngIf="element.kycComplaint==1">KYC verified</span>
+                                <span *ngIf="element.kycComplaint==2">Applied</span>
+                                <span *ngIf="element.kycComplaint==3">Accepted</span>
+                                <span *ngIf="element.kycComplaint==4">Rejected</span>
+                            </span>
+                            <span
+                                *ngIf="!isLoading && (!element.email || !element.mobileNo || !element.pan) ">N/A</span>
+                            <img *ngIf="!isLoading && element.kycReason" src="/assets/images/svg/info-black.svg"
+                                matTooltip={{element.kycReason}}
+                                aria-label="Button that displays a tooltip when focused or hovered over" class="pl-4">
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Actions </th>
+                    <div class="bar"></div>
+                    <td mat-cell *matCellDef="let element" class="br">
+                        <!-- <img src="/assets/images/svg/info-black.svg" matTooltip="Info about the action"
+                            class="pl-4 c-p"> -->
+
+                        <div *ngIf="isLoading" class="bar"></div>
+                        <span *ngIf="!isLoading && (!element.email || !element.mobileNo || !element.pan) ">N/A</span>
+                        <div *ngIf="!isLoading && element.email && element.mobileNo && element.pan  && !element.isLoader"
+                            class="bar">
+                            <!-- <button (click)="openAddAllkyc(element,'KYCFroala')" *ngIf="element.kycComplaint==4"
+                                mat-stroked-button class="btn-primary btn-mange-kyc">Redo KYC</button> -->
+                            <!-- <span
+                                *ngIf="(element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3) && element.email && element.mobileNo && element.pan">
+                                - </span> -->
+                            <button
+                                [disabled]="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                [ngClass]="{'cursor-not-allowed opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                (click)="openAddAllkyc(element,'KYCFroala')"
+                                *ngIf="element.kycComplaint==0 || element.kycComplaint==4" mat-stroked-button
+                                class="btn-danger btn-mange-kyc text-white">Send
+                                Link</button>
+                            <button matTooltip={{element.verifyStatus}}
+                                [ngClass]="{'opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
+                                *ngIf="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
+                                mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                Link</button>
+                        </div>
+                        <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <div class="col-md-12 d-flex justify-content-center align-items-center">
+                <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="dataSource.data.length == 0 && isLoading==false" class="col-md-12 p-0 mt-28 text-center">
+        <img src="/assets/images/svg/dialogs4.svg">
+        <h4 class="d-flex justify-content-center p-44 pt-28">
+            No data found
+        </h4>
+    </div>
+</div>

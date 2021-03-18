@@ -156,7 +156,7 @@ export class OtherPayablesComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf('', para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '', false);
+    this.util.htmlToPdf('', para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '', false, null);
   }
 
   // generatePdf(tableTitle){
@@ -231,8 +231,8 @@ export class OtherPayablesComponent implements OnInit {
     };
     this.dataSource.data = [{}, {}, {}];
     this.custmService.getOtherPayables(obj).subscribe(
-      data => this.getOtherPayablesRes(data), (error) => {
-        this.eventService.openSnackBar('Something went wrong!', 'Dismiss');
+      data => this.getOtherPayablesRes(data), (err) => {
+        this.eventService.showErrorMessage(err);
         this.dataSource.data = [];
         this.isLoading = false;
       }

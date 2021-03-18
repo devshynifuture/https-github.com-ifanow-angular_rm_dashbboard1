@@ -76,7 +76,7 @@
           id="tbs" mat-table matSort>
           <ng-container matColumnDef="aggregatorType" sticky>
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
                 {{isLoading ? '' : (element.aggregatorType == 1) ? 'NSE' : (element.aggregatorType == 2) ? 'BSE' : '-'}}
               </div>
@@ -85,7 +85,7 @@
           <ng-container matColumnDef="brokerCode">
             <th *matHeaderCellDef mat-header-cell mat-sort-header="brokerCode" class="br" sticky> ARN/RIA
             </th>
-            <td *matCellDef="let element" mat-cell class="br">
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" mat-cell class="br">
               <div class="bar"> {{isLoading ? '' : (element.brokerCode) ? element.brokerCode : '-'}}
               </div>
             </td>
@@ -95,7 +95,7 @@
               Investor
               name
             </th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
                 {{(element.firstApplicantName) ? element.firstApplicantName : element.clientName}}
               </div>
@@ -104,7 +104,7 @@
           <ng-container matColumnDef="panNo">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantPan" sticky> PAN
             </th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar"> {{(element.firstApplicantPan) ? element.firstApplicantPan : element.pan}}
               </div>
             </td>
@@ -112,7 +112,7 @@
           <ng-container matColumnDef="taxStatus">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="taxDesc" sticky> Tax status
             </th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
                 {{isLoading ? '' : (element.taxDesc) ? element.taxDesc : element.taxStatus}}
               </div>
@@ -122,10 +122,10 @@
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="holdingType" sticky> Holding
               nature
             </th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
-                {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ? 'ANYONE OR
-                SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ?
+                {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ?
+                'ANYONE OR SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ?
                 'JOINT' : '-'}}
               </div>
             </td>
@@ -135,7 +135,7 @@
               Account
               number
             </th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar"> {{isLoading ? '' : (element.clientCode) ? element.clientCode : '-'}}
               </div>
             </td>
@@ -144,7 +144,7 @@
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="statusStringTemp">
               Status
             </th>
-            <td *matCellDef="let element" class="br" mat-cell>
+            <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
                 <span class="text-success  f-400 c-p">{{element.statusStringTemp}}</span>
               </div>
@@ -152,18 +152,18 @@
           </ng-container>
           <ng-container matColumnDef="icons" sticky>
             <th *matHeaderCellDef mat-header-cell>Actions</th>
-            <td *matCellDef="let element" mat-cell>
+            <td [matMenuTriggerFor]="menu3" *matCellDef="let element" mat-cell>
               <div *ngIf="isLoading==true" class="bar">
                 {{''}}
               </div>
-              <div *ngIf="isLoading==false"><i class="material-icons c-p">
-                  more_vert
-                </i>
-              </div>
+              <img class="c-p" src="/assets/images/svg/dot-menu.svg" alt="">
+              <mat-menu #menu3="matMenu" class="disabledOpacity">
+                <button mat-menu-item (click)="openFatca(element)">Upload FATCA details</button>
+              </mat-menu>
             </td>
           </ng-container>
           <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
-          <tr (click)="openInvestorDetail(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
 
       </div>

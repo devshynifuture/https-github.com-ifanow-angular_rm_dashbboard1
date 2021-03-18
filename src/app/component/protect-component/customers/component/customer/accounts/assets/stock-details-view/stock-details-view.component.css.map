@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "stock-details-view.component.scss"
+    ],
+    "names": [],
+    "file": "stock-details-view.component.css"
+}

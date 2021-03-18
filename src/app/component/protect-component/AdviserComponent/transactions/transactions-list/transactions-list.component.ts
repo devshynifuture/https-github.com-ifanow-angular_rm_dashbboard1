@@ -73,7 +73,7 @@ export class TransactionsListComponent implements OnInit {
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(
@@ -114,7 +114,8 @@ export class TransactionsListComponent implements OnInit {
     const obj: any = {
       advisorId: this.advisorId,
       startDate: this.finalStartDate,
-      endDate: this.finalEndDate
+      endDate: this.finalEndDate,
+      adminId: AuthService.getAdminId()
     };
     if (this.isAdvisorSection) {
       obj.tpUserCredentialId = this.selectedBroker.id;

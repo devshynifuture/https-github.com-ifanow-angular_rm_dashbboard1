@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACA,AAAA,aAAa,CAAC;EACV,UAAU,EAAE,KAAK;EACjB,UAAU,EAAE,MAAM;CACrB",
+    "sources": [
+        "helth-insurance-policy.component.scss"
+    ],
+    "names": [],
+    "file": "helth-insurance-policy.component.css"
+}

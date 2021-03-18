@@ -142,6 +142,11 @@ export class SettingsService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST, httpParams);
   }
 
+  getArnlistChanges(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ARN_RIA_LIST_CHANGE, httpParams);
+  }
+
   addArn(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_ARN_RIA, data);
   }
@@ -180,8 +185,28 @@ export class SettingsService {
   getBulkEmailPasswordList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_EMAIL_PASSWORD_HISTORY, data);
   }
-  addCallBackMob(data){
+  addCallBackMob(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CALL_BACK_MOB, data);
 
+  }
+  getTemplateList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATE_LIST, data);
+
+  }
+  addNewTemplate(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_TEMPLATE, data);
+  }
+  editTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_TEMPLATE, data);
+
+  }
+  setVisibilityTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SET_VISIBILITY, data);
+  }
+  resetTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_TEMPLATE, data);
+  }
+  deleteTemplate(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEMPLATE, data);
   }
 }

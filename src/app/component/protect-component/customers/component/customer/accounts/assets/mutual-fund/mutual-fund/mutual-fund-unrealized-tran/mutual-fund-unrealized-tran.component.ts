@@ -228,6 +228,11 @@ export class MutualFundUnrealizedTranComponent {
   resData: any;
   mfAllTransactionCapability: any = {};
   mfCapability: any = {};
+  clientNameToDisplay: any;
+  excelDownload: boolean = false;
+  ninethArrayTran: any;
+  ninethArrayTotalTran: any;
+  showSummaryTable: boolean = true;
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -382,9 +387,9 @@ export class MutualFundUnrealizedTranComponent {
 
     } else {
       this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-        'units', 'balanceUnits', 'days', 'icons'];
+        'units', 'balanceUnits', 'days', 'lockPeriod', 'icons'];
       this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-        'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'iconsTotal'];
+        'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'iconsTotal'];
     }
     this.dataTransaction.displayedColumns = this.displayedColumns;
     this.colspanValue = Math.round(this.displayedColumns.length / 2);
@@ -465,14 +470,18 @@ export class MutualFundUnrealizedTranComponent {
                 displayName: element.columnName,
                 selected: element.selected
               };
-              allClient.push(obj);
+              if (element.reportType != 'showSummary') {
+                allClient.push(obj);
+              }
             } else {
               const obj = {
                 displayName: element.columnName,
                 selected: element.selected
               };
               getList.push(element);
-              currentClient.push(obj);
+              if (element.reportType != 'showSummary') {
+                currentClient.push(obj);
+              }
             }
           });
           if (getList.length > 0) {
@@ -513,9 +522,11 @@ export class MutualFundUnrealizedTranComponent {
           this.saveFilterData = {
             transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
+            showSummary: (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected),
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           };
+          //this.setDefaultFilterData.showSummary = this.saveFilterData.showSummary
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
@@ -627,42 +638,128 @@ export class MutualFundUnrealizedTranComponent {
 
     if (header == 'no') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Sr no.', index: ind, isCheked: true,
+        name: 'Sr no.', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '9%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'order-left': '1px solid #DADCE0',
+          'text-align': 'left'
+        }
       });
       // Object.assign(this.customDataSource.data, { no: true });
     } else if (header == 'transactionType') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction type', index: ind, isCheked: true,
+        name: 'Transaction type', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '15%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'left'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionType: true });
     } else if (header == 'transactionDate') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction date', index: ind, isCheked: true,
+        name: 'Transaction date', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '15%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionDate: true });
     } else if (header == 'transactionAmount') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction amount', index: ind, isCheked: true,
+        name: 'Transaction amount', index: ind, isCheked: true, style: {
+          width: '15%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionAmount: true });
     } else if (header == 'transactionNav') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Transaction NAV', index: ind, isCheked: true,
+        name: 'Transaction NAV', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '8%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { transactionNav: true });
     } else if (header == 'units') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Units', index: ind, isCheked: true,
+        name: 'Units', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          width: '10%',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+          'text-align': 'right'
+        }
       });
       // Object.assign(this.customDataSource.data, { units: true });
     } else if (header == 'balanceUnits') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Balance units', index: ind, isCheked: true,
+        name: 'Balance units', index: ind, isCheked: true, style: {
+          'border-top': ' 1px solid #DADCE0',
+          width: '10%',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
       });
       // Object.assign(this.customDataSource.data, { balanceUnits: true });
     } else if (header == 'days') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Days', index: ind, isCheked: true,
+        name: 'Days', index: ind, isCheked: true, style: {
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
+    } else if (header == 'lockPeriod') {
+      this.customDataSource.data.arrayTran.push({
+        name: 'Unlock date', index: ind, isCheked: true, style: {
+          width: '13%',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
       });
       // Object.assign(this.customDataSource.data, { days: true });
     }
@@ -851,6 +948,7 @@ export class MutualFundUnrealizedTranComponent {
   }
   getMutualFundResponse(data) {
     if (data) {
+      this.checkFamMember();
       this.isLoading = true;
       this.mfData = data;
       // this.mutualFund = data;
@@ -898,7 +996,24 @@ export class MutualFundUnrealizedTranComponent {
       this.isLoading = false;
     }
   }
+  checkFamMember() {
+    this.clientNameToDisplay = null;
+    if (Object.keys(this.setDefaultFilterData).length > 0) {
+      if (this.setDefaultFilterData.familyMember) {
+        let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
+        if (famMember.length == 1) {
+          this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+        } else {
+          this.clientNameToDisplay = this.clientData.name
+        }
+      } else {
+        this.clientNameToDisplay = this.clientData.name
+      }
 
+    } else {
+      this.clientNameToDisplay = this.clientData.name
+    }
+  }
   filterForBulkEmailing(data) {
     if (data) {
       const categoryWiseMfList = [];
@@ -1003,6 +1118,7 @@ export class MutualFundUnrealizedTranComponent {
     };
     this.custumService.getMfUnrealizedTransactions(obj).subscribe(
       data => {
+        this.checkFamMember();
         // console.log(data);
         // this.mutualFund.mutualFundList = data;
         // this.asyncFilter(this.mutualFund.mutualFundList);
@@ -1108,8 +1224,11 @@ export class MutualFundUnrealizedTranComponent {
         // }
         if (this.viewMode == 'All Transactions') {
           this.isTableShow = false;
+          this.showSummaryTable = false
         } else {
           this.isTableShow = true;
+          this.showSummaryTable = this.setDefaultFilterData.showSummary
+          console.log('showSummaryTable', this.showSummaryTable)
         }
         if (this.isBulkEmailing && this.fromDate && this.toDate) {
           this.isTableShow = false;
@@ -1157,6 +1276,12 @@ export class MutualFundUnrealizedTranComponent {
             case 7:
               this.eighthArrayTran = this.filterHedaerWiseTran(element);
               this.eighthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+
+              break;
+            case 8:
+              this.ninethArrayTran = this.filterHedaerWiseTran(element);
+              this.ninethArrayTotalTran = this.filterHedaerWiseTotalTran(element);
 
 
               break;
@@ -1274,6 +1399,7 @@ export class MutualFundUnrealizedTranComponent {
 
   Excel(tableTitle) {
     this.showDownload = true;
+    this.excelDownload = true
     setTimeout(() => {
       const blob = new Blob([document.getElementById('template').innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
@@ -1333,6 +1459,7 @@ export class MutualFundUnrealizedTranComponent {
             this.mfService.setDataForMfGet('');
             this.mfService.setMfData('');
             this.mfService.setTransactionType('');
+            this.resData = '';
             this.ngOnInit();
             // this.getMutualFund();
           }
@@ -1464,6 +1591,7 @@ export class MutualFundUnrealizedTranComponent {
       // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
       showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
+      showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : ((this.saveFilterData) ? this.saveFilterData.showSummary : this.setDefaultFilterData.showSummary),
       fromDate: this.setDefaultFilterData.fromDate,
       toDate: this.setDefaultFilterData.toDate,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
@@ -1485,6 +1613,7 @@ export class MutualFundUnrealizedTranComponent {
             this.setUnrealizedDataSource([]);
             this.isLoading = true;
             this.isTableShow = true;
+            this.showSummaryTable = true
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
@@ -1588,6 +1717,7 @@ export class MutualFundUnrealizedTranComponent {
 
   generatePdf() {
     this.showDownload = true;
+    this.excelDownload = false
     this.fragmentData.isSpinner = true;
     this.cd.markForCheck();
     this.cd.detectChanges();
@@ -1598,7 +1728,7 @@ export class MutualFundUnrealizedTranComponent {
       } else {
         this.headerHtml = document.getElementById('alltemplateHeader');
       }
-      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML, para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '', true);
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML, para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
     }, 200);
   }
 
@@ -1723,7 +1853,9 @@ export class MutualFundUnrealizedTranComponent {
       case 'Days':
         obj = 'days';
         break;
-
+      case 'Unlock date':
+        obj = 'elssDate';
+        break;
     }
 
     return obj;
@@ -1754,6 +1886,9 @@ export class MutualFundUnrealizedTranComponent {
         obj = 'totalBalanceUnit';
         break;
       case 'Days':
+        obj = '';
+        break;
+      case 'Unlock date':
         obj = '';
         break;
 
@@ -1825,32 +1960,33 @@ export class MutualFundUnrealizedTranComponent {
   }
 
   generatePdfBulk() {
+    this.excelDownload = false
     this.loadingDone = true;
-    setTimeout(() => {
-      const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
-      const para = this.unrealizedTranTemplate.nativeElement.innerHTML;
-      if (this.viewMode == 'Unrealized Transactions') {
-        this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML;
-      } else {
-        this.header = this.allTranTemplateHeader.nativeElement.innerHTML;
-      }
-      const obj = {
-        htmlInput: para,
-        header: this.header,
-        name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
-        landscape: true,
-        key: 'showPieChart',
-        clientId: this.clientId,
-        advisorId: this.advisorId,
-        fromEmail: this.clientDetails.advisorData.email,
-        toEmail: this.clientData.email,
-        mfBulkEmailRequestId: this.mfBulkEmailRequestId,
-        // fromEmail: 'devshyni@futurewise.co.in',
-        // toEmail: 'devshyni@futurewise.co.in'
-      };
-      this.utilService.bulkHtmlToPdf(obj);
-      // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
-    }, 200);
+    this.cd.detectChanges();
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+    const para = this.unrealizedTranTemplate.nativeElement.innerHTML;
+    if (this.viewMode == 'Unrealized Transactions') {
+      this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML;
+    } else {
+      this.header = this.allTranTemplateHeader.nativeElement.innerHTML;
+    }
+    const obj = {
+      htmlInput: para,
+      header: this.header,
+      name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
+      landscape: true,
+      key: 'showPieChart',
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      fromEmail: this.clientDetails.advisorData.email,
+      toEmail: this.clientData.email,
+      mfBulkEmailRequestId: this.mfBulkEmailRequestId,
+      // fromEmail: 'devshyni@futurewise.co.in',
+      // toEmail: 'devshyni@futurewise.co.in'
+    };
+    this.utilService.bulkHtmlToPdf(obj);
+    // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
+
   }
 
   getDetails() {

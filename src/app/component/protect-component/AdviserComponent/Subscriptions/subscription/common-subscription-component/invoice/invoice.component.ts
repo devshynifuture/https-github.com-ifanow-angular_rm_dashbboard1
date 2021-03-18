@@ -623,22 +623,22 @@ export class InvoiceComponent implements OnInit {
     this.showRecord = true;
     // this.getRecordPayment(data);
     this.sendRecordPaymentData = data;
-    this.sendRecordPaymentData.balanceDue =this.storeData.balanceDue;
-    this.sendRecordPaymentData.finalAmount =this.storeData.finalAmount;
+    this.sendRecordPaymentData.balanceDue = this.storeData.balanceDue;
+    this.sendRecordPaymentData.finalAmount = this.storeData.finalAmount;
 
     this.sendRecordPaymentData.add = false;
     // this.sendRecordPaymentData.add=false;
   }
 
   cancel(value) {
-    if (value != "" ) {
+    if (value != "") {
       this.storeData.balanceDue = (value.balanceDue) ? value.balanceDue : '';
       this.storeData.status = value.status;
-      this.storeData.status =(value.balanceDue!=0)? 3 :value.status
+      this.storeData.status = (value.balanceDue != 0) ? 3 : value.status
       if (value.status == 1) {
         this.rpyment = false;
-      }else{
-        this.rpyment=true;
+      } else {
+        this.rpyment = true;
       }
     }
     this.showRecord = false;
@@ -660,7 +660,7 @@ export class InvoiceComponent implements OnInit {
 
   selectedInvRecord: any;
   passInvoice(data, index, event) {
-    
+
     if (data.balanceDue == 0 || data.status == 1) {
       this.rpyment = false;
     } else {
@@ -844,7 +844,7 @@ export class InvoiceComponent implements OnInit {
   generatePdf() {
     this.storeData.isSubscription = true;
     const para = document.getElementById('template');
-    this.utils.htmlToPdf('',para.innerHTML, 'Test', '',this.storeData,'','',false);
+    this.utils.htmlToPdf('', para.innerHTML, 'Test', '', this.storeData, '', '', false, null);
   }
 
 

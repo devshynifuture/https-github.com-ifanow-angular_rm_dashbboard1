@@ -47,6 +47,8 @@ import { NoCredFoundComponent } from './noCredFound/no-cred-found/no-cred-found.
 import { InvestorDetailComponent } from './investors-transactions/investor-detail/investor-detail.component';
 import { MappedUserComponent } from './investors-transactions/investor-detail/mapped-user/mapped-user.component';
 import { MultiTransactionPopupComponent } from './overview-transactions/doTransaction/multi-transaction-popup/multi-transaction-popup.component';
+import { EditFatcaDetailsComponent } from './investors-transactions/edit-fatca-details/edit-fatca-details.component';
+import { CommonComponentModule } from '../../common-component/common-component.module';
 
 export const componentList = [
   OnlineTransactionComponent,
@@ -90,7 +92,8 @@ export const componentList = [
   MappedUserComponent,
   DetailedViewMandateComponent,
   InvestorDetailComponent,
-  MultiTransactionPopupComponent
+  MultiTransactionPopupComponent,
+  EditFatcaDetailsComponent
   // VideoKycComponent
 
 
@@ -106,7 +109,8 @@ export const componentList = [
     CustomDirectiveModule,
     CustomCommonModule,
     ScrollingModule,
-    PeopleEntryModule
+    PeopleEntryModule,
+    CommonComponentModule
   ],
   exports: [
     FormsModule,

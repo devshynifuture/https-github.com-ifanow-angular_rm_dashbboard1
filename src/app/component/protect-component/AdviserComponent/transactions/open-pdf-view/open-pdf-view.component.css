@@ -1,0 +1,14 @@
+.btnConfirm {
+  width: 140px;
+  height: 40px;
+}
+
+.uploadInput {
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  display: none;
+  top: 0;
+}
+/*# sourceMappingURL=open-pdf-view.component.css.map */

@@ -3,12 +3,16 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { appConfig } from 'src/app/config/component-config';
 import { apiConfig } from 'src/app/config/main-config';
 import { HttpParams } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanService {
+
+  private planData = new BehaviorSubject('')
+  private clientId = new BehaviorSubject('')
+
 
   constructor(private http: HttpService) { }
   public assetSubject = new Subject();
@@ -158,7 +162,7 @@ export class PlanService {
   }
   getAllGoals(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_GOALS, httpParams);
+    return this.http.get(apiConfig.GOAL + appConfig.GET_ALL_GOALS, httpParams);
   }
   deleteGoal(data) {
     const httpParams = new HttpParams().set('goalId', data.goalId).set('goalType', data.goalType).set('id', data.id);
@@ -199,7 +203,7 @@ export class PlanService {
   //   return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_INFLAMATION_RETURNS, data)
   // }
   getMFList(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_DATA, data);
+    return this.http.get(apiConfig.GOAL + appConfig.GET_MF_DATA, data);
   }
   saveMileStone(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_MILESTONE, data);
@@ -360,7 +364,7 @@ export class PlanService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FP_SECTION, data);
   }
   getTemplates(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATES, '');
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATES, data);
   }
   getPreview(data) {
     const httpParams = new HttpParams().set('id', data.id);
@@ -371,5 +375,33 @@ export class PlanService {
   }
   lifeInsurancePlanAdd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_PLAN_ADD, data);
+  }
+
+  addManuallyRiskProfile(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MANUAL_RISK_PROFILE, data);
+  }
+  setPlanData(value) {
+    this.planData.next(value);
+  }
+  getPlanData() {
+    return this.planData.asObservable();
+  }
+  setGoalData(value) {
+    this.planData.next(value);
+  }
+  getGoalData() {
+    return this.planData.asObservable();
+  }
+  setClientId(value) {
+    this.clientId.next(value);
+  }
+  getClientId() {
+    return this.clientId.asObservable();
+  }
+  clearStorage() {
+    this.setPlanData('');
+  }
+  clearStorageGoal() {
+    this.setGoalData('');
   }
 }

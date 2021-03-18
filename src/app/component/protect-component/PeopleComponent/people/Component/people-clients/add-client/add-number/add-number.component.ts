@@ -5,6 +5,7 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-add-number',
@@ -42,6 +43,7 @@ export class AddNumberComponent implements OnInit {
   protected _onDestroy = new Subject<void>();
   selectedISD: any;
   taxstatusId: any;
+  onintCallFlag: boolean;
 
   ngOnInit() {
     // listen for search field value changes
@@ -50,10 +52,21 @@ export class AddNumberComponent implements OnInit {
       .subscribe(() => {
         this.filterCodes();
       });
+
+    if (this.taxstatusId == 1) {
+      this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
+      // this.selectedISD = this.isdCodes[0].id
+      this.getMobileNumList.controls.forEach(element => {
+        element.get('code').setValue(73);
+        element.get('number').setValidators([Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)])
+        element.updateValueAndValidity();
+      });
+    }
+    this.onintCallFlag = true;
   }
 
   constructor(private fb: FormBuilder, private utilService: UtilService,
-    private peopleService: PeopleService, private enumService: EnumServiceService) {
+    private peopleService: PeopleService, private enumDataService: EnumDataService) {
   }
 
   // if this input not used anywhere then remove it
@@ -67,30 +80,23 @@ export class AddNumberComponent implements OnInit {
   }
 
   getIsdCodesData(taxStatusId) {
-    let obj = {};
-    this.peopleService.getIsdCode(obj).subscribe(
-      data => {
-        if (data) {
-          console.log(data);
-          this.isdCodes = data;
-          if (taxStatusId == 1) {
-            this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
-            // this.selectedISD = this.isdCodes[0].id
-            this.getMobileNumList.controls.forEach(element => {
-              element.get('code').setValue(73);
-              element.get('number').setValidators([Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)])
-              element.updateValueAndValidity();
-            });
-          } else {
-            data.sort(function (a, b) {
-              return a.countryCode.localeCompare(b.countryCode);
-            });
-            this.isdCodes = data;
-          }
-          this.filteredIsdCodes.next(this.isdCodes);
-        }
+    this.isdCodes = this.enumDataService.getIsdCodeData();
+    if (taxStatusId == 1) {
+      if (this.onintCallFlag) {
+        this.isdCodes = this.isdCodes.filter(element => element.code == '+91');
+        this.getMobileNumList.controls.forEach(element => {
+          element.get('code').setValue(73);
+          element.get('number').setValidators([Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)])
+          element.updateValueAndValidity();
+        });
       }
-    );
+    } else {
+      this.isdCodes.sort(function (a, b) {
+        return a.countryCode.localeCompare(b.countryCode);
+      });
+      this.isdCodes = this.isdCodes;
+    }
+    this.filteredIsdCodes.next(this.isdCodes);
   }
 
   selectedISDMethod(value, index) {

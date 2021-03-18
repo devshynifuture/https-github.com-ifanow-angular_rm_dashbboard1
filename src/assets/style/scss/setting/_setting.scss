@@ -12,6 +12,19 @@
   }
 }
 
+
+.action-teamplates {
+  position: absolute;
+  right: 10px;
+  z-index: 9;
+
+  img {
+    position: relative;
+    top: 8px;
+
+  }
+}
+
 .domain-favicon {
   .profilePhoto {
     width: 140px;
@@ -176,6 +189,21 @@
     .mat-card-header-text {
       display: none;
     }
+  }
+}
+
+.setting-upload-crop-img {
+  height: 256px;
+  width: 183px;
+}
+
+#ui-add-new-all-kyc-froala {
+  .fr-toolbar .fr-btn-grp {
+    margin: 0px !important;
+  }
+
+  .fr-box.fr-basic .fr-wrapper {
+    min-height: 320px !important;
   }
 }
 

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,MAAM,CAAA;EACJ,KAAK,EAAE,KAAK;CACb",
+    "sources": [
+        "sendy-excel.component.scss"
+    ],
+    "names": [],
+    "file": "sendy-excel.component.css"
+}

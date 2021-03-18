@@ -1338,8 +1338,7 @@ mat-tab-group[vertical] {
 }
 
 .mf-summary .mat-row:last-child,
-.mutualfunds-capital-debt .mat-row:last-child,
-.mutualfunds-capital-dividend-summary .mat-row:last-child {
+.mutualfunds-capital-debt .mat-row:last-child{
   font-weight: bold !important;
 }
 
@@ -1903,7 +1902,7 @@ textarea {
 
   .mat-error {
     white-space: nowrap !important;
-    padding-left: 10px;
+    padding-left: 4px;
     font-size: 12px;
   }
 }
@@ -2236,5 +2235,126 @@ a.docFileName:hover {
     // width: 120px;
     height: 35px;
     margin-right: 15px;
+  }
+}
+
+.my-custom-todo {
+
+
+  .edit-todo-icons {
+
+    display: none;
+    line-height: 10px;
+    top: 6px;
+    position: relative;
+
+
+  }
+
+  &:hover .edit-todo-icons {
+    display: block;
+    line-height: 10px;
+  }
+}
+
+.width-70 {
+  .mat-expansion-panel-header-title {
+    margin-right: 0px !important;
+  }
+
+  .close-side-icons {
+    margin-left: 0px !important;
+    width: 100% !important;
+  }
+
+  .mat-expansion-panel-header {
+    padding-right: 0px !important;
+  }
+
+  .mat-list-item-content {
+
+    justify-content: center !important;
+  }
+
+  .desKBTN {
+    margin-left: 0px !important;
+    display: block !important;
+    margin: 0 auto !important;
+  }
+}
+
+
+.plan-templates-img-right-side {
+  position: relative;
+
+  &:hover .image {
+    opacity: 0.3;
+  }
+
+  &:hover .middleOne {
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .middleOne {
+    position: absolute;
+    cursor: pointer;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    width: 340px;
+    height: 100%;
+    top: 0px;
+    opacity: 0;
+
+    p {
+      color: #ffffff;
+      position: absolute;
+      margin: 0;
+    }
+  }
+}
+
+.plan-setting-img-hw {
+  width: 340px;
+  height: 476px;
+}
+
+.hw-open-gallery-plan {
+  width: 280px;
+  height: 392px;
+}
+
+.plan-templates-img {
+  position: relative;
+  border: 1px solid #ddd;
+
+  &:hover .image {
+    opacity: 0.3;
+  }
+
+  &:hover .middleOne {
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .middleOne {
+    position: absolute;
+    cursor: pointer;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 140px;
+    bottom: 0px;
+    opacity: 0;
+
+    p {
+      color: #ffffff;
+      position: absolute;
+      margin: 0;
+    }
   }
 }

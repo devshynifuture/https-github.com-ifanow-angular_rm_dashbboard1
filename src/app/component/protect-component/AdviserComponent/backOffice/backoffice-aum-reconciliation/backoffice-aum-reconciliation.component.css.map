@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACV,MAAM,EAAE,KAAK;CACd;;AAED,AAAA,iBAAiB,CAAC,aAAa,AAAA,OAAO,CAAC;EACrC,gBAAgB,EAAE,sBAAsB;EACxC,aAAa,EAAE,4BAA4B;EAC3C,KAAK,EAAE,kBAAkB;CAE1B;;AAED,AAAA,iBAAiB,CAAC,aAAa,CAAC;EAC9B,KAAK,EAAE,kBAAkB;EACzB,aAAa,EAAE,qBAAqB;EACpC,KAAK,EAAE,gBAAgB;EACvB,UAAU,EAAE,sBAAsB;EAClC,WAAW,EAAE,mBAAmB;EAChC,cAAc,EAAE,iBAAiB;CAClC",
+    "sources": [
+        "backoffice-aum-reconciliation.component.scss"
+    ],
+    "names": [],
+    "file": "backoffice-aum-reconciliation.component.css"
+}

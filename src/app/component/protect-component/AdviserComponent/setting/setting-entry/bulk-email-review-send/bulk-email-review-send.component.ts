@@ -82,6 +82,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
   searchName: string;
   selectedClientArray = [];
   tempData: any = [];
+  templateObj: any;
 
   constructor(
     public authService: AuthService,
@@ -165,7 +166,7 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     this.mailForm = this.fb.group({
       mail_body: [''],
     });
-    this.data == 'Email' ? this.subject.setValue('Your new money management account is created!') : this.subject.setValue("IFANOW");
+    this.data == 'Sms' ? this.subject.setValue("IFANOW") : this.getSubjectTemplate();
 
     this.searchFC.valueChanges.pipe(
       debounceTime(700),
@@ -197,6 +198,27 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
     } else {
       this.getClientListValue(0);
     }
+  }
+
+  getSubjectTemplate() {
+    const obj = {
+      advisorId: this.advisorId,
+      templateId: 8
+    }
+    this.orgSetting.getEmailBulkSubjectTemplate(obj).subscribe(
+      data => {
+        if (data) {
+          console.log(data);
+          this.templateObj = data;
+          this.templateObj.fromEmail != "N/A" ? this.selectedFromEmail.setValue(this.templateObj.fromEmail) : this.selectedFromEmail.setValue(this.verifiedAccountsList[0].emailAddress);
+          this.subject.setValue(data.subject);
+        } else {
+          this.subject.setValue('Your new money management account is created!')
+        }
+      }, err => {
+        this.subject.setValue('Your new money management account is created!')
+      }
+    )
   }
 
   getClientListValue(offset) {
@@ -286,7 +308,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         if (this.isLoading) {
           this.isLoading = false;
         }
+        setTimeout(() => {
+          this.hasEndReached = false;
 
+        }, 1000);
       } else {
         this.dataSource.data = (this.infiniteScrollClientList.length > 0) ? this.infiniteScrollClientList : null;
         this.dataSource.sort = this.sort;
@@ -303,7 +328,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         }
         this.dataSource.filteredData = [];
         this.eventService.openSnackBar('No More Data Found', "DISMISS");
-        this.hasEndReached = true;
+        setTimeout(() => {
+          this.hasEndReached = false;
+
+        }, 1000);
       }
     }
 
@@ -313,9 +341,10 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
     console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
     let tableOffsetTop = this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop;
-    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 38);
+    let tableOffsetHeight = (e.target.scrollTop + e.target.offsetHeight - 37);
     if (tableOffsetTop <= tableOffsetHeight) {
       if (!this.hasEndReached) {
+        this.hasEndReached = true;
         console.log("on entering inside", this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
         // this.infiniteScrollingFlag = true;
         if (!this.fromSearch && !this.infiniteScrollingFlag) {
@@ -479,12 +508,22 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
 
     }
 
+    let email;
 
+    if (this.verifiedAccountsList.length == 0) {
+      email = 'no-reply@my-planner.in'
+    } else if (this.templateObj.fromEmail == 'N/A' && this.verifiedAccountsList.length == 1) {
+      email = this.verifiedAccountsList[0].emailAddress;
+    } else if (this.templateObj.fromEmail != 'N/A' && this.verifiedAccountsList.length == 1) {
+      email = this.templateObj.fromEmail
+    } else {
+      email = this.selectedFromEmail.value;
+    }
 
     const obj = {
       advisorId: this.advisorId,
       clientIds: arr,
-      fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : this.selectedFromEmail.value,
+      fromEmail: email,
       subject: this.subject.value,
       messageBody: this.emailBody
     };

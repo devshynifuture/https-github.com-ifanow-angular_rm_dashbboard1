@@ -172,7 +172,7 @@ export class FixedIncomeComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
@@ -230,7 +230,10 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = true;
     const obj = {
       clientId: this.clientId,
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      reminderType: 0,
+      endDate: 0,
+      startDate: 0
     };
     this.dataSource.data = [{}, {}, {}];
     this.customerService.getFixedDeposit(obj).subscribe(

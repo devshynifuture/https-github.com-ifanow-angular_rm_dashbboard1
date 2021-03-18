@@ -16,7 +16,7 @@ export class SendyExcelComponent implements OnInit {
     private fb: FormBuilder
   ) { }
   sendyForm: FormGroup;
-  isMainLoading: boolean = false;
+  isMainLoading = false;
 
   ngOnInit() {
     this.initForm();
@@ -26,14 +26,14 @@ export class SendyExcelComponent implements OnInit {
     this.sendyForm = this.fb.group({
       listId: [null, Validators.required],
       file: [null, Validators.required]
-    })
+    });
   }
 
   onFileSelected(event) {
     console.log(event);
-    let data = {
+    const data = {
       fileName: event.target.files[0].name
-    }
+    };
     if (event.target.files) {
       this.formSubmit(data, event);
     }
@@ -47,30 +47,30 @@ export class SendyExcelComponent implements OnInit {
           const { bucketName, s3ObjectKey, uploadUrl } = res;
           this.supportService.putUploadSendyExcelFile(uploadUrl, event.target.files[0])
             .subscribe(response => {
-              let obj = {
+              const obj = {
                 s3ObjectKey,
                 bucketName,
                 listId: this.sendyForm.get('listId').value
-              }
+              };
               this.supportService.postSendyDataAfterFileUpload(obj)
                 .subscribe(value => {
-                  console.log("after uplaod", value);
-                  this.eventService.openSnackBar("File Uploaded Successfully", "DISMISS");
+                  console.log('after uplaod', value);
+                  this.eventService.openSnackBar('File Uploaded Successfully', 'DISMISS');
                   this.sendyForm.reset({ emitEvent: false });
                   // event
                   this.isMainLoading = false;
                 }, err => {
-                  this.eventService.openSnackBar('Something went wrong', "DISMISS");
+                  this.eventService.showErrorMessage(err);
                   console.error(err);
-                })
+                });
             }, err => {
-              this.eventService.openSnackBar('Something went wrong', "DISMISS");
+              this.eventService.showErrorMessage(err);
               console.error(err);
             });
         }, err => {
-          this.eventService.openSnackBar('Something went wrong', "DISMISS");
+          this.eventService.showErrorMessage(err);
           console.error(err);
-        })
+        });
     } else {
       this.sendyForm.markAllAsTouched();
     }

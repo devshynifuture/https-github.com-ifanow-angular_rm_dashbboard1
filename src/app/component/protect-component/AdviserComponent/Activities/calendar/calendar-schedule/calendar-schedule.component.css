@@ -1,0 +1,156 @@
+.scheduleBox .row {
+  margin-right: -15px !important;
+  margin-left: -15px !important;
+}
+
+.numberDate {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  text-align: center;
+  line-height: 36px;
+}
+
+.activeNumber {
+  background: #008FFF;
+  color: #ffffff;
+}
+
+.text-primitive, .text-primary {
+  text-transform: uppercase;
+}
+
+.text-primary {
+  color: #000;
+}
+
+.eventList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 32px;
+  cursor: pointer;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  height: 32px;
+  padding-left: 10px;
+  outline: none;
+  overflow: hidden;
+}
+
+.eventList .eventListIcon {
+  width: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-ordinal-group: 1;
+      -ms-flex-order: 0;
+          order: 0;
+}
+
+.eventList .eventListIcon span {
+  border-radius: 12px;
+  border: 1px solid;
+  width: 10px;
+  height: 10px;
+  border-color: #008FFF;
+  display: inline-block;
+}
+
+.eventList .eventListTime {
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 160px;
+}
+
+.eventList .eventListText {
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+
+.eventList:hover {
+  background: #f5f5f5;
+}
+
+.eventList2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 32px;
+  cursor: pointer;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  height: 32px;
+  padding-left: 10px;
+  outline: none;
+  overflow: hidden;
+  margin: 11px 0px;
+}
+
+.eventList2 .eventListIcon {
+  width: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-ordinal-group: 1;
+      -ms-flex-order: 0;
+          order: 0;
+}
+
+.eventList2 .eventListIcon span {
+  border-radius: 12px;
+  border: 1px solid;
+  width: 10px;
+  height: 10px;
+  border-color: #008FFF;
+  display: inline-block;
+}
+
+.eventList2 .eventListTime {
+  line-height: 18px;
+  font-size: 14px;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 160px;
+}
+
+.eventList2 .eventListText {
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+
+.eventList2:hover {
+  background: #f5f5f5;
+}
+/*# sourceMappingURL=calendar-schedule.component.css.map */

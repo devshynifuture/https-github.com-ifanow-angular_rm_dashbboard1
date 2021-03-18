@@ -1,0 +1,67 @@
+.boxone {
+  width: 276px;
+  height: 180px;
+  border: 2px solid #83959D;
+  background: #F5F7F7;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 5px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: relative;
+}
+
+.borderActive {
+  border: 3px solid #008FFF;
+  background: #DFF1FF;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background: #008FFF;
+}
+
+.icomeCheckBox {
+  position: absolute;
+  top: -6px;
+  right: 0px;
+}
+
+.familyMemberBox {
+  width: calc(100% - 400px);
+  margin: 0px auto;
+}
+
+.memberBorderBox {
+  width: 110px;
+  height: 110px;
+  border: 2px solid #83959D;
+  margin: 0px auto 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.incomeSourcesBox .memberBorderBox {
+  border: 1px solid #D9DEE1;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+/*# sourceMappingURL=add-income.component.css.map */

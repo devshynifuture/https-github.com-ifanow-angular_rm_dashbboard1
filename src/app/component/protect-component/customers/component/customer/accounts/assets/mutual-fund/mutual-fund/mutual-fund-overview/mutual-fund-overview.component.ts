@@ -132,6 +132,7 @@ export class MutualFundOverviewComponent implements OnInit {
   latestNavDate: any;
   mfCapability: any;
   overviewReportCapability: any = {};
+  clientNameToDisplay: any;
 
   constructor(private ngZone: NgZone, private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -451,6 +452,7 @@ export class MutualFundOverviewComponent implements OnInit {
         if (this.showSummaryBar) {
           this.pieChart('piechartMutualFund');
           if (this.finPlanObj) {
+            this.ref.detectChanges();
             this.svg = this.chart.getSVG();
             this.loadsvg.emit(this.svg);
           }// pie chart data after calculating percentage
@@ -585,6 +587,7 @@ export class MutualFundOverviewComponent implements OnInit {
       this.getTransactionTypeData();
     }
     if (data) {
+      this.checkFamMember();
       this.getCountData.emit('call');
       this.mfCopyData = data;
       this.MfServiceService.sendMutualFundData(data);
@@ -656,7 +659,25 @@ export class MutualFundOverviewComponent implements OnInit {
     }
 
   }
+  checkFamMember() {
+    this.clientNameToDisplay = null;
+    if (Object.keys(this.setDefaultFilterData).length > 0) {
+      if (this.setDefaultFilterData.familyMember) {
+        let famMember = this.setDefaultFilterData.familyMember.filter(d => d.selected == true);
+        if (famMember.length == 1) {
+          this.clientNameToDisplay = famMember[0].name ? famMember[0].name : this.clientData.name
+        } else {
+          this.clientNameToDisplay = this.clientData.name
+        }
+      } else {
+        this.clientNameToDisplay = this.clientData.name
+      }
 
+    } else {
+      this.clientNameToDisplay = this.clientData.name
+    }
+
+  }
   getCashFlowData(data) {
     const cashFlow = data;
     if (cashFlow && cashFlow.hasOwnProperty('mutualFundCategoryMastersList') && cashFlow.mutualFundCategoryMastersList.length !== 0) {
@@ -976,7 +997,9 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdf() {
-    this.svg = this.chart.getSVG();
+    if (this.chart) {
+      this.svg = this.chart.getSVG();
+    }
     this.fragmentData.isSpinner = true;
     const para = document.getElementById('templateOverview');
     const obj = {
@@ -987,7 +1010,7 @@ export class MutualFundOverviewComponent implements OnInit {
       svg: this.svg
     };
     const header = null;
-    this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg, true);
+    this.returnValue = this.UtilService.htmlToPdf(header, para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg, true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
     console.log('return value ====', this.returnValue);
     return obj;
   }
@@ -1262,8 +1285,8 @@ export class MutualFundOverviewComponent implements OnInit {
             if (this.rightFilterData.mfData) {
               this.reponseData = this.mfService.doFiltering(this.rightFilterData.mfData);
             }
-            this.getMutualFundResponse(this.rightFilterData.mfData);
             this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
+            this.getMutualFundResponse(this.rightFilterData.mfData);
             if (this.rightFilterData) {
               this.showHideTable = this.rightFilterData.overviewFilter;
               (this.showHideTable[0].name == 'Summary bar' && this.showHideTable[0].selected == true) ? this.showSummaryBar = true : (this.showSummaryBar = false);
@@ -1357,9 +1380,11 @@ export class MutualFundOverviewComponent implements OnInit {
   generatePdfBulk() {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     this.loadingDone = true;
-    this.svg = this.chart.getSVG();
+    this.ref.detectChanges();
+    if (this.chart) {
+      this.svg = this.chart.getSVG();
+    }
     const para = this.mfOverviewTemplate.nativeElement
-
     const obj = {
       htmlInput: para.innerHTML,
       name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'MF_Overview_Report' + date,

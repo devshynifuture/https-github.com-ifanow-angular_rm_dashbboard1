@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,mBAAmB,CAAC;EAClB,UAAU,EAAE,OAAiB;EAC7B,KAAK,EAAE,KAAK;EACZ,KAAK,EAAE,IAAI;EACX,UAAU,EAAE,MAAM;CAYnB;;AAhBD,AAME,mBANiB,CAMjB,CAAC,CAAC;EACA,KAAK,EAAE,KAAK;CACb;;AARH,AAUE,mBAViB,AAUhB,MAAM,EAVT,mBAAmB,AAWhB,OAAO,EAXV,mBAAmB,AAYhB,MAAM,CAAC;EACN,KAAK,EAAE,KAAK;EACZ,UAAU,EAAE,OAAiB;CAC9B",
+    "sources": [
+        "email-left-sidebar.component.scss"
+    ],
+    "names": [],
+    "file": "email-left-sidebar.component.css"
+}

@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddDeploymentsComponent } from './add-deployments/add-deployments.component';
 import { SipCleanupTransactionComponent } from './sip-cleanup-transaction/sip-cleanup-transaction.component';
 import { startWith, debounceTime } from 'rxjs/operators';
+import { EditSipAmountComponent } from './edit-sip-amount/edit-sip-amount.component';
 
 @Component({
   selector: "app-sip-cleanup",
@@ -177,6 +178,19 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
       }
     });
     // this.getSipCleanUpList(false);
+  }
+
+  openEditSIPPopup(data, index) {
+    const dialogRef = this.dialog.open(EditSipAmountComponent, {
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.dataSource.data[index] = result;
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -380,6 +394,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     if (choice === "keep") {
       // data.removeStatus = 0;
       // this.tableData[index].removeStatus = 0;
+      data.disabled = 0
       if (this.selectedRow.length > 0) {
         this.selectedRow.forEach(element => {
           dataObjArr.push({
@@ -398,6 +413,7 @@ export class SipCleanupComponent implements OnInit, OnDestroy {
     } else if (choice === "remove") {
       // data.removeStatus = 1;
       // this.tableData[index].removeStatus = 1;
+      data.disabled = 1
       if (this.selectedRow.length > 0) {
         this.selectedRow.forEach(element => {
           dataObjArr.push({

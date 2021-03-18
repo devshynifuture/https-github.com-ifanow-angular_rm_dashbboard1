@@ -45,7 +45,7 @@
 }
 
 .max-scroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #F1F1F1;
 }
 
 .max-scroll::-webkit-scrollbar-thumb:hover {
@@ -67,7 +67,6 @@
 .height180 {
   height: 180px;
   margin: 20px auto;
-
 }
 
 .skeletonAnimation .relClass {
@@ -93,7 +92,6 @@
       animation: loading 1s infinite;
     }
   }
-
 
   .bar120 {
     background-color: #E7E7E7;
@@ -159,18 +157,12 @@
       animation: loading 1s infinite;
     }
   }
- 
-
-
-
 }
 
 .height24 {
   height: 24px;
   margin-bottom: 6px;
 }
-
- 
 
 .btn40 {
   height: 40px;
@@ -179,7 +171,6 @@
 .dasBoradBox {
   width: 100%;
 }
-
 
 .fundBoxDashboard {
   min-width: 180px;
@@ -209,7 +200,6 @@
   background: #FF7272;
 }
 
-
 .fundBoxDashboard_loader {
   min-width: 155px;
   height: 102px;
@@ -231,10 +221,9 @@
   padding: 10px 0px;
 }
 
-
 .fundBox {
   min-width: 240px;
-  height: 170px;
+  height: 140px;
   border-radius: 4px;
   padding: 10px;
   border: 1px solid #D9DEE1;
@@ -266,17 +255,33 @@
   }
 }
 
-.todo-wrraper
-{
+.todo-wrraper {
   position: relative;
-  .form-control
-  {
+
+  .form-control {
     padding-right: 60px !important;
   }
-  .todo-btn
-  {
+
+  .todo-btn {
     position: absolute;
     top: 10px;
     right: 0px;
   }
+}
+
+.bg-4-todo {
+  // background: #F5F7F7;
+  // padding-left: 12px;
+  // padding-right: 12px;
+  padding-top: 25px;
+  top: 126px;
+}
+
+.emptyTo-Do {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.h-160 {
+  height: 160px !important;
 }

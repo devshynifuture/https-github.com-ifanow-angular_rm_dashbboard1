@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-income-source',
@@ -11,10 +12,12 @@ export class AddIncomeSourceComponent implements OnInit {
   stepOneData: any;
   selectedFamilyIncome = [];
   countIncomeType: number = 0;
+  clientData;
   constructor(private eventService: EventService) { }
   @Output() IncomeSourceDetailsData = new EventEmitter();
   @Output() previousStep = new EventEmitter();
   @Input() set selectedFamilyList(data) {
+    this.clientData = AuthService.getClientData();
     if (data.flag == "addIncome") {
       // data.data.forEach(element => {
       //   const obj = [

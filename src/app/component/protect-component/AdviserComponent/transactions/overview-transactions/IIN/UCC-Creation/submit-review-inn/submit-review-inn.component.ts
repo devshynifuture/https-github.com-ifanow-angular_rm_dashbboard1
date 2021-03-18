@@ -31,6 +31,7 @@ export class SubmitReviewInnComponent implements OnInit {
   thirdHolder: any;
   secondHolder: any;
   dataSource: any;
+  failureMessage: string = '';
 
   constructor(private onlineTransact: OnlineTransactionService,
     private fb: FormBuilder,
@@ -144,7 +145,7 @@ export class SubmitReviewInnComponent implements OnInit {
   getBSECredentials() {
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     console.log('encode', obj);
@@ -161,7 +162,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
   getBSESubBrokerCredentials() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
@@ -256,7 +257,7 @@ export class SubmitReviewInnComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
   }
@@ -272,6 +273,13 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   submit(singleBrokerCred) {
+    console.log('singleBrokerCreds', singleBrokerCred)
+    // if (singleBrokerCred.aggregatorType == 1) {
+    //   if (!this.nominee) {
+    //     this.failureMessage = 'Please go back and fill nominee details for NSE';
+    //     return;
+    //   }
+    // }
     // this.doneData = true;
     this.selectedBroker = singleBrokerCred
     this.toSendObjHolderList = [];
@@ -287,11 +295,13 @@ export class SubmitReviewInnComponent implements OnInit {
         this.toSendObjBankList.push(element);
       }
     });
-    this.allData.nomineeList.forEach(element => {
-      if (element.address && element.name) {
-        this.toSendObjNomineeList.push(element);
-      }
-    });
+    if (this.allData.nomineeList.length > 0 && this.nominee) {
+      this.allData.nomineeList.forEach(element => {
+        if (element.address && element.name) {
+          this.toSendObjNomineeList.push(element);
+        }
+      });
+    }
     this.allData.holderList = this.toSendObjHolderList;
     this.allData.bankDetailList = this.toSendObjBankList;
     this.allData.nomineeList = this.toSendObjNomineeList;

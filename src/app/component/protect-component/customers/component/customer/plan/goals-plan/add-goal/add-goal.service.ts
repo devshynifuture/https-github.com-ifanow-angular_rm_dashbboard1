@@ -3,6 +3,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PlanService } from '../../plan.service';
 import { Subject } from 'rxjs';
 import { copyArrayItem } from '@angular/cdk/drag-drop';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AddGoalService {
   constructor(
     private eventService: EventService,
     private plansService: PlanService,
+    private subInjectService: SubscriptionInject,
   ) { }
 
   refreshObservable = new Subject();
@@ -28,23 +30,23 @@ export class AddGoalService {
       //   this.eventService.openSnackBar("Asset allocation unsuccessful !! Asset maturing after goal date.", "Dismiss");
       // } else {
 
-        let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
-        if (asset.absAllocation < 100) {
-          asset.goalAssetMapping.forEach(element => {
-            obj.percentAllocated = 100 - element.percentAllocated
-          });
-          obj.lump_debt = selectedGoal.dashboardData.lump_debt
-          if (asset.assetType == 44 || asset.assetType == 43) {
-            obj.insuranceCashFlowTypeId = asset.insuranceCashFlowTypeId
-            obj.insuranceCashFlowId = asset.insuranceCashFlowId
-          }
-          obj.lump_equity = selectedGoal.dashboardData.lump_equity
-          obj.currentValue = asset.currentValue
-          this.allocateAsset(obj);
-        } else {
-          this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
+      let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
+      if (asset.absAllocation < 100) {
+        asset.goalAssetMapping.forEach(element => {
+          obj.percentAllocated = 100 - element.percentAllocated
+        });
+        obj.lump_debt = selectedGoal.dashboardData.lump_debt
+        if (asset.assetType == 44 || asset.assetType == 43) {
+          obj.insuranceCashFlowTypeId = asset.insuranceCashFlowTypeId
+          obj.insuranceCashFlowId = asset.insuranceCashFlowId
         }
-   //  }
+        obj.lump_equity = selectedGoal.dashboardData.lump_equity
+        obj.currentValue = asset.currentValue
+        this.allocateAsset(obj);
+      } else {
+        this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
+      }
+      //  }
 
     }
 
@@ -61,7 +63,7 @@ export class AddGoalService {
             obj.sipPercent = parseInt(mfAsset.absSIP)
             obj.lumpsumOrSip = 2
           } else {
-            obj.lumpsumPercent = parseInt(mfAsset.absLumsum)
+            obj.lumpsumPercent = (100 - element.allocatedToOtherGoal)
             obj.lumpsumOrSip = 1
           }
         });
@@ -83,7 +85,8 @@ export class AddGoalService {
       assetType: asset.assetType,
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
-      percentAllocated: 100
+      percentAllocated: 100,
+      otherAssetDebtOrEquityId: (asset.assetType == 45) ? asset.otherAssetDebtOrEquityId : 0
     }
   }
   createAllocationObjectForMf(asset, advisor_client_id, selectedGoal) {
@@ -104,6 +107,7 @@ export class AddGoalService {
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
     }, err => {
       this.eventService.openSnackBar(err);
     })
@@ -114,6 +118,7 @@ export class AddGoalService {
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Unallocated", "Dismiss");
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
     }, err => {
       this.eventService.openSnackBar(err);
     })

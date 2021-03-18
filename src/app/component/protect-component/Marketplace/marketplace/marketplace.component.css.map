@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,gBAAgB,CAAA;EAExB,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,IAAI;EACX,OAAO,EAAE,cAAc;EACvB,SAAS,EAAE,cAAc;EACzB,UAAU,EAAE,OAAO;EACnB,MAAM,EAAE,cAAc;EACtB,WAAW,EAAE,eAAe;EAC5B,aAAa,EAAE,cAAc;CAO9B;;AAhBD,AAWE,SAXO,CAAC,gBAAgB,CAWxB,IAAI,CAAC;EACH,SAAS,EAAE,GAAG;EACd,UAAU,EAAE,MAAM;CACnB",
+    "sources": [
+        "marketplace.component.scss"
+    ],
+    "names": [],
+    "file": "marketplace.component.css"
+}

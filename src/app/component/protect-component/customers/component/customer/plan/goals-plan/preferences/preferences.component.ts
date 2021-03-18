@@ -56,6 +56,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   subscriber = new Subscriber();
   freez: boolean = false;
   savingStartDate: any;
+  goalSDrror: boolean;
+  goalRError: boolean;
+  goalAddError: boolean;
+  goalError: boolean;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -70,10 +74,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   selected = 0;
 
   ngOnInit() {
+    if (this.data.remainingData.freezed == true) {
+      this.freez = true
+    }
     if (this.data.singleOrMulti == 1) {
-      if (this.data.remainingData.freezed == true) {
-        this.freez = true
-      }
       console.log((new Date(this.data.remainingData.goalStartDate).getFullYear()));
       console.log((new Date().getFullYear()) + 1)
       this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear() - 1)).map((v, idx) => v + idx);
@@ -172,8 +176,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
             freezed: false,
           }
           this.planService.freezCalculation(obj).subscribe(res => {
-            //this.allocateOtherAssetService.refreshAssetList.next();
-            //this.loadAllAssets();
+            this.allocateOtherAssetService.refreshAssetList.next();
+            this.subInjectService.closeNewRightSlider({ state: 'close', refreshRequired: true });
             this.eventService.openSnackBar("Goal unfreeze successfully");
             dialogRef.close();
           }, err => {
@@ -278,14 +282,32 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
     const sStartDate = this.goalDetailsFG.controls.savingStartDateYear.value + '-' + this.goalDetailsFG.controls.savingStartDateMonth.value + '-01';
     const sEndtDate = this.goalDetailsFG.controls.savingEndDateYear.value + '-' + this.goalDetailsFG.controls.savingEndDateMonth.value + '-01';
+    const gAddDate = this.datePipe.transform(this.goalDetailsFG.controls.goalAdditionDate.value, 'yyyy-MM-dd')
 
-    if (this.data.singleOrMulti == 2) {
+    if (this.data.singleOrMulti == 2 && this.data.goalType == 1) {
+      if ([-1].includes(UtilService.compareDatesFor(gstartDate, sEndtDate))) {
+        this.goalRError = true;
+      } else {
+        this.goalRError = false;
+      }
+      if ([-1].includes(UtilService.compareDates(gAddDate, gstartDate))) {
+        this.goalAddError = true;
+      } else {
+        this.goalAddError = false;
+      }
+      if ([-1].includes(UtilService.compareDates(sStartDate, gstartDate))) {
+        this.goalError = true;
+      } else {
+        this.goalError = false;
+      }
+    }
+    else if (this.data.singleOrMulti == 2) {
       const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
       // goal start date cannot be greater than end date
       if ([-1].includes(UtilService.compareDates(gstartDate, gendtDate))) {
-        this.goalSDError = true;
+        this.goalSDrror = true;
       } else {
-        this.goalSDError = false;
+        this.goalSDrror = false;
       }
 
       // savings SD cannot be greater than goal end date
@@ -294,6 +316,21 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       } else {
         this.savingsEDError = false;
       }
+      if ([-1].includes(UtilService.compareDatesFor(sStartDate, sEndtDate))) {
+        this.savingsSDError = true;
+      } else {
+        this.savingsSDError = false;
+      }
+      if ([-1].includes(UtilService.compareDates(gAddDate, gstartDate))) {
+        this.goalAddError = true;
+      } else {
+        this.goalAddError = false;
+      }
+      if ([-1].includes(UtilService.compareDates(sStartDate, gstartDate))) {
+        this.goalError = true;
+      } else {
+        this.goalError = false;
+      }
     } else {
       // savings SD cannot be greater than goal start date
       if ([-1].includes(UtilService.compareDates(sEndtDate, gstartDate))) {
@@ -301,16 +338,31 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       } else {
         this.savingsEDError = false;
       }
+      if ([-1].includes(UtilService.compareDatesFor(sStartDate, sEndtDate))) {
+        this.savingsSDError = true;
+      } else {
+        this.savingsSDError = false;
+      }
+      if ([-1].includes(UtilService.compareDates(gAddDate, gstartDate))) {
+        this.goalAddError = true;
+      } else {
+        this.goalAddError = false;
+      }
+      if ([-1].includes(UtilService.compareDates(sStartDate, gstartDate))) {
+        this.goalError = true;
+      } else {
+        this.goalError = false;
+      }
     }
 
     // savings start date cannot be greater than end date
-    if ([-1].includes(UtilService.compareDates(sStartDate, sEndtDate))) {
+    if ([-1].includes(UtilService.compareDatesFor(sStartDate, sEndtDate))) {
       this.savingsSDError = true;
     } else {
       this.savingsSDError = false;
     }
 
-    return this.goalSDError || this.savingsEDError || this.savingsSDError;
+    return this.goalSDError || this.savingsEDError || this.savingsSDError || this.goalSDrror || this.goalAddError || this.goalError;
   }
 
   savePreference() {

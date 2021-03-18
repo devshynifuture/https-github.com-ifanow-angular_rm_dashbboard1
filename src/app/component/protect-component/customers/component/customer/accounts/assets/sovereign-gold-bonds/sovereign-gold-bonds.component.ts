@@ -66,7 +66,9 @@ export class SovereignGoldBondsComponent implements OnInit {
 
 
   }
-  displayedColumns3 = ['no', 'owner', 'units', 'cvalue', 'interest', 'amountInvested', 'issueDate', 'mvalue', 'mdate', 'bondseries', 'xirrDate', 'status', 'icons'];
+  // displayedColumns3 = ['no', 'owner', 'units', 'cvalue', 'interest', 'amountInvested', 'issueDate', 'mvalue', 'mdate', 'bondseries', 'xirrDate', 'status', 'icons'];
+
+  displayedColumns3 = ['no', 'owner', 'units', 'cvalue', 'interest', 'bondseries', 'xirrDate', 'description', 'status', 'icons'];
 
   ngOnInit() {
     this.reportDate = new Date();
@@ -107,7 +109,7 @@ export class SovereignGoldBondsComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -291,7 +293,7 @@ export class SovereignGoldBondsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.assetValidation.goldBondList = this.dataList ? this.dataList : null;
+    this.assetValidation.goldBondList = this.dataList.assetList ? this.dataList : null;
   }
 
   deleteModal(value, element) {

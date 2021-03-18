@@ -18,7 +18,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
   noData: string;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
- 
+
   constructor(private tranService: OnlineTransactionService, private eventService: EventService) { }
   columns = [];
   ngOnInit() {
@@ -34,7 +34,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.tranService.getBSECredentials(obj).subscribe(
@@ -51,7 +51,7 @@ export class SettingsEmpanelledAmcComponent implements OnInit {
 
     if (data) {
       this.credentialData = data;
-      
+
       this.getEmpanelledAmcData();
     } else {
       this.isLoading = false;

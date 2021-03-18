@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "custom-dialog-container.component.scss"
+    ],
+    "names": [],
+    "file": "custom-dialog-container.component.css"
+}

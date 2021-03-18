@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
-import * as Highcharts from 'highcharts';
 import { ColorString } from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
@@ -10,15 +9,19 @@ import { Subscription } from 'rxjs';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { UtilService } from 'src/app/services/util.service';
 import { Chart } from 'angular-highcharts';
+import HC_exporting from 'highcharts/modules/exporting';
 import { AppConstants } from 'src/app/services/app-constants';
-import { MutualFundOverviewComponent } from "../assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component";
-import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { BackOfficeService } from "../../../../../AdviserComponent/backOffice/back-office.service";
-import { ChangeDetectorRef } from "@angular/core/src/metadata/*";
-import { SettingsService } from "../../../../../AdviserComponent/setting/settings.service";
+import { MutualFundOverviewComponent } from '../assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import { SubscriptionInject } from '../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from '../../../../../AdviserComponent/backOffice/back-office.service';
+import { ChangeDetectorRef } from '@angular/core/src/metadata/*';
+import { SettingsService } from '../../../../../AdviserComponent/setting/settings.service';
 import { CustomerOverviewService } from '../../customer-overview/customer-overview.service';
 import { MatSidenav } from '@angular/material';
+import Highcharts from 'highcharts';
+
+HC_exporting(Highcharts);
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -27,6 +30,7 @@ import { MatSidenav } from '@angular/material';
 })
 
 export class PortfolioSummaryComponent implements OnInit, OnDestroy {
+  reportDate;
   advisorId: any;
   clientId: any;
   summaryTotalValue: any;
@@ -36,6 +40,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   summaryMap;
   graphList: any[];
   totalAssetsWithoutLiability = 0;
+  totalInsurance = 0;
   liabilityTotal = 0;
   nightyDayData: any;
   oneDay: any;
@@ -44,6 +49,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   expenseList = [];
   incomeList = [];
   userData: any;
+  fragmentData = { isSpinner: false, date: null, time: '', size: '' };
   filterCashFlow = { income: [], expense: [] };
   inflowFlag;
   yearArr = Array(12).fill('').map((v, i) => this.datePipe.transform(new Date().setMonth(new Date().getMonth() + i), 'MMM'));
@@ -54,11 +60,25 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       isLoading: true,
     }
   };
-  assetAllocationPieConfig: Chart;
-  portfolioGraph: Chart;
+  @Output() loaded = new EventEmitter(); // emit financial planning innerHtml reponse
+  @Output() loadsvg1 = new EventEmitter(); // emit financial planning innerHtml reponse
+  @Output() loadsvg2 = new EventEmitter(); // emit financial planning innerHtml reponse
+  @Output() loadsvg3 = new EventEmitter(); // emit financial planning innerHtml reponse
+
+  @Input() finPlanObj: any; // finacial plan pdf input
+
+  assetAllocationPieConfig: Highcharts.Chart;
+  portfolioGraph: Highcharts.Chart;
+  portSvg: string;
+  cashFlowChart: Highcharts.Chart;
+  cashFlowSvg: string;
+  getOrgData: any;
+  userInfo: any;
+
   sidenavState = true;
   chartTotal = 100;
   chartData: any[];
+  chart: Highcharts.Chart;
   portFolioData: any[] = [];
   hasError = false;
   clientData = AuthService.getClientData();
@@ -114,6 +134,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   cashFlowDescNaming: any[] = [];
   assetAllocationRes: boolean;
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  svg: string;
+  AlltotalAssetsWithoutLiability = 0;
+  mainLoader: boolean = true;
+
   constructor(
     public eventService: EventService,
     private cusService: CustomerService,
@@ -121,8 +145,13 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private enumService: EnumServiceService,
     public authService: AuthService,
-    private customerOverview: CustomerOverviewService
+    private customerOverview: CustomerOverviewService,
+    private util: UtilService,
+    private ref: ChangeDetectorRef,
   ) {
+    this.userInfo = AuthService.getUserInfo();
+    this.userData = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
   }
 
   ngOnInit() {
@@ -140,12 +169,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     // }
 
     this.userData = AuthService.getUserInfo();
+    this.getOrgData = AuthService.getOrgDetails();
     console.log('Portfolio summary userData : ', this.userData);
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    this.initializePieChart();
-    this.initializePortfolioChart();
     !this.customerOverview.summaryLeftsidebarData ? this.calculateTotalSummaryValues() : this.calculateTotalSummaryValuesRes(this.customerOverview.summaryLeftsidebarData);
     !this.customerOverview.aumGraphdata ? this.getAumGraphData() : this.getAumGraphDataResponse(this.customerOverview.aumGraphdata);
     !this.customerOverview.assetAllocationChart ? this.getAssetAllocationSummary() : this.getAssetAllocationSummaryResponse(this.customerOverview.assetAllocationChart);
@@ -169,8 +197,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     });
   }
 
-  initializePieChart() {
-    const chartConfig: any = {
+  initializePieChart(id) {
+    this.chart = Highcharts.chart(id, {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -212,12 +240,12 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         innerSize: '60%',
         data: this.chartData
       }]
-    };
-    this.assetAllocationPieConfig = new Chart(chartConfig);
+    });
+    console.log('Chart', this.chart);
   }
 
-  initializePortfolioChart() {
-    const chartConfig: any = {
+  initializePortfolioChart(id) {
+    this.portfolioGraph = Highcharts.chart(id, {
       chart: {
         zoomType: 'x'
       },
@@ -253,19 +281,6 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
               [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba') as ColorString],
             ]
           },
-          /*fillColor: {
-            linearGradient: {
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1
-            },
-            stops: [
-              [0, Highcharts.getOptions().colors[0]],
-              // [1,  Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-              [1, Highcharts.getOptions().colors[0]],
-            ]
-          },*/
           marker: {
             radius: 2
           },
@@ -283,8 +298,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         type: 'area',
         data: this.graphList
       }]
-    };
-    this.portfolioGraph = new Chart(chartConfig);
+    });
   }
 
   calculateTotalSummaryValues() {
@@ -304,9 +318,32 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.finalTotal = 0;
         this.liabilityTotal = 0;
         this.totalAssetsWithoutLiability = 0;
+        this.totalInsurance = 0;
       }
     );
     // this.getSummaryList(obj);
+  }
+
+  generatePdf(data) {
+    if (this.chart) {
+      this.svg = this.chart.getSVG();
+    }
+    if (this.portfolioGraph) {
+      this.portSvg = this.portfolioGraph.getSVG();
+    }
+    if (this.cashFlowChart) {
+      this.cashFlowSvg = this.cashFlowChart.getSVG();
+    }
+    console.log('svg', this.cashFlowSvg);
+    const svgs = [{ key: '$showpiechart1', svg: this.svg ? this.svg : '' },
+    { key: '$showpiechart2', svg: this.portSvg ? this.portSvg : '' },
+    { key: '$showpiechart3', svg: this.cashFlowSvg ? this.cashFlowSvg : '' }];
+    this.fragmentData.isSpinner = true;
+
+    const para = document.getElementById('portfolioSummary');
+    // const header = this.summaryTemplateHeader.nativeElement.innerHTML
+    this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
+
   }
 
   calculateTotalSummaryValuesRes(data) {
@@ -319,6 +356,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       console.log(this.summaryTotalValue);
       this.liabilityTotal = 0;
       this.totalAssetsWithoutLiability = 0;
+      this.totalInsurance = 0;
       this.totalOfLiabilitiesAndTotalAssset(this.summaryTotalValue);
 
       this.summaryTotalValue.forEach(element => {
@@ -328,6 +366,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         } else if (!element.currentValue || element.currentValue == 0) {
           element.percentage = 0;
           element.currentValue = 0;
+        } else if (element.assetType == 3) {
+          const dividedValue = element.currentValue / this.totalInsurance;
+          element.percentage = (dividedValue * 100).toFixed(2);
         } else {
           const dividedValue = element.currentValue / this.totalAssetsWithoutLiability;
           element.percentage = (dividedValue * 100).toFixed(2);
@@ -350,7 +391,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.cashAndFLow = this.cashAndFLow[0];
       this.Commodities = data.filter(element => element.assetType == 12);
       this.Commodities = this.Commodities[0];
-      this.Others = data.filter(element => element.assetType == 35);
+      this.Others = data.filter(element => element.assetType == 45);
       this.Others = this.Others[0];
       const tempSummaryTotalValue: any = {};
 
@@ -375,6 +416,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.hasError = true;
         this.assetAllocationRes = false;
         this.tabsLoaded.portfolioData.isLoading = false;
+        this.loaderFunction();
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
@@ -382,6 +424,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   getAssetAllocationSummaryResponse(res) {
     this.customerOverview.assetAllocationChart = res;
+    this.tabsLoaded.portfolioData.isLoading = false;
+    this.loaderFunction();
     if (res == null) {
       this.assetAllocationRes = false;
       this.portFolioData = [];
@@ -452,13 +496,15 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       // if (counter > 4) {
       //   chartData.push(othersData);
       // }
+      this.ref.detectChanges();
+      this.initializePieChart('piechartMutualFund123');
       if (counter > 0) {
         this.chartTotal = chartTotal;
         this.chartData = chartData;
         this.assetAllocationPieChartDataMgnt(this.chartData);
       }
     }
-    this.tabsLoaded.portfolioData.isLoading = false;
+
     this.tabsLoaded.portfolioData.dataLoaded = true;
   }
 
@@ -471,6 +517,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
 
     return data;
+  }
+
+  loaderFunction() {
+    if (!this.summaryFlag && !this.tabsLoaded.portfolioData.isLoading) {
+      this.mainLoader = false;
+    } else {
+      this.mainLoader = true;
+    }
   }
 
   getAumGraphData() {
@@ -487,7 +541,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         // this.lineChart('container-hc-figure');
       },
       err => {
+        this.graphList = [];
         this.finalTotal = 0;
+        this.summaryFlag = false;
+        this.loaderFunction();
       }
     );
   }
@@ -506,15 +563,19 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       for (const singleData of sortedDateList) {
         this.graphList.push([singleData.targetDate, Math.round(singleData.currentValue)]);
       }
+      this.ref.detectChanges();
+      this.initializePortfolioChart('PortFolio');
       this.setPortfolioGraphData(this.graphList);
     } else {
-      this.graphList = []
+      this.graphList = [];
     }
+    this.summaryFlag = false;
+    this.loaderFunction();
   }
 
   assetAllocationPieChartDataMgnt(data) {
-    this.assetAllocationPieConfig.removeSeries(0);
-    this.assetAllocationPieConfig.addSeries({
+    // this.assetAllocationPieConfig.(0);
+    this.chart.addSeries({
       type: 'pie',
       name: 'Asset allocation',
       animation: false,
@@ -524,7 +585,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   setPortfolioGraphData(data) {
-    this.portfolioGraph.removeSeries(0);
+    // this.portfolioGraph.removeSeries(0);
     this.portfolioGraph.addSeries({
       type: 'area',
       data: this.graphList
@@ -546,6 +607,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       err => {
         this.cashFlowViewDataSource = [];
         this.noCashflowData = true;
+        this.cashflowFlag = false;
+        this.loaderFunction();
       }
     );
   }
@@ -562,6 +625,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.expenseList = [];
     this.createFilterList();
     this.sortDataUsingFlowType(data);
+    this.loaderFunction();
   }
 
   sortDataUsingFlowType(ObjectArray) {
@@ -697,10 +761,13 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     dataList.forEach(element => {
       if (element.assetType == 2) {
         this.liabilityTotal += element.currentValue;
-      } else {
+      } if (element.assetType == 3) {
+        this.totalInsurance += element.currentValue;
+      } else if (element.assetType != 2 && element.assetType != 3) {
         this.totalAssetsWithoutLiability += element.currentValue;
       }
     });
+    this.AlltotalAssetsWithoutLiability = this.totalAssetsWithoutLiability + this.totalInsurance
     console.log(this.totalAssetsWithoutLiability, 'total asset without liability');
     console.log(this.liabilityTotal, 'liability total');
     this.finalTotal = this.totalAssetsWithoutLiability - this.liabilityTotal;
@@ -736,8 +803,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         .map(e => e.currentValue)
         .reduce((acc, curr) => acc + curr, 0);
     });
-
-    new Highcharts.Chart('cashFlow', {
+    this.cashFlowChart = Highcharts.chart('cashFlow', {
       chart: {
         type: 'column'
       },
@@ -768,6 +834,26 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         type: 'column',
       }]
     });
+    // new Highcharts.Chart('cashFlow', {
+
+    // });
+    if (this.finPlanObj) {
+      this.ref.detectChanges();
+      if (this.chart) {
+        this.svg = this.chart.getSVG();
+        this.loadsvg1.emit(this.svg);
+      }
+      if (this.portfolioGraph) {
+        this.portSvg = this.portfolioGraph.getSVG();
+        this.loadsvg2.emit(this.portSvg);
+      }
+      if (this.cashFlowChart) {
+        this.cashFlowSvg = this.cashFlowChart.getSVG();
+        this.loadsvg3.emit(this.cashFlowSvg);
+      }
+      this.loaded.emit(document.getElementById('portfolioSummary'));
+    }
+
   }
 
   lineChart(id) {

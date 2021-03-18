@@ -22,8 +22,8 @@ export class SelectFolioMapComponent implements OnInit {
   errorMsg: string;
   arrayOfFamilyMemberOrClientError: boolean;
   parentId;
-  selectedClientFullName: any = ''
-  selectedClientGrpHeadName: any = ''
+  selectedClientFullName: any = '';
+  selectedClientGrpHeadName: any = '';
   selectedClientPan: any = '';
   selectedClientDob: any = '';
   selectedClientGrpHeadMobNum: any = '';
@@ -67,7 +67,7 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   setUserDetail(value, typedValue) {
-    this.searchFamilyOrClientForm.controls['searchFamilyOrClient'].enable({ emitEvent: false });
+    this.searchFamilyOrClientForm.controls.searchFamilyOrClient.enable({ emitEvent: false });
 
     this.doShowDetails = true;
     this.searchKeyword = typedValue;
@@ -88,7 +88,7 @@ export class SelectFolioMapComponent implements OnInit {
   formInit() {
     this.searchFamilyOrClientForm = this.fb.group({
       searchFamilyOrClient: [, Validators.required]
-    })
+    });
     this.searchFamilyOrClientValueChanges();
   }
 
@@ -97,14 +97,14 @@ export class SelectFolioMapComponent implements OnInit {
       .pipe(
         debounceTime(500),
         tap(() => {
-          this.errorMsg = "";
+          this.errorMsg = '';
           this.arrayOfFamilyMemberOrClient = [];
           this.isLoadingForDropDown = true;
         }),
         switchMap(value => this.getFamilyOrClientList(value)
           .pipe(
             finalize(() => {
-              this.isLoadingForDropDown = false
+              this.isLoadingForDropDown = false;
             }),
           )
         )
@@ -113,29 +113,29 @@ export class SelectFolioMapComponent implements OnInit {
         if (data && this.data.type === 'backoffice') {
           this.arrayOfFamilyMemberOrClient = data;
           this.arrayOfFamilyMemberOrClient.map(element => {
-            element.showName = ''
+            element.showName = '';
           });
           this.arrayOfFamilyMemberOrClient.map(item => {
             if (item.familyId > 0) {
-              item.showName = item.familyMemberName
+              item.showName = item.familyMemberName;
             } else {
-              item.showName = item.clientName
+              item.showName = item.clientName;
             }
-          })
-          console.log("this is advisor name::::::::", data);
-          if (data && data['length'] > 0) {
+          });
+          console.log('this is advisor name::::::::', data);
+          if (data && data.length > 0) {
             this.arrayOfFamilyMemberOrClientError = false;
           } else {
             this.arrayOfFamilyMemberOrClientError = true;
             this.errorMsg = 'No data Found';
           }
-          console.log("this is some value", this.arrayOfFamilyMemberOrClient);
+          console.log('this is some value', this.arrayOfFamilyMemberOrClient);
         } else if (data && this.data.type === 'casFileUpload') {
           this.arrayOfFamilyMemberOrClient = data;
           this.arrayOfFamilyMemberOrClient.map(item => {
             item.showName = item.displayName;
-          })
-          if (data && data['length'] > 0) {
+          });
+          if (data && data.length > 0) {
             this.arrayOfFamilyMemberOrClientError = false;
           } else {
             this.arrayOfFamilyMemberOrClientError = true;
@@ -148,7 +148,7 @@ export class SelectFolioMapComponent implements OnInit {
       }, err => {
         this.arrayOfFamilyMemberOrClientError = true;
         this.errorMsg = 'Something went wrong';
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBar(err, 'Dismiss');
       });
   }
 
@@ -157,18 +157,18 @@ export class SelectFolioMapComponent implements OnInit {
       const data = {
         parentId: this.parentId === 0 ? this.advisorId : this.parentId,
         searchQuery: value,
-      }
-      return this.backOfcFolioMappingService.getUserDetailList(data)
+      };
+      return this.backOfcFolioMappingService.getUserDetailList(data);
     } else if (this.data.type === 'casFileUpload') {
       const data = {
         clientId: this.clientId
-      }
-      return this.cusService.getFamilyMemberListForCasMapping(data)
+      };
+      return this.cusService.getFamilyMemberListForCasMapping(data);
     }
   }
 
   mapFolio() {
-    let data = [];
+    const data = [];
     let obj;
     if (this.data.selectedFolios.length !== 0) {
       this.data.selectedFolios.forEach(element => {
@@ -178,7 +178,7 @@ export class SelectFolioMapComponent implements OnInit {
           familyMemberId: this.selectedClient.familyId,
           folioNumber: element.folioNumber,
           parentId: this.parentId === 0 ? this.advisorId : this.parentId,
-        }
+        };
         data.push(obj);
       });
     }
@@ -195,21 +195,21 @@ export class SelectFolioMapComponent implements OnInit {
           } else {
             this.dialogClose(false);
           }
-          this.eventService.openSnackBar("Mapped Successfully !", "DISMISS");
+          this.eventService.openSnackBar('Mapped Successfully !', 'DISMISS');
         } else {
-          this.eventService.openSnackBar("Something went wrong!", "DISMISS");
+          this.eventService.openSnackBar('Something went wrong!', 'DISMISS');
         }
       }, err => {
-        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
+        this.eventService.showErrorMessage(err);
         console.error(err);
-      })
+      });
   }
 
   dialogClose(refresh) {
     if (this.data.type === 'backoffice') {
       this.dialogRef.close({ refresh });
     } else if (this.data.type === 'casFileUpload') {
-      this.dialogRef.close({ refresh, selectedFamilyMemberData: this.selectedClient })
+      this.dialogRef.close({ refresh, selectedFamilyMemberData: this.selectedClient });
     }
   }
 }

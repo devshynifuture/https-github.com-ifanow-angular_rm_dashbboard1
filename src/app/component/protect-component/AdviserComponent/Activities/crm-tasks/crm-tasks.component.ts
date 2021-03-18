@@ -1,16 +1,17 @@
 // import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
-import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
-import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { AddTasksComponent } from './add-tasks/add-tasks.component';
-import { CrmTaskService } from './crm-task.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FormControl } from '@angular/forms';
-import { RoleService } from 'src/app/auth-service/role.service';
-import { DashboardService } from '../../dashboard/dashboard.service';
+import {CustomFilterDatepickerDialogComponent} from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {AddTasksComponent} from './add-tasks/add-tasks.component';
+import {CrmTaskService} from './crm-task.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FormControl} from '@angular/forms';
+import {RoleService} from 'src/app/auth-service/role.service';
+import {DashboardService} from '../../dashboard/dashboard.service';
+import {ConfirmDialogComponent} from '../../../common-component/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -31,18 +32,18 @@ export class CrmTasksComponent implements OnInit {
   infiniteScrollingFlag = false;
   filterFormControl = new FormControl('');
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
-  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl', {static: false}) tableEl;
   filterValueId: any;
-  customDateFilter: boolean = false;
+  customDateFilter = false;
   customFromToDate: any;
   filterTaskWithStatus: any = 0;
   statusFC: FormControl;
   statusList = [
-    { name: 'Done', value: 1 },
-    { name: 'Not Done', value: 0 },
-  ]
+    {name: 'Done', value: 1},
+    {name: 'Not Done', value: 0},
+  ];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -53,7 +54,8 @@ export class CrmTasksComponent implements OnInit {
     private dashboardService: DashboardService
 
     // private webPushNotify: WebPushNotifyService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.statusFC = new FormControl(0);
@@ -67,7 +69,7 @@ export class CrmTasksComponent implements OnInit {
     this.dataSource.data = ELEMENT_DATA;
     this.dataSource.sort = this.sort;
     this.statusFC.patchValue(0);
-    console.log("iniitialized");
+    console.log('iniitialized');
     this.getTaskStatus();
     // this.registerForPushNotification();
   }
@@ -91,7 +93,7 @@ export class CrmTasksComponent implements OnInit {
     const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent, {
       width: '35%',
       data: ''
-    })
+    });
 
     dialogRef.afterClosed()
       .subscribe(res => {
@@ -103,7 +105,7 @@ export class CrmTasksComponent implements OnInit {
         } else {
           this.customDateFilter = false;
         }
-      })
+      });
   }
 
   getTaskStatus() {
@@ -112,10 +114,10 @@ export class CrmTasksComponent implements OnInit {
         if (res) {
           console.log(res);
           this.taskStatus = res.taskStatus;
-          this.dateFilterList = res.taskDaysFilter
+          this.dateFilterList = res.taskDaysFilter;
           this.getAllTaskList(0);
         }
-      })
+      });
   }
 
   getTaskNameFromTaskStatusList(taskStatus) {
@@ -125,7 +127,7 @@ export class CrmTasksComponent implements OnInit {
   setFilterToDefault() {
     this.filterFormControl.patchValue('');
     this.isFilterSet = false;
-    this.statusFC.patchValue(0, { emitEvent: false });
+    this.statusFC.patchValue(0, {emitEvent: false});
     this.initPoint();
   }
 
@@ -137,7 +139,7 @@ export class CrmTasksComponent implements OnInit {
 
   setTaskFilterWithStatus(event) {
     const value = event.value;
-    if (value !== "") {
+    if (value !== '') {
       this.filterTaskWithStatus = parseInt(value);
     }
     this.finalTaskList = [];
@@ -147,17 +149,17 @@ export class CrmTasksComponent implements OnInit {
   }
 
   getAllTaskList(offset) {
-    const data = {
+    const data:any = {
       advisorId: this.advisorId,
       offset,
       limit: 20,
       status: this.filterTaskWithStatus
-    }
+    };
     if (this.isFilterSet) {
-      data['dateFilter'] = this.filterValueId;
+      data.dateFilter = this.filterValueId;
       if (this.customDateFilter) {
-        data['fromDate'] = this.customFromToDate.fromDate;
-        data['toDate'] = this.customFromToDate.toDate;
+        data.fromDate = this.customFromToDate.fromDate;
+        data.toDate = this.customFromToDate.toDate;
       }
     }
 
@@ -166,10 +168,10 @@ export class CrmTasksComponent implements OnInit {
         this.isLoading = false;
         if (res) {
           console.log(res);
-          let dataArray = [];
+          const dataArray = [];
           res.forEach((element, index) => {
-            let dateFormat = new Date(element.dueDate)
-            let dueDate = dateFormat.getDate() + '/' + (dateFormat.getMonth() + 1) + '/' + dateFormat.getFullYear();
+            const dateFormat = new Date(element.dueDate);
+            const dueDate = dateFormat.getDate() + '/' + (dateFormat.getMonth() + 1) + '/' + dateFormat.getFullYear();
             dataArray.push({
               client: element.clientName,
               member: element.familyMemberName,
@@ -216,17 +218,17 @@ export class CrmTasksComponent implements OnInit {
           this.isLoading = false;
           this.infiniteScrollingFlag = false;
           if (this.finalTaskList.length > 0) {
-            this.eventService.openSnackBar("No more Task Found", "DISMISS");
+            this.eventService.openSnackBar('No more Task Found', 'DISMISS');
           } else {
             this.dataSource.data = null;
             this.dataSource.sort = null;
-            this.eventService.openSnackBar('No Task Found', "DISMISS");
+            this.eventService.openSnackBar('No Task Found', 'DISMISS');
           }
         }
       }, err => {
         console.error(err);
-        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
-      })
+        this.eventService.showErrorMessage(err);
+      });
   }
 
   onTableScroll(e: any) {
@@ -241,21 +243,50 @@ export class CrmTasksComponent implements OnInit {
     }
   }
 
-  deleteTask(id) {
-    this.crmTaskService.deleteActivityTask(id)
-      .subscribe(res => {
-        if (res) {
-          this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
-          this.finalTaskList = [];
-          DashboardService.dashTaskDashboardCount = null;
-          DashboardService.dashTodaysTaskList = null;
-          this.initPoint();
-        }
-      }, err => {
-        console.error(err);
-        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
-      })
+  deleteModal(value, id) {
+
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.crmTaskService.deleteActivityTask(id)
+          .subscribe(res => {
+            if (res) {
+              dialogRef.close();
+              this.eventService.openSnackBar('Task Successfully Deleted!!', 'DISMISS');
+              this.finalTaskList = [];
+              DashboardService.dashTaskDashboardCount = null;
+              DashboardService.dashTodaysTaskList = null;
+              this.initPoint();
+            }
+          }, err => {
+            console.error(err);
+            this.eventService.showErrorMessage(err);
+          });
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
+
 
   openAddTask(data) {
     if (data) {
@@ -286,6 +317,7 @@ export class CrmTasksComponent implements OnInit {
     );
   }
 }
+
 export interface PeriodicElement {
   client: string;
   member: string;
@@ -298,8 +330,8 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: '' },
-  { client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: '' },
+  {client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: ''},
+  {client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: ''},
 
 ];
 

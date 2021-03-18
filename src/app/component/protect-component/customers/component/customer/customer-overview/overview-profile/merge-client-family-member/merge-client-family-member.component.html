@@ -6,10 +6,10 @@
         member
       </h4>
     </div>
-    <div class="col-md-4 text-right">
-      <div class="wrapper-12">
-        <i (click)="close('close')" class="material-icons c-p pt-8 v-middle"> clear</i>
-      </div>
+    <div class="col-md-4 full-end pr-24">
+
+      <i (click)="close('close')" class="material-icons c-p"> clear</i>
+
     </div>
   </div>
 </div>
@@ -220,7 +220,8 @@
             <ng-container matColumnDef="status">
               <th *matHeaderCellDef class="br" mat-header-cell> Tax status</th>
               <td *matCellDef="let element" class="br" mat-cell>
-                {{(element.clientType==1)?'Individual':(element.clientType)==2?'Minor':(element.clientType)==3?'Non-individual':'Sole proprietorship'}}
+                {{(element.clientType==1)?'Individual':(element.clientType)==2?'Minor':(element.clientType)==3?'Non-individual':'Sole
+                proprietorship'}}
               </td>
             </ng-container>
 
@@ -306,8 +307,8 @@
     </div>
 
   </div>
-  <div class="bottom-fixed-50 wrapper-12">
-    <div class="row">
+  <div class="bottom-fixed-50 wrapper-12 d-flex align-items-center">
+    <div class="row w-100">
       <div class="col-md-4">
         <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
       </div>

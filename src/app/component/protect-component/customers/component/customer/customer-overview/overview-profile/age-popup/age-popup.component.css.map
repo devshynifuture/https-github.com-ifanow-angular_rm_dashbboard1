@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAEI,SAFK,CACP,UAAU,CACR,qBAAqB,CAAC;EACpB,QAAQ,EAAE,iBAAiB;CAC5B",
+    "sources": [
+        "age-popup.component.scss"
+    ],
+    "names": [],
+    "file": "age-popup.component.css"
+}

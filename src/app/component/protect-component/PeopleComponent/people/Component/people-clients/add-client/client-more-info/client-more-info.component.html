@@ -8,9 +8,9 @@
         <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter name" #displayName appInputValueValidation
-                        [inputValidator]="validatorType.TEXT_ONLY" formControlName="displayName" matInput
-                        [maxLength]="50" class="form-control">
+                    <input autocomplete="off" placeholder="Enter name" (input)="capitalise($event)" #displayName
+                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE"
+                        formControlName="displayName" matInput [maxLength]="50" class="form-control">
                     <mat-hint align="end">{{displayName.value.length}}/50</mat-hint>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -201,9 +201,9 @@
                 NEXT
             </button> -->
 
-            <app-progress-button (btnClick)="saveNext('Next')" class="br-0 text-inherit ml-12"
+            <app-progess-button-white (btnClick)="saveNext('Next')" class="br-0 text-inherit ml-12"
                 [options]="barButtonOptions1">
-            </app-progress-button>
+            </app-progess-button-white>
             <!-- <button mat-raised-button (click)="saveNext('Next')" class="br-0 text-inherit mr-12">SAVE & NEXT
             </button> -->
             <app-progress-button (btnClick)="saveNext('close')" class="br-0 text-inherit ml-12"
@@ -220,9 +220,9 @@
             <!-- <button mat-raised-button (click)="saveNextFamilyMember('Next')" class="br-0 text-inherit mr-12">SAVE &
                 NEXT
             </button> -->
-            <app-progress-button (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit ml-12"
+            <app-progess-button-white (btnClick)="saveNextFamilyMember('Next')" class="br-0 text-inherit ml-12"
                 [options]="barButtonOptions1">
-            </app-progress-button>
+            </app-progess-button-white>
             <app-progress-button (btnClick)="saveNextFamilyMember('close')" class="br-0 text-inherit ml-12"
                 [options]="barButtonOptions">
             </app-progress-button>

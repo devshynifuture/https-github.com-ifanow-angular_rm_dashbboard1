@@ -57,10 +57,10 @@
                         selected out of {{tempData.length}}
                     </p>
                     <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container"
-                        [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
+                        (scroll)="onWindowScroll($event)">
                         <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
                             [appSkeletonLoading]="isLoading" #clientTableSort="matSort" #tableEl>
-                            <ng-container matColumnDef="checkbox" sticky>
+                            <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="br">
                                     <mat-checkbox (change)="selectAll($event)" name="selectAll" *ngIf="!isLoading"
                                         [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
@@ -102,7 +102,7 @@
                             <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                         </table>
-                        <div class="row relClass" *ngIf="infiniteScrollingFlag">
+                        <!-- <div class="row relClass" *ngIf="infiniteScrollingFlag">
                             <div class="col-md-12 p-0">
                                 <div class="bar height24">
                                 </div>
@@ -115,6 +115,9 @@
                                 <div class="bar height24">
                                 </div>
                             </div>
+                        </div> -->
+                        <div *ngIf="infiniteScrollingFlag" class="full-center">
+                            <mat-spinner class="spinnerClass" [diameter]="30"></mat-spinner>
                         </div>
                     </div>
 
@@ -185,7 +188,7 @@
                         [ngClass]="{'skeletonAnimation': infiniteScrollingFlag}" (scroll)="onWindowScroll($event)">
                         <table class="skeletonAnimation" [dataSource]="dataSource" id="tbs" mat-table matSort
                             [appSkeletonLoading]="isLoading" #clientTableSort="matSort" #tableEl>
-                            <ng-container matColumnDef="checkbox" sticky>
+                            <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="br">
                                     <mat-checkbox (change)="selectAll($event)" name="selectAll" *ngIf="!isLoading"
                                         [indeterminate]="dataCount > 0 && dataCount != dataSource.data.length"
@@ -218,20 +221,23 @@
                             <tr *matHeaderRowDef="displayedColumns1; sticky: true" mat-header-row></tr>
                             <tr *matRowDef="let row; columns: displayedColumns1;" mat-row></tr>
                         </table>
-                        <div class="row relClass" *ngIf="infiniteScrollingFlag">
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <div class="bar height24">
-                                </div>
-                            </div>
+                        <div *ngIf="infiniteScrollingFlag" class="full-center">
+                            <mat-spinner class="spinnerClass" [diameter]="30"></mat-spinner>
                         </div>
+                        <!-- <div class="row relClass" *ngIf="infiniteScrollingFlag">
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="bar height24">
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
 
                     <div class="text-center" *ngIf="!isLoading && dataSource === null">
@@ -275,10 +281,14 @@
                 <div class="d-flex align-items-center justify-content-between mb-24">
                     <p class="mb-0">Since your email is <span *ngIf="verifiedAccountsList.length==0">not verified</span>
                         <span *ngIf="verifiedAccountsList.length>0">verified</span>, the bulk email will be sent from
-                        <span *ngIf="verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span
+                            *ngIf="templateObj.fromEmail=='N/A' && verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span
+                            *ngIf="templateObj.fromEmail!='N/A' && verifiedAccountsList.length==1">{{templateObj.fromEmail}}</span>
                         <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
                             *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
-                            (click)="bulkEmail('')">Change</span> </p>
+                            (click)="bulkEmail('')">Change</span>
+                    </p>
                     <mat-form-field class="w-200" *ngIf="verifiedAccountsList.length>1">
                         <mat-select class="form-control" [formControl]="selectedFromEmail">
                             <mat-option *ngFor="let singleClient of verifiedAccountsList"
@@ -305,7 +315,7 @@
                     <div class="col-md-1 p-0 d-flex align-items-center">
                         <h5 class="f-14 mb-0">Subject</h5>
                     </div>
-                    <div class="col-md-11 pr-0 eventPadd event-none">
+                    <div class="col-md-11 pr-0 eventPadd ">
                         <mat-form-field appearance="standard" floatLabel="never">
                             <input [formControl]="subject" matInput class="form-control">
                         </mat-form-field>
@@ -314,7 +324,7 @@
                 <div class="row pt-20">
                     <div class="col-md-12 p-0">
                         <form [formGroup]="mailForm">
-                            <app-froala class="event-none" [(model)]="emailBody"></app-froala>
+                            <app-froala [(model)]="emailBody"></app-froala>
                         </form>
                     </div>
                 </div>

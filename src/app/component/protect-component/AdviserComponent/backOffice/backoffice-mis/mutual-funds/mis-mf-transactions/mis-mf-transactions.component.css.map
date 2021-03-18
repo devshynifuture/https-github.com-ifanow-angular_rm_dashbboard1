@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAA;EACD,OAAO,EAAE,IAAI;CAChB",
+    "sources": [
+        "mis-mf-transactions.component.scss"
+    ],
+    "names": [],
+    "file": "mis-mf-transactions.component.css"
+}

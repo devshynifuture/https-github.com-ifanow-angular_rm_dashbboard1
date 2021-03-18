@@ -61,6 +61,7 @@ export class ClientBankComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   idData: any;
   keyInfoCapability: any = {};
+  allBankList: any;
 
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
@@ -79,7 +80,7 @@ export class ClientBankComponent implements OnInit {
   @Output() cancelTab = new EventEmitter();
   @Output() refreshClientUploadBankDetails = new EventEmitter();
   @Output() tabDisableFlag = new EventEmitter();
-
+  @Output() bankListEmit = new EventEmitter();
   @Input() fieldFlag;
 
   @Input() set data(data) {
@@ -87,7 +88,6 @@ export class ClientBankComponent implements OnInit {
     this.clientName = data.displayName;
     this.fieldFlag;
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
-    this.createBankForm(data);
   }
 
   toUpperCase(formControl, event) {
@@ -106,6 +106,9 @@ export class ClientBankComponent implements OnInit {
   }
 
   getBankList(data) {
+    if (this.userData.flag && this.userData.flag.includes('Add')) {
+      return;
+    }
     const obj =
       [{
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
@@ -116,6 +119,8 @@ export class ClientBankComponent implements OnInit {
         console.log(data);
         (data == 0) ? data = undefined : '';
         if (data && data.length > 0) {
+          this.allBankList = data;
+          this.bankListEmit.emit(data);
           this.bankList = data[0];
           this.createBankForm(this.bankList);
         } else {
@@ -205,6 +210,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createBankForm({});
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
     if (this.userData.bankData == undefined && this.fieldFlag) {
       this.getBankList(this.userData);
@@ -248,9 +254,11 @@ export class ClientBankComponent implements OnInit {
       data.address = UtilService.removeSpecialCharactersFromString(data.address);
       adderessData = data.address.trim();
       pincode = adderessData.match(/\d/g);
-      pincode = pincode.join('');
-      pincode = pincode.substring(pincode.length - 6, pincode.length);
-      adderessData = adderessData.replace(pincode, '');
+      if (pincode) {
+        pincode = pincode.join('');
+        pincode = pincode.substring(pincode.length - 6, pincode.length);
+        adderessData = adderessData.replace(pincode, '');
+      }
       const addressMidLength = adderessData.length / 2;
       address1 = adderessData.substring(0, addressMidLength);
       address2 = adderessData.substring(addressMidLength, adderessData.length);
@@ -365,6 +373,12 @@ export class ClientBankComponent implements OnInit {
           this.barButtonOptions.active = false;
           this.barButtonOptions1.active = false;
           if (flag == 'Next') {
+            if (this.allBankList && this.allBankList.length > 0) {
+              this.allBankList[0] = data;
+              this.bankListEmit.emit(this.allBankList);
+            } else {
+              this.bankListEmit.emit([data]);
+            }
             this.tabChange.emit(1);
             this.saveNextData.emit(true);
             this.refreshClientUploadBankDetails.emit(true);

@@ -20,8 +20,9 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   selectedFamilyMembers = [];
   ownerCount = 0;
   checkFamList: boolean;
+  clientData: any;
 
-  constructor(private peopleService :PeopleService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
+  constructor(private peopleService: PeopleService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -31,6 +32,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
     if (data == null) {
       this.advisorId = AuthService.getAdvisorId();
       this.clientId = AuthService.getClientId();
+      this.clientData = AuthService.getClientData();
       this.getFamilyMemberList();
     } else {
       (data.flag == 'addIncome') ? data.flag == 'editIncome' : console.log('dsdas');
@@ -52,7 +54,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       clientId: this.clientId,
     };
     // this.custumService.getListOfFamilyByClient(obj).subscribe(
-      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }

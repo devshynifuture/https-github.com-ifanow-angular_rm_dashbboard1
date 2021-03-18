@@ -31,6 +31,8 @@ import { MY_FORMATS2 } from '../../../../../constants/date-format.constant';
 import { AddSettingSchemeBasketComponent } from './add-setting-scheme-basket/add-setting-scheme-basket.component';
 import { BulkEmailReviewSendComponent } from './bulk-email-review-send/bulk-email-review-send.component';
 import { FeviconUrlComponent } from '../setting-preference/fevicon-url/fevicon-url.component';
+import { TeamMemberClientListComponent } from '../setting-user-roles/setting-users-roles/users/team-member-client-list/team-member-client-list.component';
+import { AddNewTemplateComponent } from '../setting-plan/setting-plan/plan-templates/add-new-template/add-new-template.component';
 
 export const componentList = [AddReportingManagerComponent, AddNewRoleComponent,
   AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent,
@@ -38,7 +40,8 @@ export const componentList = [AddReportingManagerComponent, AddNewRoleComponent,
   AddModelPortfolioComponent,
   AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent,
   NewTeamMemberComponent, OpenEmailVerificationComponent, OrgProfileComponent,
-  TaskTemplateTypeComponent, AddTeamMemberComponent, AddSettingSchemeBasketComponent, BulkEmailReviewSendComponent, FeviconUrlComponent];
+  TaskTemplateTypeComponent, AddTeamMemberComponent, AddSettingSchemeBasketComponent, BulkEmailReviewSendComponent,
+  FeviconUrlComponent, TeamMemberClientListComponent, AddNewTemplateComponent];
 
 @NgModule({
   declarations: [componentList],

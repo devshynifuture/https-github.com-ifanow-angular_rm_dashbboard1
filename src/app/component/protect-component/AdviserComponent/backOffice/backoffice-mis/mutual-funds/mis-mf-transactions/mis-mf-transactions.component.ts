@@ -43,13 +43,18 @@ export class PickDateAdapter extends NativeDateAdapter {
   ],
 })
 export class MisMfTransactionsComponent implements OnInit {
+  mode;
   maxDate = new Date();
+  advisor = AuthService.getUserInfo();
+  advisorId = AuthService.getAdvisorId();
+  reportDate = new Date();
   rangesFooter;
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   displayedColumns: string[] = ['name', 'scheme', 'folio', 'unit', 'Amount', 'tType', 'tDate'];
   data: Array<any> = [{}, {}, {}];
   mfTransaction = new MatTableDataSource(this.data);
+  ExcelTransaData = new MatTableDataSource(this.data);
   isLoading: boolean;
   fragmentData = { isSpinner: false };
   parentId: any;
@@ -85,6 +90,7 @@ export class MisMfTransactionsComponent implements OnInit {
   filterTransaction = [];
   obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {}, key: {}; flag: {} };
   dateFilterAdded: boolean = false;
+  loadTransaction = false;
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
@@ -229,7 +235,7 @@ export class MisMfTransactionsComponent implements OnInit {
       this.filterApi(this.obj.categoryId)
     }
   }
-  // remove(item) { //backup 
+  // remove(item) { //backup
   //   if (this.filterStatus[item].name == this.selectedStatusFilter.name) {
   //     this.selectedStatusFilter = 'statusFilter';
   //   }
@@ -362,6 +368,7 @@ export class MisMfTransactionsComponent implements OnInit {
       parentId: this.parentId,
       startFlag: endFlag,
       endFlag: endFlag + 50,
+      advisorId: this.advisorId
     };
 
     this.backoffice.getMfTransactions(obj)
@@ -381,10 +388,49 @@ export class MisMfTransactionsComponent implements OnInit {
       })
 
   }
+  getAllTransactionData(tableTitle) {
+    this.loadTransaction = true;
+    const obj = {
+      parentId: this.parentId,
+      startFlag: 0,
+      endFlag: 100000,
+      advisorId: this.advisorId
+    };
 
+    this.backoffice.getMfTransactions(obj)
+      .subscribe(res => {
+        console.log(res);
+        if (res) {
+          this.ExcelTransaData = new MatTableDataSource(res)
+
+          setTimeout(() => {
+            const blob = new Blob([document.getElementById('templateMis').innerHTML], {
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+            });
+            saveAs(blob, tableTitle + '.xls');
+          }, 200);
+          this.loadTransaction = false;
+        } else {
+          this.ExcelTransaData.data = []
+        }
+      }, err => {
+        console.error(err);
+      })
+  }
+  AllExcel(tableTitle) {
+    // let rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle)
+    this.getAllTransactionData(tableTitle);
+
+  }
   Excel(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
+    this.ExcelTransaData = new MatTableDataSource(this.mfTransaction.data)
+    setTimeout(() => {
+      const blob = new Blob([document.getElementById('templateMis').innerHTML], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+      });
+      saveAs(blob, tableTitle + '.xls');
+    }, 200);
   }
 }
 

@@ -1,15 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AddClientMappingComponent} from './add-client-mapping/add-client-mapping.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {OnlineTransactionService} from '../../online-transaction.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {TransactionEnumService} from '../../transaction-enum.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {TransactionRoleService} from '../../transaction-role.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AddClientMappingComponent } from './add-client-mapping/add-client-mapping.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { OnlineTransactionService } from '../../online-transaction.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { TransactionEnumService } from '../../transaction-enum.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { TransactionRoleService } from '../../transaction-role.service';
 
 @Component({
     selector: 'app-settings-client-mapping',
@@ -35,15 +35,15 @@ export class SettingsClientMappingComponent implements OnInit {
     isLoading: any;
     advisorId: any;
 
-    @ViewChild(MatSort, {static: false}) sort: MatSort;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
     credentialsData: any;
     noData: string;
 
     constructor(public dialog: MatDialog, private onlineTransact: OnlineTransactionService,
-                private eventService: EventService, private utilService: UtilService,
-                private enumServiceService: EnumServiceService,
-                public transactionRoleService: TransactionRoleService,
-                private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
+        private eventService: EventService, private utilService: UtilService,
+        private enumServiceService: EnumServiceService,
+        public transactionRoleService: TransactionRoleService,
+        private subInjectService: SubscriptionInject, private tranService: OnlineTransactionService) {
     }
 
     ngOnInit() {
@@ -55,14 +55,14 @@ export class SettingsClientMappingComponent implements OnInit {
 
     getFilterOptionData() {
         const obj = {
-            advisorId: this.advisorId,
+            advisorId: AuthService.getAdminId(),
             onlyBrokerCred: true
         };
         this.onlineTransact.getBSECredentials(obj).subscribe(
             data => this.getFilterOptionDataRes(data), error => {
                 this.isLoading = false;
                 this.dataSource.data = [];
-                this.noData = 'sNo credentials found';
+                this.noData = 'No credentials found';
                 this.eventService.openSnackBar(error, 'Dismiss');
             }
         );

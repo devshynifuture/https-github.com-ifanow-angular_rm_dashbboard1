@@ -352,6 +352,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
   logout() {
     this.enumDataService.setSearchData([]);
     // if (!this.authService.isAdvisor()) {
+    this.peopleService.clearCacheData();
     this.peopleService.clientList = undefined;
     this.customerOverview.clearServiceData();
     this.domainData = AuthService.getDomainDetails();

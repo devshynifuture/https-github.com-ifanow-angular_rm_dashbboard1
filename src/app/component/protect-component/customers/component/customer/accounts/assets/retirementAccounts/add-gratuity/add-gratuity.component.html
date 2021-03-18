@@ -137,8 +137,7 @@
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
                         <input autocomplete="off" matInput (click)="Mpicker.open()" [matDatepicker]="Mpicker"
-                            [min]="minMD" class="form-control br-0 b-0" formControlName="maturityDate" matInput
-                            readonly>
+                            [min]="minMD" class="form-control br-0 b-0" formControlName="maturityDate" matInput>
                         <mat-datepicker-toggle matSuffix [for]="Mpicker"></mat-datepicker-toggle>
                         <mat-datepicker #Mpicker></mat-datepicker>
                         <mat-error class="f-12" *ngIf="invalidRD">

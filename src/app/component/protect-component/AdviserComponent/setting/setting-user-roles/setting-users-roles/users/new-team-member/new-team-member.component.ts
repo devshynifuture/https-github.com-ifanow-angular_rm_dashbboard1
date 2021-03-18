@@ -190,6 +190,7 @@ export class NewTeamMemberComponent implements OnInit {
     const dataObj = this.teamMemberFG.value;
     this.settingsService.addTeamMember(dataObj).subscribe((res) => {
       this.close(true);
+      this.peopleService.teamMembers = undefined;
       this.eventService.openSnackBar('Invitation sent successfully', "Dismiss");
     }, (err) => {
       console.error(err);

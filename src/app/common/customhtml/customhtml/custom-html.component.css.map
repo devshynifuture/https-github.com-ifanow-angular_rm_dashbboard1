@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "custom-html.component.scss"
+    ],
+    "names": [],
+    "file": "custom-html.component.css"
+}

@@ -257,7 +257,7 @@ export class AddGratuityComponent implements OnInit {
         id: 0,
         isClient: 0
       })]),
-      maturityDate: [data.maturityDate],
+      maturityDate: [data.maturityDate ? new Date(data.maturityDate) : ''],
 
       // ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       // noOfcompleteYrs: [(data == undefined) ? '' : data.yearsCompleted, [Validators.required]],

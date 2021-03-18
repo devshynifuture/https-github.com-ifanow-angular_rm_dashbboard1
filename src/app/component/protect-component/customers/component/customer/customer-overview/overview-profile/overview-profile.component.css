@@ -1,0 +1,424 @@
+.profileOverview-2 {
+  margin-top: 38px;
+}
+
+.profileOverview-2 .uiListProfile {
+  margin: 8px 0 0 0;
+  padding: 0px;
+  list-style-type: none;
+  display: block;
+}
+
+.profileOverview-2 .uiListProfile li {
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 25px;
+  font-size: 14px;
+}
+
+.profileOverview-2 .uiListProfile li img {
+  margin-right: 8px;
+}
+
+.profilePhoto {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.profilePhoto img {
+  max-width: 100%;
+}
+
+.profileDetails {
+  margin-top: 12px;
+}
+
+.emailIcon {
+  margin-right: 6px;
+}
+
+.menu-myProfileIcon {
+  margin-right: 16px;
+  margin-top: 1px;
+  display: none;
+}
+
+.familyMemberBox {
+  height: 76px;
+  border-radius: 4px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+.familyMemberBox .memberName {
+  width: 92px;
+  margin: 0;
+  line-height: 18px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.familyMemberBox .memberList {
+  border-radius: 4px;
+  display: inline-block;
+  width: 160px;
+  margin-top: 9px;
+  height: 57px;
+  margin-right: 9px;
+  position: relative;
+}
+
+.familyMemberBox .memberList .familyDelete {
+  position: absolute;
+  top: 5px;
+  right: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.familyMemberBox .memberList img {
+  float: left;
+  margin-top: 1px;
+}
+
+.familyMemberBox .memberList .familyList {
+  margin-left: 0px;
+  margin-top: 2px;
+  float: left;
+  width: 95px;
+}
+
+.familyMemberBox .memberList .familyList p {
+  line-height: 16px;
+}
+
+.familyMemberBox .memberList .familyList h4 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.familyMemberBox .memberList .familyList h4:hover {
+  overflow: visible;
+}
+
+.familyMemberBox .addFamilyMember {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  margin-top: 6px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.detailContainer {
+  padding: 18px 0px;
+}
+
+.detailContainer .headingDetails {
+  margin-top: 8px;
+}
+
+.detailContainer .basicDetaisList {
+  margin-top: 6px;
+  margin-left: 10px;
+  margin-bottom: 19px;
+}
+
+.editCLass {
+  width: 37px;
+  height: 20px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 2px;
+}
+
+.hrMargin {
+  margin: 22px 0px;
+}
+
+.arrowSlider {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.memberSlider {
+  max-width: 83.88%;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: inline-block;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.memberSlider::-webkit-scrollbar {
+  width: 1px;
+  cursor: pointer;
+  height: 4px;
+}
+
+.memberSlider::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.memberSlider::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.memberSlider::-webkit-scrollbar-thumb:window-inactive {
+  background: #555;
+}
+
+.addMemberBtn {
+  width: 196px;
+  height: 40px;
+  font-size: 16px;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  font-size: 14px;
+}
+
+.shadowNone {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+::ng-deep .mat-expansion-panel-header-description,
+.mat-expansion-panel-header-title {
+  margin-right: 26px;
+}
+
+.accSubmitBtn {
+  width: 75px;
+  height: 36px;
+  padding: 0px;
+}
+
+::ng-deep .progressBarBox mat-progress-bar {
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+::ng-deep .progressBarBox .mat-progress-bar-fill::after {
+  background-color: #2680EB !important;
+}
+
+.riskBtn {
+  width: 204px;
+  height: 40px;
+  border: 2px solid;
+  padding: 0px;
+}
+
+.historyBtn {
+  width: 84px;
+  height: 40px;
+  border: 2px solid;
+  padding: 0px;
+}
+
+.profileRiskWidth {
+  width: 60%;
+  margin: 50px auto 0px;
+}
+
+.numberBox {
+  width: 100px;
+  height: 100px;
+  margin: 0px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 3px solid #1F1F1F;
+  font-size: 48px;
+}
+
+.addDenmatClass {
+  height: 130px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.addAddressClass {
+  height: 250px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.height23 {
+  height: 23px;
+}
+
+.skeletonAnimation .relClass {
+  position: relative;
+}
+
+.skeletonAnimation .relClass .bar {
+  background-color: #E7E7E7;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass .bar:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 24px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 24px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+
+.skeletonAnimation .relClass .bar120 {
+  background-color: #E7E7E7;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.skeletonAnimation .relClass .bar120:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 120px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 120px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+
+.skeletonAnimation .relClass .bar57 {
+  background-color: #E7E7E7;
+  width: 100%;
+}
+
+.skeletonAnimation .relClass .bar57:after {
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 57px;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+  background-size: 100px 57px;
+  background-position: -10px 0;
+  background-repeat: no-repeat;
+  -webkit-animation: loading 1s infinite;
+          animation: loading 1s infinite;
+}
+
+.familyLoaderBox {
+  width: 148px;
+  height: 57px;
+}
+
+.sticky-top {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 140px;
+  z-index: 1020;
+}
+
+.containerOne {
+  position: relative;
+}
+
+.containerOne:hover .image {
+  opacity: 0.3;
+}
+
+.containerOne:hover .middleOne {
+  opacity: 1;
+}
+
+.widthwebLogo {
+  width: 270px;
+  height: 68px;
+  position: relative;
+  overflow: hidden;
+}
+
+.middleOne {
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 70px;
+  top: 60px;
+  opacity: 0;
+}
+
+.middleOne p {
+  color: #ffffff;
+  margin: 15px 0px 0px 0px;
+}
+
+.borRd {
+  border-radius: 4px !important;
+}
+/*# sourceMappingURL=overview-profile.component.css.map */

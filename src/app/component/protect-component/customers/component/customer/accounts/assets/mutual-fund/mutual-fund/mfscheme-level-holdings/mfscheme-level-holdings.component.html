@@ -2,7 +2,9 @@
   <div class="row bb-1">
     <div class="col-md-8 p-0">
       <h4 class="mb-0 wrapper-20">
-        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': (data && data.flag === 'addMutualFund') ? 'Add Mutual Fund and ' : (data && data.flag === 'editMutualFund') ? 'Edit Mutual Fund and' : 'Add Mutual Fund'}}
+        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': (data &&
+        data.flag === 'addMutualFund') ? 'Add Mutual Fund and ' : (data && data.flag === 'editMutualFund') ? 'Edit
+        Mutual Fund and' : 'Add Mutual Fund'}}
         scheme level transactions
       </h4>
     </div>
@@ -217,9 +219,17 @@
       <div class="col-md-3">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input matInput autocomplete="off" type="number" formControlName="transactionAmount" maxlength="20"
-              class="form-control br-0 rupess" #trnAmt
-              (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
+            <!-- <input matInput autocomplete="off" appInputValueValidation
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" [maxLength]="20"
+              formControlName="transactionAmount" #trnAmt
+              (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)" formControlName="Units" type="number"
+              maxlength="20" class="form-control br-0 rupess"> -->
+
+            <input matInput autocomplete="off" type="number" appInputValueValidation
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #transactionAmount
+              formControlName="transactionAmount" class="form-control br-0 rupess" [maxLength]="20"
+              (keyup)="getIndexOfSelectedElement(transactionAmount.value,singleTransaction)">
+            <mat-hint align="end" class="f-12">{{transactionAmount.value.length}}/20</mat-hint>
             <mat-error>
               This field is required
             </mat-error>
@@ -229,10 +239,11 @@
       <div class="col-md-2 pl-0">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input matInput autocomplete="off" #totalNetContribution appInputValueValidation
-              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits
+            <input matInput autocomplete="off" appInputValueValidation
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" [maxLength]="8" #totalUnits
               (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units"
               type="number" maxlength="20" class="form-control br-0 rupess">
+            <mat-hint align="end" class="f-12">{{totalUnits.value.length}}/8</mat-hint>
             <mat-error>
               This field is required
             </mat-error>

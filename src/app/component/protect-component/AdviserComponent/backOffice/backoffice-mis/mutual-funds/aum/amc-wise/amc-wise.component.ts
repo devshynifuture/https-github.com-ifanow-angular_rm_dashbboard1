@@ -248,7 +248,7 @@ export class AmcWiseComponent implements OnInit {
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
-      parentId: (this.data) ? this.data.parentId : -1
+      parentId: (this.parentId) ? this.parentId : -1,
     };
     if (this.aumIdList && this.aumIdList.length >= 0) {
       obj['rtId'] = this.aumIdList;
@@ -488,7 +488,7 @@ export class AmcWiseComponent implements OnInit {
       const obj = {
         advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
-        parentId: (this.data) ? this.data.parentId : -1,
+        parentId: (this.parentId) ? this.parentId : -1,
         schemeMasterId: schemeData.id,
         totalAum: schemeData.totalAum
       };

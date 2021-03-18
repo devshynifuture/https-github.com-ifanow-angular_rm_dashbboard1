@@ -88,9 +88,9 @@
                 <div class="col-md-12 p-0 insuranceTable">
 
                     <h5 class="roboto f-500">Suggested policies</h5>
-                    <table *ngIf="dataSouce3?.length > 0" mat-table [dataSource]="dataSouce3" multiTemplateDataRows
-                        class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
-                        class="mt-8 skeletonAnimation c-p">
+                    <table *ngIf="dataSource3?.length > 0" mat-table [dataSource]="dataSource3" multiTemplateDataRows
+                           class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
+                           class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
@@ -170,7 +170,8 @@
                                         <p class="new-lineText mb-0" *ngIf="inputData?.insuranceType == 1">
                                             {{element?.insurance?.suggestion ?
                                             element?.insurance?.suggestion : 'No suggestions found'}}</p>
-                                        <p class="new-lineText mb-0" *ngIf="inputData?.insuranceType != 1">{{element?.adviceDetails?.advice_description
+                                        <p class="new-lineText mb-0" *ngIf="inputData?.insuranceType != 1">
+                                            {{element?.adviceDetails?.advice_description
                                             ? element?.adviceDetails?.advice_description : 'No suggestions
                                             found'}}</p>
                                     </div>
@@ -181,11 +182,11 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                         <tr mat-row *matRowDef="let element; columns: displayedColumns3" class="example-element-row"
                             [class.example-expanded-row]="expandedElement === element"
-                            (click)="expandedElement = expandedElement === element  ? null : element;changeValue(dataSouce3,element)">
+                            (click)="expandedElement = expandedElement === element  ? null : element;changeValue(dataSource3,element)">
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                     </table>
-                    <div *ngIf="!isLoadingPlan && dataSouce3?.length == 0"
+                    <div *ngIf="!isLoadingPlan && dataSource3?.length == 0"
                         class="d-flex flex-column align-items-center">
                         <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                         <h4 class="text-center pt-12">No data found</h4>
@@ -1032,11 +1033,57 @@
     <table cellpadding="0" cellspacing="0" border="0"
         style="width: 900px; font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: always;">
+
+        <!-- pdf header -->
         <tr>
+            <td>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="text-align: left; vertical-align: top; width: 20%;">
+                            <div
+                                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                                <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            </div>
+                            <div
+                                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                            </div>
+                            <div
+                                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                            </div>
+                        </td>
+                        <td style=" text-align: right; width: 50%;">
+                            <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;"
+                                *ngIf="userInfo">
+                                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                            <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                                    Mob
+                                    number:</strong>
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                            </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                                    Email:</strong>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
+
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
+                                    {{'Plan Summary'}}</strong>
+                            </p>
+                            <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- <tr>
             <td>
                 <table style="width: 100%; border: 0px; padding-bottom: 10px; border-bottom: 1px solid #dee5e7;">
                     <tr>
                         <td>
+
                             <h3 style="margin: 0px; font-size: 18px;">
                                 {{clientData?.displayName}}'s Insurance Plan
                             </h3>
@@ -1052,7 +1099,7 @@
                     </tr>
                 </table>
             </td>
-        </tr>
+        </tr> -->
 
         <tr>
             <td>
@@ -1147,7 +1194,7 @@
         <tr>
             <td colspan="5" style="padding: 10px;"></td>
         </tr>
-        <tr *ngIf="dataSouce3.length > 0">
+        <tr *ngIf="dataSource3.length > 0">
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top: 40px; width: 100%;">
                     <tr>
@@ -1170,7 +1217,7 @@
                                         Status</td>
                                 </tr>
 
-                                <tr *ngFor="let element of dataSouce3">
+                                <tr *ngFor="let element of dataSource3">
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
                                         {{element?.insurance?.policyName ? element?.insurance?.policyName :

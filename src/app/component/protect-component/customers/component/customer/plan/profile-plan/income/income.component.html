@@ -129,8 +129,8 @@
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">{{!isLoading && element.monthlyIncomeToShow? "₹" : ""}}<span
-                                    appFormatNumber
-                                    *ngIf="!isLoading">{{element.monthlyIncomeToShow ? element.monthlyIncomeToShow : '-' }}</span>
+                                    appFormatNumber *ngIf="!isLoading">{{element.monthlyIncomeToShow ?
+                                    element.monthlyIncomeToShow : '-' }}</span>
                             </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -238,7 +238,7 @@
 <!-- -------------------- pdf ---------------------------- -->
 <!-- <div #incomeTemp id="template" class="hide"> -->
 
-<div #incomeTemp id="template" class="hide">
+<div #incomeTemp id="incomeTemplate" class="hide">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
         <tr>
             <td>
@@ -264,11 +264,12 @@
                                 {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong>
                                     Number: </strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
+                                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>
                                     Report as on:
@@ -342,7 +343,9 @@
 
                         <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>
-                            {{(item.incomeTypeId==1) ? 'Salaried' : (item.incomeTypeId==2) ? 'Business' : (item.incomeTypeId==3) ? 'Profession' : (item.incomeTypeId==4) ? 'Rental' : (item.incomeTypeId==5) ? 'Others' : '-'}}
+                            {{(item.incomeTypeId==1) ? 'Salaried' : (item.incomeTypeId==2) ? 'Business' :
+                            (item.incomeTypeId==3) ? 'Profession' : (item.incomeTypeId==4) ? 'Rental' :
+                            (item.incomeTypeId==5) ? 'Others' : '-'}}
                         </td>
                         <td
                             style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
@@ -353,7 +356,8 @@
                             {{(item.incomeStyleId == 1) ? 'Stable' : 'Erratic'}}</td>
                         <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>
-                            {{(item.continueTill==1) ? 'Retirement' : (item.continueTill==2) ? 'Life time' :  (item.numberOfYear)}}
+                            {{(item.continueTill==1) ? 'Retirement' : (item.continueTill==2) ? 'Life time' :
+                            (item.numberOfYear)}}
                         </td>
                         <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;"
                             appFormatNumber>

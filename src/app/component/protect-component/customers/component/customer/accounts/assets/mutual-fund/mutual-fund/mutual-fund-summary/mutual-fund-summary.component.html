@@ -39,9 +39,10 @@
                 <ng-container matColumnDef="schemeName">
                     <th class="br t-50" mat-header-cell *matHeaderCellDef> Scheme name </th>
                     <td class="br" mat-cell *matCellDef="let element" style="line-height: 20px !important;">
-                        <div class="bar"><span
-                                *ngIf="!isLoading && element.schemeName!='Total'">{{element.schemeName+' | '}}<span>{{element.isin ? element.isin+' | ' : ''}}</span><span
-                                    class="text-primary">{{element.folioNumber}}</span>{{' | '+element.ownerName}}</span>
+                        <div class="bar"><span *ngIf="!isLoading && element.schemeName!='Total'">{{element.schemeName+'
+                                | '}}<span>{{element.isin ? element.isin+' | ' : ''}}</span><span
+                                    class="text-primary">{{element.folioNumber}}</span>{{' |
+                                '+element.ownerName}}</span>
 
                         </div>
                     </td>
@@ -379,12 +380,12 @@
 
                         <img class="c-p" src="/assets/images/svg/dot-menu.svg" alt="">
                         <mat-menu #menu3="matMenu" class="disabledOpacity">
-                            <button mat-menu-item *ngIf="mfSummaryCapability.Foliomasterdetails"
-                                (click)="openFolioMaster(element)">Folio master details</button>
-                            <button mat-menu-item *ngIf="mfSummaryCapability.SIPdetails"
-                                (click)="openSipDetails(element)">SIP details</button>
-                            <button mat-menu-item *ngIf="mfSummaryCapability.Transactonline" class="bt-1"
-                                (click)="openTransaction(element)">Transact
+                            <!-- *ngIf="mfSummaryCapability.Foliomasterdetails" -->
+                            <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
+                            <!-- *ngIf="mfSummaryCapability.SIPdetails" -->
+                            <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
+                            <!-- *ngIf="mfSummaryCapability.Transactonline" -->
+                            <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
                                 online</button>
                             <button mat-menu-item (click)="orderSOA(element)"
                                 *ngIf="(element.rtMasterId === 1 || element.rtMasterId === 2) && mfSummaryCapability.DownloadSOA">
@@ -392,12 +393,17 @@
                             </button>
 
                             <button mat-menu-item class="bt-1"
-                                (click)="openUpperFragment('addTransaction', element)">View
+                                (click)="openUpperFragment('addTransaction', element,'View transaction')">View
                                 transactions</button>
+                            <!-- element.isNFO == false && element.isClosed == 0 && -->
+                            <button mat-menu-item
+                                *ngIf="element.nfo == false &&  element?.isClosed == 0 && !enumDataService.PRODUCTION"
+                                class="bt-1" (click)="openUpperFragment('addTransaction', element ,'Fact sheet')">Fact
+                                sheet</button>
                             <!-- Hidden because we show edit to all cams,carvy data -->
                             <!-- [disabled]="element.rtMasterId !== 14" -->
                             <!-- [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
-                                [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below" -->
+                                [matTooltipDisabled]=".rtMasterId === 14" matTooltipPosition="below" -->
                             <div *ngIf="mfCapability.Edit">
                                 <button mat-menu-item (click)="openMutualEditFund('editMutualFund',element)">Edit
                                     Mutual Fund</button>
@@ -507,7 +513,7 @@
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
         align="center; page-break-before: auto;border-collapse: separate;">
         <tr>
-            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData && excelDownload!= true">
                 <div style="width: 200px;"
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
@@ -529,7 +535,10 @@
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
                     {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report -
-                        {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise'))}}</strong>
+                        {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ?
+                        this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType :
+                        (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category
+                        wise'))}}</strong>
                 </p>
                 <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
                         {{reportDate | date:'dd-MMM-yyyy' }}</strong>
@@ -544,8 +553,7 @@
 
         <tr>
             <td colspan="8" style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">
-                Client name:
-                {{(clientData.name) ? clientData.name : '-'}}</td>
+                Client name: {{clientNameToDisplay ? clientNameToDisplay : this.clientData.name}}</td>
 
         </tr>
         <tr style="background: #f5f7f7;" *ngIf="!isLoading && summary.data.length > 0">
@@ -592,7 +600,7 @@
 
             <tr *ngIf="item.groupName">
                 <td colspan="12"
-                    style="text-align: center;color: #008FFF; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                    style="text-align: center;color: #008FFF; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}</td>
             </tr>
             <tr *ngIf="item.id">

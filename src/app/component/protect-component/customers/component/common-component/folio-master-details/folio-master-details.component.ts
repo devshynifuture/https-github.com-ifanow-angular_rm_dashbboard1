@@ -14,24 +14,36 @@ export class FolioMasterDetailsComponent implements OnInit {
   isLoading: boolean;
   isNomineeLoading = false;
   nomineeArray = [];
+  bankDetails: any;
+  obj: any;
+  msgForFranklin: string;
+  isLoadingOthers = false;
+  othersData: any;
+  emailList: any;
+  mobileList: any;
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) {
+  }
+
   @Input()
   set data(data) {
     this.isLoading = true;
     this.inputData = data;
-    this.getFolioMasterDetails(this.inputData)
+    this.getFolioMasterDetails(this.inputData);
   }
 
   get data() {
     return this.inputData;
   }
+
   ngOnInit() {
+    this.getBankDetails()
   }
+
   getFolioMasterDetails(data) {
     const obj = {
       mfId: this.inputData.id
-    }
+    };
     this.custumService.getMfFolioMaster(obj).subscribe(
       data => this.getFolioMasterResponse(data), (error) => {
         this.isLoading = false;
@@ -39,39 +51,97 @@ export class FolioMasterDetailsComponent implements OnInit {
       }
     );
   }
-
+  getBankDetails() {
+    this.bankDetails = []
+    if (this.inputData.rtMasterId == 3) {
+      this.msgForFranklin = 'We havent been able to identify the bank account associated with this scheme because franklin doesnt provide scheme code in folio files hence, we are showing all the accounts related to this folio'
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+      };
+    } else {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+        schemeCode: this.inputData.schemeCode
+      };
+    }
+    this.custumService.getBankDetails(this.obj)
+      .subscribe(res => {
+        if (res) {
+          console.log("bank details", res)
+          this.bankDetails = res;
+        } else {
+          this.bankDetails = [];
+        }
+      }, err => {
+        console.error(err);
+      })
+  }
   onTabChanged(event) {
     if (event.index == 2) {
       if (this.nomineeArray.length == 0) {
         this.getNomineeDetailsFolioSchemeWise();
       }
     }
+    if (event.index == 4) {
+      this.getOtherFolioDetails();
+    }
     console.log(this.inputData);
   }
-
-  getNomineeDetailsFolioSchemeWise() {
-    let data = {
+  getOtherFolioDetails() {
+    this.isLoadingOthers = true;
+    this.obj = {
       folioNumber: this.inputData.folioNumber,
       schemeCode: this.inputData.schemeCode
-    }
+    };
+    this.custumService.OtherFolioDetails(this.obj)
+      .subscribe((res: any) => {
+        this.isLoadingOthers = false;
+        if (res) {
+          this.othersData = res;
+          this.emailList = this.othersData.emailList;
+          this.mobileList = this.othersData.mobileList;
+
+        } else {
+          this.othersData = res;
+        }
+      }, err => {
+        this.othersData = null;
+        this.isLoadingOthers = false;
+        console.error(err);
+        this.eventService.showErrorMessage(err);
+      });
+  }
+  getNomineeDetailsFolioSchemeWise() {
     this.isNomineeLoading = true;
-    this.custumService.getFolioSchemeWiseNomineeDetails(data)
-      .subscribe(res => {
+    if (this.inputData.rtMasterId == 3) {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+      };
+    } else {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+        schemeCode: this.inputData.schemeCode
+      };
+    }
+    this.custumService.getFolioSchemeWiseNomineeDetails(this.obj)
+      .subscribe((res: any) => {
         this.isNomineeLoading = false;
         if (res) {
-          const decodedRes = JSON.parse(atob(res['payLoad']));
-          console.log("nominee daata", decodedRes);
+          const decodedRes = res;
+          this.isLoading = false
+          console.log('nominee daata', decodedRes);
           this.nomineeArray = [...decodedRes];
         } else {
           this.nomineeArray = [];
         }
       }, err => {
         this.nomineeArray = [];
-        this.isNomineeLoading = true
+        this.isNomineeLoading = false;
         console.error(err);
-        this.eventService.openSnackBar("Something went wrong", 'DISMISS');
-      })
+        this.eventService.showErrorMessage(err);
+      });
   }
+
   getFolioMasterResponse(data) {
     this.isLoading = false;
     console.log(data);
@@ -82,6 +152,7 @@ export class FolioMasterDetailsComponent implements OnInit {
       this.folioDetails = [];
     }
   }
+
   close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }

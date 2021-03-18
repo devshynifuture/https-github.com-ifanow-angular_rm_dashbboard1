@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACZ,OAAO,EAAE,GAAG;EACZ,MAAM,EAAE,WAAW;CACpB;;AAED,AACE,SADO,CAAC,gBAAgB,CACxB,0BAA0B,CAAC;EACzB,MAAM,EAAE,GAAG;CACZ;;AAHH,AAIE,SAJO,CAAC,gBAAgB,CAIxB,wBAAwB,CAAC;EACvB,UAAU,EAAE,IAAI;CACjB",
+    "sources": [
+        "sip-cleanup.component.scss"
+    ],
+    "names": [],
+    "file": "sip-cleanup.component.css"
+}

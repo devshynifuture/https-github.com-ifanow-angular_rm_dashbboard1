@@ -31,6 +31,8 @@ export class OpenGalleryPlanComponent implements OnInit {
   sendToCopy: any;
   individualGoal: boolean;
   goalIndividualData: any;
+  choose: boolean;
+  jsonDataObj: { advisorId: any; goalName: any; imageURL: any; goalTypeId: any; };
   constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,
     private subInjectService: SubscriptionInject, private orgSetting: OrgSettingServiceService,
@@ -38,11 +40,15 @@ export class OpenGalleryPlanComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId()
     this.sendToCopy = this.dataGet.bank
     this.goalIndividualData = this.dataGet.animal
+    if (this.goalIndividualData != '' && !this.goalIndividualData.template) {
+      this.getPersonalInfo();
+    } else {
+      this.imgURL = (this.dataGet.bank.imageUrl) ? this.dataGet.bank.imageUrl : this.dataGet.bank
+    }
   }
 
   ngOnInit() {
     //this.getdataForm('')
-    this.getPersonalInfo();
   }
 
   getPersonalInfo() {
@@ -57,6 +63,7 @@ export class OpenGalleryPlanComponent implements OnInit {
   uploadImageForCorping(event) {
     this.imageUploadEvent = event;
     this.showCropper = true;
+    this.choose = false
   }
   onNoClick() {
     if (this.showCropper) {
@@ -68,40 +75,57 @@ export class OpenGalleryPlanComponent implements OnInit {
           if (status == 200) {
             this.showSpinner = true
             const responseObject = JSON.parse(response);
-            const jsonDataObj = {
-              advisorId: this.advisorId,
-              goalName: this.sendToCopy.name,
-              imageURL: responseObject.secure_url,
-              goalTypeId: this.sendToCopy.goalTypeId,
-            }
-            if (this.individualGoal == true) {
-              let obj = {
-                goalType: this.goalIndividualData.goalType,
-                id: this.goalIndividualData.goalId,
-                imageUrl: responseObject.secure_url,
-              }
-              this.orgSetting.uploadIndividualGoal(obj).subscribe((res) => {
-                this.anyDetailsChanged = true;
-                this.imgURL = jsonDataObj.imageURL;
-                this.showSpinner = false
-                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-                this.Close(this.anyDetailsChanged);
-              });
+            if (!this.goalIndividualData.template) {
+              this.uploadGoalIMG(responseObject)
             } else {
-              this.orgSetting.uploadPlanPhoto(jsonDataObj).subscribe((res) => {
-                this.anyDetailsChanged = true;
-                this.imgURL = jsonDataObj.imageURL;
-                this.showSpinner = false
-                this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
-                this.Close(this.anyDetailsChanged);
-              });
+              this.uploadTemlate(responseObject)
             }
-
           }
         });
     } else {
       this.Close(this.anyDetailsChanged);
     }
+  }
+  uploadTemlate(responseObject) {
+    this.dialogRef.close(responseObject);
+  }
+  uploadGoalIMG(responseObject) {
+    this.jsonDataObj = {
+      advisorId: this.advisorId,
+      goalName: this.sendToCopy.name,
+      imageURL: responseObject.secure_url,
+      goalTypeId: this.sendToCopy.goalTypeId,
+    }
+    if (this.individualGoal == true) {
+      let obj = {
+        goalType: this.goalIndividualData.goalType,
+        id: this.goalIndividualData.goalId,
+        imageUrl: responseObject.secure_url,
+      }
+
+      this.orgSetting.uploadIndividualGoal(obj).subscribe((res) => {
+        this.anyDetailsChanged = true;
+        this.imgURL = this.jsonDataObj.imageURL;
+        this.showSpinner = false
+        this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+        this.Close(this.anyDetailsChanged);
+      });
+    } else {
+      this.jsonDataObj = {
+        advisorId: this.advisorId,
+        goalName: this.sendToCopy.name,
+        imageURL: responseObject.secure_url,
+        goalTypeId: this.sendToCopy.goalTypeId,
+      }
+      this.orgSetting.uploadPlanPhoto(this.jsonDataObj).subscribe((res) => {
+        this.anyDetailsChanged = true;
+        this.imgURL = this.jsonDataObj.imageURL;
+        this.showSpinner = false
+        this.event.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+        this.Close(this.anyDetailsChanged);
+      });
+    }
+
   }
   Close(flag: boolean) {
     // this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });

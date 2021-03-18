@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { SummaryPlanServiceService } from './summary-plan-service.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiConfig } from 'src/app/config/main-config';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
     selector: 'app-summary-plan',
@@ -41,7 +42,7 @@ export class SummaryPlanComponent implements OnInit {
     incomePercent: number;
     expensePercent: number;
     @ViewChild('summaryPlan', { static: false }) summaryPlan: ElementRef;
-
+    show = true;
     fragmentData = { isSpinner: false, date: null, time: '', size: '' };
     map: any;
     loopEle: number;
@@ -64,6 +65,9 @@ export class SummaryPlanComponent implements OnInit {
     @Output() loaded = new EventEmitter();//emit financial planning innerHtml reponse
 
     @Input() finPlanObj: any;//finacial plan pdf input
+    reportDate: Date;
+    totalMonth = 0;
+    totalLumpsum = 0;
 
     constructor(
         private summaryPlanService: SummaryPlanServiceService,
@@ -75,7 +79,8 @@ export class SummaryPlanComponent implements OnInit {
         private util: UtilService,
         private sanitizer: DomSanitizer,
         private cd: ChangeDetectorRef,
-        private http: HttpClient
+        private http: HttpClient,
+        public enumDataService: EnumDataService
     ) {
         console.log('org', this.getOrgData)
         console.log('userInfo', this.userInfo)
@@ -84,6 +89,7 @@ export class SummaryPlanComponent implements OnInit {
     @ViewChild(MatPaginator, { static: false }) paginator;
 
     ngOnInit() {
+        this.reportDate = new Date()
         this.isLoadingBudget = true;
         this.summaryPlanService.getClientId().subscribe(res => {
             this.clientIdToClearStorage = res;
@@ -121,7 +127,7 @@ export class SummaryPlanComponent implements OnInit {
         this.fragmentData.isSpinner = true;;
         let para = document.getElementById('planSummary');
         //const header = this.summaryTemplateHeader.nativeElement.innerHTML
-        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', false, this.fragmentData, '', '', false);
+        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', 'false', this.fragmentData, '', '', false, null);
 
     }
     getFinPlan() {
@@ -145,6 +151,12 @@ export class SummaryPlanComponent implements OnInit {
                 console.error(err);
             }
         );
+        if (this.isLoadingCashFlow && this.isLoadingBudget && this.isLoadingGoals && this.isLoadingSummary) {
+            this.cd.detectChanges();//to refresh the dom when response come
+            setTimeout(() => {
+                this.loaded.emit(document.getElementById('planSummary'));
+            }, 5000);
+        }
     }
     downloadPrevoius(element) {
         if (element) {
@@ -246,6 +258,12 @@ export class SummaryPlanComponent implements OnInit {
             // this.eventService.openSnackBar(err, 'Dismiss');
 
         })
+        if (this.isLoadingCashFlow && this.isLoadingBudget && this.isLoadingGoals && this.isLoadingSummary) {
+            this.cd.detectChanges();//to refresh the dom when response come
+            setTimeout(() => {
+                this.loaded.emit(document.getElementById('planSummary'));
+            }, 5000);
+        }
     }
 
     sorting(data, filterId) {
@@ -445,6 +463,10 @@ export class SummaryPlanComponent implements OnInit {
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.planService.getGoalSummaryPlanData(data)
             .subscribe(res => {
+                let monthly = 0;
+                let Alllumpsum = 0;
+                this.totalMonth = 0;
+                this.totalLumpsum = 0;
                 if (res) {
                     console.log(res);
                     this.goalSummaryCountObj = res;
@@ -487,6 +509,8 @@ export class SummaryPlanComponent implements OnInit {
                                 goalAssetAllocation: item.goalAssetAllocation,
                                 retirementTableValue: goalValueObj.retirementTableValue
                             });
+                            monthly = month;
+                            Alllumpsum = lumpsum;
                         } else if (!!item.singleOrMulti && item.singleOrMulti === 2) {
                             let goalValueObj = item.multiYearGoalPlan,
                                 lumpsumDebt = 0,
@@ -551,7 +575,11 @@ export class SummaryPlanComponent implements OnInit {
                                 goalAssetAllocation: item.goalAssetAllocation,
                                 retirementTableValue: goalValueObj.retirementTableValue
                             });
+                            monthly = month;
+                            Alllumpsum = lumpsum;
                         }
+                        this.totalMonth += monthly
+                        this.totalLumpsum += Alllumpsum
                     });
                     this.dataSource.data = arr;
                     this.isLoadingGoals = false;
@@ -563,10 +591,13 @@ export class SummaryPlanComponent implements OnInit {
                 console.error(err);
                 // this.eventService.openSnackBar("Something went wrong", "DISMISS")
             })
-        this.cd.detectChanges();//to refresh the dom when response come
-        setTimeout(() => {
-            this.loaded.emit(document.getElementById('planSummary'));
-        }, 5000);
+        if (this.isLoadingCashFlow && this.isLoadingBudget && this.isLoadingGoals && this.isLoadingSummary) {
+            this.cd.detectChanges();//to refresh the dom when response come
+            setTimeout(() => {
+                this.loaded.emit(document.getElementById('planSummary'));
+            }, 5000);
+        }
+
     }
 
     getSumOfJsonMap(json: Object = {}) {
@@ -668,6 +699,12 @@ export class SummaryPlanComponent implements OnInit {
                 this.isLoadingSummary = false;
                 console.error(err);
             })
+        if (this.isLoadingCashFlow && this.isLoadingBudget && this.isLoadingGoals && this.isLoadingSummary) {
+            this.cd.detectChanges();//to refresh the dom when response come
+            setTimeout(() => {
+                this.loaded.emit(document.getElementById('planSummary'));
+            }, 5000);
+        }
     }
 
     getListFamilyMem() {
@@ -707,6 +744,12 @@ export class SummaryPlanComponent implements OnInit {
                 this.getBudgetApis();
             }
         );
+        if (this.isLoadingCashFlow && this.isLoadingBudget && this.isLoadingGoals && this.isLoadingSummary) {
+            this.cd.detectChanges();//to refresh the dom when response come
+            setTimeout(() => {
+                this.loaded.emit(document.getElementById('planSummary'));
+            }, 5000);
+        }
     }
 
     getCashflowData() {
@@ -727,6 +770,9 @@ export class SummaryPlanComponent implements OnInit {
                     console.log(data);
                     this.annualSurplus = 0;
                     this.cashFlowData = data;
+                    this.cashFlowData.loanEmi = this.cashFlowData.loanEmi ? (this.cashFlowData.loanEmi).toFixed(2) : 0
+                    this.cashFlowData.surplus = this.cashFlowData.surplus ? (this.cashFlowData.surplus).toFixed(2) : 0
+                    console.log('cashFlowData', this.cashFlowData)
                     this.annualSurplus = this.cashFlowData.income - this.cashFlowData.expense;
                     let total = this.cashFlowData.income + this.cashFlowData.expense;
                     this.incomePercent = Math.floor((this.cashFlowData.income / total) * 100);
@@ -735,10 +781,17 @@ export class SummaryPlanComponent implements OnInit {
                     this.cashFlowData = '';
                 }
             }, (error) => {
+
                 // this.eventService.showErrorMessage(error);
                 this.isLoadingCashFlow = false;
             }
         );
+        if (this.isLoadingCashFlow && this.isLoadingBudget && this.isLoadingGoals && this.isLoadingSummary) {
+            this.cd.detectChanges();//to refresh the dom when response come
+            setTimeout(() => {
+                this.loaded.emit(document.getElementById('planSummary'));
+            }, 5000);
+        }
     }
 
 }

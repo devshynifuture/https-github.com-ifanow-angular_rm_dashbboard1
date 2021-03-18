@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAC,QAAQ,CAAC,cAAc,CAAC;EAC9B,MAAM,EAAE,IAAI;EACZ,WAAW,EAAE,IAAI;EACjB,OAAO,EAAE,YAAY;CACxB",
+    "sources": [
+        "advice-stocks.component.scss"
+    ],
+    "names": [],
+    "file": "advice-stocks.component.css"
+}

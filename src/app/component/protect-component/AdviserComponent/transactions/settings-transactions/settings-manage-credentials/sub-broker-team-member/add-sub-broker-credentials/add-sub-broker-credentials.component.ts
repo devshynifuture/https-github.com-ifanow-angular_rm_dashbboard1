@@ -74,7 +74,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
   getBSECredentials() {
     this.isLoadingBroker = true;
     let obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(
@@ -143,7 +143,7 @@ export class AddSubBrokerCredentialsComponent implements OnInit {
       this.barButtonOptions.active = true;
       const obj = {
         id: (this.inputData) ? this.inputData.id : null,
-        advisorId: this.advisorId,
+        advisorId: AuthService.getAdminId(),
         teamMemberSessionId: (this.selectedTeam == undefined) ? this.inputData.teamMemberSessionId : this.selectedTeam.adminAdvisorId,
         tpUserCredentialId: (this.selectBrokerCred == undefined) ? this.inputData.tpUserCredentialId : this.selectBrokerCred.tpUserCredentialId,
         euin: this.addSubCredential.controls.euin.value,

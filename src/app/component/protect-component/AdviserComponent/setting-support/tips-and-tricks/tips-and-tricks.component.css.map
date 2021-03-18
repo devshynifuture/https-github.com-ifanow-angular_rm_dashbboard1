@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "tips-and-tricks.component.scss"
+    ],
+    "names": [],
+    "file": "tips-and-tricks.component.css"
+}

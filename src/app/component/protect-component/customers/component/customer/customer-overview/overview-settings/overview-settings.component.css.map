@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "overview-settings.component.scss"
+    ],
+    "names": [],
+    "file": "overview-settings.component.css"
+}

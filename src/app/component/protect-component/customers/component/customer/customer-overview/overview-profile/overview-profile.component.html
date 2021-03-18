@@ -12,10 +12,11 @@
                     [ngClass]="{'activeColor lt':Tab=='Tab2'}" class="c-p">
                     <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Risk profile
                 </li>
-                <!-- <li class="c-p">
-                    <img class="mr-8" src="/assets/images/svg/financial-health-icon.svg"> Financial health check
+                <li (click)="Tab='Tab3'" *ngIf="!enumDataService.PRODUCTION" [ngClass]="{'activeColor lt':Tab=='Tab3'}"
+                    class="c-p">
+                    <img class="mr-8" src="/assets/images/svg/mange-kyc.svg"> Manage KYC
                 </li>
-                <li class="c-p">
+                <!-- <li class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Preliminary data
                 </li> -->
             </ul>
@@ -81,7 +82,7 @@
 
                     </div>
                     <div class="col-md-2 text-right">
-                        <img *ngIf="!letsideBarLoader" class="emailIcon" src="/assets/images/svg/email-icon.svg">
+                        <!-- <img *ngIf="!letsideBarLoader" class="emailIcon" src="/assets/images/svg/email-icon.svg"> -->
                         <img *ngIf="!letsideBarLoader" class=" c-p" [matMenuTriggerFor]="menu"
                             src="/assets/images/svg/menu-myProfile-icon.svg">
                         <mat-menu #menu="matMenu">
@@ -114,10 +115,10 @@
                             <div class="memberSlider">
                                 <div *ngFor="let singleMembers of familyMemberList"
                                     class="memberList primary-border c-p">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==2"
-                                        style="margin-right: 9px; margin-left: 2px;"
-                                        src="/assets/images/svg/man-profile.svg" width="48px">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==3"
+                                    <img (click)="open('edit',singleMembers)"
+                                        style="margin-right: 9px; margin-left: 2px;" [src]="singleMembers.imgUrl"
+                                        [ngStyle]="{'width': singleMembers.width}">
+                                    <!-- <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==3"
                                         style="margin-right: 9px; margin-left: 2px;"
                                         src="/assets/images/svg/women-profile-icon.svg" width="48px">
                                     <img (click)="open('edit',singleMembers)"
@@ -143,13 +144,13 @@
                                         style="margin-right: 9px; margin-left: 2px;"
                                         src="/assets/images/svg/father-profile.svg" width="48px">
                                     <img (click)="open('edit',singleMembers)"
-                                        *ngIf="singleMembers.relationshipId==10 || singleMembers.relationshipId==8 || singleMembers.relationshipId==9  || singleMembers.relationshipId==11 || singleMembers.relationshipId==12 || singleMembers.relationshipId==13 || singleMembers.relationshipId==14 || singleMembers.relationshipId==15 || singleMembers.relationshipId==16 "
+                                        *ngIf="singleMembers.relationshipId==10 || singleMembers.relationshipId==8 || singleMembers.relationshipId==9  || singleMembers.relationshipId==11 || singleMembers.relationshipId==12 || singleMembers.relationshipId==13 || singleMembers.relationshipId==14 || singleMembers.relationshipId==15 || singleMembers.relationshipId==16 || singleMembers.relationshipId==0 "
                                         style="margin-right: 9px; margin-left: 2px;" src="/assets/images/svg/others.svg"
                                         width="48px">
                                     <img (click)="open('edit',singleMembers)"
                                         *ngIf="singleMembers.relationshipId==17 || singleMembers.relationshipId==18 || singleMembers.relationshipId==19"
                                         style="margin-right: 9px; margin-left: 2px;"
-                                        src="/assets/images/svg/office-building.svg" width="48px">
+                                        src="/assets/images/svg/office-building.svg" width="48px"> -->
                                     <div (click)="open('edit',singleMembers)" class="familyList">
                                         <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
                                             <span matTooltip="{{singleMembers.name}}"
@@ -164,13 +165,12 @@
                                             <span *ngIf="singleMembers.relationshipId==5">Daughter</span>
                                             <span *ngIf="singleMembers.relationshipId==7">Mother</span>
                                             <span *ngIf="singleMembers.relationshipId==6">Father</span>
-                                            <span
-                                                *ngIf="singleMembers.relationshipId==10 || singleMembers.relationshipId==0">Others</span>
+                                            <span *ngIf="singleMembers.relationshipId==10 ">Others</span>
                                             <span *ngIf="singleMembers.relationshipId==8">Brother</span>
                                             <span *ngIf="singleMembers.relationshipId==9">Sister</span>
                                             <!-- <span *ngIf="singleMembers.relationshipId==10">Others</span> -->
-                                            <span *ngIf="singleMembers.relationshipId==11">Daughter_In_Law</span>
-                                            <span *ngIf="singleMembers.relationshipId==12">Sister_In_Law</span>
+                                            <span *ngIf="singleMembers.relationshipId==11">Daughter InLaw</span>
+                                            <span *ngIf="singleMembers.relationshipId==12">Sister In Law</span>
                                             <span *ngIf="singleMembers.relationshipId==13">Grandmother</span>
                                             <span *ngIf="singleMembers.relationshipId==14">Grandfather</span>
                                             <span *ngIf="singleMembers.relationshipId==15">Niece</span>
@@ -178,14 +178,22 @@
                                             <span *ngIf="singleMembers.relationshipId==18">HUF</span>
                                             <span *ngIf="singleMembers.relationshipId==19">Private Limited</span>
                                             <span *ngIf="singleMembers.relationshipId==17">Sole proprietorship</span>
+                                            <span *ngIf="singleMembers.relationshipId==20">Grand Son</span>
+                                            <span *ngIf="singleMembers.relationshipId==21">Grand Daughter</span>
+                                            <span *ngIf="singleMembers.relationshipId==22">Brother In Law</span>
+                                            <span *ngIf="singleMembers.relationshipId==23">LLP</span>
+                                            <span *ngIf="singleMembers.relationshipId==24">Family Trust</span>
+                                            <span *ngIf="singleMembers.relationshipId==25">Partnership</span>
                                         </p>
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             {{singleMembers.age}} Yrs</p>
                                     </div>
-
-                                    <!-- <i class="material-icons familyDelete">
-                      cancel
-                  </i> -->
+                                    <img *ngIf="singleMembers.kycComplaint==1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType!=2"
+                                        src="/assets/images/svg/circle-verified.svg" matTooltip="KYC Verified"
+                                        class="familyDelete c-p">
+                                    <img *ngIf="singleMembers.kycComplaint!=1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType!=2"
+                                        src="/assets/images/svg/error-red.png" matTooltip="KYC Not Verified"
+                                        class="familyDelete c-p">
 
                                 </div>
                             </div>
@@ -223,8 +231,8 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span
-                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.displayName) ? clientOverviewData.displayName : 'N/A'}}
+                                                <span *ngIf="!letsideBarLoader">{{(clientOverviewData.displayName) ?
+                                                    clientOverviewData.displayName : 'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -238,7 +246,10 @@
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
                                                 <span *ngIf="!letsideBarLoader">
-                                                    {{(clientOverviewData.mobileList && clientOverviewData.mobileList.length > 0 && clientOverviewData.mobileList[0].mobileNo!=0) ? clientOverviewData.mobileList[0].mobileNo : 'N/A'}}
+                                                    {{(clientOverviewData.mobileList &&
+                                                    clientOverviewData.mobileList.length > 0 &&
+                                                    clientOverviewData.mobileList[0].mobileNo!=0) ?
+                                                    clientOverviewData.mobileList[0].mobileNo : 'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -258,10 +269,18 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class=" basicDetaisList ">
+                                <div *ngIf="!enumDataService.PRODUCTION" class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">KYC STATUS</p>
-                                    <p class=" f-14 roboto f-500 m-0 "> Not verified</p>
-                                </div> -->
+                                    <p *ngIf="!letsideBarLoader" class=" f-14 roboto f-500 m-0 ">
+                                        <span class="text-danger" *ngIf="clientOverviewData.kycComplaint==0">Not
+                                            Verified</span>
+                                        <span class="text-primary"
+                                            *ngIf="clientOverviewData.kycComplaint==1">KYC_VERIFIED</span>
+                                        <span *ngIf="clientOverviewData.kycComplaint==2">APPLIED</span>
+                                        <span *ngIf="clientOverviewData.kycComplaint==3">ACCEPTED</span>
+                                        <span *ngIf="clientOverviewData.kycComplaint==4">REJECTED</span>
+                                    </p>
+                                </div>
                                 <div *ngIf="clientData.clientType==3 || clientData.clientType==4"
                                     class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 "><span *ngIf="clientData.clientType==3">COMPANY
@@ -320,7 +339,8 @@
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
                                                 <span *ngIf="!letsideBarLoader">
-                                                    {{(clientOverviewData.userName) ? clientOverviewData.userName : 'N/A'}}
+                                                    {{(clientOverviewData.userName) ? clientOverviewData.userName :
+                                                    'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -332,8 +352,8 @@
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
-                                                <span
-                                                    *ngIf="!letsideBarLoader">{{(clientOverviewData.aadhaarNumber) ? clientOverviewData.aadhaarNumber : 'N/A'}}
+                                                <span *ngIf="!letsideBarLoader">{{(clientOverviewData.aadhaarNumber) ?
+                                                    clientOverviewData.aadhaarNumber : 'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -401,13 +421,17 @@
                     </div>
 
                     <div class=" col-lg-3 col-md-4 pl-8 pr-8 br-primitive ">
-                        <div class=" row ">
+                        <!-- <div class=" row ">
                             <div class=" col-md-9 ">
-                                <h5 class=" headingDetails "> Address</h5>
+                                <h5 class=" headingDetails "> Address<i *ngIf="addressList && addressList.length>0"
+                                        (click)="openAddEdit(clientData,null,'Address','Add')"
+                                        class=" material-icons f-18 c-p">
+                                        add_circle_outline</i></h5>
+
                             </div>
                             <div class=" col-md-3 text-right ">
                             </div>
-                        </div>
+                        </div> -->
                         <div [appSkeletonLoading]="adressFlag" [hidden]="!adressFlag " appSkeletonLoading
                             class="skeletonAnimation">
                             <div class="relClass mb-12">
@@ -417,10 +441,12 @@
                                 <div class="bar height23"></div>
                             </div>
                         </div>
-                        <div class="row ">
+                        <!-- <div class="row ">
                             <div *ngFor="let singleAddress of addressList" class=" row ">
                                 <div class="col-md-9">
-                                    <p class=" f-12 mb-0 pt-4 text-primitive ">PERMANENT</p>
+                                    <p class=" f-12 mb-0 pt-4 text-primitive ">
+                                        {{!singleAddress.addressType ||singleAddress.addressType==1?'RESIDENTIAL':singleAddress.addressType==2?'OFFICE':'KYC'}}
+                                    </p>
 
 
                                     <p class=" f-14 ">
@@ -440,9 +466,12 @@
 
                             </div>
 
+                          
+
+                        </div> -->
+                        <div class="row">
                             <div *ngIf="addressList==undefined && !adressFlag" class="col-md-12 addAddressClass">
                                 <div class="d-flex flex-column align-items-center">
-                                    <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
                                     <h4 *ngIf="!showSectionError.addressList" class="text-center pt-12 f-14">No address
                                         found
                                     </h4>
@@ -454,8 +483,58 @@
                                     </p>
                                 </div>
                             </div>
-
                         </div>
+                        <div *ngFor="let singleAddress of addressList;index as i">
+                            <div *ngIf="selectedAddress===singleAddress" class=" row ">
+                                <div class="col-md-6  pl-0">
+                                    <h5 class=" headingDetails d-flex"> Address
+                                        <i (click)="openAddEdit(clientData,null,'Address','Add')"
+                                            class=" material-icons f-18 c-p">
+                                            add_circle_outline</i>
+                                    </h5>
+
+                                </div>
+                                <div *ngIf="addressList && addressList.length>1"
+                                    class=" col-md-6 p-0 d-flex align-items-center justify-content-end ">
+                                    <span class=" f-12 text-primitive ">{{i + 1}} of {{addressList.length}}</span>
+                                    <span class=" arrow-primitive arrowSlider c-p ">
+                                        <i (click)="previousAddress(i)" class=" material-icons f-17 text-primitive ">
+                                            chevron_left
+                                        </i>
+                                    </span>
+                                    <span class=" arrow-primitive arrowSlider c-p ">
+                                        <i (click)="nextAddress(i)" class=" material-icons f-17 text-primitive ">
+                                            chevron_right
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="selectedAddress===singleAddress" class="row">
+                                <div class=" col-md-9 p-0 ">
+                                    <p class=" f-12 mb-0 pt-4 text-primitive ">
+                                        {{!singleAddress.addressType
+                                        ||singleAddress.addressType==1?'RESIDENTIAL':singleAddress.addressType==2?'OFFICE':'KYC'}}
+                                    </p>
+
+
+                                    <p class=" f-14 ">
+                                        {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}}
+                                        {{singleAddress.address2 ? singleAddress.address2 + ' , ' : ''}}
+                                        {{singleAddress.address3 ? singleAddress.address3 + ' , ' : ''}}
+                                        {{singleAddress.city ? singleAddress.city : ''}} {{singleAddress.pinCode
+                                        ? singleAddress.pinCode + '.' : ''}}
+                                        {{singleAddress.state ? singleAddress.state : ''}}
+                                    </p>
+                                </div>
+                                <div class=" col-md-3 p-0 text-right ">
+                                    <a *ngIf="keyInfoCapability.Edit"
+                                        (click)="openAddEdit(clientData,singleAddress,'Address','Edit')"
+                                        class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class=" col-lg-3 col-md-4 pl-20 pr-0">
@@ -577,8 +656,8 @@
                                 <div class=" row ">
                                     <div class=" col-md-9 p-0 ">
                                         <p class=" m-0 f-14 ">
-                                            <span
-                                                class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName ?selectedDemat.depositoryParticipantName :'N/A'}}</span>
+                                            <span class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName
+                                                ?selectedDemat.depositoryParticipantName :'N/A'}}</span>
                                             <br> DP ID:
                                             {{selectedDemat.depositoryParticipantId?selectedDemat.depositoryParticipantId:'N/A'}}
                                             <br> UCC:
@@ -601,6 +680,9 @@
         </div>
         <div *ngIf="Tab=='Tab2'" class="col-md-10 responsive-right-side-top">
             <app-overview-risk-profile></app-overview-risk-profile>
+        </div>
+        <div *ngIf="Tab=='Tab3' && !enumDataService.PRODUCTION" class="col-md-10 responsive-right-side-top">
+            <app-manage-kyc></app-manage-kyc>
         </div>
     </div>
 </div>

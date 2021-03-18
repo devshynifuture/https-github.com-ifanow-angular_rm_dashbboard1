@@ -1,0 +1,110 @@
+p {
+  font-family: "Roboto", sans-serif;
+  line-height: 19px;
+  letter-spacing: 0.2px;
+}
+
+.f-70 {
+  font-size: 70px;
+}
+
+.align-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  text-align: center;
+  margin: 15% 0;
+  min-height: 200px;
+  align-items: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+.boxes {
+  height: 255px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  position: relative;
+}
+
+.boxes .documrntBox p {
+  font-size: 12px !important;
+  margin-bottom: 0px !important;
+  text-align: left !important;
+}
+
+h5 {
+  margin-bottom: 28px;
+}
+
+.action-button {
+  position: absolute;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  width: 59px;
+  height: 26px;
+  left: 0px;
+  right: 0px;
+  margin: 0px auto;
+  bottom: 25px;
+}
+
+#ui-documents-overview {
+  margin-bottom: 100px !important;
+  margin-top: 100px !important;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+::ng-deep .hoverable {
+  -webkit-transition: -webkit-box-shadow 0.3s;
+  transition: -webkit-box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+}
+
+::ng-deep .hoverable:hover {
+  -webkit-box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+          box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+::ng-deep .detailsFont {
+  padding: 8px;
+}
+
+::ng-deep .detailsFont p {
+  font-size: 8px;
+  margin: 0;
+  line-height: normal;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+@media (max-width: 992px) {
+  .align-center {
+    margin: 25% 0;
+  }
+}
+/*# sourceMappingURL=overview.component.css.map */

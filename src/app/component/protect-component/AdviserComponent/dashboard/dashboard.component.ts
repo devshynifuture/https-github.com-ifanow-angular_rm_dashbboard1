@@ -35,7 +35,9 @@ import { interval, Subscription } from 'rxjs';
 import { MfServiceService } from '../../customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { AssetValidationService } from '../../customers/component/customer/accounts/assets/asset-validation.service';
 import { CredentialsErrorPopupComponent } from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
-
+import { AddArnRiaCredentialsComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/settings-transactions/settings-manage-credentials/arn-ria-credentials/add-arn-ria-credentials/add-arn-ria-credentials.component';
+import { IinUccCreationComponent } from 'src/app/component/protect-component/AdviserComponent/transactions//overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component'
+import { OnlineTransactionComponent } from '../transactions//overview-transactions/doTransaction/online-transaction/online-transaction.component';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -160,6 +162,7 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 export class DashboardComponent implements OnInit {
   hours: number;
   mfData: any;
+  dontHide: boolean;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -291,6 +294,7 @@ export class DashboardComponent implements OnInit {
   advisorId: any;
   dashBoardSummary: {}[];
   isLoadingSubSummary = false;
+  credentialsAdded = false;
   feeRecieved: any;
   dataSourceClientWithSub: any;
   greeting: string;
@@ -500,6 +504,7 @@ export class DashboardComponent implements OnInit {
         this.hours = undefined
       }
     }
+    this.credentialsAdded = true;
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
     this.clientData = AuthService.getClientData();
@@ -756,6 +761,85 @@ export class DashboardComponent implements OnInit {
     this.newchartData = chartData
     this.assetAllocationPieChartDataMgnt(this.newchartData);
     this.tabsLoaded.portfolioData.dataLoaded = true
+  }
+  getBSECredentials() {
+    this.isLoading = true;
+    const obj = {
+      advisorId: AuthService.getAdminId(),
+      onlyBrokerCred: true
+    };
+
+  }
+
+  openAddCredential(data, flag) {
+    const fragmentData = {
+      flag,
+      data,
+      id: 1,
+      state: (flag == 'detailedNsc') ? 'open35' : 'open35',
+      componentName: AddArnRiaCredentialsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getBSECredentials();
+            this.credentialsAdded = true;
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+
+      }
+    );
+  }
+  refresh(flag) {
+    this.dontHide = true;
+  }
+
+
+
+
+
+  openTransaction() {
+    const fragmentData = {
+      flag: 'addNewTransaction',
+      data: { isAdvisorSection: true, flag: 'addNewTransaction' },
+      id: 1,
+      state: 'open65',
+      componentName: OnlineTransactionComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.refresh(true);
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
+
+  openNewCustomerIIN() {
+    const fragmentData = {
+      flag: 'addNewCustomer',
+      id: 1,
+      direction: 'top',
+      componentName: IinUccCreationComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
   }
 
   getTaskDashboardCount() {
@@ -1128,9 +1212,9 @@ export class DashboardComponent implements OnInit {
   getLastSevenDaysTransactionsRes(data) {
     this.transactionFlag = false;
     this.LastSevenDaysTransactions = data;
-    this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
-      x.status == 1 || x.status == 7;
-    });
+    // this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
+    //   x.status == 1 || x.status == 7;
+    // });
   }
 
   getSummaryDataDashboard() {
@@ -1232,6 +1316,10 @@ export class DashboardComponent implements OnInit {
   }
 
   updateTodoList(todoData) {
+    if (this.updateNote.value == '') {
+      this.eventService.openSnackBar("Please type something", "Dismiss");
+      return;
+    }
     const obj = {
       id: todoData.id,
       advisorId: this.advisorId,
@@ -1890,8 +1978,9 @@ export class DashboardComponent implements OnInit {
     this.isKeyMatrix = false;
     data.mfAum = UtilService.getNumberToWord(data.mfAum);
     data.sipBook = UtilService.getNumberToWord(data.sipBook);
-    delete data['mfAum'];
+    // delete data['mfAum'];
     this.keyMetricJson = data;
+    this.mfAumValue = data.mfAum;
     // this.keyMetricJson.mfAum = '';
     this.loaderFun();
   }
@@ -1957,6 +2046,7 @@ export class DashboardComponent implements OnInit {
       parentId: this.parentId,
       startFlag: 0,
       endFlag: 5,
+      advisorId: this.advisorId
     };
     this.backoffice.getMfTransactions(obj).subscribe(
       data => {
@@ -1984,8 +2074,7 @@ export class DashboardComponent implements OnInit {
     }
   }
   getMisDataRes(data) {
-    this.keyMetricJson.mfAum = data.totalAumRupees;
-    this.mfAumValue = data.totalAumRupees;
+    // this.keyMetricJson.mfAum = data.totalAumRupees;
   }
   loaderFun() {
     if (!this.isKeyMatrix && !this.mfDataflag) {

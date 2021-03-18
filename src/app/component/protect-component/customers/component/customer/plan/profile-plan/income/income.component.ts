@@ -213,7 +213,7 @@ export class IncomeComponent implements OnInit {
     }
     if (this.finPlanObj) {
       this.ref.detectChanges();
-      this.loaded.emit(document.getElementById('template'));
+      this.loaded.emit(document.getElementById('incomeTemplate'));
     }
   }
 
@@ -263,10 +263,10 @@ export class IncomeComponent implements OnInit {
 
   generatePdf() {
     this.fragmentData.isSpinner = true;
-    const para = document.getElementById('template');
+    const para = document.getElementById('incomeTemplate');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
 
-    this.util.htmlToPdf('', para.innerHTML, 'Income', 'true', this.fragmentData, '', '', false);
+    this.util.htmlToPdf('', para.innerHTML, 'Income', 'true', this.fragmentData, '', '', false, null);
 
   }
 

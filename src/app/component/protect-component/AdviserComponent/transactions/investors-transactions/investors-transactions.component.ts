@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { OpenPdfViewComponent } from '../open-pdf-view/open-pdf-view.component';
 import { TransactionRoleService } from "../transaction-role.service";
 import { MappedUserComponent } from './investor-detail/mapped-user/mapped-user.component';
+import { EditFatcaDetailsComponent } from './edit-fatca-details/edit-fatca-details.component';
 
 @Component({
   selector: 'app-investors-transactions',
@@ -104,7 +105,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   getBSECredentials() {
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSECredentials(obj).subscribe(
@@ -122,7 +123,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   }
   getBSESubBrokerCredentials() {
     const obj = {
-      advisorId: this.advisorId,
+      advisorId: AuthService.getAdminId(),
       onlyBrokerCred: true
     };
     this.onlineTransact.getBSESubBrokerCredentials(obj).subscribe(
@@ -216,6 +217,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   //   (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   // }
   getMappedData() {
+    this.displayedColumns = ['aggregatorType', 'brokerCode', 'name', 'panNo', 'taxStatus', 'holdingType',
+      'clientCode', 'status'];
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
     this.isPendingData = false;
@@ -304,6 +307,8 @@ export class InvestorsTransactionsComponent implements OnInit {
   }
 
   getIINUCC() {
+    this.displayedColumns = ['aggregatorType', 'brokerCode', 'name', 'panNo', 'taxStatus', 'holdingType',
+      'clientCode', 'status', 'icons'];
     this.dontHide = true;
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
@@ -397,6 +402,24 @@ export class InvestorsTransactionsComponent implements OnInit {
       id: 1,
       state: 'open35',
       componentName: InvestorDetailComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  openFatca(data) {
+    const fragmentData = {
+      flag: 'investorDetail',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: EditFatcaDetailsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

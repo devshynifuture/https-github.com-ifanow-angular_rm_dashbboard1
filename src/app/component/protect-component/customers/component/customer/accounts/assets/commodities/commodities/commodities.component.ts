@@ -19,6 +19,7 @@ import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { RoleService } from 'src/app/auth-service/role.service';
 import { CustomerOverviewService } from '../../../../customer-overview/customer-overview.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-commodities',
@@ -28,7 +29,7 @@ import { CustomerOverviewService } from '../../../../customer-overview/customer-
 export class CommoditiesComponent implements OnInit {
   showRequring: string;
   @ViewChild('tableEl', { static: false }) tableEl;
-  dummyOtherDataList=[];
+  dummyOtherDataList = [];
   displayedColumns9 = ['no', 'owner', 'grams', 'car', 'price', 'mvalue', 'pvalue', 'desc', 'status', 'icons'];
   datasource9 = ELEMENT_DATA9;
 
@@ -47,7 +48,7 @@ export class CommoditiesComponent implements OnInit {
   sumOfPurchaseValueOther: any;
   currentDate = new Date();
   footer = [];
-
+  show = false;
   @ViewChild('goldListTable', { static: false }) goldListTableSort: MatSort;
   @ViewChild('otherListTable', { static: false }) otherListTableSort: MatSort;
   @ViewChild('goldTemp', { static: false }) goldTemp: ElementRef;
@@ -75,7 +76,7 @@ export class CommoditiesComponent implements OnInit {
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet, private assetValidation: AssetValidationService, private ref: ChangeDetectorRef,
-    public roleService: RoleService, private customerOverview: CustomerOverviewService) { }
+    public roleService: RoleService, private customerOverview: CustomerOverviewService, public enumDataService: EnumDataService) { }
 
   ngOnInit() {
     this.commoditiesCapability = this.roleService.portfolioPermission.subModule.assets.subModule.commodities.capabilityList
@@ -91,8 +92,8 @@ export class CommoditiesComponent implements OnInit {
         this.showRequring = '1'
         this.getfixedIncomeData('1');
       } else {
-        this.showRequring = '2'
-        this.getfixedIncomeData('2');
+        this.showRequring = '3'
+        this.getfixedIncomeData('3');
       }
     } else {
       this.getfixedIncomeData('1');
@@ -145,7 +146,7 @@ export class CommoditiesComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true);
+    this.returnValue = this.utils.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
     console.log('return value ====', this.returnValue);
     return obj;
     //this.pdfGen.generatePdf(rows, tableTitle);
@@ -215,7 +216,7 @@ export class CommoditiesComponent implements OnInit {
         this.goldList = new MatTableDataSource(this.data);
         this.getGoldList();
       }
-    } else {
+    } else if (value == '3') {
       if (this.otherDataList || this.assetValidation.otherDataList) {
         this.isLoading = false;
         this.getOthersRes(this.otherDataList ? this.otherDataList : this.assetValidation.otherDataList);

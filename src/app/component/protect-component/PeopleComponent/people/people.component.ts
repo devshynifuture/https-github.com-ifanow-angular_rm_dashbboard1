@@ -22,6 +22,7 @@ export class PeopleComponent implements OnInit {
     this.enumDataService.getRoles();
     this.enumDataService.getProofType();
     // this.enumDataService.getAccountList();
+    this.enumDataService.apiCallIsdCodesData();
     this.enumDataService.getClientRole();
     this.enumDataService.setBankAccountTypes();
   }

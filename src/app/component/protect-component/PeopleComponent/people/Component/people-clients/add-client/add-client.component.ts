@@ -1,10 +1,10 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CancelFlagService} from '../../people-service/cancel-flag.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatDialog} from '@angular/material';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CancelFlagService } from '../../people-service/cancel-flag.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-add-client',
@@ -12,12 +12,13 @@ import {MatDialog} from '@angular/material';
   styleUrls: ['./add-client.component.scss']
 })
 export class AddClientComponent implements OnInit {
+  bankListEmitResData: any;
 
   constructor(private cusService: CustomerService,
-              private eventService: EventService,
-              private subInjectService: SubscriptionInject,
-              private cancelFlagService: CancelFlagService,
-              public dialog: MatDialog) {
+    private eventService: EventService,
+    private subInjectService: SubscriptionInject,
+    private cancelFlagService: CancelFlagService,
+    public dialog: MatDialog) {
   }
 
   @Input() set data(data) {
@@ -32,7 +33,7 @@ export class AddClientComponent implements OnInit {
   matTabGroupFlag: boolean;
   hideDematFlag: any;
   refreshBankFlag: any;
-  @ViewChild('tabGroup', {static: false}) tabGroup: any;
+  @ViewChild('tabGroup', { static: false }) tabGroup: any;
   valueChangesFlag: any;
 
   selected = 0;
@@ -45,15 +46,15 @@ export class AddClientComponent implements OnInit {
       state: 'close',
       refreshRequired: true
     }) : (data == 'close') ? this.subInjectService.changeNewRightSliderState(
-      {state: 'close'}) : this.subInjectService.changeNewRightSliderState({
-      state: 'close',
-      refreshRequired: true
-    });
+      { state: 'close' }) : this.subInjectService.changeNewRightSliderState({
+        state: 'close',
+        refreshRequired: true
+      });
   }
 
   getTabData(data) {
     console.log(data);
-    (data == undefined) ? this.tabData = {id: undefined} : this.tabData = data;
+    (data == undefined) ? this.tabData = { id: undefined } : this.tabData = data;
   }
 
   changeTab(flag) {
@@ -72,6 +73,12 @@ export class AddClientComponent implements OnInit {
   refreshBankUpload(flag) {
     if (flag) {
       this.refreshBankFlag = flag;
+    }
+  }
+
+  bankListEmitRes(data) {
+    if (data) {
+      this.bankListEmitResData = data;
     }
   }
 

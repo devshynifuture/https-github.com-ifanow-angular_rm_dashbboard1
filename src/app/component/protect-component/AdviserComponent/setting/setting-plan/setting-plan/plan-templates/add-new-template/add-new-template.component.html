@@ -1,0 +1,84 @@
+<div class="row bb-1 popup-header-fix w-60">
+    <div class="col-md-10 p-0">
+        <h4 class="mb-0 l-22 wrapper-20">Add new template</h4>
+    </div>
+    <div class="col-md-2 full-end pr-24" (click)="close(false)">
+        <i class="material-icons c-p ">
+            clear
+        </i>
+    </div>
+</div>
+<div class="pt-90 pb-48" [formGroup]="addTemplate">
+    <div class="row ">
+        <div class="col-md-6 full-end pt-16">
+            <h5 class="m-0 f-16 roboto f-400">Template name</h5>
+        </div>
+        <div class="col-md-4 pl-0">
+            <mat-form-field appearance="standard">
+                <input placeholder="Enter template name" (change)="getNameValidation($event.target.value)"
+                    formControlName="name" matInput class="form-control">
+            </mat-form-field>
+        </div>
+        <div class="col-md-10 full-end pt-8">
+            <mat-error *ngIf="error">
+                Template name should not be same as default template
+            </mat-error>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-md-6 full-end">
+            <h5 class="m-0 roboto f-16 f-400">Select category</h5>
+        </div>
+        <div class="col-md-4 pl-0">
+            <mat-form-field>
+                <mat-select class="form-control" formControlName="category" matInput>
+                    <mat-option value='' [disabled]=true>
+                        Select category
+                    </mat-option>
+                    <mat-option *ngFor="let item of templateList" [value]="item.id">
+                        {{item.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-32 pb-48">
+        <div class="col-md-6 text-right">
+            <h5 class="m-0 roboto f-16 f-400">Upload your template</h5>
+            <p class="f-12 roboto text-custom lh-14 f-400">The size
+                of the image should be 340 px x 476 px <br>or on a similar proportionate basis.</p>
+        </div>
+        <div class="col-md-5 p-0" *ngIf="edit">
+            <div (click)="openGallery(imgUrl)">
+                <div class="plan-templates-img-right-side">
+                    <img src="{{imgUrl}}" class="b-a c-p plan-setting-img-hw">
+                    <div class="middleOne">
+                        <p class="c-p"> Edit</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5 pl-0" *ngIf="!edit">
+            <div (click)="openGallery('/assets/images/setting.png')">
+                <div class="plan-templates-img-right-side">
+                    <img src="/assets/images/svg/dummy-plan-setting.svg" class="c-p">
+                    <div class="middleOne">
+                        <p class="c-p"> Edit</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16 w-60">
+    <div class="row">
+        <div class="col-md-4 pt-8">
+            <h5 (click)="close(false)" class="mb-0  text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 text-right">
+            <button class="btn-primary f-14 ml-12" (click)="addTemplates()" mat-stroked-button>SAVE</button>
+        </div>
+    </div>
+</div>
