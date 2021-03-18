@@ -184,6 +184,8 @@ export class CustomiseSettingComponent implements OnInit {
           }
         }
       });
+    } else if (!data && offset == 0) {
+      this.dataSource.data = []
     }
     console.log('dataSource bulk email', data)
     this.infiniteScrollingFlag = false;
