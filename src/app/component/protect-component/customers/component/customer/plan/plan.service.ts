@@ -158,7 +158,7 @@ export class PlanService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_PURCHASE_SCHEME, data);
   }
   getAssetsForAllocation(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_ASSETS, data);
+    return this.http.get(apiConfig.GOAL + appConfig.GET_ALL_ASSETS, data);
   }
   getAllGoals(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
