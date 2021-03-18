@@ -31,8 +31,8 @@ export class BulkReportSendingComponent implements OnInit {
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
-    private eventService : EventService,
-    private orgSetting : OrgSettingServiceService
+    private eventService: EventService,
+    private orgSetting: OrgSettingServiceService
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -55,7 +55,7 @@ export class BulkReportSendingComponent implements OnInit {
         console.log('getOrderList ==', data)
         this.isLoading = false
         this.dataSource.data = data
-        if(data == null){
+        if (data == null) {
           this.dataSource.data = []
         }
         console.log(this.dataSource)
@@ -66,7 +66,7 @@ export class BulkReportSendingComponent implements OnInit {
     this.getlistOrder()
   }
   getEmailTemplate() {
-    this.emailTemplateList = [{},{},{}];
+    this.emailTemplateList = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId
     }
@@ -80,11 +80,11 @@ export class BulkReportSendingComponent implements OnInit {
   getEmailTempalatRes(data) {
     if (data) {
       this.emailTemplateList = data
-      console.log('emailTemplateList',this.emailTemplateList)
+      console.log('emailTemplateList', this.emailTemplateList)
       this.emailTemplateList.forEach(element => {
-        if(element.title == 'Sending reports'){
+        if (element.title == 'Sending reports') {
           this.emailData = element
-          if(element.fromEmail == 'N/A'){
+          if (element.fromEmail == 'N/A') {
             this.showOpenEmailSetting = true
           }
           //this.OpenEmail('emailTemp',this.emailData)
@@ -109,7 +109,7 @@ export class BulkReportSendingComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-           // this.getEmailTemplate();
+            // this.getEmailTemplate();
             //this.openSendNow('')
           }
           rightSideDataSub.unsubscribe();
@@ -150,6 +150,7 @@ export class BulkReportSendingComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getEmailTemplate()
           }
           rightSideDataSub.unsubscribe();
 
@@ -157,7 +158,7 @@ export class BulkReportSendingComponent implements OnInit {
       }
     );
   }
-  openCustmiseSetting(){
+  openCustmiseSetting() {
     const fragmentData = {
       flag: 'addNewCustomer',
       id: 1,

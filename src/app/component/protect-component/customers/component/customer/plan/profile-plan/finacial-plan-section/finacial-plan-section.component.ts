@@ -218,7 +218,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   getNotes() {
     this.isLoading = true
     let obj = {
-      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
       searchQuery: (this.searchQuery) ? this.searchQuery : '',
       limit: -1,
       offset: 0

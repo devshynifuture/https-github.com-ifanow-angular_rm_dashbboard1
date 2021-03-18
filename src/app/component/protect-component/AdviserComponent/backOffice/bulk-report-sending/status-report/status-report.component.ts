@@ -55,6 +55,7 @@ export class StatusReportComponent implements OnInit {
       data => {
         if (data) {
           console.log('getLog ==', data)
+          this.close()
         }
         this.isLoading = false
       }

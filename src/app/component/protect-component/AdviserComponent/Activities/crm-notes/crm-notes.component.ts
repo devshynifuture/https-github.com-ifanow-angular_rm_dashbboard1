@@ -204,7 +204,10 @@ export class CrmNotesComponent implements OnInit {
       })
     if (this.finPlanObj) {
       this.ref.detectChanges();//to refresh the dom when response come
-      this.loaded.emit(this.tableEl.nativeElement);
+      var inner = this.tableEl.nativeElement
+      var innerHTML = inner.innerHTML
+      inner.innerHTML = innerHTML.replace("%**TEXT%**REPLACE", this.sendTags)
+      this.loaded.emit(inner);
     }
   }
   selectAll(event) {
