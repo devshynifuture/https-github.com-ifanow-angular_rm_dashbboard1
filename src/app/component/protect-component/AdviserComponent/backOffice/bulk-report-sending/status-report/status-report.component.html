@@ -77,7 +77,7 @@
                 [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                 <ng-container matColumnDef="checkbox">
                     <th class="br" mat-header-cell *matHeaderCellDef sticky> Check all
-                        <mat-checkbox *ngIf="!isLoading" [checked]="selectAll" (change)="selectAllData($event,element)"
+                        <mat-checkbox *ngIf="!isLoading" [checked]="selectAll" (change)="selectAllData($event,null)"
                             class="example-margin"></mat-checkbox>
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">

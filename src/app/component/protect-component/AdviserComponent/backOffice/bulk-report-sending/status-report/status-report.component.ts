@@ -13,17 +13,18 @@ export class StatusReportComponent implements OnInit {
   userInfo: any;
   refreshCount: any;
   displayedColumns: string[] = ['checkbox', 'name', 'mfoverview', 'status'];
-  clientDetails = []
+  clientDetails = [];
   isLoading: boolean;
   dataForFilter: any[];
-  showResend: boolean = false;
-  selectAll: boolean = false
+  showResend = false;
+  selectAll = false;
+  activeFilter;
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
   ) {
     this.userInfo = AuthService.getUserInfo();
-    console.log('info ===', this.userInfo)
+    console.log('info ===', this.userInfo);
   }
   @Input()
   set data(data) {
@@ -36,53 +37,53 @@ export class StatusReportComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
-    this.isLoading = false
-    this.refresh()
-    this.getLog()
+    this.isLoading = false;
+    this.refresh();
+    this.getLog();
   }
   resendNow() {
-    let obj = {
+    const obj = {
       id: this.clientDetails[0].mfBulkEmailRequestId,
       clientIds: []
-    }
-    var list = []
+    };
+    const list = [];
     this.clientDetails.forEach(element => {
       if (element.checked == true) {
-        list.push(element.clientId)
+        list.push(element.clientId);
       }
     });
-    obj.clientIds = list
+    obj.clientIds = list;
     this.backOfficeService.resendNow(obj).subscribe(
       data => {
         if (data) {
-          console.log('getLog ==', data)
-          this.close()
+          console.log('getLog ==', data);
+          this.close();
         }
-        this.isLoading = false
+        this.isLoading = false;
       }
     );
   }
   selectAllData(event, data) {
-    this.showResend = true
-    this.selectAll = event.checked
+    this.showResend = true;
+    this.selectAll = event.checked;
     if (this.selectAll == true) {
       this.clientDetails.forEach(element => {
-        element.checked = true
+        element.checked = true;
       });
     } else {
-      this.showResend = false
+      this.showResend = false;
       this.clientDetails.forEach(element => {
-        element.checked = false
+        element.checked = false;
       });
     }
   }
   selectToResend(event, value) {
-    this.showResend = true
-    value.checked = event.checked
+    this.showResend = true;
+    value.checked = event.checked;
   }
   filterData(type) {
     if (type == 'ALL') {
-      this.clientDetails = this.dataForFilter
+      this.clientDetails = this.dataForFilter;
     } else if (type == 'SENT') {
       this.clientDetails = this.dataForFilter.filter((x) => x.status == 1);
     } else if (type == 'NOT SENT') {
@@ -91,35 +92,35 @@ export class StatusReportComponent implements OnInit {
   }
   refresh() {
     const obj = {
-      id: this.inputData.id///5125
+      id: this.inputData.id/// 5125
     };
     this.backOfficeService.refreshCount(obj).subscribe(
       data => {
-        console.log('refreshCount ==', data)
-        this.refreshCount = data
-        console.log(this.refreshCount)
+        console.log('refreshCount ==', data);
+        this.refreshCount = data;
+        console.log(this.refreshCount);
       }
     );
   }
   getLog() {
-    this.isLoading = true
+    this.isLoading = true;
     const obj = {
-      mfBulkEmailRequestId: this.inputData.id///5125
+      mfBulkEmailRequestId: this.inputData.id/// 5125
     };
     this.backOfficeService.getLog(obj).subscribe(
       data => {
         if (data) {
-          console.log('getLog ==', data)
-          this.clientDetails = data
+          console.log('getLog ==', data);
+          this.clientDetails = data;
           this.clientDetails.forEach(element => {
-            element.checked = false
+            element.checked = false;
           });
-          this.dataForFilter = this.clientDetails
-          console.log('clientDetails', this.clientDetails)
+          this.dataForFilter = this.clientDetails;
+          console.log('clientDetails', this.clientDetails);
         } else {
-          this.clientDetails = []
+          this.clientDetails = [];
         }
-        this.isLoading = false
+        this.isLoading = false;
       }
     );
   }
