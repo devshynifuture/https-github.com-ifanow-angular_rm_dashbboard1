@@ -21,8 +21,8 @@
         <button mat-button class="btn-black right br-0">INVEST NOW</button>
       </div> -->
       <div class="col-md-6 pl-0 d-flex align-items-center justify-content-end">
-        <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24" matTooltip="Download PDF"
-          src="assets/images/svg/download-pdf-blue.svg">
+        <img *ngIf="!fragmentData.isSpinner && !isLoadingNav" (click)="generatePdf(null)" class=" c-p h-24"
+          matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
         <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
       </div>
@@ -101,33 +101,36 @@
               <mat-tab-group headerPosition="below" *ngIf="!isLoadingNav" (selectedTabChange)="tabClick($event)"
                 [(selectedIndex)]="demo1TabIndex">
                 <mat-tab label="3m" [disabled]='disable3m'>
-                  <div class="w-100 ">
-                    <div class="highcharts-figure" [chart]="portfolioGraph"></div>
+                  <div class="w-100 height400">
+                    <div class="highcharts-figure" id="portfolioGraphToSvg"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="6m" [disabled]='disable6m'>
-                  <div class="w-100 ">
-                    <div class="highcharts-figure" [chart]="portfolioGraph1"></div>
+                  <!-- <div class="w-100 ">
+                    <div>{{'dfdf'}}</div>
+                  </div> -->
+                  <div class="w-100 height400 ">
+                    <div class="highcharts-figure" id="portfolioGraphToSvg"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="1y" [disabled]='disable1y'>
-                  <div class="w-100 ">
-                    <div class="highcharts-figure" [chart]="portfolioGraph2"></div>
+                  <div class="w-100 height400">
+                    <div class="highcharts-figure" id="portfolioGraphToSvg"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="3y" [disabled]='disable3y'>
-                  <div class="w-100 ">
-                    <div class="highcharts-figure" [chart]="portfolioGraph3"></div>
+                  <div class="w-100 height400">
+                    <div class="highcharts-figure" id="portfolioGraphToSvg"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="5y" [disabled]='disable5y'>
-                  <div class="w-100 ">
-                    <div class="highcharts-figure" [chart]="portfolioGraph4"></div>
+                  <div class="w-100 height400">
+                    <div class="highcharts-figure" id="portfolioGraphToSvg"></div>
                   </div>
                 </mat-tab>
                 <mat-tab label="All" [disabled]='disableall'>
-                  <div class="w-100 ">
-                    <div class="highcharts-figure" [chart]="portfolioGraph5"></div>
+                  <div class="w-100 height400">
+                    <div class="highcharts-figure" id="portfolioGraphToSvg"></div>
                   </div>
                 </mat-tab>
               </mat-tab-group>
@@ -220,8 +223,12 @@
           <div class="wrapper-8">
             <p class="m-0 f-500 roboto">Relative performance</p>
             <!-- <img src="/assets/images/svg/dotted.svg" class="w-100 pt-32"> -->
-            <div class="highcharts-figure" *ngIf="!relativePerLoading && ratioData.length > 0" id="container-hc-figure"
+            <!-- <div class="highcharts-figure" *ngIf="!relativePerLoading && ratioData.length > 0" id="container-hc-figure"
               [chart]="performaceGraph">
+            </div> -->
+            <div *ngIf="!relativePerLoading && ratioData.length > 0">
+              <div navLoading class="highcharts-figure" id="performaceGraph">
+              </div>
             </div>
             <div class="row skeletonAnimation" *ngIf="relativePerLoading && ratioData.length > 0"
               [appSkeletonLoading]="relativePerLoading" appSkeletonLoading>
@@ -352,7 +359,11 @@
               </h2>
               <p class="m-0 pt-12 f-13 roboto f-400">would have fetched you following returns</p>
               <!-- <img src="/assets/images/svg/graph-scheme.svg" class="w-100 pt-32"> -->
-              <div class="highcharts-figure h-185" *ngIf="!navLoading" id="container-hc-figure" [chart]="schemeChart">
+              <!-- <div class="highcharts-figure h-185" navLoading id="container-hc-figure" [chart]="schemeChart">
+              </div> -->
+              <div *ngIf="!navLoading">
+                <div navLoading class="highcharts-figure h-250" id="schemeChart">
+                </div>
               </div>
               <div class="row skeletonAnimation" *ngIf="navLoading" [appSkeletonLoading]="navLoading"
                 appSkeletonLoading>
@@ -393,9 +404,12 @@
           <div class="row">
             <div class="col-md-12">
               <p class="m-0 pt-8 f-500 roboto">Riskometer</p>
-              <div class="highcharts-figure h-250" *ngIf="!speedLoading" id="container-hc-figure"
-                [chart]="speedChartVar">
+              <div *ngIf="!speedLoading">
+                <div class="highcharts-figure h-250" id="Gauge">
+                </div>
               </div>
+              <!-- <div class="highcharts-figure" id="Gauge"></div> -->
+
               <div class="row skeletonAnimation" *ngIf="speedLoading" [appSkeletonLoading]="speedLoading"
                 appSkeletonLoading>
                 <div class="col-md-12  mt-20 overflow-hidden ">
@@ -636,8 +650,10 @@
           </tr>
           <tr>
             <td colspan="2">
-              <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
-                style="width: 100%;">
+              <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
+                style="width: 100%;"> -->
+              <div style="width: 500px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart1</div>
+
             </td>
           </tr>
           <tr>
@@ -720,8 +736,10 @@
             <td
               style="font-weight: bold;padding-top: 10px;padding-bottom: 10px;background-color: #fff;padding-left: 10px;"
               colspan="2">
-              <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
-                style="width: 100%;">
+              <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
+                style="width: 100%;"> -->
+              <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart2</div>
+
             </td>
           </tr>
           <tr>
@@ -790,8 +808,10 @@
               <h4 style="text-decoration: underline;font-size: 46px;margin: 0px;"><span
                   *ngIf="amount.value">{{amount.value}}</span></h4>
               <p style="margin: 0px;padding-bottom: 10px;padding-top: 5px;">would have fetched you following returns</p>
-              <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/styled-mode-column/thumbnail.png"
-                style="width: 100%;">
+              <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/styled-mode-column/thumbnail.png"
+                style="width: 100%;"> -->
+              <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart3</div>
+
             </td>
           </tr>
           <tr>
@@ -840,7 +860,9 @@
             <td style="font-weight: bold;">
               <p style="margin: 0px;font-weight: bold;padding-left: 10px;padding-bottom: 10px;padding-top: 10px;">
                 Riskometer</p>
-              <img src="https://www.etmoney.com/static/images/mf-explore/risko-meter-bg.png" style="width: 100%;">
+              <!-- <img src="https://www.etmoney.com/static/images/mf-explore/risko-meter-bg.png" style="width: 100%;"> -->
+              <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart4</div>
+
             </td>
           </tr>
         </table>

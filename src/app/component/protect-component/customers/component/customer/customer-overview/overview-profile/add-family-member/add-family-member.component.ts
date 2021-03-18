@@ -121,6 +121,14 @@ export class AddFamilyMemberComponent implements OnInit {
     }
   }
 
+  hufDateChangeMethod(event, index) {
+    if (event.value == 18) {
+      this.getFamilyListList.controls[index].get('date').setValue(new Date("0001-01-01"));
+    } else {
+      this.getFamilyListList.controls[index].get('date').setValue("")
+    }
+  }
+
   capitalise(event) {
     if (event.target.value != '') {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
