@@ -704,9 +704,8 @@
             <div class="col-md-3 pl-0">
               <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
               <mat-form-field floatLabel="never" appearance="standard">
-                <input #number matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                  formControlName="number" maxlength={{arnRiaMaxlength}} class="form-control bg-white"
-                  placeholder="Enter ARN/RIA number">
+                <input #number matInput appInputValueValidation formControlName="number" maxlength={{arnRiaMaxlength}}
+                  class="form-control bg-white" placeholder="Enter ARN/RIA number">
                 <mat-hint *ngIf="singleArnRiaForm.get('arnOrRia').value!=''" align="end">
                   {{number.value.length}}/{{arnRiaMaxlength}}</mat-hint>
                 <mat-error *ngIf="singleArnRiaForm.get('number').errors?.required">This field is required</mat-error>

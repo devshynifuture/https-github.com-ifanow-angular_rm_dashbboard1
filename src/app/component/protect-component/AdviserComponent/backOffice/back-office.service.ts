@@ -407,6 +407,9 @@ export class BackOfficeService {
   getLog(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LOG, data);
   }
+  resendNow(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESEND_REPORT_NOW, data)
+  }
   addMisAumData(data) {
     this.misAum.next(data);
   }
