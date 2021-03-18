@@ -449,13 +449,11 @@ export class MutualFundOverviewComponent implements OnInit {
         this.getCashFlowStatus();
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
         if (this.showSummaryBar) {
-          setTimeout(() => {
-            this.pieChart('piechartMutualFund');
-            if (this.finPlanObj) {
-              this.svg = this.chart.getSVG();
-              this.loadsvg.emit(this.svg);
-            }// pie chart data after calculating percentage
-          }, 1000);
+          this.pieChart('piechartMutualFund');
+          if (this.finPlanObj) {
+            this.svg = this.chart.getSVG();
+            this.loadsvg.emit(this.svg);
+          }// pie chart data after calculating percentage
           if (this.finPlanObj) {
             this.ref.detectChanges();
             this.loaded.emit(this.mfOverviewTemplate.nativeElement);
