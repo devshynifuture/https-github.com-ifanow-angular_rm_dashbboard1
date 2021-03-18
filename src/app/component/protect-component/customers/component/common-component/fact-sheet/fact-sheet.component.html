@@ -21,8 +21,8 @@
         <button mat-button class="btn-black right br-0">INVEST NOW</button>
       </div> -->
       <div class="col-md-6 pl-0 d-flex align-items-center justify-content-end">
-        <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24" matTooltip="Download PDF"
-          src="assets/images/svg/download-pdf-blue.svg">
+        <img *ngIf="!fragmentData.isSpinner && !isLoadingNav" (click)="generatePdf(null)" class=" c-p h-24"
+          matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
         <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
       </div>
