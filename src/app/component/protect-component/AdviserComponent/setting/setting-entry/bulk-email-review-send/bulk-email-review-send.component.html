@@ -334,6 +334,44 @@
 
         </div>
         <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12 p-0" id="ui-tc-insert">
+                    <h5 class="m-0 pb-8 roboto pt-24">Insert placeholders</h5>
+                    <div class="b-a">
+                        <div class="row">
+                            <div class="col-md-12" (click)="openDialog('howToUse')">
+                                <p class="text-primary m-0 pt-8 pb-8 c-p roboto f-400">How to use?</p>
+                            </div>
+                        </div>
+                        <div class="placeholder-scroll">
+                            <!-- <div class="pl-16 pb-16">
+                        <div class="row b-a mb-16">
+                          <div class="col-md-12 p-0 borderlightPlaceholders">
+                            <div class="bg-grey lter wrapper-12 pt-16">
+                              <p class="m-0 text-black wb">{{name.name}}</p>
+                            </div>
+                            <div class="bg-white wrapper-12">
+                              <p class="m-0 text-black wb" (click)="copyName(name.value)">{{name.value}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                            <div class="wrapper-16 pb-0">
+                                <div class="row b-a">
+                                    <div class="col-md-12 p-0">
+                                        <div class="bg-grey lter wrapper-12 pt-16">
+                                            <p class="m-0 text-black">Client name</p>
+                                        </div>
+                                        <div class="bg-white wrapper-12">
+                                            <p class="m-0 text-black">client name</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <p class="mb-0 posP text-primary" *ngIf="!isAllSelected">Email will be sent to {{selectedClientsCount}}
                 <span *ngIf="selectedClientsCount==1">client</span><span *ngIf="selectedClientsCount>1">clients</span>
             </p>

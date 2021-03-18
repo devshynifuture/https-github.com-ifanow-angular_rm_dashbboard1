@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { element } from 'protractor';
+import { HowToUseDialogComponent } from '../../../Subscriptions/subscription/common-subscription-component/how-to-use-dialog/how-to-use-dialog.component';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -219,6 +220,23 @@ export class BulkEmailReviewSendComponent implements OnInit, AfterViewInit {
         this.subject.setValue('Your new money management account is created!')
       }
     )
+  }
+
+  openDialog(data) {
+    const Fragmentdata = {
+      flag: data,
+    };
+    const dialogRef = this.dialog.open(HowToUseDialogComponent, {
+      width: '30%',
+      data: Fragmentdata,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
 
   getClientListValue(offset) {
