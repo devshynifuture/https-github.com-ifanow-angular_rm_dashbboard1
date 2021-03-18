@@ -1,10 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { Chart } from 'angular-highcharts';
-import Highcharts, { ColorString } from 'highcharts';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -16,7 +15,10 @@ import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-
 import { CustomerService } from '../../customer/customer.service';
 import { LearnMoreFactsheetComponent } from './learn-more-factsheet/learn-more-factsheet.component';
 require('highcharts/modules/solid-gauge')(Highcharts);
-require('highcharts/highcharts-more')(Highcharts);
+import more from 'highcharts/highcharts-more';
+import * as Highcharts from 'highcharts';
+more(Highcharts);
+
 
 @Component({
   selector: 'app-fact-shit',
@@ -27,6 +29,7 @@ export class FactSheetComponent implements OnInit {
   displayedColumns = ['name', 'sector', 'ins', 'all', 'progress', 'assets'];
   isLoading = false;
   dataSource = new MatTableDataSource();
+  chartSpeed: Highcharts.Chart;
   portfolioGraph: Chart;
   portfolioGraph1: Chart;
   portfolioGraph2: Chart;
@@ -42,7 +45,7 @@ export class FactSheetComponent implements OnInit {
   nightyDayData: { value: number; flag: boolean; };
   oneDay: { value: number; flag: boolean; };
   @Input() data;
-  schemeChart: Chart;
+  schemeChart: Highcharts.Chart;
   ngOnInitLoad = true;
   isLoadingSchemeDetails = true;
   relativePerLoading = true;
@@ -51,7 +54,9 @@ export class FactSheetComponent implements OnInit {
   isLoadingNav = true;
   schemeReturnLoading = true;
   speedChartVar: Chart;
-  performaceGraph: Chart;
+  portfolioGraphToSvg: Highcharts.Chart;
+  performaceGraph: Highcharts.Chart;
+  portfolioGraphToSvg2: Highcharts.Chart
   currentValue: any;
   xirrValue: any;
   profitOrLossValue: any;
@@ -93,7 +98,11 @@ export class FactSheetComponent implements OnInit {
   clientData = AuthService.getClientData();
   fragmentData = { isSpinner: false, date: null, time: '', size: '' };
   clientNameToDisplay: any;
-  constructor(private util: UtilService, protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
+  svg1: string;
+  svg2: any;
+  svg3: string;
+  svg4: string;
+  constructor(private cd: ChangeDetectorRef, private ngZone: NgZone, private util: UtilService, protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
   formatMoney(value) {
     // const temp = `${value}`.replace(/\,/g, "");
@@ -153,11 +162,30 @@ export class FactSheetComponent implements OnInit {
     // const svgs = [{ key: '$showpiechart1', svg: this.svg ? this.svg : '' },
     // { key: '$showpiechart2', svg: this.portSvg ? this.portSvg : '' },
     // { key: '$showpiechart3', svg: this.cashFlowSvg ? this.cashFlowSvg : '' }];
+    if (this.chartSpeed) {
+      this.svg1 = this.chartSpeed.getSVG();
+    }
+    if (this.schemeChart) {
+      this.svg2 = this.schemeChart.getSVG();
+    }
+    if (this.performaceGraph) {
+      this.svg3 = this.performaceGraph.getSVG();
+    }
+
+    if (this.portfolioGraphToSvg) {
+      this.svg4 = this.portfolioGraphToSvg.getSVG();
+    }
+    const svgs = [{ key: '$showpiechart1', svg: this.svg4 ? this.svg4 : '' },
+    { key: '$showpiechart2', svg: this.svg3 ? this.svg3 : '' },
+    { key: '$showpiechart3', svg: this.svg2 ? this.svg2 : '' },
+    { key: '$showpiechart4', svg: this.svg1 ? this.svg1 : '' }];
     this.fragmentData.isSpinner = true;
 
     const para = document.getElementById('fact-Sheet');
     // const header = this.summaryTemplateHeader.nativeElement.innerHTML
-    this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null, null);
+    // this.util.htmlToPdfPort('', para.innerHTML, 'Fact Sheet', 'true', this.fragmentData, 'showPieChart', '', false, null, null);
+    this.util.htmlToPdfPort('', para.innerHTML, 'Fact Sheet', 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
+
 
   }
   getRatio() {
@@ -318,13 +346,21 @@ export class FactSheetComponent implements OnInit {
           console.log("miny", this.miny);
           console.log("xDivider", this.xDivider);
           console.log("yDivider", this.yDivider);
-
-          this.relativePerformanceGraph();
+          this.ngZone.run(() => {
+            this.cd.detectChanges();
+            this.relativePerformanceGraph();
+          });
         } else {
-          this.relativePerformanceGraph();
+          this.ngZone.run(() => {
+            this.cd.detectChanges();
+            this.relativePerformanceGraph();
+          });
         }
       }, err => {
-        this.relativePerformanceGraph();
+        this.ngZone.run(() => {
+          this.cd.detectChanges();
+          this.relativePerformanceGraph();
+        });
         this.relativePerLoading = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
@@ -530,8 +566,10 @@ export class FactSheetComponent implements OnInit {
         this.scheme = this.navReturn['mfreturn'] ? this.calculateScheme(this.navReturn['mfreturn'].fiveYearReturns, 'YEAR', 3) : null;
         break;
     }
-
-    this.schemePerformance();
+    this.ngZone.run(() => {
+      this.cd.detectChanges();
+      this.schemePerformance();
+    });
   }
   getInvRet() {
     this.navLoading = true;
@@ -666,15 +704,24 @@ export class FactSheetComponent implements OnInit {
           });
           console.log('speedometer', arry);
           this.json = arry
-          this.initializePortfolioChart();
+          this.ngZone.run(() => {
+            this.cd.detectChanges();
+            this.initializePortfolioChart();
+          });
           this.getXirr();
         } else {
-          this.initializePortfolioChart();
+          this.ngZone.run(() => {
+            this.cd.detectChanges();
+            this.initializePortfolioChart();
+          });
 
         }
 
       }, err => {
-        this.initializePortfolioChart();
+        this.ngZone.run(() => {
+          this.cd.detectChanges();
+          this.initializePortfolioChart();
+        });
         this.isLoadingNav = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
@@ -777,13 +824,24 @@ export class FactSheetComponent implements OnInit {
               this.speedData = 80;
               break;
           }
-          this.speedChart();
+          this.ngZone.run(() => {
+            this.cd.detectChanges();
+            this.speedChart();
+          });
         } else {
-          this.speedChart();
+          this.ngZone.run(() => {
+            this.cd.detectChanges();
+            this.speedChart();
+          });
         }
       }, err => {
+        this.ngZone.run(() => {
+          this.speedLoading = false;
+          this.cd.detectChanges();
+          this.speedChart();
+
+        });
         this.speedChart();
-        this.speedLoading = false;
         this.eventService.openSnackBar('err', 'DISMISS');
       });
   }
@@ -810,6 +868,7 @@ export class FactSheetComponent implements OnInit {
       });
   }
   relativePerformanceGraph() {
+
     const chartConfigPerformance: any = {
       chart: {
         renderTo: 'container',
@@ -863,6 +922,10 @@ export class FactSheetComponent implements OnInit {
         showFirstLabel: false,
         lineColor: '#ccc'
       },
+
+    }
+    this.performaceGraph = Highcharts.chart('performaceGraph', Highcharts.merge(chartConfigPerformance, {
+
       series: [
         {
 
@@ -894,8 +957,9 @@ export class FactSheetComponent implements OnInit {
           ]
         }
       ]
-    }
-    this.performaceGraph = new Chart(chartConfigPerformance);
+
+    }));
+
   }
   schemePerformance() {
     const chartConfigScheme: any = {
@@ -936,6 +1000,8 @@ export class FactSheetComponent implements OnInit {
         pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
       },
 
+    };
+    this.schemeChart = Highcharts.chart('schemeChart', Highcharts.merge(chartConfigScheme, {
       series: [
         {
           name: "",
@@ -959,8 +1025,9 @@ export class FactSheetComponent implements OnInit {
           ]
         }
       ],
-    };
-    this.schemeChart = new Chart(chartConfigScheme);
+
+    }));
+
   }
   speedChart() {
     const chartConfigSpeed: any = {
@@ -1047,6 +1114,8 @@ export class FactSheetComponent implements OnInit {
           }
         }
       },
+    }
+    this.chartSpeed = Highcharts.chart('Gauge', Highcharts.merge(chartConfigSpeed, {
 
       series: [{
         type: 'pie',
@@ -1133,9 +1202,10 @@ export class FactSheetComponent implements OnInit {
           rearLength: 0
         }
       }],
-    }
-    this.speedChartVar = new Chart(chartConfigSpeed);
+
+    }));
   }
+
   tabClick(value) {
     console.log(value);
     console.log(this.selectedItem);
@@ -1189,18 +1259,23 @@ export class FactSheetComponent implements OnInit {
         }
       },
 
+
+    };
+    this.portfolioGraphToSvg = Highcharts.chart('portfolioGraphToSvg', Highcharts.merge(chartConfig, {
+
       series: [{
         type: 'area',
         name: 'NAV',
         data: this.json
       }]
-    };
-    this.portfolioGraph = new Chart(chartConfig);
-    this.portfolioGraph1 = new Chart(chartConfig);
-    this.portfolioGraph2 = new Chart(chartConfig);
-    this.portfolioGraph3 = new Chart(chartConfig);
-    this.portfolioGraph4 = new Chart(chartConfig);
-    this.portfolioGraph5 = new Chart(chartConfig);
+
+    }));
+    // this.portfolioGraph = new Chart(chartConfig);
+    // this.portfolioGraph1 = new Chart(chartConfig);
+    // this.portfolioGraph2 = new Chart(chartConfig);
+    // this.portfolioGraph3 = new Chart(chartConfig);
+    // this.portfolioGraph4 = new Chart(chartConfig);
+    // this.portfolioGraph5 = new Chart(chartConfig);
 
   }
 }
