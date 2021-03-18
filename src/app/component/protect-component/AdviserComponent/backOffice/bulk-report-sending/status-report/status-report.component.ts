@@ -12,7 +12,7 @@ export class StatusReportComponent implements OnInit {
   inputData: any;
   userInfo: any;
   refreshCount: any;
-  displayedColumns: string[] = ['name', 'mfoverview', 'status'];
+  displayedColumns: string[] = ['checkbox', 'name', 'mfoverview', 'status', 'action',];
   clientDetails = []
   isLoading: boolean;
   constructor(
