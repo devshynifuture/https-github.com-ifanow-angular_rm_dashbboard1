@@ -766,6 +766,7 @@ export const appConfig = {
   GET_SCHEMES_DETAILS: 'rmdashboard/get/scheme/details',
   MF_LIST_UNFREEZE: 'mutual-fund/mf-list/unfreeze',
   EDIT_SIP_AMOUNT: 'backoffice/sip-cleanup/sip-amount/edit',
+  RESEND_REPORT_NOW: 'mutual-fund/report/bulk-order/resend',
   /********************************* TASKS Section ****************************************/
 
   ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',

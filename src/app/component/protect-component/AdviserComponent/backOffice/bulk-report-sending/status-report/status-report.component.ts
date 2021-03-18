@@ -12,9 +12,11 @@ export class StatusReportComponent implements OnInit {
   inputData: any;
   userInfo: any;
   refreshCount: any;
-  displayedColumns: string[] = ['name', 'mfoverview', 'status'];
+  displayedColumns: string[] = ['checkbox', 'name', 'mfoverview', 'status'];
   clientDetails = []
   isLoading: boolean;
+  dataForFilter: any[];
+  selectAll: boolean = false
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
@@ -36,6 +38,52 @@ export class StatusReportComponent implements OnInit {
     this.isLoading = false
     this.refresh()
     this.getLog()
+  }
+  resendNow() {
+    let obj = {
+      id: this.clientDetails[0].mfBulkEmailRequestId,
+      clientIds: []
+    }
+    var list = []
+    this.clientDetails.forEach(element => {
+      if (element.checked == true) {
+        list.push(element.clientId)
+      }
+    });
+    obj.clientIds = list
+    this.backOfficeService.resendNow(obj).subscribe(
+      data => {
+        if (data) {
+          console.log('getLog ==', data)
+          this.close()
+        }
+        this.isLoading = false
+      }
+    );
+  }
+  selectAllData(event, data) {
+    this.selectAll = event.checked
+    if (this.selectAll == true) {
+      this.clientDetails.forEach(element => {
+        element.checked = true
+      });
+    } else {
+      this.clientDetails.forEach(element => {
+        element.checked = false
+      });
+    }
+  }
+  selectToResend(event, value) {
+    value.checked = event.checked
+  }
+  filterData(type) {
+    if (type == 'ALL') {
+      this.clientDetails = this.dataForFilter
+    } else if (type == 'SENT') {
+      this.clientDetails = this.dataForFilter.filter((x) => x.status == 1);
+    } else if (type == 'NOT SENT') {
+      this.clientDetails = this.dataForFilter.filter((x) => x.status == 0);
+    }
   }
   refresh() {
     const obj = {
@@ -59,6 +107,10 @@ export class StatusReportComponent implements OnInit {
         if (data) {
           console.log('getLog ==', data)
           this.clientDetails = data
+          this.clientDetails.forEach(element => {
+            element.checked = false
+          });
+          this.dataForFilter = this.clientDetails
           console.log('clientDetails', this.clientDetails)
         } else {
           this.clientDetails = []

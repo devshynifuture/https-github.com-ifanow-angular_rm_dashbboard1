@@ -148,7 +148,8 @@
                     class="row mbottom-30 add-family-members-profile">
                     <div class="w-22 pl-10 pr-10">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <mat-select *ngIf="familyMemberNameList[i].value==10" class="form-control"
+                            <mat-select (selectionChange)="hufDateChangeMethod($event,i)"
+                                *ngIf="familyMemberNameList[i].value==10" class="form-control"
                                 formControlName="relationTypeId">
                                 <mat-option disabled value=''>Select option
                                 </mat-option>

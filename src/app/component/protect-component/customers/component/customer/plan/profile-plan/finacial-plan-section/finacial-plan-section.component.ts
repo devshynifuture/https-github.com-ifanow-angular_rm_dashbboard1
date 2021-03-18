@@ -218,7 +218,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   getNotes() {
     this.isLoading = true
     let obj = {
-      advisorId: AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId(),
       searchQuery: (this.searchQuery) ? this.searchQuery : '',
       limit: -1,
       offset: 0
@@ -1053,6 +1053,7 @@ export class FinacialPlanSectionComponent implements OnInit {
                 goalType: goalValueObj.goalType,
                 value: !!goalValueObj.goalFV ? Math.round(goalValueObj.goalFV) : '',
                 futureValue: goalValueObj.goalFV,
+                goalTableValues: item.goalTableValues,
                 month,
                 lumpsum,
                 percentCompleted: Math.round(!!goalValueObj.goalAchievedPercentage ? goalValueObj.goalAchievedPercentage : 0),
@@ -1126,6 +1127,7 @@ export class FinacialPlanSectionComponent implements OnInit {
                 value: !!goalValueObj.futureValue ? Math.round(goalValueObj.futureValue) : '',
                 year: year,
                 goalType: goalValueObj.goalType,
+                goalTableValues: item.goalTableValues,
                 goalFV: UtilService.getNumberToWord(!!goalValueObj.futureValue ? goalValueObj.futureValue : 0),
                 achievedValue: UtilService.getNumberToWord(!!goalValueObj.achievedValue ? goalValueObj.achievedValue : 0),
                 equity_monthly: this.getSumOfJsonMap(goalValueObj.sipAmountEquity) || 0,

@@ -520,14 +520,14 @@
 
 
                     </div>
-                    <div class="row pt-40" *ngIf="!loaderFn.loading && !isRetirementTab && !enumDataService.PRODUCTION">
+                    <div class="row pt-40" *ngIf="!loaderFn.loading && !isRetirementTab">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 pb-12">Goal year wise details</h5>
                         </div>
                     </div>
 
                     <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden"
-                        *ngIf="!loaderFn.loading && !isRetirementTab && !enumDataService.PRODUCTION">
+                        *ngIf="!loaderFn.loading && !isRetirementTab">
                         <table mat-table [dataSource]="goalTableValues" id="tbs" class="skeletonAnimation"
                             appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
                             <ng-container matColumnDef="goalYear">
@@ -1115,7 +1115,7 @@
         <tr>
             <td>
                 <table cellpadding="0" cellspacing="0" style="margin-top:40px; width: 100%; page-break-before: auto;">
-                    <tr *ngIf="singleGoalData.goalType !=1 && !enumDataService.PRODUCTION">
+                    <tr *ngIf="singleGoalData.goalType !=1">
                         <td>
                             <p style=" font-size: 18px; font-weight: 600;">
                                 Goal year wise details</p>
