@@ -344,19 +344,23 @@
                             </div>
                         </div>
                         <div class="placeholder-scroll">
-                            <!-- <div class="pl-16 pb-16">
-                        <div class="row b-a mb-16">
-                          <div class="col-md-12 p-0 borderlightPlaceholders">
-                            <div class="bg-grey lter wrapper-12 pt-16">
-                              <p class="m-0 text-black wb">{{name.name}}</p>
+                            <div *ngFor="let singlePlaceholder of templateObj.placeholderTemplateList">
+                                <div class="pl-16 pb-16">
+                                    <div class="row b-a mb-16">
+                                        <div class="col-md-12 p-0 borderlightPlaceholders">
+                                            <div class="bg-grey lter wrapper-12 pt-16">
+                                                <p class="m-0 text-black wb">{{singlePlaceholder.name}}</p>
+                                            </div>
+                                            <div class="bg-white wrapper-12 c-p">
+                                                <p class="m-0 text-black wb"
+                                                    (click)="copyName(singlePlaceholder.value)">
+                                                    {{singlePlaceholder.value}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="bg-white wrapper-12">
-                              <p class="m-0 text-black wb" (click)="copyName(name.value)">{{name.value}}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
-                            <div class="wrapper-16">
+                            <!-- <div class="wrapper-16">
                                 <div class="row b-a">
                                     <div class="col-md-12 p-0">
                                         <div class="bg-grey lter wrapper-12 pt-16">
@@ -367,7 +371,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
