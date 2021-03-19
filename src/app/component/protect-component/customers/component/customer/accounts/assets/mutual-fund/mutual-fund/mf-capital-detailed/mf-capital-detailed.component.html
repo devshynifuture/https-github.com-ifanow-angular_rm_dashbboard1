@@ -16,7 +16,7 @@
             </div>
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item (click)="generatePdf()">PDF</button>
-                <button mat-menu-item (click)="Excel('detailed Capital')">XLS</button>
+                <button mat-menu-item (click)="Excel('detailed Capital')">XLSX</button>
             </mat-menu>
             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
@@ -1393,7 +1393,8 @@
 
                         <td valign="top"
                             style="text-align: right;width:6%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                            <span *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
+                            <span
+                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
                                 ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 :
                                 0)}}</span>
                         </td>
@@ -1865,7 +1866,8 @@
 
                         <td valign="top"
                             style="width: 6%; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                            <span *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
+                            <span
+                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate)
                                 ? (element.purchasePriceRate | number:'1.2-4') : (element.purchasePriceRate == 0) ? 0 :
                                 0)}}</span>
                         </td>

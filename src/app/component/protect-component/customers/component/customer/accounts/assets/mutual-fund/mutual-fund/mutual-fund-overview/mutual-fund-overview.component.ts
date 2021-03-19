@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, NgZone } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, NgZone, Inject } from '@angular/core';
 import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
@@ -14,7 +14,7 @@ import { MfServiceService } from '../../mf-service.service';
 // import { WebworkerService } from 'src/app/services/web-worker.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DOCUMENT } from '@angular/common';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
@@ -133,6 +133,7 @@ export class MutualFundOverviewComponent implements OnInit {
   mfCapability: any;
   overviewReportCapability: any = {};
   clientNameToDisplay: any;
+  refreshLoader: boolean;
 
   constructor(private ngZone: NgZone, private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -142,7 +143,9 @@ export class MutualFundOverviewComponent implements OnInit {
     public eventService: EventService, private custumService: CustomerService,
     private ref: ChangeDetectorRef,
     private MfServiceService: MfServiceService, private settingService: SettingsService,
-    public roleService: RoleService
+    public roleService: RoleService,
+    private customerService: CustomerService,
+    @Inject(DOCUMENT) private _document: Document
   ) {
     if (routerActive) {
       this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
@@ -1420,6 +1423,20 @@ export class MutualFundOverviewComponent implements OnInit {
     this.clientData = data.clientData;
     this.getOrgData = data.advisorData;
     this.userInfo = data.advisorData;
+  }
+
+  refreshMfOfClient() {
+    this.refreshLoader = true;
+    const obj = {
+      clientId: this.clientId
+    }
+    this.customerService.refreshMutualFundList(obj).subscribe(res => {
+      this.refreshLoader = false;
+      this._document.defaultView.location.reload();
+    }, err => {
+      this.refreshLoader = false;
+      this.eventService.openSnackBar(err, "Dimiss");
+    })
   }
 
   ngOnDestroy(): void {
