@@ -13,13 +13,14 @@ export class StatusReportComponent implements OnInit {
   inputData: any;
   userInfo: any;
   refreshCount: any;
-  displayedColumns: string[] = ['checkbox', 'name', 'mfoverview', 'status'];
+  displayedColumns: string[] = ['name', 'mfoverview', 'status'];
   clientDetails = [];
   isLoading: boolean;
   dataForFilter: any[];
   showResend = false;
   selectAll = false;
   activeFilter;
+  disabledResend: boolean = false;
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
@@ -43,17 +44,26 @@ export class StatusReportComponent implements OnInit {
     this.refresh();
     this.getLog();
   }
-  resendNow() {
+  resendNow(flag) {
+    this.disabledResend = true
     const obj = {
       id: this.clientDetails[0].mfBulkEmailRequestId,
       clientIds: []
     };
     const list = [];
-    this.clientDetails.forEach(element => {
-      if (element.checked == true) {
-        list.push(element.clientId);
-      }
-    });
+    if (flag = "fornotSent") {
+      this.clientDetails.forEach(element => {
+        if (element.status == 0) {
+          list.push(element.clientId);
+        }
+      });
+    } else {
+      this.clientDetails.forEach(element => {
+        if (element.checked == true) {
+          list.push(element.clientId);
+        }
+      });
+    }
     obj.clientIds = list;
     this.backOfficeService.resendNow(obj).subscribe(
       data => {
@@ -86,10 +96,13 @@ export class StatusReportComponent implements OnInit {
   filterData(type) {
     if (type == 'ALL') {
       this.clientDetails = this.dataForFilter;
+      this.displayedColumns = ['name', 'mfoverview', 'status'];
     } else if (type == 'SENT') {
       this.clientDetails = this.dataForFilter.filter((x) => x.status == 1);
+      this.displayedColumns = ['name', 'mfoverview', 'status'];
     } else if (type == 'NOT SENT') {
       this.clientDetails = this.dataForFilter.filter((x) => x.status == 0);
+      this.displayedColumns = ['checkbox', 'name', 'mfoverview', 'status'];
     }
   }
   refresh() {

@@ -34,6 +34,14 @@
                 <mat-progress-bar mode="determinate" value="{{(refreshCount)?refreshCount.emailSentCount:0}}">
                 </mat-progress-bar>
             </div>
+            <div class="bg-grey lter smallBoxReport" *ngIf="inputData.status != 'Sending'">
+                <p class=" f-14 pl-10 mb-4 text-primitive">Bounced emails</p>
+                <p class="mb-12 pl-10 d-flex align-items-center   f-20">
+                    {{(refreshCount)?inputData.clientCount - refreshCount.emailSentCount:''}}
+                    <span class="primary-border c-p refeClassBox text-primary f-12"
+                        (click)="resendNow('fornotSent')">RESEND</span>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -48,8 +56,9 @@
 </div>
 <div class="row">
     <div class="col-md-12 full-end">
-        <button class="sendEmailBtn btn-primary" *ngIf="showResend && !enumDataService.PRODUCTION" (click)="resendNow()"
-            mat-stroked-button>Resend
+        <button class="sendEmailBtn btn-primary" [disabled]="disabledResend"
+            [ngClass]="disabledResend ? 'cursor-not-allowed': ''" *ngIf="showResend && !enumDataService.PRODUCTION"
+            (click)="resendNow('')" mat-stroked-button>Resend
             Now</button>
 
         <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
@@ -60,11 +69,11 @@
                 All
             </button>
             <button mat-menu-item [ngClass]="activeFilter == 'LIVE'?'filterActive':''" (click)="filterData('SENT')">
-                SENT
+                Sent
             </button>
-            <button mat-menu-item [ngClass]="activeFilter == 'PENDING'?'filterActive':''"
-                (click)="filterData('NOT SENT')">
-                NOT SENT
+            <button mat-menu-item *ngIf="inputData.status != 'Sending'"
+                [ngClass]="activeFilter == 'PENDING'?'filterActive':''" (click)="filterData('NOT SENT')">
+                Not sent
             </button>
         </mat-menu>
 
@@ -77,7 +86,7 @@
             <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                 [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                 <ng-container matColumnDef="checkbox">
-                    <th class="br" mat-header-cell *matHeaderCellDef sticky> Check all
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky>Select all
                         <mat-checkbox *ngIf="!isLoading" [checked]="selectAll" (change)="selectAllData($event,null)"
                             class="example-margin"></mat-checkbox>
                     </th>
