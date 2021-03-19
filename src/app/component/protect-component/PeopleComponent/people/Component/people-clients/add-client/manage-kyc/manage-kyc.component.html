@@ -96,7 +96,7 @@
                                 <div *ngIf="isLoading" class="bar"></div>
                                 <!-- <span
                                     *ngIf="!isLoading && (!element.email || !element.mobileNo || !element.pan) ">N/A</span> -->
-                                <div *ngIf="!isLoading && data && element.email && element.mobileNo && element.pan && !element.isLoader"
+                                <div *ngIf="!isLoading && data && element.email && element.mobileNo && element.pan && !element.isLoader && (element.clientType==1 ||element.familyMemberType==1)"
                                     class="bar">
                                     <button (click)="openFroala(element,'KYCFroala')"
                                         *ngIf="element.kycComplaint==0 || element.kycComplaint==4" mat-stroked-button
@@ -108,8 +108,8 @@
                                         mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
                                         Link</button>
                                 </div>
-                                <div *ngIf="!isLoading &&!data && element.email && element.pan && element.mobileNo && !element.isLoader"
-                                    class="bar">
+                                <div *ngIf="!isLoading &&!data && element.email && element.pan && element.mobileNo && !element.isLoader && (element.clientType==1 ||element.familyMemberType==1)"
+                                    class=" bar">
                                     <button (click)="openFroala(element,'KYCFroala')"
                                         *ngIf="userData.userType==1 && (element.kycComplaint==0 || element.kycComplaint==4)"
                                         mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send

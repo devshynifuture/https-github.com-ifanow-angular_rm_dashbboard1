@@ -188,10 +188,10 @@
                                         <p (click)="open('edit',singleMembers)" class="f-12 m-0 text-primitive">
                                             {{singleMembers.age}} Yrs</p>
                                     </div>
-                                    <img *ngIf="singleMembers.kycComplaint==1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType!=2"
+                                    <img *ngIf="singleMembers.kycComplaint==1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType==1"
                                         src="/assets/images/svg/circle-verified.svg" matTooltip="KYC Verified"
                                         class="familyDelete c-p">
-                                    <img *ngIf="singleMembers.kycComplaint!=1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType!=2"
+                                    <img *ngIf="singleMembers.kycComplaint!=1 && !enumDataService.PRODUCTION && singleMembers.familyMemberType==1"
                                         src="/assets/images/svg/error-red.png" matTooltip="KYC Not Verified"
                                         class="familyDelete c-p">
 
@@ -269,7 +269,8 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="!enumDataService.PRODUCTION" class=" basicDetaisList ">
+                                <div *ngIf="!enumDataService.PRODUCTION && clientOverviewData.clientType==1"
+                                    class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">KYC STATUS</p>
                                     <p *ngIf="!letsideBarLoader" class=" f-14 roboto f-500 m-0 ">
                                         <span class="text-danger" *ngIf="clientOverviewData.kycComplaint==0">Not
