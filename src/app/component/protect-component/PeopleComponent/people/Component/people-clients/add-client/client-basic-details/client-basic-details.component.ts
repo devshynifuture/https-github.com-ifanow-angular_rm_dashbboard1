@@ -311,13 +311,27 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
   }
+  getTaxStatusOfPan() {
+    let taxStatus: string
+
+    if (this.invTypeCategory == 1) {
+      taxStatus = "01";
+    }
+    if (this.invTypeCategory == 3) {
+      taxStatus = "03";
+    }
+    if (this.invTypeCategory == 4) {
+      taxStatus = "13";
+    }
+    return taxStatus;
+  }
 
   getKycStatusOfPan(event) {
     if (event.value.length == 10) {
       this.kycLoader = true;
       const obj = {
         pan: event.value,
-        taxStatus: this.invTaxStatus
+        taxStatus: this.getTaxStatusOfPan()
       }
       this.peopleService.kycStatusOfPan(obj).subscribe(
         data => {

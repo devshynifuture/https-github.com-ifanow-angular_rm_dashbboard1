@@ -129,6 +129,9 @@ export class StatusReportComponent implements OnInit {
           this.clientDetails = data;
           this.clientDetails.forEach(element => {
             element.checked = false;
+            if (element.email) {
+              element.email = element.email.split(",")
+            }
           });
           this.dataForFilter = this.clientDetails;
           console.log('clientDetails', this.clientDetails);
