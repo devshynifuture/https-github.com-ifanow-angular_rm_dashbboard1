@@ -222,6 +222,8 @@
 </div>
 <!-- -------------------- pdf ---------------------------- -->
 <div #sgbPdf id="tempSgb" class="hide">
+  <html>
+  <meta charset="UTF-8">
   <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
     <tr>
       <td>
@@ -302,10 +304,10 @@
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Interest amount </td>
-            <td
+            <!-- <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-              Invested amount </td>
-            <td
+              Invested amount </td> -->
+            <!-- <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Investment date </td>
             <td
@@ -313,13 +315,16 @@
               Maturity value </td>
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-              Maturity date </td>
+              Maturity date </td> -->
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Bond name & series </td>
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               XIRR (as on date) </td>
+            <td
+              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+              Description </td>
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Status </td>
@@ -352,7 +357,7 @@
                   [value]="element.interestAmountYearlyToShow"
                   appFormatNumber>{{element.interestAmountYearlyToShow}}</span></div>
             </td>
-            <td
+            <!-- <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <div *ngIf="element.investmentAmountToShow == 0"><span *ngIf="!isLoading">-</span></div>
               <div *ngIf="element.investmentAmountToShow != 0">{{!isLoading ? "₹" : ""}}<span
@@ -373,17 +378,24 @@
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <div>{{element.maturityDate ? (element.maturityDate | date:'dd/MM/yyyy') : '-'}}</div>
-            </td>
+            </td> -->
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <span>
                 {{element.bondNameAndSeries ? element.bondNameAndSeries : '-'}}
               </span>
             </td>
+
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <div><span>{{element.xirr ? element.xirr : '-'}}</span>{{!isLoading
                 ? "%" : ""}}</div>
+            </td>
+            <td
+              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
+              <span>
+                {{!isLoading ? (element.description && element.description != 'null' ? element.description : '-') : ''}}
+              </span>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
@@ -443,4 +455,6 @@
       </td>
     </tr>
   </table>
+
+  </html>
 </div>
