@@ -19,6 +19,7 @@ export class PlanTemplatesComponent implements OnInit {
   quotes: any;
   miscellaneous: any;
   element: any;
+  isLoading: boolean = false;
 
   constructor(private subInjectService: SubscriptionInject,
     private settingsService: SettingsService,
@@ -31,6 +32,7 @@ export class PlanTemplatesComponent implements OnInit {
     this.getTemplateList()
   }
   getTemplateList() {
+    this.isLoading = true
     const obj = {
       advisorId: AuthService.getAdvisorId(),
     };
@@ -139,6 +141,7 @@ export class PlanTemplatesComponent implements OnInit {
     this.fincialPlanList = data[0].templates
     this.quotes = data[1].templates
     this.miscellaneous = data[2].templates
+    this.isLoading = false
   }
   openAddtemlates(data) {
     const fragmentData = {
