@@ -1,3 +1,4 @@
+import { EnumDataService } from './../../../../../../services/enum-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -22,6 +23,7 @@ export class StatusReportComponent implements OnInit {
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
+    public enumDataService: EnumDataService,
   ) {
     this.userInfo = AuthService.getUserInfo();
     console.log('info ===', this.userInfo);
