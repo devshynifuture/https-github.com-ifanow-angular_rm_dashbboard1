@@ -821,7 +821,8 @@ export class CustomerService {
   }
 
   getMfFolioMaster(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.FOLIO_MASTER_DETAILS, data);
   }
   getBankDetails(data) {
     return this.http.get(apiConfig.USER + appConfig.GET_BANK_DETAILS, data)
@@ -1198,7 +1199,8 @@ export class CustomerService {
   }
 
   getFolioSchemeWiseNomineeDetails(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA, data);
   }
 
   deleteCasFile(data) {

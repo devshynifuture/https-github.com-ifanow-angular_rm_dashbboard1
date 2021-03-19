@@ -65,7 +65,8 @@ export class ReconciliationService {
     }
 
     getMutualFundFolioMasterValues(data) {
-        return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data)
+        //  return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data)
+        return this.http.get(apiConfig.MF_URL + appConfig.FOLIO_MASTER_DETAILS, data)
     }
 
     getAumReportListValues(data) {

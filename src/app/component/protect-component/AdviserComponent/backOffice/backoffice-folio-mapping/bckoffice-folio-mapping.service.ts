@@ -28,7 +28,8 @@ export class BackofficeFolioMappingService {
   }
 
   getUserDetailList(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST, data);
+    //  return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST, data);
   }
 
   putMutualFundInvestorDetail(data) {
