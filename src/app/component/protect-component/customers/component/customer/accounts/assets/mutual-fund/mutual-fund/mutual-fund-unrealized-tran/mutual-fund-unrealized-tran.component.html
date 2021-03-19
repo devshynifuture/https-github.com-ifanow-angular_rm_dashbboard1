@@ -21,7 +21,7 @@
             <mat-menu #menu1="matMenu" class="disabledOpacity">
                <button (click)="generatePdf()" mat-menu-item>PDF
                </button>
-               <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLS</button>
+               <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLSX</button>
             </mat-menu>
             <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
          </div>
@@ -704,6 +704,7 @@
 
       </tr>
       <div *ngIf="isTableShow && unrealisedData && showSummaryTable">
+         <meta charset="UTF-8">
          <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
             <td
                style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -750,11 +751,11 @@
             </td>
             <td
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-               ₹ <span appFormatNumber>{{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}</span>
+               <span appFormatNumber>{{(item.totalTransactionAmt) ? (item.totalTransactionAmt) : 0}}</span>
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                appFormatNumber>
-               ₹ <span appFormatNumber>{{(item.currentValue) ? (item.currentValue) : 0}}</span>
+               <span appFormatNumber>{{(item.currentValue) ? (item.currentValue) : 0}}</span>
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                appFormatNumber>
@@ -789,11 +790,11 @@
             </td>
             <td
                style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-               ₹ {{mfData ? mfData.total_amount_invested : 0}}
+               {{mfData ? mfData.total_amount_invested : 0}}
             </td>
             <td
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-               ₹ {{mfData ? mfData.total_current_value : '0'}}
+               {{mfData ? mfData.total_current_value : '0'}}
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
                appFormatNumber>
