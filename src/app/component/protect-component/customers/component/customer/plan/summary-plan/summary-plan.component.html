@@ -433,9 +433,11 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Assets</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.asset ? "₹" : ""}}<span
-                                                appFormatNumber [shouldRoundOff]="true"
-                                                [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">
+                                            {{cashFlowData?.assetInflow ? "₹" : ""}}<span appFormatNumber
+                                                [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.assetInflow ? cashFlowData?.assetInflow : '-'"></span>
+                                        </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
                                         <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">
@@ -449,9 +451,9 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Insurance</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.insurance ? "₹" :
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.insuranceInflow ? "₹" :
                                             ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                                [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                [value]="cashFlowData?.insuranceInflow ? cashFlowData?.insuranceInflow : '-'"></span>
                                         </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
@@ -488,9 +490,11 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Asset outflows</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.asset ? "₹" : ""}}<span
-                                                appFormatNumber [shouldRoundOff]="true"
-                                                [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span></p>
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">
+                                            {{cashFlowData?.assetOutFlow ? "₹" : ""}}<span appFormatNumber
+                                                [shouldRoundOff]="true"
+                                                [value]="cashFlowData?.assetOutFlow ? cashFlowData?.assetOutFlow : '-'"></span>
+                                        </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
                                         <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">
@@ -504,9 +508,9 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Insurance premiums</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.insurance ? "₹" :
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.insurancePremium ? "₹" :
                                             ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                                [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                [value]="cashFlowData?.insurancePremium ? cashFlowData?.insurancePremium : '-'"></span>
                                         </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
@@ -522,9 +526,10 @@
                                         <p class="m-0 pb-8 pt-10 roboto f-400">Loan EMI's</p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right" *ngIf="!isLoadingCashFlow">
-                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.loan ? "₹" : ""}}<span
+                                        <p class="m-0 pb-8 pt-10 roboto f-400">{{cashFlowData?.loanEmi ? "₹" : ""}}<span
                                                 appFormatNumber [shouldRoundOff]="true"
-                                                [value]="cashFlowData?.loan ? cashFlowData?.loan : '-'"></span></p>
+                                                [value]="cashFlowData?.loanEmi ? cashFlowData?.loanEmi : '-'"></span>
+                                        </p>
                                     </div>
                                     <div class="col-md-4 p-0 text-right relClass" *ngIf="isLoadingCashFlow">
                                         <div [ngClass]="{'height23': isLoadingCashFlow}" class="bar mt-8">

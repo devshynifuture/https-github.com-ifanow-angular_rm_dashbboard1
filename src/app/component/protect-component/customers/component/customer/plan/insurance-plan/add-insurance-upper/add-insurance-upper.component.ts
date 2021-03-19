@@ -1,9 +1,10 @@
+import { AuthService } from './../../../../../../../../auth-service/authService';
 import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
-import { AddLifeInsuranceComponent} from '../add-life-insurance/add-life-insurance.component';
+import { AddLifeInsuranceComponent } from '../add-life-insurance/add-life-insurance.component';
 import { AddHealthInsuranceComponent } from '../add-health-insurance/add-health-insurance.component';
 import { ShowHealthPlanningComponent } from '../show-health-planning/show-health-planning.component';
 
@@ -14,17 +15,21 @@ import { ShowHealthPlanningComponent } from '../show-health-planning/show-health
 })
 export class AddInsuranceUpperComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject,
+    private custumService: CustomerService,
+    public authService: AuthService,
+    private utils: UtilService,
+    private eventService: EventService) { }
 
   ngOnInit() {
   }
-  close(flag){
+  close(flag) {
     const fragmentData = {
       direction: 'top',
       componentName: AddInsuranceUpperComponent,
       state: 'close',
-      data:flag,
-      refreshRequired:flag
+      data: flag,
+      refreshRequired: flag
 
     };
 
@@ -35,7 +40,7 @@ export class AddInsuranceUpperComponent implements OnInit {
     const fragmentData = {
       flag: 'app-customer',
       id: 1,
-      data: {value : value},
+      data: { value: value },
       direction: 'top',
       componentName: ShowHealthPlanningComponent,
       state: 'open'
@@ -50,17 +55,17 @@ export class AddInsuranceUpperComponent implements OnInit {
       }
     );
 
-}
-  openHelthInsurance(obj){
-    let data ;
+  }
+  openHelthInsurance(obj) {
+    let data;
     let component;
-    if(!obj){
+    if (!obj) {
       component = AddLifeInsuranceComponent;
     }
-    else{
+    else {
       component = AddHealthInsuranceComponent;
       data = {
-        value : obj,
+        value: obj,
       }
     }
     const fragmentData = {
@@ -74,12 +79,12 @@ export class AddInsuranceUpperComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          if(sideBarData.data == true){
+          if (sideBarData.data == true) {
             const fragmentData = {
               direction: 'top',
               componentName: AddInsuranceUpperComponent,
               state: 'close',
-              data:sideBarData.data
+              data: sideBarData.data
             };
             this.eventService.changeUpperSliderState(fragmentData);
           }

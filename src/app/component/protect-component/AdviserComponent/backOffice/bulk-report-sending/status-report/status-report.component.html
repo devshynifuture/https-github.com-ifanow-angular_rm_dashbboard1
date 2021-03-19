@@ -48,7 +48,8 @@
 </div>
 <div class="row">
     <div class="col-md-12 full-end">
-        <button class="sendEmailBtn btn-primary" *ngIf="showResend" (click)="resendNow()" mat-stroked-button>Resend
+        <button class="sendEmailBtn btn-primary" *ngIf="showResend && !enumDataService.PRODUCTION" (click)="resendNow()"
+            mat-stroked-button>Resend
             Now</button>
 
         <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
@@ -77,7 +78,7 @@
                 [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                 <ng-container matColumnDef="checkbox">
                     <th class="br" mat-header-cell *matHeaderCellDef sticky> Check all
-                        <mat-checkbox *ngIf="!isLoading" [checked]="selectAll" (change)="selectAllData($event,element)"
+                        <mat-checkbox *ngIf="!isLoading" [checked]="selectAll" (change)="selectAllData($event,null)"
                             class="example-margin"></mat-checkbox>
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">
