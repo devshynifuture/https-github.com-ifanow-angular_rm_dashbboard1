@@ -151,7 +151,7 @@
                 <div class="col-md-3 pl-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input #pan (input)="toUpperCase(basicDetails.get('pan'),$event)"
+                            <input #pan (input)="toUpperCase(basicDetails.get('pan'),$event);getKycStatusOfPan(pan)"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10"
                                 placeholder="Enter pan">
@@ -169,12 +169,12 @@
                         class="mb-0 d-flex roboto  f-400 c-p"> Dummy pan number</p>
                     <mat-spinner *ngIf="kycLoader" [diameter]="20"></mat-spinner>
                     <!-- ;getKycStatusOfPan(pan) -->
-                    <!-- <p *ngIf="!kycLoader && pan.value.length==10 &&  basicDetailsData.kycComplaint==1"
+                    <p *ngIf="!kycLoader && pan.value.length==10 &&  basicDetailsData.kycComplaint==1"
                         class="mb-0 ml-12 d-flex roboto text-primary f-400 c-p">
                         <i class="material-icons mr-4"> check_circle </i> KYC compliant</p>
                     <p *ngIf="!kycLoader && pan.value.length==10 && basicDetailsData.kycComplaint!=1"
                         class="mb-0 ml-12 d-flex roboto text-danger f-400 c-p">
-                        <i class="material-icons mr-4"> highlight_off </i> Incomplete KYC</p> -->
+                        <i class="material-icons mr-4"> highlight_off </i> Incomplete KYC</p>
 
                 </div>
             </div>
