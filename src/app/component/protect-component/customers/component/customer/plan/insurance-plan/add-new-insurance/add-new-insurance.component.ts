@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-add-new-insurance',
@@ -10,7 +11,9 @@ export class AddNewInsuranceComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource1 = ELEMENT_DATA1;
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit() {
   }

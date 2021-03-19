@@ -32,6 +32,7 @@ export class OpenGalleryPlanComponent implements OnInit {
   individualGoal: boolean;
   goalIndividualData: any;
   choose: boolean;
+  isLoading: boolean = false
   jsonDataObj: { advisorId: any; goalName: any; imageURL: any; goalTypeId: any; };
   constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,

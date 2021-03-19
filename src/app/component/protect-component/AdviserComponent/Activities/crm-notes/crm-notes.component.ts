@@ -244,6 +244,7 @@ export class CrmNotesComponent implements OnInit {
     }
     var para = document.createElement("P");
     para.innerText = note.content;
+    para.classList.add("d-none")
     document.body.appendChild(para);
     var text = para.innerHTML.replace(/&lt;/g, '<')
     var text1 = text.replace(/&gt;/g, '/>')
