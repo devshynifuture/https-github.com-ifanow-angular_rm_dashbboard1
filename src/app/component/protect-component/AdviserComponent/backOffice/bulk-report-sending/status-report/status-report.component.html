@@ -1,4 +1,4 @@
-<div class="popup-header-fix w-65">
+<div class="popup-header-fix w-65 z-value-100">
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h3 class="mb-0 wrapper-20">Reports are now being sent...</h3>
@@ -77,9 +77,9 @@
             <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                 [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                 <ng-container matColumnDef="checkbox">
-                    <th class="br" mat-header-cell *matHeaderCellDef sticky> Check all
+                    <th class="br" mat-header-cell *matHeaderCellDef sticky>
                         <mat-checkbox *ngIf="!isLoading" [checked]="selectAll" (change)="selectAllData($event,null)"
-                            class="example-margin"></mat-checkbox>
+                            class="example-margin" matTooltip="Select all"></mat-checkbox>
                     </th>
                     <td class="br text-center" mat-cell *matCellDef="let element">
                         <div class="bar c-p">
