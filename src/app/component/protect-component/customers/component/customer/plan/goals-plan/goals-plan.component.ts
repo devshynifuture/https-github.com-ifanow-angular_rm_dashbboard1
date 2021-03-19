@@ -601,9 +601,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
       if (UtilService.isDialogClose(sideBarData)) {
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.loadAllGoals(false);
-        }
+        this.loadAllGoals(false);
         subscription.unsubscribe();
       }
     });

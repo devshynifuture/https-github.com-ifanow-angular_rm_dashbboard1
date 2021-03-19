@@ -1,7 +1,7 @@
 <div class=" " [ngClass]="{'hide': finPlanObj?.hideForFinPlan}">
 
   <div class="row">
-    <div class="col-md-6 p-0">
+    <div class="col-md-6 p-0 d-flex align-items-center">
       <h4 class="m-0 text-black roboto">Sovereign gold bonds</h4>
     </div>
 
@@ -39,8 +39,8 @@
 
         </ng-container>
         <ng-container matColumnDef="owner">
-          <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-25"> Owner</th>
-          <td mat-cell *matCellDef="let element" class="br w-25">
+          <th mat-sort-header="ownerName" mat-header-cell *matHeaderCellDef class="br w-22"> Owner</th>
+          <td mat-cell *matCellDef="let element" class="br w-22">
             <div class="bar">
               <div *ngIf="!element.ownerName">
                 <div *ngFor="let owner of element.ownerList; let i = index">
@@ -57,10 +57,10 @@
         </ng-container>
         <ng-container matColumnDef="units">
           <th mat-sort-header="unitsInGramForEditView" mat-header-cell *matHeaderCellDef
-            class="br right-hc text-right hide-arrow">
-            Units (grams)
+            class="br right-hc text-right hide-arrow w-7">
+            Units<br>(grams)
           </th>
-          <td mat-cell *matCellDef="let element" class="br  amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-7 amt text-right">
             <div class="bar">
               <span *ngIf="element.unitsInGramForEditView && !isLoading">{{element.unitsInGramForEditView}}</span>
             </div>
@@ -69,9 +69,9 @@
         </ng-container>
         <ng-container matColumnDef="cvalue">
           <th mat-sort-header="currentValue" mat-header-cell *matHeaderCellDef
-            class="br  right-hc text-right hide-arrow"> Current value
+            class="br  right-hc text-right hide-arrow w-10"> Current value
           </th>
-          <td mat-cell *matCellDef="let element" class="br amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-10 amt text-right">
             <div class="bar" *ngIf="element.currentValue == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.currentValue != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.currentValue" appFormatNumber>{{element.currentValue }}</span>
@@ -85,10 +85,10 @@
         </ng-container>
         <ng-container matColumnDef="interest">
           <th mat-sort-header="interestAmountYearlyToShow" mat-header-cell *matHeaderCellDef
-            class="br w-12  right-hc text-right hide-arrow">
+            class="br w-11  right-hc text-right hide-arrow">
             Interest amount
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-12 amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-11 amt text-right">
             <div class="bar" *ngIf="element.interestAmountYearlyToShow == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.interestAmountYearlyToShow != 0">{{!isLoading ? "₹" : ""}}<span
                 [value]="element.interestAmountYearlyToShow"
@@ -144,10 +144,10 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container> -->
         <ng-container matColumnDef="bondseries">
-          <th mat-sort-header="bondNameAndSeries" mat-header-cell *matHeaderCellDef class="br w-25">
+          <th mat-sort-header="bondNameAndSeries" mat-header-cell *matHeaderCellDef class="br w-22">
             Bond name & series
           </th>
-          <td mat-cell *matCellDef="let element" class="br w-25">
+          <td mat-cell *matCellDef="let element" class="br w-22">
             <div class="bar">
               <span *ngIf=" !isLoading && element.bondNameAndSeries">
                 {{element.bondNameAndSeries}}
@@ -157,10 +157,10 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="xirrDate">
-          <th mat-sort-header="xirr" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow">
+          <th mat-sort-header="xirr" mat-header-cell *matHeaderCellDef class="br right-hc text-right hide-arrow w-6">
             XIRR%
           </th>
-          <td mat-cell *matCellDef="let element" class="br  amt text-right">
+          <td mat-cell *matCellDef="let element" class="br w-6  amt text-right">
             <div class="bar" *ngIf="element.xirr == 0"><span *ngIf="!isLoading">-</span></div>
             <div class="bar" *ngIf="element.xirr != 0"><span>{{element.xirr}}</span>{{!isLoading
               ? "%" : ""}}</div>
@@ -168,8 +168,8 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="description">
-          <th *matHeaderCellDef class="br  " mat-header-cell mat-sort-header="active"> Description</th>
-          <td *matCellDef="let element" class="br" mat-cell>
+          <th *matHeaderCellDef class="br  w-14" mat-header-cell mat-sort-header="active"> Description</th>
+          <td *matCellDef="let element" class="br w-14" mat-cell>
             <div class="bar">
               {{!isLoading ? (element.description && element.description != 'null' ? element.description : '-') : ''}}
             </div>
