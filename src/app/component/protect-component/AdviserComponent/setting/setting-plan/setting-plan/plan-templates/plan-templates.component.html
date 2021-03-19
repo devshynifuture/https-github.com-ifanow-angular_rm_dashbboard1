@@ -66,6 +66,7 @@
     <div class="w-20 pr-10 pl-10" *ngFor="let item of miscellaneous  | slice:3:miscellaneous.length; let i=index">
         <mat-card class="p-0">
             <div class="action-teamplates">
+                <img src="/assets/images/svg/pencil-action.svg" (click)="openAddtemlatesMis(item)" class="pr-10 c-p">
                 <img *ngIf="item.manual == false && item.visible == true" src="/assets/images/svg/visibility.svg"
                     (click)="setVisibility(false,item)" class="c-p pl-10">
                 <img *ngIf="item.manual == false && item.visible == false" src="/assets/images/svg/visibility_off.svg"
