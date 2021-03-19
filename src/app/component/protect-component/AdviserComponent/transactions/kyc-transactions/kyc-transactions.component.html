@@ -82,7 +82,7 @@
                         <div class="bar">
                             <span *ngIf="!isLoading && element.email && element.mobileNo && element.pan">
                                 <span class="text-danger" *ngIf="element.kycComplaint==0">Not verified</span>
-                                <span class="text-primary" *ngIf="element.kycComplaint==1">KYC verified</span>
+                                <span class="text-success" *ngIf="element.kycComplaint==1">KYC verified</span>
                                 <span *ngIf="element.kycComplaint==2">Applied</span>
                                 <span *ngIf="element.kycComplaint==3">Accepted</span>
                                 <span *ngIf="element.kycComplaint==4">Rejected</span>
@@ -116,12 +116,12 @@
                                 [ngClass]="{'cursor-not-allowed opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                 (click)="openAddAllkyc(element,'KYCFroala')"
                                 *ngIf="element.kycComplaint==0 || element.kycComplaint==4" mat-stroked-button
-                                class="btn-danger btn-mange-kyc text-white">Send
+                                class="btn-primary btn-mange-kyc text-white">Send
                                 Link</button>
                             <button matTooltip={{element.verifyStatus}}
                                 [ngClass]="{'opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                 *ngIf="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                mat-stroked-button class="btn-primary btn-mange-kyc text-white">Send
                                 Link</button>
                         </div>
                         <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>

@@ -73,7 +73,7 @@
                                 <div class="bar">
                                     <span *ngIf="!isLoading && element.email && element.mobileNo && element.pan">
                                         <span class="text-danger" *ngIf="element.kycComplaint==0">Not verified</span>
-                                        <span class="text-primary" *ngIf="element.kycComplaint==1">KYC verified</span>
+                                        <span class="text-success" *ngIf="element.kycComplaint==1">KYC verified</span>
                                         <span *ngIf="element.kycComplaint==2">Applied</span>
                                         <span *ngIf="element.kycComplaint==3">Accepted</span>
                                         <span *ngIf="element.kycComplaint==4">Rejected</span>
@@ -100,32 +100,32 @@
                                     class="bar">
                                     <button (click)="openFroala(element,'KYCFroala')"
                                         *ngIf="element.kycComplaint==0 || element.kycComplaint==4" mat-stroked-button
-                                        class="btn-danger btn-mange-kyc text-white">Send
+                                        class="btn-primary btn-mange-kyc text-white">Send
                                         Link</button>
                                     <button matTooltip={{element.verifyStatus}}
                                         [ngClass]="{'opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         *ngIf="element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3"
-                                        mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                        mat-stroked-button class="btn-primary btn-mange-kyc text-white">Send
                                         Link</button>
                                 </div>
                                 <div *ngIf="!isLoading &&!data && element.email && element.pan && element.mobileNo && !element.isLoader && (element.clientType==1 ||element.familyMemberType==1)"
                                     class=" bar">
                                     <button (click)="openFroala(element,'KYCFroala')"
                                         *ngIf="userData.userType==1 && (element.kycComplaint==0 || element.kycComplaint==4)"
-                                        mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                        mat-stroked-button class="btn-primary btn-mange-kyc text-white">Send
                                         Link</button>
                                     <button matTooltip={{element.verifyStatus}}
                                         [ngClass]="{'opa-half': element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3}"
                                         *ngIf="userData.userType==1 && (element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3)"
-                                        mat-stroked-button class="btn-danger btn-mange-kyc text-white">Send
+                                        mat-stroked-button class="btn-primary btn-mange-kyc text-white">Send
                                         Link</button>
                                     <button (click)="kycClientSectionMethod(element)" mat-stroked-button
                                         *ngIf="userData.userType==2 && (element.kycComplaint==0 || element.kycComplaint==4)"
-                                        class="btn-danger btn-mange-kyc text-white">Do KYC Now
+                                        class="btn-primary btn-mange-kyc text-white">Do KYC Now
                                     </button>
                                     <button matTooltip={{element.verifyStatus}} mat-stroked-button
                                         *ngIf="userData.userType==2 && (element.kycComplaint==1 || element.kycComplaint==2 || element.kycComplaint==3)"
-                                        class="btn-danger btn-mange-kyc text-white opa-half">Do KYC Now
+                                        class="btn-primary btn-mange-kyc text-white opa-half">Do KYC Now
                                     </button>
                                 </div>
                                 <mat-spinner *ngIf='!isLoading && element.isLoader' [diameter]="20"></mat-spinner>
