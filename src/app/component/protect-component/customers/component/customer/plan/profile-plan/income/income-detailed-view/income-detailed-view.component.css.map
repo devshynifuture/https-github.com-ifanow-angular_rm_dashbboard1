@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "",
-    "sources": [
-        "income-detailed-view.component.scss"
-    ],
-    "names": [],
-    "file": "income-detailed-view.component.css"
-}

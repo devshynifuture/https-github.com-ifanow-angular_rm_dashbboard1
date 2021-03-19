@@ -27,6 +27,7 @@ export class DetailedViewSovereignGoldBondsComponent implements OnInit {
   doc: any;
   isLoadingUpload: boolean = false;
   noDoc: boolean = false;
+  dematList: any;
 
   constructor(private custumService: CustomerService, private enumService: EnumServiceService, private subInjectService: SubscriptionInject, private fileUpload: FileUploadServiceService) {
   }
@@ -37,6 +38,8 @@ export class DetailedViewSovereignGoldBondsComponent implements OnInit {
     console.log(this.bankList, "bank", this.clientFamilybankList);
     this.dataSource = this.data.sovereignGoldTransactionList;
     this.getGlobalList();
+    this.bankAccountList();
+    this.getDematList(this.data);
     this.isLoadingUpload = true;
     this.fileUpload.getAssetsDoc(this.data).then((data) => {
       if (data != 0) {
@@ -54,6 +57,57 @@ export class DetailedViewSovereignGoldBondsComponent implements OnInit {
     );
   }
 
+  bankAccountList() {
+    const array = [];
+    const obj = {
+      userId: this.data.ownerList[0].familyMemberId == this.data.clientId ? this.data.clientId : 0,
+      userType: (this.data.ownerList[0].familyMemberId == this.data.clientId) ? 2 : 3
+    };
+    array.push(obj);
+    this.custumService.getBankList(array).subscribe(
+      (data) => {
+        if (data) {
+          this.bankList = data;
+          this.bankList.forEach(element => {
+            if (element.id == this.data.linkedBankAccount) {
+              this.data.bankName = element.bankName;
+            }
+          });
+        }
+        this.enumService.addBank(this.bankList);
+      },
+      (err) => {
+        this.bankList = [];
+      }
+    );
+
+
+    // this.bankList = value;
+
+  }
+  getDematList(data) {
+    const obj = {
+      userId: this.data.ownerList[0].familyMemberId == this.data.clientId ? this.data.clientId : 0,
+      userType: (this.data.ownerList[0].familyMemberId == this.data.clientId) ? 2 : 3
+    };
+    this.custumService.getDematList(obj).subscribe(
+      data => {
+        if (data) {
+          this.dematList = data;
+          this.dematList.forEach(element => {
+            if (element.dematId == this.data.linkedDematAccount) {
+              this.data.dematBankName = element.brokerName + '-' + element.dematClientId;
+              ;
+            }
+          });
+        }
+        this.enumService.addBank(this.bankList);
+      }, err => {
+        this.bankList = [];
+
+      }
+    );
+  }
 
   getGlobalList() {
     this.custumService.getSchemeChoice().subscribe(
