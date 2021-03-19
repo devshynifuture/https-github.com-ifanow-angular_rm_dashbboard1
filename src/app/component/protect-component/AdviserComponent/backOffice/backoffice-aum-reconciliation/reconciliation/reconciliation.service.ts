@@ -89,7 +89,8 @@ export class ReconciliationService {
     }
 
     getSubAdvisorListValues(data) {
-        return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
+        // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
+        return this.http.get(apiConfig.MF_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
     }
     // post functions
 
@@ -164,7 +165,8 @@ export class ReconciliationService {
     }
     unmappedFolio(data) {
         //  const httpParams = new HttpParams().set('mutualFundId', data.mutualFundId);
-        return this.http.putParam(apiConfig.MAIN_URL + appConfig.BACKOFFICE_UNMAPPED_FOLIO, '', data);
+        //return this.http.putParam(apiConfig.MAIN_URL + appConfig.BACKOFFICE_UNMAPPED_FOLIO, '', data);
+        return this.http.putParam(apiConfig.MF_URL + appConfig.BACKOFFICE_UNMAPPED_FOLIO, '', data);
     }
     // delete functions
 
@@ -181,7 +183,8 @@ export class ReconciliationService {
     }
 
     mfListUnfreeze(data) {
-        return this.http.put(apiConfig.MAIN_URL + appConfig.MF_LIST_UNFREEZE, data);
+        //return this.http.put(apiConfig.MAIN_URL + appConfig.MF_LIST_UNFREEZE, data);
+        return this.http.put(apiConfig.MF_URL + appConfig.MF_LIST_UNFREEZE, data);
     }
 
     // common functions

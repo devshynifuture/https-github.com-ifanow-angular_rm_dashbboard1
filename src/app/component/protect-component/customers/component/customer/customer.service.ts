@@ -777,29 +777,33 @@ export class CustomerService {
   }
 
   getMutualFund(data) {
-
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MUTUAL_FUND_GET, data);
   }
 
   getNav(data) {
-
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NAV, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NAV, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_NAV, data);
   }
 
   getReportWiseCalculations(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId + '&timePeriod=' + data.timePeriod + '&type=' + data.type, { report: data.request });
+    //  return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId + '&timePeriod=' + data.timePeriod + '&type=' + data.type, { report: data.request });
+    return this.http.post(apiConfig.MF_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId + '&timePeriod=' + data.timePeriod + '&type=' + data.type, { report: data.request });
   }
 
   getMfUnrealizedTransactions(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
+    //return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
   }
 
   getSaveFilters(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_GET, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_GET, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.SAVE_FILTERS_GET, data);
   }
 
   AddSaveFilters(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_ADD, { reportFilterConfigModelList: data.ReportFilterConfigModel });
+    //return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_ADD, { reportFilterConfigModelList: data.ReportFilterConfigModel });
+    return this.http.post(apiConfig.MF_URL + appConfig.SAVE_FILTERS_ADD, { reportFilterConfigModelList: data.ReportFilterConfigModel });
   }
 
   getDatedReportWiseCalculations(data) {
@@ -807,11 +811,13 @@ export class CustomerService {
       lastDate: data.lastDate,
       report: data.reportType
     }
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, obj);
+    //return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, obj);
+    return this.http.post(apiConfig.MF_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, obj);
   }
 
   capitalGainGet(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.CAPITAL_GAIN_GET, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.CAPITAL_GAIN_GET, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.CAPITAL_GAIN_GET, data);
   }
 
   getMfFolioMaster(data) {
@@ -821,7 +827,8 @@ export class CustomerService {
     return this.http.get(apiConfig.USER + appConfig.GET_BANK_DETAILS, data)
   }
   getMfSipDetails(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_DETAILS, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_DETAILS, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.SIP_DETAILS, data);
   }
 
   searchFile(data) {
@@ -1043,7 +1050,8 @@ export class CustomerService {
   }
 
   getRTAFeeds(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_FEEDS_MF_DATA, data);
   }
 
   getDocumentsFeed(data) {
@@ -1071,43 +1079,55 @@ export class CustomerService {
   }
 
   getTransactionTypeData(data) {
+    //return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST, data)
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST, data)
   }
 
   getTransactionTypeInMF(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TRANSACTION_TYPE, data)
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TRANSACTION_TYPE, data)
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_TRANSACTION_TYPE, data)
   }
 
   postAddTransactionMutualFund(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_ADD, data);
+    //  return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_ADD, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.MUTUAL_FUND_TRANSACTION_ADD, data);
   }
 
   postEditTransactionMutualFund(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_EDIT, data);
+    //return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_EDIT, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.MUTUAL_FUND_TRANSACTION_EDIT, data);
   }
 
   postDeleteTransactionMutualFund(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_DELETE, data);
+    // return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_DELETE, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.MUTUAL_FUND_TRANSACTION_DELETE, data);
   }
 
   getFamilyMemberListByClientId(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID, data);
   }
 
+  // getSchemeNameList(data) {
+  //   return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_SCHEME_NAME_LIST_GET, data);
+  // }
+
   getSchemeNameList(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_SCHEME_NAME_LIST_GET, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MUTUAL_FUND_SCHEME_NAME_LIST_GET, data);
   }
 
   postMutualFundAdd(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_ADD, data);
+    // return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_ADD, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.MUTUAL_FUND_ADD, data);
   }
 
   postMutualFundEdit(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_EDIT, data);
+    //  return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_EDIT, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.MUTUAL_FUND_EDIT, data);
   }
 
   postMutualFundDelete(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_DELETE, data);
+    //  return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_DELETE, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.MUTUAL_FUND_DELETE, data);
   }
 
   updateClientProfilePic(data) {
@@ -1115,7 +1135,8 @@ export class CustomerService {
   }
 
   orderSoaMutualFund(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.ORDER_SOA_MUTUAL_FUND, data)
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.ORDER_SOA_MUTUAL_FUND, data)
+    return this.http.get(apiConfig.MF_URL + appConfig.ORDER_SOA_MUTUAL_FUND, data)
   }
 
   unmapFamilyMembers(data) {
@@ -1128,39 +1149,48 @@ export class CustomerService {
   }
 
   getSubAdvisorListValues(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
   }
 
   getClientLatestCASFileLogs(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LATEST_CAS_FILE_LOG, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_LATEST_CAS_FILE_LOG, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_CLIENT_LATEST_CAS_FILE_LOG, data);
   }
 
   postUploadCasFile(data) {
-    return this.httpService.post(apiConfig.MAIN_URL + appConfig.POST_MF_UPLOAD_CAS, data);
+    // return this.httpService.post(apiConfig.MAIN_URL + appConfig.POST_MF_UPLOAD_CAS, data);
+    return this.httpService.post(apiConfig.MF_URL + appConfig.POST_MF_UPLOAD_CAS, data);
   }
 
   getClientCasFileDetailData(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_CAS_FILE_DETAIL_DATA, data);
+    //  return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_CAS_FILE_DETAIL_DATA, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_CLIENT_CAS_FILE_DETAIL_DATA, data);
   }
 
   putMapInvestor(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MAP_INVESTOR_CAS, data);
+    // return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MAP_INVESTOR_CAS, data);
+    return this.http.put(apiConfig.MF_URL + appConfig.PUT_MAP_INVESTOR_CAS, data);
   }
 
   putMapTransaction(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MAP_TRANSACTION_CAS, data);
+    //  return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MAP_TRANSACTION_CAS, data);
+    return this.http.put(apiConfig.MF_URL + appConfig.PUT_MAP_TRANSACTION_CAS, data);
   }
 
   getStatusOfPastFileUpload(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_STATUS_OF_CAS_FILE_UPLOAD, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_STATUS_OF_CAS_FILE_UPLOAD, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_STATUS_OF_CAS_FILE_UPLOAD, data);
   }
 
   getCasFileLogOnRefresh(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CAS_FILE_LOG_ON_REFRESH, data);
+    //  return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CAS_FILE_LOG_ON_REFRESH, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_CAS_FILE_LOG_ON_REFRESH, data);
   }
 
   putCasFileStatusUpdate(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_CAS_FILE_STATUS_UPDATE, data);
+    //return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_CAS_FILE_STATUS_UPDATE, data);
+    return this.http.put(apiConfig.MF_URL + appConfig.PUT_CAS_FILE_STATUS_UPDATE, data);
   }
 
   getFamilyMemberListForCasMapping(data) {
@@ -1172,35 +1202,43 @@ export class CustomerService {
   }
 
   deleteCasFile(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CAS_FILE, data);
+    // return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_CAS_FILE, data);
+    return this.http.put(apiConfig.MF_URL + appConfig.DELETE_CAS_FILE, data);
   }
 
   getFactSheetAllocation(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_ALLOCATION, data);
+    //  return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_ALLOCATION, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MF_FACT_SHEET_ALLOCATION, data);
   }
 
   getFactSheetRiskometer(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RISKOMETER, data);
+    //  return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RISKOMETER, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MF_FACT_SHEET_RISKOMETER, data);
   }
 
   getFactSheetHistoricalNav(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_NAV, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_NAV, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MF_FACT_SHEET_NAV, data);
   }
 
   getFactSheetCount(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_COUNT, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_COUNT, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MF_FACT_SHEET_COUNT, data);
   }
 
   getFactSheetDetails(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_SCHEME_DETAILS, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_SCHEME_DETAILS, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MF_FACT_SHEET_SCHEME_DETAILS, data);
   }
 
   getFactInvRet(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_INV_RET, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_INV_RET, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MF_FACT_SHEET_INV_RET, data);
   }
 
   getFactRatio(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RATIO_GRAPH, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.MF_FACT_SHEET_RATIO_GRAPH, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.MF_FACT_SHEET_RATIO_GRAPH, data);
   }
 
   getKycDetailsOfClient(data) {

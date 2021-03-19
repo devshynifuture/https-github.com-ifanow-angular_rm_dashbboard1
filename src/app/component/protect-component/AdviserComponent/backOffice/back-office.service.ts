@@ -338,7 +338,8 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ADVISOR_DEATILS, data);
   }
   clientCount(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_COUNT, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_COUNT, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_CLIENT_COUNT, data);
   }
   rederToHtmlToPdf(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.HTML_TO_PDF, data);
@@ -349,24 +350,30 @@ export class BackOfficeService {
   }
 
   getClientIdByLoop(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_CLIENT_IN_LOOP, data);
+    //return this.http.post(apiConfig.MAIN_URL + appConfig.GET_CLIENT_IN_LOOP, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.GET_CLIENT_IN_LOOP, data);
   }
 
   getOrderList(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORDER_LIST, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORDER_LIST, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_ORDER_LIST, data);
   }
   refreshCount(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_COUNT, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_COUNT, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.REFRESH_COUNT, data);
   }
   getMutualFundClientList(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_CLIENTS, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_CLIENTS, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_MF_CLIENTS, data);
   }
 
   saveSetting(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING, data);
+    //return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING, data);
+    return this.http.put(apiConfig.MF_URL + appConfig.SAVE_SETTING, data);
   }
   saveSettingAll(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING_ALL, data);
+    //return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING_ALL, data);
+    return this.http.put(apiConfig.MF_URL + appConfig.SAVE_SETTING_ALL, data);
   }
   getSipCleanUpListData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_SIP_CLEANUP_LIST, data);
@@ -396,16 +403,19 @@ export class BackOfficeService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SCHEME_LIST_MIS_AUM, data);
   }
   getMfTransactions(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_TRANSACTIONS, data);
+    //return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_TRANSACTIONS, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_MF_TRANSACTIONS, data);
   }
   filterData(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.FILTER_DATA, data);
+    // return this.http.post(apiConfig.MAIN_URL + appConfig.FILTER_DATA, data);
+    return this.http.post(apiConfig.MF_URL + appConfig.FILTER_DATA, data);
   }
   searchData(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SEARCH_DATA, data);
   }
   getLog(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LOG, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LOG, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_LOG, data);
   }
   resendNow(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RESEND_REPORT_NOW, data)

@@ -191,7 +191,8 @@ export class SupportService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.RM_DASHBOARD_POST_AFTER_SENDY_FILE_UPLOAD, data);
   }
   refreshMutualFundList(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_MF_LIST, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_MF_LIST, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.REFRESH_MF_LIST, data);
   }
 
   convertToPaidDate(data) {

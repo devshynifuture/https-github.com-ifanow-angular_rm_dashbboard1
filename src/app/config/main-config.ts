@@ -6,6 +6,7 @@ export const apiConfig = {
   TRANSACT: environment.TransactionPlatform,
   GOAL: environment.GoalPlatform,
   USER: environment.UserUrl,
+  MF_URL: environment.mfProject,
   MARKET_PLACE: environment.MarketPlaceUrl,
   PRODUCTION: environment.production,
   // Prod_local: environment.Prod_local
