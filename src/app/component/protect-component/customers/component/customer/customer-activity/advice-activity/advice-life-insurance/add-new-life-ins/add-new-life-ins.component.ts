@@ -760,7 +760,6 @@ export class AddNewLifeInsComponent implements OnInit {
         linkedBankAccountId: this.Miscellaneous.get('bankAccount').value,
         policyId: this.policyData.id ? this.policyData.id : null,
         policyTypeId: this.policyData.policyTypeId ? this.policyData.policyTypeId : null,
-        description: 'test data life insurance 22',
         insuranceTypeId: this.insuranceTypeId,
         insuranceSubTypeId: this.insuranceSubTypeId,
         ridersAccidentalBenifits: this.ridersForm.get('accidentalBenefit').value,
