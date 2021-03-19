@@ -46,7 +46,7 @@
                 </div>
             </div>
             <div class="row pt-28">
-                <div class="col-md-12">
+                <div class="col-md-12 p-0">
                     <button mat-button class="br-0 mr-10 text-custom" (click)="changTab(item)"
                         *ngFor="let item of familyMemberList"
                         [ngClass]="{'text-primary button-border': selected == item.id}">{{item.name}}</button>
@@ -74,7 +74,7 @@
             </div>
             <div class="row">
 
-                <div class="col-xl-10 col-lg-10 col-md-12 deployment" *ngIf="dataSource">
+                <div class="col-xl-10 col-lg-10 col-md-12 deployment p-0" *ngIf="dataSource">
 
                     <table *ngIf="dataSource.length > 0" [appSkeletonLoading]="isLoading" appSkeletonLoading mat-table
                         [dataSource]="dataSource" class="skeletonAnimation" id="table-low">
@@ -91,8 +91,8 @@
                         <ng-container matColumnDef="assetDescription">
                             <th mat-header-cell *matHeaderCellDef> </th>
                             <td mat-cell *matCellDef="let element">
-                                <div class="bar"><span *ngIf="!isLoading"
-                                        appFormatNumber>{{element.assetName ? element.assetName : '-'}}</span>
+                                <div class="bar"><span *ngIf="!isLoading" appFormatNumber>{{element.assetName ?
+                                        element.assetName : '-'}}</span>
                                 </div>
                             </td>
                         </ng-container>

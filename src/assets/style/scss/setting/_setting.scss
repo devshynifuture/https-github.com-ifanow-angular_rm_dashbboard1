@@ -3,10 +3,12 @@
     width: 16.68% !important;
   }
 }
-.h-390{
+
+.h-390 {
   height: 390px;
   overflow: auto;
 }
+
 .plan-returnsinflation {
   table {
     tr.mat-header-row {
@@ -198,6 +200,13 @@
 .setting-upload-crop-img {
   height: 256px;
   width: 183px;
+}
+
+.h-300-setting {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #ui-add-new-all-kyc-froala,

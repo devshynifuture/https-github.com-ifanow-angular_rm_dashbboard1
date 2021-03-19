@@ -89,7 +89,7 @@
 
                     <div class="col-md-6 text-right ">
                         <span class="text-danger" *ngIf="selectedClientData.kycComplaint==0">Not verified</span>
-                        <span class="text-primary" *ngIf="selectedClientData.kycComplaint==1">KYC verified</span>
+                        <span class="text-success" *ngIf="selectedClientData.kycComplaint==1">KYC verified</span>
                         <span *ngIf="selectedClientData.kycComplaint==2">Applied</span>
                         <span *ngIf="selectedClientData.kycComplaint==3">Accepted</span>
                         <span *ngIf="selectedClientData.kycComplaint==4">Rejected</span>

@@ -10,7 +10,7 @@
         </div>
     </div>
 </div>
-<div class="h-390">
+<div class="">
     <div class="mt-80">
         <div class="row d-flex justify-content-center" *ngIf="!cropImage">
             <div class="col-md-2 text-right p-0">
@@ -67,7 +67,7 @@
                 </div>
 
             </div>
-            <div class="col-md-12 mt-24 mb-20 text-center" *ngIf="cropImage && choose != false">
+            <div class="col-md-12 mt-24 mb-20 text-center h-300-setting" *ngIf="cropImage && choose != false">
                 <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE IMAGE</button>
                 <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
             </div>
