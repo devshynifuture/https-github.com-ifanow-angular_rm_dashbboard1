@@ -8,6 +8,7 @@ import { AddNewTemplateComponent } from './add-new-template/add-new-template.com
 import { AuthService } from 'src/app/auth-service/authService';
 import { PreviewFinPlanComponent } from 'src/app/component/protect-component/customers/component/customer/plan/profile-plan/preview-fin-plan/preview-fin-plan.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { CommonFroalaComponent } from '../../../../Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
 
 @Component({
   selector: 'app-plan-templates',
@@ -30,6 +31,25 @@ export class PlanTemplatesComponent implements OnInit {
 
   ngOnInit() {
     this.getTemplateList()
+  }
+  openAddtemlatesMis(data) {
+    const fragmentData = {
+      flag: 'value',
+      data,
+      id: 1,
+      state: 'open',
+      componentName: CommonFroalaComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getdocumentSubData();
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
   getTemplateList() {
     this.isLoading = true
