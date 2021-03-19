@@ -1603,7 +1603,7 @@ export class MutualFundSummaryComponent implements OnInit {
       const blob = new Blob([para.innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
-      saveAs(blob, tableTitle + '.xls');
+      saveAs(blob, tableTitle + '.xlsx');
     }, 400);
     // if (data) {
     // this.fragmentData.isSpinner = false;

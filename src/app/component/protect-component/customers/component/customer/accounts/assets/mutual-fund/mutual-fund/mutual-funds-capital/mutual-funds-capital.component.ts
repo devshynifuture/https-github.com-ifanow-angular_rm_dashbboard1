@@ -841,7 +841,7 @@ export class MutualFundsCapitalComponent implements OnInit {
             var blob = new Blob([document.getElementById('template').innerHTML], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
             });
-            saveAs(blob, tableTitle + ".xls");
+            saveAs(blob, tableTitle + ".xlsx");
         }, 200);
     }
     pdf(tableTitle) {

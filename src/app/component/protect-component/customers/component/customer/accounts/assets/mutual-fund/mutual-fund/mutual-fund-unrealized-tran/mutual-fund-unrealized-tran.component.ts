@@ -1400,12 +1400,25 @@ export class MutualFundUnrealizedTranComponent {
   Excel(tableTitle) {
     this.showDownload = true;
     this.excelDownload = true
+    // setTimeout(() => {
+    //   const blob = new Blob([document.getElementById('template').innerHTML], {
+    //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+    //   });
+    //   saveAs(blob, tableTitle + '.xlsx');
+    // }, 400);
+
     setTimeout(() => {
-      const blob = new Blob([document.getElementById('template').innerHTML], {
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
-      });
-      saveAs(blob, this.viewMode + '.xls');
-    }, 200);
+      console.log(document.getElementById('template').innerHTML)
+      var blob = new Blob([document.getElementById('template').innerHTML], { type: 'application/csv;charset=utf-8;' });
+
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'demo.xlsx';
+
+      document.body.appendChild(link);
+
+      link.click();
+    }, 400);
     // if (data) {
     //   this.fragmentData.isSpinner = false;
     // }
