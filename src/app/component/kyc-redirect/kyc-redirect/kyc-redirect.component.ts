@@ -30,9 +30,9 @@ export class KycRedirectComponent implements OnInit {
   getIdFromURL(id) {
     this.peopleService.kycStatusUpdate(id).subscribe(
       data => {
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
       }, err => {
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
       }
     )
   }

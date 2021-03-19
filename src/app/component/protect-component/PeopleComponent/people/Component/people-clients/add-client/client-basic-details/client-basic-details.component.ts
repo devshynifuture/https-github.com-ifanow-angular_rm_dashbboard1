@@ -331,7 +331,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       this.kycLoader = true;
       const obj = {
         pan: event.value,
-        taxStatus: this.getTaxStatusOfPan()
+        taxStatus: "01"
       }
       this.peopleService.kycStatusOfPan(obj).subscribe(
         data => {

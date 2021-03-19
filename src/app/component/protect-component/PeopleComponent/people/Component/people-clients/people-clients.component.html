@@ -74,7 +74,7 @@
                         <div class="bar"> {{element.pan}}</div>
                     </td>
                 </ng-container>
-                <!-- <ng-container matColumnDef="kyc">
+                <ng-container matColumnDef="kyc">
                     <th mat-sort-header="kyc" mat-header-cell *matHeaderCellDef class="br" sticky>KYC status </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar">
@@ -82,12 +82,12 @@
                                 <span class="text-danger"
                                     *ngIf="element.kycRemainCount!=0">{{element.kycRemainCount!=1?element.kycRemainCount:''}}
                                     Not Verified</span>
-                                <span class="text-sucess" *ngIf="element.kycRemainCount==0">All Verified</span>
+                                <span class="text-success" *ngIf="element.kycRemainCount==0">All Verified</span>
                             </span>
                             <span *ngIf="!isLoading && element.clientType!=1">-</span>
                         </div>
                     </td>
-                </ng-container> -->
+                </ng-container>
                 <ng-container matColumnDef="member">
                     <th mat-sort-header="count" mat-header-cell *matHeaderCellDef class="br" sticky> Members </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
