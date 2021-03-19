@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-2 text-right p-0">
+    <div class="col-md-2 full-end p-0">
         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
     </div>
     <div class="col-md-2 pr-0 right text-right c-p" *ngIf="!isLoadingPlan">
@@ -89,8 +89,8 @@
 
                     <h5 class="roboto f-500">Suggested policies</h5>
                     <table *ngIf="dataSource3?.length > 0" mat-table [dataSource]="dataSource3" multiTemplateDataRows
-                           class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
-                           class="mt-8 skeletonAnimation c-p">
+                        class="mat-elevation-z8" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan"
+                        class="mt-8 skeletonAnimation c-p">
 
                         <ng-container matColumnDef="name">
                             <th mat-header-cell class="w-25" *matHeaderCellDef> Policy name </th>
@@ -1061,7 +1061,8 @@
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
                                     Mob
                                     number:</strong>
-                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo :
+                                userInfo.mobile}}
                             </p>
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
                                     Email:</strong>
@@ -1204,16 +1205,17 @@
                             <table cellpadding="0" cellspacing="0"
                                 style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;border-top: 0px;">
                                 <tr>
-                                    <td style="padding: 8px;background: #f5f7f7; border-top: 1px solid #dee5e7;">
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-top: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
                                         Policy name</td>
                                     <td
-                                        style="padding: 8px;background: #f5f7f7;border-left: 1px solid #dee5e7;width: 20%; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;text-align: right;">
+                                        style="padding: 8px;background: #f5f7f7;border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;text-align: right;">
                                         Sum assured</td>
                                     <td
                                         style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
                                         Annual premium</td>
                                     <td
-                                        style="padding: 8px;background: #f5f7f7;width: 25%; text-align: left; border-left: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                        style="padding: 8px;background: #f5f7f7; text-align: left; border-top: 1px solid #dee5e7;">
                                         Status</td>
                                 </tr>
 
@@ -1260,19 +1262,19 @@
                                 style="width: 100%; font-size: 16px; border: 1px solid #dee5e7;border-top: 0px;">
                                 <tr>
                                     <td
-                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
                                         Policy name</td>
                                     <td
                                         style="padding: 8px;background: #f5f7f7;border-top: 1px solid #dee5e7; text-align: right;">
                                         Sum assured</td>
                                     <td
-                                        style="padding: 8px;background: #f5f7f7; text-align: right;border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;width: 20%;">
+                                        style="padding: 8px;background: #f5f7f7; text-align: right;border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
                                         Annual premium</td>
                                     <!-- <td
                                         style="padding: 8px;background: #f5f7f7; text-align: right; border-right: 1px solid #dee5e7;">
                                         Returns</td> -->
                                     <td
-                                        style="padding: 8px;background: #f5f7f7; text-align: left;width: 30%; border-left: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
+                                        style="padding: 8px;background: #f5f7f7; text-align: left; border-left: 1px solid #dee5e7;border-top: 1px solid #dee5e7;">
                                         Advice</td>
                                 </tr>
 
@@ -1342,7 +1344,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>1. Liabilities</b>
+                                        1. Liabilities
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1423,7 +1425,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>2. Dependant's needs</b>
+                                        2. Dependant's needs
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1481,7 +1483,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>3. Goals to be met</b>
+                                        3. Goals to be met
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1539,7 +1541,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>4. Gross life insurance required(1+2+3)</b>
+                                        4. Gross life insurance required(1+2+3)
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1596,7 +1598,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>5. Less: Continuous income source</b>
+                                        5. Less: Continuous income source
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1660,7 +1662,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>6. Less: Exisiting life Insurance (sum assured)</b>
+                                        6. Less: Exisiting life Insurance (sum assured)
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1723,7 +1725,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
-                                        <b>7. Less: Existing Assets</b>
+                                        7. Less: Existing Assets
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">
@@ -1791,7 +1793,7 @@
                                 <tr>
                                     <td
                                         style="padding: 8px;   border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 0px;">
-                                        <b>8. Additional life insurance required (4-5-6-7)</b>
+                                        8. Additional life insurance required (4-5-6-7)
                                     </td>
                                     <td
                                         style="padding: 8px; border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;text-align: right;">

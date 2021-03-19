@@ -111,8 +111,8 @@
                     <th class="br" mat-header-cell *matHeaderCellDef sticky> Email Id </th>
                     <td class="br text-left" mat-cell *matCellDef="let element">
                         <div class="bar c-p">
-                            <div class="bar">
-                                {{(isLoading) ? '':element.email}}
+                            <div class="bar" *ngFor="let item of element.email">
+                                {{(isLoading) ? '':item}}
                             </div>
                         </div>
                     </td>
