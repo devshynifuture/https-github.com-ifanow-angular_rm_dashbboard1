@@ -252,7 +252,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
   loadPlanRes(data, flag) {
     if (data) {
-      this.plansService.setGoalData(data)
       this.allGoals = data
       if (flag == true) {
         this.loadAllGoals(false)

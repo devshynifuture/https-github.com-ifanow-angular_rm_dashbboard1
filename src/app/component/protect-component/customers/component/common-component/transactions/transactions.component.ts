@@ -157,6 +157,7 @@ export class TransactionsComponent implements OnInit {
       (item.id == this.data.id)
     );
     this.data = this.mfList;
+    this.casFolioNumber(this.mfList.mutualFundTransactions);
     this.dataSource.data = this.mfList.mutualFundTransactions
     this.currentValue = this.mfList.currentValue;
     this.profitOrLossValue = this.currentValue - this.mfList.amountInvested;

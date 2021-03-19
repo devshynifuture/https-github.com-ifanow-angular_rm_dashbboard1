@@ -221,7 +221,7 @@ export class OverviewTransactionsComponent implements OnInit {
           this.percentageTrasact = ((this.doneTrasaction / this.transactionCount) * 100);
           this.percentageTrasact = (this.percentageTrasact).toFixed(2);
         }
-        this.pendingTransaction = this.rejectionTransaction.length;
+        this.pendingTransaction = this.pendingTransaction.length;
         this.rejectionTransaction = this.rejectionTransaction.length;
 
       },
