@@ -37,7 +37,9 @@
             <div class="row">
               <div class="col-md-12 d-flex p-0">
                 <h1 class="text-primary f-32 proxima">₹ <span> {{currentValue}}</span></h1>
-                <h5 class="m-0 text-success pt-12 proxima pl-5"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue
+                <h5 class="m-0  pt-12 proxima pl-5"
+                  [ngClass]="{'text-success': xirrValue >= 0,'text-danger':xirrValue < 0}"><span>{{(xirrValue >= 0) ?
+                    '+' : ''}}</span>{{xirrValue
                   |
                   number:'1.2-2'}}%</h5>
               </div>
@@ -48,7 +50,9 @@
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-primitive">PROFIT (LOSS)</p>
-            <h1 class="m-0 text-success proxima f-32">₹ <span>{{profitOrLossValue}}</span></h1>
+            <h1 class="m-0 proxima f-32"
+              [ngClass]="{'text-success': profitAndLossCheck >= 0,'text-danger':profitAndLossCheck < 0}">
+              ₹ <span>{{profitOrLossValue}}</span></h1>
           </div>
           <div class="col-md-4 pl-0 text-right">
             <p class="m-0 f-12 text-primitive">INVESTOR NAME</p>

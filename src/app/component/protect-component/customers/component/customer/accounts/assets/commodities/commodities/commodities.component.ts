@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../../../../auth-service/authService';
 import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, ElementRef, Input, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -109,7 +110,7 @@ export class CommoditiesComponent implements OnInit {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: AuthService.getClientId(),
       familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value,
       element: element

@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../../../../auth-service/authService';
 import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../../customer.service';
@@ -126,7 +127,7 @@ export class CashAndBankComponent implements OnInit {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: AuthService.getClientId(),
       familyMemberId: element.familyMemberId,
       asset: value,
       element: element

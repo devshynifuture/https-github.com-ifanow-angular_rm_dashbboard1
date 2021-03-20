@@ -102,7 +102,7 @@ export class PoSavingsComponent implements OnInit {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: AuthService.getClientId(),
       familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value,
       element: element
