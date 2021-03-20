@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="row pt-6">
                                     <div class="col-md-6 text-center height66 br-primitive">
-                                        <p class="f-12 roboto">APPLIED</p>
+                                        <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': isLoading}" class="bar">
                                                 <span *ngIf="!isLoading">
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="borderTransactions text-center">
-                                    <p class="f-12 mb-8 roboto">TOTAL KYC DONE</p>
+                                    <p class="f-12 mb-8 roboto">TOTAL KYC VERIFIED</p>
                                     <h4 class="f-30 f-300 text-success mb-4 relClass">
                                         <div [ngClass]="{'height23': metrixLoader}" class="bar">
                                             <span *ngIf="!metrixLoader && kycDetails">{{(kycDetails.kycVerifiedCount) ?
@@ -90,7 +90,7 @@
                                 </div>
                                 <hr class="bottom-boredrs">
                                 <div class="borderTransactions text-center">
-                                    <p class="f-12 mb-8 roboto pt-6">CLIENTS WITHOUT KYC</p>
+                                    <p class="f-12 mb-8 roboto pt-6">TOTAL KYC NOT VERIFIED</p>
                                     <h4 class="f-30 f-300 text-danger mb-4 relClass">
                                         <div [ngClass]="{'height23': metrixLoader}" class="bar">
                                             <span *ngIf="!metrixLoader">{{(kycDetails.kycUnverifiedCount)?
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="row pt-6">
                                     <div class="col-md-6 text-center height66 br-primitive">
-                                        <p class="f-12 roboto">PENDING</p>
+                                        <p class="f-12 roboto">APPLIED</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': metrixLoader}" class="bar">
                                                 <span *ngIf="!metrixLoader">
