@@ -875,7 +875,7 @@ export class UtilService {
     if (!string) {
       string = ''
     }
-    string = string.replace(/[\/\\#+()@!^&;|[$~%.'":*?<>_={}-]/g, '')
+    string = string.replace(/[\\\#+()@!^&;|[$~%.'":*?<>_={}-]/g, '')
     string = string.replace(/[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g, '')
     string = string.replace(']', '')
     return string

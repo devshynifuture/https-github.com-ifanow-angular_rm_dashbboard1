@@ -88,6 +88,7 @@ export class ManageKycComponent implements OnInit {
       clientId: this.data ? this.data.clientId : elementData.clientId,
       email: this.data ? this.data.email : elementData.email,
       mobileNo: this.data ? this.data.mobileNo : elementData.mobileNo,
+      familyMemberId: this.data ? this.data.familyMemberId : elementData.familyMemberId,
       redirectUrl: `${hostNameOrigin}/kyc-redirect`
     }
     if (elementData.kycComplaint != 0) {

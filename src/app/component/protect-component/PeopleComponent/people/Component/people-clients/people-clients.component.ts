@@ -41,7 +41,7 @@ export class PeopleClientsComponent implements OnInit {
     this.userInfo = AuthService.getUserInfo();
     this.getOrgData = AuthService.getOrgDetails();
   }
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'member', 'owner',
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'kyc', 'member', 'owner',
     'login', /*'status', *//*'icons',*/ 'icons1'];
   dataSource;
   advisorId: any;

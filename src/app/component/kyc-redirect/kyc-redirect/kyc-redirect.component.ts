@@ -21,7 +21,7 @@ export class KycRedirectComponent implements OnInit {
         this.id = params._id;
         this.getIdFromURL(this.id)
       } else {
-        this.router.navigate(['']);
+        // this.router.navigate(['']);
       }
     });
 

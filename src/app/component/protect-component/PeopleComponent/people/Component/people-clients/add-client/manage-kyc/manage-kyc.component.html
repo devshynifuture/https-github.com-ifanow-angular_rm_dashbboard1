@@ -72,8 +72,8 @@
                             <td mat-cell *matCellDef="let element" class="br">
                                 <div class="bar">
                                     <span *ngIf="!isLoading && element.email && element.mobileNo && element.pan">
-                                        <span class="text-danger" *ngIf="element.kycComplaint==0">Not verified</span>
-                                        <span class="text-success" *ngIf="element.kycComplaint==1">KYC verified</span>
+                                        <span class="text-danger" *ngIf="element.kycComplaint==0">Not Verified</span>
+                                        <span class="text-success" *ngIf="element.kycComplaint==1">KYC Verified</span>
                                         <span *ngIf="element.kycComplaint==2">Applied</span>
                                         <span *ngIf="element.kycComplaint==3">Accepted</span>
                                         <span *ngIf="element.kycComplaint==4">Rejected</span>
