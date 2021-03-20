@@ -17,8 +17,8 @@ export class KycRedirectComponent implements OnInit {
   ngOnInit() {
 
     this.route.queryParams.subscribe((params) => {
-      if (params.uuid) {
-        this.id = params._id;
+      if (params._id || params.id) {
+        this.id = params._id || params.id;
         this.getIdFromURL(this.id)
       } else {
         // this.router.navigate(['']);
@@ -28,7 +28,10 @@ export class KycRedirectComponent implements OnInit {
   }
 
   getIdFromURL(id) {
-    this.peopleService.kycStatusUpdate(id).subscribe(
+    const obj = {
+      id: id
+    }
+    this.peopleService.kycStatusUpdate(obj).subscribe(
       data => {
         // this.router.navigate(['']);
       }, err => {
