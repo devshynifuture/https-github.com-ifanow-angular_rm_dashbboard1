@@ -380,6 +380,11 @@ export class PlanService {
   addManuallyRiskProfile(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MANUAL_RISK_PROFILE, data);
   }
+
+  getInsuranceSummary(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.LIFE_INSURANCE_SUMMARY, data);
+  }
+
   setPlanData(value) {
     this.planData.next(value);
   }
