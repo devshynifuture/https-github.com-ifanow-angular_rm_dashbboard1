@@ -60,7 +60,7 @@ export class TransactionsComponent implements OnInit {
     this.profitOrLossValue = this.data.unrealizedGain;
     // this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
     // this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
-    this.xirrValue = this.data.xirr;
+    this.xirrValue = this.ConvertStringToNumber(this.data.xirr);
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
     this.nav = this.data.nav;
@@ -147,6 +147,11 @@ export class TransactionsComponent implements OnInit {
         }
       }
     );
+  }
+  ConvertStringToNumber(input) {
+    input = input.replace(/,/g, "")
+    var numeric = Number(input);
+    return numeric;
   }
   getTransactionDataBasedOnMf(res) {
     let setDataForMf = res;
