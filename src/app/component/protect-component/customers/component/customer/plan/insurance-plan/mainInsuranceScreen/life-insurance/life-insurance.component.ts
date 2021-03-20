@@ -523,14 +523,14 @@ export class LifeInsuranceComponent implements OnInit {
         data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date;
         data.adviceDetails.applicableDate = data.adviceDetails.applicable_date;
         data.adviceDetails.adviceDescription = data.adviceDetails.advice_description;
-        data.adviceDetails.advice_allotment = data.adviceDetails.advice_allotment;
+        data.adviceDetails.adviceAllotment = data.adviceDetails.adviceAllotment;
       } else {
         const id = data ? (data.adviceDetails ? (data.adviceDetails.insurance_advice_id) : this.adviceName) : this.adviceName;
         this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : '';
         data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date;
         data.adviceDetails.applicableDate = data.adviceDetails.applicable_date;
         data.adviceDetails.adviceDescription = data.adviceDetails.advice_description;
-        data.adviceDetails.advice_allotment = data.adviceDetails.advice_allotment;
+        data.adviceDetails.adviceAllotment = data.adviceDetails.adviceAllotment ? data.adviceDetails.adviceAllotment : data.insurance.sumAssured;
       }
     }
     const sendData = {
