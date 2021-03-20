@@ -50,7 +50,7 @@ export class IncomeComponent implements OnInit {
   isAdded: any;
   LoadCount: any;
   clientIdToClearStorage: string;
-
+  advisorIdToClearStorage: string;
   constructor(private fileUpload: FileUploadServiceService,
     private util: UtilService, private excel: ExcelGenService,
     public dialog: MatDialog, private eventService: EventService,
@@ -83,12 +83,19 @@ export class IncomeComponent implements OnInit {
     this.summaryPlanService.getClientId().subscribe(res => {
       this.clientIdToClearStorage = res;
     });
-    if (this.clientIdToClearStorage) {
+    this.summaryPlanService.getAdvisorId().subscribe(res => {
+      this.advisorIdToClearStorage = res;
+    });
+    if (this.clientIdToClearStorage && this.advisorIdToClearStorage) {
       if (this.clientIdToClearStorage != this.clientId) {
         this.summaryPlanService.clearStorage();
       }
     }
+    if (this.advisorIdToClearStorage && this.advisorIdToClearStorage != this.advisorId) {
+      this.summaryPlanService.clearStorage();
+    }
     this.summaryPlanService.setClientId(this.clientId);
+    this.summaryPlanService.setAdvisorId(this.advisorId);
     this.summaryPlanService.getIncomeData()
       .subscribe(res => {
         this.storedData = '';
@@ -333,6 +340,9 @@ export class IncomeComponent implements OnInit {
       }
     );
   }
+  // ngOnDestroy() {
+  //   this.summaryPlanService.clearStorage();
+  // }
 
 
 }
