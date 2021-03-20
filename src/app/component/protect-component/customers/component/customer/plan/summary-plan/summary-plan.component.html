@@ -574,8 +574,13 @@
                                     </div>
                                     <div class="col-md-10 pr-0 ">
                                         <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>
-                                        <p class="f-14 mb-16 f-600">₹ <span appFormatNumber [shouldRoundOff]="true"
-                                                [value]="item.amount?item.amount:0"></span>
+                                        <p class="f-14 mb-16 f-600">Current:{{item.sumAssuredOfClient ? '₹' : ''}}<span
+                                                appFormatNumber [shouldRoundOff]="true"
+                                                [value]="item.sumAssuredOfClient ?item.sumAssuredOfClient :0"></span>
+                                        </p>
+                                        <p class="f-14 mb-16 f-600">Additional req :{{item.additionalSumAssuredRequired
+                                            ? '₹' : ''}}<span appFormatNumber [shouldRoundOff]="true"
+                                                [value]="item.additionalSumAssuredRequired?item.additionalSumAssuredRequired:0"></span>
                                         </p>
                                     </div>
                                 </div>
@@ -1215,9 +1220,9 @@
                                                                 Assets </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
-                                                                    [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span>
+                                                                {{cashFlowData?.assetInflow ? "₹" : ""}}<span
+                                                                    appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.assetInflow ? cashFlowData?.assetInflow : '-'"></span>
                                                             </td>
                                                         </tr>
 
@@ -1227,9 +1232,9 @@
                                                                 Insurance </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                ">{{cashFlowData?.insurance ? "₹" :
+                                                                {{cashFlowData?.insuranceInflow ? "₹" :
                                                                 ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                                    [value]="cashFlowData?.insuranceInflow ? cashFlowData?.insuranceInflow : '-'"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1256,9 +1261,9 @@
                                                                 Asset outflows </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
-                                                                    [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span>
+                                                                {{cashFlowData?.assetOutFlow ? "₹" : ""}}<span
+                                                                    appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.assetOutFlow ? cashFlowData?.assetOutFlow : '-'"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1267,9 +1272,20 @@
                                                                 Insurance premiums</td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.insurance ? "₹" :
+                                                                {{cashFlowData?.insurancePremium ? "₹" :
                                                                 ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                                    [value]="cashFlowData?.insurancePremium ? cashFlowData?.insurancePremium : '-'"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
+                                                                Loan EMI's</td>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
+                                                                {{cashFlowData?.loanEmi ? "₹" : ""}}<span
+                                                                    appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.loanEmi ? cashFlowData?.loanEmi : '-'"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1383,9 +1399,19 @@
                                                                 </p>
                                                                 <p
                                                                     style="margin: 0px; font-weight: 600; font-size: 14px;">
-                                                                    ₹<span appFormatNumber [shouldRoundOff]="true"
-                                                                        [value]="item.amount?item.amount:0"></span></p>
+                                                                    Current:{{item.sumAssuredOfClient ? '₹' : ''}}<span
+                                                                        appFormatNumber [shouldRoundOff]="true"
+                                                                        [value]="item.sumAssuredOfClient ?item.sumAssuredOfClient :0"></span>
+                                                                </p>
+                                                                <p
+                                                                    style="margin: 0px; font-weight: 600; font-size: 14px;">
+                                                                    Additional req :{{item.additionalSumAssuredRequired
+                                                                    ? '₹' : ''}}<span appFormatNumber
+                                                                        [shouldRoundOff]="true"
+                                                                        [value]="item.additionalSumAssuredRequired?item.additionalSumAssuredRequired:0"></span>
+                                                                </p>
                                                             </div>
+
                                                         </div>
 
 

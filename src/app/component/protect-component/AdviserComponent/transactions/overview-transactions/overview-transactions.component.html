@@ -5,6 +5,65 @@
                 <div class="col-md-12 p-0">
 
                     <div class="row">
+
+                        <div [appSkeletonLoading]="isLoading" appSkeletonLoading
+                            class="col-xl-6 col-lg-4 col-md-6 mb-16 pl-0 skeletonAnimation">
+                            <div class="bg-white shadowBox p-9">
+                                <div class="row">
+                                    <div class="col-md-4 p-0">
+                                        <h5 class="f-500 roboto">Transactions</h5>
+                                    </div>
+                                    <div class="col-md-8 p-0 d-flex align-items-center  justify-content-end text-right">
+                                        <span class="text-primitive f-12">Last 7 days</span>
+                                        <!-- <i class="material-icons c-p"> more_vert </i> -->
+                                    </div>
+                                </div>
+                                <div class="borderTransactions text-center">
+                                    <p class="f-12 mb-8 roboto">TOTAL TRANSACTIONS DONE</p>
+                                    <h4 class="f-30 f-300 text-primary mb-4 relClass">
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                            <span *ngIf="!isLoading">{{(transactionCount) ? transactionCount :
+                                                0}}</span>
+                                            <span class="f-14 text-black"></span>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <hr class="bottom-boredrs">
+                                <div class="borderTransactions text-center">
+                                    <p class="f-12 mb-8 roboto pt-6">SUCCESSFUL TRANSACTIONS</p>
+                                    <h4 class="f-30 f-300 text-success mb-4 relClass">
+                                        <div [ngClass]="{'height23': isLoading}" class="bar">
+                                            <span *ngIf="!isLoading">{{(doneTrasaction)}}</span> <span
+                                                class="f-14 text-black">
+                                                <span *ngIf="!isLoading">
+                                                    {{(percentageTrasact) ? percentageTrasact : 0}}{{(percentageTrasact)
+                                                    ? '%' : ''}}</span>
+                                            </span>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div class="row pt-6">
+                                    <div class="col-md-6 text-center height66 br-primitive">
+                                        <p class="f-12 roboto">APPLIED</p>
+                                        <h4 class="roboto f-300 f-30 relClass">
+                                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                <span *ngIf="!isLoading">
+                                                    {{(pendingTransaction) ? pendingTransaction : 0}}</span>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-6 text-center height66">
+                                        <p class="f-12 roboto">REJECTIONS</p>
+                                        <h4 class="roboto f-300 f-30 relClass">
+                                            <div [ngClass]="{'height23': isLoading}" class="bar">
+                                                <span *ngIf="!isLoading">
+                                                    {{(rejectionTransaction) ? rejectionTransaction : 0}}</span>
+                                            </div>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div *ngIf="!enumDataService.PRODUCTION" [appSkeletonLoading]="metrixLoader" appSkeletonLoading
                             class="col-xl-6 col-lg-4 col-md-6 mb-16 pl-0 skeletonAnimation">
                             <div class="bg-white shadowBox p-9">
@@ -46,7 +105,7 @@
                                 </div>
                                 <div class="row pt-6">
                                     <div class="col-md-6 text-center height66 br-primitive">
-                                        <p class="f-12 roboto">APPLIED</p>
+                                        <p class="f-12 roboto">PENDING</p>
                                         <h4 class="roboto f-300 f-30 relClass">
                                             <div [ngClass]="{'height23': metrixLoader}" class="bar">
                                                 <span *ngIf="!metrixLoader">
@@ -62,64 +121,6 @@
                                                 <span *ngIf="!metrixLoader">
                                                     {{(kycDetails.kycRejectedCount) ? kycDetails.kycRejectedCount :
                                                     0}}</span>
-                                            </div>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div [appSkeletonLoading]="isLoading" appSkeletonLoading
-                            class="col-xl-6 col-lg-4 col-md-6 mb-16 pl-0 skeletonAnimation">
-                            <div class="bg-white shadowBox p-9">
-                                <div class="row">
-                                    <div class="col-md-4 p-0">
-                                        <h5 class="f-500 roboto">Transactions</h5>
-                                    </div>
-                                    <div class="col-md-8 p-0 d-flex align-items-center  justify-content-end text-right">
-                                        <span class="text-primitive f-12">Last 7 days</span>
-                                        <!-- <i class="material-icons c-p"> more_vert </i> -->
-                                    </div>
-                                </div>
-                                <div class="borderTransactions text-center">
-                                    <p class="f-12 mb-8 roboto">TOTAL TRANSACTIONS DONE</p>
-                                    <h4 class="f-30 f-300 text-primary mb-4 relClass">
-                                        <div [ngClass]="{'height23': isLoading}" class="bar">
-                                            <span *ngIf="!isLoading">{{(transactionCount) ? transactionCount :
-                                                0}}</span>
-                                            <span class="f-14 text-black"></span>
-                                        </div>
-                                    </h4>
-                                </div>
-                                <hr class="bottom-boredrs">
-                                <div class="borderTransactions text-center">
-                                    <p class="f-12 mb-8 roboto pt-6">SUCCESSFUL TRANSACTIONS</p>
-                                    <h4 class="f-30 f-300 text-success mb-4 relClass">
-                                        <div [ngClass]="{'height23': isLoading}" class="bar">
-                                            <span *ngIf="!isLoading">{{(doneTrasaction)}}</span> <span
-                                                class="f-14 text-black">
-                                                <span *ngIf="!isLoading">
-                                                    {{(percentageTrasact) ? percentageTrasact : 0}}{{(percentageTrasact)
-                                                    ? '%' : ''}}</span>
-                                            </span>
-                                        </div>
-                                    </h4>
-                                </div>
-                                <div class="row pt-6">
-                                    <div class="col-md-6 text-center height66 br-primitive">
-                                        <p class="f-12 roboto">PENDING</p>
-                                        <h4 class="roboto f-300 f-30 relClass">
-                                            <div [ngClass]="{'height23': isLoading}" class="bar">
-                                                <span *ngIf="!isLoading">
-                                                    {{(pendingTransaction) ? pendingTransaction : 0}}</span>
-                                            </div>
-                                        </h4>
-                                    </div>
-                                    <div class="col-md-6 text-center height66">
-                                        <p class="f-12 roboto">REJECTIONS</p>
-                                        <h4 class="roboto f-300 f-30 relClass">
-                                            <div [ngClass]="{'height23': isLoading}" class="bar">
-                                                <span *ngIf="!isLoading">
-                                                    {{(rejectionTransaction) ? rejectionTransaction : 0}}</span>
                                             </div>
                                         </h4>
                                     </div>
