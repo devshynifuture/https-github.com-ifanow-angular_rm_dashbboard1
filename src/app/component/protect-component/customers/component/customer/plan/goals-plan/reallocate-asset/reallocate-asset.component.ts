@@ -146,11 +146,13 @@ export class ReallocateAssetComponent implements OnInit {
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation updated");
       this.allocateOtherAssetService.refreshObservable.next();
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     }, err => {
       this.eventService.openSnackBar(err);
       this.barButtonOptions.active = false;
     })
   }
-
+  close() {
+    this.dialogRef.close(false);
+  }
 }
