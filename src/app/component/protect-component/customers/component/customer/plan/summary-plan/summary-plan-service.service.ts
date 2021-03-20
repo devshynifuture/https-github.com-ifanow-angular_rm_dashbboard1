@@ -14,6 +14,7 @@ export class SummaryPlanServiceService {
   private incomeCount = new BehaviorSubject('')
   private clientId = new BehaviorSubject('')
   private finplanId = new BehaviorSubject('')
+  private advisorId = new BehaviorSubject('')
 
   constructor() { }
 
@@ -61,6 +62,12 @@ export class SummaryPlanServiceService {
   getClientId() {
     return this.clientId.asObservable();
   }
+  setAdvisorId(value) {
+    this.advisorId.next(value);
+  }
+  getAdvisorId() {
+    return this.advisorId.asObservable();
+  }
   clearStorage() {
     this.setIncomeData('');
     this.setIncomeCount('');
@@ -77,14 +84,14 @@ export class SummaryPlanServiceService {
   getFinPlanId() {
     return this.finplanId.asObservable();
   }
-  getTypeIds(data){
-    let typeObj={
-      insuranceSubTypeId:0,
-      insuranceTypeId:0,
-      showInsurance:'',
-      adviceToCategoryId:0
+  getTypeIds(data) {
+    let typeObj = {
+      insuranceSubTypeId: 0,
+      insuranceTypeId: 0,
+      showInsurance: '',
+      adviceToCategoryId: 0
     }
-    if(data){
+    if (data) {
       switch (data.insuranceType) {
         case 5:
           typeObj.insuranceSubTypeId = 5;
@@ -130,15 +137,15 @@ export class SummaryPlanServiceService {
           break;
       }
     }
-      
-      return typeObj;
+
+    return typeObj;
   }
   getCategoryId(type) {
-    let obj={
-      insuranceCategoryTypeId:0,
-      adviseCategoryTypeMasterId:0
+    let obj = {
+      insuranceCategoryTypeId: 0,
+      adviseCategoryTypeMasterId: 0
     }
-    
+
     switch (type) {
       case 4:
         obj.insuranceCategoryTypeId = 37
@@ -160,7 +167,7 @@ export class SummaryPlanServiceService {
         obj.insuranceCategoryTypeId = 38
         obj.adviseCategoryTypeMasterId = 4
         break;
-      case 9: 
+      case 9:
         obj.insuranceCategoryTypeId = 39
         obj.adviseCategoryTypeMasterId = 4
         break;
