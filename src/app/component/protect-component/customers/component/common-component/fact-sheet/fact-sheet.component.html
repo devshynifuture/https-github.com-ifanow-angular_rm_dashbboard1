@@ -37,7 +37,9 @@
             <div class="row">
               <div class="col-md-12 d-flex p-0">
                 <h1 class="text-primary f-32 proxima">₹ <span> {{currentValue}}</span></h1>
-                <h5 class="m-0 text-success pt-12 proxima pl-5"><span>{{(xirrValue >= 0) ? '+' : '-'}}</span>{{xirrValue
+                <h5 class="m-0  pt-12 proxima pl-5"
+                  [ngClass]="{'text-success': xirrValue >= 0,'text-danger':xirrValue < 0}"><span>{{(xirrValue >= 0) ?
+                    '+' : ''}}</span>{{xirrValue
                   |
                   number:'1.2-2'}}%</h5>
               </div>
@@ -48,7 +50,9 @@
           </div>
           <div class="col-md-4 p-0">
             <p class="m-0 f-12 text-primitive">PROFIT (LOSS)</p>
-            <h1 class="m-0 text-success proxima f-32">₹ <span>{{profitOrLossValue}}</span></h1>
+            <h1 class="m-0 proxima f-32"
+              [ngClass]="{'text-success': profitAndLossCheck >= 0,'text-danger':profitAndLossCheck < 0}">
+              ₹ <span>{{profitOrLossValue}}</span></h1>
           </div>
           <div class="col-md-4 pl-0 text-right">
             <p class="m-0 f-12 text-primitive">INVESTOR NAME</p>
@@ -547,391 +551,414 @@
 
 
 <!-- pdf fact sheet -->
-<div style="background-color: #f2f2f2;" class="d-none" id="fact-Sheet">
-  <table style="width: 100%;">
+<div class="d-none" id="fact-Sheet">
+  <table style="background-color: #f2f2f2;width: 100%;height: 100%;padding: 20px;">
     <tr>
-      <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
-        <div style="width: 200px;"
-          *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-          <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-        </div>
-        <div style="width: 200px;"
-          *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-          <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-        </div>
-        <div
-          *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-          <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-        </div>
-      </td>
-      <td style=" text-align: right;" colspan="12">
-        <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-          {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-        <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
-          {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-        <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-          {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
-        <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Fact sheet</strong>
-        </p>
-        <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
-            {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-        </p>
-      </td>
-    </tr>
 
-    <tr>
-      <td colspan="2" style="padding: 10px;"></td>
-    </tr>
-    <tr>
-      <td colspan="8" style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;">
-        Client name: {{clientNameToDisplay ? clientNameToDisplay : this.clientData.name}}</td>
-
-    </tr>
-  </table>
-  <table style="width: 100%">
-    <tr>
-      <td style="width: 65%;padding-right: 15px;">
-        <table style="width: 100%">
+      <td>
+        <table style="width: 100%;">
           <tr>
-            <td style="padding-top: 20px;padding-bottom: 20px;">
-              <span
-                style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">{{data.categoryName}}</span>
-              <span
-                style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">{{data.subCategoryName}}</span>
+            <td style="text-align: left; vertical-align: top;" *ngIf="getOrgData">
+              <div style="width: 200px;"
+                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+              </div>
+              <div style="width: 200px;"
+                *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                <img style="max-width: 100%;" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+              </div>
+              <div
+                *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+              </div>
             </td>
+            <td style=" text-align: right;" colspan="12">
+              <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+              <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+              <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
+                {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
+              <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Fact sheet</strong>
+              </p>
+              <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                  {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2" style="padding: 10px;"></td>
+          </tr>
+          <tr>
+            <td colspan="8" style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;">
+              Client name: {{clientNameToDisplay ? clientNameToDisplay : this.clientData.name}}</td>
+
           </tr>
         </table>
         <table style="width: 100%">
           <tr>
-            <td style="background-color: #fff;padding: 28px;width: 60%;">
+            <td style="width: 60%;padding-right: 15px;" colspan="5">
+              <table style="width: 100%">
+                <tr>
+                  <td style="padding-top: 20px;padding-bottom: 20px;">
+                    <span
+                      style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">{{data.categoryName}}</span>
+                    <span
+                      style="margin-right: 10px;background-color: #fff;color: #000;border-radius: 16px;padding:10px;">{{data.subCategoryName}}</span>
+                  </td>
+                </tr>
+              </table>
+              <table style="width: 100%">
+                <tr>
+                  <td style="background-color: #fff;padding: 28px;width: 60%;">
+                    <table style="width: 100%;">
+                      <tr>
+                        <td style="width: 40%">
+                          <p style="margin: 0px;font-size: 12px;color: #83959D">CURRENT VALUE</p>
+                          <p style="margin:0px;"><span style="font-size: 28px;color: #008FFF;">₹ <span>
+                                {{currentValue}}</span></span>
+                            <span style="color:#02B875 !important;font-size: 16px;"><span>{{(xirrValue >= 0) ? '+' :
+                                '-'}}</span>{{xirrValue
+                              |
+                              number:'1.2-2'}}%</span>
+                          </p>
+                        </td>
+                        <td style="width: 20%">
+                          <p style="margin: 0px;font-size: 12px;color: #83959D">PROFIT (LOSS)</p>
+                          <p style="margin:0px;"><span style="font-size: 28px;color: #02B875;">₹
+                              <span>{{profitOrLossValue}}</span></span>
+                          </p>
+                        </td>
+                        <td style="width: 33%;text-align: right;">
+                          <p style="margin: 0px;font-size: 12px;color: #83959D">INVESTOR NAME</p>
+                          <p style="margin: 0px;font-size: 20px;color: #000">{{ investorName }}</p>
+                          <p style="margin: 0px;font-size: 12px;color: #83959D">{{ folioNumber }}</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="height: 15px;"></td>
+                </tr>
+              </table>
+              <table style="width: 100%;border-collapse: collapse;">
+                <tr style="background-color: #fff;">
+                  <td style="padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
+                    <p style="margin: 0px;font-size: 12px;color: #83959D">NAV</p>
+                    <p style="margin: 0px;font-size: 26px;color: #000">{{nav}}</p>
+                    <p style="margin: 0px;font-size: 12px;color: #83959D">as on {{data.navDate}}</p>
+                  </td>
+                  <td style="text-align: right;padding-top: 10px;padding-bottom: 10px;padding-right: 10px;">
+                    <p style="margin: 0px;font-size: 12px;color: #83959D">{{schemeReturnName}} NAV RETURN</p>
+                    <p style="margin: 0px;font-size: 26px;color: #000">{{schemeReturnValue ? (schemeReturnValue |
+                      number:'1.2-2') : 0}}%</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
+                style="width: 100%;"> -->
+                    <div style="width: 100%;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart1</div>
+                    <br><br><br><br><br><br><br><br><br>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style="text-align: center;background-color: #fff;font-size: 18px;padding-bottom: 4px;padding-top: 8px;"
+                    colspan="2">
+                    <span style="padding-right: 20px;"
+                      [ngStyle]="{'border-bottom': demo1TabIndex == 0 ? '2px solid #2680eb' : 'none' }">3m</span>
+                    <span [ngStyle]="{'border-bottom': demo1TabIndex == 1 ? '2px solid #2680eb' : 'none' }"
+                      style="padding-right: 20px;">6m</span>
+                    <span [ngStyle]="{'border-bottom': demo1TabIndex == 2 ? '2px solid #2680eb' : 'none' }"
+                      style="padding-right: 20px;">1y</span>
+                    <span [ngStyle]="{'border-bottom': demo1TabIndex == 3 ? '2px solid #2680eb' : 'none' }"
+                      style="padding-right: 20px;">3y</span>
+                    <span [ngStyle]="{'border-bottom': demo1TabIndex == 4 ? '2px solid #2680eb' : 'none' }"
+                      style="padding-right: 20px;">5y</span>
+                    <span [ngStyle]="{'border-bottom': demo1TabIndex == 5 ? '2px solid #2680eb' : 'none' }"
+                      style="padding-right: 0px;">all</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="height: 20px;"></td>
+                </tr>
+                <tr>
+                  <td
+                    style="font-weight: bold;padding-top: 10px;padding-bottom: 10px;background-color: #fff;padding-left: 10px;"
+                    colspan="2">Top Holdings</td>
+                </tr>
+                <tr>
+                  <td style="background-color: #fff;padding: 10px;" colspan="2">
+                    <table style="width: 100%;border:1px solid #DADCE0;border-collapse: collapse">
+                      <tr>
+                        <td
+                          style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px;padding-left: 5px; ">
+                          Name</td>
+                        <td
+                          style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px; ">
+                          Sector</td>
+                        <td
+                          style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px; ">
+                          Instrument</td>
+                        <td
+                          style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px;text-align: right; ">
+                          % Allocation</td>
+                        <td style="border-bottom:1px solid #DADCE0; "></td>
+                        <td
+                          style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px;text-align: right;padding-right: 5px; ">
+                          Assets (Cr)</td>
+                      </tr>
+                      <tr *ngFor="let element of dataSource.data">
+                        <td style="padding-top: 5px;padding-bottom: 5px;padding-left: 5px;color: #212121;">
+                          {{element.companyName ? element.companyName :'-'}}</td>
+                        <td style="padding-top: 5px;padding-bottom: 5px;color: #212121;">{{element.sectorName ?
+                          element.sectorName : '-'}}</td>
+                        <td style="padding-top: 5px;padding-bottom: 5px;">{{element.rating ? element.rating :'-'}}</td>
+                        <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;color: #212121;">
+                          {{element.holdPercentage | number:'1.2-2'}}{{isLoading ? '' :'%'}}</td>
+                        <td style="padding-left: 20px;width: 100px;background:white;">
+                          <div style="background:white">
+                            <!-- {{element.holdPercentage}} -->
+                            <div style="background:#007bff ;height: 15px;"
+                              [ngStyle]="{'width':element.holdPercentage+'%' }">
+                            </div>
+                          </div>
+                          <!-- <div style="height: 15px;background-color: #008FFF;" [ngStyle]="{'width':element.holdPercentage+'%' }></div> -->
+                        </td>
+                        <td
+                          style="padding-top: 5px;padding-bottom: 5px;text-align: right;padding-right: 5px;color: #212121;">
+                          <span appFormatNumber>{{!isLoading ? (element.mktValue ? element.mktValue : '-')
+                            : ''}}</span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="height: 20px;"></td>
+                </tr>
+                <tr>
+                  <td
+                    style="font-weight: bold;padding-top: 10px;padding-bottom: 10px;background-color: #fff;padding-left: 10px;"
+                    colspan="2">Relative performance</td>
+                </tr>
+                <tr>
+                  <td
+                    style="font-weight: bold;padding-top: 10px;padding-bottom: 10px;background-color: #fff;padding-left: 10px;"
+                    colspan="2">
+                    <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
+                style="width: 100%;"> -->
+                    <div style="width: 100%;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart2</div>
+                    <br><br><br><br><br><br><br><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <p style="font-weight: bold;padding-bottom: 10px;margin:0px;padding-top: 20px;font-size: 16px;">
+                      About
+                      {{data.schemeName}}</p>
+                    <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">{{data.schemeName}} is a
+                      {{data.categoryName | lowercase }} Mutual Fund
+                      Scheme launched by {{schemeDetails?.amc}} Mutual Fund.<span *ngIf="schemeDetails?.inceptDate">This
+                        scheme
+                        was introduced to investors on {{schemeDetails?.inceptDate ? (schemeDetails?.inceptDate |
+                        date:'dd-MMM-yyyy') : '-'}}.</span><span
+                        *ngIf="schemeDetails?.fundManager1">{{schemeDetails?.fundManager1}} is the Current Fund Manager
+                        of
+                        {{data.schemeName}}.</span>The fund
+                      currently has an Asset Under Management(AUM) of ₹<span appFormatNumber
+                        [value]="schemeDetails?.aum ? schemeDetails?.aum :'-'"></span> Cr and the Latest NAV as of
+                      {{data.navDate}} is
+                      ₹{{data?.nav}}.</p>
+                    <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">The {{data.schemeName}} is rated
+                      {{schemeDetails?.color}}.<span *ngIf="data.sipAmount != 0">Minimum SIP
+                        Investment is {{data.sipAmount}}.</span><span *ngIf="schemeDetails?.lumpsum">Minimum Lumpsum
+                        Investment
+                        is {{schemeDetails?.lumpsum}}. Exit load of
+                        {{schemeDetails?.remarks}}% if redeemed
+                        within 365 days.</span></p>
+                    <p style="font-weight: bold;padding-bottom: 5px;padding-top:15px;margin:0px;font-size: 16px"
+                      *ngIf="schemeDetails?.objective">Scheme
+                      objective</p>
+                    <p class="f-300 roboto m-0 pt-8" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.objective}}</p>
+                    <p style="font-weight: bold;padding-bottom: 5px;padding-top:15px;margin:0px;font-size: 16px;">
+                      Disclaimer
+                    </p>
+                    <p style="margin: 0px;color: #000;font-size: 14px;">Mutual Fund investments are subject to market
+                      risks,
+                      read all scheme related documents carefully. </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style="width:40%;vertical-align: top;padding-top: 50px;">
+              <table style="width: 100%;background-color: #fff;">
+                <tr>
+                  <td style="padding-top: 15px;padding-bottom: 15px;padding-left: 10px;">
+                    <p style="color: #000;font-size: 12px;margin: 0px;">Scheme Returns</p>
+                    <p style="color: #008FFF;font-size: 32px;margin: 0px;">{{schemeReturnValue ? (schemeReturnValue |
+                      number:'1.2-2') :
+                      '-'}}{{schemeReturnValue ? '%' : ''}}</p>
+                  </td>
+                  <td style="padding-top: 15px;padding-bottom: 15px;padding-right: 10px;text-align: right">
+                    <p style="color: #000;font-size: 12px;margin: 0px;">Scheme Returns</p>
+                    <p style="color: #008FFF;font-size: 32px;margin: 0px;">{{xirr ? (xirr | number:'1.2-2') :
+                      '-'}}{{xirr ? '%' : ''}}</p>
+                  </td>
+                </tr>
+              </table>
               <table style="width: 100%;">
                 <tr>
-                  <td style="width: 40%">
-                    <p style="margin: 0px;font-size: 12px;color: #83959D">CURRENT VALUE</p>
-                    <p style="margin:0px;"><span style="font-size: 28px;color: #008FFF;">₹ <span>
-                          {{currentValue}}</span></span>
-                      <span style="color:#02B875 !important;font-size: 16px;"><span>{{(xirrValue >= 0) ? '+' :
-                          '-'}}</span>{{xirrValue
-                        |
-                        number:'1.2-2'}}%</span>
-                    </p>
-                  </td>
-                  <td style="width: 20%">
-                    <p style="margin: 0px;font-size: 12px;color: #83959D">PROFIT (LOSS)</p>
-                    <p style="margin:0px;"><span style="font-size: 28px;color: #02B875;">₹
-                        <span>{{profitOrLossValue}}</span></span>
-                    </p>
-                  </td>
-                  <td style="width: 33%;text-align: right;">
-                    <p style="margin: 0px;font-size: 12px;color: #83959D">INVESTOR NAME</p>
-                    <p style="margin: 0px;font-size: 20px;color: #000">{{ investorName }}</p>
-                    <p style="margin: 0px;font-size: 12px;color: #83959D">{{ folioNumber }}</p>
-                  </td>
+                  <td style="height: 10px;background-color: #f2f2f2"></td>
                 </tr>
               </table>
-            </td>
-          </tr>
-          <tr>
-            <td style="height: 15px;"></td>
-          </tr>
-        </table>
-        <table style="width: 100%;border-collapse: collapse;">
-          <tr style="background-color: #fff;">
-            <td style="padding-top: 10px;padding-bottom: 10px;padding-left: 10px;">
-              <p style="margin: 0px;font-size: 12px;color: #83959D">NAV</p>
-              <p style="margin: 0px;font-size: 26px;color: #000">{{nav}}</p>
-              <p style="margin: 0px;font-size: 12px;color: #83959D">as on {{data.navDate}}</p>
-            </td>
-            <td style="text-align: right;padding-top: 10px;padding-bottom: 10px;padding-right: 10px;">
-              <p style="margin: 0px;font-size: 12px;color: #83959D">{{schemeReturnName}} NAV RETURN</p>
-              <p style="margin: 0px;font-size: 26px;color: #000">{{schemeReturnValue ? (schemeReturnValue |
-                number:'1.2-2') : 0}}%</p>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
-                style="width: 100%;"> -->
-              <div style="width: 500px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart1</div>
-
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;background-color: #fff;font-size: 18px;padding-bottom: 4px;padding-top: 8px;"
-              colspan="2">
-              <span style="padding-right: 20px;"
-                [ngStyle]="{'border-bottom': demo1TabIndex == 0 ? '2px solid #2680eb' : 'none' }">3m</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 1 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">6m</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 2 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">1y</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 3 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">3y</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 4 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 20px;">5y</span>
-              <span [ngStyle]="{'border-bottom': demo1TabIndex == 5 ? '2px solid #2680eb' : 'none' }"
-                style="padding-right: 0px;">all</span>
-            </td>
-          </tr>
-          <tr>
-            <td style="height: 20px;"></td>
-          </tr>
-          <tr>
-            <td
-              style="font-weight: bold;padding-top: 10px;padding-bottom: 10px;background-color: #fff;padding-left: 10px;"
-              colspan="2">Top Holdings</td>
-          </tr>
-          <tr>
-            <td style="background-color: #fff;padding: 10px;" colspan="2">
-              <table style="width: 100%;border:1px solid #DADCE0;border-collapse: collapse">
+              <table style="background-color: #fff;">
                 <tr>
-                  <td
-                    style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px;padding-left: 5px; ">
-                    Name</td>
-                  <td style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px; ">
-                    Sector</td>
-                  <td style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px; ">
-                    Instrument</td>
-                  <td
-                    style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px;text-align: right; ">
-                    % Allocation</td>
-                  <td style="border-bottom:1px solid #DADCE0; "></td>
-                  <td
-                    style="border-bottom:1px solid #DADCE0;font-weight: bold;padding-top: 5px;padding-bottom: 5px;text-align: right;padding-right: 5px; ">
-                    Assets (Cr)</td>
+                  <td style="font-weight: bold;padding-top: 10px;padding-left: 10px;">Scheme Performance</td>
                 </tr>
-                <tr *ngFor="let element of dataSource.data">
-                  <td style="padding-top: 5px;padding-bottom: 5px;padding-left: 5px;color: #212121;">
-                    {{element.companyName ? element.companyName :'-'}}</td>
-                  <td style="padding-top: 5px;padding-bottom: 5px;color: #212121;">{{element.sectorName ?
-                    element.sectorName : '-'}}</td>
-                  <td style="padding-top: 5px;padding-bottom: 5px;">{{element.rating ? element.rating :'-'}}</td>
-                  <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;color: #212121;">
-                    {{element.holdPercentage | number:'1.2-2'}}{{isLoading ? '' :'%'}}</td>
-                  <td style="padding-left: 20px;width: 100px;background:white;">
-                    <div style="background:white">
-                      <!-- {{element.holdPercentage}} -->
-                      <div style="background:#007bff ;height: 15px;" [ngStyle]="{'width':element.holdPercentage+'%' }">
-                      </div>
-                    </div>
-                    <!-- <div style="height: 15px;background-color: #008FFF;" [ngStyle]="{'width':element.holdPercentage+'%' }></div> -->
+                <tr>
+                  <td style="text-align: center;">
+                    <p style="margin: 0px;">An investment of </p>
+                    <h4 style="text-decoration: underline;font-size: 46px;margin: 0px;"><span
+                        *ngIf="amount.value">{{amount.value}}</span></h4>
+                    <p style="margin: 0px;padding-bottom: 10px;padding-top: 5px;">would have fetched you following
+                      returns
+                    </p>
+                    <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/styled-mode-column/thumbnail.png"
+                style="width: 100%;"> -->
+                    <div style="width: 100%;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart3</div>
+
                   </td>
-                  <td style="padding-top: 5px;padding-bottom: 5px;text-align: right;padding-right: 5px;color: #212121;">
-                    <span appFormatNumber>{{!isLoading ? (element.mktValue ? element.mktValue : '-')
-                      : ''}}</span>
+                </tr>
+                <tr>
+                  <td style="height: 300px;"></td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;background-color: #fff;font-size: 18px;padding-bottom: 4px;"
+                    colspan="2">
+                    <span style="padding-right: 20px;">
+                      <img *ngIf="selectedItem.value== '1'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                      <img *ngIf="selectedItem.value!= '1'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                      3m</span>
+                    <span style="padding-right: 20px;">
+                      <img *ngIf="selectedItem.value== '2'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                      <img *ngIf="selectedItem.value!= '2'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                      6m</span>
+                    <span style="padding-right: 20px;">
+                      <img *ngIf="selectedItem.value== '3'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                      <img *ngIf="selectedItem.value!= '3'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                      1y</span>
+                    <span style="padding-right: 20px;">
+                      <img *ngIf="selectedItem.value== '4'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                      <img *ngIf="selectedItem.value!= '4'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">3y</span>
+                    <span style="padding-right: 20px;">
+                      <img *ngIf="selectedItem.value== '5'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
+                      <img *ngIf="selectedItem.value!= '5'"
+                        src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
+                      5y</span>
+
                   </td>
                 </tr>
               </table>
-            </td>
-          </tr>
-          <tr>
-            <td style="height: 20px;"></td>
-          </tr>
-          <tr>
-            <td
-              style="font-weight: bold;padding-top: 10px;padding-bottom: 10px;background-color: #fff;padding-left: 10px;"
-              colspan="2">Relative performance</td>
-          </tr>
-          <tr>
-            <td
-              style="font-weight: bold;padding-top: 10px;padding-bottom: 10px;background-color: #fff;padding-left: 10px;"
-              colspan="2">
-              <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/line-time-series/thumbnail.png"
-                style="width: 100%;"> -->
-              <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart2</div>
+              <table style="width: 100%;">
+                <tr>
+                  <td style="height: 10px;background-color: #f2f2f2"></td>
+                </tr>
+              </table>
+              <table style="background-color: #fff;">
+                <tr>
+                  <td style="font-weight: bold;">
+                    <p style="margin: 0px;font-weight: bold;padding-left: 10px;padding-bottom: 10px;padding-top: 10px;">
+                      Riskometer</p>
+                    <!-- <img src="https://www.etmoney.com/static/images/mf-explore/risko-meter-bg.png" style="width: 100%;"> -->
+                    <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart4</div>
 
+                  </td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <td style="height: 10px;background-color: #f2f2f2"></td>
+                </tr>
+              </table>
+              <table style="background-color: #fff;width: 100%;">
+                <tr>
+                  <td style="font-weight: bold;padding-left: 10px;padding-top: 15px;" colspan="2">Scheme details</td>
+                </tr>
+                <tr>
+                  <table style="width: 100%;background-color: #fff;">
+                    <tr>
+                      <td style="padding-left: 10px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;padding-top: 20px;">MIN AMOUNT</p>
+                        <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.minAmount ? '₹' : ''}}<span
+                            appFormatNumber class="bar"
+                            [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span></p>
+                      </td>
+                      <td style="padding-right: 10px;padding-top: 20px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME TYPE</p>
+                        <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.type)}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-left: 10px;padding-top: 30px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME STARTED</p>
+                        <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.inceptDate ? (schemeDetails?.inceptDate
+                          | date:'dd-MM-yyyy') :'-' }}</p>
+                      </td>
+                      <td style="padding-right: 10px;padding-top: 30px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME SIZE</p>
+                        <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.aum ? '₹' : ''}}<span appFormatNumber
+                            [value]="schemeDetails?.aum ? schemeDetails?.aum : '-'"></span></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-left: 10px;padding-top: 30px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">CASH POSITION</p>
+                        <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.aum ? (schemeDetails?.aum |
+                          number:'1.2-2') :'-'}}{{schemeDetails?.aum ? '%' : ''}}</p>
+                      </td>
+                      <td style="padding-right: 10px;padding-top: 30px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">EXPENSE RATIO</p>
+                        <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.expRatio}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-left: 10px;padding-top: 30px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">PE RATIO</p>
+                        <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.pe | number:'1.2-2')}}</p>
+                      </td>
+                      <td style="padding-right: 10px;padding-top: 30px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">P/B RATIO</p>
+                        <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.pb | number:'1.2-2')}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="padding-left: 10px;padding-top: 30px;padding-bottom: 20px;">
+                        <p style="margin:0px;color: #83959D;font-size: 12px;">EXIT LOAD</p>
+                        <p style="margin: 0px;font-size: 16px;"><span *ngIf="schemeDetails?.remarks">Exit load of
+                            {{schemeDetails?.remarks}}
+                            if redeemed within
+                            365 days.</span>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </tr>
+              </table>
             </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <p style="font-weight: bold;padding-bottom: 10px;margin:0px;padding-top: 20px;font-size: 16px;">About
-                {{data.schemeName}}</p>
-              <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">{{data.schemeName}} is a
-                {{data.categoryName | lowercase }} Mutual Fund
-                Scheme launched by {{schemeDetails?.amc}} Mutual Fund.<span *ngIf="schemeDetails?.inceptDate">This
-                  scheme
-                  was introduced to investors on {{schemeDetails?.inceptDate ? (schemeDetails?.inceptDate |
-                  date:'dd-MMM-yyyy') : '-'}}.</span><span
-                  *ngIf="schemeDetails?.fundManager1">{{schemeDetails?.fundManager1}} is the Current Fund Manager of
-                  {{data.schemeName}}.</span>The fund
-                currently has an Asset Under Management(AUM) of ₹<span appFormatNumber
-                  [value]="schemeDetails?.aum ? schemeDetails?.aum :'-'"></span> Cr and the Latest NAV as of
-                {{data.navDate}} is
-                ₹{{data?.nav}}.</p>
-              <p class="m-0 f-300 roboto pt-8" *ngIf="!isLoadingSchemeDetails">The {{data.schemeName}} is rated
-                {{schemeDetails?.color}}.<span *ngIf="data.sipAmount != 0">Minimum SIP
-                  Investment is {{data.sipAmount}}.</span><span *ngIf="schemeDetails?.lumpsum">Minimum Lumpsum
-                  Investment
-                  is {{schemeDetails?.lumpsum}}. Exit load of
-                  {{schemeDetails?.remarks}}% if redeemed
-                  within 365 days.</span></p>
-              <p style="font-weight: bold;padding-bottom: 5px;padding-top:15px;margin:0px;font-size: 16px"
-                *ngIf="schemeDetails?.objective">Scheme
-                objective</p>
-              <p class="f-300 roboto m-0 pt-8" *ngIf="!isLoadingSchemeDetails">{{schemeDetails?.objective}}</p>
-              <p style="font-weight: bold;padding-bottom: 5px;padding-top:15px;margin:0px;font-size: 16px;">Disclaimer
-              </p>
-              <p style="margin: 0px;color: #000;font-size: 14px;">Mutual Fund investments are subject to market risks,
-                read all scheme related documents carefully. </p>
-            </td>
-          </tr>
-        </table>
-      </td>
-      <td style="width:35%">
-        <table style="width: 100%;background-color: #fff;">
-          <tr>
-            <td style="padding-top: 15px;padding-bottom: 15px;padding-left: 10px;">
-              <p style="color: #000;font-size: 12px;margin: 0px;">Scheme Returns</p>
-              <p style="color: #008FFF;font-size: 32px;margin: 0px;">{{schemeReturnValue ? (schemeReturnValue |
-                number:'1.2-2') :
-                '-'}}{{schemeReturnValue ? '%' : ''}}</p>
-            </td>
-            <td style="padding-top: 15px;padding-bottom: 15px;padding-right: 10px;text-align: right">
-              <p style="color: #000;font-size: 12px;margin: 0px;">Scheme Returns</p>
-              <p style="color: #008FFF;font-size: 32px;margin: 0px;">{{xirr ? (xirr | number:'1.2-2') :
-                '-'}}{{xirr ? '%' : ''}}</p>
-            </td>
-          </tr>
-        </table>
-        <table style="width: 100%;">
-          <tr>
-            <td style="height: 10px;background-color: #f2f2f2"></td>
-          </tr>
-        </table>
-        <table style="background-color: #fff;">
-          <tr>
-            <td style="font-weight: bold;padding-top: 10px;padding-left: 10px;">Scheme Performance</td>
-          </tr>
-          <tr>
-            <td style="text-align: center;">
-              <p style="margin: 0px;">An investment of </p>
-              <h4 style="text-decoration: underline;font-size: 46px;margin: 0px;"><span
-                  *ngIf="amount.value">{{amount.value}}</span></h4>
-              <p style="margin: 0px;padding-bottom: 10px;padding-top: 5px;">would have fetched you following returns</p>
-              <!-- <img src="https://www.highcharts.com/demo/images/samples/highcharts/demo/styled-mode-column/thumbnail.png"
-                style="width: 100%;"> -->
-              <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart3</div>
-
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;background-color: #fff;font-size: 18px;padding-bottom: 4px;padding-top: 8px;"
-              colspan="2">
-              <span style="padding-right: 20px;">
-                <img *ngIf="selectedItem.value== '1'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
-                <img *ngIf="selectedItem.value!= '1'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
-                3m</span>
-              <span style="padding-right: 20px;">
-                <img *ngIf="selectedItem.value== '2'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
-                <img *ngIf="selectedItem.value!= '2'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
-                6m</span>
-              <span style="padding-right: 20px;">
-                <img *ngIf="selectedItem.value== '3'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
-                <img *ngIf="selectedItem.value!= '3'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
-                1y</span>
-              <span style="padding-right: 20px;">
-                <img *ngIf="selectedItem.value== '4'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
-                <img *ngIf="selectedItem.value!= '4'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">3y</span>
-              <span style="padding-right: 20px;">
-                <img *ngIf="selectedItem.value== '5'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966382/svg_assets/Ellipse.svg">
-                <img *ngIf="selectedItem.value!= '5'"
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1615966389/svg_assets/EllipseHollow.svg">
-                5y</span>
-
-            </td>
-          </tr>
-        </table>
-        <table style="width: 100%;">
-          <tr>
-            <td style="height: 10px;background-color: #f2f2f2"></td>
-          </tr>
-        </table>
-        <table style="background-color: #fff;">
-          <tr>
-            <td style="font-weight: bold;">
-              <p style="margin: 0px;font-weight: bold;padding-left: 10px;padding-bottom: 10px;padding-top: 10px;">
-                Riskometer</p>
-              <!-- <img src="https://www.etmoney.com/static/images/mf-explore/risko-meter-bg.png" style="width: 100%;"> -->
-              <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart4</div>
-
-            </td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td style="height: 10px;background-color: #f2f2f2"></td>
-          </tr>
-        </table>
-        <table style="background-color: #fff;width: 100%;">
-          <tr>
-            <td style="font-weight: bold;padding-left: 10px;padding-top: 15px;" colspan="2">Scheme details</td>
-          </tr>
-          <tr>
-            <table style="width: 100%;background-color: #fff;">
-              <tr>
-                <td style="padding-left: 10px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;padding-top: 20px;">MIN AMOUNT</p>
-                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.minAmount ? '₹' : ''}}<span appFormatNumber
-                      class="bar" [value]="schemeDetails?.minAmount ? schemeDetails?.minAmount : '-'"></span></p>
-                </td>
-                <td style="padding-right: 10px;padding-top: 20px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME TYPE</p>
-                  <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.type)}}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding-left: 10px;padding-top: 30px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME STARTED</p>
-                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.inceptDate ? (schemeDetails?.inceptDate
-                    | date:'dd-MM-yyyy') :'-' }}</p>
-                </td>
-                <td style="padding-right: 10px;padding-top: 30px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">SCHEME SIZE</p>
-                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.aum ? '₹' : ''}}<span appFormatNumber
-                      [value]="schemeDetails?.aum ? schemeDetails?.aum : '-'"></span></p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding-left: 10px;padding-top: 30px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">CASH POSITION</p>
-                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.aum ? (schemeDetails?.aum |
-                    number:'1.2-2') :'-'}}{{schemeDetails?.aum ? '%' : ''}}</p>
-                </td>
-                <td style="padding-right: 10px;padding-top: 30px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">EXPENSE RATIO</p>
-                  <p style="margin: 0px;font-size: 16px;">{{schemeDetails?.expRatio}}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding-left: 10px;padding-top: 30px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">PE RATIO</p>
-                  <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.pe | number:'1.2-2')}}</p>
-                </td>
-                <td style="padding-right: 10px;padding-top: 30px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">P/B RATIO</p>
-                  <p style="margin: 0px;font-size: 16px;">{{(schemeDetails?.pb | number:'1.2-2')}}</p>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2" style="padding-left: 10px;padding-top: 30px;padding-bottom: 20px;">
-                  <p style="margin:0px;color: #83959D;font-size: 12px;">EXIT LOAD</p>
-                  <p style="margin: 0px;font-size: 16px;"><span *ngIf="schemeDetails?.remarks">Exit load of
-                      {{schemeDetails?.remarks}}
-                      if redeemed within
-                      365 days.</span>
-                  </p>
-                </td>
-              </tr>
-            </table>
           </tr>
         </table>
       </td>
