@@ -600,7 +600,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
       if (UtilService.isDialogClose(sideBarData)) {
-        this.loadAllGoals(false);
+        if (sideBarData.refreshObservable == true) {
+          this.loadAllGoals(false);
+        }
         subscription.unsubscribe();
       }
     });
@@ -898,11 +900,16 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       goalData: this.selectedGoal,
       allocationData: allocation,
     }
-    this.dialog.open(ReallocateAssetComponent, {
+    const dialogRef = this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
       height: '400px',
       data: dialogData,
       autoFocus: false,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == true) {
+        this.loadAllGoals(false)
+      }
     });
   }
 
