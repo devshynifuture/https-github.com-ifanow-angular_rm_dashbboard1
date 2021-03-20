@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../../../auth-service/authService';
 import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -90,7 +91,7 @@ export class OthersAssetsComponent implements OnInit {
     this.isLoadingUpload = true;
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: AuthService.getClientId(),
       familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value,
       element: element

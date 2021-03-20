@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../../../../../../auth-service/authService';
 import { AddNscComponent } from './../common-component/add-nsc/add-nsc.component';
 import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -112,7 +113,7 @@ export class NscSchemeComponent implements OnInit {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: AuthService.getClientId(),
       familyMemberId: (element.ownerList[0].isClient == 1) ? 0 : element.ownerList[0].familyMemberId,
       asset: value,
       element: element
