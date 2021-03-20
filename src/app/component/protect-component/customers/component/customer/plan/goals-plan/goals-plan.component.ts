@@ -190,32 +190,14 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
     this.fragmentData = { isSpinner: false };
     this.dataSource1 = [];
+    this.dataSource1 = [];
     //this.dataSource.data = [];
-    // this.subscriber.add(
-    //   this.allocateOtherAssetService.refreshObservable.subscribe(() => {
-    //     this.loadAllGoals(false);
-    //   })
-    // );
-    // this.plansService.getClientId().subscribe(res => {
-    //   this.clientIdToClearStorage = res;
-    // });
-    // if (this.clientIdToClearStorage) {
-    //   if (this.clientIdToClearStorage != this.clientId) {
-    //     this.plansService.clearStorageGoal();
-    //   }
-    // }
-    // this.plansService.setClientId(this.clientId);
-    // this.plansService.getGoalData()
-    //   .subscribe(res => {
-    //     this.storedData = '';
-    //     this.storedData = res;
-    //   });
-
-    // if (this.chekToCallApi()) {
-    //   this.loadAllGoals(false);
-    // } else {
-    //   this.loadPlanRes(this.storedData, false);
-    // }
+    this.subscriber.add(
+      this.allocateOtherAssetService.refreshObservable.subscribe(() => {
+        this.loadAllGoals(false);
+      })
+    );
+    this.loadAllAssets();
     this.loadAllGoals(false);
     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
   }
@@ -237,18 +219,21 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};
     this.dataSource3 = new MatTableDataSource(ELEMENT_DATA);
-
-    let obj = {
-      advisorId: AuthService.getAdvisorId(),
-      clientId: AuthService.getClientId()
-    }
-    this.plansService.getAllGoals(this.advisor_client_id).subscribe(
-      data => this.loadPlanRes(data, flag),
-      err => {
-        this.eventService.openSnackBar(err, "Dismiss");
-        this.loaderFn.decreaseCounter();
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
+      if (data) {
+        this.allGoals = data
+        if (flag == true) {
+          this.loadAllGoals(false)
+        }
+      } else {
+        this.allGoals = [];
       }
-    );
+      this.isLoading = false;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.loaderFn.decreaseCounter();
+    });
   }
   loadPlanRes(data, flag) {
     if (data) {
@@ -600,7 +585,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
       if (UtilService.isDialogClose(sideBarData)) {
-        this.loadAllGoals(false);
+        if (sideBarData.refreshObservable == true) {
+          this.loadAllGoals(false);
+        }
         subscription.unsubscribe();
       }
     });
@@ -898,11 +885,16 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       goalData: this.selectedGoal,
       allocationData: allocation,
     }
-    this.dialog.open(ReallocateAssetComponent, {
+    const dialogRef = this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
       height: '400px',
       data: dialogData,
       autoFocus: false,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == true) {
+        this.loadAllGoals(false)
+      }
     });
   }
 

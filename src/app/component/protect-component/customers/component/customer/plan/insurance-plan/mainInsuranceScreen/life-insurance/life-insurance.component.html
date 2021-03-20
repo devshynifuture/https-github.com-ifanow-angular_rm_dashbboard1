@@ -285,8 +285,7 @@
                                 </button>
                                 <!-- suggestPolicyGi(inputData,element.insurance) -->
                                 <mat-menu #menu4="matMenu">
-                                    <button mat-menu-item (click)="openDetailedView(element)"
-                                        *ngIf="inputData?.insuranceType != 1">Detailed view</button>
+                                    <button mat-menu-item (click)="openDetailedView(element)">Detailed view</button>
                                     <!-- <button mat-menu-item
                                         (click)="inputData?.insuranceType == 1 ? openDialog(element,null) : needAnalysis(null)">Edit</button> -->
                                     <button *ngIf="roleService.planPermission.subModule.insurance.capabilityList.Delete"

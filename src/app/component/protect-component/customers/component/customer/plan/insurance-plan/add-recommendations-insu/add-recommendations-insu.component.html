@@ -55,7 +55,7 @@
                 <td mat-cell *matCellDef="let element" class="br text-left">
                     <div class="bar">
                         <span *ngIf="element.advice">
-                            {{element.advice}}
+                            {{element.advice ? element.advice : '-'}}
                         </span>
                         <span *ngIf="!element.advice" class="c-p">
                             <img src="/assets/images/svg/plus-rounded.svg" (click)="openDialog(null,element)">

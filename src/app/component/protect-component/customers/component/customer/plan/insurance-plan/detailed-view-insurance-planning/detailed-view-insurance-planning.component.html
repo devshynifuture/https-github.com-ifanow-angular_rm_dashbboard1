@@ -552,32 +552,38 @@
                 <div class="row bb-1 pt-6 pb-6 br bl-1">
                     <div class="col-md-4 f-400 f-14">
                         {{(_data?.parentAsset?.premiumAmount) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.parentAsset?.premiumAmount) ? _data?.parentAsset?.premiumAmount : '-'}}</span>
+                            appFormatNumber>{{(_data?.parentAsset?.premiumAmount) ? _data?.parentAsset?.premiumAmount :
+                            '-'}}</span>
                     </div>
                     <div class="col-md-4 f-500 f-14 roboto text-center"> Premium </div>
                     <div class="col-md-4 f-400 f-14 text-right">
                         {{(_data?.childAsset?.premiumAmount) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.childAsset?.premiumAmount) ? _data?.childAsset?.premiumAmount : '-'}}</span>
+                            appFormatNumber>{{(_data?.childAsset?.premiumAmount) ? _data?.childAsset?.premiumAmount :
+                            '-'}}</span>
                     </div>
 
                 </div>
                 <div class="row bb-1 pt-6 pb-6 br bl-1">
                     <div class="col-md-4 f-400 f-14">
-                        {{(_data?.parentAsset?.policyStartDate) ? (_data?.parentAsset?.policyStartDate | date:'dd/MM/yyyy') : '-'}}
+                        {{(_data?.parentAsset?.policyStartDate) ? (_data?.parentAsset?.policyStartDate |
+                        date:'dd/MM/yyyy') : '-'}}
                     </div>
                     <div class="col-md-4 f-500 f-14 roboto text-center"> Policy start date </div>
                     <div class="col-md-4 f-400 f-14 text-right">
-                        {{(_data?.childAsset?.policyStartDate) ? (_data?.childAsset?.policyStartDate | date:'dd/MM/yyyy') : '-'}}
+                        {{(_data?.childAsset?.policyStartDate) ? (_data?.childAsset?.policyStartDate |
+                        date:'dd/MM/yyyy') : '-'}}
                     </div>
 
                 </div>
                 <div class="row bb-1 pt-6 pb-6 br bl-1">
                     <div class="col-md-4 f-400 f-14">
-                        {{(_data?.parentAsset?.policyExpiryDate) ? (_data?.parentAsset?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                        {{(_data?.parentAsset?.policyExpiryDate) ? (_data?.parentAsset?.policyExpiryDate |
+                        date:'dd/MM/yyyy') : '-'}}
                     </div>
                     <div class="col-md-4 f-500 f-14 roboto text-center">Policy expiry date</div>
                     <div class="col-md-4 f-400 f-14 text-right">
-                        {{(_data?.childAsset?.policyExpiryDate) ? (_data?.childAsset?.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}
+                        {{(_data?.childAsset?.policyExpiryDate) ? (_data?.childAsset?.policyExpiryDate |
+                        date:'dd/MM/yyyy') : '-'}}
                     </div>
 
                 </div>
@@ -703,14 +709,16 @@
                 <div class="row bb-1 pt-6 pb-6 br bl-1" *ngIf="showInsurance?.heading =='Health insurance'">
                     <div class="col-md-4 f-400 f-14">
                         {{(_data?.parentAsset?.deductibleSumInsured) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.parentAsset?.deductibleSumInsured) ? _data?.parentAsset?.deductibleSumInsured : '-'}}</span>
+                            appFormatNumber>{{(_data?.parentAsset?.deductibleSumInsured) ?
+                            _data?.parentAsset?.deductibleSumInsured : '-'}}</span>
                     </div>
                     <div class="col-md-4 f-500 f-14 roboto text-center"> Deductible sum insured
 
                     </div>
                     <div class="col-md-4 f-400 f-14 text-right">
                         {{(_data?.childAsset?.deductibleSumInsured) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.childAsset?.deductibleSumInsured) ? _data?.childAsset?.deductibleSumInsured : '-'}}</span>
+                            appFormatNumber>{{(_data?.childAsset?.deductibleSumInsured) ?
+                            _data?.childAsset?.deductibleSumInsured : '-'}}</span>
                     </div>
 
                 </div>
@@ -718,14 +726,16 @@
                     *ngIf="(_data?.parentAsset?.policyType=='Family floater' || _data?.childAsset?.policyType=='Family floater')">
                     <div class="col-md-4 f-400 f-14" *ngIf="_data?.parentAsset?.policyType=='Family floater'">
                         {{(_data?.parentAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
+                            appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv :
+                            '-'}}</span>
                     </div>
                     <div class="col-md-4 f-500 f-14 roboto text-center"
                         *ngIf="(_data?.parentAsset?.policyType=='Family floater' || _data?.childAsset?.policyType=='Family floater')">
                         Sum insured </div>
                     <div class="col-md-4 f-400 f-14 text-right" *ngIf="_data?.childAsset?.policyType=='Family floater'">
                         {{(_data?.childAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                            appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv : '-'}}</span>
+                            appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv :
+                            '-'}}</span>
                     </div>
 
                 </div>
@@ -738,8 +748,8 @@
                                 {{(item.name) ? item.name : '-'}}
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(item.sumInsured) ? '₹' : ''}}<span
-                                    appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                {{(item.sumInsured) ? '₹' : ''}}<span appFormatNumber>{{(item.sumInsured) ?
+                                    item.sumInsured : '-'}}</span>
                             </div>
 
                         </div>
@@ -754,8 +764,8 @@
                                 {{(item.name) ? item.name : '-'}}
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(item.sumInsured) ? '₹' : ''}}<span
-                                    appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                {{(item.sumInsured) ? '₹' : ''}}<span appFormatNumber>{{(item.sumInsured) ?
+                                    item.sumInsured : '-'}}</span>
                             </div>
 
                         </div>
@@ -807,8 +817,8 @@
                                     AD sum insured{{i + 1}}
                                 </div>
                                 <div class="col-md-4  text-right f-14 roboto p-0">
-                                    {{(item.sumInsured) ? '₹' : ''}}<span
-                                        appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                    {{(item.sumInsured) ? '₹' : ''}}<span appFormatNumber>{{(item.sumInsured) ?
+                                        item.sumInsured : '-'}}</span>
                                 </div>
                             </div>
                             <div class="row p-8">
@@ -816,8 +826,8 @@
                                     TTD sum insured {{i + 1}}
                                 </div>
                                 <div class="col-md-4  text-right f-14 roboto p-0">
-                                    {{(item.ttdSumInsured) ? '₹' : ''}}<span
-                                        appFormatNumber>{{(item.ttdSumInsured) ? item.ttdSumInsured : '-'}}</span>
+                                    {{(item.ttdSumInsured) ? '₹' : ''}}<span appFormatNumber>{{(item.ttdSumInsured) ?
+                                        item.ttdSumInsured : '-'}}</span>
                                 </div>
                             </div>
 
@@ -842,8 +852,8 @@
                                     AD sum insured{{i + 1}}
                                 </div>
                                 <div class="col-md-4  text-right f-14 roboto p-0">
-                                    {{(item.sumInsured) ? '₹' : ''}}<span
-                                        appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                    {{(item.sumInsured) ? '₹' : ''}}<span appFormatNumber>{{(item.sumInsured) ?
+                                        item.sumInsured : '-'}}</span>
                                 </div>
                             </div>
                             <div class="row p-8">
@@ -851,8 +861,8 @@
                                     TTD sum insured {{i + 1}}
                                 </div>
                                 <div class="col-md-4  text-right f-14 roboto p-0">
-                                    {{(item.ttdSumInsured) ? '₹' : ''}}<span
-                                        appFormatNumber>{{(item.ttdSumInsured) ? item.ttdSumInsured : '-'}}</span>
+                                    {{(item.ttdSumInsured) ? '₹' : ''}}<span appFormatNumber>{{(item.ttdSumInsured) ?
+                                        item.ttdSumInsured : '-'}}</span>
                                 </div>
                             </div>
 
@@ -863,7 +873,8 @@
                         <div class="col-md-4 f-400 f-14"
                             *ngIf="_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'">
                             {{(_data?.parentAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                                appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ? _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
+                                appFormatNumber>{{(_data?.parentAsset?.sumInsuredIdv) ?
+                                _data?.parentAsset?.sumInsuredIdv : '-'}}</span>
                         </div>
                         <div class="col-md-4 f-500 f-14 roboto text-center"
                             *ngIf="(_data?.parentAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident') || (_data?.childAsset?.sumInsuredIdv && showInsurance?.heading == 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident')">
@@ -871,7 +882,8 @@
                         <div *ngIf="_data?.childAsset?.sumInsuredIdv && showInsurance?.heading != 'Travel insurance' && showInsurance != 'Health' && showInsurance?.heading !='Personal accident'"
                             class="col-md-4 f-400 f-14 text-right">
                             {{(_data?.childAsset?.sumInsuredIdv) ? '₹' : ''}}<span
-                                appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv : '-'}}</span>
+                                appFormatNumber>{{(_data?.childAsset?.sumInsuredIdv) ? _data?.childAsset?.sumInsuredIdv
+                                : '-'}}</span>
                         </div>
                     </div>
                 </div>
@@ -895,7 +907,8 @@
                             Advice given date
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{( _data?.adviceDetails?.adviceGivenDate) ? ( _data?.adviceDetails?.adviceGivenDate | date:'dd/MM/yyyy') : '-'}}
+                            {{( _data?.adviceDetails?.adviceGivenDate) ? ( _data?.adviceDetails?.adviceGivenDate |
+                            date:'dd/MM/yyyy') : '-'}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
@@ -903,7 +916,8 @@
                             Implementation date
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{( _data?.adviceDetails?.applicableDate) ? ( _data?.adviceDetails?.applicableDate | date:'dd/MM/yyyy') : '-'}}
+                            {{( _data?.adviceDetails?.applicableDate) ? ( _data?.adviceDetails?.applicableDate |
+                            date:'dd/MM/yyyy') : '-'}}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
@@ -911,17 +925,25 @@
                             Advice status
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{ _data?.adviceDetails?.adviceStatusId == 1 ? 'GIVEN' : _data?.adviceDetails?.adviceStatusId == 2 ? 'AWAITING CONSENT' :_data?.adviceDetails?.adviceStatusId == 3 ? 'ACCEPTED' :_data?.adviceDetails?.adviceStatusId == 4 ? 'IN PROGRESS' :_data?.adviceDetails?.adviceStatusId == 5 ? 'IMPLEMENTED' :
-                            _data?.adviceDetails?.adviceStatusId == 6 ? 'DECLINED' :_data?.adviceDetails?.adviceStatusId == 7 ? 'PENDING' :_data?.adviceDetails?.adviceStatusId == 8 ? 'SYSTEM GENERATED' :_data?.adviceDetails?.adviceStatusId == 9 ? 'REVISED' : 'GIVEN'  }}
+                            {{ _data?.adviceDetails?.adviceStatusId == 1 ? 'GIVEN' :
+                            _data?.adviceDetails?.adviceStatusId == 2 ? 'AWAITING CONSENT'
+                            :_data?.adviceDetails?.adviceStatusId == 3 ? 'ACCEPTED'
+                            :_data?.adviceDetails?.adviceStatusId == 4 ? 'IN PROGRESS'
+                            :_data?.adviceDetails?.adviceStatusId == 5 ? 'IMPLEMENTED' :
+                            _data?.adviceDetails?.adviceStatusId == 6 ? 'DECLINED' :_data?.adviceDetails?.adviceStatusId
+                            == 7 ? 'PENDING' :_data?.adviceDetails?.adviceStatusId == 8 ? 'SYSTEM GENERATED'
+                            :_data?.adviceDetails?.adviceStatusId == 9 ? 'REVISED' : 'GIVEN' }}
                         </div>
                     </div>
                     <div class="row bb p-8 b-l br">
                         <div class="col-md-8 text-left f-14 roboto p-0">
-                            {{adviceName == 'Surrender' ? 'Surrender value' : 'Sum assured'}}
+                            {{adviceName == 'Surrender' ? 'Surrender value' : 'Sum
+                            assured'}}
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{( _data?.adviceDetails?.adviceAllotment) ? '₹' : ''}}<span
-                                appFormatNumber>{{( _data?.adviceDetails?.adviceAllotment) ?  _data?.adviceDetails?.adviceAllotment : '-'}}</span>
+                            {{( _data?.adviceDetails?.adviceAllotment) ? '₹' : ''}}<span appFormatNumber>{{(
+                                _data?.adviceDetails?.adviceAllotment) ? _data?.adviceDetails?.adviceAllotment :
+                                '-'}}</span>
                         </div>
                     </div>
                     <div class="row   p-8 b-l br">
@@ -931,7 +953,8 @@
                     </div>
                     <div class="row bb p-8 pt-0 b-l br">
                         <div class="col-md-12 text-left new-lineText f-14 roboto p-0">
-                            {{( _data?.adviceDetails?.adviceDescription) ? ( _data?.adviceDetails?.adviceDescription) : '-'}}
+                            {{( _data?.adviceDetails?.adviceDescription) ? ( _data?.adviceDetails?.adviceDescription) :
+                            '-'}}
                         </div>
                     </div>
                 </div>
