@@ -277,7 +277,9 @@
                                         <div class="col-md-3 d-flex align-items-center">
                                             <div class="relClass">
                                                 <div class="bar">{{!loaderFn.loading? "" : ""}}
-                                                    <p class="mb-0 roboto"> {{allocation.assetName}}</p>
+                                                    <p class="mb-0 roboto">
+                                                        {{allocation.assetName}}:{{(allocation.lumpsumOrSip ==2)?allocation.sipAmount:''}}
+                                                    </p>
                                                 </div>
                                             </div>
 
