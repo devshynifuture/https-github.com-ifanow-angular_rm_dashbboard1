@@ -50,6 +50,10 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   absSIP: number;
   absLumsum: any;
   disableAllocate: boolean = false;
+  equity_monthly: any;
+  debt_monthly: any;
+  lump_equity: any;
+  lump_debt: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -155,10 +159,29 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
+  getSumOfJsonMap(json: Object = {}) {
+    let sum = 0;
+    for (let k in json) {
+      if (json.hasOwnProperty(k)) {
+        sum += json[k];
+      }
+    }
+    return sum;
+  }
   loadMFData() {
     this.loaderFn.increaseCounter();
     this.planService.getMFList({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
-      this.mfList = res;
+      this.mfList = res.mfData;
+      this.equity_monthly = this.getSumOfJsonMap(res.sipAmountEquity) || 0;
+      this.debt_monthly = this.getSumOfJsonMap(res.sipAmountDebt) || 0;
+      this.lump_equity = this.getSumOfJsonMap(res.lumpSumAmountEquity) || 0;
+      this.lump_debt = this.getSumOfJsonMap(res.lumpSumAmountDebt) || 0;
+      if (this.equity_monthly == 0 && this.lump_equity != 0) {
+        this.equity_monthly = 'N/A'
+      }
+      if (this.debt_monthly == 0 && this.lump_debt != 0) {
+        this.debt_monthly = 'N/A'
+      }
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
         let absSIP = 0;

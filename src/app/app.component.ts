@@ -46,7 +46,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       this.document.getElementById('tabviewJs').style.height = `${width}px`;
       // console.log(height, width)
     }
-    this.getDomainData(document.location.hostname);
+    this.getDomainData("dev.ifanow.in");
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
       appTitle: 'This is a tribute'

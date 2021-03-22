@@ -351,12 +351,12 @@
                   <!-- (click)="dobAsPerRecord.open()" // asper bug raise in Mf the dropdown to choose date should be removed as we are not going to show any back dated data over here -->
                   <p class="m-0 roboto f-400 f-16">As on
                     {{asOnDate | date:'dd/MM/yyyy'}}</p>
-                  <!-- <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
+                  <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
                     <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24"
                       matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
                     <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
-                  </div> -->
+                  </div>
 
                   <!-- <button class="b-a br-0 width180 h-40" mat-button>
       
@@ -500,7 +500,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6 col-md-6 pt-12-1200 pl-8-1200" *ngIf="!noCashflowData">
+                    <div class="col-xl-4 col-lg-6 col-md-6 pt-12-1200 pl-10" *ngIf="!noCashflowData">
                       <mat-select formControlName="bankfilter" class="form-control">
                         <mat-option [value]="'all'">
                           All banks
@@ -709,7 +709,7 @@
                 [value]="liabilityTotal" class="bar">{{liabilityTotal}}</span></span>
           </div>
           <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 10px;">
-            <span>INSURANCE</span>
+            <span>Insurance</span>
             <span style="float: right;">
               <span *ngIf="totalInsurance>0">₹</span><span appFormatNumber [value]="totalInsurance"
                 class="bar">{{totalInsurance}}</span>
@@ -720,8 +720,8 @@
             <span style="float: right;"> <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
               <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
                 ? '-' : mutualFundValue.currentValue}}
-              </span> <br><span style="float: right;"> <span
-                  *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
+              </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false"
+                  style="padding-bottom: 10px;">{{mutualFundValue.percentage == 0 ? '-' :
                   mutualFundValue.percentage}}
                   <span *ngIf="mutualFundValue.percentage!=0">%</span></span></span> </span>
           </div>
@@ -854,27 +854,51 @@
       <tr>
 
         <td rowspan="2" style="padding-top: 20px;padding-left: 20px;" colspan="2">
-          <div style="padding-top: 180px;">
-            <span style="font-size: 18px;padding-top: 30px;">
-              Net cash flow </span><br>
-          </div>
 
-          <div *ngIf="cashFlowViewDataSource?.length > 0">
-            <div style="height: 150px;">$showpiechart3</div>
-          </div>
-          <div *ngIf="cashFlowViewDataSource?.length==0" class="row">
-            <div class="col-md-12 mt-30 d-flex align-items-center justify-content-center p-0">
-              <div class=" text-center bg-white">
-                <img
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1616244828/svg_assets/net-cash-flow-empty-state.svg">
-              </div>
-              <div class="content-Empty">
-                <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
-                <p class="f-12 text-primitive"> Before we can create any charts, <br> we will first need
-                  to get some data in here </p>
-              </div>
-            </div>
-          </div>
+          <table style="width: 100%;">
+            <tr>
+              <td>
+                <table style="border:1px solid #ddd;width: 100%;">
+                  <tr>
+                    <td style="border-bottom: 1px solid #ddd;">
+                      Description
+                    </td>
+                    <td style="border-bottom: 1px solid #ddd;">
+                      Date
+                    </td>
+                    <td style="border-bottom: 1px solid #ddd;">
+                      Amount
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border-bottom: 1px solid #ddd;">RD Naitik Singhania
+                    </td>
+                    <td style="border-bottom: 1px solid #ddd;">22/04/2021 </td>
+                    <td style="border-bottom: 1px solid #ddd;color:#FF6823;">RD Naitik Singhania
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <div>
+                  <span style="font-size: 18px;padding-top: 30px;">
+                    Net cash flow </span><br>
+                </div>
+
+                <div *ngIf="cashFlowViewDataSource?.length > 0">
+                  <div style="height: 150px;">$showpiechart3</div>
+                </div>
+                <div *ngIf="cashFlowViewDataSource?.length==0">
+                  <img
+                    src="https://res.cloudinary.com/futurewise/image/upload/v1616244828/svg_assets/net-cash-flow-empty-state.svg">
+                  <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
+                  <p class="f-12 text-primitive"> Before we can create any charts, <br> we will first need
+                    to get some data in here </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+
         </td>
       </tr>
     </tbody>

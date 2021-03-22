@@ -42,7 +42,7 @@ export class AddGoalService {
         }
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
         obj.currentValue = asset.currentValue
-        this.allocateAsset(obj);
+        this.allocateAsset(obj, 'other');
       } else {
         this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
       }
@@ -70,7 +70,7 @@ export class AddGoalService {
         obj.lump_debt = selectedGoal.dashboardData.lump_debt
         obj.lump_equity = selectedGoal.dashboardData.lump_equity
         obj.currentValue = mfAsset.currentValue
-        this.allocateAsset(obj);
+        this.allocateAsset(obj, 'mf');
       } else {
         this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
       }
@@ -101,13 +101,17 @@ export class AddGoalService {
     }
   }
 
-  allocateAsset(obj) {
+  allocateAsset(obj, flag) {
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.refreshObservable.next();
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
+      if (flag == 'mf') {
+        this.subInjectService.changeNewRightSliderState({ state: 'open70', refreshObservable: true });
+      } else {
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
+      }
     }, err => {
       this.eventService.openSnackBar(err);
     })
