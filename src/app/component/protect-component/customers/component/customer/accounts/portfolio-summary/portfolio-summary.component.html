@@ -351,12 +351,12 @@
                   <!-- (click)="dobAsPerRecord.open()" // asper bug raise in Mf the dropdown to choose date should be removed as we are not going to show any back dated data over here -->
                   <p class="m-0 roboto f-400 f-16">As on
                     {{asOnDate | date:'dd/MM/yyyy'}}</p>
-                  <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
+                  <!-- <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
                     <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24"
                       matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
                     <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
-                  </div>
+                  </div> -->
 
                   <!-- <button class="b-a br-0 width180 h-40" mat-button>
       
@@ -804,7 +804,7 @@
         <td style="border-bottom:1px solid #ddd;text-align: right;">As on {{asOnDate | date:'dd/MM/yyyy'}}</td>
       </tr>
       <tr>
-        <td rowspan="1" style="padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
+        <td rowspan="2" style="padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
           <span style="font-size: 18px;">
             Portfolio growth <span style="float: right;font-size: 30px;color: #008fff!important;">₹<span appFormatNumber
                 [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
@@ -825,22 +825,21 @@
 
           </div>
         </td>
-        <td rowspan="1" style="text-align: center;">
+        <td rowspan="2" style="text-align: center;">
           <span style="font-size: 18px;">
             Asset allocation
           </span><br>
           <div *ngIf="assetAllocationRes" style="width: 150px;height: 150px;border-left:1px solid #ddd">$showpiechart1
           </div>
-          <div *ngIf="!assetAllocationRes" class="row">
-            <div class="col-md-12 p-0">
-              <div class="d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
-                <img
-                  src="https://res.cloudinary.com/futurewise/image/upload/v1616395224/svg_assets/asset-allocation-empty-state.svg">
-                <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
-                <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll
-                  first need to get some data in here </p>
-              </div>
-            </div>
+          <div *ngIf="!assetAllocationRes">
+
+            <img
+              src="https://res.cloudinary.com/futurewise/image/upload/v1616395224/svg_assets/asset-allocation-empty-state.svg">
+            <h4>Not enough data to display</h4>
+            <p> Before we can create any charts, <br> we will
+              first need to get some data in here </p>
+
+
           </div>
         </td>
       </tr>
@@ -855,26 +854,26 @@
 
         <td rowspan="2" style="padding-top: 20px;padding-left: 20px;" colspan="2">
 
-          <table style="width: 100%;">
+          <table style="width: 100%;border-collapse: collapse;">
             <tr>
               <td>
                 <table style="border:1px solid #ddd;width: 100%;">
                   <tr>
-                    <td style="border-bottom: 1px solid #ddd;">
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">
                       Description
                     </td>
-                    <td style="border-bottom: 1px solid #ddd;">
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">
                       Date
                     </td>
-                    <td style="border-bottom: 1px solid #ddd;">
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">
                       Amount
                     </td>
                   </tr>
                   <tr>
-                    <td style="border-bottom: 1px solid #ddd;">RD Naitik Singhania
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">RD Naitik Singhania
                     </td>
-                    <td style="border-bottom: 1px solid #ddd;">22/04/2021 </td>
-                    <td style="border-bottom: 1px solid #ddd;color:#FF6823;">RD Naitik Singhania
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">22/04/2021 </td>
+                    <td style="border-bottom: 1px solid #ddd;color:#FF6823;padding: 6px 8px;">RD Naitik Singhania
                     </td>
                   </tr>
                 </table>
@@ -891,9 +890,9 @@
                 <div *ngIf="cashFlowViewDataSource?.length==0">
                   <img
                     src="https://res.cloudinary.com/futurewise/image/upload/v1616244828/svg_assets/net-cash-flow-empty-state.svg">
-                  <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
-                  <p class="f-12 text-primitive"> Before we can create any charts, <br> we will first need
-                    to get some data in here </p>
+                  <h4>Not enough data to display</h4>
+                  <p> Before we can create any charts, <br> we will
+                    first need to get some data in here </p>
                 </div>
               </td>
             </tr>
