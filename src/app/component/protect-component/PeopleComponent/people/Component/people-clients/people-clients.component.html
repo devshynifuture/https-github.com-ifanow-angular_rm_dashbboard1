@@ -79,8 +79,7 @@
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br">
                         <div class="bar">
                             <span *ngIf="!isLoading && element.clientType==1">
-                                <span class="text-danger"
-                                    *ngIf="element.kycRemainCount!=0">{{element.kycRemainCount!=1?element.kycRemainCount:''}}
+                                <span class="text-danger" *ngIf="element.kycRemainCount!=0">{{element.kycRemainCount}}
                                     Not Verified</span>
                                 <span class="text-success" *ngIf="element.kycRemainCount==0">All Verified</span>
                             </span>
