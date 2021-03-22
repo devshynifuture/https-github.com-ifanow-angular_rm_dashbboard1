@@ -284,7 +284,13 @@
                                         <span *ngIf="clientOverviewData.kycComplaint==2">Applied</span>
                                         <span *ngIf="clientOverviewData.kycComplaint==3">Accepted</span>
                                         <span *ngIf="clientOverviewData.kycComplaint==4">Rejected</span>
+                                        <img *ngIf="!letsideBarLoader && clientOverviewData.kycReason"
+                                            src="/assets/images/svg/info-black.svg"
+                                            matTooltip={{clientOverviewData.kycReason}}
+                                            aria-label="Button that displays a tooltip when focused or hovered over"
+                                            class="pl-4 c-p">
                                     </p>
+
                                 </div>
                                 <div *ngIf="clientData.clientType==3 || clientData.clientType==4"
                                     class=" basicDetaisList ">

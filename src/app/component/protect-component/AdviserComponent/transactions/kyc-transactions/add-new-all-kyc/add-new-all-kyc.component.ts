@@ -47,15 +47,15 @@ export class AddNewAllKycComponent implements OnInit {
     private orgSetting: OrgSettingServiceService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : AuthService.getClientData().advisorId;
     if (this.data.name) {
       this.selectedClientData = this.data;
       this.previewEmail();
+      this.getSubjectTemplate();
     } else {
       this.step1 = true;
       this.data['btnFlag'] = 'Cancel'
     }
-    this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : AuthService.getClientData().advisorId;
-    this.getSubjectTemplate();
     this.kycForm = this.fb.group({
       from: [, [Validators.required]],
       subject: ["", [Validators.required]],
