@@ -8,8 +8,8 @@
 
 <div class="pt-150">
     <div class="row">
-        <div class="col-md-6"></div>
-        <div class="col-md-6">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
 
             <!-- <button [matMenuTriggerFor]="menu1" class="ba-black borderLine br-0 mr-10" mat-stroked-button>
                     Fixed deposit
@@ -22,6 +22,14 @@
                     </div>
                 </mat-menu> -->
             <div class="row">
+                <div class="col-md-1 pl-0 pt-10">
+                    <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
+                        <img src="assets/images/svg/download-bordered.svg">
+                    </a>
+                    <mat-menu #menu5="matMenu">
+                        <button (click)="Excel('Reminder')" mat-menu-item>XLS</button>
+                    </mat-menu>
+                </div>
                 <div class="col-md-4 pl-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
@@ -33,7 +41,7 @@
                     </mat-form-field>
 
                 </div>
-                <div class="col-md-4 pr-0">
+                <div class="col-md-3 pr-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select (selectionChange)="changeSubAssetType($event)" [formControl]="selectedSubType"
@@ -44,7 +52,7 @@
                     </mat-form-field>
 
                 </div>
-                <div class="col-md-4 pr-0">
+                <div class="col-md-3 pr-0">
 
                     <mat-form-field floatLabel="never" appearance="standard">
                         <mat-select (selectionChange)="sortDateFilter($event)" [formControl]="selectedNextDate"
