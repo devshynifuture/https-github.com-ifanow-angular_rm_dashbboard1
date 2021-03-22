@@ -50,6 +50,10 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   absSIP: number;
   absLumsum: any;
   disableAllocate: boolean = false;
+  equity_monthly: number;
+  debt_monthly: number;
+  lump_equity: number;
+  lump_debt: number;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -155,42 +159,55 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
   }
+  getSumOfJsonMap(json: Object = {}) {
+    let sum = 0;
+    for (let k in json) {
+      if (json.hasOwnProperty(k)) {
+        sum += json[k];
+      }
+    }
+    return sum;
+  }
   loadMFData() {
     this.loaderFn.increaseCounter();
     this.planService.getMFList({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
       this.mfList = res.mfData;
-      this.mfList = this.mfList.map(mf => {
-        let absAllocation = 0;
-        let absSIP = 0;
-        let absLumsum = 0;
-        if (mf.goalAssetMapping.length > 0) {
-          mf.goalAssetMapping.forEach(element => {
-            element.lumpsumPercent = (element.lumpsumPercent).toFixed(2)
-            element.sipPercent = (element.sipPercent).toFixed(2)
-            absAllocation += element.percentAllocated;
-            absSIP += element.sipPercent;
-            absLumsum += element.lumpsumPercent
-            element.remainSIP = 0
-            element.remainLumsum = 0
-          });
-          this.data.goalAssetAllocation.forEach(element => {
-            mf.goalAssetMapping.forEach(element1 => {
-              if (element.id == element1.id) {
-                element1.disable = false
-              } else if (element.remainLumsum == 0 || element.remainSIP) {
-                element1.disable = false
-              } else {
-                element1.disable = true
-              }
+      this.equity_monthly = this.getSumOfJsonMap(res.sipAmountEquity) || 0,
+        this.debt_monthly = this.getSumOfJsonMap(res.sipAmountDebt) || 0,
+        this.lump_equity = this.getSumOfJsonMap(res.lumpSumAmountEquity) || 0,
+        this.lump_debt = this.getSumOfJsonMap(res.lumpSumAmountDebt) || 0,
+        this.mfList = this.mfList.map(mf => {
+          let absAllocation = 0;
+          let absSIP = 0;
+          let absLumsum = 0;
+          if (mf.goalAssetMapping.length > 0) {
+            mf.goalAssetMapping.forEach(element => {
+              element.lumpsumPercent = (element.lumpsumPercent).toFixed(2)
+              element.sipPercent = (element.sipPercent).toFixed(2)
+              absAllocation += element.percentAllocated;
+              absSIP += element.sipPercent;
+              absLumsum += element.lumpsumPercent
+              element.remainSIP = 0
+              element.remainLumsum = 0
             });
-          });
-        }
-        absSIP = 100 - absSIP
-        absLumsum = 100 - absLumsum
+            this.data.goalAssetAllocation.forEach(element => {
+              mf.goalAssetMapping.forEach(element1 => {
+                if (element.id == element1.id) {
+                  element1.disable = false
+                } else if (element.remainLumsum == 0 || element.remainSIP) {
+                  element1.disable = false
+                } else {
+                  element1.disable = true
+                }
+              });
+            });
+          }
+          absSIP = 100 - absSIP
+          absLumsum = 100 - absLumsum
 
 
-        return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
-      })
+          return { absAllocation, ...mf, absSIP, ...mf, absLumsum, ...mf };
+        })
 
       this.loaderFn.decreaseCounter();
     }, err => {
