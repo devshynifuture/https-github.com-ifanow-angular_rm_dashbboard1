@@ -156,6 +156,7 @@ export class FinacialPlanSectionComponent implements OnInit {
   storedData: string;
   clientIdToClearStorage: any;
   LoadCount: number;
+  svg4: any;
   constructor(private http: HttpClient, private util: UtilService,
     private cusService: CustomerService,
     private resolver: ComponentFactoryResolver,
@@ -631,6 +632,9 @@ export class FinacialPlanSectionComponent implements OnInit {
       { key: "$showpiechart2", svg: this.svg2 ? this.svg2 : '' },
       { key: "$showpiechart3", svg: this.svg3 ? this.svg3 : '' }]
       this.util.htmlToPdfPort('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
+    }
+    else if (sectionName == 'RiskProfile') {
+      this.svg = this.svg4
     } else {
       this.util.htmlToPdf('', data.innerHTML, sectionName, 'true', this.fragmentData, 'showPieChart', '', false, null);
     }
@@ -934,8 +938,8 @@ export class FinacialPlanSectionComponent implements OnInit {
         var svg = pdfContent.loadsvg
           //.pipe(delay(1))
           .subscribe(data => {
-            this.svg = data
-            console.log('svg', this.svg)
+            this.svg4 = data
+            console.log('svg', this.svg4)
             svg.unsubscribe();
           });
       }
@@ -990,6 +994,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     this.sectionName = sectionName
     if (sectionName == 'Mutual fund overview') {
 
+    } else if (sectionName == 'RiskProfile') {
+      obj.svg = this.svg4
     }
     if (sectionName == 'portfolioSummary') {
       let svgs = [{ key: "$showpiechart1", svg: this.svg1 ? this.svg1 : '' },
