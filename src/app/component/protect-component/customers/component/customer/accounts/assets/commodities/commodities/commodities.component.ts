@@ -1,4 +1,3 @@
-import { AuthService } from './../../../../../../../../../auth-service/authService';
 import { Component, OnInit, ViewChild, ViewChildren, Output, EventEmitter, ElementRef, Input, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
