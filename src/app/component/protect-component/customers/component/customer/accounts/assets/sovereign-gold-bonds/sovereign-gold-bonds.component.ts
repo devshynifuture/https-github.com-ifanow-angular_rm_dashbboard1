@@ -183,6 +183,7 @@ export class SovereignGoldBondsComponent implements OnInit {
       this.noData = 'No schemes found';
       this.datasource3.data = [];
     }
+    this.assetValidation.addAssetCount({ type: 'Add', value: 'commodities' })
     // this.assetValidation.getAssetCountGLobalData()
     this.ref.detectChanges();//to refresh the dom when response come
     // this.loaded.emit(this.realEstateTemp.nativeElement);
@@ -312,13 +313,14 @@ export class SovereignGoldBondsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
             dialogRef.close();
-            this.assetValidation.addAssetCount({ type: 'Delete', value: 'sovereignGoldBond' })
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
             this.customerOverview.portFolioData = null;
             this.customerOverview.assetAllocationChart = null;
             this.customerOverview.summaryLeftsidebarData = null;
             this.customerOverview.aumGraphdata = null;
             this.customerOverview.assetAllocationChart = null;
             this.customerOverview.summaryCashFlowData = null;
+            this.assetValidation.addAssetCount({ type: 'Delete', value: 'commodities' })
             this.dataList.assetList = this.dataList.assetList.filter(x => x.id != element.id);
             // this.dataList.totalCurrentValue -= element.currentValue;
             this.getGoldBondsDataResponse(this.dataList);
