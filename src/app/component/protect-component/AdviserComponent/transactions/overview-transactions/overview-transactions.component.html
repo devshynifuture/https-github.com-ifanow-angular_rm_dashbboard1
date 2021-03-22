@@ -82,8 +82,7 @@
                                         <div [ngClass]="{'height23': metrixLoader}" class="bar">
                                             <span *ngIf="!metrixLoader && kycDetails">{{(kycDetails.kycVerifiedCount) ?
                                                 kycDetails.kycVerifiedCount : 0}}</span>
-                                            <span *ngIf="!metrixLoader && kycDonePercentage!=0"
-                                                class="f-14 text-black">{{(kycDonePercentage) ? kycDonePercentage :
+                                            <span *ngIf="!metrixLoader && kycDonePercentage!=0" class="f-14 text-black">{{(kycDonePercentage) ? kycDonePercentage :
                                                 0}}{{(kycDonePercentage) ? '%' : ''}}</span>
                                         </div>
                                     </h4>
@@ -499,7 +498,10 @@
                     class="btn-transaction text-primary  roboto" mat-stroked-button>
                     <img class="width20 mr-4" src="assets/images/svg/shopping-blue.svg"> TRANSACTION
                 </button>
-
+                <button (click)="openAddAllkyc({},'TEst')" *ngIf="!enumDataService.PRODUCTION"
+                    class="btn-transaction text-primary  roboto" mat-stroked-button>
+                    <img class="width20 mr-4" src="assets/images/svg/shopping-blue.svg"> KNOW YOUR CUSTOMER
+                </button>
                 <button (click)="openNewCustomerIIN()" *ngIf="transactionRoleServcie.investorsModule.capabilityMap.add"
                     class="btn-transaction text-primary  roboto" mat-stroked-button>
                     <img class="width20 mr-4" src="assets/images/svg/iin-ucc-icon.svg"> IIN/UCC CREATION
