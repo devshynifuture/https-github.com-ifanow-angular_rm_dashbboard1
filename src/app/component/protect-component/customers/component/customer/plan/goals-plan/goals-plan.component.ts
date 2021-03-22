@@ -622,6 +622,10 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.finPlanObj.obj.dashboardData = {}
       this.selectedGoal = this.finPlanObj.obj
       this.selectedGoal.remainingData = this.finPlanObj.obj;
+      if (!this.selectedGoal.remainingData) {
+        this.selectedGoal.remainingData = {}
+      }
+      Object.assign(this.selectedGoal.remainingData, { savingStatus: this.finPlanObj.obj.goalValueObj.savingStatus });
       this.singleGoalData = this.finPlanObj.obj
       this.singleGoalData.dashboardData.equity_monthly = this.finPlanObj.obj.equity_monthly
       this.singleGoalData.dashboardData.debt_monthly = this.finPlanObj.obj.debt_monthly

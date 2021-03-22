@@ -530,7 +530,13 @@ export class MutualFundUnrealizedTranComponent {
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
-            this.getUnrealizedData();
+            //  this.getUnrealizedData();
+            if (this.resData) {
+              this.getMutualFundResponse(this.mfGetData);
+            } else {
+              this.getUnrealizedData()
+            }
+
           } else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
             this.isLoading = true;
             this.getMutualFundResponse(this.mfGetData);

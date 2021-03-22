@@ -69,7 +69,7 @@ export class StatusReportComponent implements OnInit {
       data => {
         if (data) {
           console.log('getLog ==', data);
-          this.close();
+          this.close(true);
         }
         this.isLoading = false;
       }
@@ -142,9 +142,9 @@ export class StatusReportComponent implements OnInit {
       }
     );
   }
-  close() {
+  close(flag) {
     this.subInjectService.changeNewRightSliderState({
-      state: 'close',
+      state: 'close', refreshRequired: flag
     });
   }
 }
