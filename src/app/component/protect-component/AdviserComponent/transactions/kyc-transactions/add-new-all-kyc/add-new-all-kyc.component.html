@@ -118,7 +118,8 @@
             <div class="mt-20">
                 <button
                     *ngIf="(selectedClientData.kycComplaint==0 || selectedClientData.kycComplaint==4) && selectedClientData.email && selectedClientData.mobileNo && selectedClientData.pan && (selectedClientData.clientType==1 ||selectedClientData.familyMemberType==1)"
-                    (click)="previewEmail();data['btnFlag'] = 'Back'" mat-stroked-button class="btn-primary">PREVIEW
+                    (click)="previewEmail();data['btnFlag'] = 'Back';getSubjectTemplate()" mat-stroked-button
+                    class="btn-primary">PREVIEW
                     EMAIL & SEND KYC
                     LINK</button>
                 <p *ngIf="selectedClientData.familyMemberType==2" class="m-0  roboto f-400  text-danger">Ineligible
