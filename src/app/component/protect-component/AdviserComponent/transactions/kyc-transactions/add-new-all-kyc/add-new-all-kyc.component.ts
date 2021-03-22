@@ -231,7 +231,8 @@ export class AddNewAllKycComponent implements OnInit {
       email: this.selectedClientData.email,
       mobileNo: this.selectedClientData.mobileNo,
       redirectUrl: `${hostNameOrigin}/kyc-redirect`,
-      fromEmail: this.kycForm.get('from').value
+      fromEmail: this.kycForm.get('from').value,
+      familyMemberId: this.selectedClientData.familyMemberId,
     }
     if (this.selectedClientData.kycComplaint != 0) {
       obj['redo'] = true;

@@ -65,7 +65,7 @@ export class KycTransactionsComponent implements OnInit {
         console.log(data)
         if (data && data.length > 0) {
           data = this.formatEmailAndMobile(data);
-          data = data.filter(element => !(!element.email || !element.mobileNo || !element.pan) && element.familyMemberId != 2);
+          data = data.filter(element => !(!element.email || !element.mobileNo || !element.pan) && (element.clientType == 1 || element.familyMemberId == 1));
           this.finalClientList = this.finalClientList ? this.finalClientList.concat(data) : data;
           this.dataSource.data = this.finalClientList;
           this.hasEndReached = false;

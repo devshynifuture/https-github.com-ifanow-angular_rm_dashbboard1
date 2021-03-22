@@ -272,14 +272,18 @@
                                 <div *ngIf="!enumDataService.PRODUCTION && clientOverviewData.clientType==1"
                                     class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">KYC STATUS</p>
+                                    <div *ngIf="letsideBarLoader" class="relClass">
+                                        <div class="bar height23">
+                                        </div>
+                                    </div>
                                     <p *ngIf="!letsideBarLoader" class=" f-14 roboto f-500 m-0 ">
                                         <span class="text-danger" *ngIf="clientOverviewData.kycComplaint==0">Not
                                             Verified</span>
-                                        <span class="text-primary"
-                                            *ngIf="clientOverviewData.kycComplaint==1">KYC_VERIFIED</span>
-                                        <span *ngIf="clientOverviewData.kycComplaint==2">APPLIED</span>
-                                        <span *ngIf="clientOverviewData.kycComplaint==3">ACCEPTED</span>
-                                        <span *ngIf="clientOverviewData.kycComplaint==4">REJECTED</span>
+                                        <span class="text-success"
+                                            *ngIf="clientOverviewData.kycComplaint==1">Verified</span>
+                                        <span *ngIf="clientOverviewData.kycComplaint==2">Applied</span>
+                                        <span *ngIf="clientOverviewData.kycComplaint==3">Accepted</span>
+                                        <span *ngIf="clientOverviewData.kycComplaint==4">Rejected</span>
                                     </p>
                                 </div>
                                 <div *ngIf="clientData.clientType==3 || clientData.clientType==4"

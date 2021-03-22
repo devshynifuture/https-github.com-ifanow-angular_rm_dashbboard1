@@ -126,7 +126,7 @@ export class CashAndBankComponent implements OnInit {
     this.isLoadingUpload = true
     let obj = {
       advisorId: this.advisorId,
-      clientId: element.clientId,
+      clientId: AuthService.getClientId(),
       familyMemberId: element.familyMemberId,
       asset: value,
       element: element
