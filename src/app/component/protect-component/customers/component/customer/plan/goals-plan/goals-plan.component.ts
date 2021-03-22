@@ -258,7 +258,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
     this.loaderFn.increaseCounter();
     forkJoin(otherAssets, mfAssets).subscribe(result => {
-      let otherAssetRes = result[1].map(asset => {
+      let getValue = result[0]
+      let otherAssetRes = getValue.map(asset => {
         let absAllocation = 0;
         if (asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
@@ -272,7 +273,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         return { absAllocation, ...asset };
       });
 
-      let mfAssetRes = result[1].map(mf => {
+      let mfAssetRes = getValue.map(mf => {
         let absAllocation = 0;
         if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
