@@ -98,6 +98,7 @@ export class FactSheetComponent implements OnInit {
   clientData = AuthService.getClientData();
   fragmentData = { isSpinner: false, date: null, time: '', size: '' };
   clientNameToDisplay: any;
+  showpiechart1
   svg1: string;
   svg2: any;
   svg3: string;
