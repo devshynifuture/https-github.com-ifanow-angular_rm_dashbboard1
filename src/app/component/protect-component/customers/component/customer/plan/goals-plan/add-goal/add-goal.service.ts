@@ -108,7 +108,7 @@ export class AddGoalService {
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
       if (flag == 'mf') {
-        this.subInjectService.changeNewRightSliderState({ state: 'open', refreshObservable: true });
+        this.subInjectService.changeNewRightSliderState({ state: 'open70', refreshObservable: true });
       } else {
         this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
       }
