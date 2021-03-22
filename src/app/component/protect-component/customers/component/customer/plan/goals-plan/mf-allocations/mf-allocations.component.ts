@@ -158,7 +158,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   loadMFData() {
     this.loaderFn.increaseCounter();
     this.planService.getMFList({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
-      this.mfList = res;
+      this.mfList = res.mfData;
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
         let absSIP = 0;
