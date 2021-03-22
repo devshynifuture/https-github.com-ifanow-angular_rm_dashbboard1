@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { BackOfficeService } from '../../back-office.service';
 import { element } from 'protractor';
 import { DatePipe } from '@angular/common';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-backoffice-new',
@@ -30,8 +31,11 @@ export class BackofficeNewComponent implements OnInit {
   fixedDepositFilter: any;
   assetTypeFilterList: unknown[];
   subTypeFilter: any;
+  @ViewChild('tableEl', { static: false }) tableEl;
+
   constructor(private eventService: EventService,
     private customerService: CustomerService,
+    private excel: ExcelGenService,
     private datePipe: DatePipe,
     private backOffice: BackOfficeService) { }
 
@@ -54,7 +58,10 @@ export class BackofficeNewComponent implements OnInit {
       }
     )
   }
-
+  Excel(flag) {
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    this.excel.generateExcel(rows, flag);
+  }
   getGlobalFilterRes(data) {
     if (data) {
       console.log(data)
