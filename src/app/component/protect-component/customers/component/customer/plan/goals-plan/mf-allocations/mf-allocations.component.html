@@ -14,13 +14,13 @@
         <div class="col-md-4">
             <div class="row bg-grey lter b-a">
                 <div class="col-md-6 p-0">
-                    <p class="m-0 text-black roboto p-12 f-500 br bb pt-8 pb-8">Additional required</p>
-                    <p class="m-0 text-black roboto p-12 br bb pt-6 pb-6">Equity</p>
-                    <p class="m-0 text-black roboto p-12 br pt-6 pb-6">Debt</p>
+                    <p class="m-0 text-black roboto p-12 f-500 br bb pt-8 pb-8 f-13">Additional required</p>
+                    <p class="m-0 text-black roboto p-12 br bb pt-6 pb-6 f-13">Equity</p>
+                    <p class="m-0 text-black roboto p-12 br pt-6 pb-6 f-13">Debt</p>
                 </div>
                 <div class="col-md-3  p-0">
-                    <p class="m-0 text-black roboto p-12 f-500 text-right bb pt-8 pb-8">Monthly</p>
-                    <p class="m-0 relClass text-black roboto p-12 bg-white text-right bb pt-6 pb-6">
+                    <p class="m-0 text-black roboto p-12 f-500 text-right bb pt-8 pb-8 f-13">Monthly</p>
+                    <p class="m-0 relClass text-black roboto p-12 bg-white text-right bb pt-6 pb-6 f-13">
                         <span appFormatNumber [value]="equity_monthly">{{equity_monthly}}
                         </span>
 
@@ -28,7 +28,7 @@
                         </span>
                     </p>
 
-                    <p class="m-0 text-black relClass roboto p-12 text-right bg-white pt-6 pb-6">
+                    <p class="m-0 text-black relClass roboto p-12 text-right bg-white pt-6 pb-6 f-13">
                         <span class="bar" appFormatNumber [value]="debt_monthly">{{debt_monthly}}
                         </span>
 
@@ -37,15 +37,15 @@
                     </p>
                 </div>
                 <div class="col-md-3   p-0">
-                    <p class="m-0 text-black roboto p-12 text-right f-500 bb pt-8 pb-8">Lumpsum</p>
+                    <p class="m-0 text-black roboto p-12 text-right f-500 bb pt-8 pb-8 f-13 pl-8">Lumpsum</p>
                     <p class="m-0 text-black relClass roboto text-right p-12 bg-white bb pt-6 pb-6">
-                        <span class="bar" appFormatNumber [value]="lump_equity">
+                        <span class="bar" appFormatNumber [value]="lump_equity" class="f-13">
                             {{lump_equity}}</span>
 
                         <span class="bar height24" style="display: inline-block;" *ngIf="loaderFn.loading">
                         </span>
                     </p>
-                    <p class="m-0 text-black relClass text-right roboto p-12 bg-white pt-6 pb-6">
+                    <p class="m-0 text-black relClass text-right roboto p-12 bg-white pt-6 pb-6 f-13">
                         <span class="bar" appFormatNumber [value]="lump_debt">
                             {{lump_debt}}</span>
                         <span class="bar height24" style="display: inline-block;" *ngIf="loaderFn.loading">
