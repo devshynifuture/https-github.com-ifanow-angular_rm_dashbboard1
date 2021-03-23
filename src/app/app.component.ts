@@ -41,11 +41,11 @@ export class AppComponent implements AfterViewInit, OnInit {
     let width, height;
     width = document.documentElement.clientWidth;
     height = document.documentElement.clientHeight;
-    if (height > width) {
-      this.document.getElementById('tabviewJs').style.width = `${height}px`
-      this.document.getElementById('tabviewJs').style.height = `${width}px`;
-      // console.log(height, width)
-    }
+    // if (height > width) {
+    //   this.document.getElementById('tabviewJs').style.width = `${height}px`
+    //   this.document.getElementById('tabviewJs').style.height = `${width}px`;
+
+    // }
     this.getDomainData("dev.ifanow.in");
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
