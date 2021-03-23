@@ -54,6 +54,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   debt_monthly: any;
   lump_equity: any;
   lump_debt: any;
+  selectedGoal: any;
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
@@ -172,10 +173,15 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.loaderFn.increaseCounter();
     this.planService.getMFList({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
       this.mfList = res.mfData;
-      this.equity_monthly = this.getSumOfJsonMap(res.sipAmountEquity) || 0;
-      this.debt_monthly = this.getSumOfJsonMap(res.sipAmountDebt) || 0;
-      this.lump_equity = this.getSumOfJsonMap(res.lumpSumAmountEquity) || 0;
-      this.lump_debt = this.getSumOfJsonMap(res.lumpSumAmountDebt) || 0;
+      res.goalList.forEach(element => {
+        if (element.goalId == this.data.remainingData.id) {
+          this.selectedGoal = element
+        }
+      });
+      this.equity_monthly = this.getSumOfJsonMap(this.selectedGoal.sipAmountEquity) || 0;
+      this.debt_monthly = this.getSumOfJsonMap(this.selectedGoal.sipAmountDebt) || 0;
+      this.lump_equity = this.getSumOfJsonMap(this.selectedGoal.lumpSumAmountEquity) || 0;
+      this.lump_debt = this.getSumOfJsonMap(this.selectedGoal.lumpSumAmountDebt) || 0;
       if (this.equity_monthly == 0 && this.lump_equity != 0) {
         this.equity_monthly = 'N/A'
       }
