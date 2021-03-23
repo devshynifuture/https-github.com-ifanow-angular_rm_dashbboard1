@@ -31,7 +31,7 @@
                     {{(refreshCount)?refreshCount.emailSentCount:''}}
                     <span class="primary-border c-p refeClassBox text-primary f-12" (click)="refresh()">REFRESH</span>
                 </p>
-                <mat-progress-bar mode="determinate" value="{{(refreshCount)?refreshCount.emailSentCount:0}}">
+                <mat-progress-bar mode="determinate" value="{{(progressBar)?progressBar:0}}">
                 </mat-progress-bar>
             </div>
             <div class="bg-grey lter smallBoxReport" *ngIf="inputData.status != 'Sending'">

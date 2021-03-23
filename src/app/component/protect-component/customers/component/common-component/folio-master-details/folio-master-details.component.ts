@@ -89,10 +89,16 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
   getOtherFolioDetails() {
     this.isLoadingOthers = true;
-    this.obj = {
-      folioNumber: this.inputData.folioNumber,
-      schemeCode: this.inputData.schemeCode
-    };
+    if (this.inputData.rtMasterId == 3) {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+      };
+    } else {
+      this.obj = {
+        folioNumber: this.inputData.folioNumber,
+        schemeCode: this.inputData.schemeCode
+      };
+    }
     this.custumService.OtherFolioDetails(this.obj)
       .subscribe((res: any) => {
         this.isLoadingOthers = false;
