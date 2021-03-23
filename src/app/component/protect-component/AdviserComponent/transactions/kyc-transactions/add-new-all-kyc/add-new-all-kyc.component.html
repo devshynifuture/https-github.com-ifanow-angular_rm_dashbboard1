@@ -93,6 +93,9 @@
                         <span *ngIf="selectedClientData.kycComplaint==2">Applied</span>
                         <span *ngIf="selectedClientData.kycComplaint==3">Accepted</span>
                         <span *ngIf="selectedClientData.kycComplaint==4">Rejected</span>
+                        <img *ngIf=" selectedClientData.kycReason" src="/assets/images/svg/info-black.svg"
+                            matTooltip={{selectedClientData.kycReason}}
+                            aria-label="Button that displays a tooltip when focused or hovered over" class="pl-4">
                     </div>
                 </div>
                 <div class="row pt-6 pb-6 bb">
