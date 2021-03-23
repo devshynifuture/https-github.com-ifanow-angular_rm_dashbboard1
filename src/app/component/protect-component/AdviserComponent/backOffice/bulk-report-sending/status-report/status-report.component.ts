@@ -21,6 +21,7 @@ export class StatusReportComponent implements OnInit {
   selectAll = false;
   activeFilter;
   disabledResend: boolean = false;
+  progressBar: number;
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
@@ -114,6 +115,7 @@ export class StatusReportComponent implements OnInit {
         console.log('refreshCount ==', data);
         this.refreshCount = data;
         console.log(this.refreshCount);
+        this.progressBar = (this.refreshCount.emailSentCount / this.inputData.clientCount) * 100
       }
     );
   }
