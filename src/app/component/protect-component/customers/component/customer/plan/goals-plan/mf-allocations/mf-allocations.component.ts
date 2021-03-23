@@ -394,7 +394,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           goalType: allocatedGoal.goalType,
           percentAllocated: 0
         }
-        this.allocationService.allocateOtherAssetToGoalRm(obj);
+        this.allocationService.allocateOtherAssetToGoalRm(obj, 'mf');
         dialogRef.close()
       }
     };
