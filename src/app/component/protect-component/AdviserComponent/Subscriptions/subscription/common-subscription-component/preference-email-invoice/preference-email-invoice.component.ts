@@ -61,7 +61,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
     this.fragmentData = { data };
     this.popupHeaderText = data.title;
     this.heading = (this.fragmentData.data.id == 1) ? 'Invoice' : (this.fragmentData.data.id == 2) ? 'Quotations' : (this.fragmentData.data.id == 3) ? ' Documents with esign request' : ' Documents without eSign request';
-    this.storeData = this.fragmentData.data;
+    this.storeData = Object.assign({}, this.fragmentData.data);
   }
 
   getEmailList() {
@@ -79,7 +79,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   getEmailListRes(data) {
     if (data && data.length > 0) {
       this.emailLists = data;
-      this.storeData.fromEmail = data[0].emailAddress;
+      this.storeData.fromEmail = this.storeData.fromEmail == 'N/A' ? data[0].emailAddress : this.storeData.fromEmail;
     }
     console.log('getEmailList', data)
   }
