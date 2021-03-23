@@ -150,7 +150,7 @@ export class CustomiseSettingComponent implements OnInit {
     } else {
       this.dataSource.data = data
     }
-    if (!data) {
+    if (data) {
       this.dataSource.data.forEach(element => {
         if (element.overview == true && element.id != 0) {
           this.count++
