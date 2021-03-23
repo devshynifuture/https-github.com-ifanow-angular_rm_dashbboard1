@@ -1,17 +1,19 @@
 // import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
-import {CustomFilterDatepickerDialogComponent} from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AddTasksComponent} from './add-tasks/add-tasks.component';
-import {CrmTaskService} from './crm-task.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormControl} from '@angular/forms';
-import {RoleService} from 'src/app/auth-service/role.service';
-import {DashboardService} from '../../dashboard/dashboard.service';
-import {ConfirmDialogComponent} from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AddTasksComponent } from './add-tasks/add-tasks.component';
+import { CrmTaskService } from './crm-task.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormControl } from '@angular/forms';
+import { RoleService } from 'src/app/auth-service/role.service';
+import { DashboardService } from '../../dashboard/dashboard.service';
+import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog/confirm-dialog.component';
+import { Subscription, Observable } from 'rxjs';
+import { startWith, debounceTime } from 'rxjs/operators';
 
 
 @Component({
@@ -32,18 +34,19 @@ export class CrmTasksComponent implements OnInit {
   infiniteScrollingFlag = false;
   filterFormControl = new FormControl('');
 
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('tableEl', { static: false }) tableEl;
   filterValueId: any;
   customDateFilter = false;
   customFromToDate: any;
   filterTaskWithStatus: any = 0;
   statusFC: FormControl;
   statusList = [
-    {name: 'Done', value: 1},
-    {name: 'Not Done', value: 0},
+    { name: 'Done', value: 1 },
+    { name: 'Not Done', value: 0 },
   ];
+  searchText = '';
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -127,7 +130,7 @@ export class CrmTasksComponent implements OnInit {
   setFilterToDefault() {
     this.filterFormControl.patchValue('');
     this.isFilterSet = false;
-    this.statusFC.patchValue(0, {emitEvent: false});
+    this.statusFC.patchValue(0, { emitEvent: false });
     this.initPoint();
   }
 
@@ -148,12 +151,32 @@ export class CrmTasksComponent implements OnInit {
     this.getAllTaskList(0);
   }
 
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
+
+  searchTask(event) {
+    this.searchText = event.target.value
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(700)).subscribe(
+        data => {
+          this.isLoading = true;
+          this.dataSource.data = ELEMENT_DATA;
+          this.finalTaskList = []
+          this.getAllTaskList(0)
+        }
+      )
+  }
+
   getAllTaskList(offset) {
-    const data:any = {
+    const data: any = {
       advisorId: this.advisorId,
       offset,
       limit: 20,
-      status: this.filterTaskWithStatus
+      status: this.filterTaskWithStatus,
+      name: this.searchText
     };
     if (this.isFilterSet) {
       data.dateFilter = this.filterValueId;
@@ -330,8 +353,8 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: ''},
-  {client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: ''},
+  { client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: '' },
+  { client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: '' },
 
 ];
 

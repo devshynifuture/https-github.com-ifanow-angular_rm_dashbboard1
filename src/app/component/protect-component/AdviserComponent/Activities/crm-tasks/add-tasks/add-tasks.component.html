@@ -345,7 +345,8 @@
             <div class="col-md-12 pl-20">
                 <div class="row pt-5 pb-5 bt-1" [ngClass]="{'bb': i==(subTaskList.length-1)}">
                     <div class="col-md-1 pl-10">
-                        <mat-checkbox [checked]="item.status == 1" [(ngModel)]="item.checked" #subTaskCompleteCheckbox
+                        <mat-checkbox [checked]="item.status == 1" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="item.checked" #subTaskCompleteCheckbox
                             (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
                     </div>
                     <div (click)="changeTabState(item, 2)" class="col-md-5 pl-0 f-14"
