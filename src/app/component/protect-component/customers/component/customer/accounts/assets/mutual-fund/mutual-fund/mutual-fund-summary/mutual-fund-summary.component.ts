@@ -1568,7 +1568,7 @@ export class MutualFundSummaryComponent implements OnInit {
     return str.replace(regex, '');
   }
 
-  Excel(tableTitle) {
+  Excel(tableTitle, flag) {
     this.cd.markForCheck();
     this.cd.detectChanges();
     this.showDownload = true;
@@ -1607,7 +1607,11 @@ export class MutualFundSummaryComponent implements OnInit {
       const blob = new Blob([para.innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
-      saveAs(blob, tableTitle + '.xlsx');
+      if (flag == 'XLSX') {
+        saveAs(blob, tableTitle + '.xlsx');
+      } else {
+        saveAs(blob, tableTitle + '.xls');
+      }
     }, 400);
     // if (data) {
     // this.fragmentData.isSpinner = false;

@@ -30,7 +30,8 @@
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
                 <mat-menu #menu5="matMenu">
-                    <button (click)="Excel('mfTransaction')" mat-menu-item>XLS</button>
+                    <button (click)="Excel('mfTransaction','XLS')" mat-menu-item>XLS</button>
+                    <button (click)="Excel('mfTransaction','XLSX')" mat-menu-item>XLSX</button>
                 </mat-menu>
             </div>
             <div class="col-md-3 pr-0">

@@ -1403,14 +1403,18 @@ export class MutualFundUnrealizedTranComponent {
     }
   }
 
-  Excel(tableTitle) {
+  Excel(tableTitle, flag) {
     this.showDownload = true;
     this.excelDownload = true
     setTimeout(() => {
       const blob = new Blob([document.getElementById('template').innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
-      saveAs(blob, tableTitle + '.xlsx');
+      if (flag == 'XLSX') {
+        saveAs(blob, tableTitle + '.xlsx');
+      } else {
+        saveAs(blob, tableTitle + '.xls');
+      }
     }, 400);
     // if (data) {
     //   this.fragmentData.isSpinner = false;

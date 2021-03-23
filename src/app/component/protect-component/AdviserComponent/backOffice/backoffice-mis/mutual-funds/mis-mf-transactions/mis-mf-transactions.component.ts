@@ -423,13 +423,17 @@ export class MisMfTransactionsComponent implements OnInit {
     this.getAllTransactionData(tableTitle);
 
   }
-  Excel(tableTitle) {
+  Excel(tableTitle, flag) {
     this.ExcelTransaData = new MatTableDataSource(this.mfTransaction.data)
     setTimeout(() => {
       const blob = new Blob([document.getElementById('templateMis').innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
-      saveAs(blob, tableTitle + '.xls');
+      if (flag == 'XLSX') {
+        saveAs(blob, tableTitle + '.xlsx');
+      } else {
+        saveAs(blob, tableTitle + '.xls');
+      }
     }, 200);
   }
 }
