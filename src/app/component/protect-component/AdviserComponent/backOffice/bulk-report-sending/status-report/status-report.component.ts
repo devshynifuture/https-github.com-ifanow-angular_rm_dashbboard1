@@ -93,6 +93,10 @@ export class StatusReportComponent implements OnInit {
   selectToResend(event, value) {
     this.showResend = true;
     value.checked = event.checked;
+    let checkList = this.dataForFilter.filter((x) => x.checked == true);
+    if (checkList.length == 0) {
+      this.showResend = false
+    }
   }
   filterData(type) {
     if (type == 'ALL') {
