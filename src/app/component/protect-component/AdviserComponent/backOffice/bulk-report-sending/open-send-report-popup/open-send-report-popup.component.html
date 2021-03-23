@@ -13,8 +13,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div
-                class="people-table-scroll fitScreen">
+            <div *ngIf="clientDetails.data.length > 0" class="people-table-scroll fitScreen">
                 <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                     [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                     <ng-container matColumnDef="name">
@@ -28,13 +27,14 @@
 
                     <!-- Name Column -->
                     <ng-container matColumnDef="mfoverview">
-                        <th  class="br" mat-header-cell *matHeaderCellDef sticky> {{(reportType == 1)? 'MF overview':(reportType == 2)?'MF summary':(reportType == 3)?'MF transaction':(reportType == 4)?'MF unrealised transactions':(reportType == 5)?'MF capital gain summary': 'MF capital gain details'}}
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky>
+                            {{(reportType == 1)? 'MF overview':(reportType == 2)?'MF summary':(reportType == 3)?'MF transaction':(reportType == 4)?'MF unrealised transactions':(reportType == 5)?'MF capital gain summary': 'MF capital gain details'}}
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
                                 <mat-checkbox *ngIf="!isLoading" [checked]="element.checkFlag"
-                                    (change)="selectReport($event,element,reportType)"
-                                    class="example-margin"></mat-checkbox>
+                                    (change)="selectReport($event,element,reportType)" class="example-margin">
+                                </mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -43,6 +43,10 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
             </div>
+        </div>
+        <div *ngIf="clientDetails.data.length == 0" class="d-flex flex-column align-items-center w-100 mt-5">
+            <img class="width300" src="assets/images/svg/noDataFound.svg">
+            <h4 class="text-center pt-12">No data found</h4>
         </div>
     </div>
 
@@ -65,19 +69,22 @@
 </div> -->
     <div *ngIf="!isLoading && !clientDetails">
         <div class="col-md-12 p-0 d-flex align-items-center justify-content-center">
-            <span class="pl-10 full-center w-100 f-14" >No client selected</span>
+            <span class="pl-10 full-center w-100 f-14">No client selected</span>
         </div>
     </div>
-    
+
     <div class="row pt-16 pb-16">
         <div class="col-md-12 d-flex align-items-center justify-content-end">
+            <mat-checkbox *ngIf="clientDetails.data.length >0" [checked]="false" (change)="sendCopy=true"
+                class="example-margin">Don't send me a copy</mat-checkbox>
             <p class="br-0 text-primitive mb-0 mr-20 f-14" (click)="close()">
                 CANCEL
             </p>
             <!-- <button class="text-primary f-14 ml-12 sendNowBtn " (click)="()" mat-stroked-button cdkFocusInitial>
                 SEND NOW
             </button> -->
-            <app-progress-button (btnClick)="sendClientId()" class="br-0 text-inherit  " [options]="barButtonOptions">
+            <app-progress-button *ngIf="clientDetails.data.length > 0" (btnClick)="sendClientId()"
+                class="br-0 text-inherit  " [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

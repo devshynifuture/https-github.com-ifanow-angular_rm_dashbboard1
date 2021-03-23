@@ -39,6 +39,7 @@ export class ManageKycComponent implements OnInit {
           data.forEach(element => {
             element['verifyStatus'] = (element.kycComplaint == 1) ? 'Already KYC Verified.' : (element.kycComplaint == 2 || element.kycComplaint == 3) ? 'KYC Application is in process.' : '';
             element['isLoader'] = false;
+            element['naReason'] = this.naReasonMethod(element)
           });
           this.dataSource.data = data;
         } else {
@@ -50,6 +51,14 @@ export class ManageKycComponent implements OnInit {
         this.eventService.openSnackBar(err, "Dismiss");
       }
     )
+  }
+
+  naReasonMethod(memberData) {
+    let naReason
+    if ((!memberData.email || !memberData.mobileNo || !memberData.pan)) {
+      naReason = `Please provide ${!memberData.pan ? 'PAN, ' : ''}${!memberData.mobileNo ? 'Mobile, ' : ''}${!memberData.email ? 'Email, ' : ''} to proceed with KYC.`
+    }
+    return naReason;
   }
 
   kycClientSectionMethod(elementData) {
@@ -88,6 +97,7 @@ export class ManageKycComponent implements OnInit {
       clientId: this.data ? this.data.clientId : elementData.clientId,
       email: this.data ? this.data.email : elementData.email,
       mobileNo: this.data ? this.data.mobileNo : elementData.mobileNo,
+      familyMemberId: this.data ? this.data.familyMemberId : elementData.familyMemberId,
       redirectUrl: `${hostNameOrigin}/kyc-redirect`
     }
     if (elementData.kycComplaint != 0) {

@@ -37,7 +37,7 @@ export class SummaryPlanComponent implements OnInit {
     budgetData = [{}, {}, {}]
     isLoadingBudget = false;
     isLoadingCashFlow = true;
-    object: { 'insuranceName': any; 'amount': any; 'img': string; };
+    object: any;
     annualSurplus: any;
     incomePercent: number;
     expensePercent: number;
@@ -127,7 +127,7 @@ export class SummaryPlanComponent implements OnInit {
         this.fragmentData.isSpinner = true;;
         let para = document.getElementById('planSummary');
         //const header = this.summaryTemplateHeader.nativeElement.innerHTML
-        this.util.htmlToPdf('', para.innerHTML, 'Financial plan', 'false', this.fragmentData, '', '', false, null);
+        this.util.htmlToPdf('', para.innerHTML, 'Summary plan', 'false', this.fragmentData, '', '', false, null);
 
     }
     getFinPlan() {
@@ -441,13 +441,17 @@ export class SummaryPlanComponent implements OnInit {
 
     getStartAndEndDate() {
         var date = new Date();
-        var firstDay = new Date(date.getFullYear(), 0, 1);
-        var lastDay = new Date(date.getFullYear(), 11, 31);
+        let year = date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear();
+        var firstDay = new Date(year, 3, 1);
+        var lastDay = new Date(year + 1, 2, 31);
         this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
         this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
+        let startDateObj = new Date(this.startDate);
+        let endDateObj = new Date(this.endDate);
         var startYear = firstDay.getFullYear() - 1;
         var endYear = lastDay.getFullYear().toString().substr(-2);
-        this.yearToShow = startYear + '-' + endYear;
+
+        this.yearToShow = startDateObj.getFullYear() + '-' + endDateObj.getFullYear();
         console.log('startYearddddddddddddddddddddd', startYear);
         console.log('endYearddddddddddddddddddddd', endYear);
 
@@ -612,86 +616,64 @@ export class SummaryPlanComponent implements OnInit {
 
     getSummeryInsurance() {
         let data = {
-            clientId: this.clientId
+            clientId: this.clientId,
+            advisorId: this.advisorId
         }
         this.isLoadingSummary = true;
-        this.planService.getInsurancePlanningPlanSummary(data)
+        this.planService.getInsuranceSummary(data)
             .subscribe(res => {
                 this.isLoadingSummary = false;
                 this.insurancePlanList = []
                 console.log(res, "values to see");
                 if (!!res && res !== null) {
                     // this.insurancePlanList = res;
-                    for (const [index, key] of Object.entries(res)) {
-                        const element = res;
-                        switch (index) {
-                            case 'criticalIllness':
-                                this.object = {
-                                    'insuranceName': 'Critical illness',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/CIsmall.svg'
-                                }
+                    res.forEach(element => {
+                        switch (element['insuranceType']) {
+                            case 6:
+                                element.insuranceName = 'Critical illness',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/CIsmall.svg'
                                 break;
 
-                            case 'fireAndSpecialPerilsInsurance':
-                                this.object = {
-                                    'insuranceName': 'Fire insurance',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/FIsmall.svg'
-                                }
+                            case 10:
+                                element.insuranceName = 'Fire insurance',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/FIsmall.svg'
+
                                 break;
 
-                            case 'healthInsurance':
-                                this.object = {
-                                    'insuranceName': 'Health insurance',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543999/Insurance-summary-img/Hsmall.svg'
-                                }
+                            case 5:
+                                element.insuranceName = 'Health insurance',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543999/Insurance-summary-img/Hsmall.svg'
+
                                 break;
-                            case 'homeInsurance':
-                                this.object = {
-                                    'insuranceName': 'Home insurance',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543999/Insurance-summary-img/Hsmall.svg'
-                                }
+                            case 9:
+                                element.insuranceName = 'Home insurance',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543999/Insurance-summary-img/Hsmall.svg'
                                 break;
-                            case 'life_insurance':
-                                this.object = {
-                                    'insuranceName': 'Life insurance',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/LIsmall.svg'
-                                }
+                            case 1:
+                                element.insuranceName = 'Life insurance',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/LIsmall.svg'
+
                                 break;
-                            case 'motorInsurance':
-                                this.object = {
-                                    'insuranceName': 'Motor insurance',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/MotorSmall.svg'
-                                }
+                            case 4:
+                                element.insuranceName = 'Motor insurance',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/MotorSmall.svg'
+
                                 break;
-                            case 'personalAccident':
-                                this.object = {
-                                    'insuranceName': 'Personal accident',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543998/Insurance-summary-img/PAsmall.svg'
-                                }
+                            case 7:
+                                element.insuranceName = 'Personal accident',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543998/Insurance-summary-img/PAsmall.svg'
+
                                 break;
-                            case 'travelInsurance':
-                                this.object = {
-                                    'insuranceName': 'Travel insurance',
-                                    'amount': key,
-                                    'img': 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/TravelSmall.svg'
-                                }
+                            case 8:
+                                element.insuranceName = 'Travel insurance',
+                                    element.img = 'https://res.cloudinary.com/futurewise/image/upload/v1613543997/Insurance-summary-img/TravelSmall.svg'
+
                                 break;
                             default:
                                 break;
                         }
-
-                        this.insurancePlanList.push(this.object);
-
-                    }
-
-                    this.insurancePlanList = [...new Map(this.insurancePlanList.map(item => [item['insuranceName'], item])).values()];
+                    });
+                    this.insurancePlanList = res;
 
                 }
             }, err => {

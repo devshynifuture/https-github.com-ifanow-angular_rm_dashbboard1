@@ -438,24 +438,27 @@ export class ShowHealthPlanningComponent implements OnInit {
     data.forEach(element => {
       element.insuranceDetails = element.insurance ? element.insurance : element.insuranceDetails;
       element.sumAssured = 0;
-      element.insuranceDetails.sumInsuredIdv = 0;
-      if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
-        element.insuranceDetails.insuredMembers.forEach(ele => {
-          ele.sumAssured += ele.sumInsured;
-        });
-      } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
-        element.insuranceDetails.policyFeatures.forEach(ele => {
-          element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
-        });
-      } else {
-        element.insuranceDetails.sumInsuredIdv = element.insuranceDetails.sumInsuredIdv;
+      if (!element.insuranceDetails.sumInsuredIdv) {
+        element.insuranceDetails.sumInsuredIdv = 0;
+        if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
+          element.insuranceDetails.insuredMembers.forEach(ele => {
+            element.insuranceDetails.sumInsuredIdv += ele.sumInsured;
+          });
+        } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
+          element.insuranceDetails.policyFeatures.forEach(ele => {
+            element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
+          });
+        } else {
+          element.insuranceDetails.sumInsuredIdv = element.insuranceDetails.sumInsuredIdv;
+        }
+
+        if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
+          element.insuranceDetails.addOns.forEach(ele => {
+            element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
+          });
+        }
       }
 
-      if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
-        element.insuranceDetails.addOns.forEach(ele => {
-          element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
-        });
-      }
     });
 
   }

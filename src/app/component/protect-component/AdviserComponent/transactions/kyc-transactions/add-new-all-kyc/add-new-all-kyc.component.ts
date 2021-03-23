@@ -47,15 +47,15 @@ export class AddNewAllKycComponent implements OnInit {
     private orgSetting: OrgSettingServiceService) { }
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : AuthService.getClientData().advisorId;
     if (this.data.name) {
       this.selectedClientData = this.data;
       this.previewEmail();
+      this.getSubjectTemplate();
     } else {
       this.step1 = true;
       this.data['btnFlag'] = 'Cancel'
     }
-    this.advisorId = AuthService.getAdvisorId() ? AuthService.getAdvisorId() : AuthService.getClientData().advisorId;
-    this.getSubjectTemplate();
     this.kycForm = this.fb.group({
       from: [, [Validators.required]],
       subject: ["", [Validators.required]],
@@ -231,7 +231,8 @@ export class AddNewAllKycComponent implements OnInit {
       email: this.selectedClientData.email,
       mobileNo: this.selectedClientData.mobileNo,
       redirectUrl: `${hostNameOrigin}/kyc-redirect`,
-      fromEmail: this.kycForm.get('from').value
+      fromEmail: this.kycForm.get('from').value,
+      familyMemberId: this.selectedClientData.familyMemberId,
     }
     if (this.selectedClientData.kycComplaint != 0) {
       obj['redo'] = true;

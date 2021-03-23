@@ -12,9 +12,9 @@ export class AddNewInsuranceComponent implements OnInit {
   displayedColumns1: string[] = ['position', 'name', 'weight', 'symbol', 'icons'];
   dataSource1 = ELEMENT_DATA1;
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
   ) { }
-
+  logoText = ''
   ngOnInit() {
   }
 

@@ -572,10 +572,16 @@
                                     <div class="col-md-2 p-0">
                                         <img class="img-max-width" [src]="item.img">
                                     </div>
-                                    <div class="col-md-10 pr-0 ">
-                                        <p class="f-14 m-0 roboto f-400">{{ item.insuranceName }}</p>
-                                        <p class="f-14 mb-16 f-600">₹ <span appFormatNumber [shouldRoundOff]="true"
-                                                [value]="item.amount?item.amount:0"></span>
+                                    <div class="col-md-10 pr-0 pl-10">
+                                        <p class="f-14 m-0 roboto f-500">{{ item.insuranceName }}</p>
+                                        <p class="f-14 mb-0 roboto f-500">Current:{{item.sumAssuredOfClient ? '₹' :
+                                            ''}}<span appFormatNumber [shouldRoundOff]="true"
+                                                [value]="item.sumAssuredOfClient ?item.sumAssuredOfClient :0"></span>
+                                        </p>
+                                        <p class="f-14 mb-10 roboto f-500">Additional req
+                                            :{{item.additionalSumAssuredRequired
+                                            ? '₹' : ''}}<span appFormatNumber [shouldRoundOff]="true"
+                                                [value]="item.additionalSumAssuredRequired?item.additionalSumAssuredRequired:0"></span>
                                         </p>
                                     </div>
                                 </div>
@@ -1155,7 +1161,7 @@
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div style="float: left; margin-left: 10px;">
+                                                    <div style="float: left;">
                                                         <div
                                                             style="border: 1px solid #BCC6CA; padding: 10px; text-align: center; margin-bottom: 10px; width: 140px;">
                                                             <p>
@@ -1215,9 +1221,9 @@
                                                                 Assets </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
-                                                                    [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span>
+                                                                {{cashFlowData?.assetInflow ? "₹" : ""}}<span
+                                                                    appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.assetInflow ? cashFlowData?.assetInflow : '-'"></span>
                                                             </td>
                                                         </tr>
 
@@ -1227,9 +1233,9 @@
                                                                 Insurance </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                ">{{cashFlowData?.insurance ? "₹" :
+                                                                {{cashFlowData?.insuranceInflow ? "₹" :
                                                                 ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                                    [value]="cashFlowData?.insuranceInflow ? cashFlowData?.insuranceInflow : '-'"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1256,9 +1262,9 @@
                                                                 Asset outflows </td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.asset ? "₹" : ""}}<span appFormatNumber
-                                                                    [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.asset ? cashFlowData?.asset : '-'"></span>
+                                                                {{cashFlowData?.assetOutFlow ? "₹" : ""}}<span
+                                                                    appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.assetOutFlow ? cashFlowData?.assetOutFlow : '-'"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1267,9 +1273,20 @@
                                                                 Insurance premiums</td>
                                                             <td
                                                                 style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
-                                                                {{cashFlowData?.insurance ? "₹" :
+                                                                {{cashFlowData?.insurancePremium ? "₹" :
                                                                 ""}}<span appFormatNumber [shouldRoundOff]="true"
-                                                                    [value]="cashFlowData?.insurance ? cashFlowData?.insurance : '-'"></span>
+                                                                    [value]="cashFlowData?.insurancePremium ? cashFlowData?.insurancePremium : '-'"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; padding: 12px 0px; font-size: 14px;">
+                                                                Loan EMI's</td>
+                                                            <td
+                                                                style="border-bottom: 1px solid #dee5e7; text-align: right; padding: 12px 0px; font-size: 14px;">
+                                                                {{cashFlowData?.loanEmi ? "₹" : ""}}<span
+                                                                    appFormatNumber [shouldRoundOff]="true"
+                                                                    [value]="cashFlowData?.loanEmi ? cashFlowData?.loanEmi : '-'"></span>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -1295,25 +1312,25 @@
                                                         cellpadding="0" cellspacing="0" border="0">
                                                         <tr style="background: #F5F7F7;">
                                                             <th
-                                                                style="font-weight: normal; width: 33%; text-align: center; font-size: 14px;height: 46px;">
+                                                                style="font-weight: normal; width: 33%; text-align: center; font-size: 14px;height: 46px;border-bottom: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                                                                 Goal
                                                                 details</th>
                                                             <th
-                                                                style="font-weight: normal; text-align: center; font-size: 14px;height: 46px;">
+                                                                style="font-weight: normal; text-align: center; font-size: 14px;height: 46px;border-bottom: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                                                                 Goal
                                                                 value</th>
                                                             <th
-                                                                style="font-weight: normal; text-align: center; font-size: 14px;height: 46px;">
+                                                                style="font-weight: normal; text-align: center; font-size: 14px;height: 46px;border-bottom: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                                                                 Monthly
                                                             </th>
                                                             <th
-                                                                style="font-weight: normal; text-align: center; font-size: 14px;height: 46px;">
+                                                                style="font-weight: normal; text-align: center; font-size: 14px;height: 46px;border-bottom: 1px solid #DADCE0;border-top: 1px solid #DADCE0;border-right: 1px solid #DADCE0;">
                                                                 Lumpsum
                                                             </th>
                                                         </tr>
                                                         <tr *ngFor="let element of dataSource.data">
                                                             <td
-                                                                style="font-size: 14px; color: #484848; text-align: center;">
+                                                                style="font-size: 14px; color: #484848; text-align: center;border-bottom: 1px solid #DADCE0;">
                                                                 <div style="width: 80%; margin: 10px auto;">
                                                                     <div style="float: left;">
                                                                         <img style="height: 50px;padding-bottom: 10px;"
@@ -1343,15 +1360,15 @@
 
                                                             </td>
                                                             <td
-                                                                style="font-size: 14px; color: #484848; text-align: center;">
+                                                                style="font-size: 14px; color: #484848; text-align: center;border-bottom: 1px solid #DADCE0;">
                                                                 <span appFormatNumber>{{element.value}}</span>
                                                             </td>
                                                             <td
-                                                                style="font-size: 14px; color: #484848; text-align: center;">
+                                                                style="font-size: 14px; color: #484848; text-align: center;border-bottom: 1px solid #DADCE0;">
                                                                 <span appFormatNumber>{{element.month}}</span>
                                                             </td>
                                                             <td
-                                                                style="font-size: 14px; color: #484848; text-align: center;">
+                                                                style="font-size: 14px; color: #484848; text-align: center;border-bottom: 1px solid #DADCE0;">
                                                                 <span appFormatNumber>{{element.lumpsum}}</span>
                                                             </td>
                                                         </tr>
@@ -1365,7 +1382,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="vertical-align: top; padding-left: 10px;">
+                                    <td style="vertical-align: top;">
                                         <div style="padding: 10px; background: #ffffff;">
                                             <h4 style="margin: 0px; font-size: 16px;">Insurance summary </h4>
 
@@ -1373,7 +1390,7 @@
                                                 <tr>
                                                     <td style="padding: 12px 0px; border-bottom: 1px solid #dee5e7;">
                                                         <div *ngFor="let item of insurancePlanList"
-                                                            style="width: 25%; margin-right: 10px; margin-bottom: 10px; float: left; border: 1px solid #dee5e7; padding: 8px;">
+                                                            style="width: 45%; margin-right: 10px; margin-bottom: 10px; float: left; border: 1px solid #dee5e7; padding: 8px;">
                                                             <div style=" float: left; margin-right: 10px;">
                                                                 <img style="width: 35px;" [src]="item.img" alt="">
                                                             </div>
@@ -1383,9 +1400,19 @@
                                                                 </p>
                                                                 <p
                                                                     style="margin: 0px; font-weight: 600; font-size: 14px;">
-                                                                    ₹<span appFormatNumber [shouldRoundOff]="true"
-                                                                        [value]="item.amount?item.amount:0"></span></p>
+                                                                    Current:{{item.sumAssuredOfClient ? '₹' : ''}}<span
+                                                                        appFormatNumber [shouldRoundOff]="true"
+                                                                        [value]="item.sumAssuredOfClient ?item.sumAssuredOfClient :0"></span>
+                                                                </p>
+                                                                <p
+                                                                    style="margin: 0px; font-weight: 600; font-size: 14px;">
+                                                                    Additional req :{{item.additionalSumAssuredRequired
+                                                                    ? '₹' : ''}}<span appFormatNumber
+                                                                        [shouldRoundOff]="true"
+                                                                        [value]="item.additionalSumAssuredRequired?item.additionalSumAssuredRequired:0"></span>
+                                                                </p>
                                                             </div>
+
                                                         </div>
 
 

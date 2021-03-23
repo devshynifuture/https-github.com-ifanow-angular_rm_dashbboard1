@@ -60,7 +60,7 @@ export class TransactionsComponent implements OnInit {
     this.profitOrLossValue = this.data.unrealizedGain;
     // this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
     // this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
-    this.xirrValue = this.data.xirr;
+    this.xirrValue = this.ConvertStringToNumber(this.data.xirr);
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
     this.nav = this.data.nav;
@@ -148,6 +148,11 @@ export class TransactionsComponent implements OnInit {
       }
     );
   }
+  ConvertStringToNumber(input) {
+    input = input.replace(/,/g, "")
+    var numeric = Number(input);
+    return numeric;
+  }
   getTransactionDataBasedOnMf(res) {
     let setDataForMf = res;
     this.isLoading = false;
@@ -157,6 +162,7 @@ export class TransactionsComponent implements OnInit {
       (item.id == this.data.id)
     );
     this.data = this.mfList;
+    this.casFolioNumber(this.mfList.mutualFundTransactions);
     this.dataSource.data = this.mfList.mutualFundTransactions
     this.currentValue = this.mfList.currentValue;
     this.profitOrLossValue = this.currentValue - this.mfList.amountInvested;

@@ -20,7 +20,7 @@ export class AddInsuranceUpperComponent implements OnInit {
     public authService: AuthService,
     private utils: UtilService,
     private eventService: EventService) { }
-
+  logoText = ''
   ngOnInit() {
   }
   close(flag) {

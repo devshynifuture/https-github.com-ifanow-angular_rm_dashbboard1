@@ -98,10 +98,12 @@ export class FactSheetComponent implements OnInit {
   clientData = AuthService.getClientData();
   fragmentData = { isSpinner: false, date: null, time: '', size: '' };
   clientNameToDisplay: any;
+  showpiechart1
   svg1: string;
   svg2: any;
   svg3: string;
   svg4: string;
+  profitAndLossCheck: number;
   constructor(private cd: ChangeDetectorRef, private ngZone: NgZone, private util: UtilService, protected subinject: SubscriptionInject, private subInjctService: SubscriptionInject, private router: Router, private cusService: CustomerService, private mfService: MfServiceService, private eventService: EventService) {
   }
   formatMoney(value) {
@@ -123,6 +125,8 @@ export class FactSheetComponent implements OnInit {
     this.folioNumber = this.data.folioNumber;
     this.nav = this.data.nav;
     this.clientNameToDisplay = this.data.clientName;
+    this.xirrValue = this.ConvertStringToNumber(this.data.xirr);
+    this.profitAndLossCheck = this.ConvertStringToNumber(this.data.unrealizedGain);
     this.getInvRet();
     this.getRatio();
     this.getDetails();

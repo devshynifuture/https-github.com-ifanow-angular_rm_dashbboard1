@@ -277,7 +277,9 @@
                                         <div class="col-md-3 d-flex align-items-center">
                                             <div class="relClass">
                                                 <div class="bar">{{!loaderFn.loading? "" : ""}}
-                                                    <p class="mb-0 roboto"> {{allocation.assetName}}</p>
+                                                    <p class="mb-0 roboto">
+                                                        {{allocation.assetName}}:{{(allocation.lumpsumOrSip ==2)?allocation.sipAmount:''}}
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -474,6 +476,17 @@
                                     <div class="bar"> {{element.goalYear}} </div>
                                 </td>
                             </ng-container>
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal present value</th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}
+                                        <span appFormatNumber>
+                                            {{(element.goalPresentValue ? element.goalPresentValue : 0)}}
+                                        </span>
+                                    </div>
+                                </td>
+
+                            </ng-container>
                             <ng-container matColumnDef="goalFv">
                                 <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal FV </th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
@@ -492,20 +505,10 @@
 
                             </ng-container> -->
 
-                            <ng-container matColumnDef="status">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal present value</th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
-                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}
-                                        <span appFormatNumber>
-                                            {{(element.goalPresentValue ? element.goalPresentValue : 0)}}
-                                        </span>
-                                    </div>
-                                </td>
 
-                            </ng-container>
                             <ng-container matColumnDef="percentage">
                                 <th mat-header-cell *matHeaderCellDef class="br text-right">Achievable</th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                <td mat-cell *matCellDef="let element" class="br text-left">
                                     <div class="bar">
                                         <span>
                                             {{element.achievedPercent ? element.achievedPercent : 0}}%
@@ -528,19 +531,12 @@
 
                     <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden"
                         *ngIf="!loaderFn.loading && !isRetirementTab">
-                        <table mat-table [dataSource]="goalTableValues" id="tbs" class="skeletonAnimation"
+                        <table mat-table [dataSource]="selectedGoal.goalTableValues" id="tbs" class="skeletonAnimation"
                             appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
                             <ng-container matColumnDef="goalYear">
                                 <th *matHeaderCellDef class="br  " mat-header-cell> Goal Year</th>
                                 <td *matCellDef="let element; let i = index;" class="br" mat-cell>
                                     <div class="bar"> {{element.goalYr | date: 'yyyy'}} </div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="goalFv">
-                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal FV </th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
-                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber>
-                                            {{element.fvOnGoalDate}} </span></div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="status">
@@ -554,6 +550,14 @@
                                 </td>
 
                             </ng-container>
+                            <ng-container matColumnDef="goalFv">
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal FV </th>
+                                <td mat-cell *matCellDef="let element" class="br text-right">
+                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber>
+                                            {{element.fvOnGoalDate}} </span></div>
+                                </td>
+                            </ng-container>
+
                             <ng-container matColumnDef="percentage">
                                 <th mat-header-cell *matHeaderCellDef class="br text-right">Achievable</th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
@@ -923,10 +927,11 @@
                                 </tr>
                             </table>
 
-                            <p style="margin-bottom: 0px; padding-top: 25px; font-size: 16px; font-weight: 600;">
+                            <p *ngIf="selectedGoal?.remainingData?.savingStatus == 1"
+                                style="margin-bottom: 0px; padding-top: 25px; font-size: 16px; font-weight: 600;">
                                 Additional Required</p>
-
                             <table cellpadding="0" cellspacing="0"
+                                *ngIf="selectedGoal?.remainingData?.savingStatus == 1"
                                 style="margin: 10px 0px 0px 0px; font-size: 16px; border: 1px solid #dee5e7;  width: 100%; border: 1px solid #dee5e7; width: 100%;">
                                 <tr style="background: #F5F7F7;">
                                     <td
@@ -972,7 +977,41 @@
                                 </tr>
 
                             </table>
+                            <p *ngIf="selectedGoal?.remainingData?.savingStatus == 2"
+                                style="margin-bottom: 0px; padding-top: 25px; font-size: 16px; font-weight: 600;">
+                                Additional Required</p>
+                            <table *ngIf="selectedGoal?.remainingData?.savingStatus == 2" cellpadding="0"
+                                cellspacing="0"
+                                style="margin: 10px 0px 0px 0px; font-size: 16px; border: 1px solid #dee5e7;  width: 100%; border: 1px solid #dee5e7; width: 100%;">
+                                <tr style="background: #F5F7F7;">
+                                    <td
+                                        style="border-bottom: 1px solid #dee5e7; padding: 14px; border-right: 1px solid #dee5e7; ">
+                                        Additional Required </td>
 
+                                    <td style="border-bottom: 1px solid #dee5e7;    padding: 14px; text-align: right;">
+                                        Monthly
+                                    </td>
+
+                                    <td style="border-bottom: 1px solid #dee5e7;padding: 14px;   text-align: right;">
+                                        Lumpsum
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td
+                                        style="border-bottom: 1px solid #dee5e7; padding: 14px; border-right: 1px solid #dee5e7; ">
+                                        Total(Equity+Debt)
+                                    </td>
+                                    <td style="padding: 14px; border-bottom: 1px solid #dee5e7; text-align: right;">
+                                        ₹<span appFormatNumber
+                                            [value]="(selectedGoal?.dashboardData?.equity_monthly)+(selectedGoal?.dashboardData?.debt_monthly)"></span>
+                                    </td>
+                                    <td style="padding: 14px; text-align: right;">
+                                        ₹<span appFormatNumber
+                                            [value]="(selectedGoal?.dashboardData?.lump_equity)+(selectedGoal?.dashboardData?.lump_debt)"></span>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                 </table>
@@ -1075,12 +1114,13 @@
                                 <tr *ngIf="dataSource">
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
                                         Goal year</td>
-                                    <td
-                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
-                                        Goal FV</td>
+
                                     <td
                                         style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
                                         Goal present value</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal FV</td>
                                     <td
                                         style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
                                         Achievable</td>
@@ -1091,18 +1131,19 @@
                                     <td
                                         style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                         {{element.goalYear}} </td>
-                                    <td
-                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        ₹ <span appFormatNumber
-                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'> </span>
-                                    </td>
+
                                     <td
                                         style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         ₹ <span appFormatNumber
                                             [value]='(element.goalPresentValue ? element.goalPresentValue : 0)'> </span>
                                     </td>
                                     <td
-                                        style="padding: 8px; text-align: left; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                                        ₹ <span appFormatNumber
+                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'> </span>
+                                    </td>
+                                    <td
+                                        style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                         {{element.achievedPercent}}% </td>
                                 </tr>
                             </table>
@@ -1125,12 +1166,13 @@
                                 <tr *ngIf="dataSource">
                                     <td style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7;">Goal
                                         Goal year</td>
-                                    <td
-                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
-                                        Goal FV</td>
+
                                     <td
                                         style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
                                         Goal present value</td>
+                                    <td
+                                        style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
+                                        Goal FV</td>
                                     <td
                                         style="padding: 8px;background: #f5f7f7; border-right: 1px solid #dee5e7; text-align: right;">
                                         Achievable</td>
@@ -1144,13 +1186,14 @@
                                     <td
                                         style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         ₹ <span appFormatNumber
-                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'> </span>
+                                            [value]='(element.yearlyGoalValue ? element.yearlyGoalValue : 0)'> </span>
                                     </td>
                                     <td
                                         style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                                         ₹ <span appFormatNumber
-                                            [value]='(element.yearlyGoalValue ? element.yearlyGoalValue : 0)'> </span>
+                                            [value]='element.fvOnGoalDate ? element.fvOnGoalDate : 0'> </span>
                                     </td>
+
                                     <td
                                         style="padding: 8px; text-align: right; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;">
                                         {{element.achievedPercent}}% </td>

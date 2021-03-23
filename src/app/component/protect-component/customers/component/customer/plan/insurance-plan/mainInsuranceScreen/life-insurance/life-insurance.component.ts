@@ -1,36 +1,36 @@
-import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
-import {AddPlaninsuranceComponent} from '../../add-planinsurance/add-planinsurance.component';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from '../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AddSuggestPolicyComponent} from '../../add-suggest-policy/add-suggest-policy.component';
-import {AddRecommendationsInsuComponent} from '../../add-recommendations-insu/add-recommendations-insu.component';
-import {PlanService} from '../../../plan.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatAccordion} from '@angular/material';
-import {forkJoin, of} from 'rxjs';
-import {trigger, state, style, transition, animate} from '@angular/animations';
-import {ShowHealthPlanningComponent} from '../../show-health-planning/show-health-planning.component';
-import {InsurancePlanningServiceService} from '../../insurance-planning-service.service';
-import {SuggestHealthInsuranceComponent} from '../../suggest-health-insurance/suggest-health-insurance.component';
-import {PersonalInsuranceComponent} from '../personal-insurance/personal-insurance.component';
-import {CriticalInsuranceComponent} from '../critical-insurance/critical-insurance.component';
-import {MotorInsuranceComponent} from '../motor-insurance/motor-insurance.component';
-import {TravelInsuranceComponent} from '../travel-insurance/travel-insurance.component';
-import {HouseholdersInsuranceComponent} from '../householders-insurance/householders-insurance.component';
-import {FireInsuranceComponent} from '../fire-insurance/fire-insurance.component';
-import {ActiityService} from '../../../../customer-activity/actiity.service';
-import {SuggestAndGiveAdviceComponent} from '../../suggest-and-give-advice/suggest-and-give-advice.component';
-import {HelthInsurancePolicyComponent} from '../../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
-import {DetailedViewInsurancePlanningComponent} from '../../detailed-view-insurance-planning/detailed-view-insurance-planning.component';
-import {SummaryPlanComponent} from '../../../summary-plan/summary-plan.component';
-import {SummaryPlanServiceService} from '../../../summary-plan/summary-plan-service.service';
-import {catchError} from 'rxjs/operators';
-import {RoleService} from 'src/app/auth-service/role.service';
-import {OtherInsuranceInsurancePlanningComponent} from '../other-insurance-insurance-planning/other-insurance-insurance-planning.component';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { AddPlaninsuranceComponent } from '../../add-planinsurance/add-planinsurance.component';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from '../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-policy.component';
+import { AddRecommendationsInsuComponent } from '../../add-recommendations-insu/add-recommendations-insu.component';
+import { PlanService } from '../../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatAccordion } from '@angular/material';
+import { forkJoin, of } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ShowHealthPlanningComponent } from '../../show-health-planning/show-health-planning.component';
+import { InsurancePlanningServiceService } from '../../insurance-planning-service.service';
+import { SuggestHealthInsuranceComponent } from '../../suggest-health-insurance/suggest-health-insurance.component';
+import { PersonalInsuranceComponent } from '../personal-insurance/personal-insurance.component';
+import { CriticalInsuranceComponent } from '../critical-insurance/critical-insurance.component';
+import { MotorInsuranceComponent } from '../motor-insurance/motor-insurance.component';
+import { TravelInsuranceComponent } from '../travel-insurance/travel-insurance.component';
+import { HouseholdersInsuranceComponent } from '../householders-insurance/householders-insurance.component';
+import { FireInsuranceComponent } from '../fire-insurance/fire-insurance.component';
+import { ActiityService } from '../../../../customer-activity/actiity.service';
+import { SuggestAndGiveAdviceComponent } from '../../suggest-and-give-advice/suggest-and-give-advice.component';
+import { HelthInsurancePolicyComponent } from '../../add-insurance-planning/helth-insurance-policy/helth-insurance-policy.component';
+import { DetailedViewInsurancePlanningComponent } from '../../detailed-view-insurance-planning/detailed-view-insurance-planning.component';
+import { SummaryPlanComponent } from '../../../summary-plan/summary-plan.component';
+import { SummaryPlanServiceService } from '../../../summary-plan/summary-plan-service.service';
+import { catchError } from 'rxjs/operators';
+import { RoleService } from 'src/app/auth-service/role.service';
+import { OtherInsuranceInsurancePlanningComponent } from '../other-insurance-insurance-planning/other-insurance-insurance-planning.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-life-insurance',
@@ -38,14 +38,14 @@ import {DomSanitizer} from '@angular/platform-browser';
   styleUrls: ['./life-insurance.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
 export class LifeInsuranceComponent implements OnInit {
-  reportDate;
+  reportDate: any;
   blockExpansion = true;
   panelOpenState = false;
   isClick = false;
@@ -56,13 +56,13 @@ export class LifeInsuranceComponent implements OnInit {
   displayedColumns3 = ['name', 'sum', 'premium', 'status', 'icons'];
   // displayedColumns3 = ['name', 'weight', 'symbol', 'position'];
   // dataSouce3=ELEMENT_DATA4;
-  allInsurance = [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}, {
+  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
     name: 'Health',
     id: 5
-  }, {name: 'Personal accident', id: 7}, {name: 'Critical illness', id: 6}, {
+  }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
     name: 'Motor',
     id: 4
-  }, {name: 'Travel', id: 8}, {name: 'Home', id: 9}, {name: 'Fire & special perils', id: 10}];
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
   dataSource3: Array<any> = [{}, {}, {}];
   dataSource1 = [{}, {}, {}];
   expandedElement: PeriodicElement | null;
@@ -84,13 +84,13 @@ export class LifeInsuranceComponent implements OnInit {
   };
   checkedBox = 'https://res.cloudinary.com/futurewise/image/upload/v1611903063/logos/Checkbox_srkq9v.png';
   uncheckBox = 'https://res.cloudinary.com/futurewise/image/upload/v1611903072/logos/Uncheckbox_y4a6yk.png';
-  adviceHeaderList = [{id: '1', value: 'Continue'}, {id: '2', value: 'Discontinue'}, {
+  adviceHeaderList = [{ id: '1', value: 'Continue' }, { id: '2', value: 'Discontinue' }, {
     id: '3',
     value: 'Port policy'
-  }, {id: '4', value: 'Increase sum assured'}, {id: '5', value: 'Decrease sum assured'}, {
+  }, { id: '4', value: 'Increase sum assured' }, { id: '5', value: 'Decrease sum assured' }, {
     id: '6',
     value: 'Add members'
-  }, {id: '7', value: 'Remove members'}];
+  }, { id: '7', value: 'Remove members' }];
   setLogo = [{
     heading: 'Life insurance',
     logo: 'https://res.cloudinary.com/futurewise/image/upload/v1606125641/svg_assets/LIbig.svg',
@@ -151,33 +151,33 @@ export class LifeInsuranceComponent implements OnInit {
     heading: 'Fire insurance',
     subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
   },
-    {
-      value: '7',
-      logo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/Travel.svg',
-      bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/TravelBig.svg',
-      header: 'Add Travel Insurance',
-      smallHeading: 'travel insurance',
-      insuranceType: 8,
-      heading: 'Travel insurance',
-      subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
-    }, {
-      value: '8',
-      logo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/Motor.svg',
-      bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/MotorBig.svg',
-      header: 'Add Motor Insurance',
-      smallHeading: 'motor insurance',
-      insuranceType: 4,
-      heading: 'Motor insurance',
-      subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
-    }, {
-      value: '9',
-      logo: '/assets/images/svg/Fireinsurance.svg',
-      header: 'Add Other Insurance',
-      smallHeading: 'other insurance',
-      insuranceType: 11,
-      heading: 'Other insurance',
-      subHeading: 'Select how you’d like to proceed with planning for other insurance policies.'
-    }];
+  {
+    value: '7',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/Travel.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/TravelBig.svg',
+    header: 'Add Travel Insurance',
+    smallHeading: 'travel insurance',
+    insuranceType: 8,
+    heading: 'Travel insurance',
+    subHeading: 'Select how you’d like to proceed with planning for travel insurance policies.'
+  }, {
+    value: '8',
+    logo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/Motor.svg',
+    bigLogo: 'https://res.cloudinary.com/futurewise/image/upload/v1611740386/svg_assets/MotorBig.svg',
+    header: 'Add Motor Insurance',
+    smallHeading: 'motor insurance',
+    insuranceType: 4,
+    heading: 'Motor insurance',
+    subHeading: 'Select how you’d like to proceed with planning for motor insurance policies.'
+  }, {
+    value: '9',
+    logo: '/assets/images/svg/Fireinsurance.svg',
+    header: 'Add Other Insurance',
+    smallHeading: 'other insurance',
+    insuranceType: 11,
+    heading: 'Other insurance',
+    subHeading: 'Select how you’d like to proceed with planning for other insurance policies.'
+  }];
 
   logo: any;
   getData: any;
@@ -187,12 +187,12 @@ export class LifeInsuranceComponent implements OnInit {
   isLoading: boolean;
   insuranceDetails: any;
   isLoadingPlan = false;
-  @ViewChild('firstAccordion', {static: false}) firstAccordion: MatAccordion;
+  @ViewChild('firstAccordion', { static: false }) firstAccordion: MatAccordion;
   @Output() outputChange = new EventEmitter<any>();
   @Output() stopLoaderWhenReponse = new EventEmitter<any>();
   @Output() loaded = new EventEmitter();
   @Input() finPlanObj: any; // finacial plan pdf input
-  @ViewChild('insuranceTemp', {static: false}) insuranceTemp: ElementRef;
+  @ViewChild('insuranceTemp', { static: false }) insuranceTemp: ElementRef;
   inputReceive: any;
   needAnalysisData: any;
   dataSourceLiability: any;
@@ -235,18 +235,18 @@ export class LifeInsuranceComponent implements OnInit {
 
 
   constructor(private subInjectService: SubscriptionInject,
-              private custumService: CustomerService,
-              private utils: UtilService,
-              private eventService: EventService,
-              private planService: PlanService,
-              private dialog: MatDialog,
-              private ipService: InsurancePlanningServiceService,
-              private UtilService: UtilService,
-              private ref: ChangeDetectorRef,
-              private activityService: ActiityService,
-              private summaryPlanService: SummaryPlanServiceService,
-              public roleService: RoleService,
-              private sanitizer: DomSanitizer
+    private custumService: CustomerService,
+    private utils: UtilService,
+    private eventService: EventService,
+    private planService: PlanService,
+    private dialog: MatDialog,
+    private ipService: InsurancePlanningServiceService,
+    private UtilService: UtilService,
+    private ref: ChangeDetectorRef,
+    private activityService: ActiityService,
+    private summaryPlanService: SummaryPlanServiceService,
+    public roleService: RoleService,
+    private sanitizer: DomSanitizer
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -255,6 +255,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.getAdvisorDetail = AuthService.getAdvisorDetails();
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
+    this.reportDate = new Date()
   }
 
   @Input()
@@ -303,7 +304,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fragmentData = {isSpinner: false};
+    this.fragmentData = { isSpinner: false };
     console.log(this.finPlanObj);
     if (this.finPlanObj) {
       this.allInsuranceData = this.finPlanObj.allInsuranceList;
@@ -522,14 +523,14 @@ export class LifeInsuranceComponent implements OnInit {
         data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date;
         data.adviceDetails.applicableDate = data.adviceDetails.applicable_date;
         data.adviceDetails.adviceDescription = data.adviceDetails.advice_description;
-        data.adviceDetails.advice_allotment = data.adviceDetails.advice_allotment;
+        data.adviceDetails.adviceAllotment = data.adviceDetails.adviceAllotment;
       } else {
         const id = data ? (data.adviceDetails ? (data.adviceDetails.insurance_advice_id) : this.adviceName) : this.adviceName;
         this.adviceName = (id == 1) ? 'Continue' : (id == 2) ? 'Surrender' : (id == 3) ? 'Stop paying premium' : (id == 4) ? 'Take loan' : (id == 5) ? 'Partial withdrawl' : '';
         data.adviceDetails.adviceGivenDate = data.adviceDetails.created_date;
         data.adviceDetails.applicableDate = data.adviceDetails.applicable_date;
         data.adviceDetails.adviceDescription = data.adviceDetails.advice_description;
-        data.adviceDetails.advice_allotment = data.adviceDetails.advice_allotment;
+        data.adviceDetails.adviceAllotment = data.adviceDetails.adviceAllotment ? data.adviceDetails.adviceAllotment : data.insurance.sumAssured;
       }
     }
     const sendData = {
@@ -563,12 +564,12 @@ export class LifeInsuranceComponent implements OnInit {
   }
 
   openDialog(data, value): void {
-    value = {smallHeading: 'life insurance', inputData: this.inputData};
+    value = { smallHeading: 'life insurance', inputData: this.inputData };
     data.data = this.inputData;
     const dialogRef = this.dialog.open(HelthInsurancePolicyComponent, {
       width: '780px',
       // height: '600px',
-      data: {data, value}
+      data: { data, value }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -648,7 +649,7 @@ export class LifeInsuranceComponent implements OnInit {
   }
 
   openAddEditAdvice(value, data, flag) {
-    this.adviceNameObj = {adviceName: this.adviceName};
+    this.adviceNameObj = { adviceName: this.adviceName };
     let component;
     this.object = {
       data,
@@ -752,7 +753,7 @@ export class LifeInsuranceComponent implements OnInit {
     if (data) {
       data.inputData = this.inputData;
     } else {
-      data = {inputData: this.inputData};
+      data = { inputData: this.inputData };
     }
     const dialogData = {
       data: value,
@@ -874,7 +875,7 @@ export class LifeInsuranceComponent implements OnInit {
           // this.isRefreshRequired = true;
           // this.outputChange.emit({id : '',isRefreshRequired:true});
 
-          this.outputChange.emit({loadResponse: true});
+          this.outputChange.emit({ loadResponse: true });
           // this.getDetailsInsurance()
           dialogRef.close();
         }, (err) => {
@@ -1067,24 +1068,27 @@ export class LifeInsuranceComponent implements OnInit {
 
   getSumAssuredInAll(element) {
     element.sumAssured = 0;
-    element.sumInsuredIdv = 0;
-    if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
-      element.insuredMembers.forEach(ele => {
-        element.sumAssured += ele.sumInsured;
-      });
-    } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
-      element.policyFeatures.forEach(ele => {
-        element.sumInsuredIdv += ele.featureSumInsured;
-      });
-    } else {
-      element.sumInsuredIdv = element.sumInsuredIdv;
+    if (!element.sumInsuredIdv) {
+      element.sumInsuredIdv = 0;
+      if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
+        element.insuredMembers.forEach(ele => {
+          element.sumAssured += ele.sumInsured;
+        });
+      } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
+        element.policyFeatures.forEach(ele => {
+          element.sumInsuredIdv += ele.featureSumInsured;
+        });
+      } else {
+        element.sumInsuredIdv = element.sumInsuredIdv;
+      }
+
+      if (!element.sumInsuredIdv && element && element.hasOwnProperty('addOns') && element.addOns.length > 0) {
+        element.addOns.forEach(ele => {
+          element.sumInsuredIdv += ele.addOnSumInsured;
+        });
+      }
     }
 
-    if (!element.sumInsuredIdv && element && element.hasOwnProperty('addOns') && element.addOns.length > 0) {
-      element.addOns.forEach(ele => {
-        element.sumInsuredIdv += ele.addOnSumInsured;
-      });
-    }
     return element;
   }
 
@@ -1113,8 +1117,9 @@ export class LifeInsuranceComponent implements OnInit {
                 const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
                 singleInsuranceData.displayHolderName += ', ' + firstName;
                 if (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured) {
-                  singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured = this.formatNumber(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured, 0);
-                  const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
+                  let sumAss = singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured;
+                  sumAss = this.formatNumber(sumAss, 0);
+                  const firstSumInsured = (sumAss as string).split(' ')[0];
                   singleInsuranceData.displayHolderSumInsured += ', ₹' + firstSumInsured;
                 } else {
                   singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.sumInsuredIdv ? singleInsuranceData.insuranceDetails.sumInsuredIdv : 0;
@@ -1138,24 +1143,28 @@ export class LifeInsuranceComponent implements OnInit {
     data.forEach(element => {
       element.insuranceDetails = element.insurance ? element.insurance : element.insuranceDetails;
       element.sumAssured = 0;
-      element.insuranceDetails.sumInsuredIdv = 0;
-      if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
-        element.insuranceDetails.insuredMembers.forEach(ele => {
-          ele.sumAssured += ele.sumInsured;
-        });
-      } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
-        element.insuranceDetails.policyFeatures.forEach(ele => {
-          element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
-        });
-      } else {
-        element.insuranceDetails.sumInsuredIdv = element.insuranceDetails.sumInsuredIdv;
+      if (!element.insuranceDetails.sumInsuredIdv) {
+        element.insuranceDetails.sumInsuredIdv = 0;
+        if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
+          element.insuranceDetails.insuredMembers.forEach(ele => {
+            ele.sumAssured += ele.sumInsured;
+          });
+        } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
+          element.insuranceDetails.policyFeatures.forEach(ele => {
+            element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
+          });
+        } else {
+          element.insuranceDetails.sumInsuredIdv = element.insuranceDetails.sumInsuredIdv;
+        }
+
+        if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
+          element.insuranceDetails.addOns.forEach(ele => {
+            element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
+          });
+        }
       }
 
-      if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
-        element.insuranceDetails.addOns.forEach(ele => {
-          element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
-        });
-      }
+
     });
 
   }
@@ -1420,7 +1429,7 @@ export class LifeInsuranceComponent implements OnInit {
     if (data) {
       data.inputData = this.inputData;
     } else {
-      data = {inputData: this.inputData};
+      data = { inputData: this.inputData };
     }
     const fragmentData = {
       flag: 'opencurrentpolicies',
@@ -1509,7 +1518,7 @@ export class LifeInsuranceComponent implements OnInit {
     if (data) {
       data.inputData = this.inputData;
     } else {
-      data = {inputData: this.inputData};
+      data = { inputData: this.inputData };
     }
     const fragmentData = {
       flag: 'opencurrentpolicies',
@@ -1550,7 +1559,7 @@ export interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 'HDFC Ergo My Health Suraksha', name: '7,00,000', weight: '19,201', symbol: 'Waiting for approval'},
+  { position: 'HDFC Ergo My Health Suraksha', name: '7,00,000', weight: '19,201', symbol: 'Waiting for approval' },
 ];
 
 export interface PeriodicElement1 {
@@ -1561,10 +1570,10 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {name: 'LIC Jeevan Saral', sum: '20,00,000', premium: '27,000', advice: 'Stop paying premiums'},
+  { name: 'LIC Jeevan Saral', sum: '20,00,000', premium: '27,000', advice: 'Stop paying premiums' },
 ];
 const ELEMENT_DATA2: PeriodicElement1[] = [
-  {name: 'LIC Jeevan Saral', sum: '20,00,000', premium: '27,000', advice: 'Stop paying premiums'},
+  { name: 'LIC Jeevan Saral', sum: '20,00,000', premium: '27,000', advice: 'Stop paying premiums' },
 ];
 
 export interface PeriodicElement2 {

@@ -40,6 +40,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   deletedEmailData = [];
   delayTime: number;
   kycLoader: boolean;
+  kycComplaintId: number;
 
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
@@ -146,8 +147,9 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     this.userData = AuthService.getUserInfo();
     this.advisorId = AuthService.getAdvisorId();
     this.advisorData = AuthService.getUserInfo();
-    this.basicDetailsData = data;
+    this.basicDetailsData = Object.assign({}, data);
     this.tempBasicData = data;
+    this.kycComplaintId = data.kycComplaint ? data.kycComplaint : 0;
     this.delayTime = .9;
     this.idData = (this.fieldFlag != 'familyMember') ? this.basicDetailsData.clientId : this.basicDetailsData.familyMemberId;
     if (data.fieldFlag == 'familyMember') {
@@ -311,18 +313,32 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
   }
+  getTaxStatusOfPan() {
+    let taxStatus: string
+
+    if (this.invTypeCategory == 1) {
+      taxStatus = "01";
+    }
+    if (this.invTypeCategory == 3) {
+      taxStatus = "03";
+    }
+    if (this.invTypeCategory == 4) {
+      taxStatus = "13";
+    }
+    return taxStatus;
+  }
 
   getKycStatusOfPan(event) {
     if (event.value.length == 10) {
       this.kycLoader = true;
       const obj = {
         pan: event.value,
-        taxStatus: this.invTaxStatus
+        taxStatus: "01"
       }
       this.peopleService.kycStatusOfPan(obj).subscribe(
         data => {
           this.kycLoader = false;
-          this.basicDetailsData.kycComplaint = data.status;
+          this.kycComplaintId = data.status;
         }, err => {
           this.kycLoader = false;
           this.eventService.openSnackBar(err, "Dismiss");
@@ -710,7 +726,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
         status: (this.fieldFlag == 'client') ? 1 : 2,
         clientType: parseInt(this.invTypeCategory),
         clientCode: (this.invTypeCategory == 1) ? this.basicDetails.value.clientCode : this.nonIndividualForm.value.clientCode,
-        kycComplaint: this.basicDetailsData.kycComplaint
+        kycComplaint: this.kycComplaintId
       };
       if (this.invTypeCategory == 1) {
         obj.dateOfBirth = this.datePipe.transform(this.basicDetails.controls.dobAsPerRecord.value, 'dd/MM/yyyy');
@@ -972,7 +988,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       anniversaryDate: null,
       gstin: (this.invTypeCategory == '3' || this.invTypeCategory == '4') ? this.nonIndividualForm.controls.gstinNum.value : null,
       companyStatus: ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comStatus.value != '') ? this.nonIndividualForm.controls.comStatus.value : null,
-      kycComplaint: this.basicDetailsData.kycComplaint
+      kycComplaint: this.kycComplaintId
     };
 
     if (this.invTypeCategory != 2) {

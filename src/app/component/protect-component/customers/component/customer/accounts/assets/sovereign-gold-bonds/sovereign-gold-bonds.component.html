@@ -168,7 +168,8 @@
           <td *matFooterCellDef mat-footer-cell class=" "></td>
         </ng-container>
         <ng-container matColumnDef="description">
-          <th *matHeaderCellDef class="br  w-14" mat-header-cell mat-sort-header="active"> Description</th>
+          <th mat-sort-header="description" *matHeaderCellDef class="br  w-14" mat-header-cell mat-sort-header="active">
+            Description</th>
           <td *matCellDef="let element" class="br w-14" mat-cell>
             <div class="bar">
               {{!isLoading ? (element.description && element.description != 'null' ? element.description : '-') : ''}}
@@ -222,6 +223,8 @@
 </div>
 <!-- -------------------- pdf ---------------------------- -->
 <div #sgbPdf id="tempSgb" class="hide">
+  <html>
+  <meta charset="UTF-8">
   <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
     <tr>
       <td>
@@ -293,19 +296,19 @@
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Owner</td>
             <td
-              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; text-align: right;">
+              style="padding: 7px 8px;text-align: right;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Units (grams) </td>
             <td
-              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+              style="padding: 7px 8px;text-align: right;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Current value
             </td>
             <td
-              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+              style="padding: 7px 8px;text-align: right;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Interest amount </td>
-            <td
+            <!-- <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-              Invested amount </td>
-            <td
+              Invested amount </td> -->
+            <!-- <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Investment date </td>
             <td
@@ -313,13 +316,16 @@
               Maturity value </td>
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
-              Maturity date </td>
+              Maturity date </td> -->
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Bond name & series </td>
             <td
-              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+              style="padding: 7px 8px;text-align: right;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               XIRR (as on date) </td>
+            <td
+              style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
+              Description </td>
             <td
               style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-top: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;">
               Status </td>
@@ -335,24 +341,24 @@
             </td>
 
             <td
-              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0;">
+              style="padding: 7px 8px;text-align: right;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0; ">
               <span *ngIf="element.unitsInGramForEditView && !isLoading">{{element.unitsInGramForEditView}}</span>
             </td>
             <td
-              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
+              style="padding: 7px 8px;text-align: right;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0; ">
               <div *ngIf="element.currentValue == 0"><span *ngIf="!isLoading">-</span></div>
               <div *ngIf="element.currentValue != 0">{{!isLoading ? "₹" : ""}}<span [value]="element.currentValue"
                   appFormatNumber>{{element.currentValue }}</span>
               </div>
             </td>
             <td
-              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
+              style="padding: 7px 8px;text-align: right;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; ">
               <div *ngIf="element.interestAmountYearlyToShow == 0"><span *ngIf="!isLoading">-</span></div>
               <div *ngIf="element.interestAmountYearlyToShow != 0">{{!isLoading ? "₹" : ""}}<span
                   [value]="element.interestAmountYearlyToShow"
                   appFormatNumber>{{element.interestAmountYearlyToShow}}</span></div>
             </td>
-            <td
+            <!-- <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <div *ngIf="element.investmentAmountToShow == 0"><span *ngIf="!isLoading">-</span></div>
               <div *ngIf="element.investmentAmountToShow != 0">{{!isLoading ? "₹" : ""}}<span
@@ -373,17 +379,24 @@
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <div>{{element.maturityDate ? (element.maturityDate | date:'dd/MM/yyyy') : '-'}}</div>
-            </td>
+            </td> -->
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
               <span>
                 {{element.bondNameAndSeries ? element.bondNameAndSeries : '-'}}
               </span>
             </td>
+
             <td
-              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
+              style="padding: 7px 8px;text-align: right;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; ">
               <div><span>{{element.xirr ? element.xirr : '-'}}</span>{{!isLoading
                 ? "%" : ""}}</div>
+            </td>
+            <td
+              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
+              <span>
+                {{!isLoading ? (element.description && element.description != 'null' ? element.description : '-') : ''}}
+              </span>
             </td>
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left; border-bottom: 1px solid #DADCE0; ">
@@ -422,15 +435,6 @@
             <td
               style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0; ">
             </td>
-            <td
-              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0; ">
-            </td>
-            <td
-              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0; ">
-            </td>
-            <td
-              style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right; border-bottom: 1px solid #DADCE0; ">
-            </td>
           </tr>
 
         </table>
@@ -443,4 +447,6 @@
       </td>
     </tr>
   </table>
+
+  </html>
 </div>

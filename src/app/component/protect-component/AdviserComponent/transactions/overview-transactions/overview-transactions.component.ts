@@ -17,6 +17,7 @@ import { EnumDataService } from 'src/app/services/enum-data.service';
 import { TransactionRoleService } from "../transaction-role.service";
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { CredentialsErrorPopupComponent } from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
+import { AddNewAllKycComponent } from '../kyc-transactions/add-new-all-kyc/add-new-all-kyc.component';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -221,7 +222,7 @@ export class OverviewTransactionsComponent implements OnInit {
           this.percentageTrasact = ((this.doneTrasaction / this.transactionCount) * 100);
           this.percentageTrasact = (this.percentageTrasact).toFixed(2);
         }
-        this.pendingTransaction = this.rejectionTransaction.length;
+        this.pendingTransaction = this.pendingTransaction.length;
         this.rejectionTransaction = this.rejectionTransaction.length;
 
       },
@@ -339,5 +340,28 @@ export class OverviewTransactionsComponent implements OnInit {
       }
     );
 
+  }
+
+  openAddAllkyc(data, flag) {
+    data['btnFlag'] = 'Cancel';
+    const fragmentData = {
+      flag,
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: AddNewAllKycComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // this.getBSECredentials();
+            // data ? data.kycComplaint = 2 : '';
+          }
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
   }
 }

@@ -143,7 +143,8 @@
                       <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                         <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                           <span *ngIf="fixedIncome.currentValue!=0">₹</span>
-                          <span *ngIf="fixedIncome" appFormatNumber [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
+                          <span *ngIf="fixedIncome" appFormatNumber
+                            [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' :
                             fixedIncome.currentValue}}</span>
                         </p>
                         <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
@@ -221,7 +222,8 @@
                     <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
                       <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                         <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                        <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                        <span appFormatNumber [value]="smallSavingScheme.currentValue"
+                          *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
                           smallSavingScheme.currentValue}}</span>
                       </p>
                       <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
@@ -350,8 +352,8 @@
                   <p class="m-0 roboto f-400 f-16">As on
                     {{asOnDate | date:'dd/MM/yyyy'}}</p>
                   <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
-                    <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24"
-                      matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
+                    <img *ngIf="!fragmentData.isSpinner && !letsideBarLoader" (click)="generatePdf(null)"
+                      class=" c-p h-24" matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
                     <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
                   </div>
@@ -380,7 +382,8 @@
                       </div>
                       <div class="col-md-6 pl-0">
                         <h2 *ngIf="mainLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
-                          ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+                          ₹<span appFormatNumber
+                            [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                             liabilityTotal}}</span>
                         </h2>
                       </div>
@@ -497,7 +500,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6 col-md-6 pt-12-1200 pl-8-1200" *ngIf="!noCashflowData">
+                    <div class="col-xl-4 col-lg-6 col-md-6 pt-12-1200 pl-10" *ngIf="!noCashflowData">
                       <mat-select formControlName="bankfilter" class="form-control">
                         <mat-option [value]="'all'">
                           All banks
@@ -638,204 +641,308 @@
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>
-  <!---------------------------------pdf ----------------------->
-  <div id="portfolioSummary">
+</div>
+<!---------------------------------pdf ----------------------->
+<div id="portfolioSummary">
 
-    <table style="width: 100%;color: #000;font-family: 'Roboto', sans-serif;    border-collapse: collapse;">
-      <tbody>
-        <tr>
-          <td colspan="3" style="border-bottom:1px solid #ddd;">
-            <table style="width: 100%;">
-              <tr>
-                <td style="text-align: left; vertical-align: top; width: 20%;">
-                  <div
-                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-                  </div>
-                  <div
-                    *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
-                  </div>
-                  <div
-                    *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
-                  </div>
-                </td>
-                <td style=" text-align: right; width: 50%;">
-                  <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
-                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
-                  <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
-                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
-                      Mob
-                      number:</strong>
-                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
-                  </p>
-                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
-                      Email:</strong>
-                    {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
+  <table style="width: 100%;color: #000;font-family: 'Roboto', sans-serif;    border-collapse: collapse;">
+    <tbody>
+      <tr>
+        <td colspan="3" style="border-bottom:1px solid #ddd;">
+          <table style="width: 100%;">
+            <tr>
+              <td style="text-align: left; width: 20%;">
+                <div
+                  *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                  <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                </div>
+                <div
+                  *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                  <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
+                <div
+                  *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                  <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
+                </div>
+              </td>
+              <td style=" text-align: right; width: 50%;vertical-align: top;">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px; margin-bottom: 5px;" *ngIf="userInfo">
+                  {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
+                <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                    Mob
+                    number:</strong>
+                  {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}
+                </p>
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong>
+                    Email:</strong>
+                  {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
-                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
-                      {{'Plan Summary'}}</strong>
-                  </p>
-                  <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
-                      {{reportDate | date:'dd-MMM-yyyy' }}</strong>
-                  </p>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td rowspan="4"
-            style="border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;width: 250px;padding-top: 12px;">
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
+                    {{'PortFolio Summary'}}</strong>
+                </p>
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
+                    {{reportDate | date:'dd-MMM-yyyy' }}</strong>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2" style="padding: 10px;"></td>
+            </tr>
 
-            <span style="padding-top: 12px;">NET WORTH</span><br>
-            <span style="font-size: 30px;"> <span>₹</span>
-              <span *ngIf="letsideBarLoader==false" appFormatNumber
+
+            <tr>
+              <td colspan="8" style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;"
+                *ngIf="clientData">
+                Client name: {{this.clientData.name ? this.clientData.name : '-'}}</td>
+
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="4"
+          style="border-right: 1px solid #ddd;border-bottom: 1px solid #ddd;width: 250px;padding-top: 12px;">
+
+          <span style="padding-top: 12px;">NET WORTH</span><br>
+          <span style="font-size: 30px;"> <span>₹</span>
+            <span *ngIf="letsideBarLoader==false" appFormatNumber
+              [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+              liabilityTotal}}</span></span>
+          <div style="padding-top: 15px;padding-right: 10px;">
+            <span>ASSETS</span>
+            <span style="float: right;"><span *ngIf="totalAssetsWithoutLiability>0">₹</span><span appFormatNumber
+                [value]="totalAssetsWithoutLiability" class="bar">{{totalAssetsWithoutLiability }}</span></span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 10px;">
+            <span>LIABILITIES</span>
+            <span style="float: right;"> <span *ngIf="liabilityTotal>0">₹</span><span appFormatNumber
+                [value]="liabilityTotal" class="bar">{{liabilityTotal}}</span></span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 10px;">
+            <span>Insurance</span>
+            <span style="float: right;">
+              <span *ngIf="totalInsurance>0">₹</span><span appFormatNumber [value]="totalInsurance"
+                class="bar">{{totalInsurance}}</span>
+            </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Mutual funds </span>
+            <span style="float: right;"> <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
+              <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
+                ? '-' : mutualFundValue.currentValue}}
+              </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false"
+                  style="padding-bottom: 10px;">{{mutualFundValue.percentage == 0 ? '-' :
+                  mutualFundValue.percentage}}
+                  <span *ngIf="mutualFundValue.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Stocks </span>
+            <span style="float: right;"><span *ngIf="stocks.currentValue!=0">₹</span>
+              <span [value]="stocks.currentValue" appFormatNumber>{{stocks.currentValue == 0 ? '-' :
+                stocks.currentValue}}
+              </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{stocks.percentage == 0
+                  ? '-' : stocks.percentage}}
+                  <span *ngIf="stocks.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Fixed Income </span>
+            <span style="float: right;"> <span *ngIf="fixedIncome.currentValue!=0">₹</span>
+              <span *ngIf="fixedIncome" appFormatNumber [value]="fixedIncome.currentValue">{{fixedIncome.currentValue
+                == 0 ? '-' :
+                fixedIncome.currentValue}}</span> <br><span style="float: right;"> <span
+                  *ngIf="letsideBarLoader==false">
+                  {{fixedIncome.percentage == 0 ? '-' : fixedIncome.percentage}}
+                  <span *ngIf="fixedIncome.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Real estate </span>
+            <span style="float: right;"> <span *ngIf="realEstate.currentValue!=0">₹</span>
+              <span appFormatNumber [value]="realEstate.currentValue" *ngIf="realEstate">{{realEstate.currentValue ==
+                0 ? '-' : realEstate.currentValue}}</span> <br><span style="float: right;"> <span
+                  *ngIf="letsideBarLoader==false">{{realEstate.percentage == 0 ? '-' : realEstate.percentage}}
+                  <span *ngIf="realEstate.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Retirement a/c </span>
+            <span style="float: right;"><span *ngIf="retirement.currentValue!=0">₹</span>
+              <span appFormatNumber [value]="retirement.currentValue" *ngIf="summaryMap">
+                {{retirement.currentValue == 0 ? '-' : retirement.currentValue}}</span> <br><span style="float: right;">
+                <span *ngIf="letsideBarLoader==false">{{retirement.percentage == 0 ? '-' :
+                  retirement.percentage}}
+                  <span *ngIf="retirement.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Small savings </span>
+            <span style="float: right;"> <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
+              <span appFormatNumber [value]="smallSavingScheme.currentValue"
+                *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
+                smallSavingScheme.currentValue}}</span> <br><span style="float: right;"> <span
+                  *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' :
+                  smallSavingScheme.percentage}}
+                  <span *ngIf="smallSavingScheme.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Cash and bank </span>
+            <span style="float: right;"><span *ngIf="cashAndFLow.currentValue!=0">₹</span>
+              <span appFormatNumber [value]="cashAndFLow.currentValue" *ngIf="cashAndFLow">{{cashAndFLow.currentValue
+                == 0 ? '-' : cashAndFLow.currentValue}}</span> <br><span style="float: right;"> <span
+                  *ngIf="letsideBarLoader==false">{{cashAndFLow.percentage == 0 ? '-' :
+                  cashAndFLow.percentage}}
+                  <span *ngIf="cashAndFLow.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 30px;">
+            <span> Commodities </span>
+            <span style="float: right;"><span *ngIf="Commodities.currentValue!=0">₹</span>
+              <span appFormatNumber [value]="Commodities.currentValue" *ngIf="Commodities">{{Commodities.currentValue
+                == 0 ? '-' : Commodities.currentValue}}</span><br><span style="float: right;"> <span
+                  *ngIf="letsideBarLoader==false">{{Commodities.percentage == 0 ? '-' :
+                  Commodities.percentage}}
+                  <span *ngIf="Commodities.percentage!=0">%</span></span></span> </span>
+          </div>
+          <div style="padding-top: 15px;padding-right: 10px;padding-bottom: 30px;">
+            <span> Other assets </span>
+            <span style="float: right;"> <span *ngIf="Others?.currentValue!=0">₹</span>
+              <span appFormatNumber [value]="Others?.currentValue ? Others?.currentValue : '-'" *ngIf="Others"></span>
+              <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{Others?.percentage ?
+                  Others?.percentage : '-'}}
+                  <span *ngIf="Others?.percentage!=0">%</span></span></span> </span>
+          </div>
+        </td>
+        <td
+          style="border-bottom:1px solid #ddd;width: 40%;font-size: 20px;font-weight: bold;padding-bottom: 10px;padding-left: 10px;padding-top: 12px;">
+          Portfolio summary</td>
+        <td style="border-bottom:1px solid #ddd;text-align: right;">As on {{asOnDate | date:'dd/MM/yyyy'}}</td>
+      </tr>
+      <tr>
+        <td rowspan="2" style="padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
+          <span style="font-size: 18px;">
+            Portfolio growth <span style="float: right;font-size: 30px;color: #008fff!important;">₹<span appFormatNumber
                 [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
-                liabilityTotal}}</span></span>
-            <div style="padding-top: 15px;padding-right: 10px;">
-              <span>ASSETS</span>
-              <span style="float: right;"><span *ngIf="totalAssetsWithoutLiability>0">₹</span><span appFormatNumber
-                  [value]="totalAssetsWithoutLiability" class="bar">{{totalAssetsWithoutLiability }}</span></span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 10px;">
-              <span>LIABILITIES</span>
-              <span style="float: right;"> <span *ngIf="liabilityTotal>0">₹</span><span appFormatNumber
-                  [value]="liabilityTotal" class="bar">{{liabilityTotal}}</span></span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 10px;">
-              <span>INSURANCE</span>
-              <span style="float: right;">
-                <span *ngIf="totalInsurance>0">₹</span><span appFormatNumber [value]="totalInsurance"
-                  class="bar">{{totalInsurance}}</span>
-              </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Mutual funds </span>
-              <span style="float: right;"> <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
-                <span [value]="mutualFundValue.currentValue" appFormatNumber>{{mutualFundValue.currentValue == 0
-                  ? '-' : mutualFundValue.currentValue}}
-                </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' :
-                    mutualFundValue.percentage}}
-                    <span *ngIf="mutualFundValue.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Stocks </span>
-              <span style="float: right;"><span *ngIf="stocks.currentValue!=0">₹</span>
-                <span [value]="stocks.currentValue" appFormatNumber>{{stocks.currentValue == 0 ? '-' :
-                  stocks.currentValue}}
-                </span> <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{stocks.percentage == 0
-                    ? '-' : stocks.percentage}}
-                    <span *ngIf="stocks.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Fixed Income </span>
-              <span style="float: right;"> <span *ngIf="fixedIncome.currentValue!=0">₹</span>
-                <span *ngIf="fixedIncome" appFormatNumber [value]="fixedIncome.currentValue">{{fixedIncome.currentValue
-                  == 0 ? '-' :
-                  fixedIncome.currentValue}}</span> <br><span style="float: right;"> <span
-                    *ngIf="letsideBarLoader==false">
-                    {{fixedIncome.percentage == 0 ? '-' : fixedIncome.percentage}}
-                    <span *ngIf="fixedIncome.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Real estate </span>
-              <span style="float: right;"> <span *ngIf="realEstate.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="realEstate.currentValue" *ngIf="realEstate">{{realEstate.currentValue ==
-                  0 ? '-' : realEstate.currentValue}}</span> <br><span style="float: right;"> <span
-                    *ngIf="letsideBarLoader==false">{{realEstate.percentage == 0 ? '-' : realEstate.percentage}}
-                    <span *ngIf="realEstate.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Retirement a/c </span>
-              <span style="float: right;"><span *ngIf="retirement.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="retirement.currentValue" *ngIf="summaryMap">
-                  {{retirement.currentValue == 0 ? '-' : retirement.currentValue}}</span> <br><span
-                  style="float: right;">
-                  <span *ngIf="letsideBarLoader==false">{{retirement.percentage == 0 ? '-' :
-                    retirement.percentage}}
-                    <span *ngIf="retirement.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Small savings </span>
-              <span style="float: right;"> <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="smallSavingScheme.currentValue" *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' :
-                  smallSavingScheme.currentValue}}</span> <br><span style="float: right;"> <span
-                    *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' :
-                    smallSavingScheme.percentage}}
-                    <span *ngIf="smallSavingScheme.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Cash and bank </span>
-              <span style="float: right;"><span *ngIf="cashAndFLow.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="cashAndFLow.currentValue" *ngIf="cashAndFLow">{{cashAndFLow.currentValue
-                  == 0 ? '-' : cashAndFLow.currentValue}}</span> <br><span style="float: right;"> <span
-                    *ngIf="letsideBarLoader==false">{{cashAndFLow.percentage == 0 ? '-' :
-                    cashAndFLow.percentage}}
-                    <span *ngIf="cashAndFLow.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;border-bottom: 1px solid #ddd;padding-bottom: 20px;">
-              <span> Commodities </span>
-              <span style="float: right;"><span *ngIf="Commodities.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="Commodities.currentValue" *ngIf="Commodities">{{Commodities.currentValue
-                  == 0 ? '-' : Commodities.currentValue}}</span><br><span style="float: right;"> <span
-                    *ngIf="letsideBarLoader==false">{{Commodities.percentage == 0 ? '-' :
-                    Commodities.percentage}}
-                    <span *ngIf="Commodities.percentage!=0">%</span></span></span> </span>
-            </div>
-            <div style="padding-top: 15px;padding-right: 10px;">
-              <span> Other assets </span>
-              <span style="float: right;"> <span *ngIf="Others?.currentValue!=0">₹</span>
-                <span appFormatNumber [value]="Others?.currentValue ? Others?.currentValue : '-'" *ngIf="Others"></span>
-                <br><span style="float: right;"> <span *ngIf="letsideBarLoader==false">{{Others?.percentage ?
-                    Others?.percentage : '-'}}
-                    <span *ngIf="Others?.percentage!=0">%</span></span></span> </span>
-            </div>
-          </td>
-          <td
-            style="border-bottom:1px solid #ddd;width: 40%;font-size: 20px;font-weight: bold;padding-bottom: 10px;padding-left: 10px;padding-top: 12px;">
-            Portfolio summary</td>
-          <td style="border-bottom:1px solid #ddd;text-align: right;">As on {{asOnDate | date:'dd/MM/yyyy'}}</td>
-        </tr>
-        <tr>
-          <td rowspan="1" style="padding-top: 20px;padding-left: 20px;padding-bottom: 20px;">
-            <span style="font-size: 18px;">
-              Portfolio growth <span style="float: right;font-size: 30px;color: #008fff!important;">₹<span
-                  appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
-                  liabilityTotal}}</span></span></span><br>
+                liabilityTotal}}</span></span></span><br>
 
-            <div style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">$showpiechart2</div>
-          </td>
-          <td rowspan="1" style="text-align: center;">
-            <span style="font-size: 18px;">
-              Asset allocation
-            </span><br>
-            <div style="width: 150px;height: 150px;border-left:1px solid #ddd">$showpiechart1</div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <br>
-          </td>
-        </tr>
+          <div *ngIf="graphList && graphList.length > 0"
+            style="width: 150px;height: 150px;padding-top: 20px;padding-bottom: 60px;">
+            $showpiechart2</div>
+          <div *ngIf="graphList && graphList.length==0">
+
+            <img
+              src="https://res.cloudinary.com/futurewise/image/upload/v1616399588/svg_assets/portfolio-growth-icon.png"
+              style="width: 50%;">
+            <h4>Not enough data to display</h4>
+            <p> Before we can create any charts, <br> we will
+              first need to get some data in here </p>
 
 
-        <tr>
+          </div>
+        </td>
+        <td rowspan="2" style="text-align: center;vertical-align: top;border-left: 1px solid rgb(221, 221, 221);">
+          <span style="font-size: 22px;">
+            Asset allocation
+          </span><br>
+          <div *ngIf="assetAllocationRes" style="width: 150px;height: 150px;">$showpiechart1
+          </div>
+          <div *ngIf=" !assetAllocationRes">
 
-          <td rowspan="2" style="padding-top: 20px;padding-left: 20px;" colspan="2"
-            *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag">
-            <div style="padding-top: 180px;">
-              <span style="font-size: 18px;padding-top: 30px;">
-                Net cash flow </span><br>
-            </div>
+            <img
+              src="https://res.cloudinary.com/futurewise/image/upload/v1616395224/svg_assets/asset-allocation-empty-state.svg">
+            <h4>Not enough data to display</h4>
+            <p> Before we can create any charts, <br> we will
+              first need to get some data in here </p>
 
 
-            <div *ngIf="cashFlowViewDataSource.length > 0 || !cashflowFlag" style="height: 150px;">$showpiechart3</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <br>
+        </td>
+      </tr>
 
-  </div>
+
+      <tr>
+
+        <td rowspan="2" style="padding-left: 20px;vertical-align: top;" colspan="2">
+
+          <table style="width: 100%;border-collapse: collapse;">
+            <tr>
+              <td style="padding-top: 300px;font-size: 22px;">
+                Net cash flow
+              </td>
+            </tr>
+            <tr>
+              <td *ngIf="cashFlowViewDataSource?.length > 0">
+                <table style="border:1px solid #ddd;width: 100%;border-collapse: collapse;">
+                  <tr>
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;font-weight: bold;">
+                      Description
+                    </td>
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;font-weight: bold;">
+                      Date
+                    </td>
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;font-weight: bold;">
+                      Amount
+                    </td>
+                  </tr>
+                  <tr *ngFor="let element of cashFlowViewDataSource">
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">
+                      <div>
+                        <div>
+                          <span>{{element.institutionName || element.bankName || element.description}}
+                          </span>
+                          <span>{{element.serialNumber}}</span>
+                        </div>
+                        <div>
+                          <span>{{getShortForm(element)}} </span>
+                          <span>{{element.ownerName}}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">{{element.targetDate |
+                      date:'dd/MM/yyyy'}} </td>
+                    <td style="border-bottom: 1px solid #ddd;color:#FF6823;padding: 6px 8px;"><span
+                        [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
+                        ₹
+                        <span appFormatNumber>
+                          {{element.currentValue}}
+                        </span>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td style="vertical-align: top;">
+
+                <table style="width: 100%;">
+
+
+                  <tr>
+                    <td>
+                      <div *ngIf="cashFlowViewDataSource?.length > 0">
+                        <div>$showpiechart3</div>
+                      </div>
+                      <div *ngIf="cashFlowViewDataSource?.length==0">
+                        <img
+                          src="https://res.cloudinary.com/futurewise/image/upload/v1616244828/svg_assets/net-cash-flow-empty-state.svg">
+                        <h4>Not enough data to display</h4>
+                        <p> Before we can create any charts, <br> we will
+                          first need to get some data in here </p>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+
+
+
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 </div>

@@ -31,7 +31,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   clientsSend: any;
   advisorId: any;
   dataClients: { clientId: number; };
-  setObj: {};
+  setObj: any;
   callBulk: boolean = false;
   reportType: any;
   clientCount: any;
@@ -41,6 +41,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   clientDetails = new MatTableDataSource(this.data);
   checkFlag: boolean = false;
   overviewAll: boolean = false
+  sendCopy: boolean = false;
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
@@ -77,14 +78,16 @@ export class OpenSendReportPopupComponent implements OnInit {
     if (this.data1.reportType == 'overview') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
-        reportTypeId: 1
+        reportTypeId: 1,
+        sendCopy: false
       }
       this.reportType = 1
     } else if (this.data1.reportType == 'summary') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 2,
-        toDate: this.data1.selectedElement.toDate
+        toDate: this.data1.selectedElement.toDate,
+        sendCopy: false
       }
       this.reportType = 2
     } else if (this.data1.reportType == 'allTransactions') {
@@ -92,7 +95,8 @@ export class OpenSendReportPopupComponent implements OnInit {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 3,
         fromDate: this.data1.selectedElement.fromDate,
-        toDate: this.data1.selectedElement.toDate
+        toDate: this.data1.selectedElement.toDate,
+        sendCopy: false
       }
       this.reportType = 3
     } else if (this.data1.reportType == 'unrealisedTransactions') {
@@ -100,7 +104,8 @@ export class OpenSendReportPopupComponent implements OnInit {
         advisorId: AuthService.getAdvisorId(),
         reportTypeId: 4,
         fromDate: this.data1.selectedElement.fromDate,
-        toDate: this.data1.selectedElement.toDate
+        toDate: this.data1.selectedElement.toDate,
+        sendCopy: false
       }
       this.reportType = 4
     } else if (this.data1.reportType == 'capitalGainSummary') {
@@ -109,6 +114,7 @@ export class OpenSendReportPopupComponent implements OnInit {
         reportTypeId: 5,
         fromYear: this.data1.selectedElement.from,
         toYear: this.data1.selectedElement.to,
+        sendCopy: false
       }
       this.reportType = 5
     } else if (this.data1.reportType == 'capitalGainDetails') {
@@ -117,6 +123,7 @@ export class OpenSendReportPopupComponent implements OnInit {
         reportTypeId: 6,
         fromYear: this.data1.selectedElement.from,
         toYear: this.data1.selectedElement.to,
+        sendCopy: false
       }
       this.reportType = 6
     }
@@ -127,6 +134,7 @@ export class OpenSendReportPopupComponent implements OnInit {
       advisorId: AuthService.getAdvisorId(),
       reportTypeId: 1
     };
+    this.setObj.sendCopy = this.sendCopy
     this.backOfficeService.getClientIdByLoop(this.setObj).subscribe(
       data => {
         console.log('getClientIdByLoop ==', data)

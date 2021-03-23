@@ -21,6 +21,7 @@ export class StatusReportComponent implements OnInit {
   selectAll = false;
   activeFilter;
   disabledResend: boolean = false;
+  progressBar: number;
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
@@ -69,7 +70,7 @@ export class StatusReportComponent implements OnInit {
       data => {
         if (data) {
           console.log('getLog ==', data);
-          this.close();
+          this.close(true);
         }
         this.isLoading = false;
       }
@@ -92,6 +93,10 @@ export class StatusReportComponent implements OnInit {
   selectToResend(event, value) {
     this.showResend = true;
     value.checked = event.checked;
+    let checkList = this.dataForFilter.filter((x) => x.checked == true);
+    if (checkList.length == 0) {
+      this.showResend = false
+    }
   }
   filterData(type) {
     if (type == 'ALL') {
@@ -114,6 +119,7 @@ export class StatusReportComponent implements OnInit {
         console.log('refreshCount ==', data);
         this.refreshCount = data;
         console.log(this.refreshCount);
+        this.progressBar = (this.refreshCount.emailSentCount / this.inputData.clientCount) * 100
       }
     );
   }
@@ -129,6 +135,9 @@ export class StatusReportComponent implements OnInit {
           this.clientDetails = data;
           this.clientDetails.forEach(element => {
             element.checked = false;
+            if (element.email) {
+              element.email = element.email.split(",")
+            }
           });
           this.dataForFilter = this.clientDetails;
           console.log('clientDetails', this.clientDetails);
@@ -139,9 +148,9 @@ export class StatusReportComponent implements OnInit {
       }
     );
   }
-  close() {
+  close(flag) {
     this.subInjectService.changeNewRightSliderState({
-      state: 'close',
+      state: 'close', refreshRequired: flag
     });
   }
 }

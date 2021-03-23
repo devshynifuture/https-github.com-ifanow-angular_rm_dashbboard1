@@ -530,7 +530,13 @@ export class MutualFundUnrealizedTranComponent {
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
-            this.getUnrealizedData();
+            //  this.getUnrealizedData();
+            if (this.resData) {
+              this.getMutualFundResponse(this.mfGetData);
+            } else {
+              this.getUnrealizedData()
+            }
+
           } else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
             this.isLoading = true;
             this.getMutualFundResponse(this.mfGetData);
@@ -1397,14 +1403,18 @@ export class MutualFundUnrealizedTranComponent {
     }
   }
 
-  Excel(tableTitle) {
+  Excel(tableTitle, flag) {
     this.showDownload = true;
     this.excelDownload = true
     setTimeout(() => {
       const blob = new Blob([document.getElementById('template').innerHTML], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
       });
-      saveAs(blob, tableTitle + '.xlsx');
+      if (flag == 'XLSX') {
+        saveAs(blob, tableTitle + '.xlsx');
+      } else {
+        saveAs(blob, tableTitle + '.xls');
+      }
     }, 400);
     // if (data) {
     //   this.fragmentData.isSpinner = false;

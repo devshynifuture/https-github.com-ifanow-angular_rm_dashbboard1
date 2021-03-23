@@ -865,14 +865,18 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.UtilService.htmlToPdf(header.innerHTML, para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
 
     }
-    Excel(tableTitle) {
+    Excel(tableTitle, flag) {
         this.excelDownload = true
         this.showDownload = true
         setTimeout(() => {
             var blob = new Blob([document.getElementById('template').innerHTML], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
             });
-            saveAs(blob, tableTitle + ".xlsx");
+            if (flag == 'XLSX') {
+                saveAs(blob, tableTitle + '.xlsx');
+            } else {
+                saveAs(blob, tableTitle + '.xls');
+            }
         }, 200);
         // if (data) {
         // this.fragmentData.isSpinner = false;

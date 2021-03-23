@@ -126,7 +126,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.count = 0
   }
   download(template, tableTitle) {
-    this.svg = this.chart.getSVG();
+    //this.svg = this.chart.getSVG();
     //let rows = this.tableEl._elementRef.nativeElement.rows;
     this.fragmentData.isSpinner = true;
     const para = document.getElementById(template);
@@ -135,7 +135,7 @@ export class OverviewRiskProfileComponent implements OnInit {
       name: tableTitle,
       landscape: true,
       key: 'showPieChart',
-      svg: this.svg
+      svg: null
     };
     let header = null
     this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, 'showPieChart', this.svg, true, null);
@@ -203,9 +203,7 @@ export class OverviewRiskProfileComponent implements OnInit {
     this.callFun(data)
   }
   callFun(data) {
-    this.chart = new Highcharts.Chart({
-
-      chart: { renderTo: 'container1' },
+    this.chart = Highcharts.chart('container1', {
       xAxis: { categories: ['<span class="hc-cat-title"></span>'] },
       yAxis: {
         min: 0,
@@ -509,14 +507,14 @@ export class OverviewRiskProfileComponent implements OnInit {
       }
       setTimeout(() => {
         this.percentage(this.feedsRiskProfile)
-      });
-      if (this.chart) {
         this.svg = this.chart.getSVG();
-      }
-      if (this.finPlanObj) {
-        this.ref.detectChanges();//to refresh the dom when response come
-        this.loaded.emit(this.riskTemp.nativeElement);
         this.loadsvg.emit(this.svg)
+      }, 300);
+
+      if (this.finPlanObj) {
+        this.ref.detectChanges();
+        this.loaded.emit(this.riskTemp.nativeElement);
+        //this.loadsvg.emit(this.svg)
 
       }
     } else {
