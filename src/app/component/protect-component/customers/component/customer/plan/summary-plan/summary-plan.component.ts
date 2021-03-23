@@ -441,13 +441,17 @@ export class SummaryPlanComponent implements OnInit {
 
     getStartAndEndDate() {
         var date = new Date();
-        var firstDay = new Date(date.getFullYear(), 0, 1);
-        var lastDay = new Date(date.getFullYear(), 11, 31);
+        let year = date.getMonth() < 3 ? date.getFullYear() - 1 : date.getFullYear();
+        var firstDay = new Date(year, 3, 1);
+        var lastDay = new Date(year + 1, 2, 31);
         this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
         this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
+        let startDateObj = new Date(this.startDate);
+        let endDateObj = new Date(this.endDate);
         var startYear = firstDay.getFullYear() - 1;
         var endYear = lastDay.getFullYear().toString().substr(-2);
-        this.yearToShow = startYear + '-' + endYear;
+
+        this.yearToShow = startDateObj.getFullYear() + '-' + endDateObj.getFullYear();
         console.log('startYearddddddddddddddddddddd', startYear);
         console.log('endYearddddddddddddddddddddd', endYear);
 
