@@ -83,7 +83,7 @@
 </div>
 <div class="row pt-20">
     <div class="col-md-12">
-        <div class="people-table-scroll fitScreen">
+        <div class="people-table-scroll fitScreen" *ngIf="clientDetails.length > 0">
             <table #tableEl mat-table [dataSource]="clientDetails" class=" skeletonAnimation"
                 [appSkeletonLoading]="isLoading" id="tbs" class=" ">
                 <ng-container matColumnDef="checkbox">
@@ -133,9 +133,12 @@
             </table>
         </div>
     </div>
-    <div class="col-md-12 pl-0 pr-0 pt-20 text-center" *ngIf="clientDetails.length  == 0 && !isLoading">
-        <span class="f-14">No data found</span>
+    <!-- <div class="col-md-12 pl-0 pr-0 pt-20 text-center" *ngIf="clientDetails.length  == 0 && !isLoading"> -->
+    <div *ngIf="clientDetails.length == 0 && !isLoading" class="d-flex flex-column align-items-center w-100 mt-5">
+        <img class="width300" src="assets/images/svg/noDataFound.svg">
+        <h4 class="text-center pt-12">No data found</h4>
     </div>
+    <!-- </div> -->
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-65">
     <div class="row">
