@@ -146,7 +146,9 @@ export class CustomiseSettingComponent implements OnInit {
     this.countCap = 0
     this.countCapDetail = 0
     if (offset > 0) {
-      this.dataSource.data = this.dataSource.data.concat(data)
+      if (data) {
+        this.dataSource.data = this.dataSource.data.concat(data)
+      }
     } else {
       this.dataSource.data = data
     }
