@@ -968,7 +968,13 @@ button.primary-sm {
 @media screen and (orientation:portrait) {
   #tabviewJs {
     transform: rotate(-90deg);
-    transform-origin: 50% 61%
+    transform-origin: 50% 61% // transform: rotate(-90deg);
+      // transform-origin: left top;
+      // width: 100vh;
+      // overflow-x: hidden;
+      // position: absolute;
+      // top: 100%;
+      // left: 0;
   }
 
   // .loginBox_adv .h-100vh {

@@ -100,8 +100,8 @@ export class SendNowReportsComponent implements OnInit {
     this.date.fromDate = this.datePipe.transform(this.date.fromDate, 'yyyy-MM-dd')
     this.date.toDate = this.datePipe.transform(this.date.toDate, 'yyyy-MM-dd')
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
-      width: '400px',
-      height: '500px',
+      width: '450px',
+      // height: '500px',
       data: { reportType: this.selectedReportType, selectedElement: this.date }
     });
     dialogRef.afterClosed().subscribe(result => {
