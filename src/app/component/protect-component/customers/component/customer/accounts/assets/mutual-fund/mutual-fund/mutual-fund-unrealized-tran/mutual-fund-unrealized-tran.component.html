@@ -21,7 +21,8 @@
             <mat-menu #menu1="matMenu" class="disabledOpacity">
                <button (click)="generatePdf()" mat-menu-item>PDF
                </button>
-               <button (click)="Excel('Mutual fund unrealized transactions')" mat-menu-item>XLSX</button>
+               <button (click)="Excel('Mutual fund unrealized transactions','XLS')" mat-menu-item>XLS</button>
+               <button (click)="Excel('Mutual fund unrealized transactions','XLSX')" mat-menu-item>XLSX</button>
             </mat-menu>
             <mat-spinner *ngIf="fragmentData.isSpinner" [diameter]="30"></mat-spinner>
          </div>

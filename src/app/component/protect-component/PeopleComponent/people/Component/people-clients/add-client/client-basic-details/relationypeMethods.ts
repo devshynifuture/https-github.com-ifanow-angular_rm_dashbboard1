@@ -25,6 +25,7 @@ export function relationListFilterOnID(clientType) {
         { name: 'LLP', value: 23 },
         { name: 'Family Trust', value: 24 },
         { name: 'Partnership', value: 25 },
+        { name: 'Son In Law', value: 26 }
     ]
     return relationList;
 

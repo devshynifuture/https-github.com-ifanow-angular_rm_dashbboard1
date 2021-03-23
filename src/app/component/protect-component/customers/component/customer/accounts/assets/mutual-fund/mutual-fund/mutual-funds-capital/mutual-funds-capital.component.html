@@ -18,7 +18,8 @@
                 </div>
                 <mat-menu #menu1="matMenu">
                     <button mat-menu-item (click)="generatePdf()">PDF</button>
-                    <button mat-menu-item (click)="Excel('Capital Gain')">XLSX</button>
+                    <button mat-menu-item (click)="Excel('Capital Gain','XLS')">XLS</button>
+                    <button mat-menu-item (click)="Excel('Capital Gain','XLSX')">XLSX</button>
                 </mat-menu>
                 <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">

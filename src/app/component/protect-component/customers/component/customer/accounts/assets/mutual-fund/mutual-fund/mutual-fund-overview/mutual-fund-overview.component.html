@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-6 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
                 <div class="pdfClass">
-                    <p class="text-danger mb-0 pr-12">Seen old data ?</p>
+                    <p class="text-danger mb-0 pr-12">Seeing old data ?</p>
                     <div class="width-60">
                         <p *ngIf="!refreshLoader" class="text-success pr-12 mb-0 c-p" (click)="refreshMfOfClient()">
                             Refresh
@@ -315,8 +315,7 @@
                                     <div class="bar height24">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.liquidPercentage && !isLoading">{{(this.liquidPercentage) ?
-                                                (liquidPercentage | number:'1.2-2') : '0'}}%</span><span
-                                                appFormatNumber
+                                                (liquidPercentage | number:'1.2-2') : '0'}}%</span><span appFormatNumber
                                                 *ngIf="!this.liquidPercentage && !isLoading ">0.00%</span>
                                         </p>
 
@@ -371,7 +370,7 @@
                                     <div class="bar height24 ">
                                         <p class="text-black mb-0 text-right"><span appFormatNumber
                                                 *ngIf="this.otherPercentage && !isLoading">{{(this.otherPercentage) ?
-                                                (this.hybridPercenatge | number:'1.2-2') : '0'}}%</span><span
+                                                (this.otherPercentage | number:'1.2-2') : '0'}}%</span><span
                                                 appFormatNumber
                                                 *ngIf="!this.otherPercentage && !isLoading ">0.00%</span>
                                         </p>
@@ -680,7 +679,8 @@
                                 <div class="bar"><span appFormatNumber
                                         *ngIf="element.data != 'i. Lifetime XIRR (All Transactions)' && !isLoading"
                                         [value]="element.amts"></span>
-                                    <span *ngIf="element.data == 'i. Lifetime XIRR (All Transactions)' &&  !isLoading">{{element.amts
+                                    <span
+                                        *ngIf="element.data == 'i. Lifetime XIRR (All Transactions)' &&  !isLoading">{{element.amts
                                         | number:'1.2-2'}}{{(isLoading) ? '' : '%'}}</span>
                                     <span *ngIf="isLoading">{{''}} </span>
 
