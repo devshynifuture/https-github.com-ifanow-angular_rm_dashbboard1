@@ -39,6 +39,7 @@
                 <p class="mb-12 pl-10 d-flex align-items-center   f-20">
                     {{(refreshCount)?inputData.clientCount - refreshCount.emailSentCount:''}}
                     <span class="primary-border c-p refeClassBox text-primary f-12"
+                        *ngIf="(inputData?.clientCount - refreshCount?.emailSentCount) != 0"
                         (click)="resendNow('fornotSent')">RESEND</span>
                 </p>
             </div>
