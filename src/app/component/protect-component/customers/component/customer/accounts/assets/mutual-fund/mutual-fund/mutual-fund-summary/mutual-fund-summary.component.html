@@ -14,7 +14,9 @@
             </a>
             <mat-menu #summarydownload="matMenu">
                 <button (click)="generatePdf()" mat-menu-item>PDF</button>
-                <button (click)="Excel('Mutual fund summary')" mat-menu-item>XLSX</button>
+                <button (click)="Excel('Mutual fund summary','XLS')" mat-menu-item>XLS</button>
+                <button (click)="Excel('Mutual fund summary','XLSX')" mat-menu-item>XLSX</button>
+
             </mat-menu>
             <mat-spinner class="mr-10" [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
             <!-- </div> -->

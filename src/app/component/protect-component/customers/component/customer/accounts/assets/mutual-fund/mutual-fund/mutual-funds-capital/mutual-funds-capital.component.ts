@@ -829,7 +829,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         // this.objSendToDetailedCapital.toDateYear =data.financialYear[0].to;
         // this.getCapitalgainRes(data.capitalGainData.responseData);
     }
-    Excel(tableTitle) {
+    Excel(tableTitle, flag) {
         // let rows = this.tableEl._elementRef.nativeElement.rows;
         // this.excel.generateExcel(rows, tableTitle)
         // let rows2 = this.tableEl._elementRef.nativeElement.rows;
@@ -841,7 +841,11 @@ export class MutualFundsCapitalComponent implements OnInit {
             var blob = new Blob([document.getElementById('template').innerHTML], {
                 type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
             });
-            saveAs(blob, tableTitle + ".xlsx");
+            if (flag == 'XLSX') {
+                saveAs(blob, tableTitle + '.xlsx');
+            } else {
+                saveAs(blob, tableTitle + '.xls');
+            }
         }, 200);
     }
     pdf(tableTitle) {
