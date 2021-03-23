@@ -351,12 +351,12 @@
                   <!-- (click)="dobAsPerRecord.open()" // asper bug raise in Mf the dropdown to choose date should be removed as we are not going to show any back dated data over here -->
                   <p class="m-0 roboto f-400 f-16">As on
                     {{asOnDate | date:'dd/MM/yyyy'}}</p>
-                  <!-- <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
-                    <img *ngIf="!fragmentData.isSpinner" (click)="generatePdf(null)" class=" c-p h-24"
-                      matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
+                  <div class="col-md-2 pl-0 d-flex align-items-center justify-content-end">
+                    <img *ngIf="!fragmentData.isSpinner && !letsideBarLoader" (click)="generatePdf(null)"
+                      class=" c-p h-24" matTooltip="Download PDF" src="assets/images/svg/download-pdf-blue.svg">
                     <mat-spinner [diameter]="24" *ngIf="fragmentData.isSpinner"></mat-spinner>
 
-                  </div> -->
+                  </div>
 
                   <!-- <button class="b-a br-0 width180 h-40" mat-button>
       
@@ -686,6 +686,17 @@
                 </p>
               </td>
             </tr>
+            <tr>
+              <td colspan="2" style="padding: 10px;"></td>
+            </tr>
+
+
+            <tr>
+              <td colspan="8" style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;"
+                *ngIf="clientData">
+                Client name: {{this.clientData.name ? this.clientData.name : '-'}}</td>
+
+            </tr>
           </table>
         </td>
       </tr>
@@ -856,12 +867,12 @@
 
           <table style="width: 100%;border-collapse: collapse;">
             <tr>
-              <td style="padding-top: 200px;font-size: 22px;">
+              <td style="padding-top: 300px;font-size: 22px;">
                 Net cash flow
               </td>
             </tr>
             <tr>
-              <td style="vertical-align: top;">
+              <td *ngIf="cashFlowViewDataSource?.length > 0">
                 <table style="border:1px solid #ddd;width: 100%;border-collapse: collapse;">
                   <tr>
                     <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;font-weight: bold;">
@@ -874,11 +885,29 @@
                       Amount
                     </td>
                   </tr>
-                  <tr>
-                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">RD Naitik Singhania
+                  <tr *ngFor="let element of cashFlowViewDataSource">
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">
+                      <div>
+                        <div>
+                          <span>{{element.institutionName || element.bankName || element.description}}
+                          </span>
+                          <span>{{element.serialNumber}}</span>
+                        </div>
+                        <div>
+                          <span>{{getShortForm(element)}} </span>
+                          <span>{{element.ownerName}}</span>
+                        </div>
+                      </div>
                     </td>
-                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">22/04/2021 </td>
-                    <td style="border-bottom: 1px solid #ddd;color:#FF6823;padding: 6px 8px;">RD Naitik Singhania
+                    <td style="border-bottom: 1px solid #ddd;padding: 6px 8px;">{{element.targetDate |
+                      date:'dd/MM/yyyy'}} </td>
+                    <td style="border-bottom: 1px solid #ddd;color:#FF6823;padding: 6px 8px;"><span
+                        [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
+                        ₹
+                        <span appFormatNumber>
+                          {{element.currentValue}}
+                        </span>
+                      </span>
                     </td>
                   </tr>
                 </table>

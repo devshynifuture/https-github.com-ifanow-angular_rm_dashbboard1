@@ -174,6 +174,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     !this.customerOverview.summaryLeftsidebarData ? this.calculateTotalSummaryValues() : this.calculateTotalSummaryValuesRes(this.customerOverview.summaryLeftsidebarData);
     !this.customerOverview.aumGraphdata ? this.getAumGraphData() : this.getAumGraphDataResponse(this.customerOverview.aumGraphdata);
     !this.customerOverview.assetAllocationChart ? this.getAssetAllocationSummary() : this.getAssetAllocationSummaryResponse(this.customerOverview.assetAllocationChart);
@@ -342,7 +343,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
     const para = document.getElementById('portfolioSummary');
     // const header = this.summaryTemplateHeader.nativeElement.innerHTML
-    this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'true', this.fragmentData, 'showPieChart', '', false, null, svgs);
+    this.util.htmlToPdfPort('', para.innerHTML, 'Financial plan', 'false', this.fragmentData, 'showPieChart', '', false, null, svgs);
 
   }
 
