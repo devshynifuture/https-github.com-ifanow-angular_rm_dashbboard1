@@ -1583,7 +1583,9 @@ export class MutualFundSummaryComponent implements OnInit {
       console.log('includes', test);
       if (element.folioNumber && test == true && this.pdfDownload != true) {
         let isin = element.isin ? ' | ' + element.isin : '';
-        element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        if (element.schemeName != 'Total') {
+          element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        }
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         element.navDate = element.navDate.replace("$NEXTLINE", ' | ')
         const navPresent = element.navDate.includes('|');
@@ -1592,7 +1594,9 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log(element.navDate)
       } else if (xls != true) {
         let isin = element.isin ? ' | ' + element.isin : '';
-        element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        if (element.schemeName != 'Total') {
+          element.schemeName = element.schemeName + isin + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        }
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         let nav = element.nav ? element.nav : '';
         element.navDate = (nav + ' | ' + element.navDate);
