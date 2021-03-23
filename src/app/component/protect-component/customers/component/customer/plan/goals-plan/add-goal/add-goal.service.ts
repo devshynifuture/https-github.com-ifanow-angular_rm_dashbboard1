@@ -116,7 +116,7 @@ export class AddGoalService {
       this.eventService.openSnackBar(err);
     })
   }
-  allocateOtherAssetToGoalRm(obj) {
+  allocateOtherAssetToGoalRm(obj, flag) {
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.refreshObservable.next();
       this.plansService.assetSubject.next(res);
