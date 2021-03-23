@@ -665,7 +665,7 @@
                     {{item[tweleventhArray]}}
                 </td>
             </tr>
-            <tr *ngIf="item.schemeName=='Total'">
+            <tr *ngIf="!item.groupName && !item.id ">
                 <td valign="top" *ngIf="customDataSource.data?.array[0]?.isCheked"
                     [ngStyle]="customDataSource.data?.array2[0].style">
                     <b>{{item[firstArrayTotal]}}</b>
