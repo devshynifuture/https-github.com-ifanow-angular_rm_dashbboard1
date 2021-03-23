@@ -1068,24 +1068,27 @@ export class LifeInsuranceComponent implements OnInit {
 
   getSumAssuredInAll(element) {
     element.sumAssured = 0;
-    element.sumInsuredIdv = 0;
-    if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
-      element.insuredMembers.forEach(ele => {
-        element.sumAssured += ele.sumInsured;
-      });
-    } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
-      element.policyFeatures.forEach(ele => {
-        element.sumInsuredIdv += ele.featureSumInsured;
-      });
-    } else {
-      element.sumInsuredIdv = element.sumInsuredIdv;
+    if (!element.sumInsuredIdv) {
+      element.sumInsuredIdv = 0;
+      if (element && element.hasOwnProperty('insuredMembers') && element.insuredMembers.length > 0) {
+        element.insuredMembers.forEach(ele => {
+          element.sumAssured += ele.sumInsured;
+        });
+      } else if (element && element.hasOwnProperty('policyFeatures') && element.policyFeatures.length > 0) {
+        element.policyFeatures.forEach(ele => {
+          element.sumInsuredIdv += ele.featureSumInsured;
+        });
+      } else {
+        element.sumInsuredIdv = element.sumInsuredIdv;
+      }
+
+      if (!element.sumInsuredIdv && element && element.hasOwnProperty('addOns') && element.addOns.length > 0) {
+        element.addOns.forEach(ele => {
+          element.sumInsuredIdv += ele.addOnSumInsured;
+        });
+      }
     }
 
-    if (!element.sumInsuredIdv && element && element.hasOwnProperty('addOns') && element.addOns.length > 0) {
-      element.addOns.forEach(ele => {
-        element.sumInsuredIdv += ele.addOnSumInsured;
-      });
-    }
     return element;
   }
 
@@ -1114,8 +1117,9 @@ export class LifeInsuranceComponent implements OnInit {
                 const firstName = (singleInsuranceData.insuranceDetails.insuredMembers[i].name as string).split(' ')[0];
                 singleInsuranceData.displayHolderName += ', ' + firstName;
                 if (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured) {
-                  singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured = this.formatNumber(singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured, 0);
-                  const firstSumInsured = (singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured as string).split(' ')[0];
+                  let sumAss = singleInsuranceData.insuranceDetails.insuredMembers[i].sumInsured;
+                  sumAss = this.formatNumber(sumAss, 0);
+                  const firstSumInsured = (sumAss as string).split(' ')[0];
                   singleInsuranceData.displayHolderSumInsured += ', ₹' + firstSumInsured;
                 } else {
                   singleInsuranceData.displayHolderSumInsured = singleInsuranceData.insuranceDetails.sumInsuredIdv ? singleInsuranceData.insuranceDetails.sumInsuredIdv : 0;
@@ -1139,24 +1143,28 @@ export class LifeInsuranceComponent implements OnInit {
     data.forEach(element => {
       element.insuranceDetails = element.insurance ? element.insurance : element.insuranceDetails;
       element.sumAssured = 0;
-      element.insuranceDetails.sumInsuredIdv = 0;
-      if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
-        element.insuranceDetails.insuredMembers.forEach(ele => {
-          ele.sumAssured += ele.sumInsured;
-        });
-      } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
-        element.insuranceDetails.policyFeatures.forEach(ele => {
-          element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
-        });
-      } else {
-        element.insuranceDetails.sumInsuredIdv = element.insuranceDetails.sumInsuredIdv;
+      if (!element.insuranceDetails.sumInsuredIdv) {
+        element.insuranceDetails.sumInsuredIdv = 0;
+        if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('insuredMembers') && element.insuranceDetails.insuredMembers.length > 0) {
+          element.insuranceDetails.insuredMembers.forEach(ele => {
+            ele.sumAssured += ele.sumInsured;
+          });
+        } else if (element.insuranceDetails && element.insuranceDetails.hasOwnProperty('policyFeatures') && element.insuranceDetails.policyFeatures.length > 0) {
+          element.insuranceDetails.policyFeatures.forEach(ele => {
+            element.insuranceDetails.sumInsuredIdv += ele.featureSumInsured;
+          });
+        } else {
+          element.insuranceDetails.sumInsuredIdv = element.insuranceDetails.sumInsuredIdv;
+        }
+
+        if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
+          element.insuranceDetails.addOns.forEach(ele => {
+            element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
+          });
+        }
       }
 
-      if (!element.insuranceDetails.sumInsuredIdv && element.insuranceDetails && element.insuranceDetails.hasOwnProperty('addOns') && element.insuranceDetails.addOns.length > 0) {
-        element.insuranceDetails.addOns.forEach(ele => {
-          element.insuranceDetails.sumInsuredIdv += ele.addOnSumInsured;
-        });
-      }
+
     });
 
   }
