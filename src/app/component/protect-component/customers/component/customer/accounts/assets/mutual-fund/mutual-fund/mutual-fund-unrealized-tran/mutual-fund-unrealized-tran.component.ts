@@ -236,7 +236,7 @@ export class MutualFundUnrealizedTranComponent {
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService,
+    private mfService: MfServiceService,
     private route: Router,
     private backOfficeService: BackOfficeService,
     public routerActive: ActivatedRoute,
@@ -1701,29 +1701,13 @@ export class MutualFundUnrealizedTranComponent {
   // }
 
   isGroup2 = (index, item) => item.schemeName; // for grouping schme name
-  //   return item.schemeName;
-  //   return item.nav;
-  // }
+
 
   isGroup3 = (index, item) => item.name; // for grouping family member name
-  //   return item.name;
-  //   return item.pan;
-  //   return item.folio;
-  // }
+
 
   isGroup4 = (index, item) => item.total; // for getting total of each scheme
-  //   return item.total;
-  //   return item.totalTransactionAmt;
-  //   return item.totalUnit;
-  //   return item.totalNav;
-  //   return item.totalCurrentValue;
-  //   return item.dividendPayout;
-  //   return item.divReinvestment;
-  //   return item.totalAmount;
-  //   return item.gain;
-  //   return item.absReturn;
-  //   return item.xirr;
-  // }
+
 
   generatePdf() {
     this.showDownload = true;
