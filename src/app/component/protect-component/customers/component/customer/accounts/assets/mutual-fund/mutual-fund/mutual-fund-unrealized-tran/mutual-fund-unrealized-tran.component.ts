@@ -522,7 +522,7 @@ export class MutualFundUnrealizedTranComponent {
           this.saveFilterData = {
             transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
-            showSummary: (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected),
+            //showSummary: (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected),
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           };
@@ -1601,7 +1601,7 @@ export class MutualFundUnrealizedTranComponent {
       // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
       showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
-      showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : ((this.saveFilterData) ? this.saveFilterData.showSummary : this.setDefaultFilterData.showSummary),
+      showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : this.setDefaultFilterData.showSummary,
       fromDate: this.setDefaultFilterData.fromDate,
       toDate: this.setDefaultFilterData.toDate,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
