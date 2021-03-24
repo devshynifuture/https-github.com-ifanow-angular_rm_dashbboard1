@@ -640,7 +640,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   }
   close() {
     // this.addMoreFlag = false;
-    this.subInjectService.closeNewRightSlider({ state: 'close' });
+    this.subInjectService.closeNewRightSlider({ state: 'close', refreshRequired: true });
   }
 
   ngOnDestroy() {

@@ -236,7 +236,7 @@ export class MutualFundUnrealizedTranComponent {
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService,
+    private mfService: MfServiceService,
     private route: Router,
     private backOfficeService: BackOfficeService,
     public routerActive: ActivatedRoute,
@@ -522,11 +522,11 @@ export class MutualFundUnrealizedTranComponent {
           this.saveFilterData = {
             transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
-            showSummary: (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected),
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           };
-          //this.setDefaultFilterData.showSummary = this.saveFilterData.showSummary
+          this.setDefaultFilterData.showSummary = (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected);
+          console.log('transactionview', transactionView)
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
@@ -1601,7 +1601,7 @@ export class MutualFundUnrealizedTranComponent {
       // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
       showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
-      showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : ((this.saveFilterData) ? this.saveFilterData.showSummary : this.setDefaultFilterData.showSummary),
+      showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : this.setDefaultFilterData.showSummary,
       fromDate: this.setDefaultFilterData.fromDate,
       toDate: this.setDefaultFilterData.toDate,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
@@ -1701,29 +1701,13 @@ export class MutualFundUnrealizedTranComponent {
   // }
 
   isGroup2 = (index, item) => item.schemeName; // for grouping schme name
-  //   return item.schemeName;
-  //   return item.nav;
-  // }
+
 
   isGroup3 = (index, item) => item.name; // for grouping family member name
-  //   return item.name;
-  //   return item.pan;
-  //   return item.folio;
-  // }
+
 
   isGroup4 = (index, item) => item.total; // for getting total of each scheme
-  //   return item.total;
-  //   return item.totalTransactionAmt;
-  //   return item.totalUnit;
-  //   return item.totalNav;
-  //   return item.totalCurrentValue;
-  //   return item.dividendPayout;
-  //   return item.divReinvestment;
-  //   return item.totalAmount;
-  //   return item.gain;
-  //   return item.absReturn;
-  //   return item.xirr;
-  // }
+
 
   generatePdf() {
     this.showDownload = true;

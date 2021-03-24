@@ -5,14 +5,15 @@
                 <div class="wrapper-8">
                     <div class="row pt-28 pb-28">
                         <div class="col-md-4 pl-0">
-                            <button mat-button
-                                *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled"
-                                [ngClass]="{'mat-stroked-button': viewMode == 'Transactions','text-primary':viewMode == 'Transactions'}"
-                                (click)="viewMode='Transactions';getBugetTab(viewMode)">Transactions</button>
+
                             <button mat-button
                                 *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled"
                                 (click)="viewMode='Budget';getBugetTab(viewMode)"
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
+                            <button mat-button
+                                *ngIf="roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled"
+                                [ngClass]="{'mat-stroked-button': viewMode == 'Transactions','text-primary':viewMode == 'Transactions'}"
+                                (click)="viewMode='Transactions';getBugetTab(viewMode)">Transactions</button>
                         </div>
 
                         <div class="col-md-8  d-flex align-items-center justify-content-end pr-0">
