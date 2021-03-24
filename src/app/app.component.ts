@@ -46,7 +46,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     //   this.document.getElementById('tabviewJs').style.height = `${width}px`;
 
     // }
-    this.getDomainData("dev.ifanow.in");
+    this.getDomainData(document.location.hostname);
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
       appTitle: 'This is a tribute'
@@ -54,7 +54,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // this.setValuesAsPerDomain(domainData);
   }
 
-  getDomainData(data) {
+  getDomainData("portfolio.finapian.com") {
     const obj = {
       hostName: data
     };
