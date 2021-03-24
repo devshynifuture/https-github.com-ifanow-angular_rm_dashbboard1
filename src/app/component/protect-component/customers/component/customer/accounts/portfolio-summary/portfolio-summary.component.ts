@@ -768,7 +768,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.totalAssetsWithoutLiability += element.currentValue;
       }
     });
-    this.AlltotalAssetsWithoutLiability = this.totalAssetsWithoutLiability + this.totalInsurance
+    this.AlltotalAssetsWithoutLiability = this.totalAssetsWithoutLiability + this.totalInsurance;
+    this.AlltotalAssetsWithoutLiability = this.AlltotalAssetsWithoutLiability - this.liabilityTotal;
     console.log(this.totalAssetsWithoutLiability, 'total asset without liability');
     console.log(this.liabilityTotal, 'liability total');
     this.finalTotal = this.totalAssetsWithoutLiability - this.liabilityTotal;
