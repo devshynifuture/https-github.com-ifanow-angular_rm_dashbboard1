@@ -547,6 +547,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         break;
       case 'openPreferences':
         fragmentData.componentName = PreferencesComponent;
+        fragmentData['isOverlayVisible'] = false;
         fragmentData.state = 'open40';
         break;
       case 'openView':
