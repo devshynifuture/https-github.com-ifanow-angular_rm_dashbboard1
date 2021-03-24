@@ -168,7 +168,7 @@
                     <p *ngIf="basicDetails.get('pan').value=='XXXXX1234X' && fieldFlag=='lead' && !kycLoader"
                         class="mb-0 d-flex roboto  f-400 c-p"> Dummy pan number</p>
                     <mat-spinner *ngIf="kycLoader" [diameter]="20"></mat-spinner>
-                    <p *ngIf="kycLoader" class="mb-0 ml-12 d-flex roboto text-danger f-400 c-p">
+                    <p *ngIf="kycLoader" class="mb-0 d-flex roboto text-danger f-400 c-p">
                         Checking</p>
                     <!-- ;getKycStatusOfPan(pan) -->
                     <!-- <p *ngIf="!kycLoader && pan.value.length==10 &&  kycComplaintId==1"

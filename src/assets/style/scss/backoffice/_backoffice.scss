@@ -433,6 +433,14 @@
 
 }
 
+.client-assignment {
+  .mat-table {
+    max-height: 650px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
+
 .running-sip-table {
   .refersh-btn {
     background: #D9DEE1;
