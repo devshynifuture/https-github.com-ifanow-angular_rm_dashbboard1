@@ -116,13 +116,17 @@ export class AddGoalService {
       this.eventService.openSnackBar(err);
     })
   }
-  allocateOtherAssetToGoalRm(obj) {
+  allocateOtherAssetToGoalRm(obj, flag) {
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.refreshObservable.next();
       this.plansService.assetSubject.next(res);
       this.refreshAssetList.next();
       this.eventService.openSnackBar("Unallocated", "Dismiss");
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
+      if (flag == 'mf') {
+        this.subInjectService.changeNewRightSliderState({ state: 'open70', refreshObservable: true });
+      } else {
+        this.subInjectService.changeNewRightSliderState({ state: 'close', refreshObservable: true });
+      }
     }, err => {
       this.eventService.openSnackBar(err);
     })
