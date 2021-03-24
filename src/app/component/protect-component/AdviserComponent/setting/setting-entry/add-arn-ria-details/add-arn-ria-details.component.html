@@ -68,13 +68,14 @@
                     <input matInput type="text" formControlName="number"
                         [placeholder]="formPlaceHolders.ENTER_ARN_RIA_NUMBER"
                         class="form-control br-0 inputBorderTransparent" appInputValueValidation
-                        [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="11">
+                        [inputValidator]="validatorType.ALPHA_NUMERIC"
+                        (input)="toUpperCase(arnRiaFG.get('number'),$event)" maxlength="11">
                     <mat-hint *ngIf="arnRiaFG.get('arnOrRia').value == 1 || arnRiaFG.get('arnOrRia').value == 2"
                         align="end">{{arnRiaFG.get('number').value.length}}/11</mat-hint>
                     <mat-error *ngIf="arnRiaFG.get('number').errors?.required">This field is required</mat-error>
-                    <mat-error
+                    <!-- <mat-error
                         *ngIf="arnRiaFG.get('number').errors?.maxlength || arnRiaFG.get('number').errors?.minlength">
-                        Please enter valid number</mat-error>
+                        Please enter valid number</mat-error> -->
                 </mat-form-field>
             </div>
         </div>
