@@ -522,11 +522,11 @@ export class MutualFundUnrealizedTranComponent {
           this.saveFilterData = {
             transactionView,
             showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
-            //showSummary: (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected),
             reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
             selectFilter: (getList.length > 0) ? this.clientId : 0
           };
-          //this.setDefaultFilterData.showSummary = this.saveFilterData.showSummary
+          this.setDefaultFilterData.showSummary = (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected);
+          console.log('transactionview', transactionView)
           this.mfData = this.mfGetData;
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
