@@ -329,8 +329,8 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
     return taxStatus;
   }
 
-  getKycStatusOfPan(event) {
-    if (event.value.length == 10) {
+  getKycStatusOfPan(event, formControl) {
+    if (event.value.length == 10 && formControl.valid) {
       this.kycLoader = true;
       const obj = {
         pan: event.value,

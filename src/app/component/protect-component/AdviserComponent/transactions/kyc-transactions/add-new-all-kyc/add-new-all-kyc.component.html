@@ -94,7 +94,8 @@
                         <span *ngIf="selectedClientData.kycComplaint==3">Accepted</span>
                         <span *ngIf="selectedClientData.kycComplaint==4">Rejected</span>
                         <img *ngIf=" selectedClientData.kycComplaint==2 || selectedClientData.kycComplaint==3"
-                            src="/assets/images/svg/info-black.svg" matTooltip="Already in process"
+                            src="/assets/images/svg/info-black.svg"
+                            matTooltip="Your application is in process, check back the status in 2-3 days"
                             aria-label="Button that displays a tooltip when focused or hovered over" class="pl-4">
                     </div>
                 </div>
