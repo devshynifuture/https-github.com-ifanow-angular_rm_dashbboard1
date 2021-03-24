@@ -54,7 +54,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     // this.setValuesAsPerDomain(domainData);
   }
 
-  getDomainData("portfolio.finapian.com") {
+  getDomainData(data) {
     const obj = {
       hostName: data
     };
