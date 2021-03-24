@@ -68,7 +68,7 @@ export class ExpensesComponent implements OnInit {
   dataSource5 = new MatTableDataSource([] as Array<any>);
   advisorId: any;
   clientId: any;
-  viewMode;
+  viewMode = "Budget";
   isLoading = false;
   dataSource1 = new MatTableDataSource([{}, {}, {}] as Array<any>);
   noData: string;
@@ -130,7 +130,7 @@ export class ExpensesComponent implements OnInit {
   clientDob: any;
   billsAndUtilities: any;
   isLoadingBudget = false;
-  tab = 'Transactions';
+  tab = 'Budget';
   allExpnseData: any;
   expenseStorage = {};
   storedData: any;
@@ -168,9 +168,9 @@ export class ExpensesComponent implements OnInit {
     console.log(this.data);
 
     if (this.roleService.planPermission.subModule.profile.subModule.expenses.subModule.transactions.enabled) {
-      this.viewMode = "Transactions"
-    } else {
       this.viewMode = "Budget"
+    } else {
+      this.viewMode = "Transactions"
     }
     this.summaryPlanService.getExpenseData()
       .subscribe(res => {
@@ -402,6 +402,16 @@ export class ExpensesComponent implements OnInit {
         this.getAllExpenseResposne(data);
         // this.isLoading = true;
       }, (error) => {
+
+        if (this.viewMode == 'Budget') {
+          if (this.chekToCallApiBudget()) {
+            if (this.familyList && this.clientDob) {
+              this.getBudgetApis()
+            }
+          } else {
+            this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
+          }
+        }
         this.expenseStorage[this.startDate + '-' + this.endDate] = null;
         // this.expenseStorage[this.startDate + '-' + this.endDate] = [];
         // this.expenseStorage[this.startDate + '-' + this.endDate].push([])
@@ -409,7 +419,9 @@ export class ExpensesComponent implements OnInit {
         this.dataSource.data = [];
         this.dataSource1.data = [];
         this.isLoading = false;
-        this.eventService.showErrorMessage(error);
+        if (this.viewMode != 'Budget') {
+          this.eventService.showErrorMessage(error);
+        }
       }
     );
   }
@@ -567,6 +579,15 @@ export class ExpensesComponent implements OnInit {
         if (this.data.name) {
           this.getBudgetApis();
         }
+      }
+    }
+    if (this.viewMode == 'Budget') {
+      if (this.chekToCallApiBudget()) {
+        if (this.familyList && this.clientDob) {
+          this.getBudgetApis()
+        }
+      } else {
+        this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
       }
     }
   }
@@ -935,7 +956,7 @@ export class ExpensesComponent implements OnInit {
     // const BudgetRecurring = this.planService.otherCommitmentsGet(obj2);
     // const BudgetGraph = this.planService.getBudgetGraph(obj3);
     const budgetList = this.planService.getBudget(obj1).pipe(
-      catchError(error => of(null))
+      catchError(error => of(this.eventService.showErrorMessage('No data found')))
     );
     const BudgetRecurring = this.planService.otherCommitmentsGet(obj2).pipe(
       catchError(error => of(null))
@@ -956,6 +977,7 @@ export class ExpensesComponent implements OnInit {
       this.dataSource5.data = [];
       this.budgetChart('bugetChart');
       this.isLoadingBudget = false;
+      this.eventService.showErrorMessage(err);
     })
   }
   getBudgetApisResponse(result) {
@@ -1025,7 +1047,17 @@ export class ExpensesComponent implements OnInit {
     return array;
   }
   getListFamilyMem() {
-    this.isLoading = true;
+    // this.isLoading = true;
+    if (this.data.name == 'Transactions') {
+      this.dataSource.data = [{}, {}, {}];
+      this.dataSource1.data = [{}, {}, {}];
+      this.isLoading = true;
+    } else {
+      this.dataSource4.data = [{}, {}, {}];
+      this.dataSource5.data = [{}, {}, {}];
+      this.isLoadingBudget = true;
+    }
+
     const obj = {
       clientId: this.clientId
     };
@@ -1070,9 +1102,13 @@ export class ExpensesComponent implements OnInit {
             if (this.chekToCallApiBudget()) {
               this.viewMode = 'Budget';
               if (Object.keys(this.data).length !== 0) {
+                this.dataSource4.data = [{}, {}, {}];
+                this.dataSource5.data = [{}, {}, {}];
+                this.isLoadingBudget = true;
                 this.getAllExpense();
               } else {
-                this.getBudgetApis()
+                this.getAllExpense();
+                // this.getBudgetApis()
               }
             } else {
               this.getBudgetApisResponse(this.storedDataBudget[this.startDate + '-' + this.endDate][0]);
@@ -1663,6 +1699,7 @@ export class ExpensesComponent implements OnInit {
               this.expenseStorage = {};
               this.storedData = "";
               this.getAllExpense();
+              this.getBudgetApis();
               // this.getExpenseGraphValue();
             } else if (sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget') {
               // this.getBudgetList();
