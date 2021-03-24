@@ -1,4 +1,4 @@
-<div class="row pt-150">
+<div class="row pt-80">
     <div class="col-md-4 d-flex align-items-center">
         <!--        <h3 class="m-0">Leads</h3>-->
     </div>
@@ -209,7 +209,8 @@
                             </p>
                             <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email:
                                 </strong>
-                                {{getOrgData.email != '-' ? getOrgData.email:userInfo.emailList.length > 0?userInfo.emailList[0].email : userInfo.email}}
+                                {{getOrgData.email != '-' ? getOrgData.email:userInfo.emailList.length >
+                                0?userInfo.emailList[0].email : userInfo.email}}
                             </p>
 
                             <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;padding-top: 12px;"> <strong>

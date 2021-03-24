@@ -14,7 +14,7 @@
   <div [formGroup]="taskTemplate" class="pt-90 pl-28 pr-28">
     <div [hidden]="taskTemplate.get('templateType').value == 2" class="row">
       <div class="col-md-12 p-0 select-category">
-        <h5 class="m-0 pb-12">Select category</h5>
+        <h5 class="m-0 pb-12">Select type</h5>
         <mat-radio-group aria-label="Select an option" class="taskradio" formControlName="categoryId">
           <mat-radio-button
             [ngClass]="taskTemplate.get('categoryId').value == 1 ? 'text-primary b-a-custom': 'text-primitive'"
@@ -51,7 +51,7 @@
 
     <div [hidden]="taskTemplate.get('templateType').value == 2" class="row">
       <div class="col-md-5 pl-0">
-        <h5 class="m-0 pb-8 pt-24">Select {{category}}</h5>
+        <h5 class="m-0 pb-8 pt-24">Select category</h5>
         <div class="form-group matFormPadding">
           <mat-form-field appearance="standard" floatLabel="never">
             <mat-select class="form-control" formControlName="subcategoryId"

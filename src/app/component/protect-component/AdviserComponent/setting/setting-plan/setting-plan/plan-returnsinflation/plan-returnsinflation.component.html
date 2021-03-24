@@ -3,7 +3,8 @@
         <h4 class="m-0 text-black">Returns & inflation</h4>
     </div>
     <div class="col-md-4 text-right p-0" *ngIf="!showErrImg">
-        <button mat-stroked-button class="greryColorBg" class="btn-primary" *ngIf="!editMode" (click)="toggleEditMode()">
+        <button mat-stroked-button class="greryColorBg" class="btn-primary" *ngIf="!editMode"
+            (click)="toggleEditMode()">
             <span class="tableValue">
                 EDIT MODE
             </span>
@@ -19,30 +20,37 @@
     <div class="col-md-4 pl-0">
         <table mat-table [dataSource]="shortDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
-                <th class="br t-65" mat-header-cell *matHeaderCellDef> Short item </th>
+                <th class="br t-65" mat-header-cell *matHeaderCellDef> Short term </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element" (dblclick)="editMode = true">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
+                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate"
+                        #returnInput (input)="checkForMinMax(returnInput, element)"
+                        [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                        (change)="element.edited = true">
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
-        <table mat-table [dataSource]="shortTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table mat-table [dataSource]="shortTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
-                <th mat-header-cell class="br t-65" *matHeaderCellDef>Short item </th>
+                <th mat-header-cell class="br t-65" *matHeaderCellDef>Short term </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element" (dblclick)="editMode = true">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
+                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate"
+                        #returnInput (input)="checkForMinMax(returnInput, element)"
+                        [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                        (change)="element.edited = true">
                 </td>
             </ng-container>
             <ng-container matColumnDef="disclaimer">
@@ -60,14 +68,17 @@
     <div class="col-md-4 pl-0">
         <table mat-table [dataSource]="longDS" id="table-low" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="position">
-                <th class="br t-65" mat-header-cell *matHeaderCellDef> Long item </th>
+                <th class="br t-65" mat-header-cell *matHeaderCellDef> Long term </th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element" (dblclick)="editMode = true">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
+                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate"
+                        #returnInput (input)="checkForMinMax(returnInput, element)"
+                        [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                        (change)="element.edited = true">
                 </td>
             </ng-container>
 
@@ -75,17 +86,21 @@
 
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <table mat-table [dataSource]="longTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <table mat-table [dataSource]="longTerm" id="table-low" class="mt-20" multiTemplateDataRows appSkeletonLoading
+            [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="position">
-                <th mat-header-cell class="br t-65" *matHeaderCellDef>Long item</th>
+                <th mat-header-cell class="br t-65" *matHeaderCellDef>Long term</th>
                 <td mat-cell class="br" *matCellDef="let element"> {{element.class}} </td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell class="br t-70" *matHeaderCellDef>Assumption (%)</th>
                 <td mat-cell class="text-center br" *matCellDef="let element" (dblclick)="editMode = true">
                     <div class="bar" *ngIf="!editMode">{{element.inflation_rate}}</div>
-                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate" #returnInput (input)="checkForMinMax(returnInput, element)" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation (change)="element.edited = true">
+                    <input class="form-control" type="text" *ngIf="editMode" [ngModel]="element.inflation_rate"
+                        #returnInput (input)="checkForMinMax(returnInput, element)"
+                        [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                        (change)="element.edited = true">
                 </td>
             </ng-container>
             <ng-container matColumnDef="disclaimer">
