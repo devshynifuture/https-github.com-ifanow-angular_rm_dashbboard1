@@ -151,8 +151,7 @@
                 <div class="col-md-3 pl-0 mob-pl-10 mob-pr-10">
                     <div class="form-group mb-0">
                         <mat-form-field appearance="standard" floatLabel="never">
-                            <input #pan
-                                (input)="toUpperCase(basicDetails.get('pan'),$event);getKycStatusOfPan(pan,basicDetails.get('pan'))"
+                            <input #pan (input)="toUpperCase(basicDetails.get('pan'),$event)"
                                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
                                 autocomplete="off" class="form-control" formControlName="pan" matInput maxlength="10"
                                 placeholder="Enter pan">
@@ -172,7 +171,7 @@
                     <p *ngIf="kycLoader" class="mb-0 ml-12 d-flex roboto text-primary f-400 ">
                         Checking</p>
                     <!-- ;getKycStatusOfPan(pan,basicDetails.get('pan')) -->
-                    <p *ngIf="!kycLoader&& pan.value.length==10 && basicDetails.get('pan').valid &&  kycComplaintId==1 &&!kycError"
+                    <!-- <p *ngIf="!kycLoader&& pan.value.length==10 && basicDetails.get('pan').valid &&  kycComplaintId==1 &&!kycError"
                         class="mb-0 ml-12 d-flex roboto text-primary f-400 ">
                         <i class="material-icons mr-4"> check_circle </i> KYC Compliant</p>
                     <p *ngIf="!kycLoader&& pan.value.length==10 && basicDetails.get('pan').valid && kycComplaintId!=1 && !kycError"
@@ -180,7 +179,7 @@
                         <i class="material-icons mr-4"> highlight_off </i> Incomplete KYC</p>
                     <p *ngIf="!kycLoader&& pan.value.length==10 && basicDetails.get('pan').valid && kycError"
                         class="mb-0 ml-12 d-flex roboto text-warning f-400 ">
-                        <i class="material-icons mr-4"> highlight_off </i> Unable to check status now</p>
+                        <i class="material-icons mr-4"> highlight_off </i> Unable to check status now</p> -->
                 </div>
             </div>
             <!-- <div class="row pt-28">
