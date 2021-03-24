@@ -564,7 +564,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 mt-16 pl-8 skeletonAnimation" [appSkeletonLoading]="isLoadingSummary"
-                        appSkeletonLoading>
+                        appSkeletonLoading *ngIf="!enumDataService.PRODUCTION">
                         <div class="bg-white p-20 c-p" [routerLink]="['/customer/detail/plan/insurance']">
                             <h5 class="f-500 mb-10"> Insurance summary</h5>
                             <div *ngIf="insurancePlanList?.length > 0 && !isLoadingSummary">
@@ -1381,7 +1381,7 @@
                                         </table>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr *ngIf="!enumDataService.PRODUCTION">
                                     <td style="vertical-align: top;">
                                         <div style="padding: 10px; background: #ffffff;">
                                             <h4 style="margin: 0px; font-size: 16px;">Insurance summary </h4>
