@@ -380,8 +380,12 @@
                       </div>
                       <div class="col-md-6 pl-0">
                         <h2 *ngIf="mainLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
-                          ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
+                          <<<<<<< HEAD ₹<span appFormatNumber [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability -
                             liabilityTotal}}</span>
+                            =======
+                            ₹<span appFormatNumber
+                              [value]="AlltotalAssetsWithoutLiability">{{AlltotalAssetsWithoutLiability}}</span>
+                            >>>>>>> 99beddef0ae7d61d30a5031ccf983337121bdabe
                         </h2>
                       </div>
                     </div>
@@ -508,7 +512,7 @@
                     <div class="col-xl-4 col-lg-6 col-md-6 pt-12-1200 pl-0-1200" *ngIf="!noCashflowData">
                       <mat-select formControlName="familyfilter" class="form-control">
                         <mat-option [value]="'all'">
-                          All banks
+                          All family
                         </mat-option>
                         <mat-option *ngFor="let fam of families" [value]="fam.id">{{fam.name}}</mat-option>
                       </mat-select>
@@ -676,7 +680,7 @@
                     {{getOrgData.email ? getOrgData.email : userInfo.email}}</p>
 
                   <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
-                      {{'Portfolio Summary'}}</strong>
+                      {{'PortFolio Summary'}}</strong>
                   </p>
                   <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong> Report as on:
                       {{reportDate | date:'dd-MMM-yyyy' }}</strong>
