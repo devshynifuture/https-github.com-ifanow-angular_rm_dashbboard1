@@ -41,6 +41,7 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
   delayTime: number;
   kycLoader: boolean;
   kycComplaintId: number;
+  kycError: boolean;
 
   ngAfterViewInit(): void {
     if (this.tempBasicData.panInvalid) {
@@ -338,10 +339,16 @@ export class ClientBasicDetailsComponent implements OnInit, AfterViewInit {
       this.peopleService.kycStatusOfPan(obj).subscribe(
         data => {
           this.kycLoader = false;
-          this.kycComplaintId = data.status;
+          if (data && data.status == -1) {
+            this.kycError = true;
+          } else {
+            this.kycError = false;
+            this.kycComplaintId = data.status;
+          }
         }, err => {
           this.kycLoader = false;
-          this.eventService.openSnackBar(err, "Dismiss");
+          this.kycError = true
+          // this.eventService.openSnackBar(err, "Dismiss");
         }
       )
     }

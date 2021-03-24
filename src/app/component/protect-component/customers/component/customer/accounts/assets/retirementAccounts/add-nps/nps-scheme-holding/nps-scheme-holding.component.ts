@@ -198,7 +198,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
       id: [(data == undefined) ? '' : data.id,],
       holdingList: this.fb.array([this.fb.group({
         schemeId: ['', [Validators.required]], schemeName: [], holdingAsOn: [null, [Validators.required]],
-        totalUnits: [null, [Validators.required]], totalAmountInvested: [null, [Validators.required]]
+        totalUnits: [null, [Validators.required]], totalAmountInvested: []
       })]),
       futureContributionList: this.fb.array([this.fb.group({
         frequencyId: [null, [Validators.required]],
@@ -284,7 +284,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
           schemeId: [element.schemeId, [Validators.required]],
           totalUnits: [element.totalUnits, Validators.required],
           schemeName: [element.schemeName],
-          totalAmountInvested: [element.totalAmountInvested, Validators.required],
+          totalAmountInvested: [element.totalAmountInvested],
           holdingAsOn: [new Date(element.holdingAsOn), Validators.required],
           id: [element.id, [Validators.required]]
         }))
@@ -317,7 +317,7 @@ export class NpsSchemeHoldingComponent implements OnInit {
   addHoldings() {
     this.holdings.push(this.fb.group({
       schemeId: [null, [Validators.required]], schemeName: [null], holdingAsOn: [null, [Validators.required]],
-      totalUnits: [null, [Validators.required]], totalAmountInvested: [null, [Validators.required]]
+      totalUnits: [null, [Validators.required]], totalAmountInvested: []
     }));
 
   }
