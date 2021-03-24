@@ -1280,63 +1280,63 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
 
-  getListForPdf(columns) {
+  // getListForPdf(columns) {
 
-    const filterArray = [];
-    let name;
-    columns.forEach(element => {
+  //   const filterArray = [];
+  //   let name;
+  //   columns.forEach(element => {
 
-      if (element == 'schemeName') {
-        name = 'Scheme name';
-      }
-      if (element == 'amountInvested') {
-        name = 'Amount invested';
-      }
-      if (element == 'currentValue') {
-        name = 'Current value';
-      }
-      if (element == 'unrealizedProfit') {
-        name = 'Unrealized profit (loss)';
-      }
-      if (element == 'absoluteReturn') {
-        name = 'Abs ret %';
-      }
-      if (element == 'xirr') {
-        name = 'XIRR %';
-      }
-      if (element == 'dividendPayout') {
-        name = 'Dividend payout';
-      }
-      if (element == 'switchOut') {
-        name = 'Withdrawals Switch outs';
-      }
-      if (element == 'balanceUnit') {
-        name = 'Balance unit';
-      }
-      if (element == 'navDate') {
-        name = 'NAV/Date';
-      }
-      if (element == 'sipAmount') {
-        name = 'SIP';
-      }
-      if (element == 'investedDate') {
-        name = 'Invested date';
-      }
+  //     if (element == 'schemeName') {
+  //       name = 'Scheme name';
+  //     }
+  //     if (element == 'amountInvested') {
+  //       name = 'Amount invested';
+  //     }
+  //     if (element == 'currentValue') {
+  //       name = 'Current value';
+  //     }
+  //     if (element == 'unrealizedProfit') {
+  //       name = 'Unrealized profit (loss)';
+  //     }
+  //     if (element == 'absoluteReturn') {
+  //       name = 'Abs ret %';
+  //     }
+  //     if (element == 'xirr') {
+  //       name = 'XIRR %';
+  //     }
+  //     if (element == 'dividendPayout') {
+  //       name = 'Dividend payout';
+  //     }
+  //     if (element == 'switchOut') {
+  //       name = 'Withdrawals Switch outs';
+  //     }
+  //     if (element == 'balanceUnit') {
+  //       name = 'Balance unit';
+  //     }
+  //     if (element == 'navDate') {
+  //       name = 'NAV/Date';
+  //     }
+  //     if (element == 'sipAmount') {
+  //       name = 'SIP';
+  //     }
+  //     if (element == 'investedDate') {
+  //       name = 'Invested date';
+  //     }
 
-      const obj = {
-        name
-      };
-      filterArray.push(obj);
-    });
-    this.displayColumnsPDf = filterArray;
-    this.customDataSource.data.array = [];
-    this.customDataSource.data.array1 = [];
-    this.customDataSource.data.array2 = [];
-    this.customDataSource.data.array3 = [];
-    this.displayedColumns.forEach((element, ind) => {
-      this.styleObject(element, ind);
-    });
-  }
+  //     const obj = {
+  //       name
+  //     };
+  //     filterArray.push(obj);
+  //   });
+  //   this.displayColumnsPDf = filterArray;
+  //   this.customDataSource.data.array = [];
+  //   this.customDataSource.data.array1 = [];
+  //   this.customDataSource.data.array2 = [];
+  //   this.customDataSource.data.array3 = [];
+  //   this.displayedColumns.forEach((element, ind) => {
+  //     this.styleObject(element, ind);
+  //   });
+  // }
 
   asyncFilter(mutualFund) {
     if (this.inputData == 'category wise') {
