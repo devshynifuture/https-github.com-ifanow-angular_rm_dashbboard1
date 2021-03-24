@@ -173,9 +173,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private utilService: UtilService,
     public mfService: MfServiceService,
-    // private excel: ExcelGenService,
     private backOfficeService: BackOfficeService,
-    // private workerService: WebworkerService,
     public dialog: MatDialog,
     public eventService: EventService,
     private customerService: CustomerService,
@@ -183,30 +181,13 @@ export class MutualFundSummaryComponent implements OnInit {
     private datePipe: DatePipe,
     public routerActive: ActivatedRoute,
     private onlineTransact: OnlineTransactionService,
-    private activatedRoute: ActivatedRoute,
     private assetValidation: AssetValidationService,
     public roleService: RoleService,
     private cd: ChangeDetectorRef,
     private customerOverview: CustomerOverviewService,
     public enumDataService: EnumDataService) {
     this.routerActive.queryParamMap.subscribe((queryParamMap: any) => {
-      if (queryParamMap.has('clientId')) {
-        const param1 = queryParamMap.params;
-        this.clientId = parseInt(param1.clientId);
-        this.advisorId = parseInt(param1.advisorId);
-        this.parentId = parseInt(param1.parentId);
-        // this.setDefaultFilterData.toDate = param1.toDate;
-        this.toDate = param1.toDate;
-        this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
-        this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
-        this.isRouterLink = true;
-        console.log('2423425', param1);
-      } else {
-        this.advisorId = AuthService.getAdvisorId();
-        this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-        this.parentId = AuthService.getParentId();
-        this.isClient = AuthService.getUserInfo().clientId ? true : false;
-      }
+      this.forBulkEmail(queryParamMap)
     });
   }
 
@@ -222,7 +203,25 @@ export class MutualFundSummaryComponent implements OnInit {
     }
     return this.dataSummary;
   }
-
+  forBulkEmail(queryParamMap) {
+    if (queryParamMap.has('clientId')) {
+      const param1 = queryParamMap.params;
+      this.clientId = parseInt(param1.clientId);
+      this.advisorId = parseInt(param1.advisorId);
+      this.parentId = parseInt(param1.parentId);
+      // this.setDefaultFilterData.toDate = param1.toDate;
+      this.toDate = param1.toDate;
+      this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
+      this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
+      this.isRouterLink = true;
+      console.log('2423425', param1);
+    } else {
+      this.advisorId = AuthService.getAdvisorId();
+      this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+      this.parentId = AuthService.getParentId();
+      this.isClient = AuthService.getUserInfo().clientId ? true : false;
+    }
+  }
   ngOnInit() {
     this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
     const summaryCapabilityList = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.summaryReport.capabilityList
@@ -1282,17 +1281,7 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   getListForPdf(columns) {
-    // this.displayColumnsPDf[0].name=(columns[0] = 'schemeName')?this.displayColumnsPDf.push('Scheme name'):null;
-    // this.displayColumnsPDf[1].name=(columns[1] = 'amountInvested')?'Amount invested':null;
-    // this.displayColumnsPDf[2].name=(columns[2] = 'currentValue')?'Current value':null;
-    // this.displayColumnsPDf[3].name=(columns[3] = 'unrealizedProfit')?'Unrealized profit (loss)':null;
-    // this.displayColumnsPDf[4].name=(columns[4] = 'absoluteReturn')?'Abs ret %':null;
-    // this.displayColumnsPDf[5].name=(columns[5] = 'xirr')?'XIRR %':null;
-    // this.displayColumnsPDf[6].name=(columns[6] = 'dividendPayout')?'Dividend payout':null;
-    // this.displayColumnsPDf[7].name=(columns[7] = 'switchOut')?'Withdrawals Switch outs':null;
-    // this.displayColumnsPDf[8].name=(columns[8] = 'balanceUnit')?'Balance unit':null;
-    // this.displayColumnsPDf[9].name=(columns[9] = 'navDate')?'NAV Date':null;
-    // this.displayColumnsPDf[10].name=(columns[10] = 'sipAmount')?' SIP':null;
+
     const filterArray = [];
     let name;
     columns.forEach(element => {
