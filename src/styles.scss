@@ -271,7 +271,7 @@
 #ui-mareketplace-advisor,
 #ui-advisor-dashboard-header {
   position: fixed;
-  margin-top: 4px;
+  // margin-top: 4px;
   float: right;
   width: 100%;
   padding-right: 0px;
@@ -467,7 +467,7 @@
 #ui-people,
 #ui-refers,
 #ui-setting-supports {
-  @extend .mt-64;
+  // @extend .mt-64;
 
   .example-card .mat-card-header-text {
     margin: 0 !important;

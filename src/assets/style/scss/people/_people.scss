@@ -304,3 +304,13 @@
 }
 
 @media(max-width:1024px) {}
+
+@media(max-width:768px) {
+  .advisor-status {
+    display: none;
+  }
+
+  .hide-on-768 {
+    display: none !important;
+  }
+}

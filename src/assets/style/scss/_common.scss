@@ -1016,6 +1016,9 @@ button.primary-sm {
 
 
 @media(max-width:767px) {
+  .text-center-767 {
+    text-align: center !important;
+  }
 
   #tabviewJs {
     transform: none;
