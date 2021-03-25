@@ -1100,3 +1100,10 @@
 .img-max-width {
   max-width: 100%;
 }
+
+@media(max-width:768px) {
+  .maxw-320 {
+    max-width: 230px !important;
+    width: 230px !important;
+  }
+}
