@@ -73,8 +73,7 @@ export class MisMfTransactionsComponent implements OnInit {
   dateChips = [
     { name: 'Last one month', value: 1 }, { name: 'Last three month', value: 2 }, { name: 'Last six month', value: 3 }, { name: 'Last year', value: 4 }
   ];
-  transactionTypeChips = [
-  ];
+  transactionTypeChips = [];
   filterStatus = [];
   filterDate = [];
   filterDataArr: any[];
@@ -91,6 +90,8 @@ export class MisMfTransactionsComponent implements OnInit {
   obj: { transactionTypeId: any[]; categoryId: any[]; begin: {}, end: {}; parentId: {}; startFlag: {}; endFlag: {}, key: {}; flag: {} };
   dateFilterAdded: boolean = false;
   loadTransaction = false;
+  storedData: any;
+  LoadCount: number;
 
   constructor(private excel: ExcelGenService,
     private cusService: CustomerService,
@@ -105,7 +106,21 @@ export class MisMfTransactionsComponent implements OnInit {
   ngOnInit() {
     this.obj = { transactionTypeId: [], categoryId: [], begin: {}, end: {}, parentId: {}, startFlag: {}, endFlag: {}, key: "", flag: 0 }
     this.hasEndReached = true;
-    this.getTransactionType()
+    this.cusService.getTransactionData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getTransactionType()
+    } else {
+      this.transactionTypeChips = this.storedData;
+      this.cusService.setTransactionData(this.storedData)
+      this.transactionTypeChips.forEach(element => {
+        element.filterType = 'transactionType'
+      });
+    }
     //this.mfTransaction.data = ELEMENT_DATA;
     this.isLoading = false
     this.parentId = AuthService.getAdminAdvisorId();
@@ -113,7 +128,9 @@ export class MisMfTransactionsComponent implements OnInit {
     this.mfTransaction.data = [{}, {}, {}];
     this.getMfTransactionData(0)
   }
-
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
+  }
   onWindowScroll(e: any) {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
       if (!this.hasEndReached) {
@@ -131,6 +148,7 @@ export class MisMfTransactionsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.transactionTypeChips = res;
+          this.cusService.setTransactionData(res)
           this.transactionTypeChips.forEach(element => {
             element.filterType = 'transactionType'
           });

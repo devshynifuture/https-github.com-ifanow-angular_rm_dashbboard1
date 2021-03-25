@@ -13,6 +13,8 @@ export class CustomerService {
 
   private documentData = new BehaviorSubject('')
   private clientId = new BehaviorSubject('')
+  private transactionData = new BehaviorSubject('')
+
 
   constructor(private http: HttpService, private httpService: HttpClient) {
   }
@@ -1234,6 +1236,12 @@ export class CustomerService {
   }
   clearStorage() {
     this.setDocumentData('');
+  }
+  setTransactionData(value) {
+    this.transactionData.next(value);
+  }
+  getTransactionData() {
+    return this.transactionData.asObservable();
   }
 }
 

@@ -67,6 +67,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   maximumDate: any;
   errorMsgForScheme: boolean;
   storedVal: any;
+  storedData: any;
+  LoadCount: number;
 
   constructor(
     public subInjectService: SubscriptionInject,
@@ -110,8 +112,23 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       }
       this.setValueChangeForScheme();
     }
-    this.getTransactionTypeData();
+    this.cusService.getTransactionData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getTransactionTypeData()
+    } else {
+      this.transactionTypeList = this.storedData;
+      this.cusService.setTransactionData(this.storedData)
+      this.getSchemeLevelHoldings(this.data);
+    }
     this.transactionListForm.valueChanges.subscribe(res => console.log("this is transactionForm values::::", res))
+  }
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
   }
   callFunctions() {
     this.checkValidation();
@@ -277,6 +294,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         if (res) {
           console.log("this is transaction Type:::", res);
           this.transactionTypeList = res;
+          this.cusService.setTransactionData(res)
           this.getSchemeLevelHoldings(this.data);
         }
       }, err => {

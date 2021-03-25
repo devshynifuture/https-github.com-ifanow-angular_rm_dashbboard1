@@ -57,7 +57,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   portfolioFieldData: { familyMemberId: any; };
   nomineesListFM: any = [];
   checkValid: boolean = false;
-  transactionTypeList = [];
+  transactionTypeList: any;
   callMethod: { methodName: string; ParamValue: any; };
   nomineesList: any[] = [];
   Holdings: any;
@@ -65,6 +65,8 @@ export class StockScripLevelTransactionComponent implements OnInit {
   oldOwnerID: number;
   private unSubcripBank: Subscription;
   private unSubcripDemat: Subscription;
+  storedData: string;
+  LoadCount: number;
   constructor(public dialog: MatDialog, private assetValidation: AssetValidationService, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService,
     private customerOverview: CustomerOverviewService) { }
   @ViewChild('holding', { static: false }) holding;
@@ -92,7 +94,17 @@ export class StockScripLevelTransactionComponent implements OnInit {
     this.getFormData(data);
   }
   ngOnInit() {
-    this.getTransactionTypeData();
+    this.cusService.getTransactionData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getTransactionTypeData();
+    } else {
+      this.transactionTypeList = this.storedData;
+    }
     this.unSubcripBank = this.enumService.getBankAC().subscribe((data: any) => {
       this.bankList = data;
     });
@@ -101,7 +113,9 @@ export class StockScripLevelTransactionComponent implements OnInit {
       this.bankDematList = data;
     });
   }
-
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
+  }
   ngOnDestroy() {
     this.unSubcripBank.unsubscribe();
     this.unSubcripDemat.unsubscribe();
@@ -112,6 +126,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.transactionTypeList = res;
+          this.cusService.setTransactionData(res)
         } else {
           this.eventService.openSnackBar("No TransactionType Data Found", "Dismiss");
         }
