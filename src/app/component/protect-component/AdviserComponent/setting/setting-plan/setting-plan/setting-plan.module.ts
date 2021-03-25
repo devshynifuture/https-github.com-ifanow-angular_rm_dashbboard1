@@ -11,12 +11,20 @@ import { MaterialModule } from 'src/app/material/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
+import { ReturnsInflationHeaderComponent } from './returns-inflation-header/returns-inflation-header.component';
+import { PlanReturnInflationComponent } from './returns-inflation-header/plan-return-inflation/plan-return-inflation.component';
+import { InsuranceReturnInflationComponent } from './returns-inflation-header/insurance-return-inflation/insurance-return-inflation.component';
+import { ExpenesReturnInflationComponent } from './returns-inflation-header/expenes-return-inflation/expenes-return-inflation.component';
 
 
 
 @NgModule({
   declarations: [PlanAssetallocationComponent, PlanReturnsinflationComponent, PlanTemplatesComponent, PlanGalleryComponent, SettingPlanComponent,
     PlanKeyParametersComponent,
+    ReturnsInflationHeaderComponent,
+    PlanReturnInflationComponent,
+    InsuranceReturnInflationComponent,
+    ExpenesReturnInflationComponent,
   ],
   imports: [
     CommonModule,
