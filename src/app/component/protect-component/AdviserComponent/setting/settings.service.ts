@@ -209,4 +209,8 @@ export class SettingsService {
   deleteTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEMPLATE, data);
   }
+
+  removeAccessRight(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_ACCESS_RIGHT, data);
+  }
 }

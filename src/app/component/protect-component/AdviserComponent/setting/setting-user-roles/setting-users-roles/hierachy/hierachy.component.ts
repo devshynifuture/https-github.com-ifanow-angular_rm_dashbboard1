@@ -5,7 +5,8 @@ import { AddTeamMemberComponent } from './add-team-member/add-team-member.compon
 import { EventService } from 'src/app/Data-service/event.service';
 import { SettingsService } from '../../../settings.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-hierachy',
@@ -24,6 +25,7 @@ export class HierachyComponent implements OnInit {
     private eventService: EventService,
     private settingsService: SettingsService,
     public utilService: UtilService,
+    private dialog: MatDialog
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -46,6 +48,54 @@ export class HierachyComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss");
     })
   }
+
+  removeAccess(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'REMOVE ACCESS',
+      body: 'Are you sure you want to remove?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'REMOVE',
+      positiveMethod: () => {
+        const obj = {
+          "id": data.id,
+          "ChildId": data.childId,
+          "emailId": data.emailId,
+          "mobileNo": data.mobileNo,
+          "parentName": data.parentName,
+          "parentId": 0,
+          "roleName": data.roleName
+        }
+        this.settingsService.removeAccessRight(obj).subscribe(
+          res => {
+            dialogRef.close();
+            this.eventService.openSnackBar("Access removed successfully", "Dismiss");
+            this.getAccessRightsList();
+          }, err => {
+            this.eventService.openSnackBar(err, "Dismiss");
+          }
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+
 
   assignTeamMember(value, data) {
     const fragmentData = {
