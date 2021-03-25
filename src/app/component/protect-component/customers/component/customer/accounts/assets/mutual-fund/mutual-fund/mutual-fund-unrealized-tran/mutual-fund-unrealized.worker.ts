@@ -29,7 +29,18 @@ addEventListener('message', ({ data }) => {
     } else {
     }
     if (element.elssDate) {
+      element.elssDateOrg = element.elssDate;
       element.elssDate = element.elssDate ? new Date(element.elssDate).toISOString().replace(/T.*/, '').split('-').reverse().join('-') : '-';
+    }
+    if (element.elssDateOrg && element.unlockedUnits) {
+      if (new Date(element.elssDateOrg) > new Date()) {
+        element.status = 'LOCK'
+      } else {
+        element.status = 'UNLOCK'
+      }
+      if (element.unlockedUnits) {
+        element.unlockedUnits = mfService.mutualFundRoundAndFormat(element.unlockedUnits, 2);
+      }
     }
     element.purchasePrice = mfService.mutualFundRoundAndFormat(element.purchasePrice, 4)
     if (element.totalCurrentValue && element.totalTransactionAmt && !element.totalGain) {

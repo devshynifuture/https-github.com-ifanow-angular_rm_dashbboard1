@@ -131,14 +131,14 @@
         </div>
     </div>
     <div class="row secoundTable">
-        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 pt-12">
+        <div [ngClass]="{'table-scroll':isLoading==false }" *ngIf="!isLoading" class="col-md-12 p-0 mb-8 pt-12">
             <!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
 
             <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport class="tran-height-2">
                 <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
-                <table #tableEl [appSkeletonLoading]="isLoading" *ngIf="unrealisedData" [dataSource]="unrealisedData"
-                    appSkeletonLoading class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table
-                    matSort [multiTemplateDataRows]="true">
+                <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
+                    class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort
+                    [multiTemplateDataRows]="true">
                     <ng-container matColumnDef="no" sticky>
                         <th *matHeaderCellDef class="br" mat-header-cell>Sr no.</th>
                         <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
@@ -403,11 +403,11 @@
                     </ng-container>
                     <ng-container matColumnDef="lockFreeUnits">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Lock free date
+                            Lock free units
                         </th>
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
-                                <span>{{element?.elssDate ? (element?.elssDate) : '-'}}</span>
+                                <span>{{element?.unlockedUnits ? (element?.unlockedUnits) : '-'}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -420,11 +420,11 @@
                     </ng-container>
                     <ng-container matColumnDef="lockFreeDays">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Lock free date
+                            Lock free days
                         </th>
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
-                                <span>{{element?.elssDate ? (element?.elssDate) : '-'}}</span>
+                                <span>{{element?.unLockDays ? (element?.unLockDays) : '-'}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -437,11 +437,11 @@
                     </ng-container>
                     <ng-container matColumnDef="LockFreeStatus">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Lock free date
+                            Lock free status
                         </th>
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
-                                <span>{{element?.elssDate ? (element?.elssDate) : '-'}}</span>
+                                <span>{{element?.status ? (element?.status) : '-'}}</span>
                             </div>
                         </td>
                     </ng-container>

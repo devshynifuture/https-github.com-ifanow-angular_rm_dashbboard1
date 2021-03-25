@@ -230,6 +230,7 @@ export class MfElssReportComponent implements OnInit {
   ninethArrayTran: any;
   ninethArrayTotalTran: any;
   showSummaryTable: boolean = true;
+  allData: any;
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -324,13 +325,16 @@ export class MfElssReportComponent implements OnInit {
     const obj = {
       clientId: this.clientId,
     };
-    this.custumService.getElssTransacitonReport(obj).pipe(map((data) => {
-    })).subscribe(
+    this.custumService.getElssTransacitonReport(obj).subscribe(
       data => {
-        this.isLoading = false;
         let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
-        console.log(data);
-        //  this.asyncFilter(this.mfData.mutualFundList);
+        let array = [];
+        Object.keys(data.familyMemberList).map(key => {
+          array.push(data.familyMemberList[key]);
+        });
+        data.family_member_list = array;
+        this.allData = data;
+        this.asyncFilter(filterData);
         console.log(data);
       }, (error) => {
         this.setUnrealizedDataSource([]);
@@ -563,7 +567,7 @@ export class MfElssReportComponent implements OnInit {
       // console.log(`13091830918239182390183091830912830918310938109381093809328`);
       this.rightFilterData.reportType = [];
       this.rightFilterData.reportType[0] = {
-        name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : (this.setDefaultFilterData.reportType ? this.setDefaultFilterData.reportType : 'Sub Category wise')),
+        name: 'Investor wise',
         selected: true,
       };
       if (this.isRouterLink) {
@@ -571,14 +575,11 @@ export class MfElssReportComponent implements OnInit {
       }
       const input = {
         mutualFundList: mutualFund,
-        type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : 'Sub Category wise',
-        // nav: this.mutualFund.nav,
-        // mutualFund:this.mfData,
-        mutualFund: (this.reponseData) ? this.reponseData : (this.mutualFund ? this.mutualFund : this.mfData),
+        type: this.rightFilterData.reportType,
+        mutualFund: this.allData,
         transactionType: this.rightFilterData.transactionType,
-        viewMode: this.viewMode,
-        showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
-        // mfService: this.mfService
+        viewMode: 'All transactions',
+        showFolio: false,
       };
       // Create a new
       const worker = new Worker('src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized.worker.ts', { type: 'module' });
@@ -601,12 +602,13 @@ export class MfElssReportComponent implements OnInit {
         this.dataTransaction.viewMode = this.mode;
         this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData;
         this.dataTransaction.columnHeader = this.columnHeader;
-        if (!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain) && !isNaN(this.mfData.total_unrealized_gain)) {
-          this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
-          this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
-          this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
-          this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
-        }
+        // if (!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain) && !isNaN(this.mfData.total_unrealized_gain)) {
+        //   this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
+        //   this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
+        //   this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
+        //   this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
+        // }
+        this.setUnrealizedDataSource(data.customDataSourceData);
         this.dataSource = new MatTableDataSource(data.dataSourceData);
         console.log('datdataSource', this.unrealisedData)
         console.log('datasource............', this.dataSource.data)
