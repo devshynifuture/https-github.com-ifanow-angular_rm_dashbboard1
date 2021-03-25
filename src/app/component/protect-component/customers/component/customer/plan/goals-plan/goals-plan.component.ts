@@ -259,6 +259,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.loaderFn.increaseCounter();
     forkJoin(otherAssets, mfAssets).subscribe(result => {
       let getValue = result[0]
+      if (!getValue) {
+        getValue = []
+      }
       let otherAssetRes = getValue.map(asset => {
         let absAllocation = 0;
         if (asset.goalAssetMapping) {
