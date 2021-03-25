@@ -1020,6 +1020,10 @@ button.primary-sm {
     text-align: center !important;
   }
 
+  .mob-no-wrap {
+    flex-wrap: nowrap !important;
+  }
+
   #tabviewJs {
     transform: none;
     transform-origin: center;
