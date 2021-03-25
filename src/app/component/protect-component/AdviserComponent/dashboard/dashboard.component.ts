@@ -1585,7 +1585,7 @@ export class DashboardComponent implements OnInit {
 
   onResize() {
     console.log("resize")
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 768) {
       this.redirectFlag = true;
     } else {
       this.redirectFlag = false;
