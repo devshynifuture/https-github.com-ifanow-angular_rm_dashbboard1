@@ -48,10 +48,13 @@
             <th mat-header-cell *matHeaderCellDef class="br"> Give access to </th>
             <td mat-cell *matCellDef="let element" class="br">
                 <div class="bar d-flex align-items-center justify-content-between">
-                    <div *ngIf="element.parentName && !utilService.isLoading && element.canReport == 1"
-                        (click)="assignTeamMember(null, element)">
+                    <div *ngIf="element.parentName && !utilService.isLoading && element.canReport == 1">
                         {{element.parentName}}
-                        <button mat-stroked-button class="btn-primary-outline changeBtn"> Change</button>
+                        <button mat-stroked-button (click)="assignTeamMember(null, element)"
+                            class="btn-primary-outline changeBtn"> Change</button>
+                        <button mat-stroked-button (click)="removeAccess(null,element)"
+                            class="btn-danger-outline changeBtn">
+                            Remove access</button>
                     </div>
                 </div>
                 <p class="text-primary m-0 f-400 c-p"
