@@ -1,6 +1,6 @@
 <!--Main invoice section-->
 <div id="ui-invoice-pdf-documents" *ngIf="invoiceInSub=='invoiceSubscription' && showEdit==false">
-    <div class="bg-white pt-120 invoice-subcriptions-responsive">
+    <div class="bg-white invoice-subcriptions-responsive">
         <div class="row b-b">
             <div class="col-lg-4 col-md-12 p-0">
                 <div class="row ptb-12-992">
@@ -122,7 +122,8 @@
                                                     INVOICE </h1>
                                             </td>
                                             <td style="text-align: right; vertical-align: top;">
-                                                <img style="width: 200px;" [src]="storeData.logoUrl"> </td>
+                                                <img style="width: 200px;" [src]="storeData.logoUrl">
+                                            </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -209,10 +210,12 @@
                                         <tr>
                                             <td style="padding: 16px;">
                                                 <h4 class="m-0 f-14">
-                                                    {{(storeData.services.length > 0) ? storeData.services[0].serviceName : ''}}
+                                                    {{(storeData.services.length > 0) ?
+                                                    storeData.services[0].serviceName : ''}}
                                                 </h4>
                                                 <span class="m-0 f-14 text-custom">
-                                                    {{(storeData.services.length > 0) ? storeData.services[0].description : ''}}
+                                                    {{(storeData.services.length > 0) ?
+                                                    storeData.services[0].description : ''}}
                                                 </span>
                                             </td>
                                             <td style="text-align: right; padding: 16px;"><span>&#8377;</span>
@@ -249,7 +252,8 @@
                                             </td>
                                             <td style=" text-align: right;padding: 8px;font-size: 14px;">
                                                 <span>&#8377;</span><span appFormatNumber
-                                                    [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
+                                                    [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal
+                                                    - storeData.discount) * 18 / 100)}}</span>
                                             </td>
                                         </tr>
                                         <tr *ngIf="storeData.cgst!=0">
@@ -259,7 +263,8 @@
                                             <td style=" text-align: right;padding: 8px;font-size: 14px;">
                                                 <span>&#8377;</span><span
                                                     [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                                    appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                                                    appFormatNumber>{{formatter((storeData.subTotal -
+                                                    storeData.discount) * 9 / 100)}}</span>
                                             </td>
                                         </tr>
                                         <tr *ngIf="storeData.sgst!=0">
@@ -269,7 +274,8 @@
                                             <td style=" text-align: right;padding: 8px;font-size: 14px;">
                                                 <span>&#8377;</span><span
                                                     [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                                    appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                                                    appFormatNumber>{{formatter((storeData.subTotal -
+                                                    storeData.discount) * 9 / 100)}}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -291,7 +297,8 @@
                                                 style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
                                                 <span>&#8377;</span><span
                                                     [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue : '-'"
-                                                    appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue :'-'}}</span>
+                                                    appFormatNumber>{{storeData.balanceDue == 0 ? '0' :
+                                                    storeData.balanceDue ? storeData.balanceDue :'-'}}</span>
                                             </td>
                                         </tr>
                                     </table>
@@ -358,7 +365,8 @@
                                                     INVOICE </h1>
                                             </td>
                                             <td style="text-align: right; vertical-align: top;">
-                                                <img style="width: 200px;" [src]="storeData.logoUrl"> </td>
+                                                <img style="width: 200px;" [src]="storeData.logoUrl">
+                                            </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -443,10 +451,12 @@
                                         <tr>
                                             <td style="padding: 16px;">
                                                 <h4 class="m-0 f-14">
-                                                    {{(storeData.services.length > 0) ? storeData.services[0].serviceName : ''}}
+                                                    {{(storeData.services.length > 0) ?
+                                                    storeData.services[0].serviceName : ''}}
                                                 </h4>
                                                 <span class="m-0 f-14 text-custom">
-                                                    {{(storeData.services.length > 0) ? storeData.services[0].description : ''}}
+                                                    {{(storeData.services.length > 0) ?
+                                                    storeData.services[0].description : ''}}
                                                 </span>
                                             </td>
                                             <td style="text-align: right; padding: 16px;"><span>&#8377;</span>
@@ -483,7 +493,8 @@
                                             </td>
                                             <td style=" text-align: right;padding: 8px;font-size: 14px;">
                                                 <span>&#8377;</span><span appFormatNumber
-                                                    [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
+                                                    [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal
+                                                    - storeData.discount) * 18 / 100)}}</span>
                                             </td>
                                         </tr>
                                         <tr *ngIf="storeData.cgst!=0">
@@ -493,7 +504,8 @@
                                             <td style=" text-align: right;padding: 8px;font-size: 14px;">
                                                 <span>&#8377;</span><span
                                                     [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                                    appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                                                    appFormatNumber>{{formatter((storeData.subTotal -
+                                                    storeData.discount) * 9 / 100)}}</span>
                                             </td>
                                         </tr>
                                         <tr *ngIf="storeData.sgst!=0">
@@ -503,7 +515,8 @@
                                             <td style=" text-align: right;padding: 8px;font-size: 14px;">
                                                 <span>&#8377;</span><span
                                                     [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                                    appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                                                    appFormatNumber>{{formatter((storeData.subTotal -
+                                                    storeData.discount) * 9 / 100)}}</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -525,7 +538,8 @@
                                                 style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
                                                 <span>&#8377;</span><span
                                                     [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue :'-'"
-                                                    appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue : '-'}}</span>
+                                                    appFormatNumber>{{storeData.balanceDue == 0 ? '0' :
+                                                    storeData.balanceDue ? storeData.balanceDue : '-'}}</span>
                                             </td>
                                         </tr>
                                     </table>
@@ -704,7 +718,8 @@
                                     </h1>
                                 </td>
                                 <td style="text-align: right; vertical-align: top;">
-                                    <img style="width: 200px;" [src]="storeData.logoUrl"> </td>
+                                    <img style="width: 200px;" [src]="storeData.logoUrl">
+                                </td>
                             </tr>
                         </table>
                     </td>
@@ -821,7 +836,8 @@
                                 </td>
                                 <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
                                         appFormatNumber
-                                        [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
+                                        [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal
+                                        - storeData.discount) * 18 / 100)}}</span>
                                 </td>
                             </tr>
                             <tr *ngIf="storeData.cgst!=0">
@@ -829,7 +845,8 @@
                                 </td>
                                 <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
                                         [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 /
+                                        100)}}</span>
                                 </td>
                             </tr>
                             <tr *ngIf="storeData.sgst!=0">
@@ -837,7 +854,8 @@
                                 </td>
                                 <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
                                         [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 /
+                                        100)}}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -859,7 +877,8 @@
                                     style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
                                     <span>&#8377;</span><span
                                         [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue :'-'"
-                                        appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue :'-'}}</span>
+                                        appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue ?
+                                        storeData.balanceDue :'-'}}</span>
                                 </td>
                             </tr>
                         </table>
@@ -979,7 +998,7 @@
   </div> -->
 </div>
 <!--Add and edit invoice section-->
-<div *ngIf="showEdit" [ngClass]="!inputData?'pt-60':''">
+<div *ngIf="showEdit" [ngClass]="!inputData?'pt-0':''">
     <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)"
         (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
         [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
