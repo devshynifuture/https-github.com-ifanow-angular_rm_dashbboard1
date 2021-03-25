@@ -68,7 +68,7 @@ export class MisMfTransactionsComponent implements OnInit {
     { name: 'EQUITY', id: 2, filterType: 'category' },
     { name: 'HYBRID', id: 3, filterType: 'category' },
     { name: 'COMMODITY', id: 4, filterType: 'category' },
-    { name: 'LIQUID', id: 5, filterType: 'category' }
+    // { name: 'LIQUID', id: 5, filterType: 'category' }
   ];
   dateChips = [
     { name: 'Last one month', value: 1 }, { name: 'Last three month', value: 2 }, { name: 'Last six month', value: 3 }, { name: 'Last year', value: 4 }
