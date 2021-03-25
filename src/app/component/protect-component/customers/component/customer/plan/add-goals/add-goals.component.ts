@@ -43,7 +43,12 @@ export class AddGoalsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadGlobalGoalData();
+    if (!this.planService.globalGoalList) {
+      this.loadGlobalGoalData();
+    } else {
+      this.loaderFn.increaseCounter();
+      this.getGoalGlobalDataRes(this.planService.globalGoalList);
+    }
     this.getFamilyMembersList();
   }
 
@@ -105,6 +110,7 @@ export class AddGoalsComponent implements OnInit {
   // Set questionnaires for all the and divide the goal set into two rows
   // TODO:- improve ui such that we dont need to divide it into two rows.
   getGoalGlobalDataRes(data) {
+    this.planService.globalGoalList = data;
     data.forEach(element => {
       switch (element.goalTypeId) {
         case AppConstants.RETIREMENT_GOAL: // Retirement

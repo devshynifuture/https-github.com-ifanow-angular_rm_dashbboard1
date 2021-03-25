@@ -28,6 +28,8 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
   transactionTypeList = []
   portfolioFieldData: { familyMemberId: any; };
   nomineesListFM: any = [];
+  storedData: any;
+  LoadCount: number;
 
   constructor(
     public dialog: MatDialog,
@@ -45,14 +47,28 @@ export class MFSchemeLevelTransactionsComponent implements OnInit {
     this.getFormData(data);
   }
   ngOnInit() {
-    this.getTransactionTypeData();
-  }
+    this.cusService.getTransactionData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
 
+    if (this.chekToCallApi()) {
+      this.getTransactionTypeData();
+    } else {
+      this.transactionTypeList = this.storedData;
+      this.cusService.setTransactionData(this.storedData)
+    }
+  }
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
+  }
   getTransactionTypeData() {
     this.cusService.getTransactionTypeData({})
       .subscribe(res => {
         if (res) {
           this.transactionTypeList = res;
+          this.cusService.setTransactionData(res)
         }
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss")

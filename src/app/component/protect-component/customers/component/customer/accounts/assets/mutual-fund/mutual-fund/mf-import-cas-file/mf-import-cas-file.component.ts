@@ -1,20 +1,20 @@
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import {ClientSggestionListService} from './../../../../../customer-overview/overview-profile/client-sggestion-list.service';
-import {CancelFlagService} from './../../../../../../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
-import {UtilService} from './../../../../../../../../../../services/util.service';
-import {AddFamilyMemberComponent} from './../../../../../customer-overview/overview-profile/add-family-member/add-family-member.component';
-import {EnumDataService} from './../../../../../../../../../../services/enum-data.service';
-import {SelectFolioMapComponent} from './../../../../../../../../AdviserComponent/backOffice/backoffice-folio-mapping/select-folio-map/select-folio-map.component';
-import {SelectionModel} from '@angular/cdk/collections';
-import {MatDialog, MatTableDataSource} from '@angular/material';
-import {EventService} from './../../../../../../../../../../Data-service/event.service';
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { ClientSggestionListService } from './../../../../../customer-overview/overview-profile/client-sggestion-list.service';
+import { CancelFlagService } from './../../../../../../../../PeopleComponent/people/Component/people-service/cancel-flag.service';
+import { UtilService } from './../../../../../../../../../../services/util.service';
+import { AddFamilyMemberComponent } from './../../../../../customer-overview/overview-profile/add-family-member/add-family-member.component';
+import { EnumDataService } from './../../../../../../../../../../services/enum-data.service';
+import { SelectFolioMapComponent } from './../../../../../../../../AdviserComponent/backOffice/backoffice-folio-mapping/select-folio-map/select-folio-map.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { EventService } from './../../../../../../../../../../Data-service/event.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {AuthService} from './../../../../../../../../../../auth-service/authService';
-import {SubscriptionInject} from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { AuthService } from './../../../../../../../../../../auth-service/authService';
+import { SubscriptionInject } from './../../../../../../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mf-import-cas-file',
@@ -35,6 +35,8 @@ export class MfImportCasFileComponent implements OnInit {
   matTabIndex = 0;
   investorUnmappedCount: number;
   transactionUnmappedCount: number;
+  storedData: any;
+  LoadCount: number;
 
   constructor(
     private cusService: CustomerService,
@@ -79,12 +81,26 @@ export class MfImportCasFileComponent implements OnInit {
 
   ngOnInit() {
     this.getFamilyMemberList();
-    this.getTransactionTypeList();
+    this.cusService.getTransactionData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getTransactionTypeList();
+    } else {
+      this.transactionTypeList = this.storedData;
+      this.cusService.setTransactionData(this.storedData)
+    }
+
   }
 
-
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
+  }
   getFamilyMemberList() {
-    this.cusService.getFamilyMemberListForCasMapping({clientId: this.clientId})
+    this.cusService.getFamilyMemberListForCasMapping({ clientId: this.clientId })
       .subscribe(res => {
         if (res) {
           this.familyMemberList = res;
@@ -117,7 +133,7 @@ export class MfImportCasFileComponent implements OnInit {
 
       let ClientList = Object.assign([], this.enumDataService.getEmptySearchStateData());
       ClientList = ClientList.filter(element => element.userId != this.clientData.userId);
-      data = {flag: 'Add member', fieldFlag: 'familyMember', client: this.clientData, ClientList};
+      data = { flag: 'Add member', fieldFlag: 'familyMember', client: this.clientData, ClientList };
     }
     const fragmentData = {
       flag: value,
@@ -259,6 +275,7 @@ export class MfImportCasFileComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.transactionTypeList = res;
+          this.cusService.setTransactionData(res)
           console.log(res);
         }
       }, err => {
@@ -329,7 +346,7 @@ export class MfImportCasFileComponent implements OnInit {
 
   getClientCASFileDetailData() {
     this.isLoading = true;
-    this.cusService.getClientCasFileDetailData({casUploadLogId: this.currentCasFileObject.id})
+    this.cusService.getClientCasFileDetailData({ casUploadLogId: this.currentCasFileObject.id })
       .subscribe(res => {
         this.isLoading = false;
         if (res) {
@@ -528,7 +545,7 @@ export class MfImportCasFileComponent implements OnInit {
 
   getStatusOfPastFileUpload() {
     this.isLoading = true;
-    this.cusService.getStatusOfPastFileUpload({clientId: this.clientId})
+    this.cusService.getStatusOfPastFileUpload({ clientId: this.clientId })
       .subscribe(res => {
         if (res) {
           this.isLoading = false;
@@ -584,7 +601,7 @@ export class MfImportCasFileComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
 
-      data: {selectedFolios: data, type: 'casFileUpload'}
+      data: { selectedFolios: data, type: 'casFileUpload' }
     });
 
 
@@ -600,9 +617,9 @@ export class MfImportCasFileComponent implements OnInit {
     let data;
     if (choice === 'single') {
       this.dataSource5.data.find(item => item.id === this.currentCasFileObject.id).isLoading = true;
-      data = {casUploadLogId: this.currentCasFileObject.id};
+      data = { casUploadLogId: this.currentCasFileObject.id };
     } else {
-      data = {casUploadLogId: this.casFileUploadId};
+      data = { casUploadLogId: this.casFileUploadId };
     }
     this.cusService.getCasFileLogOnRefresh(data)
       .subscribe(res => {
@@ -745,9 +762,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: any[] = [
-  {position: '', name: '', weight: '', symbol: '', member: ''},
-  {position: '', name: '', weight: '', symbol: '', member: ''},
-  {position: '', name: '', weight: '', symbol: '', member: ''},
+  { position: '', name: '', weight: '', symbol: '', member: '' },
+  { position: '', name: '', weight: '', symbol: '', member: '' },
+  { position: '', name: '', weight: '', symbol: '', member: '' },
 
 ];
 
@@ -760,9 +777,9 @@ export interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA2: any[] = [
-  {position: '', name: '', weight: '', symbol: '', member: '', isMapped: false},
-  {position: '', name: '', weight: '', symbol: '', member: ''},
-  {position: '', name: '', weight: '', symbol: '', member: ''},
+  { position: '', name: '', weight: '', symbol: '', member: '', isMapped: false },
+  { position: '', name: '', weight: '', symbol: '', member: '' },
+  { position: '', name: '', weight: '', symbol: '', member: '' },
 
 ];
 
@@ -774,7 +791,7 @@ export interface PeriodicElement3 {
 }
 
 const ELEMENT_DATA3: any[] = [
-  {position: 'Aditya Birla Sun Life Frontline Equity Fund-Growth	', weight: 'B12'},
+  { position: 'Aditya Birla Sun Life Frontline Equity Fund-Growth	', weight: 'B12' },
 
 ];
 
@@ -786,8 +803,8 @@ export interface PeriodicElement5 {
 }
 
 const ELEMENT_DATA5: any[] = [
-  {fileName: '', uploadTime: '', status: '', id: null},
-  {fileName: '', uploadTime: '', status: '', id: null},
-  {fileName: '', uploadTime: '', status: '', id: null},
+  { fileName: '', uploadTime: '', status: '', id: null },
+  { fileName: '', uploadTime: '', status: '', id: null },
+  { fileName: '', uploadTime: '', status: '', id: null },
 
 ];

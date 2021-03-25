@@ -980,6 +980,7 @@ export const appConfig = {
   SET_VISIBILITY: 'plan/financial-plan/template/visibility/edit',
   RESET_TEMPLATE: 'plan/financial-plan/advisor-template/reset',
   DELETE_TEMPLATE: 'plan/financial-plan/template/delete',
+  REMOVE_ACCESS_RIGHT: 'setting/users-roles/access-rights/remove',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
   GET_ATTENDY: 'user/client/email/list/get',
