@@ -167,16 +167,22 @@ export class MisMfTransactionsComponent implements OnInit {
   }
   addFilters(addFilters) {
 
-    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
+    if (this.filterStatus.find(element => element.name == addFilters.name) == undefined && this.filterStatus.length < 10) {
       this.filterStatus.push(addFilters);
       this.filterDataArr = [];
     }
     this.filterJson.statusFilterJson = this.filterStatus;
     this.filterApi(this.filterStatus)
   }
-
+  selectFilter() {
+    if (this.showFilter == true) {
+      this.showFilter = false
+    } else {
+      this.showFilter = true
+    }
+  }
   addTransactionType(event) {
-    if (this.filterStatus.find(element => element.transactionType == event.transactionType) == undefined) {
+    if (this.filterStatus.find(element => element.transactionType == event.transactionType) == undefined && this.filterStatus.length < 10) {
       this.filterStatus.push(event);
       this.filterDataArr = [];
     }
@@ -344,8 +350,8 @@ export class MisMfTransactionsComponent implements OnInit {
           this.isLoading = false
           res = this.casFolioNumber(res)
           this.mfTransaction.data = res
+          this.mfTransaction.sort = this.sort
         }
-
       }, err => {
         console.error(err);
         this.isLoading = false

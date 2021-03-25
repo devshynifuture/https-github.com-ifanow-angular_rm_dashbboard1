@@ -44,7 +44,7 @@
 
             </div>
             <div class="col-md-2 p-0 text-right">
-                <button (click)="showFilter = true" mat-stroked-button class="btn-default addon ml-8 v-middle"><i
+                <button (click)="selectFilter()" mat-stroked-button class="btn-default addon ml-8 v-middle"><i
                         class="material-icons">filter_list</i>FILTER
                 </button>
             </div>
@@ -171,8 +171,7 @@
                             Amount</th>
                         <td class="br text-right" mat-cell *matCellDef="let element">
                             <div class="bar d-flex justify-content-end c-p">
-                                <span appFormatNumber>{{(isLoading) ? '': (element.amount ? element.amount :
-                                    '-')}}</span>
+                                <span appFormatNumber>{{(isLoading) ? '': (element.amount)}}</span>
                             </div>
                         </td>
                     </ng-container>

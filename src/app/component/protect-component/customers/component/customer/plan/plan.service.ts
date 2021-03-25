@@ -12,7 +12,7 @@ export class PlanService {
 
   private planData = new BehaviorSubject('')
   private clientId = new BehaviorSubject('')
-
+  globalGoalList;
 
   constructor(private http: HttpService) { }
   public assetSubject = new Subject();
