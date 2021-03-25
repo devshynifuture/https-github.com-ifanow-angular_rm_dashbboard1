@@ -85,6 +85,7 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   proceed() {
+    this.disabledProcess = true
     if (this.selectedReportType == "capitalGainSummary" || this.selectedReportType == "capitalGainDetailed") {
       if (!this.date.to) {
         this.date = this.default
