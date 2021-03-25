@@ -117,11 +117,12 @@
 }
 
 .kyc-transctions {
-  
+
   .kyc-transctions-scroll {
     overflow-y: auto !important;
     height: calc(100vh - 214px);
   }
+
   tr.mat-header-row {
     height: 48px !important;
   }
@@ -176,5 +177,37 @@
 @media(max-width:992px) {
   .investors-transactions .investors-transactions-scroll {
     height: auto !important;
+  }
+}
+
+@media(max-width:768px) {
+  .d-none-768 {
+    display: none !important;
+  }
+
+  .mob-pl-15 {
+    padding-left: 15px !important;
+  }
+
+  #iin-ucc-creation {
+    .pt-125 {
+      padding-top: 80px !important;
+    }
+
+    .centerBox {
+      width: 100% !important;
+    }
+
+    .text-center {
+      text-align: left !important;
+    }
+
+    .pr-32 {
+      padding-right: 16px !important;
+    }
+
+    .justify-content-end {
+      justify-content: end !important;
+    }
   }
 }

@@ -30,6 +30,8 @@ export class TransactionsComponent implements OnInit {
   mfList: any;
   nav: any;
   adminAdvisorIds: string;
+  storedData: any;
+  LoadCount: number;
 
   constructor(
     private UtilService: UtilService,
@@ -66,6 +68,21 @@ export class TransactionsComponent implements OnInit {
     this.nav = this.data.nav;
     this.initPoint();
     this.getTransactionTypeList()
+    this.cusService.getTransactionData()
+      .subscribe(res => {
+        this.storedData = '';
+        this.storedData = res;
+      });
+
+    if (this.chekToCallApi()) {
+      this.getTransactionTypeList()
+    } else {
+      this.transactionTypeList = this.storedData;
+      this.cusService.setTransactionData(this.storedData)
+    }
+  }
+  chekToCallApi() {
+    return this.LoadCount >= 1 ? false : this.storedData ? false : true;
   }
   casFolioNumber(data) {
     if (data && data.length > 0) {
@@ -86,6 +103,7 @@ export class TransactionsComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.transactionTypeList = res;
+          this.cusService.setTransactionData(res)
         }
       })
   }
