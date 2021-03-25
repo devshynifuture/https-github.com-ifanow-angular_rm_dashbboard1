@@ -10,7 +10,7 @@
 </div>
 
 
-<div class="row pt-130">
+<div class="row pt-60">
     <div class="col-md-8">
         <h3 class="f-18 mt-20">Send reports</h3>
     </div>
@@ -82,8 +82,12 @@
                     <th mat-header-cell class="br" *matHeaderCellDef> Report type </th>
                     <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
                         <div class="bar c-p">
-                            {{isLoading ? '' :(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)? 'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)? 'MF Unrealised Transactions':(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId
-                            == 5)? 'MF Capital gains - Summary':(element.reportTypeId == 6)? 'MF Capital gains - Detailed':''}}
+                            {{isLoading ? '' :(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)?
+                            'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)?
+                            'MF Unrealised Transactions':(element.reportTypeId == 1)? 'MF
+                            Overview':(element.reportTypeId
+                            == 5)? 'MF Capital gains - Summary':(element.reportTypeId == 6)? 'MF Capital gains -
+                            Detailed':''}}
                         </div>
                     </td>
                 </ng-container>

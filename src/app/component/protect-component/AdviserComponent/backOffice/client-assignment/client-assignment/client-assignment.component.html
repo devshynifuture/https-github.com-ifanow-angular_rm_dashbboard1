@@ -1,0 +1,61 @@
+<div class="client-assignment-box">
+    <div class="row h-60">
+        <div class="col-md-12 d-flex align-items-center">
+            <h3 class="m-0">Client Assignment</h3>
+        </div>
+    </div>
+</div>
+<div class="pt-80">
+    <div class="row">
+        <div class="col-md-8 d-flex align-items-center">
+            <!-- <p  class="mapBoxWidth mb-0"></p>
+        <p  class="mb-0"></p> -->
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field class="searchBox">
+                <input matInput class="form-control">
+                <i class="material-icons searchIconfolio">search </i>
+
+            </mat-form-field>
+
+        </div>
+
+    </div>
+    <div class="row pt-10 pb-24">
+        <div class="col-md-12 client-assignment">
+            <table mat-table [dataSource]="dataSource" id="tbs">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox></mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-checkbox></mat-checkbox>
+                    </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef> Pan </th>
+                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

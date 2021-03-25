@@ -82,7 +82,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
       advisorId: [this.advisorId, []],
       arnOrRia: [this.data.mainData.arnOrRia || '', [Validators.required]],
       typeId: [this.data.mainData.typeId || '', [Validators.required]],
-      number: [arnNumber, [Validators.required, Validators.maxLength(11), Validators.minLength(this.maxArnLength)]],
+      number: [arnNumber, [Validators.required]],
       nameOfTheHolder: [this.data.mainData.nameOfTheHolder, [Validators.required]],
       euin: [euinNumber || ''],
       commencementDate: [this.data.mainData.commencementDate],
@@ -109,7 +109,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
     if (this.data.mainData.arnOrRia == 1) {
       this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
       this.maxArnLength = 6;
-      this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.maxLength(11)]);
+      // this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.maxLength(11)]);
     }
     this.arnRiaFG.updateValueAndValidity();
   }
@@ -132,17 +132,21 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           this.arnRiaFG.controls.euin.clearValidators();
           this.arnRiaFG.controls.euin.setValue('');
           this.maxArnLength = 9;
-          this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)]);
+          // this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength), Validators.minLength(this.maxArnLength)]);
         } else {
           this.arnRiaFG.controls.euin.setValidators([Validators.required, Validators.pattern(/\d{6}/)]);
           this.maxArnLength = 6;
-          this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)]);
+          // this.arnRiaFG.controls.number.setValidators([Validators.required, Validators.pattern(ValidatorType.NUMBER_ONLY), Validators.maxLength(this.maxArnLength)]);
         }
         this.arnRiaFG.controls.number.setValue('');
         this.arnRiaFG.controls.number.markAsUntouched();
         this.arnRiaFG.updateValueAndValidity();
       })
     );
+  }
+
+  toUpperCase(formControl, event) {
+    this.utils.toUpperCase(formControl, event);
   }
 
   save() {

@@ -1,17 +1,17 @@
-<div class="pt-150  mandates">
+<div class="pt-80  mandates">
   <div *ngIf="!isLoading " [ngClass]="{'pe-none': isLoading}" class="row pb-10">
     <div class="col-md-4 pr-0">
       <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
         <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
-               placeholder="Type to filter data">
+          placeholder="Type to filter data">
       </mat-form-field>
     </div>
     <div *ngIf="credentialData" class="col-md-8 pt-4 text-right pl-0">
       <img (click)="refresh(true)" *ngIf="dataSource.filteredData.length > 0 && !isLoading" class="b-a p-8"
-           src="/assets/images/svg/reload.svg">
+        src="/assets/images/svg/reload.svg">
       <button (click)="openMandateClient(null)"
-              *ngIf="transactionRoleService.mandateModule.capabilityMap.add&&dataSource.filteredData.length > 0 && !isLoading&&isAdvisorSection"
-              class="btn-primary addon v-middle ml-8" mat-stroked-button>
+        *ngIf="transactionRoleService.mandateModule.capabilityMap.add&&dataSource.filteredData.length > 0 && !isLoading&&isAdvisorSection"
+        class="btn-primary addon v-middle ml-8" mat-stroked-button>
         ADD NEW
       </button>
     </div>
@@ -19,10 +19,9 @@
   <div class="row">
     <div class="col-md-12 investors-transactions">
       <div [ngClass]="{'table-scroll':isLoading==false }"
-           class="ox-hide investors-transactions-scroll responsive-table-port "
-           *ngIf="dataSource.filteredData.length > 0">
-        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-               class="skeletonAnimation" id="tbs" mat-table matSort>
+        class="ox-hide investors-transactions-scroll responsive-table-port " *ngIf="dataSource.filteredData.length > 0">
+        <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation"
+          id="tbs" mat-table matSort>
           <ng-container matColumnDef="position" sticky>
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
             <td *matCellDef="let element" class="br" mat-cell>
@@ -74,9 +73,8 @@
           <ng-container matColumnDef="amt">
             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="amount" sticky> Amount</th>
             <td *matCellDef="let element" class="br" mat-cell>
-              <div class="bar"> <span
-                appFormatNumber>{{(isLoading) ? '' : (element.amount) ? element.amount : '-'}}
-                                </span>
+              <div class="bar"> <span appFormatNumber>{{(isLoading) ? '' : (element.amount) ? element.amount : '-'}}
+                </span>
               </div>
             </td>
           </ng-container>
@@ -93,10 +91,9 @@
             </th>
             <td *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
-                                <span *ngIf="element.status==1||element.status==0"
-                                      class="text-primary t-10 f-500 c-p">Pending</span>
+                <span *ngIf="element.status==1||element.status==0" class="text-primary t-10 f-500 c-p">Pending</span>
                 <span *ngIf="element.status==3" class="text-danger t-10 f-500 c-p"> Rejected
-                                </span>
+                </span>
                 <span *ngIf="element.status==2" class="text-success t-10 f-500 c-p">Approved</span>
               </div>
             </td>
@@ -106,12 +103,12 @@
         </table>
       </div>
       <div *ngIf="dataSource.filteredData.length==0 && isLoading==false"
-           class="d-flex flex-column align-items-center pt-44">
+        class="d-flex flex-column align-items-center pt-44">
         <img class="width300" src="assets/images/svg/noDataFound.svg">
         <h4 class="pt-12">{{noData}}</h4>
         <button (click)="openTransaction()"
-                *ngIf="transactionRoleService.mandateModule.capabilityMap.add&&noData=='No mandates found'&&isAdvisorSection"
-                class="btn-primary addon v-middle  " mat-stroked-button>
+          *ngIf="transactionRoleService.mandateModule.capabilityMap.add&&noData=='No mandates found'&&isAdvisorSection"
+          class="btn-primary addon v-middle  " mat-stroked-button>
           ADD NEW
         </button>
         <button

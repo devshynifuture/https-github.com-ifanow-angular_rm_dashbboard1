@@ -285,3 +285,9 @@
 .h-160 {
   height: 160px !important;
 }
+
+@media(max-width:768px) {
+  .rightBorder {
+    border: 0px !important;
+  }
+}

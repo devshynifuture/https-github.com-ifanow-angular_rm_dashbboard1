@@ -1,10 +1,10 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {OrgSettingServiceService} from '../../org-setting-service.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
-import {Subscription} from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { OrgSettingServiceService } from '../../org-setting-service.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { Subscription } from 'rxjs';
 import { SettingsService } from '../../settings.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { AppConstants } from 'src/app/services/app-constants';
@@ -25,10 +25,10 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   globalData: any = {};
   subscription = new Subscription();
   categoryList: any[] = [];
-  category: any = 'asset';
+  category: any = 'category';
   listOfSub: any;
   adviceTypeMasterList: any[] = [];
-  formPlaceHolder:any;
+  formPlaceHolder: any;
 
   dataEdited = false;
 
@@ -60,7 +60,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
 
     // create turnaround time list
     for (let index = 1; index <= 100; index++) {
-      this.Tat.push({value: index, tat: `T+${index} day`});
+      this.Tat.push({ value: index, tat: `T+${index} day` });
     }
   }
 
@@ -174,12 +174,12 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.taskTemplate.controls.subSubCategoryId.valueChanges.subscribe(value => {
-        if(this.data.id)
+        if (this.data.id)
           this.dataEdited = true;
-        
+
         this.taskTemplate.controls.adviceTypeId.setValue('');
         this.taskTemplate.controls.adviceTypeId.markAsUntouched();
-        if(value) {
+        if (value) {
           this.adviceTypeMasterList = this.listOfSub.find(subSubCat => subSubCat.subSubCategoryId == value).adviceTypeMasterList || this.globalData.system_generated_advice_map_key;
         }
 
@@ -235,7 +235,7 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
   }
 
   Close(flag: boolean) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   save() {
@@ -286,14 +286,14 @@ export class AddTaskTemplateComponent implements OnInit, OnDestroy {
         this.event.openSnackBar('Added successfully!', 'Dismiss');
         this.Close(true);
       },
-      err =>  {
+      err => {
         this.barButtonOptions.active = true;
         this.event.openSnackBar(err, 'Dismiss')
       }
     );
   }
 
-  setTaskDescriptionForLinkedTask(jsonObj){
+  setTaskDescriptionForLinkedTask(jsonObj) {
     if (this.hideSubcategory) {
       jsonObj.taskDescription = this.globalData.system_generated_advice_map_key.find(obj => obj.id == jsonObj.adviceTypeId).advice;
     } else {

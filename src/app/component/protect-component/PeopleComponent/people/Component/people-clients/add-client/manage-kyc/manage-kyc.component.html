@@ -84,6 +84,10 @@
                                         <img src="/assets/images/svg/info-black.svg" matTooltip={{element.naReason}}
                                             aria-label="Button that displays a tooltip when focused or hovered over"
                                             class="pl-4"></span>
+                                    <span *ngIf="!isLoading &&  !element.pan &&(element.email && element.mobileNo) ">N/A
+                                        <img src="/assets/images/svg/info-black.svg" matTooltip={{element.naReason}}
+                                            aria-label="Button that displays a tooltip when focused or hovered over"
+                                            class="pl-4"></span>
                                     <span
                                         *ngIf="!isLoading &&  element.pan &&(!element.email || !element.mobileNo) &&  (element.clientType && element.clientType!=1 ||element.familyMemberType && element.familyMemberType!=1) ">N/A
                                         <span

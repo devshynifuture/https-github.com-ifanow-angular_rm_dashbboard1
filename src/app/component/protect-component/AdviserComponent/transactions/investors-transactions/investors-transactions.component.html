@@ -1,4 +1,4 @@
-<div class="pt-150 investoers">
+<div class="pt-80 investoers">
   <div [ngClass]="{'pe-none': isLoading}" class="row ">
     <!-- <div class="col-md-4  d-flex align-items-center">
     <h3 class="m-0 pt-6">Investors</h3>
@@ -125,7 +125,8 @@
             <td (click)="openInvestorDetail(element)" *matCellDef="let element" class="br" mat-cell>
               <div class="bar">
                 {{isLoading ? '' : (element.holdingType == 'SI') ? 'SINGLE' : (element.holdingType == 'AS') ?
-                'ANYONE OR SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType == 'JS') ?
+                'ANYONE OR SURVIVOR' : (element.holdingType == 'ES') ? 'EITHER OR SURVIVOR' : (element.holdingType ==
+                'JS') ?
                 'JOINT' : '-'}}
               </div>
             </td>
