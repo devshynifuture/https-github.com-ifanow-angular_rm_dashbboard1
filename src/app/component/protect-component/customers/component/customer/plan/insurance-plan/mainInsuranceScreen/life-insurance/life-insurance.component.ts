@@ -236,7 +236,6 @@ export class LifeInsuranceComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject,
     private custumService: CustomerService,
-    private utils: UtilService,
     private eventService: EventService,
     private planService: PlanService,
     private dialog: MatDialog,

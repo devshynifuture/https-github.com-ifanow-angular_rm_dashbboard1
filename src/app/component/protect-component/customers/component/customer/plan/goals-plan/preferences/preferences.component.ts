@@ -386,6 +386,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     observer.subscribe(res => {
       this.switchToTab(++this.selectedTab);
       this.eventService.openSnackBar("Preference saved", "Dismiss");
+      this.subInjectService.changeNewRightSliderState({ state: 'open40', refreshObservable: true });
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {
@@ -593,6 +594,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     this.planService.saveAssetPreference(obj).subscribe(res => {
       this.switchToTab(++this.selectedTab);
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
+      this.subInjectService.changeNewRightSliderState({ state: 'open40', refreshObservable: true });
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {
