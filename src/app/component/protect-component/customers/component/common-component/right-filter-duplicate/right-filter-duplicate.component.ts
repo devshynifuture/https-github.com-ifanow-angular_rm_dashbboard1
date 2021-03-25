@@ -113,7 +113,7 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService, private datePipe: DatePipe, ) {
+    private mfService: MfServiceService, private datePipe: DatePipe,) {
   }
 
   @Input()
@@ -1773,8 +1773,8 @@ export class RightFilterDuplicateComponent implements OnInit {
 
     if (this._data.name != 'CAPITAL GAIN REPORT') {
       this.obj = {
-        parentId: this.parentId ? this.parentId : this.advisorId,
-        advisorId: this.adminAdvisorIds,
+        //  parentId: this.parentId ? this.parentId : this.advisorId,
+        //  advisorId: this.adminAdvisorIds,
         clientId: this.clientId,
         toDate: this._data.name == 'SUMMARY REPORT' || this._data.name == 'UNREALIZED TRANSACTION REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList,

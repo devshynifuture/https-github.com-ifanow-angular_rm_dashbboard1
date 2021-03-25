@@ -1259,6 +1259,12 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_MF_LIST, data);
   }
 
+  getElssTransacitonReport(data) {
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.ELSS_TRANSACTIONS, data);
+  }
+
+
   setDocumentData(value) {
     this.documentData.next(value);
   }

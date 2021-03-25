@@ -31,7 +31,7 @@ export class MobileMyfeedComponent implements OnInit {
   chartTotal: number;
   assetAllocationPieConfig: Chart;
   mfSubCategoryPieConfig: Chart;
-  mfAllocationPieConfig : Chart;
+  mfAllocationPieConfig: Chart;
   portFolioData: any;
   recentTransactions: any[];
   riskProfile: any[];
@@ -100,9 +100,9 @@ export class MobileMyfeedComponent implements OnInit {
 
   constructor(
     private customerService: CustomerService,
-    public eventService : EventService,
+    public eventService: EventService,
     public loaderFn: LoaderFunction,
-    public mfServiceService : MfServiceService,
+    public mfServiceService: MfServiceService,
   ) {
     this.clientId = AuthService.getClientId()
     this.advisorId = AuthService.getAdvisorId()
@@ -601,17 +601,17 @@ export class MobileMyfeedComponent implements OnInit {
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId
+      //  advisorId: this.advisorId
     }
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
-      this.loaderFn.increaseCounter();
-      this.customerService.getMutualFund(obj).subscribe(
-        data => this.getMutualFundResponse(data), (error) => {
-          this.eventService.openSnackBar(error, "DISMISS");
-          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
-          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
-        }
-      );
+    this.loaderFn.increaseCounter();
+    this.customerService.getMutualFund(obj).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.openSnackBar(error, "DISMISS");
+        this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+        this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+      }
+    );
   }
   getMutualFundResponse(data) {
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;

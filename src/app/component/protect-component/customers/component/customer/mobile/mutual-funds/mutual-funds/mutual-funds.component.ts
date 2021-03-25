@@ -249,8 +249,8 @@ export class MutualFundsComponent implements OnInit {
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      parentId: this.parentId ? this.parentId : this.advisorId,
-      advisorId: this.adminAdvisorIds,
+      // parentId: this.parentId ? this.parentId : this.advisorId,
+      // advisorId: this.adminAdvisorIds,
     }
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
     this.loaderFn.increaseCounter();

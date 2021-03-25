@@ -93,21 +93,18 @@ export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy 
 }
 
 @Component({
-  selector: 'app-mutual-fund-unrealized-tran',
-  templateUrl: './mutual-fund-unrealized-tran.component.html',
-  styleUrls: ['./mutual-fund-unrealized-tran.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-mf-elss-report',
+  templateUrl: './mf-elss-report.component.html',
+  styleUrls: ['./mf-elss-report.component.scss'],
   providers: [{ provide: VIRTUAL_SCROLL_STRATEGY, useClass: CustomVirtualScrollStrategy }],
 })
-export class MutualFundUnrealizedTranComponent {
+export class MfElssReportComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'balanceUnits', 'days', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
   displayedColumnsTotal: string[] = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
     'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'currentValueTotal', 'dividendPayoutTotal', 'dividendReinvestTotal', 'totalAmountTotal', 'gainTotal', 'absReturnTotal', 'xirrTotal', 'iconsTotal'];
-  displayedColumns2: string[] = ['categoryName', 'amtInvested', 'currentValue', 'dividendPayout', 'dividendReinvest',
-    'gain', 'absReturn', 'xirr', 'allocation'];
-  // subCategoryData: any[];
-  // schemeWise: any[];
+  displayedColumns2: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
+    'units', 'balanceUnits', 'days', 'lockPeriod'];
   mfData;
   mutualFundList: any[];
   isLoading = false;
@@ -284,79 +281,15 @@ export class MutualFundUnrealizedTranComponent {
     return this.inputData;
   }
 
-  uploadData(data) {
-
-    if (data) {
-      this.clientId = data.clientId;
-      this.addedData = true;
-      this.isBulkEmailing = true;
-      // this.toDate = data.toDate;
-      // this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
-      if (data.mode == 'unrealisedTransactions') {
-        this.viewMode = 'Unrealized Transactions';
-        this.mode = 'Unrealized Transactions';
-        this.reportName = 'MF_All_Trasaction_Report';
-      } else {
-        this.viewMode = 'All Transactions';
-        this.mode = 'All Transactions';
-        this.reportName = 'MF_Unrealised_Trasaction_Report';
-      }
-      this.ngOnInit();
-    }
-    return this.dataTransaction;
-
-  }
-
   ngOnInit() {
-    this.mfCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.capabilityList;
-    if (this.viewMode == 'Unrealized Transactions') {
-      this.mfAllTransactionCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.unrealizedTransactions.capabilityList
-    } else {
-      this.mfAllTransactionCapability = this.roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.alltransactionsReport.capabilityList
-    }
-    if (this.finPlanObj && this.finPlanObj.sectionName == 'Mutual fund all transaction') {
-      this.viewMode = 'All Transactions';
-      this.mode = 'All Transactions';
-      this.reportName = 'MF_All_Trasaction_Report';
-    } else {
-      this.viewMode = 'Unrealized Transactions';
-      this.mode = 'Unrealized Transactions';
-      this.reportName = 'MF_Unrealised_Trasaction_Report';
-    }
+    this.viewMode = 'All Transactions'
+    this.getElssReport();
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
+
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
     }
     this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
-    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-      if (queryParamMap.has('clientId')) {
-        // const param1 = queryParamMap.get('params');
-        let param1 = queryParamMap['params'];
-
-        this.clientId = parseInt(param1.clientId);
-        this.advisorId = parseInt(param1.advisorId);
-        // this.toDate = (param1.toDate)
-        this.isBulkEmailing = true;
-        // this.reportDate = this.datePipe.transform(new Date(this.toDate), 'dd-MMM-yyyy')
-        if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
-          this.viewMode = 'All Transactions';
-          this.mode = 'All Transactions';
-          this.fromDate = (param1.fromDate)
-          this.toDate = (param1.toDate)
-        } else {
-          this.viewMode = 'Unrealized Transactions';
-          this.mode = 'Unrealized Transactions';
-        }
-        console.log('2423425', param1);
-        this.getDetails();
-      }
-    });
-    if (this.viewMode == 'Unrealized Transactions') {
-
-      this.reportName = 'MF unrealised trasaction report';
-    } else {
-      this.reportName = 'MF all trasaction report';
-    }
     this.dataTransaction = {};
     this.dataTransaction.viewMode = {};
     this.dataTransaction.columnHeader = {};
@@ -367,7 +300,6 @@ export class MutualFundUnrealizedTranComponent {
     this.setDefaultFilterData = {};
     this.dataTransaction.flag = false;
     this.setDefaultFilterData.transactionView = [];
-    // this.unrealisedData = new GridTableDataSource([]);
 
     this.mfService.getViewMode()
       .subscribe(res => {
@@ -376,269 +308,35 @@ export class MutualFundUnrealizedTranComponent {
           this.viewMode = this.mode;
         }
       });
-    this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
-
-    if (this.viewMode == 'Unrealized Transactions') {
-      this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-        'units', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr'];
-      this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-        'unitsTotal', 'currentValueTotal', 'dividendPayoutTotal', 'dividendReinvestTotal', 'totalAmountTotal', 'gainTotal', 'absReturnTotal',
-        'xirrTotal'];
-
-    } else {
-      this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-        'units', 'balanceUnits', 'days', 'lockPeriod', 'icons'];
-      this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-        'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'iconsTotal'];
-    }
+    // this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
+    this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
+      'units', 'balanceUnits', 'days', 'lockPeriod', 'icons'];
+    this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
+      'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'iconsTotal'];
     this.dataTransaction.displayedColumns = this.displayedColumns;
     this.colspanValue = Math.round(this.displayedColumns.length / 2);
     console.log('colspanValue', this.colspanValue);
 
 
   }
-
-  // ngAfterViewInit() {
-  //   this.unrealisedData = new GridTableDataSource(this.unrealisedArray, this.viewport, this.unrealisedArray.length);
-  //   this.unrealisedData.offsetChange.subscribe(offset => {
-  //     this.placeholderHeight = offset;
-  //     // console.log(' this.placeholderHeight ', this.placeholderHeight);
-  //   });
-  //   const para = document.getElementById('template');
-  //   if (para.innerHTML) {
-  //     if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
-  //       this.showDownload = true;
-  //       this.generatePdfBulk();
-  //     }
-  //     if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
-  //       this.showDownload = true;
-  //       this.generatePdfBulk();
-  //     }
-  //   }
-  // }
-
-  getFilterData(value) {
-    this.dataSource = new MatTableDataSource([{}, {}, {}]);
-
-    this.mfService.getadvisorList()
-      .subscribe(res => {
-        this.adminAdvisorIds = res;
-      });
-    this.mfService.getMfData()
-      .subscribe(res => {
-        this.mutualFund = res;
-      });
-    this.mfService.getFilterValues()
-      .subscribe(res => {
-        this.setDefaultFilterData = res;
-        if (this.setDefaultFilterData == '') {
-          this.setDefaultFilterData = {};
-        }
-      });
-    this.mfService.getDataForMfGet()
-      .subscribe(res => {
-        this.mfGetData = res;
-      });
-    this.mfService.getTransactionType()
-      .subscribe(res => {
-        if (res) {
-          this.getTransactionType(res);
-
-        }
-      });
-
+  getElssReport() {
     this.isLoading = true;
-    this.changeInput.emit(true);
     const obj = {
-      advisor_id: this.advisorId,
       clientId: this.clientId,
-      reportId: value
     };
-    this.custumService.getSaveFilters(obj).subscribe(
+    this.custumService.getElssTransacitonReport(obj).pipe(map((data) => {
+    })).subscribe(
       data => {
-        if (data) {
-          const allClient = [];
-          const currentClient = [];
-          let transactionView = [];
-          const getList = [];
-          // let displaycopy =[];
-          this.displayedColumns = [];
-          this.displayedColumnsTotal = [];
-          data.forEach(element => {
-            if (element.clientId == 0) {
-              const obj = {
-                displayName: element.columnName,
-                selected: element.selected
-              };
-              if (element.reportType != 'showSummary') {
-                allClient.push(obj);
-              }
-            } else {
-              const obj = {
-                displayName: element.columnName,
-                selected: element.selected
-              };
-              getList.push(element);
-              if (element.reportType != 'showSummary') {
-                currentClient.push(obj);
-              }
-            }
-          });
-          if (getList.length > 0) {
-            transactionView = currentClient;
-          } else {
-            transactionView = allClient;
-          }
-          if (this.reponseData) {
-            this.setDefaultFilterData.transactionView.forEach(element => {
-              if (element.selected == true) {
-                this.displayedColumns.push(element.displayName);
-                this.displayedColumnsTotal.push(element.displayName + 'Total');
+        this.isLoading = false;
+        //  this.asyncFilter(this.mfData.mutualFundList);
+        console.log(data);
+      }, (error) => {
+        this.setUnrealizedDataSource([]);
+        this.isLoading = false;
+        this.eventService.showErrorMessage(error);
 
-              }
-            });
-            if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions') {
-              this.displayedColumns.forEach((element, ind) => {
-                if (this.customDataSource.length > 0) {
-                  this.styleObjectUnrealised(element, ind);
-                }
-              });
-            } else {
-              this.displayedColumns.forEach((element, ind) => {
-                if (this.customDataSource.length > 0) {
-                  this.styleObjectTransaction(element, ind);
-                }
-              });
-            }
-          } else {
-            transactionView.forEach(element => {
-              if (element.selected == true) {
-                this.displayedColumns.push(element.displayName);
-                this.displayedColumnsTotal.push(element.displayName + 'Total');
-              }
-            });
-          }
-
-          this.saveFilterData = {
-            transactionView,
-            showFolio: (getList.length > 0) ? ((getList[0].showZeroFolios == true) ? '1' : '2') : (data[0].showZeroFolios == true) ? '1' : '2',
-            reportType: (getList.length > 0) ? (getList[0].reportType) : data[0].reportType,
-            selectFilter: (getList.length > 0) ? this.clientId : 0
-          };
-          this.setDefaultFilterData.showSummary = (getList.length > 0) ? ((getList[getList.length - 1].selected)) : (data[data.length - 1].selected);
-          console.log('transactionview', transactionView)
-          this.mfData = this.mfGetData;
-          if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
-            this.isLoading = true;
-            //  this.getUnrealizedData();
-            if (this.resData) {
-              this.getMutualFundResponse(this.mfGetData);
-            } else {
-              this.getUnrealizedData()
-            }
-
-          } else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
-            this.isLoading = true;
-            this.getMutualFundResponse(this.mfGetData);
-          } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
-            this.isLoading = true;
-            this.changeInput.emit(true);
-            this.getMutualFundResponse(this.mfGetData);
-          } else if (this.viewMode != 'Unrealized Transactions' && this.mutualFund) {
-            this.isLoading = true;
-            this.changeInput.emit(true);
-            this.getMutualFundResponse(this.mutualFund);
-          } else {
-            if (this.adminAdvisorIds.length > 0) {
-              this.getMutualFund();
-            } else {
-              this.teamMemberListGet();
-            }
-          }
-          this.colspanValue = Math.round(this.displayedColumns.length / 2);
-          console.log('colspanValue', this.colspanValue);
-        }
-        const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
-        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
-      },
-      (error) => {
-        if (this.reponseData) {
-
-          this.displayedColumns = [];
-          this.displayedColumnsTotal = [];
-          this.setDefaultFilterData.transactionView.forEach(element => {
-            if (element.selected == true) {
-              this.displayedColumns.push(element.displayName);
-              this.displayedColumnsTotal.push(element.displayName + 'Total');
-
-            }
-          });
-        } else {
-          this.setDefaultFilterData.transactionView = [];
-          this.displayedColumns.forEach(element => {
-            const obj = {
-              displayName: element,
-              selected: true
-            };
-            this.setDefaultFilterData.transactionView.push(obj);
-          });
-        }
-
-        this.mfData = this.mfGetData;
-        if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
-          this.isLoading = true;
-          this.getUnrealizedData();
-        } else if (this.viewMode != 'Unrealized Transactions' && this.resData) {
-          this.isLoading = true;
-          this.getMutualFundResponse(this.mfGetData);
-        } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
-          this.isLoading = true;
-          this.changeInput.emit(true);
-          this.getMutualFundResponse(this.mfGetData);
-        } else if (this.viewMode != 'Unrealized Transactions' && this.mutualFund) {
-          this.isLoading = true;
-          this.changeInput.emit(true);
-          this.getMutualFundResponse(this.mutualFund);
-        } else {
-          if (this.adminAdvisorIds.length > 0) {
-            this.getMutualFund();
-          } else {
-            this.teamMemberListGet();
-          }
-        }
-        this.colspanValue = Math.round(this.displayedColumns.length / 2);
-        console.log('colspanValue', this.colspanValue);
-        const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
-        this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
       }
     );
-
-  }
-  teamMemberListGet() {
-    this.adminAdvisorIds = [];
-    this.custumService.getSubAdvisorListValues({ advisorId: this.advisorId })
-      .subscribe(data => {
-        if (data && data.length !== 0) {
-          console.log('team members: ', data);
-          data.forEach(element => {
-            this.adminAdvisorIds.push(element);
-          });
-          const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
-          if (!isIncludeID) {
-            this.adminAdvisorIds.unshift(this.advisorId);
-          }
-          console.log(this.adminAdvisorIds);
-        } else {
-          this.adminAdvisorIds = [this.advisorId];
-        }
-        this.getMutualFund();
-        this.mfService.setadvisorList(this.adminAdvisorIds);
-      }, err => {
-        this.adminAdvisorIds = [this.advisorId];
-        this.mfService.setadvisorList(this.adminAdvisorIds);
-        this.getMutualFund();
-
-      });
   }
   styleObjectTransaction(header, ind) {
 
@@ -773,154 +471,20 @@ export class MutualFundUnrealizedTranComponent {
 
   }
 
-  styleObjectUnrealised(header, ind) {
-    if (header == 'no') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Sr no.', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { no: true });
-    } else if (header == 'transactionType') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Transaction type', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { transactionType: true });
-    } else if (header == 'transactionDate') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Transaction date', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { transactionDate: true });
-    } else if (header == 'transactionAmount') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Transaction amount', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { transactionAmount: true });
-    } else if (header == 'transactionNav') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Transaction NAV', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { transactionNav: true });
-    } else if (header == 'currentValue') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Current value', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { currentValue: true });
-    } else if (header == 'dividendPayout') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Dividend payout', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { dividendPayout: true });
-    } else if (header == 'dividendReinvest') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Dividend reinvestment', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { dividendReinvest: true });
-    } else if (header == 'totalAmount') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Total amount', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { totalAmount: true });
-    } else if (header == 'units') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Units', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { units: true });
-    } else if (header == 'gain') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Gain', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { gain: true });
-    } else if (header == 'absReturn') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'Absolute return', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { absReturn: true });
-    } else if (header == 'xirr') {
-      this.customDataSource.data.arrayUnrealised.push({
-        name: 'XIRR', index: ind, isCheked: true,
-      });
-      // Object.assign(this.customDataSource.data, { xirr: true });
-    }
-  }
-
   initValueOnInit() {
 
     if (this.mutualFund.mutualFundList.length > 0) {
       this.isLoading = true;
       this.changeInput.emit(true);
       this.advisorData = this.mutualFund.advisorData;
-
-      // this.getSubCategoryWise(this.mutualFund);
-      // this.getSchemeWise();
-      // this.mfSchemes();
-      // this.dataSource.data = this.getCategory(this.mutualFundList, '', this.mfService);
-      // this.grandTotal = this.getfinalTotalValue(this.mutualFundList, this.mfService);
-      // for displaying table values as per category
-      // this.customDataSource.data = this.subCatArray(this.mutualFundList, '', this.mfService);
-      // this.getDataForRightFilter();
     } else {
       this.isLoading = false;
       this.changeInput.emit(false);
-      // this.customDataSource.data = [];
-      // this.unrealisedData = new TableVirtualScrollDataSource([]);
-      this.setUnrealizedDataSource([]);
 
       this.customDataSource.data = [];
       this.customDataHolder = [];
-      // this.changeDetectorRef.detectChanges();
     }
   }
-
-  setUnrealizedDataSource(dataArray) {
-    this.unrealisedArray = dataArray;
-    if (this.unrealisedData) {
-      this.unrealisedData.allData = this.unrealisedArray;
-    }
-  }
-
-  getMutualFund() {
-    this.isLoading = true;
-    // this.unrealisedData = new TableVirtualScrollDataSource([]);
-    // this.setUnrealizedDataSource([]);
-    this.customDataSource = [];
-    this.dataSource = new MatTableDataSource([{}, {}, {}]);
-
-    const obj = {
-      // parentId: this.parentId ? this.parentId : this.advisorId,
-      // advisorId: this.adminAdvisorIds,
-      clientId: this.clientId,
-      showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
-    };
-    this.custumService.getMutualFund(obj).pipe(map((data) => {
-      return this.doFiltering(data);
-    })).subscribe(
-      data => {
-        const cashFlow = data;
-        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
-          this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
-        }
-        this.getMutualFundResponse(data);
-        this.cashFlowObj = {
-          cashFlowInvestment: this.mfData.total_cashflow_amount_inv,
-          cashFlowSwitchIn: this.mfData.total_cashflow_switch_in,
-          cashFlowSwitchOut: this.mfData.total_cashflow_switch_out,
-          cashFlowRedemption: this.mfData.total_cashflow_redemption,
-          cashFlowDividendPayout: this.mfData.total_cashflow_dividend_payout,
-          cashFlowNetInvestment: this.mfData.total_cashflow_net_investment,
-          cashFlowMarketValue: this.mfData.total_cashflow_current_value,
-          cashFlowNetGain: this.mfData.total_cashflow_net_gain,
-          cashFlowLifetimeXirr: this.cashFlowXirr,
-        };
-        this.mfService.setCashFlowXirr(this.cashFlowObj);
-      }, (error) => {
-        this.isLoading = false;
-        this.eventService.showErrorMessage('No data found');
-        this.showDownload = true;
-        this.cd.detectChanges();
-        this.loaded.emit(this.unrealizedTranTemplate.nativeElement);
-      }
-    );
-  }
-
   doFiltering(data) {
     if (this.inputData == 'scheme wise') {
       this.rightFilterData.reportType = [];
@@ -937,11 +501,6 @@ export class MutualFundUnrealizedTranComponent {
       data.mutualFundList = this.casFolioNumber(data.mutualFundList)
     }
     return data;
-
-    // data.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-    // data.schemeWise = this.mfService.filter(data.subCategoryData, 'mutualFundSchemeMaster');
-    // data.mutualFundList = this.mfService.filter(data.schemeWise, 'mutualFund');
-    // return data;
   }
   casFolioNumber(data) {
     data.forEach(element => {
@@ -951,56 +510,6 @@ export class MutualFundUnrealizedTranComponent {
 
     });
     return data;
-  }
-  getMutualFundResponse(data) {
-    if (data) {
-      this.checkFamMember();
-      this.isLoading = true;
-      this.mfData = data;
-      // this.mutualFund = data;
-      if (this.addedData) {
-        this.mutualFund = this.mfData;
-        this.getTransactionTypeData();
-        this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
-
-        this.mfService.setDataForMfGet(this.mfData);
-        if (this.isBulkEmailing && this.viewMode == 'All Transactions') {
-          this.filterForBulkEmailing(data.mutualFundList);
-          // this.getUnrealizedData();
-        } else {
-          this.filterForBulkEmailing(data.mutualFundList);
-          // this.getUnrealizedData();
-        }
-        this.mfService.setMfData(this.mfData);
-        this.mfService.setFilterValues(this.setDefaultFilterData);
-      }
-      this.addedData = false;
-      this.mfService.changeShowMutualFundDropDown(false);
-      this.mutualFundList = this.mutualFund.mutualFundList;
-      // this.asyncFilter(this.mutualFundList);
-      if (!this.isBulkEmailing) {
-        this.mfData.mutualFundList.forEach(element => {
-          element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
-        });
-        this.asyncFilter(this.mfData.mutualFundList);
-        console.log('startTime ', new Date());
-      }
-
-      // this.initValueOnInit();
-      // if (this.mfData) {
-      //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
-      // }
-    } else {
-      this.isLoading = false;
-      this.dataSource.data = [];
-      // this.customDataSource.data = [];
-      // this.unrealisedData = new TableVirtualScrollDataSource([]);
-      this.customDataSource = [];
-      this.customDataHolder = [];
-      this.changeInput.emit(false);
-      this.mfService.setDataForMfGet(null);
-      this.isLoading = false;
-    }
   }
   checkFamMember() {
     this.clientNameToDisplay = null;
@@ -1019,44 +528,6 @@ export class MutualFundUnrealizedTranComponent {
     } else {
       this.clientNameToDisplay = this.clientData.name
     }
-  }
-  filterForBulkEmailing(data) {
-    if (data) {
-      const categoryWiseMfList = [];
-      data.forEach(element => {
-        categoryWiseMfList.push(element.id);
-      });
-      const obj = {
-        // parentId: this.parentId,
-        // advisorId: this.adminAdvisorIds,
-        clientId: this.clientId,
-        toDate: this.toDate,
-        id: categoryWiseMfList,
-        showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
-
-      };
-      this.custumService.getMutualFund(obj).subscribe(
-        data => {
-          console.log(data);
-          const response = this.mfService.doFiltering(data);
-          this.mutualFund = response;
-          Object.assign(response.mutualFundList, { flag: true });
-          response.mutualFundList.forEach(element => {
-            element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
-          });
-          // response.mutualFundList.forEach(element => {
-          //   element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
-          // });
-          if (this.viewMode == 'All Transactions') {
-            this.asyncFilter(response.mutualFundList);
-          } else {
-            this.getUnrealizedData()
-          }
-
-        }
-      );
-    }
-
   }
 
   getTransactionTypeData() {
@@ -1079,86 +550,12 @@ export class MutualFundUnrealizedTranComponent {
     );
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-
-  //   for (const propName in changes) {
-  //     const chng = changes[propName];
-  //     const cur = JSON.stringify(chng.currentValue);
-  //     const prev = JSON.stringify(chng.previousValue);
-  //     // console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-  //   }
-  //   if (changes.mutualFund && !!changes.mutualFund.currentValue) {
-  //     if (this.mutualFund.mutualFundList.length > 0) {
-  //       if (this.mutualFund.viewMode == 'Unrealized Transactions') {
-  //         this.getUnrealizedData();
-  //       } else {
-  //         this.mutualFundList = this.mutualFund.mutualFundList;
-  //         this.asyncFilter(this.mutualFundList);
-  //       }
-  //     } else {
-  //       this.dataSource.data = [];
-  //       this.customDataSource.data = [];
-  //     }
-
-  //   }
-  // }
-
-  getUnrealizedData() {
-    const myArray = (this.mfGetData != '') ? (this.mfGetData ? this.mfGetData.mutualFundList : []) : this.mutualFund.mutualFundList;
-    const list = [];
-    myArray.forEach(val => list.push(Object.assign({}, val)));
-    // let list =[];
-    // list =(this.mfGetData) ? this.mfGetData.mutualFundList : this.mutualFund.mutualFundList;
-    list.forEach(element => {
-      element.navDate = new Date(element.navDate);
-      if (element.toDate) {
-        element.toDate = new Date(element.toDate);
-      }
-      element.mutualFundTransactions = [];
-      // element.mutualFundTransactions.forEach(element => {
-      //   element.transactionDate =
-      // });
-    });
-    const obj = {
-      mutualFundList: list
-    };
-    this.custumService.getMfUnrealizedTransactions(obj).subscribe(
-      data => {
-        this.checkFamMember();
-        // console.log(data);
-        // this.mutualFund.mutualFundList = data;
-        // this.asyncFilter(this.mutualFund.mutualFundList);
-        if (this.isBulkEmailing) {
-          // this.filterForBulkEmailing(data);
-          if (this.fromDate && this.toDate) {
-            data.forEach(element => {
-              element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy/MM/dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
-            });
-          }
-          this.asyncFilter(data);
-        } else {
-          this.asyncFilter(data);
-        }
-
-      }, (error) => {
-        this.isLoading = false;
-        this.dataSource.data = [];
-        // this.customDataSource.data = [];
-        // this.unrealisedData = new TableVirtualScrollDataSource([]);
-        this.setUnrealizedDataSource([]);
-        this.customDataSource = [];
-        this.customDataHolder = [];
-        if (!this.mfGetData) {
-          this.mfService.setDataForMfGet(null);
-        }
-        this.eventService.showErrorMessage('No data found');
-        this.changeInput.emit(false);
-        // this.changeDetectorRef.detectChanges();
-      }
-    );
+  setUnrealizedDataSource(dataArray) {
+    this.unrealisedArray = dataArray;
+    if (this.unrealisedData) {
+      this.unrealisedData.allData = this.unrealisedArray;
+    }
   }
-
-
   asyncFilter(mutualFund) {
     if (typeof Worker !== 'undefined') {
       // console.log(`13091830918239182390183091830912830918310938109381093809328`);
@@ -1182,7 +579,7 @@ export class MutualFundUnrealizedTranComponent {
         // mfService: this.mfService
       };
       // Create a new
-      const worker = new Worker('./mutual-fund-unrealized.worker.ts', { type: 'module' });
+      const worker = new Worker('src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized.worker.ts', { type: 'module' });
       worker.onmessage = ({ data }) => {
         console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
@@ -1208,7 +605,6 @@ export class MutualFundUnrealizedTranComponent {
           this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
           this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         }
-        this.setUnrealizedDataSource(data.customDataSourceData);
         this.dataSource = new MatTableDataSource(data.dataSourceData);
         console.log('datdataSource', this.unrealisedData)
         console.log('datasource............', this.dataSource.data)
@@ -1218,26 +614,6 @@ export class MutualFundUnrealizedTranComponent {
           this.displayedColumns.forEach((element, ind) => {
             this.styleObjectTransaction(element, ind);
           });
-        } else {
-          this.displayedColumns.forEach((element, ind) => {
-            this.styleObjectUnrealised(element, ind);
-          });
-        }
-        // if(this.rightFilterData.transactionPeriodCheck ? this.rightFilterData.transactionPeriodCheck : this.setDefaultFilterData.transactionPeriodCheck && this.viewMode == 'All Transactions'){
-        //   this.isTableShow = false;
-        // }else{
-        //   this.isTableShow = true;
-        // }
-        if (this.viewMode == 'All Transactions') {
-          this.isTableShow = false;
-          this.showSummaryTable = false
-        } else {
-          this.isTableShow = true;
-          this.showSummaryTable = this.setDefaultFilterData.showSummary
-          console.log('showSummaryTable', this.showSummaryTable)
-        }
-        if (this.isBulkEmailing && this.fromDate && this.toDate) {
-          this.isTableShow = false;
         }
         this.ngZone.run(() => {
           this.isLoading = false;
@@ -1294,105 +670,15 @@ export class MutualFundUnrealizedTranComponent {
 
           }
         });
-        this.customDataSource.data.arrayUnrealised.forEach(element => {
-          switch (element.index) {
-            case 0:
-              this.firstArray = this.filterHedaerWise(element);
-              this.firstArrayTotal = this.filterHedaerWiseTotal(element);
-
-              break;
-            case 1:
-              this.secondArray = this.filterHedaerWise(element);
-              this.secondArrayTotal = this.filterHedaerWiseTotal(element);
-
-              break;
-            case 2:
-              this.thirdArray = this.filterHedaerWise(element);
-              this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
-
-              break;
-            case 3:
-              this.fourthArray = this.filterHedaerWise(element);
-              this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
-
-              break;
-            case 4:
-              this.fifthArray = this.filterHedaerWise(element);
-              this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
-
-              break;
-            case 5:
-              this.SixthArray = this.filterHedaerWise(element);
-              this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
-
-              break;
-            case 6:
-              this.seventhArray = this.filterHedaerWise(element);
-              this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
-
-              break;
-            case 7:
-              this.eighthArray = this.filterHedaerWise(element);
-              this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
-
-
-              break;
-            case 8:
-              this.ninethArray = this.filterHedaerWise(element);
-              this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
-
-
-              break;
-            case 9:
-              this.tenthArray = this.filterHedaerWise(element);
-              this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
-
-
-              break;
-            case 10:
-              this.eleventhArray = this.filterHedaerWise(element);
-              this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
-
-
-              break;
-            case 11:
-              this.twelwthArray = this.filterHedaerWise(element);
-              this.twelwthArrayTotal = this.filterHedaerWiseTotal(element);
-
-
-              break;
-            case 12:
-              this.thirteenthArray = this.filterHedaerWise(element);
-              this.thirteenthArrayTotal = this.filterHedaerWiseTotal(element);
-
-
-              break;
-
-          }
-        });
-        // this.setUnrealizedDataSource(this.customDataSource.data);
-
-        // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         if (mutualFund.flag == true) {
           this.dataTransaction.flag = true;
         }
-        if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
-          this.showDownload = true;
-          this.generatePdfBulk();
-        }
-        if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
-          this.showDownload = true;
-          this.generatePdfBulk();
-        }
         this.changeInput.emit(false);
-        // this.cd.markForCheck();
-        // this.cd.detectChanges();
         console.log('dataSource', this.dataSource)
 
         if (this.finPlanObj) {
           this.showDownload = true;
           this.cd.detectChanges();
-          this.loaded.emit(this.unrealizedTranTemplate.nativeElement);
         }
       };
 
@@ -1575,21 +861,8 @@ export class MutualFundUnrealizedTranComponent {
       state: 'open35',
       componentName: RightFilterDuplicateComponent
     };
-    // fragmentData.data = {
-    //   name: (this.viewMode == 'Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
-    //   mfData: this.mutualFund,
-    //   folioWise: this.mutualFund.mutualFundList,
-    //   schemeWise: this.mutualFund.schemeWise,
-    //   familyMember: this.mutualFund.family_member_list,
-    //   category: this.mutualFund.mutualFundCategoryMastersList,
-    //   transactionView: this.displayedColumns,
-    //   fromDate:this.setDefaultFilterData.fromDate,
-    //   toDate:this.setDefaultFilterData.toDate,
-    //   reportType :this.setDefaultFilterData.reportType,
-    //   showFolio :this.setDefaultFilterData.showFolio
-    // };
     fragmentData.data = {
-      name: (this.viewMode == 'Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
+      name: this.viewMode,
       mfData: this.mutualFund,
       folioWise: this.setDefaultFilterData.folioWise,
       schemeWise: this.setDefaultFilterData.schemeWise,
@@ -1620,49 +893,15 @@ export class MutualFundUnrealizedTranComponent {
             // this.customDataSource.data = ([{}, {}, {}]);
             this.customDataSource = [];
             // this.unrealisedData = new TableVirtualScrollDataSource([]);
-            this.setUnrealizedDataSource([]);
             this.isLoading = true;
             this.isTableShow = true;
             this.showSummaryTable = true
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
-            // this.setTrueKey = this.rightFilterData.setTrueKey;
             this.saveFilterData = {};
-            // this.columns =[];
-            // this.rightFilterData.transactionView.forEach(element => {
-            //   if(element.selected == true){
-            //     this.columns.push(element.displayName)
-            //   }
-            // });
-            // this.displayedColumns =[];
-            // this.displayedColumns = this.columns;
-            // this.displayColArray=[];
-            // this.rightFilterData.transactionView.forEach(element => {
-            //   const obj = {
-            //     displayName: element.displayName,
-            //     selected:true
-            //   };
-            //   this.displayColArray.push(obj);
-            // });
-            // this.type = this.rightFilterData.reportType[0];
             if (this.rightFilterData.mfData) {
               this.reponseData = this.doFiltering(this.rightFilterData.mfData);
-            }
-            if (this.rightFilterData.transactionPeriodCheck) {
-              if (this.viewMode != 'Unrealized Transactions') {
-                // this.reponseData.mutualFundList.forEach(element => {
-                //   element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
-                // });
-                this.reponseData.mutualFundList.forEach(element => {
-                  element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.rightFilterData.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
-                });
-              }
-              // else{
-              //   this.reponseData.mutualFundList.forEach(element => {
-              //     element.mutualFundTransactions = element.mutualFundTransactions.filter(item =>  this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= this.rightFilterData.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.rightFilterData.toDate);
-              //   });
-              // }
             }
 
             this.mfData = this.reponseData;
@@ -1681,7 +920,6 @@ export class MutualFundUnrealizedTranComponent {
             this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.toDate), 'dd-MMM-yyyy');
             this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData;
             this.dataTransaction.rightFilterData = this.rightFilterData.mfData;
-            this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
             // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,
@@ -1717,107 +955,9 @@ export class MutualFundUnrealizedTranComponent {
     this.cd.detectChanges();
     setTimeout(() => {
       const para = document.getElementById('template');
-      if (this.viewMode == 'Unrealized Transactions') {
-        this.headerHtml = document.getElementById('templateHeader');
-      } else {
-        this.headerHtml = document.getElementById('alltemplateHeader');
-      }
+      this.headerHtml = document.getElementById('alltemplateHeader');
       this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML, para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '', true, this.clientNameToDisplay ? this.clientNameToDisplay : this.clientData.name);
     }, 200);
-  }
-
-  filterHedaerWise(data) {
-    let obj;
-    switch (data.name) {
-      case 'Sr no.':
-        obj = 'indexId';
-        break;
-      case 'Transaction type':
-        obj = 'fwTransactionType';
-        break;
-      case 'Transaction date':
-        obj = 'transactionDate';
-        break;
-      case 'Transaction amount':
-        obj = 'amount';
-        break;
-      case 'Transaction NAV':
-        obj = 'purchasePrice';
-        break;
-      case 'Units':
-        obj = 'unit';
-        break;
-      case 'Current value':
-        obj = 'currentAmount';
-        break;
-      case 'Dividend payout':
-        obj = 'dividendPayout';
-        break;
-      case 'Dividend reinvestment':
-        obj = 'dividendReinvest';
-        break;
-      case 'Total amount':
-        obj = 'currentAmount';
-        break;
-      case 'Gain':
-        obj = 'gain';
-        break;
-      case 'Absolute return':
-        obj = 'absoluteReturn';
-        break;
-      case 'XIRR':
-        obj = 'cagr';
-        break;
-    }
-
-    return obj;
-  }
-
-  filterHedaerWiseTotal(data) {
-    let obj;
-    switch (data.name) {
-      case 'Sr no.':
-        obj = '';
-        break;
-      case 'Transaction type':
-        obj = 'total';
-        break;
-      case 'Transaction date':
-        obj = '';
-        break;
-      case 'Transaction amount':
-        obj = 'totalTransactionAmt';
-        break;
-      case 'Transaction NAV':
-        obj = '';
-        break;
-      case 'Units':
-        obj = 'totalUnit';
-        break;
-      case 'Current value':
-        obj = 'totalCurrentValue';
-        break;
-      case 'Dividend payout':
-        obj = 'dividendPayout';
-        break;
-      case 'Dividend reinvestment':
-        obj = 'dividendReinvest';
-        break;
-      case 'Total amount':
-        obj = 'totalCurrentValue';
-        break;
-      case 'Gain':
-        obj = 'netGain';
-        break;
-      case 'Absolute return':
-        obj = 'trnAbsoluteReturn';
-        break;
-      case 'XIRR':
-        obj = 'totalCagr';
-        break;
-    }
-
-    return obj;
   }
 
   filterHedaerWiseTran(data) {
@@ -1903,14 +1043,6 @@ export class MutualFundUnrealizedTranComponent {
     } else if (value == 'Total') {
       number = 'Total';
     }
-    // if (value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
-    //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
-    // } else if (value == 'transactionDate') {
-    //   number = this.datePipe.transform(data, 'dd/MM/yyyy')
-    // } else {
-    //   number = this.mfService.mutualFundRoundAndFormat(data, 3);
-    // }
-
     return number;
   }
   formatNumber(data, noOfPlaces: number = 0) {
@@ -1942,47 +1074,8 @@ export class MutualFundUnrealizedTranComponent {
     } else if (value == 'Total') {
       number = 'Total';
     }
-    // if (value == 'amount' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
-    //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
-    // } else if (value == 'transactionDate') {
-    //   number = this.datePipe.transform(data, 'dd/MM/yyyy')
-    // } else {
-    //   number = this.mfService.mutualFundRoundAndFormat(data, 3);
-    // }
-
     return number;
   }
-
-  generatePdfBulk() {
-    this.excelDownload = false
-    this.loadingDone = true;
-    this.cd.detectChanges();
-    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
-    const para = this.unrealizedTranTemplate.nativeElement.innerHTML;
-    if (this.viewMode == 'Unrealized Transactions') {
-      this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML;
-    } else {
-      this.header = this.allTranTemplateHeader.nativeElement.innerHTML;
-    }
-    const obj = {
-      htmlInput: para,
-      header: this.header,
-      name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
-      landscape: true,
-      key: 'showPieChart',
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-      fromEmail: this.clientDetails.advisorData.email,
-      toEmail: this.clientData.email,
-      mfBulkEmailRequestId: this.mfBulkEmailRequestId,
-      // fromEmail: 'devshyni@futurewise.co.in',
-      // toEmail: 'devshyni@futurewise.co.in'
-    };
-    this.utilService.bulkHtmlToPdf(obj);
-    // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
-
-  }
-
   getDetails() {
     const obj = {
       clientId: this.clientId,

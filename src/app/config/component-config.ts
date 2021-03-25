@@ -320,6 +320,7 @@ export const appConfig = {
   GET_KYC_DETAILS_OF_CLIENT: 'user/investor-kyc-remaining/count/get',
   HIDE_KYC_POPUP: 'user/investor-kyc-remaining/hide',
   OTHER_FOLIO_DETAILS: 'user/client/contact-number-and-email/scheme-wise/get',
+  ELSS_TRANSACTIONS: 'mutual-fund/elss/transaction/list/get',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',

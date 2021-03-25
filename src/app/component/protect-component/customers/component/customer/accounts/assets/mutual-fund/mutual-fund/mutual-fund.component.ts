@@ -124,7 +124,7 @@ export class MutualFundComponent implements OnInit {
   getMutualFund() {
     this.isLoading = true;
     const obj = {
-      advisorId: this.advisorId,
+      //  advisorId: this.advisorId,
       clientId: this.clientId,
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
