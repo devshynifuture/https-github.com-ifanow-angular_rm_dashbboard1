@@ -6,7 +6,8 @@
 
     box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
 
-    position: fixed;
+    position: sticky;
+    top: 64px;
     width: 100%;
     z-index: 10;
     background: #fff !important;

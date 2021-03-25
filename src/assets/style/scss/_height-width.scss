@@ -523,7 +523,7 @@
 }
 
 .h-64 {
-  height: 64px;
+  height: 64px !important;
 }
 
 .width-60 {
@@ -1105,5 +1105,10 @@
   .maxw-320 {
     max-width: 230px !important;
     width: 230px !important;
+  }
+
+  .mob-hw-logout-img {
+    max-width: 50px !important;
+    max-height: 50px !important;
   }
 }

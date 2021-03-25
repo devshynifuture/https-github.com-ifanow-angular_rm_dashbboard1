@@ -1,7 +1,7 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
   <mat-sidenav class="mobileMargin" #sidenav mode="side" opened role="navigation">
     <mat-nav-list class="pt-0" id="d" [ngStyle]="{'width':showTabs?'220px':''}">
-      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 c-p" (click)="goHome()">
+      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 c-p h-64" (click)="goHome()">
         <div class="logoWrap">
           <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo">
           <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
@@ -220,7 +220,7 @@
         mat-icon-button type="button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button> -->
-      <div class="row align-items-center justify-content-center h-64">
+      <div class="row align-items-center justify-content-center h-64 mob-no-wrap">
         <div class="col-md-5 col-11 p-0 d-flex">
           <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav mobileBTN"
             mat-icon-button type="button">
@@ -236,14 +236,14 @@
                 <mat-option (onSelectionChange)="selectClient(singleClient)" *ngFor="let singleClient of clientList "
                   [value]="singleClient.displayName">
                   <div class="row">
-                    <div class="col-md-1 d-flex align-items-center">
+                    <div class="col-1 d-flex align-items-center">
                       <i class="material-icons"> person </i>
 
                     </div>
-                    <div class="col-md-7 d-flex align-items-center">
+                    <div class="col-7 d-flex align-items-center">
                       <p class="t-left m-0">{{singleClient.displayName}}</p>
                     </div>
-                    <div class="col-md-4 text-right">
+                    <div class="col-4 text-right">
 
                       <button class="small-primitive" *ngIf="singleClient.userType==3" mat-stroked-button>FAMILY MEMBER
                       </button>
@@ -813,14 +813,13 @@
 
                     <a class="sidenav-link" mat-list-item>
                       <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
-                      <mat-menu #menu="matMenu" class="log-out maxw-320"
-                        style="width: 320px !important;max-width: 320px !important;">
-                        <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
+                      <mat-menu #menu="matMenu" class="log-out maxw-320">
+                        <div class="pl-20 maxw-320">
                           <div class="row bb-1 pt-20 pb-20">
-                            <div class="col-md-3 p-0 full-center">
-                              <img [src]="authService.profilePic" class="w-100 br-10">
+                            <div class="col-md-3 col-2 p-0 full-center">
+                              <img [src]="authService.profilePic" class="w-100 br-10 mob-hw-logout-img">
                             </div>
-                            <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
+                            <div class="col-md-9 col-10 d-flex justify-content-center flex-column pt-32 mob-pt-0">
                               <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
                               <p class="text-custom m-0 roboto f-400">{{role}}</p>
                             </div>
@@ -850,14 +849,13 @@
 
             <a mat-list-item>
               <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
-              <mat-menu #menu="matMenu" class="log-out maxw-320"
-                style="width: 320px !important;max-width: 320px !important;">
-                <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
+              <mat-menu #menu="matMenu" class="log-out maxw-320">
+                <div class="pl-20 maxw-320">
                   <div class="row bb-1 pt-20 pb-20">
-                    <div class="col-md-3 p-0 full-center">
-                      <img [src]="authService.profilePic" class="w-100 br-10">
+                    <div class="col-md-3 col-2 p-0 full-center">
+                      <img [src]="authService.profilePic" class="w-100 br-10 mob-hw-logout-img">
                     </div>
-                    <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
+                    <div class="col-md-9 col-10 d-flex justify-content-center flex-column pt-32 mob-pt-0">
                       <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
                       <p class="text-custom m-0 roboto f-400">{{role}}</p>
                     </div>

@@ -163,6 +163,7 @@ export class DashboardComponent implements OnInit {
   hours: number;
   mfData: any;
   dontHide: boolean;
+  redirectFlag: boolean;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -1580,6 +1581,15 @@ export class DashboardComponent implements OnInit {
         this.bseData = [{}, {}];
       }
     );
+  }
+
+  onResize() {
+    console.log("resize")
+    if (window.innerWidth <= 768) {
+      this.redirectFlag = true;
+    } else {
+      this.redirectFlag = false;
+    }
   }
 
   getLast7DaysTransactionStatusRes(data) {

@@ -59,14 +59,13 @@
                     <!-- <mat-menu #menu="matMenu">
                         <button (click)="logout()" mat-menu-item>Logout</button>
                     </mat-menu> -->
-                    <mat-menu #menu="matMenu" class="log-out maxw-320 p-0"
-                        style="width: 320px !important;max-width: 320px !important;">
-                        <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
+                    <mat-menu #menu="matMenu" class="log-out maxw-320 p-0">
+                        <div class="pl-20 maxw-320">
                             <div class="row bb-1 pt-20 pb-20">
-                                <div class="col-md-3 p-0 full-center">
-                                    <img [src]="authService.profilePic" class="w-100 br-10">
+                                <div class="col-md-3 col-2 p-0 full-center">
+                                    <img [src]="authService.profilePic" class="w-100 br-10 mob-hw-logout-img">
                                 </div>
-                                <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
+                                <div class="col-md-9 col-10 d-flex justify-content-center flex-column pt-32 mob-pt-0">
                                     <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
                                     <p class="text-custom m-0 roboto f-400">{{role}}</p>
                                 </div>
@@ -90,14 +89,13 @@
                     <!-- <mat-menu #menu="matMenu">
                         <button (click)="logout()" mat-menu-item>Logout</button>
                     </mat-menu> -->
-                    <mat-menu #menu="matMenu" class="log-out maxw-320 p-0"
-                        style="width: 320px !important;max-width: 320px !important;">
-                        <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
+                    <mat-menu #menu="matMenu" class="log-out maxw-320 p-0">
+                        <div class="pl-20 maxw-320">
                             <div class="row bb-1 pt-20 pb-20">
-                                <div class="col-md-3 p-0 full-center">
-                                    <img [src]="authService.clientProfilePic" class="w-100 br-10">
+                                <div class="col-md-3 col-2 p-0 full-center">
+                                    <img [src]="authService.clientProfilePic" class="w-100 br-10 mob-hw-logout-img">
                                 </div>
-                                <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
+                                <div class="col-md-9 col-10 d-flex justify-content-center flex-column pt-32 mob-pt-0">
                                     <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
                                     <p class="text-custom m-0 roboto f-400 wb">{{clientName}}</p>
                                 </div>
