@@ -270,9 +270,10 @@
 #ui-setting-supports,
 #ui-mareketplace-advisor,
 #ui-advisor-dashboard-header {
-  position: fixed;
+  position: sticky;
+  top: 64px;
   // margin-top: 4px;
-  float: right;
+  // float: right;
   width: 100%;
   padding-right: 0px;
   // right: 0;

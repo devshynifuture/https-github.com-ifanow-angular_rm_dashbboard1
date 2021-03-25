@@ -28,9 +28,9 @@
   </div>
 </div>
 
-<div class="row pt-60 " id="ui-dashboard-advisor">
+<div class="row" id="ui-dashboard-advisor">
 
-  <div class="col-lg-3 col-md-3  pl-20 pr-20 mt-44 new-grid-842 pb-28 mob-mt-15" id="keyMetrics">
+  <div class="col-lg-3 col-md-5  pl-20 pr-20 mt-44 new-grid-842 pb-28 mob-mt-15" id="keyMetrics">
     <div class="sticky-top z-0">
       <h5 *ngIf="roleService.dashboardPermission.dashboardCapability.Key_metrics" class="m-0 roboto f-500 pb-16">Key
         metrics</h5>
@@ -245,7 +245,7 @@
   </div>
 
 
-  <div class="col-lg-6 col-md-6  bl-1 br p-0 pt-24 pb-28">
+  <div class="col-lg-6 col-md-7  bl-1 br p-0 pt-24 pb-28">
     <div class="pl-24 pr-24 plr-16-992">
       <div class="advisor-status pl-20 mb-24">
         <h3 class="m-0 roboto f-500 roboto text-black pt-20">{{greeting}} {{advisorName}}</h3>
@@ -692,7 +692,7 @@
         <div class="col-md-4 p-0 text-right mob-pt-10">
           <p class="m-0 f-400 roboto text-black f-12">Last 7 days</p>
         </div>
-        <div class="col-md-12 p-0 pt-10">
+        <div class="col-md-12 p-0 pt-10 mob-overflow-table-575">
           <table mat-table [appSkeletonLoading]="last7DaysFlag" appSkeletonLoading class="skeletonAnimation"
             [dataSource]="bseData" id="table-low">
 
@@ -739,7 +739,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
           </table>
-
+        </div>
+        <div class="col-md-12 p-0 mob-overflow-table-575">
           <table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation mt-20" mat-table
             [dataSource]="nscData" id="table-low">
 
@@ -1302,7 +1303,7 @@
           </div>
         </div>
 
-        <div class="col-md-12 p-0" *ngIf="dataSource8.length > 0">
+        <div class="col-md-12 p-0 mob-overflow-table-575" *ngIf="dataSource8.length > 0">
           <table mat-table [dataSource]="dataSource8" id="table-low" class="mt-10"
             [appSkeletonLoading]="isLoadingTransaction" appSkeletonLoading class="skeletonAnimation">
             <ng-container matColumnDef="position">
@@ -1364,7 +1365,7 @@
         </div>
 
         <div class="row" *ngIf="dashBoardSummary.length > 0">
-          <div class="col-md-12 p-0 pt-8">
+          <div class="col-md-12 p-0 pt-8 mob-overflow-table-575">
             <table mat-table [appSkeletonLoading]="isLoadingSubSummary" appSkeletonLoading class=" skeletonAnimation"
               [dataSource]="dashBoardSummary" id="table-low">
 
@@ -1562,7 +1563,7 @@
   </div>
 
 
-  <div class="col-lg-3 col-md-3  mt-0 p-0 bg-lter lter">
+  <div class="col-lg-3 col-md-12  mt-0 p-0 bg-lter lter">
     <div class="sticky-top z-0 bg-4-todo">
       <mat-tab-group [ngClass]="{'mwx-100': enumDataService.PRODUCTION}" animationDuration="0ms" id="advisor-radio">
         <mat-tab *ngIf="roleService.dashboardPermission.dashboardCapability.To_do" label="To-do">
