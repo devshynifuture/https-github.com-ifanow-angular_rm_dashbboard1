@@ -1524,7 +1524,6 @@ export class MutualFundSummaryComponent implements OnInit {
           this.mfService.getSummaryData()
             .subscribe(res => {
               this.getObj = res; // used for getting mutual fund data coming from main gain call
-              console.log('yeeeeeeeee', res);
               console.log('summary', this.summary);
               if (this.getObj.customDataSourceData) {
 

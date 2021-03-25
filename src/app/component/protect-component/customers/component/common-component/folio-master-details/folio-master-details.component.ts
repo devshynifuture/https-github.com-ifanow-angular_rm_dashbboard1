@@ -37,7 +37,6 @@ export class FolioMasterDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getBankDetails()
   }
 
   getFolioMasterDetails(data) {
@@ -81,6 +80,7 @@ export class FolioMasterDetailsComponent implements OnInit {
       if (this.nomineeArray.length == 0) {
         this.getNomineeDetailsFolioSchemeWise();
       }
+      this.getBankDetails()
     }
     if (event.index == 4) {
       this.getOtherFolioDetails();
