@@ -100,9 +100,9 @@ export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy 
 })
 export class MfElssReportComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-    'units', 'balanceUnits', 'days', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
+    'units', 'balanceUnits', 'days', 'lockPeriod', 'lockFreeUnits', 'lockFreeDays', 'LockFreeStatus', 'icons'];
   displayedColumnsTotal: string[] = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-    'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'currentValueTotal', 'dividendPayoutTotal', 'dividendReinvestTotal', 'totalAmountTotal', 'gainTotal', 'absReturnTotal', 'xirrTotal', 'iconsTotal'];
+    'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'lockFreeUnitsTotal', 'lockFreeDaysTotal', 'LockFreeStatusTotal', 'iconsTotal'];
   displayedColumns2: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'balanceUnits', 'days', 'lockPeriod'];
   mfData;
@@ -309,10 +309,10 @@ export class MfElssReportComponent implements OnInit {
         }
       });
     // this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
-    this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-      'units', 'balanceUnits', 'days', 'lockPeriod', 'icons'];
-    this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-      'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'iconsTotal'];
+    // this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
+    //   'units', 'balanceUnits', 'days', 'lockPeriod', 'icons'];
+    // this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
+    //   'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'iconsTotal'];
     this.dataTransaction.displayedColumns = this.displayedColumns;
     this.colspanValue = Math.round(this.displayedColumns.length / 2);
     console.log('colspanValue', this.colspanValue);
@@ -328,6 +328,8 @@ export class MfElssReportComponent implements OnInit {
     })).subscribe(
       data => {
         this.isLoading = false;
+        let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
+        console.log(data);
         //  this.asyncFilter(this.mfData.mutualFundList);
         console.log(data);
       }, (error) => {
@@ -454,7 +456,7 @@ export class MfElssReportComponent implements OnInit {
       // Object.assign(this.customDataSource.data, { days: true });
     } else if (header == 'lockPeriod') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Unlock date', index: ind, isCheked: true, style: {
+        name: 'Lock free date', index: ind, isCheked: true, style: {
           width: '13%',
           'border-top': '1px solid #DADCE0',
           'text-align': 'right',
@@ -987,7 +989,7 @@ export class MfElssReportComponent implements OnInit {
       case 'Days':
         obj = 'days';
         break;
-      case 'Unlock date':
+      case 'Lock free date':
         obj = 'elssDate';
         break;
     }
@@ -1022,7 +1024,7 @@ export class MfElssReportComponent implements OnInit {
       case 'Days':
         obj = '';
         break;
-      case 'Unlock date':
+      case 'Lock free date':
         obj = '';
         break;
 

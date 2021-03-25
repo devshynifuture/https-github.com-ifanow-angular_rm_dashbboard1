@@ -113,7 +113,7 @@
                     </ng-container>
                     <ng-container matColumnDef="lockPeriod">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Unlock date
+                            Lock free date
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
@@ -386,7 +386,7 @@
                     </ng-container>
                     <ng-container matColumnDef="lockPeriod">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Unlock date
+                            Lock free date
                         </th>
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
@@ -395,6 +395,57 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="lockPeriodTotal">
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                <span class="f-700">{{''}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lockFreeUnits">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                            Lock free date
+                        </th>
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                <span>{{element?.elssDate ? (element?.elssDate) : '-'}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lockFreeUnitsTotal">
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                <span class="f-700">{{''}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lockFreeDays">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                            Lock free date
+                        </th>
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                <span>{{element?.elssDate ? (element?.elssDate) : '-'}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lockFreeDaysTotal">
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                <span class="f-700">{{''}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="LockFreeStatus">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                            Lock free date
+                        </th>
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                <span>{{element?.elssDate ? (element?.elssDate) : '-'}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="LockFreeStatusTotal">
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
                                 <span class="f-700">{{''}}</span>

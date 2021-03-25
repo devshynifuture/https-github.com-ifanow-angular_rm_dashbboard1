@@ -759,7 +759,7 @@ export class MutualFundUnrealizedTranComponent {
       // Object.assign(this.customDataSource.data, { days: true });
     } else if (header == 'lockPeriod') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Unlock date', index: ind, isCheked: true, style: {
+        name: 'Lock free date', index: ind, isCheked: true, style: {
           width: '13%',
           'border-top': '1px solid #DADCE0',
           'text-align': 'right',
@@ -1850,7 +1850,7 @@ export class MutualFundUnrealizedTranComponent {
       case 'Days':
         obj = 'days';
         break;
-      case 'Unlock date':
+      case 'Lock free date':
         obj = 'elssDate';
         break;
     }
@@ -1885,7 +1885,7 @@ export class MutualFundUnrealizedTranComponent {
       case 'Days':
         obj = '';
         break;
-      case 'Unlock date':
+      case 'Lock free date':
         obj = '';
         break;
 
