@@ -47,14 +47,15 @@
                     <!-- Name Column -->
                     <ng-container matColumnDef="mfoverview">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF overview
-                            <mat-checkbox *ngIf="!isLoading" [checked]="overviewAll" class="example-margin ml-2"
+                            <mat-checkbox *ngIf="!isLoading" [checked]="overviewAll" class=" ml-2"
                                 (change)="selectReportAll($event,1)"></mat-checkbox>
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
-                            <div class="bar c-p">
+                            <div class="bar">
                                 <mat-checkbox *ngIf="!isLoading" [checked]="element.overview"
-                                    (change)="element.overview=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                    (change)="element.overview=$event.checked;selectReport($event,element)" class="">
+                                </mat-checkbox>
+
                             </div>
                         </td>
                     </ng-container>
@@ -62,14 +63,14 @@
                     <!-- Weight Column -->
                     <ng-container matColumnDef="mfsummary">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF summary
-                            <mat-checkbox *ngIf="!isLoading" [checked]="summaryAll" class="example-margin ml-2"
+                            <mat-checkbox *ngIf="!isLoading" [checked]="summaryAll" class=" ml-2"
                                 (change)="selectReportAll($event,2)"></mat-checkbox>
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
-                            <div class="bar c-p">
+                            <div class="bar">
                                 <mat-checkbox *ngIf="!isLoading" [checked]="element.summary"
-                                    (change)="element.summary=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                    (change)="element.summary=$event.checked;selectReport($event,element)" class="">
+                                </mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -77,56 +78,56 @@
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="mftransaction">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF all transaction
-                            <mat-checkbox *ngIf="!isLoading" [checked]="transactionAll" class="example-margin ml-2"
+                            <mat-checkbox *ngIf="!isLoading" [checked]="transactionAll" class=" ml-2"
                                 (change)="selectReportAll($event,3)"></mat-checkbox>
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
-                            <div class="bar c-p">
+                            <div class="bar">
                                 <mat-checkbox *ngIf="!isLoading" [checked]="element.allTransaction"
                                     (change)="element.allTransaction=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                    class=""></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="mfunrealised">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF unrealised transaction
-                            <mat-checkbox *ngIf="!isLoading" [checked]="unrealisedAll" class="example-margin ml-2"
+                            <mat-checkbox *ngIf="!isLoading" [checked]="unrealisedAll" class=" ml-2"
                                 (change)="selectReportAll($event,4)"></mat-checkbox>
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
-                            <div class="bar c-p">
+                            <div class="bar">
                                 <mat-checkbox *ngIf="!isLoading" [checked]="element.unrealizedTransaction"
                                     (change)="element.unrealizedTransaction=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                    class=""></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="mfcapitalgain">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capital gain summary
-                            <mat-checkbox *ngIf="!isLoading" [checked]="capitalGainAll" class="example-margin ml-2"
+                            <mat-checkbox *ngIf="!isLoading" [checked]="capitalGainAll" class=" ml-2"
                                 (change)="selectReportAll($event,5)"></mat-checkbox>
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
-                            <div class="bar c-p">
+                            <div class="bar">
                                 <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainSummary"
                                     (change)="element.capitalGainSummary=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                    class=""></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
 
                     <ng-container matColumnDef="mfcapitalgaindetailed">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capital gain detailed
-                            <mat-checkbox *ngIf="!isLoading" [checked]="capitalGainDetailedAll"
-                                class="example-margin ml-2" (change)="selectReportAll($event,6)"></mat-checkbox>
+                            <mat-checkbox *ngIf="!isLoading" [checked]="capitalGainDetailedAll" class=" ml-2"
+                                (change)="selectReportAll($event,6)"></mat-checkbox>
                         </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
-                            <div class="bar c-p">
+                            <div class="bar">
                                 <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainDetailed"
                                     (change)="element.capitalGainDetailed=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                    class=""></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>

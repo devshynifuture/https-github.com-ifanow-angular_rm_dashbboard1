@@ -457,3 +457,13 @@
     display: none !important;
   }
 }
+
+@media(max-width:575px) {
+  .mob-overflow-table-575 {
+    overflow: auto !important;
+
+    th {
+      white-space: nowrap !important;
+    }
+  }
+}
