@@ -1,4 +1,14 @@
-<button *ngIf="(fieldFlag=='familyMember' || fieldFlag=='client') &&!enumDataService.PRODUCTION" mat-icon-button
+<button *ngIf="fieldFlag=='familyMember' && enumDataService.PRODUCTION" mat-icon-button [matMenuTriggerFor]="menu1"
+    class="unmap-option c-p">
+    <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu1="matMenu">
+    <button *ngIf="keyInfoCapability.Delete && fieldFlag=='familyMember'" (click)="deleteModal('FAMILY MEMBER')"
+        mat-menu-item>
+        <span>Delete</span>
+    </button>
+</mat-menu>
+<button *ngIf="(fieldFlag=='familyMember' || fieldFlag=='client') && !enumDataService.PRODUCTION" mat-icon-button
     [matMenuTriggerFor]="menu" class="unmap-option c-p">
     <mat-icon>more_vert</mat-icon>
 </button>
