@@ -14,13 +14,13 @@ export class FolioMasterDetailsComponent implements OnInit {
   isLoading: boolean;
   isNomineeLoading = false;
   nomineeArray = [];
-  bankDetails: any;
   obj: any;
   msgForFranklin: string;
   isLoadingOthers = false;
   othersData: any;
   emailList: any;
   mobileList: any;
+  bankDetails = []
 
   constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private eventService: EventService) {
   }
@@ -76,11 +76,15 @@ export class FolioMasterDetailsComponent implements OnInit {
       })
   }
   onTabChanged(event) {
+    if (event.index == 1) {
+      if (this.bankDetails.length == 0) {
+        this.getBankDetails()
+      }
+    }
     if (event.index == 2) {
       if (this.nomineeArray.length == 0) {
         this.getNomineeDetailsFolioSchemeWise();
       }
-      this.getBankDetails()
     }
     if (event.index == 4) {
       this.getOtherFolioDetails();
