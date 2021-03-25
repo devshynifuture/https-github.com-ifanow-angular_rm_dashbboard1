@@ -1,4 +1,4 @@
-<div class="bg-white pl-20 pr-20  pt-130 pb-28">
+<div class="bg-white pl-20 pr-20  pt-65 pb-28">
     <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
         <div class="row pt-8">
             <div class="col-md-8 p-0">
@@ -50,12 +50,14 @@
                     <th *matHeaderCellDef class="f-18 bb-0 t-right" mat-header-cell mat-sort-header="balanceDue">
                         Balance due
                     </th>
-                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p tdPadding-20 text-right amt"
-                        mat-cell>
-                        <div class="bar"  [ngClass]="{floatRightClass: isLoading}" *ngIf="element.balanceDue != undefined">₹<span
-                                appFormatNumber>{{element.balanceDue}}</span></div>
+                    <td (click)="openFragment('clients',element)" *matCellDef="let element"
+                        class="c-p tdPadding-20 text-right amt" mat-cell>
+                        <div class="bar" [ngClass]="{floatRightClass: isLoading}"
+                            *ngIf="element.balanceDue != undefined">₹<span appFormatNumber>{{element.balanceDue}}</span>
+                        </div>
 
-                        <div class="bar" [ngClass]="{floatRightClass: isLoading}" *ngIf="element.balanceDue == undefined">{{!isLoading? "₹0" : ""}} </div>
+                        <div class="bar" [ngClass]="{floatRightClass: isLoading}"
+                            *ngIf="element.balanceDue == undefined">{{!isLoading? "₹0" : ""}} </div>
                     </td>
                 </ng-container>
 
