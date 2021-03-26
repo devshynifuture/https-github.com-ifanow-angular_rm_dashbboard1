@@ -60,7 +60,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   getDomainData(data) {
-    data = 'clients.manekfinancial.com';
+    // data = 'clients.manekfinancial.com';
     const obj = {
       hostName: data
     };
