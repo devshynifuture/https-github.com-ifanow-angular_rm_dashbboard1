@@ -2,8 +2,8 @@
     <div class="col-md-4">
         <button [routerLink]="['/admin/setting/activity/task/template']" routerLinkActive="active-setting-tabs-btn"
             mat-button class="bb-1">Task templates</button>
-        <button [routerLink]="['/admin/setting/activity/task/setting']" routerLinkActive="active-setting-tabs-btn"
-            mat-button class="bb-1">Task settings</button>
+        <button *ngIf="!enumDataService.PRODUCTION" [routerLink]="['/admin/setting/activity/task/setting']"
+            routerLinkActive="active-setting-tabs-btn" mat-button class="bb-1">Task settings</button>
     </div>
     <div class="col-md-8 text-right" *ngIf="!hasError && !isLoading">
 
