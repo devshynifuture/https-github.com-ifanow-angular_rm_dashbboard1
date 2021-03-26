@@ -21,6 +21,9 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { UsersComponent } from './setting-user-roles/setting-users-roles/users/users.component';
 import { DomainSettingPopupComponent } from './setting-preference/domain-setting-popup/domain-setting-popup.component';
+import { SettingActivityTabsComponent } from './setting-activity/setting-activity-tabs/setting-activity-tabs.component';
+import { SettingActivityTaskSettingComponent } from './setting-activity/setting-activity-task-setting/setting-activity-task-setting.component';
+import { SettingActivityTaskTemplatesComponent } from './setting-activity/setting-activity-task-templates/setting-activity-task-templates.component';
 
 
 @NgModule({
@@ -29,7 +32,10 @@ import { DomainSettingPopupComponent } from './setting-preference/domain-setting
     HierachyComponent, ArnRiaDetailsComponent, MfRtaDetailsComponent, SchemeBasketComponent,
     ModelPortfolioComponent,
     SettingActivityComponent,
-    DomainSettingPopupComponent],
+    DomainSettingPopupComponent,
+    SettingActivityTabsComponent,
+    SettingActivityTaskSettingComponent,
+    SettingActivityTaskTemplatesComponent],
   exports: [
     UsersComponent
   ],

@@ -1095,7 +1095,8 @@ export const appConfig = {
   FROALA_UPLOAD_URL: 'user/advisor/froala/file-upload?advisorId=',
   //////////////////////////////////////////////////////////////////////////
 
-  GLOBAL_REMINDER_FILTER: '/reminder/global-data/get'
+  GLOBAL_REMINDER_FILTER: '/reminder/global-data/get',
+  GET_CLIENT_ASSIGNMENT: 'user/client/unassigned/get',
 };
 
 

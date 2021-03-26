@@ -119,7 +119,9 @@
                                     {{(data.name == 'Life insurance premium' ||data.name=='General insurance premium') ?
                                     'Policy number ' : (data.name == 'Loan EMI') ? 'Loan type' : (data.name == 'Bank
                                     recurring deposits' || data.name == 'Post office recurring deposits') ? 'RD number'
-                                    : (data.name == 'Sukanya samriddhi yojna') ? 'SSY number' : 'Account number'}}
+                                    : (data.name == 'Sukanya samriddhi yojna') ? 'SSY number' : (data.name == 'Other
+                                    asset contribution') ? 'Asset name' : (data.name == 'Public privident fund') ?
+                                    'Account balance' : 'Account number'}}
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="br">
                                     <div [ngClass]="{'bar': isLoading}">
