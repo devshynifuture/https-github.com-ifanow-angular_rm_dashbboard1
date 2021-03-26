@@ -1,6 +1,6 @@
 <div id="ui-notes">
     <div class="w-100 fixedClass" [formGroup]="notes">
-        <div class="row pt-16">
+        <div class="row pt-16" *ngIf="listOfNotes.length > 0">
             <div class="col-md-3 pr-0">
                 <div class="row b-b pb-10 d-flex align-items-center" *ngIf="listOfNotes.length > 0">
                     <!-- <div [ngClass]="showCheckBox == true ? 'col-md-8': 'col-md-10' " class=" p-0">
@@ -59,9 +59,18 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
+    <!-- <div class="row">
+        <div class="col-md-12">
+            <div class="text-center mt-10" *ngIf="listOfNotes.length==0 &&  !isLoading">
 
+                <img class="mt-20" src="assets/images/svg/documents-empty-states.svg">
+                <p class="mt-10">No data</p>
+            </div>
+        </div>
+    </div> -->
     <div class="row pt-80">
         <div class="col-md-3 pr-0">
             <!-- <div class="row pt-10 pb-10" *ngIf="listOfNotes.length > 0">
@@ -155,14 +164,10 @@
                 </ul>
 
             </div>
-            <div class="text-center mt-10" *ngIf="listOfNotes.length==0 &&  !isLoading">
 
-                <img class="mt-20" src="assets/images/svg/documents-empty-states.svg">
-                <p class="mt-10">No data</p>
-            </div>
         </div>
 
-        <div class="col-md-9  ">
+        <div class="col-md-9  " *ngIf="isLoading">
             <div class="row ">
                 <div class="col-md-12 mt-10 p-0 froala-edit-class">
                     <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
@@ -179,7 +184,30 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-9  " *ngIf="listOfNotes.length > 0">
+            <div class="row ">
+                <div class="col-md-12 mt-10 p-0 froala-edit-class">
+                    <app-froala [(model)]="emailBody" (modelChange)="saveData($event)"></app-froala>
+                </div>
 
+            </div>
+
+            <div class="row pb-20">
+                <div class="col-md-12 p-0 text-right">
+                    <!-- <button mat-stroked-button class="btn-primary text-white text-right align-items-right c-p"
+                        (click)="addNotes('')" [ngClass]="isMainLoading ? 'cur-wait': ''">
+                        Save
+                    </button> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="text-center mt-10" *ngIf="listOfNotes.length==0 &&  !isLoading">
+
+                <img class="mt-20" src="assets/images/svg/documents-empty-states.svg">
+                <p class="mt-10">No data</p>
+            </div>
+        </div>
     </div>
 
 </div>
