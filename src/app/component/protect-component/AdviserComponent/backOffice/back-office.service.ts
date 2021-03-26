@@ -423,7 +423,7 @@ export class BackOfficeService {
     return this.http.get(apiConfig.USER + appConfig.GET_CLIENT_ASSIGNMENT, data);
   }
   searchByTeamMember(data) {
-    return this.http.get(apiConfig.USER + appConfig.GET_TEAM_MEMBERS, data);
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_TEAM_MEMBERS, data);
   }
   mapClient(data) {
     return this.http.post(apiConfig.USER + appConfig.SEARCH_DATA, data);

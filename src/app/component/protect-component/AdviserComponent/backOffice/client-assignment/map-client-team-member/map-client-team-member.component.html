@@ -23,12 +23,12 @@
                         <mat-select appOwnerNominee matInput class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of arrayOfFamilyMemberOrClient" [disabled]="f.disable"
-                                [value]="f.userName">
-                                <span>{{f.userName}}</span>
+                                [value]="f.name">
+                                <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-error>
+                    <mat-error *ngIf="">
                         This field is required
                     </mat-error>
                     <br>
