@@ -235,6 +235,7 @@ export class MfElssReportComponent implements OnInit {
   showSummaryTable: boolean = true;
   allData: any;
   mfList: any[];
+  mfObject: any;
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -294,6 +295,10 @@ export class MfElssReportComponent implements OnInit {
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt');
     }
+    this.mfService.getMfData()
+      .subscribe(res => {
+        this.mutualFund = res;
+      })
     this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     this.dataTransaction = {};
     this.dataTransaction.viewMode = {};
@@ -327,15 +332,20 @@ export class MfElssReportComponent implements OnInit {
     this.custumService.getElssTransacitonReport(obj).subscribe(
       data => {
         this.isLoading = false;
-        let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
-        let array = [];
-        Object.keys(data.familyMemberList).map(key => {
-          array.push(data.familyMemberList[key]);
-        });
-        data.family_member_list = array;
-        this.allData = data;
-        this.mfList = filterData;
-        this.asyncFilter(filterData);
+        if (data) {
+          let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
+          let array = [];
+          Object.keys(data.familyMemberList).map(key => {
+            array.push(data.familyMemberList[key]);
+          });
+          data.family_member_list = array;
+          this.allData = data;
+          this.mfList = filterData;
+          this.getFilterObj();
+          this.asyncFilter(filterData);
+        } else {
+          this.setUnrealizedDataSource([]);
+        }
         console.log(data);
       }, (error) => {
         this.setUnrealizedDataSource([]);
@@ -344,6 +354,18 @@ export class MfElssReportComponent implements OnInit {
 
       }
     );
+  }
+  getFilterObj() {
+    this.mfObject = {
+      family_member_list: this.allData.family_member_list,
+      folioWise: this.mfList,
+      mutualFundCategoryMastersList: this.mutualFund.mutualFundCategoryMastersList,
+      mutualFundList: this.mfList,
+      schemeWise: this.allData.mutualFundSchemeMasterList,
+      subCategoryData: this.mutualFund.mutualFundCategoryMastersList,
+    }
+    this.setDefaultFilterData = this.mfService.setFilterData(this.mfObject, this.rightFilterData, this.displayedColumns);
+    console.log(this.setDefaultFilterData);
   }
   styleObjectTransaction(header, ind) {
 
@@ -460,6 +482,62 @@ export class MfElssReportComponent implements OnInit {
       });
       // Object.assign(this.customDataSource.data, { days: true });
     } else if (header == 'lockPeriod') {
+      this.customDataSource.data.arrayTran.push({
+        name: 'Lock free date', index: ind, isCheked: true, style: {
+          width: '13%',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
+    } else if (header == 'lockPeriod') {
+      this.customDataSource.data.arrayTran.push({
+        name: 'Lock free date', index: ind, isCheked: true, style: {
+          width: '13%',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
+    } else if (header == 'lockFreeUnits') {
+      this.customDataSource.data.arrayTran.push({
+        name: 'Lock free date', index: ind, isCheked: true, style: {
+          width: '13%',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
+    } else if (header == 'LockFreeStatus') {
+      this.customDataSource.data.arrayTran.push({
+        name: 'Lock free date', index: ind, isCheked: true, style: {
+          width: '13%',
+          'border-top': '1px solid #DADCE0',
+          'text-align': 'right',
+          'padding': '7px 8px',
+          'font-size': '13px !important',
+          'line-height': '16px !important',
+          'color': '#202020',
+          'border-right': '1px solid #DADCE0',
+        }
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
+    } else if (header == 'lockFreeDays') {
       this.customDataSource.data.arrayTran.push({
         name: 'Lock free date', index: ind, isCheked: true, style: {
           width: '13%',
@@ -866,19 +944,26 @@ export class MfElssReportComponent implements OnInit {
       state: 'open35',
       componentName: RightFilterDuplicateComponent
     };
+    this.mfObject = {
+      family_member_list: this.allData.family_member_list,
+      folioWise: this.mfList,
+      mutualFundCategoryMastersList: this.mutualFund.mutualFundCategoryMastersList,
+      mutualFundList: this.mfList,
+      schemeWise: this.allData.mutualFundSchemeMasterList,
+      subCategoryData: this.mutualFund.mutualFundCategoryMastersList,
+    }
     fragmentData.data = {
       name: this.viewMode,
       mfData: this.mfList,
-      folioWise: this.mfList,
+      folioWise: this.setDefaultFilterData.folioWise,
       schemeWise: this.setDefaultFilterData.schemeWise,
-      familyMember: this.allData.family_member_list,
-      category: [],
+      familyMember: this.setDefaultFilterData.familyMember,
+      category: this.setDefaultFilterData.mutualFundCategoryMastersList,
       transactionView: this.displayedColumns,
-      scheme: this.setDefaultFilterData.scheme,
-      reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
-      reportAsOn: this.setDefaultFilterData.reportAsOn,
-      showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
-      showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : this.setDefaultFilterData.showSummary,
+      scheme: this.allData.mutualFundSchemeMasterList,
+      reportType: this.rightFilterData.reportType,
+      reportAsOn: new Date(),
+      showFolio: false,
       fromDate: this.setDefaultFilterData.fromDate,
       toDate: this.setDefaultFilterData.toDate,
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
@@ -993,6 +1078,15 @@ export class MfElssReportComponent implements OnInit {
       case 'Lock free date':
         obj = 'elssDate';
         break;
+      case 'Lock free units':
+        obj = 'lockFreeUnits';
+        break;
+      case 'Lock free status':
+        obj = 'LockFreeStatus';
+        break;
+      case 'Lock free days':
+        obj = 'lockFreeDays';
+        break;
     }
 
     return obj;
@@ -1026,6 +1120,15 @@ export class MfElssReportComponent implements OnInit {
         obj = '';
         break;
       case 'Lock free date':
+        obj = '';
+        break;
+      case 'Lock free units':
+        obj = '';
+        break;
+      case 'Lock free status':
+        obj = '';
+        break;
+      case 'Lock free days':
         obj = '';
         break;
 

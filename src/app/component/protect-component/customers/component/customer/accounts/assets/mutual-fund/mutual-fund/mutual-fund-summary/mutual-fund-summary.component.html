@@ -278,11 +278,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="sipAmount">
-                    <th class="br text-right" mat-header-cell *matHeaderCellDef> SIP
+                    <th class="br text-right" mat-header-cell *matHeaderCellDef> SIP|Frequency
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span>{{element.sipAmount}}</span>
-
+                        <div class="bar"><span>{{element.sipAmount}}</span><br>
+                            <span *ngIf="!isLoading">{{((element.frequency) ? (element.frequency) : '')}}</span>
                         </div>
                     </td>
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
