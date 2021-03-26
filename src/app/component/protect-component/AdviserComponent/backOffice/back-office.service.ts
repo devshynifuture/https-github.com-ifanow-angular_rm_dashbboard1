@@ -419,6 +419,12 @@ export class BackOfficeService {
   editSipAmount(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SIP_AMOUNT, data)
   }
+  getClientForAssignment(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ASSIGNMENT, data);
+  }
+  searchByTeamMember(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_TEAM_MEMBERS, data);
+  }
   private misAum = new BehaviorSubject<any>({});
   misAumData = this.misAum.asObservable();
 

@@ -1,0 +1,69 @@
+<div class=" pl-20 pb-10">
+    <div class="overflow-scroll-bar">
+        <div class="row bb-half">
+            <div class="col-md-12 p-0">
+                <h3 class="f-20 mb-28">Map selected client</h3>
+
+                <p class="f-16 mb-28 roboto f-500">Now mapping client(s) belonging to team member
+                    {{ selectedFolioInvestorName }}</p>
+
+                <p class="f-16  mb-4">To map the client, select team member from below box.
+                </p>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-12 p-0">
+                <h4 class="f-16 mb-0">Team member</h4>
+                <div class="form-group mb-0 classEmpty">
+                    <!-- <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput class="form-control">
+                 </mat-form-field> -->
+
+                    <mat-form-field>
+                        <mat-select appOwnerNominee matInput class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value='' disabled>Select family members</mat-option>
+                            <mat-option *ngFor="let f of arrayOfFamilyMemberOrClient" [disabled]="f.disable"
+                                [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                    <br>
+                    <ng-container *ngIf="arrayOfFamilyMemberOrClientError">
+                        <span class="f-12 pt-20">
+                            {{errorMsg}}
+                        </span>
+                    </ng-container>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="doShowDetails">
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mt-10 d-flex align-items-center  justify-content-end p-0">
+            <button mat-button class="text-primitive f-14" (click)="dialogClose(false)">
+                CANCEL
+            </button>
+
+            <button mat-button class="text-primary f-14" *ngIf="data && data.type === 'backoffice'"
+                (click)="mapFolio()">
+                SAVE
+            </button>
+
+            <button mat-button class="text-primary f-14" (click)="dialogClose(false)"
+                *ngIf="data && data.type === 'casFileUpload'">
+                Save
+            </button>
+        </div>
+    </div>
+
+</div>

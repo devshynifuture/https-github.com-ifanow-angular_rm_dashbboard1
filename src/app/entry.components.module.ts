@@ -145,6 +145,7 @@ import { OpenmobilePopupComponent } from './component/left-sidebar/leftsidebar/o
 import { OpenDomainWhiteLabelPopupComponent } from './component/left-sidebar/leftsidebar/open-domain-white-label-popup/open-domain-white-label-popup.component';
 import { EmailVerificationPopupComponent } from './component/protect-component/AdviserComponent/setting/setting-preference/email-verification-popup/email-verification-popup.component';
 import { OpenGalleryPlanComponent } from './component/protect-component/AdviserComponent/setting/setting-plan/setting-plan/plan-gallery/open-gallery-plan/open-gallery-plan.component';
+import { MapClientTeamMemberComponent } from './component/protect-component/AdviserComponent/backOffice/client-assignment/map-client-team-member/map-client-team-member.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -322,7 +323,8 @@ export const componentList = [
   OpenmobilePopupComponent,
   OpenDomainWhiteLabelPopupComponent,
   EmailVerificationPopupComponent,
-  OpenGalleryPlanComponent
+  OpenGalleryPlanComponent,
+  MapClientTeamMemberComponent
   // ComposeEmailComponent
 ];
 
