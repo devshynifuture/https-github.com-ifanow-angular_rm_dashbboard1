@@ -42,6 +42,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   checkFlag: boolean = false;
   overviewAll: boolean = false
   sendCopy: boolean = false;
+  sendNow: boolean = false;
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
@@ -75,6 +76,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   }
   sendClientId() {
     this.callBulk = true
+    this.sendNow = true
     if (this.data1.reportType == 'overview') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
