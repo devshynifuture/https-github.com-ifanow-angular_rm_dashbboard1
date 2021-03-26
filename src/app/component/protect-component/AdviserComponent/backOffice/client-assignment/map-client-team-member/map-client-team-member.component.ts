@@ -16,7 +16,7 @@ export class MapClientTeamMemberComponent implements OnInit {
   selected: any;
   showMap: boolean;
 
-  constructor(dialogRef: MatDialogRef<MapClientTeamMemberComponent>,
+  constructor(public dialogRef: MatDialogRef<MapClientTeamMemberComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
     @Inject(MAT_DIALOG_DATA) public fragmentData: any
@@ -69,5 +69,7 @@ export class MapClientTeamMemberComponent implements OnInit {
       }
     );
   }
-
+  close() {
+    this.dialogRef.close()
+  }
 }
