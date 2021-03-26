@@ -1,15 +1,14 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { LoginService } from '../login.service';
-import { interval } from 'rxjs';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {ValidatorType} from 'src/app/services/util.service';
+import {LoginService} from '../login.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-support-login',
@@ -108,8 +107,8 @@ export class SupportLoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    let domainUrl = window.location.hostname;
-    let domainUrlArr = domainUrl.split('.');
+    const domainUrl = AuthService.hostName;
+    const domainUrlArr = domainUrl.split('.');
     if (domainUrlArr.includes('beta')) {
       this.router.navigate(['/login']);
     }
@@ -180,7 +179,7 @@ export class SupportLoginComponent implements OnInit {
         .subscribe(
           data => {
             if (data) {
-              data.rmId = data.id
+              data.rmId = data.id;
               delete data.id;
               // this.authService.setToken(data.token);
               this.loginService.handleUserData(this.authService, this.router, data);

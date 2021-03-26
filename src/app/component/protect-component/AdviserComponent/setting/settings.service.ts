@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { appConfig } from 'src/app/config/component-config';
-import { apiConfig } from 'src/app/config/main-config';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {appConfig} from 'src/app/config/component-config';
+import {apiConfig} from 'src/app/config/main-config';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -185,27 +185,34 @@ export class SettingsService {
   getBulkEmailPasswordList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BULK_EMAIL_PASSWORD_HISTORY, data);
   }
+
   addCallBackMob(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CALL_BACK_MOB, data);
 
   }
+
   getTemplateList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TEMPLATE_LIST, data);
 
   }
+
   addNewTemplate(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_TEMPLATE, data);
   }
+
   editTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_TEMPLATE, data);
 
   }
+
   setVisibilityTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SET_VISIBILITY, data);
   }
+
   resetTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RESET_TEMPLATE, data);
   }
+
   deleteTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_TEMPLATE, data);
   }
