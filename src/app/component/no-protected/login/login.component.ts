@@ -1,17 +1,16 @@
-import { HttpParams, HttpHeaders } from '@angular/common/http';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { LoginService } from './login.service';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
-import { interval } from 'rxjs';
-import { OrgSettingServiceService } from '../../protect-component/AdviserComponent/setting/org-setting-service.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {BackOfficeService} from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import {MatProgressButtonOptions} from '../../../common/progress-button/progress-button.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {LoginService} from './login.service';
+import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import {interval} from 'rxjs';
+import {OrgSettingServiceService} from '../../protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-login',
@@ -37,6 +36,8 @@ import { OrgSettingServiceService } from '../../protect-component/AdviserCompone
   ]
 })
 export class LoginComponent implements OnInit {
+
+  private;
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -123,7 +124,7 @@ export class LoginComponent implements OnInit {
     this.getLogoUrl();
     this.createForm();
     // }B E7R8T9
-    const hostName = window.location.hostname;
+    const hostName = AuthService.hostName;
     if (hostName.includes('dev.ifanow.in')) {
       this.isDevDomain = true;
     } else {
@@ -133,7 +134,7 @@ export class LoginComponent implements OnInit {
   }
 
   getLogoUrl() {
-    this.peopleService.getClientLogo({ hostName: window.location.hostname })
+    this.peopleService.getClientLogo({hostName: AuthService.hostName})
       .subscribe(res => {
         if (res) {
           localStorage.removeItem('token');
@@ -259,7 +260,7 @@ export class LoginComponent implements OnInit {
         email: userEmail,
         advisorId: data.advisorId,
         userType: data.userType
-      }
+      };
 
       this.loginUsingCredential(obj);
     } else {
@@ -302,17 +303,17 @@ export class LoginComponent implements OnInit {
           userType: this.userData.userType
         };
         this.saveAfterVerifyCredential(obj);
-        if (document.location.hostname !== "beta.my-planner.in" && document.location.hostname !== "localhost" && document.location.hostname !== "dev.ifanow.in") {
+        if (AuthService.hostName !== 'beta.my-planner.in' && AuthService.hostName !== 'localhost' && AuthService.hostName !== 'dev.ifanow.in') {
           const obj = {
-            "completeWhiteLabel": document.location.hostname,
-            "advisorId": this.userData.advisorId
-          }
+            completeWhiteLabel: AuthService.hostName,
+            advisorId: this.userData.advisorId
+          };
           this.orgSetting.checkWhiteLabelAndUpdate(obj).subscribe(
             res => {
               this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
               this.loginService.handleUserData(this.authService, this.router, this.userData);
             }
-          )
+          );
         } else {
           this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
           this.loginService.handleUserData(this.authService, this.router, this.userData);
@@ -343,17 +344,17 @@ export class LoginComponent implements OnInit {
         //     this.barButtonOptions.active = false;
         //   }
         // );
-        if (document.location.hostname !== "beta.my-planner.in" && document.location.hostname !== "localhost" && document.location.hostname !== "dev.ifanow.in") {
+        if (document.location.hostname !== 'beta.my-planner.in' && document.location.hostname !== 'localhost' && document.location.hostname !== 'dev.ifanow.in') {
           const obj = {
-            "completeWhiteLabel": document.location.hostname,
-            "advisorId": this.userData.advisorId
-          }
+            completeWhiteLabel: document.location.hostname,
+            advisorId: this.userData.advisorId
+          };
           this.orgSetting.checkWhiteLabelAndUpdate(obj).subscribe(
             res => {
               this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
               this.loginService.handleUserData(this.authService, this.router, this.userData);
             }
-          )
+          );
         } else {
           this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
           this.loginService.handleUserData(this.authService, this.router, this.userData);
@@ -379,8 +380,6 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
-  private
 
   createForm() {
     this.loginForm = this.formBuilder.group({
@@ -433,16 +432,16 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/login/setpassword'],
               { state: { userData: data } });
           } else {
-            if (document.location.hostname !== "beta.my-planner.in" && document.location.hostname !== "localhost" && document.location.hostname !== "dev.ifanow.in") {
+            if (document.location.hostname !== 'beta.my-planner.in' && document.location.hostname !== 'localhost' && document.location.hostname !== 'dev.ifanow.in') {
               const obj = {
-                "completeWhiteLabel": document.location.hostname,
-                "advisorId": data.advisorId
-              }
+                completeWhiteLabel: document.location.hostname,
+                advisorId: data.advisorId
+              };
               this.orgSetting.checkWhiteLabelAndUpdate(obj).subscribe(
                 res => {
                   this.loginService.handleUserData(this.authService, this.router, data);
                 }
-              )
+              );
             } else {
               this.loginService.handleUserData(this.authService, this.router, data);
             }

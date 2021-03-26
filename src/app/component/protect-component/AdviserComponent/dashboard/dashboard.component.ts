@@ -1,43 +1,44 @@
-import { AddTasksComponent } from '../Activities/crm-tasks/add-tasks/add-tasks.component';
-import { CrmTaskService } from '../Activities/crm-tasks/crm-task.service';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
-import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionService } from '../Subscriptions/subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FixedFeeComponent } from '../Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
-import { VariableFeeComponent } from '../Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
-import { SubscriptionInject } from '../Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { BillerSettingsComponent } from '../Subscriptions/subscription/common-subscription-component/biller-settings/biller-settings.component';
-import { InvoiceHistoryComponent } from '../Subscriptions/subscription/common-subscription-component/invoice-history/invoice-history.component';
-import { ChangePayeeComponent } from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
-import { DeleteSubscriptionComponent } from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
-import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
-import { BackOfficeService } from '../backOffice/back-office.service';
-import { OnlineTransactionService } from '../transactions/online-transaction.service';
-import { TransactionEnumService } from '../transactions/transaction-enum.service';
-import { DashboardService } from './dashboard.service';
-import { FormControl } from '@angular/forms';
-import { calendarService } from '../Activities/calendar/calendar.service';
-import { EmailServiceService } from '../Email/email-service.service';
-import { DatePipe } from '@angular/common';
-import { AppConstants } from 'src/app/services/app-constants';
-import { CustomerService } from '../../customers/component/customer/customer.service';
-import { Chart } from 'angular-highcharts';
+import {AddTasksComponent} from '../Activities/crm-tasks/add-tasks/add-tasks.component';
+import {CrmTaskService} from '../Activities/crm-tasks/crm-task.service';
+import {Component, OnInit} from '@angular/core';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {DashboardGuideDialogComponent} from './dashboard-guide-dialog/dashboard-guide-dialog.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionService} from '../Subscriptions/subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FixedFeeComponent} from '../Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
+import {VariableFeeComponent} from '../Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
+import {SubscriptionInject} from '../Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {BillerSettingsComponent} from '../Subscriptions/subscription/common-subscription-component/biller-settings/biller-settings.component';
+import {InvoiceHistoryComponent} from '../Subscriptions/subscription/common-subscription-component/invoice-history/invoice-history.component';
+import {ChangePayeeComponent} from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
+import {DeleteSubscriptionComponent} from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
+import {ConfirmDialogComponent} from '../../common-component/confirm-dialog/confirm-dialog.component';
+import {BackOfficeService} from '../backOffice/back-office.service';
+import {OnlineTransactionService} from '../transactions/online-transaction.service';
+import {TransactionEnumService} from '../transactions/transaction-enum.service';
+import {DashboardService} from './dashboard.service';
+import {FormControl} from '@angular/forms';
+import {calendarService} from '../Activities/calendar/calendar.service';
+import {EmailServiceService} from '../Email/email-service.service';
+import {DatePipe} from '@angular/common';
+import {AppConstants} from 'src/app/services/app-constants';
+import {CustomerService} from '../../customers/component/customer/customer.service';
+import {Chart} from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
-import { EnumDataService } from '../../../../services/enum-data.service';
-import { CancelFlagService } from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
-import { RoleService } from 'src/app/auth-service/role.service';
-import { interval, Subscription } from 'rxjs';
-import { MfServiceService } from '../../customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { AssetValidationService } from '../../customers/component/customer/accounts/assets/asset-validation.service';
-import { CredentialsErrorPopupComponent } from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
-import { AddArnRiaCredentialsComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/settings-transactions/settings-manage-credentials/arn-ria-credentials/add-arn-ria-credentials/add-arn-ria-credentials.component';
-import { IinUccCreationComponent } from 'src/app/component/protect-component/AdviserComponent/transactions//overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component'
-import { OnlineTransactionComponent } from '../transactions//overview-transactions/doTransaction/online-transaction/online-transaction.component';
+import {EnumDataService} from '../../../../services/enum-data.service';
+import {CancelFlagService} from '../../PeopleComponent/people/Component/people-service/cancel-flag.service';
+import {RoleService} from 'src/app/auth-service/role.service';
+import {interval, Subscription} from 'rxjs';
+import {MfServiceService} from '../../customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {AssetValidationService} from '../../customers/component/customer/accounts/assets/asset-validation.service';
+import {CredentialsErrorPopupComponent} from 'src/app/common/credentials-error-popup/credentials-error-popup.component';
+import {AddArnRiaCredentialsComponent} from 'src/app/component/protect-component/AdviserComponent/transactions/settings-transactions/settings-manage-credentials/arn-ria-credentials/add-arn-ria-credentials/add-arn-ria-credentials.component';
+import {IinUccCreationComponent} from 'src/app/component/protect-component/AdviserComponent/transactions//overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {OnlineTransactionComponent} from '../transactions//overview-transactions/doTransaction/online-transaction/online-transaction.component';
+
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -48,9 +49,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 'Gross sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08' },
-  { position: 'Redemptions', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08' },
-  { position: 'Net sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08' },
+  {position: 'Gross sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08'},
+  {position: 'Redemptions', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08'},
+  {position: 'Net sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08'},
 
 ];
 
@@ -62,10 +63,10 @@ export interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  { position: 'Rahul Jain', name: 'Extend the account for an', weight: 'Nita Shinde' },
-  { position: 'Mohan Kumar', name: 'Re-invest FD to goal', weight: 'Sajith Thilakan' },
-  { position: 'Sagar Shah', name: 'Surrender insurance policy', weight: 'Khushboo Sidapara' },
-  { position: 'Rahul Jain', name: 'File IT returns through CA', weight: 'Satish Patel' },
+  {position: 'Rahul Jain', name: 'Extend the account for an', weight: 'Nita Shinde'},
+  {position: 'Mohan Kumar', name: 'Re-invest FD to goal', weight: 'Sajith Thilakan'},
+  {position: 'Sagar Shah', name: 'Surrender insurance policy', weight: 'Khushboo Sidapara'},
+  {position: 'Rahul Jain', name: 'File IT returns through CA', weight: 'Satish Patel'},
 
 ];
 
@@ -78,8 +79,8 @@ export interface PeriodicElement3 {
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  { position: 'Pending', name: '2', weight: '1', symbol: '4' },
-  { position: 'Rejections', name: '2', weight: '3', symbol: '2' },
+  {position: 'Pending', name: '2', weight: '1', symbol: '4'},
+  {position: 'Rejections', name: '2', weight: '3', symbol: '2'},
 
 
 ];
@@ -93,8 +94,8 @@ export interface PeriodicElement4 {
 }
 
 const ELEMENT_DATA4: PeriodicElement4[] = [
-  { position: 'Pending', name: '2', weight: '1', symbol: '4' },
-  { position: 'Rejections', name: '2', weight: '3', symbol: '2' },
+  {position: 'Pending', name: '2', weight: '1', symbol: '4'},
+  {position: 'Rejections', name: '2', weight: '3', symbol: '2'},
 
 
 ];
@@ -107,7 +108,7 @@ export interface PeriodicElement5 {
 }
 
 const ELEMENT_DATA5: PeriodicElement5[] = [
-  { position: 'Vishnu Khandelwal	', name: 'SIP Rejection', weight: '23/04/2019' },
+  {position: 'Vishnu Khandelwal	', name: 'SIP Rejection', weight: '23/04/2019'},
   {
     position: 'Saniya Kishore Parmar rep by Kishore Babulal Parmar	',
     name: 'Redemption Rejection',
@@ -126,9 +127,9 @@ export interface PeriodicElement6 {
 }
 
 const ELEMENT_DATA6: PeriodicElement6[] = [
-  { position: 'Mandira Gangakhedkar	', name: 'Investment Planning', weight: '1,00,000/Q', symbol: '15/09/2020' },
-  { position: 'Abhishek Mane	', name: 'Financial Planning', weight: '1,00,000/Q', symbol: '15/09/2020' },
-  { position: 'Sagar Shroff	', name: 'Tax Planning', weight: '1,00,000/Q', symbol: '15/09/2020' },
+  {position: 'Mandira Gangakhedkar	', name: 'Investment Planning', weight: '1,00,000/Q', symbol: '15/09/2020'},
+  {position: 'Abhishek Mane	', name: 'Financial Planning', weight: '1,00,000/Q', symbol: '15/09/2020'},
+  {position: 'Sagar Shroff	', name: 'Tax Planning', weight: '1,00,000/Q', symbol: '15/09/2020'},
 
 
 ];
@@ -145,10 +146,10 @@ export interface PeriodicElement7 {
 
 const ELEMENT_DATA7: PeriodicElement7[] = [
 
-  { position: 'CAMS	', name: 'INA000004409', weight: 'Today', symbol: 'Aniket Shah', match: '8', report: 'Report' },
-  { position: 'Karvy	', name: 'INA000004409', weight: '1 day ago', symbol: 'System', match: '23', report: 'Report' },
-  { position: 'FT	', name: 'INA000004409', weight: '10 days ago', symbol: 'Aniket Shah', match: '0', report: 'Report' },
-  { position: 'CAMS	', name: 'INA000004409', weight: '2 days ago', symbol: 'System', match: '18', report: 'Report' },
+  {position: 'CAMS	', name: 'INA000004409', weight: 'Today', symbol: 'Aniket Shah', match: '8', report: 'Report'},
+  {position: 'Karvy	', name: 'INA000004409', weight: '1 day ago', symbol: 'System', match: '23', report: 'Report'},
+  {position: 'FT	', name: 'INA000004409', weight: '10 days ago', symbol: 'Aniket Shah', match: '0', report: 'Report'},
+  {position: 'CAMS	', name: 'INA000004409', weight: '2 days ago', symbol: 'System', match: '18', report: 'Report'},
 
 
 ];
@@ -164,6 +165,7 @@ export class DashboardComponent implements OnInit {
   mfData: any;
   dontHide: boolean;
   redirectFlag: boolean;
+
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -197,6 +199,7 @@ export class DashboardComponent implements OnInit {
     this.MfServiceService.clearStorage(); // clearing storedata of Mf
     // this.assetValidation.clearAssetData(); //clear stocks data
   }
+
   clientData: any;
   chartTotal = 0;
   hasError: boolean;
@@ -271,8 +274,6 @@ export class DashboardComponent implements OnInit {
   answerObj: any = {};
   answerFlag: boolean;
   taskSummaryCount: any;
-
-
 
 
   documentSizeData: any = {};
@@ -492,7 +493,7 @@ export class DashboardComponent implements OnInit {
       isLoading: true,
     }
   };
-  update: boolean = true
+  update = true;
 
   todoDescription = '';
 
@@ -502,7 +503,7 @@ export class DashboardComponent implements OnInit {
       this.hours = new Date().getHours() - new Date(AuthService.getInvalidCredsTimeZone()).getHours();
       if (this.hours > 4) {
         sessionStorage.removeItem('invalidPopup');
-        this.hours = undefined
+        this.hours = undefined;
       }
     }
     this.credentialsAdded = true;
@@ -512,18 +513,22 @@ export class DashboardComponent implements OnInit {
     this.advisorName = AuthService.getUserInfo().name;
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
-    if (!this.update) { }
+    if (!this.update) {
+    }
+    if (DashboardService.dashMisData) {
+      this.getMisDataRes(DashboardService.dashMisData);
+    } else {
+      this.getMisData(); // summry dashbord
+    }
     if (DashboardService.dashAnswerData) {
       this.answerObj = DashboardService.dashAnswerData;
-    }
-    else {
+    } else {
       this.getAnswerData();
     }
 
     if (DashboardService.dashTotalRecivedByDash) {
       this.getTotalRecivedRes(DashboardService.dashTotalRecivedByDash);
-    }
-    else {
+    } else {
       this.getTotalRecivedByDash();
     }
 
@@ -534,73 +539,63 @@ export class DashboardComponent implements OnInit {
     }
 
     if (DashboardService.dashSummaryDataDashboard) {
-      this.getSubSummaryRes(DashboardService.dashSummaryDataDashboard)
-    }
-    else {
+      this.getSubSummaryRes(DashboardService.dashSummaryDataDashboard);
+    } else {
       this.getSummaryDataDashboard(); // summry dashbord
     }
 
     if (DashboardService.dashKeyMetrics) {
-      this.getKeyMetricsRes(DashboardService.dashKeyMetrics)
-    }
-    else {
+      this.getKeyMetricsRes(DashboardService.dashKeyMetrics);
+    } else {
       this.getKeyMetrics(); // summry dashbord
     }
 
     if (DashboardService.dashRecentTransactionData) {
       this.getRecentTransactionDataRes(DashboardService.dashRecentTransactionData);
-    }
-    else {
+    } else {
       this.getRecentTransactionData(); // summry dashbord
     }
 
     if (DashboardService.dashBirthdayOrAnniversary) {
       this.getBirthdayOrAnniversaryRes(DashboardService.dashBirthdayOrAnniversary);
-    }
-    else {
+    } else {
       this.getBirthdayOrAnniversary(); // summry dashbord
     }
 
     if (DashboardService.dashLast7DaysTransactionStatus) {
       this.getLast7DaysTransactionStatusRes(DashboardService.dashLast7DaysTransactionStatus);
-    }
-    else {
+    } else {
       this.getLast7DaysTransactionStatus(); // summry dashbord
     }
 
     if (DashboardService.dashDocumentTotalSize) {
       this.getDocumentTotalSizeRes(DashboardService.dashDocumentTotalSize);
-    }
-    else {
+    } else {
       this.getDocumentTotalSize(); // summry dashbord
     }
 
     if (DashboardService.dashLastSevenDaysTransactions && DashboardService.dashLastSevenDaysTransactionsNew) {
       this.getLastSevenDaysTransactionsRes(DashboardService.dashLastSevenDaysTransactions);
       this.getLastSevenDaysTransactionsNewRes(DashboardService.dashLastSevenDaysTransactionsNew);
-    }
-    else {
+    } else {
       this.getLastSevenDaysTransactions(); // summry dashbord
     }
 
     if (DashboardService.dashLatesAumReconciliationDataRes) {
       this.getLatesAumReconciliationDataRes(DashboardService.dashLatesAumReconciliationDataRes);
-    }
-    else {
+    } else {
       this.getLatesAumReconciliationData(); // summry dashbord
     }
 
     if (DashboardService.dashLastSevenDaysInvestmentAccounts) {
       this.getLastSevenDaysInvestmentAccountsRes(DashboardService.dashLastSevenDaysInvestmentAccounts);
-    }
-    else {
+    } else {
       this.getLastSevenDaysInvestmentAccounts(); // summry dashbord
     }
 
     if (DashboardService.dashGoalSummaryData) {
       this.getGoalSummaryDataRes(DashboardService.dashGoalSummaryData);
-    }
-    else {
+    } else {
       this.getGoalSummaryData(); // summry dashbord
     }
     if (DashboardService.allTransactions) {
@@ -608,30 +603,23 @@ export class DashboardComponent implements OnInit {
     } else {
       this.getAllTrsanction(); // summry dashbord
     }
-    if (DashboardService.dashMisData) {
-      this.getMisDataRes(DashboardService.dashMisData);
-    }
-    else {
-      this.getMisData(); // summry dashbord
-    }
+
     this.initializePieChart();
 
     if (DashboardService.dashChartData) {
       this.getChartDataRes(DashboardService.dashChartData);
-    }
-    else {
+    } else {
       this.getChartData(); // summry dashbord
     }
 
     if (DashboardService.dashTodoListData) {
       this.todoListData = DashboardService.dashTodoListData;
-    }
-    else {
+    } else {
       this.getTodoListData(); // summry dashbord
     }
     // this.getAssetAllocationData();
     // this.sipCountGet();//for getting total sip book
-    // this.getKeyMetrics(); 
+    // this.getKeyMetrics();
     // for getting total AUM
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
@@ -653,9 +641,9 @@ export class DashboardComponent implements OnInit {
   }
 
   intervalCall() {
-    this.getKeyMetrics()
+    this.getKeyMetrics();
     this.getAssetAllocationData();
-    this.sipCountGet();//for getting total sip book
+    this.sipCountGet(); // for getting total sip book
     this.getTodoListData();
     this.getRecentTransactionData();
     this.connectAccountWithGoogle();
@@ -668,7 +656,7 @@ export class DashboardComponent implements OnInit {
     this.getGoalSummaryData();
     this.initPointForTask();
     this.getMisData();
-    this.getChartData()
+    this.getChartData();
   }
 
   ngOnDestroy() {
@@ -677,8 +665,8 @@ export class DashboardComponent implements OnInit {
   }
 
   initPointForTask() {
-    console.log(DashboardService.getTaskMatrix(), "DashboardService.getTaskMatrix");
-    console.log(DashboardService.getTodaysTaskList(), "DashboardService.getTodaysTaskList");
+    console.log(DashboardService.getTaskMatrix(), 'DashboardService.getTaskMatrix');
+    console.log(DashboardService.getTodaysTaskList(), 'DashboardService.getTodaysTaskList');
 
     // DashboardService.getTaskMatrix() ? this.taskSummaryDashboardCount = DashboardService.getTaskMatrix() : this.getTaskDashboardCount();
     // DashboardService.getTodaysTaskList() ? this.dataSource2.data = DashboardService.getTodaysTaskList() : this.getTodaysTaskList();
@@ -691,7 +679,7 @@ export class DashboardComponent implements OnInit {
     if (!DashboardService.dashTodaysTaskList) {
       this.getTodaysTaskList();
     } else {
-      this.dataSource2.data = DashboardService.dashTodaysTaskList
+      this.dataSource2.data = DashboardService.dashTodaysTaskList;
     }
 
 
@@ -711,9 +699,9 @@ export class DashboardComponent implements OnInit {
           this.answerObj = data;
         }
       }), err => {
-        this.answerFlag = false;
-        this.answerObj.nextStep = 'start';
-      };
+      this.answerFlag = false;
+      this.answerObj.nextStep = 'start';
+    };
   }
 
   getChartData() {
@@ -725,12 +713,11 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getChartData(obj).subscribe(
       data => {
         this.tabsLoaded.portfolioData.isLoading = false;
-        console.log(data)
+        console.log(data);
         if (data) {
           DashboardService.dashChartData = data;
           this.getChartDataRes(data);
-        }
-        else {
+        } else {
           this.tabsLoaded.portfolioData.hasData = false;
         }
       },
@@ -744,10 +731,10 @@ export class DashboardComponent implements OnInit {
   getChartDataRes(data) {
     this.tabsLoaded.portfolioData.isLoading = false;
     this.tabsLoaded.portfolioData.hasData = true;
-    let chartData = [];
-    this.chartTotal
+    const chartData = [];
+    this.chartTotal;
     data.forEach((element, index) => {
-      this.chartTotal += Math.round(element.totalAum)
+      this.chartTotal += Math.round(element.totalAum);
       if (element.name) {
         chartData.push({
           y: Math.round(element.totalAum),
@@ -756,13 +743,14 @@ export class DashboardComponent implements OnInit {
           dataLabels: {
             enabled: false
           }
-        })
+        });
       }
     });
-    this.newchartData = chartData
+    this.newchartData = chartData;
     this.assetAllocationPieChartDataMgnt(this.newchartData);
-    this.tabsLoaded.portfolioData.dataLoaded = true
+    this.tabsLoaded.portfolioData.dataLoaded = true;
   }
+
   getBSECredentials() {
     this.isLoading = true;
     const obj = {
@@ -794,18 +782,16 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
   refresh(flag) {
     this.dontHide = true;
   }
 
 
-
-
-
   openTransaction() {
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: { isAdvisorSection: true, flag: 'addNewTransaction' },
+      data: {isAdvisorSection: true, flag: 'addNewTransaction'},
       id: 1,
       state: 'open65',
       componentName: OnlineTransactionComponent,
@@ -844,7 +830,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getTaskDashboardCount() {
-    this.dashboardService.getTaskDashboardCountValues({ advisorId: this.advisorId })
+    this.dashboardService.getTaskDashboardCountValues({advisorId: this.advisorId})
       .subscribe(res => {
         if (res) {
           this.getTaskDashboardCountRes(res);
@@ -856,7 +842,7 @@ export class DashboardComponent implements OnInit {
 
   getTaskDashboardCountRes(res) {
     this.taskSummaryDashboardCount = res;
-    this.taskSummaryCount = this.taskSummaryDashboardCount.weekTaskCount + this.taskSummaryDashboardCount.monthTaskCount + this.taskSummaryDashboardCount.overDueTaskCount
+    this.taskSummaryCount = this.taskSummaryDashboardCount.weekTaskCount + this.taskSummaryDashboardCount.monthTaskCount + this.taskSummaryDashboardCount.overDueTaskCount;
     // DashboardService.setTaskMatrix(res);
   }
 
@@ -1144,10 +1130,12 @@ export class DashboardComponent implements OnInit {
 
       });
   }
+
   getLastSevenDaysInvestmentAccountsRes(data) {
     this.investmentAccountFlag = false;
     this.LastSevenDaysInvestmentAccounts = data;
   }
+
   getLastSevenDaysTransactions() {
     this.last7DaysLoading = true;
 
@@ -1205,7 +1193,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getLastSevenDaysTransactionsNewRes(data) {
-    this.last7DaysLoading = false
+    this.last7DaysLoading = false;
     this.dataSource5 = data;
     console.log(data, 'LastSevenDaysTransactions 1233333333333333333');
   }
@@ -1234,7 +1222,7 @@ export class DashboardComponent implements OnInit {
     this.subService.filterSubscription(obj).subscribe(
       data => {
         DashboardService.dashSummaryDataDashboard = data;
-        this.getSubSummaryRes(data)
+        this.getSubSummaryRes(data);
       }, error => {
         this.isLoadingSubSummary = false;
         this.dataSource = [];
@@ -1318,7 +1306,7 @@ export class DashboardComponent implements OnInit {
 
   updateTodoList(todoData) {
     if (this.updateNote.value == '') {
-      this.eventService.openSnackBar("Please type something", "Dismiss");
+      this.eventService.openSnackBar('Please type something', 'Dismiss');
       return;
     }
     const obj = {
@@ -1354,8 +1342,8 @@ export class DashboardComponent implements OnInit {
         this.getTodoListData();
         // }
       }), err => {
-        this.eventService.openSnackBar(err, 'Dismiss');
-      };
+      this.eventService.openSnackBar(err, 'Dismiss');
+    };
   }
 
 
@@ -1387,7 +1375,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getBirthdayOrAnniversaryRes(data) {
-    console.log("birthday or aniversary", data);
+    console.log('birthday or aniversary', data);
     this.isBirhtdayLoader = false;
     // data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
     // data.forEach(element => {
@@ -1533,11 +1521,12 @@ export class DashboardComponent implements OnInit {
     }
     this.birthdayAnniList = arr;
     this.birthdayAnniList = this.birthdayAnniList.sort((a, b) =>
-      a['daysToGo'] > b['daysToGo'] ? 1 : (a['daysToGo'] === b['daysToGo'] ? 0 : -1)
+      a.daysToGo > b.daysToGo ? 1 : (a.daysToGo === b.daysToGo ? 0 : -1)
     );
 
     // console.log('final list', this.birthdayAnniList);
   }
+
   getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
   }
@@ -1569,7 +1558,7 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data) {
           DashboardService.dashLast7DaysTransactionStatus = data;
-          this.getLast7DaysTransactionStatusRes(data)
+          this.getLast7DaysTransactionStatusRes(data);
         } else {
           this.last7DaysFlag = false;
           this.nscData = [{}, {}];
@@ -1584,7 +1573,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onResize() {
-    console.log("resize")
+    console.log('resize');
     if (window.innerWidth <= 768) {
       this.redirectFlag = true;
     } else {
@@ -1613,6 +1602,7 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
   getDocumentTotalSizeRes(data) {
     this.docOverviewFlag = false;
     this.documentSizeData = data;
@@ -1641,7 +1631,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getLatesAumReconciliationDataRes(data) {
-    console.log("this is aum recon list::", data);
+    console.log('this is aum recon list::', data);
     this.aumFlag = false;
     this.aumReconList = data;
   }
@@ -1669,6 +1659,7 @@ export class DashboardComponent implements OnInit {
     this.isGoalSummaryLoaderFlag = false;
     this.goalSummaryData = data;
   }
+
   connectAccountWithGoogle() {
     this.calenderLoader = true;
     this.emailService.getProfile().subscribe(res => {
@@ -1678,7 +1669,7 @@ export class DashboardComponent implements OnInit {
         localStorage.setItem('googleOAuthToken', 'oauthtoken');
         localStorage.setItem('successStoringToken', 'true');
         localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
-        this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['/admin/emails/inbox'], {relativeTo: this.activatedRoute});
         this.getEvent();
       } else {
         this.calenderLoader = false;
@@ -1786,6 +1777,7 @@ export class DashboardComponent implements OnInit {
     this.transactionList = TransactionEnumService.setPlatformEnum(data);
     this.transactionList = TransactionEnumService.setTransactionStatus(data);
   }
+
   openCredentialsErrorPopup() {
     const dialogRef = this.dialog.open(CredentialsErrorPopupComponent, {
       width: '400px',
@@ -1942,6 +1934,7 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
   clientWithSubscriptionRes(data) {
     if (data) {
       this.subOverviewFlag = false;
@@ -1988,24 +1981,22 @@ export class DashboardComponent implements OnInit {
     this.isKeyMatrix = false;
     data.mfAum = UtilService.getNumberToWord(data.mfAum);
     data.sipBook = UtilService.getNumberToWord(data.sipBook);
-    delete data['mfAum'];
+    delete data.mfAum;
     this.keyMetricJson = data;
-    this.mfAumValue = data.mfAum;
+    // this.mfAumValue = data.mfAum;
     // this.keyMetricJson.mfAum = '';
     this.loaderFun();
   }
 
   openGuideDialog(): void {
-    const obj = {
-
-    };
+    const obj = {};
     this.dashboardService.onBoardingQuestionMaster(obj).subscribe(
       data => {
         if (data) {
           const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
             maxWidth: '100vw',
             width: '90vw',
-            data: { userData: this.userData, masterGet: data, stepFlag: this.answerObj.nextStep }
+            data: {userData: this.userData, masterGet: data, stepFlag: this.answerObj.nextStep}
           });
 
           dialogRef.afterClosed().subscribe(result => {
@@ -2037,9 +2028,8 @@ export class DashboardComponent implements OnInit {
           DashboardService.dashMisData = data;
           this.mfData = data;
           this.getMisDataRes(data);
-        }
-        else {
-          this.mfAumValue = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
+        } else {
+          // this.mfAumValue = UtilService.getNumberToWord(this.keyMetricJson.mfAum);
         }
         this.loaderFun();
         // UtilService.getNumberToWord(this.keyMetricJson.mfAum)
@@ -2050,6 +2040,7 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
   getAllTrsanction() {
     this.isLoadingTransaction = true;
     const obj = {
@@ -2075,6 +2066,7 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
   getTransactionResponse(data) {
     this.isLoadingTransaction = false;
     if (data && data.length > 0) {
@@ -2083,10 +2075,12 @@ export class DashboardComponent implements OnInit {
       this.dataSource8 = [];
     }
   }
+
   getMisDataRes(data) {
     this.keyMetricJson.mfAum = data.totalAumRupees;
     this.mfAumValue = data.totalAumRupees;
   }
+
   loaderFun() {
     if (!this.isKeyMatrix && !this.mfDataflag) {
       this.keyMatrixFlag = false;
