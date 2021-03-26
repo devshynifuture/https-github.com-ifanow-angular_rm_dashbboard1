@@ -340,6 +340,9 @@ export class MfElssReportComponent implements OnInit {
           });
           data.family_member_list = array;
           this.allData = data;
+          filterData.forEach(ele => {
+            ele.schemeId = ele.mutualFundSchemeMasterId
+          })
           this.mfList = filterData;
           this.getFilterObj();
           this.asyncFilter(filterData);
@@ -958,9 +961,9 @@ export class MfElssReportComponent implements OnInit {
       folioWise: this.setDefaultFilterData.folioWise,
       schemeWise: this.setDefaultFilterData.schemeWise,
       familyMember: this.setDefaultFilterData.familyMember,
-      category: this.setDefaultFilterData.mutualFundCategoryMastersList,
+      category: this.setDefaultFilterData.category,
       transactionView: this.displayedColumns,
-      scheme: this.allData.mutualFundSchemeMasterList,
+      scheme: this.setDefaultFilterData.scheme,
       reportType: this.rightFilterData.reportType,
       reportAsOn: new Date(),
       showFolio: false,
