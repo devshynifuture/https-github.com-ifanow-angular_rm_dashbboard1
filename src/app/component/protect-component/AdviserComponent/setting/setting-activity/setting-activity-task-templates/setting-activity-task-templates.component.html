@@ -1,30 +1,7 @@
-<div class="row pt-20">
-    <div class="col-md-12 text-right">
-        <button mat-stroked-button class="text-primary">Tasks</button>
+<div class="row">
 
-    </div>
-</div>
-<router-outlet></router-outlet>
 
-<!-- <div class="row pt-16 pb-20 setting-activity">
-    <div class="col-md-4">
-        <mat-tab-group animationDuration="0ms" id="ui-setting-activity-header">
-            <mat-tab label="Task templates">
-                <app-setting-activity-task-templates></app-setting-activity-task-templates>
-
-            </mat-tab>
-            <mat-tab label="Task settings">
-                <app-setting-activity-task-setting></app-setting-activity-task-setting>
-            </mat-tab>
-
-        </mat-tab-group>
-    </div>
-    <div class="col-md-8 text-right" *ngIf="!hasError && !isLoading">
-
-        <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()" *ngIf="taskList"> ADD
-            NEW</button>
-    </div> -->
-<!-- <div class="col-md-12 pt-28" *ngIf="taskList && linkedTaskList.length > 0">
+    <div class="col-md-12 pt-28" *ngIf="taskList && linkedTaskList.length > 0">
         Linked task template
         <table mat-table [dataSource]="linkedTaskList" class="mt-8 skeletonAnimation" id="table-low" appSkeletonLoading
             [appSkeletonLoading]="isLoading">
@@ -129,63 +106,70 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
         </table>
     </div>
-</div>
 
-<div *ngIf="taskList == undefined && !isLoading" class="row">
-    <div class="col-md-12 d-flex justify-content-center ">
-        <div class="boxEmpty mt-52">
-            <img src="assets/images/svg/task-empty-state.svg">
-            <h4 class="mt-24 mb-12">No task templates added yet</h4>
-            <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
-        </div>
 
-        <div class="dashedClass">
-            <p>In order to collaborate with your team in an efficient way, you can create task templates which are
-                custmised to how you run your practice. </p>
-            <p>You can create <strong> Linked task template </strong> or <strong> Non linked task template. </strong>
-            </p>
-            <p class="mb-0"> <strong> What is a linked task? </strong> </p>
-            <p>A linked task is one which is linked to an existing asset/insurance/loan. Linked tasks allow you to work
-                seamlessly without having to worry about entering the details of the linked asset/insurance/loan
-                manually.
-            </p>
-            <p class="mb-0"> <strong> What is a non-linked task? </strong>
-            <p>A non-linked task is the opposite of a linked task. There is nothing associated with such tasks.
-                Depending on the nature of your work, you can create such task templates. E.g: On-board a new client,
-                fill up form, do a review meeting etc.</p>
-            <p> <strong> Note: </strong> Task templates can also have sub-tasks associated with them. You can assign
-                default owners and turn around times to tasks as well as sub-tasks.</p>
+    <div *ngIf="taskList == undefined && !isLoading" class="row">
+        <div class="col-md-12 d-flex justify-content-center ">
+            <div class="boxEmpty mt-52">
+                <img src="assets/images/svg/task-empty-state.svg">
+                <h4 class="mt-24 mb-12">No task templates added yet</h4>
+                <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
+            </div>
 
-        </div>
-    </div>
-</div>
+            <div class="dashedClass">
+                <p>In order to collaborate with your team in an efficient way, you can create task templates which are
+                    custmised to how you run your practice. </p>
+                <p>You can create <strong> Linked task template </strong> or <strong> Non linked task template.
+                    </strong>
+                </p>
+                <p class="mb-0"> <strong> What is a linked task? </strong> </p>
+                <p>A linked task is one which is linked to an existing asset/insurance/loan. Linked tasks allow you to
+                    work
+                    seamlessly without having to worry about entering the details of the linked asset/insurance/loan
+                    manually.
+                </p>
+                <p class="mb-0"> <strong> What is a non-linked task? </strong>
+                <p>A non-linked task is the opposite of a linked task. There is nothing associated with such tasks.
+                    Depending on the nature of your work, you can create such task templates. E.g: On-board a new
+                    client,
+                    fill up form, do a review meeting etc.</p>
+                <p> <strong> Note: </strong> Task templates can also have sub-tasks associated with them. You can assign
+                    default owners and turn around times to tasks as well as sub-tasks.</p>
 
-<div *ngIf="hasError" class="row">
-    <div class="col-md-12 d-flex justify-content-center ">
-        <div class="boxEmpty mt-52">
-            <img src="assets/images/svg/task-empty-state.svg">
-            <h4 class="mt-24 mb-12">No task templates added yet</h4>
-            <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
-        </div>
-
-        <div class="dashedClass">
-            <p>In order to collaborate with your team in an efficient way, you can create task templates which are
-                custmised to how you run your practice. </p>
-            <p>You can create <strong> Linked task template </strong> or <strong> Non linked task template. </strong>
-            </p>
-            <p class="mb-0"> <strong> What is a linked task? </strong> </p>
-            <p>A linked task is one which is linked to an existing asset/insurance/loan. Linked tasks allow you to work
-                seamlessly without having to worry about entering the details of the linked asset/insurance/loan
-                manually.
-            </p>
-            <p class="mb-0"> <strong> What is a non-linked task? </strong>
-            <p>A non-linked task is the opposite of a linked task. There is nothing associated with such tasks.
-                Depending on the nature of your work, you can create such task templates. E.g: On-board a new client,
-                fill up form, do a review meeting etc.</p>
-            <p> <strong> Note: </strong> Task templates can also have sub-tasks associated with them. You can assign
-                default owners and turn around times to tasks as well as sub-tasks.</p>
-
+            </div>
         </div>
     </div>
 
-</div> -->
+    <div *ngIf="hasError" class="row">
+        <div class="col-md-12 d-flex justify-content-center ">
+            <div class="boxEmpty mt-52">
+                <img src="assets/images/svg/task-empty-state.svg">
+                <h4 class="mt-24 mb-12">No task templates added yet</h4>
+                <button mat-stroked-button class="btn-primary " (click)="addNewTaskTemplate()"> ADD NEW</button>
+            </div>
+
+            <div class="dashedClass">
+                <p>In order to collaborate with your team in an efficient way, you can create task templates which are
+                    custmised to how you run your practice. </p>
+                <p>You can create <strong> Linked task template </strong> or <strong> Non linked task template.
+                    </strong>
+                </p>
+                <p class="mb-0"> <strong> What is a linked task? </strong> </p>
+                <p>A linked task is one which is linked to an existing asset/insurance/loan. Linked tasks allow you to
+                    work
+                    seamlessly without having to worry about entering the details of the linked asset/insurance/loan
+                    manually.
+                </p>
+                <p class="mb-0"> <strong> What is a non-linked task? </strong>
+                <p>A non-linked task is the opposite of a linked task. There is nothing associated with such tasks.
+                    Depending on the nature of your work, you can create such task templates. E.g: On-board a new
+                    client,
+                    fill up form, do a review meeting etc.</p>
+                <p> <strong> Note: </strong> Task templates can also have sub-tasks associated with them. You can assign
+                    default owners and turn around times to tasks as well as sub-tasks.</p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
