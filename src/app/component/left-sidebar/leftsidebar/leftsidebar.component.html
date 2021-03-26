@@ -178,7 +178,7 @@
                 routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/folio-mapping">
                 <span *ngIf="showTabs" class="title" mat-line>Folio Mapping</span>
               </a>
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
+              <a *ngIf="!enumDataService.PRODUCTION" class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
                 routerLink="/admin/client-assignment">
                 <span *ngIf="showTabs" class="title" mat-line>Client assignment</span>
               </a>
