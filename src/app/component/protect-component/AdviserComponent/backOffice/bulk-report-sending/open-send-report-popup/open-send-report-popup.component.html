@@ -82,13 +82,13 @@
         </div>
         <div class="col-md-4 d-flex align-items-center justify-content-end">
 
-            <p class="br-0 text-primitive mb-0 mr-20 f-14" (click)="close()">
+            <p class="br-0 text-primitive mb-0 mr-20 f-14 c-p" (click)="close()">
                 CANCEL
             </p>
             <!-- <button class="text-primary f-14 ml-12 sendNowBtn " (click)="()" mat-stroked-button cdkFocusInitial>
                 SEND NOW
             </button> -->
-            <app-progress-button *ngIf="clientDetails.data.length > 0" (btnClick)="sendClientId()"
+            <app-progress-button [disabled]="sendNow" *ngIf="clientDetails.data.length > 0" (btnClick)="sendClientId()"
                 class="br-0 text-inherit  " [options]="barButtonOptions">
             </app-progress-button>
         </div>
