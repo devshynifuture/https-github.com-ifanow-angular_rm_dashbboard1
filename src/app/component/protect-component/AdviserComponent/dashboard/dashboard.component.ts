@@ -515,6 +515,11 @@ export class DashboardComponent implements OnInit {
     this.excessAllow = localStorage.getItem('successStoringToken');
     if (!this.update) {
     }
+    if (DashboardService.dashMisData) {
+      this.getMisDataRes(DashboardService.dashMisData);
+    } else {
+      this.getMisData(); // summry dashbord
+    }
     if (DashboardService.dashAnswerData) {
       this.answerObj = DashboardService.dashAnswerData;
     } else {
@@ -598,11 +603,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.getAllTrsanction(); // summry dashbord
     }
-    if (DashboardService.dashMisData) {
-      this.getMisDataRes(DashboardService.dashMisData);
-    } else {
-      this.getMisData(); // summry dashbord
-    }
+
     this.initializePieChart();
 
     if (DashboardService.dashChartData) {
