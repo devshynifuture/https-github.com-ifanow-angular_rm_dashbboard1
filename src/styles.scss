@@ -951,7 +951,8 @@ mat-tab-group[vertical] {
 #ui-income,
 #ui-expenses,
 #ui-insurance,
-#onboargings {
+#onboargings,
+#setting-activity-task-setting {
   .vertical-menu {
     height: 100vh;
     display: block;
@@ -2361,7 +2362,8 @@ a.docFileName:hover {
   }
 }
 
-#ui-return-inflations-header {
+#ui-return-inflations-header,
+#ui-setting-activity-header {
   .mat-tab-label {
     height: 40px !important;
     font-weight: 400 !important;
@@ -2417,6 +2419,12 @@ a.docFileName:hover {
   .mat-radio-label {
     height: 40px;
     padding-left: 6px !important;
+  }
+}
+
+#ui-setting-activity-header {
+  .mat-tab-body-wrapper {
+    margin-top: -1px !important;
   }
 }
 
