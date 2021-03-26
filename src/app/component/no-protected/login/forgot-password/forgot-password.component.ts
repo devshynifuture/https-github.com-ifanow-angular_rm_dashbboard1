@@ -1,14 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { LoginService } from '../login.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Router } from '@angular/router';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { setInterval } from 'timers';
-import { interval, timer } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {LoginService} from '../login.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {interval, timer} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {AuthService} from "../../../../auth-service/authService";
 
 @Component({
   selector: 'app-forgot-password',
@@ -74,7 +74,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   getLogoUrl() {
-    this.peopleService.getClientLogo({ hostName: document.location.hostname })
+    this.peopleService.getClientLogo({hostName: AuthService.hostName})
       .subscribe(res => {
         if (res) {
           localStorage.removeItem('token');
