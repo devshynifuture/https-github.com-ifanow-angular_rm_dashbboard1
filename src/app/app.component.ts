@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import {AfterViewInit, Component, Inject, ViewChild} from '@angular/core';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
 import {
   ActivatedRoute,
   Event,
@@ -10,16 +10,16 @@ import {
   Router,
   RouterOutlet
 } from '@angular/router';
-import { EventService } from './Data-service/event.service';
-import { RoutingState } from './services/routing-state.service';
-import { DOCUMENT, PlatformLocation } from '@angular/common';
-import { ConnectionService } from 'ng-connection-service';
-import { interval } from 'rxjs';
-import { OnInit } from '@angular/core/src/metadata/*';
-import { SettingsService } from './component/protect-component/AdviserComponent/setting/settings.service';
-import { AuthService } from './auth-service/authService';
-import { EnumDataService } from './services/enum-data.service';
-import { LoginService } from './component/no-protected/login/login.service';
+import {EventService} from './Data-service/event.service';
+import {RoutingState} from './services/routing-state.service';
+import {DOCUMENT, PlatformLocation} from '@angular/common';
+import {ConnectionService} from 'ng-connection-service';
+import {interval} from 'rxjs';
+import {OnInit} from '@angular/core/src/metadata/*';
+import {SettingsService} from './component/protect-component/AdviserComponent/setting/settings.service';
+import {AuthService} from './auth-service/authService';
+import {EnumDataService} from './services/enum-data.service';
+import {LoginService} from './component/no-protected/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -46,7 +46,12 @@ export class AppComponent implements AfterViewInit, OnInit {
     //   this.document.getElementById('tabviewJs').style.height = `${width}px`;
 
     // }
-    this.getDomainData(document.location.hostname);
+    console.log('document.location.hostname : ', document.location.hostname);
+    console.log('window.location.hostname : ', window.location.hostname);
+
+    AuthService.hostName = document.location.hostname;
+    // AuthService.hostName = 'manekfinancial.com';
+    this.getDomainData(AuthService.hostName);
     const domainData = {
       faviconUrl: 'https://www.google.com/favicon.ico',
       appTitle: 'This is a tribute'
@@ -55,17 +60,19 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   getDomainData(data) {
+    // data = 'clients.manekfinancial.com';
     const obj = {
       hostName: data
     };
+    console.log('this.obj : ', JSON.stringify(obj));
     this.settingService.getDomainData(obj).subscribe(res => {
-      if (res) {
-        console.log(res);
-        res['hostName'] = data;
-        AuthService.setDomainDetails(res);
-        this.setValuesAsPerDomain(res);
-      }
-    },
+        if (res) {
+          console.log('this.res : ', JSON.stringify(res));
+          res.hostName = data;
+          AuthService.setDomainDetails(res);
+          this.setValuesAsPerDomain(res);
+        }
+      },
       err => {
         console.log(err);
       });

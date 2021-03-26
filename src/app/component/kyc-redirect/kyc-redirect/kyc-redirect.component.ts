@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PeopleService} from '../../protect-component/PeopleComponent/people.service';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-kyc-redirect',
@@ -30,7 +30,7 @@ export class KycRedirectComponent implements OnInit {
   }
 
   getLogoUrl() {
-    this.peopleService.getClientLogo({ hostName: window.location.hostname })
+    this.peopleService.getClientLogo({hostName: AuthService.hostName})
       .subscribe(res => {
         if (res) {
           localStorage.removeItem('token');

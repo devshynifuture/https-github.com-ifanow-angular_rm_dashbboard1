@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 // import {Router} from '@angular/router';
-import { Router } from '@angular/router';
-import { DashboardService } from '../component/protect-component/AdviserComponent/dashboard/dashboard.service';
+import {Router} from '@angular/router';
+import {DashboardService} from '../component/protect-component/AdviserComponent/dashboard/dashboard.service';
 
 @Injectable()
 export class AuthService {
+  public static hostName;
 
   constructor(
     private router: Router
