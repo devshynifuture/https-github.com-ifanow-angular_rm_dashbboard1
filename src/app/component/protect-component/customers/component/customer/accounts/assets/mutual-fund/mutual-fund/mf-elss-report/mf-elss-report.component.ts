@@ -100,11 +100,14 @@ export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy 
 })
 export class MfElssReportComponent implements OnInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-    'units', 'balanceUnits', 'days', 'lockPeriod', 'lockFreeUnits', 'lockFreeDays', 'LockFreeStatus', 'icons'];
+    'units', 'balanceUnits', 'lockFreeUnits', 'lockPeriod', 'days', 'LockFreeStatus', 'lockFreeDays', 'icons'];
   displayedColumnsTotal: string[] = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-    'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'lockFreeUnitsTotal', 'lockFreeDaysTotal', 'LockFreeStatusTotal', 'iconsTotal'];
+    'unitsTotal', 'balanceUnitsTotal', 'lockFreeUnitsTotal', 'lockPeriodTotal', 'daysTotal', 'LockFreeStatusTotal', 'lockFreeDaysTotal', 'iconsTotal'];
   displayedColumns2: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-    'units', 'balanceUnits', 'days', 'lockPeriod'];
+    'units', 'balanceUnits', 'lockFreeUnits', 'lockPeriod', 'days', 'LockFreeStatus', 'lockFreeDays'];
+
+
+
   mfData;
   mutualFundList: any[];
   isLoading = false;
@@ -231,6 +234,7 @@ export class MfElssReportComponent implements OnInit {
   ninethArrayTotalTran: any;
   showSummaryTable: boolean = true;
   allData: any;
+  mfList: any[];
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -309,11 +313,6 @@ export class MfElssReportComponent implements OnInit {
           this.viewMode = this.mode;
         }
       });
-    // this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
-    // this.displayedColumns = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
-    //   'units', 'balanceUnits', 'days', 'lockPeriod', 'icons'];
-    // this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
-    //   'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'lockPeriodTotal', 'iconsTotal'];
     this.dataTransaction.displayedColumns = this.displayedColumns;
     this.colspanValue = Math.round(this.displayedColumns.length / 2);
     console.log('colspanValue', this.colspanValue);
@@ -327,6 +326,7 @@ export class MfElssReportComponent implements OnInit {
     };
     this.custumService.getElssTransacitonReport(obj).subscribe(
       data => {
+        this.isLoading = false;
         let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
         let array = [];
         Object.keys(data.familyMemberList).map(key => {
@@ -334,6 +334,7 @@ export class MfElssReportComponent implements OnInit {
         });
         data.family_member_list = array;
         this.allData = data;
+        this.mfList = filterData;
         this.asyncFilter(filterData);
         console.log(data);
       }, (error) => {
@@ -867,15 +868,14 @@ export class MfElssReportComponent implements OnInit {
     };
     fragmentData.data = {
       name: this.viewMode,
-      mfData: this.mutualFund,
-      folioWise: this.setDefaultFilterData.folioWise,
+      mfData: this.mfList,
+      folioWise: this.mfList,
       schemeWise: this.setDefaultFilterData.schemeWise,
-      familyMember: this.mutualFund.family_member_list,
-      category: this.setDefaultFilterData.category,
-      transactionView: (this.reponseData) ? this.setDefaultFilterData.transactionView : ((this.saveFilterData) ? this.saveFilterData.transactionView : this.setDefaultFilterData.transactionView),
+      familyMember: this.allData.family_member_list,
+      category: [],
+      transactionView: this.displayedColumns,
       scheme: this.setDefaultFilterData.scheme,
       reportType: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
-      // reportType: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
       reportAsOn: this.setDefaultFilterData.reportAsOn,
       showFolio: (this.reponseData) ? this.setDefaultFilterData.showFolio : ((this.saveFilterData) ? this.saveFilterData.showFolio : this.setDefaultFilterData.showFolio),
       showSummary: (this.reponseData) ? this.setDefaultFilterData.showSummary : this.setDefaultFilterData.showSummary,
@@ -885,7 +885,6 @@ export class MfElssReportComponent implements OnInit {
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       selectFilter: this.rightFilterData ? this.setDefaultFilterData.selectFilter : (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       transactionTypeList: (this.rightFilterData.transactionType) ? this.rightFilterData.transactionType : this.transactionTypeList,
-      // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

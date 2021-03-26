@@ -101,9 +101,9 @@
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="days">
+                    <ng-container matColumnDef="lockFreeUnits">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Days
+                            Lock free date
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
@@ -114,6 +114,36 @@
                     <ng-container matColumnDef="lockPeriod">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
                             Lock free date
+                        </th>
+                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                            <div class="bar">
+                                <span>{{''}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="days">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                            Days
+                        </th>
+                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                            <div class="bar">
+                                <span>{{''}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="LockFreeStatus">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                            Days
+                        </th>
+                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                            <div class="bar">
+                                <span>{{''}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lockFreeDays">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                            Days
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
@@ -254,133 +284,20 @@
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="days">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="days">
-                            Days
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                {{element.days}}
-                            </div>
-                        </td>
-                        <td *matFooterCellDef class="br text-right zIndex" mat-footer-cell>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="daysTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                {{element.days}}
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="currentValue">
+                    <ng-container matColumnDef="lockFreeUnits">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Current value
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span>{{element.currentAmount}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="currentValueTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span class="f-700">{{element.totalCurrentValue}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="dividendPayout">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Dividend payout
+                            Lock free units
                         </th>
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
-                                <span>{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
+                                <span>{{element?.unlockedUnits ? (element?.unlockedUnits) : '-'}}</span>
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="dividendPayoutTotal">
+                    <ng-container matColumnDef="lockFreeUnitsTotal">
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
-                                <span class="f-700">{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="dividendReinvest">
-                        <th *matHeaderCellDef class="br text-right zIndex" mat-header-cell>
-                            Dividend reinvestment
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{(element.dividendReinvest) ? element.dividendReinvest : 0}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="dividendReinvestTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{(element.dividendReinvest) ? element.dividendReinvest :0}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="totalAmount">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Total amount
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
-                            <div class="bar"><span>{{element.currentAmount}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="totalAmountTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex nonesticky" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.totalCurrentValue}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="gain">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Gain
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.gain}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="gainTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.netGain}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="absReturn">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Absolute return%
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar"><span>{{element.absoluteReturn}}</span></div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="absReturnTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.trnAbsoluteReturn}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="xirr">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            XIRR%
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element.cagr}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="xirrTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{element.totalCagr}}</span>
+                                <span class="f-700">{{''}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -401,17 +318,36 @@
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="lockFreeUnits">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Lock free units
+                    <ng-container matColumnDef="days">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell mat-sort-header="days">
+                            Days
                         </th>
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
-                                <span>{{element?.unlockedUnits ? (element?.unlockedUnits) : '-'}}</span>
+                                {{element.days}}
+                            </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right zIndex" mat-footer-cell>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="daysTotal">
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                {{element.days}}
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="lockFreeUnitsTotal">
+                    <ng-container matColumnDef="LockFreeStatus">
+                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
+                            Lock free status
+                        </th>
+                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                            <div class="bar">
+                                <span>{{element?.status ? (element?.status) : '-'}}</span>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="LockFreeStatusTotal">
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
                                 <span class="f-700">{{''}}</span>
@@ -429,23 +365,6 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="lockFreeDaysTotal">
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span class="f-700">{{''}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="LockFreeStatus">
-                        <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Lock free status
-                        </th>
-                        <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                            <div class="bar">
-                                <span>{{element?.status ? (element?.status) : '-'}}</span>
-                            </div>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="LockFreeStatusTotal">
                         <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                             <div class="bar">
                                 <span class="f-700">{{''}}</span>

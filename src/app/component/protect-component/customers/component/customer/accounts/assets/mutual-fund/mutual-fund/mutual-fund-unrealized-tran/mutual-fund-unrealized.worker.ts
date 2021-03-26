@@ -34,9 +34,9 @@ addEventListener('message', ({ data }) => {
     }
     if (element.elssDateOrg && element.unlockedUnits) {
       if (new Date(element.elssDateOrg) > new Date()) {
-        element.status = 'LOCK'
+        element.status = 'Lock-in'
       } else {
-        element.status = 'UNLOCK'
+        element.status = 'Lock-free'
       }
       if (element.unlockedUnits) {
         element.unlockedUnits = mfService.mutualFundRoundAndFormat(element.unlockedUnits, 2);
