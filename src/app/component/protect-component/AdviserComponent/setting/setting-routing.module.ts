@@ -9,6 +9,9 @@ import { SettingBackupComponent } from './setting-backup/setting-backup.componen
 import { SettingBackofficeComponent } from './setting-backoffice/setting-backoffice.component';
 import { SettingPreferenceComponent } from './setting-preference/setting-preference.component';
 import { SettingActivityComponent } from './setting-activity/setting-activity.component';
+import { SettingActivityTabsComponent } from './setting-activity/setting-activity-tabs/setting-activity-tabs.component';
+import { SettingActivityTaskSettingComponent } from './setting-activity/setting-activity-task-setting/setting-activity-task-setting.component';
+import { SettingActivityTaskTemplatesComponent } from './setting-activity/setting-activity-task-templates/setting-activity-task-templates.component';
 
 
 const routes: Routes = [
@@ -26,7 +29,30 @@ const routes: Routes = [
       },
       {
         path: 'activity',
-        component: SettingActivityComponent
+        component: SettingActivityComponent,
+        children: [
+          {
+            path: 'task',
+            component: SettingActivityTabsComponent,
+            children: [
+              {
+                path: 'template',
+                component: SettingActivityTaskTemplatesComponent
+              }, {
+                path: 'setting',
+                component: SettingActivityTaskSettingComponent
+              }, {
+                path: '',
+                redirectTo: 'template',
+                pathMatch: 'full'
+              }
+            ]
+          }, {
+            path: '',
+            redirectTo: 'task',
+            pathMatch: 'full'
+          }
+        ]
       },
       // {
       //   path: 'crm',

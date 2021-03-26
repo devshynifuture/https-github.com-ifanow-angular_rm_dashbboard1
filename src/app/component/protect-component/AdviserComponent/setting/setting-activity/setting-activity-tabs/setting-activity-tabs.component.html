@@ -1,15 +1,9 @@
 <div class="row pt-16 pb-20 setting-activity">
     <div class="col-md-4">
-        <mat-tab-group animationDuration="0ms" id="ui-setting-activity-header">
-            <mat-tab label="Task templates">
-                <app-setting-activity-task-templates></app-setting-activity-task-templates>
-
-            </mat-tab>
-            <mat-tab label="Task settings">
-                <app-setting-activity-task-setting></app-setting-activity-task-setting>
-            </mat-tab>
-
-        </mat-tab-group>
+        <button [routerLink]="['/admin/setting/activity/task/template']" routerLinkActive="active-setting-tabs-btn"
+            mat-button class="bb-1">Task templates</button>
+        <button [routerLink]="['/admin/setting/activity/task/setting']" routerLinkActive="active-setting-tabs-btn"
+            mat-button class="bb-1">Task settings</button>
     </div>
     <div class="col-md-8 text-right" *ngIf="!hasError && !isLoading">
 
@@ -17,3 +11,4 @@
             NEW</button>
     </div>
 </div>
+<router-outlet></router-outlet>

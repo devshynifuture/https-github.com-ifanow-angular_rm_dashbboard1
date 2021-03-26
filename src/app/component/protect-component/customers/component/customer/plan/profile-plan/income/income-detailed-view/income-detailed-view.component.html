@@ -34,8 +34,9 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Monthly amount
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{data.monthlyIncome? "₹" : ""}}<span appFormatNumber>{{income.monthlyIncome ? income.monthlyIncome : '-'}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.monthlyIncome? "₹" : ""}}<span appFormatNumber>{{income.monthlyIncome ?
+                            income.monthlyIncome : '-'}}</span>
                     </div>
                 </div>
 
@@ -44,7 +45,8 @@
                         Basic Income
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{data.basicIncome? "₹" : ""}}<span appFormatNumber>{{income.basicIncome ? income.basicIncome : '-'}}</span>
+                        {{data.basicIncome? "₹" : ""}}<span appFormatNumber>{{income.basicIncome ? income.basicIncome :
+                            '-'}}</span>
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1">
@@ -92,7 +94,8 @@
                         Continues till
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(income.continueTill == 1) ? 'Retirement' : (income.continueTill == 2) ? 'Life time' : (income.continueTill == 3) ? (income.numberOfYear + 'years') : '-'}}
+                        {{(income.continueTill == 1) ? 'Retirement' : (income.continueTill == 2) ? 'Life time' :
+                        (income.continueTill == 3) ? (income.numberOfYear + 'years') : '-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -100,7 +103,8 @@
                         Next appraisal in
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{income.nextAppraisalOrNextRenewal ? (income.nextAppraisalOrNextRenewal | date:'dd/MM/yyyy') : '-'}}
+                        {{income.nextAppraisalOrNextRenewal ? (income.nextAppraisalOrNextRenewal | date:'dd/MM/yyyy') :
+                        '-'}}
                     </div>
                 </div>
                 <div>
@@ -110,7 +114,7 @@
                                 Bonus/inflow date {{i + 1}}
                             </div>
                             <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                                {{ (data.date) ? (data.date  | date:'MMM-yyyy' ) : '-' }}
+                                {{ (data.date) ? (data.date | date:'MMM-yyyy' ) : '-' }}
                             </div>
                         </div>
 
@@ -118,8 +122,9 @@
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Bonus/inflow amount {{i + 1}}
                             </div>
-                            <div  class="col-md-4 text-right f-14 roboto p-0">
-                                {{data.amount? "₹" : ""}}<span appFormatNumber> {{ (data.amount) ? data.amount : '-' }}</span> 
+                            <div class="col-md-4 text-right f-14 roboto p-0">
+                                {{data.amount? "₹" : ""}}<span appFormatNumber> {{ (data.amount) ? data.amount : '-'
+                                    }}</span>
                             </div>
                         </div>
                     </div>
@@ -128,7 +133,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Others
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         {{income.other? "₹" : ""}}<span appFormatNumber>{{income.other ? income.other : '-'}}</span>
                     </div>
                 </div>
@@ -155,97 +160,115 @@
         </div>
     </div>
 
-        <div class="row pt-24" *ngIf="income.incomeOption == 1">
-            <div class="col-md-12 p-0">
-                <h4 class="f-16 roboto f-500">Basic salary</h4>
-                <div class="insurance-ui bt">
-                    <div class="row bb p-8 b-l br" *ngFor="let data of incomeArr; let i = index">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            {{data.name}}
-                        </div>
-                        <div  class="col-md-4 text-right f-14 roboto p-0">
-                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
-                        </div>
+    <div class="row pt-24" *ngIf="income.incomeOption == 1">
+        <div class="col-md-12 p-0">
+            <h4 class="f-16 roboto f-500">Basic salary</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngFor="let data of incomeArr; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{data.name}}
                     </div>
-
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span>
+                    </div>
                 </div>
 
             </div>
+
         </div>
+    </div>
 
-        <div class="row pt-20" *ngIf="income.incomeOption == 1">
-            <div class="col-md-12 p-0  mt-24">
-                <h4 class="f-16 roboto f-500">Allowances</h4>
-                <div class="insurance-ui bt">
-                    <div class="row bb p-8 b-l br" *ngFor="let data of allowanceArr; let i = index">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            {{data.name}}
-                        </div>
-                        <div  class="col-md-4 text-right f-14 roboto p-0">
-                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
-                        </div>
+    <div class="row pt-20" *ngIf="income.incomeOption == 1">
+        <div class="col-md-12 p-0  mt-24">
+            <h4 class="f-16 roboto f-500">Allowances</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngFor="let data of allowanceArr; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{data.name}}
                     </div>
-
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span>
+                    </div>
                 </div>
 
             </div>
+
         </div>
+    </div>
 
-        <div class="row pt-20" *ngIf="income.incomeOption == 1">
-            <div class="col-md-12 p-0  mt-24">
-                <h4 class="f-16 roboto f-500">Perquisites</h4>
-                <div class="insurance-ui bt">
-                    <div class="row bb p-8 b-l br" *ngFor="let data of perquisitesArr; let i = index">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            {{data.name}}
-                        </div>
-                        <div  class="col-md-4 text-right f-14 roboto p-0">
-                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
-                        </div>
+    <div class="row pt-20" *ngIf="income.incomeOption == 1">
+        <div class="col-md-12 p-0  mt-24" *ngIf="perquisitesArr?.length > 0">
+            <h4 class="f-16 roboto f-500">Perquisites</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngFor="let data of perquisitesArr; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{data.name}}
                     </div>
-
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span>
+                    </div>
                 </div>
 
             </div>
+
         </div>
+    </div>
 
-        <div class="row pt-20" *ngIf="income.incomeOption == 1">
-            <div class="col-md-12 p-0  mt-24">
-                <h4 class="f-16 roboto f-500">Reimbursements</h4>
-                <div class="insurance-ui bt">
-                    <div class="row bb p-8 b-l br" *ngFor="let data of ReimbursementArr; let i = index">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            {{data.name}}
-                        </div>
-                        <div  class="col-md-4 text-right f-14 roboto p-0">
-                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
-                        </div>
+    <div class="row pt-20" *ngIf="income.incomeOption == 1">
+        <div class="col-md-12 p-0  mt-24" *ngIf="ReimbursementArr?.length > 0">
+            <h4 class="f-16 roboto f-500">Reimbursements</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngFor="let data of ReimbursementArr; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{data.name}}
                     </div>
-
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span>
+                    </div>
                 </div>
 
             </div>
+
         </div>
+    </div>
 
-        <div class="row pt-20" *ngIf="income.incomeOption == 1">
-             <div class="col-md-12 p-0  mt-24">
-                 <h4 class="f-16 roboto f-500">Retirals</h4>
-                <div class="insurance-ui bt">
-                    <div class="row bb p-8 b-l br" *ngFor="let data of RetiralsArr; let i = index">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            {{data.name}}
-                        </div>
-                        <div  class="col-md-4 text-right f-14 roboto p-0">
-                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
-                        </div>
+    <div class="row pt-20" *ngIf="income.incomeOption == 1">
+        <div class="col-md-12 p-0  mt-24" *ngIf="RetiralsArr?.length > 0">
+            <h4 class="f-16 roboto f-500">Retirals</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngFor="let data of RetiralsArr; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{data.name}}
                     </div>
-
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span>
+                    </div>
                 </div>
 
             </div>
-        </div>
 
-        <!-- <div class="row pt-20" *ngIf="income.incomeOption == 1">
+        </div>
+    </div>
+
+    <div class="row pt-20" *ngIf="income.incomeOption == 1">
+        <div class="col-md-12 p-0  mt-24" *ngIf="incomeTaxArray?.length > 0">
+            <h4 class="f-16 roboto f-500">Income tax</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngFor="let data of incomeTaxArray; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{data.name}}
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <div class="row pt-20" *ngIf="income.incomeOption == 1">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Others</h4>
                 <div class="insurance-ui bt">
@@ -263,22 +286,22 @@
             </div>
         </div> -->
 
-        <div class="row pt-20" *ngIf="income.incomeOption == 2 && incomeType==5">
-            <div class="col-md-12 p-0  mt-24">
-                <h4 class="f-16 roboto f-500">Monthly income</h4>
-                <div class="insurance-ui bt">
-                    <div class="row bb p-8 b-l br" *ngFor="let data of monthlyIncomeArr; let i = index">
-                        <div class="col-md-8 text-left f-14 roboto p-0">
-                            {{data.name}}
-                        </div>
-                        <div  class="col-md-4 text-right f-14 roboto p-0">
-                            {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span> 
-                        </div>
+    <div class="row pt-20" *ngIf="income.incomeOption == 2 && incomeType==5">
+        <div class="col-md-12 p-0  mt-24">
+            <h4 class="f-16 roboto f-500">Monthly income</h4>
+            <div class="insurance-ui bt">
+                <div class="row bb p-8 b-l br" *ngFor="let data of monthlyIncomeArr; let i = index">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        {{data.name}}
                     </div>
-
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{data.value? "₹" : ""}}<span appFormatNumber>{{ (data.value) ? data.value : '-' }}</span>
+                    </div>
                 </div>
 
             </div>
+
         </div>
-    
+    </div>
+
 </div>

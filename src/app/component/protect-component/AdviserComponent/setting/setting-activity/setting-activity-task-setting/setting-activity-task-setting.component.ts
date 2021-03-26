@@ -11,10 +11,12 @@ export interface Fruit {
 })
 
 export class SettingActivityTaskSettingComponent implements OnInit {
+  viewMode: string;
 
   constructor() { }
 
   ngOnInit() {
+    this.viewMode = 'tab1'
   }
   visible = true;
   selectable = true;

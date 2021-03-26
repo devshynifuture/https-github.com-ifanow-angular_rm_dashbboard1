@@ -311,6 +311,7 @@
   }
 }
 
+
 #ui-organization-profile {
   .mat-tab-body-content {
     overflow: hidden;
@@ -455,4 +456,10 @@
       line-height: 14px;
     }
   }
+}
+
+.active-setting-tabs-btn {
+  border-top: 1px solid #DADCE0 !important;
+  border-right: 1px solid #DADCE0 !important;
+  border-left: 1px solid #DADCE0 !important;
 }
