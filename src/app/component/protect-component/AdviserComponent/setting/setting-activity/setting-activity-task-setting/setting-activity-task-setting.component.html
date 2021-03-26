@@ -8,21 +8,27 @@
         <div class="row">
             <div class="col-md-4">
                 <ul class="vertical-menu">
-                    <li>New lead</li>
-                    <li>Miscellaneous</li>
-                    <li>Onboarding</li>
-                    <li>Documentation</li>
-                    <li>Email client</li>
-                    <li>+ Add category</li>
+                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}">New
+                        lead</li>
+                    <li (click)="viewMode ='tab2'" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}">
+                        Miscellaneous</li>
+                    <li (click)="viewMode ='tab3'" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}">
+                        Onboarding</li>
+                    <li (click)="viewMode ='tab4'" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}">
+                        Documentation</li>
+                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}">
+                        Email client</li>
+                    <li (click)="viewMode ='tab6'" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}">+
+                        Add category</li>
                 </ul>
             </div>
 
 
-            <div class="col-md-8 p-0">
+            <div [ngSwitch]="viewMode" class="col-md-8 p-0">
                 <div class="b-a">
                     <div class="">
                         <div>
-                            <div class="row">
+                            <div *ngSwitchCase="'tab1'" class="row">
                                 <div class="col-md-10 pr-0">
                                     <h5 class="m-0 roboto f-400 pt-10">Category</h5>
                                     <mat-form-field>
