@@ -627,8 +627,11 @@ export class ExpensesComponent implements OnInit {
       let loanExpense = this.filterAssetData(data.loanEmi);
       let recurringDeposit = this.filterAssetData(data.rdAsset);
       let sipExpense = this.filterAssetData(data.mutualFundSipList);
+      let ppfAsset = this.filterAssetData(data.otherAssetList);
+      let otherAsset = this.filterAssetData(data.ppfAsset);
+
       this.expenseAssetData = data;
-      finalArray = [...committedInvestmentExpense, ...committedExpenditureExpense, ...pord, ...lifeInsuranceList, ...generalInsuranceExpense, ...ssy, ...loanExpense, ...recurringDeposit, ...sipExpense];
+      finalArray = [...committedInvestmentExpense, ...committedExpenditureExpense, ...pord, ...lifeInsuranceList, ...generalInsuranceExpense, ...ssy, ...loanExpense, ...recurringDeposit, ...ppfAsset, ...otherAsset, ...sipExpense];
 
       console.log(finalArray)
       this.dataSource1.data = finalArray;
@@ -655,6 +658,10 @@ export class ExpensesComponent implements OnInit {
         data[1].name = 'Bank recurring deposits'
       } else if (data[1].name == 'Sukanya samriddhi yojna') {
         data[0].assetList = data[0].ssyList;
+      } else if (data[1].name == 'Other asset contribution') {
+        data[0].assetList = data[0];
+      } else if (data[1].name == 'Public privident fund') {
+        data[0].assetList = data[0].ppfList;
       }
       obj = {
         name: data[1].name, total: data[2].total, assetList: data[0].assetList, progressPercentOther: 0, spentPerOther: 0, budgetPerOther: 0

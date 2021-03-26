@@ -135,6 +135,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     otherReimbursement: null
   };
   retiralsObj = { id: null, incomeId: null, gratuity: null, superannuation: null, nps: null, pf: null };
+  incomeObj = { id: null, incomeId: null, incomeTax: null, professionalTax: null };
   othersObj = { id: null, incomeId: null, bonus: null, performancePay: null };
   monthlyIncArr = [{ name: 'Interest Income', disabled: false, value: '1' }, {
     name: 'Dividend Income',
@@ -202,6 +203,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     disabled: false,
     value: '2'
   }, { name: 'NPS', disabled: false, value: '3' }, { name: 'PF', disabled: false, value: '4' }];
+  incomeTaxArray = [{ name: 'Income tax', disabled: false, value: '1' }, { name: 'Professional tax', disabled: false, value: '2' }];
   othersArr = [{ name: 'Bonus', disabled: false, value: '1' }, { name: 'Performance pay', disabled: false, value: '2' }];
   incomeNetForm = this.fb.group({
     incomeOption: ['2', [Validators.required]],
@@ -239,19 +241,23 @@ export class IndividualIncomeInfoComponent implements OnInit {
       id: null,
     })]),
     perquisitesForm: this.fb.array([this.fb.group({
-      perquisitesType: ['', [Validators.required]],
-      perquisitesAmt: [null, [Validators.required]],
+      perquisitesType: ['',],
+      perquisitesAmt: [null,],
       id: null,
     })]),
     reimbursementsForm: this.fb.array([this.fb.group({
-      reimbursementsType: ['', [Validators.required]],
-      reimbursementsAmt: [null, [Validators.required]],
+      reimbursementsType: ['',],
+      reimbursementsAmt: [null,],
       id: null,
     })]),
     retiralsForm: this.fb.array([this.fb.group({
-      retiralsType: ['', [Validators.required]],
-      retiralsAmt: [null, [Validators.required]],
+      retiralsType: ['',],
+      retiralsAmt: [null,],
       id: null,
+    })]),
+    incomeTaxForm: this.fb.array([this.fb.group({
+      incomeType: ['', [Validators.required]],
+      incomeAmt: [null, [Validators.required]],
     })]),
     // othersForm: this.fb.array([this.fb.group({
     //   othersType: ['', [Validators.required]],
@@ -420,6 +426,32 @@ export class IndividualIncomeInfoComponent implements OnInit {
           }
         });
       }
+      if (data.incomeTax || data.professionalTax) {
+        this.incomeTax.removeAt(0);
+      }
+      if (data.incomeTax) {
+        this.addIncomeTax('Income tax', data.incomeTax, 0);
+      }
+      if (data.professionalTax) {
+        this.addIncomeTax('Professional tax', data.professionalTax, 0);
+      }
+      // if (data.incomeTax && Object.keys(data.incomeTax).length > 0) {
+      //   const id = data.incomeTax.id;
+      //   if (id) {
+      //     this.incomeTax.removeAt(0);
+      //   }
+      //   Object.entries(data.incomeTax).forEach(([key, value]) => {
+      //     const valueOfincome = key ? (key == 'Income tax' ? '1' : key == 'Professional tax' ? '2' : '') : '';
+      //     if (value && key != 'id') {
+      //       this.incomeTaxArray.forEach(ele => {
+      //         if (valueOfincome == ele.value) {
+      //           ele.disabled = true;
+      //         }
+      //       });
+      //       this.addIncomeTax(key, value, id);
+      //     }
+      //   });
+      // }
       // if (Object.keys(data.incomeOthers).length > 0) {
       //   let id = data.incomeOthers.id;
       //   if (id) {
@@ -511,6 +543,10 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
   get retirals() {
     return this.incomeNetForm.get('retiralsForm') as FormArray;
+  }
+
+  get incomeTax() {
+    return this.incomeNetForm.get('incomeTaxForm') as FormArray;
   }
 
   chosenYearHandler(normalizedYear: Moment, form, value) {
@@ -654,8 +690,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
   addPerquisites(key, value, id) {
     this.perquisites.push(this.fb.group({
-      perquisitesType: [key ? (key == 'foodCoupon' ? '1' : key == 'giftVouchers' ? '2' : key == 'driversSalary' ? '3' : key == 'otherPerquisites' ? '4' : '') : '', [Validators.required]],
-      perquisitesAmt: [(key == 'foodCoupon' || key == 'giftVouchers' || key == 'driversSalary' || key == 'otherPerquisites') ? value : '', [Validators.required]],
+      perquisitesType: [key ? (key == 'foodCoupon' ? '1' : key == 'giftVouchers' ? '2' : key == 'driversSalary' ? '3' : key == 'otherPerquisites' ? '4' : '') : '',],
+      perquisitesAmt: [(key == 'foodCoupon' || key == 'giftVouchers' || key == 'driversSalary' || key == 'otherPerquisites') ? value : '',],
       id: [id]
     }));
   }
@@ -683,8 +719,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
   addReimbursements(key, value, id) {
     this.reimbursements.push(this.fb.group({
-      reimbursementsType: [key ? (key == 'mobileOrTelephone' ? '1' : key == 'carCharges' ? '2' : key == 'fuelAndMaintenance' ? '3' : key == 'entertainmentExpense' ? '4' : key == 'otherReimbursement' ? '5' : '') : '', [Validators.required]],
-      reimbursementsAmt: [(key == 'mobileOrTelephone' || key == 'carCharges' || key == 'fuelAndMaintenance' || key == 'entertainmentExpense' || key == 'otherReimbursement') ? value : '', [Validators.required]],
+      reimbursementsType: [key ? (key == 'mobileOrTelephone' ? '1' : key == 'carCharges' ? '2' : key == 'fuelAndMaintenance' ? '3' : key == 'entertainmentExpense' ? '4' : key == 'otherReimbursement' ? '5' : '') : '',],
+      reimbursementsAmt: [(key == 'mobileOrTelephone' || key == 'carCharges' || key == 'fuelAndMaintenance' || key == 'entertainmentExpense' || key == 'otherReimbursement') ? value : '',],
       id: [id]
     }));
   }
@@ -711,8 +747,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
   addRetirals(key, value, id) {
     this.retirals.push(this.fb.group({
-      retiralsType: [key ? (key == 'gratuity' ? '1' : key == 'superannuation' ? '2' : key == 'nps' ? '3' : key == 'pf' ? '4' : '') : '', [Validators.required]],
-      retiralsAmt: [(key == 'gratuity' || key == 'superannuation' || key == 'nps' || key == 'pf') ? value : '', [Validators.required]],
+      retiralsType: [key ? (key == 'gratuity' ? '1' : key == 'superannuation' ? '2' : key == 'nps' ? '3' : key == 'pf' ? '4' : '') : '',],
+      retiralsAmt: [(key == 'gratuity' || key == 'superannuation' || key == 'nps' || key == 'pf') ? value : '',],
       id: [id]
     }));
   }
@@ -737,6 +773,24 @@ export class IndividualIncomeInfoComponent implements OnInit {
     // }
   }
 
+  addIncomeTax(key, value, id) {
+    this.incomeTax.push(this.fb.group({
+      incomeType: [key ? (key == 'Income tax' ? '1' : key == 'Professional tax' ? '2' : '') : '', [Validators.required]],
+      incomeAmt: [(key == 'Income tax' || key == 'Professional tax') ? value : '', [Validators.required]],
+    }));
+  }
+
+  removeIncomeTax(val, item) {
+    this.incomeTaxArray.forEach(element => {
+      if (val.value.incomeType == element.value) {
+        element.disabled = false;
+      }
+    });
+    const data = this.incomeNetForm.get('incomeTaxForm') as FormArray;
+    if (data.length > 1) {
+      this.incomeTax.removeAt(item);
+    }
+  }
   // addOthers(key, value, id) {
   //   this.others.push(this.fb.group({
   //     othersType: [key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '', [Validators.required]],
@@ -1061,32 +1115,21 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.retiralsObj.incomeId = (this.retiralsObj.incomeId) ? this.retiralsObj.incomeId : element.get('id').value;
       this.retiralsObj.id = (this.retiralsObj.id) ? this.retiralsObj.id : element.get('id').value;
     });
-    // let others = this.incomeNetForm.get('othersForm') as FormArray
-    // others.controls.forEach(element => {
-    //   switch (element.get('othersType').value) {
-    //     case '1':
-    //       this.othersObj.bonus = element.get('othersAmt').value
-    //       break;
-    //     case '2':
-    //       this.othersObj.performancePay = element.get('othersAmt').value
-    //       break;
-    //   }
-    //   this.othersObj.incomeId = (this.othersObj.incomeId) ? this.othersObj.incomeId : element.get('id').value
-    //   this.othersObj.id = (this.othersObj.id) ? this.othersObj.id : element.get('id').value
-    // })
+    const incomeTax = this.incomeNetForm.get('incomeTaxForm') as FormArray;
+    incomeTax.controls.forEach(element => {
+      switch (element.get('incomeType').value) {
+        case '1':
+          this.incomeObj.incomeTax = element.get('incomeAmt').value;
+          break;
+        case '2':
+          this.incomeObj.professionalTax = element.get('incomeAmt').value;
+          break;
+      }
+    });
     if (this.showDateError) {
       return;
     }
-    // if (this.incomeNetForm.get('incomeOption').value == '2') {
-    //   this.incomeNetForm.get('basicIncome').setErrors(null);
-    //   this.incomeNetForm.get('standardDeduction').setErrors(null);
-    //   this.incomeNetForm.get('deamessAlowance').setErrors(null);
-    //   this.incomeNetForm.get('hraRecieved').setErrors(null);
-    //   this.incomeNetForm.get('totalRentPaid').setErrors(null);
 
-    // } else {
-    //   this.incomeNetForm.get('monthlyAmount').setErrors(null);
-    // }
     if (this.incomeNetForm.get('incomeOption').value == '2') {
       if (this.singleIndividualIncome.finalIncomeList.incomeTypeList == 1 || this.singleIndividualIncome.finalIncomeList.incomeTypeList == 2 || this.singleIndividualIncome.finalIncomeList.incomeTypeList == 3 || this.singleIndividualIncome.finalIncomeList.incomeTypeList == 4) {
         const monthlyInc = this.incomeNetForm.get('monthlyIncomeForm') as FormArray;
@@ -1121,6 +1164,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
       retirals.controls.forEach(element => {
         element.get('retiralsType').setErrors(null);
         element.get('retiralsAmt').setErrors(null);
+      });
+      const incomeTax = this.incomeNetForm.get('incomeTaxForm') as FormArray;
+      incomeTax.controls.forEach(element => {
+        element.get('incomeType').setErrors(null);
+        element.get('incomeAmt').setErrors(null);
       });
       // let others = this.incomeNetForm.get('othersForm') as FormArray
       // others.controls.forEach(element => {
@@ -1173,7 +1221,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
         incomePerquisites: this.perquisitesObj,
         incomeReimbursement: this.reimbursementsObj,
         incomeRetirals: this.retiralsObj,
-        // 'incomeOthers': this.othersObj,
+        incomeTax: this.incomeObj.incomeTax,
+        professionalTax: this.incomeObj.professionalTax,
         monthlyIncomeOptionList: this.montlyIncomeObj,
         description: this.incomeNetForm.get('description').value,
         monthlyDistributionList: [],
@@ -1275,6 +1324,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.allowancesObj = this.setAll(this.allowancesObj, null);
     this.reimbursementsObj = this.setAll(this.reimbursementsObj, null);
     this.retiralsObj = this.setAll(this.retiralsObj, null);
+    this.incomeObj = this.setAll(this.incomeObj, null);
     this.othersObj = this.setAll(this.othersObj, null);
   }
 
@@ -1285,6 +1335,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.reimbursementsArr = this.disabledAll(this.reimbursementsArr, false);
     this.allowancesArr = this.disabledAll(this.allowancesArr, false);
     this.retiralsArr = this.disabledAll(this.retiralsArr, false);
+    this.incomeTaxArray = this.disabledAll(this.incomeTaxArray, false);
     this.othersArr = this.disabledAll(this.othersArr, false);
   }
 
@@ -1309,6 +1360,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.addReimbursements(undefined, undefined, undefined);
     (this.incomeNetForm.get('retiralsForm') as FormArray).clear();
     this.addRetirals(undefined, undefined, undefined);
+    (this.incomeNetForm.get('incomeTaxForm') as FormArray).clear();
+    this.addIncomeTax(undefined, undefined, undefined);
     // (this.incomeNetForm.get('othersForm') as FormArray).clear();
     // this.addOthers(undefined,undefined,undefined);
   }

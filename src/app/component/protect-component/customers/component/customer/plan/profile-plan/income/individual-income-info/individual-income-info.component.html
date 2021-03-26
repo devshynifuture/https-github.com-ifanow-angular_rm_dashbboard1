@@ -284,6 +284,7 @@
                                         </mat-select>
                                         <mat-error>This field is required
                                         </mat-error>
+                                        <mat-hint>Optional</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -337,6 +338,7 @@
                                         </mat-select>
                                         <mat-error>This field is required
                                         </mat-error>
+                                        <mat-hint>Optional</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -389,6 +391,7 @@
                                         </mat-select>
                                         <mat-error>This field is required
                                         </mat-error>
+                                        <mat-hint>Optional</mat-hint>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -419,7 +422,60 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Tax</h5>
+                    </div>
+                    <!-- build error removed controls -->
+                    <div class="col-md-7 pl-0" formArrayName="incomeTaxForm">
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeTax.controls; let pointIndex=index" [formGroupName]="pointIndex">
+
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput formControlName="incomeType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true"
+                                                *ngFor="let option of incomeTaxArray;index as i"
+                                                [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="incomeAmt"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #incomeAmt autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{incomeAmt.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+
+                                <!-- build error -->
+                                <i *ngIf="incomeNetForm.value.incomeTaxForm.length < 4"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addIncomeTax(undefined,undefined,undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.incomeTaxForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removeIncomeTax(obj,pointIndex)">remove</i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Others</h5>
                     </div>
@@ -434,7 +490,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Others</h5>

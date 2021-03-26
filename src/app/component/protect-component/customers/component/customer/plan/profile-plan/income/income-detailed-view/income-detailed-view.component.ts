@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {CustomerService} from '../../../../customer.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { CustomerService } from '../../../../customer.service';
 
 @Component({
   selector: 'app-income-detailed-view',
@@ -22,6 +22,7 @@ export class IncomeDetailedViewComponent implements OnInit {
   ReimbursementArr = [];
   RetiralsArr = [];
   OthersArr = [];
+  incomeTaxArray = [];
   monthlyIncomeArr = [];
   bankList = [];
   incomeType: any;
@@ -56,45 +57,45 @@ export class IncomeDetailedViewComponent implements OnInit {
 
   getArrays(data) {
     if (data.basicIncome) {
-      this.incomeArr.push({name: 'Basic Salary', value: data.basicIncome});
+      this.incomeArr.push({ name: 'Basic Salary', value: data.basicIncome });
     }
     if (data.deamessAlowance) {
-      this.incomeArr.push({name: 'DA', value: data.deamessAlowance});
+      this.incomeArr.push({ name: 'DA', value: data.deamessAlowance });
     }
     Object.entries(data.incomePerquisites).forEach(([key, value]) => {
       if (value && key != 'id') {
         const valueOfincome = key ? (key == 'foodCoupon' ? 'Food Coupons' : key == 'giftVouchers' ? 'Gift Vouchers' : key == 'driversSalary' ? 'Driver\'s Salary' : key == 'Other' ? 'Other' : '') : '';
-        this.perquisitesArr.push({name: valueOfincome, value});
+        this.perquisitesArr.push({ name: valueOfincome, value });
       }
     });
     Object.entries(data.incomeAllowance).forEach(([key, value]) => {
       if (value && key != 'id') {
         const valueOfincome = key ? (key == 'hraReceived' ? 'House Rent Allowance' : key == 'specialAllowance' ? 'Special Allowance' : key == 'specialCompensatoryAllowance' ? 'Special Compensatory Allowance' : key == 'educationAllowance' ? 'Education Allowance' : key == 'transportAllowance' ? 'Transport Allowance' : key == 'medicalAllowance' ? 'Medical Allowance' : key == 'conveyanceAllowance' ? 'Conveyance Allowance' : key == 'leaveTravelAllowance' ? 'Leave Travel Allowance' : key == 'uniformAllowance' ? 'Uniform Allowance' : key == 'carMaintenanceAllowance' ? 'Car Maintenance Allowance' : key == 'residualChoicePay' ? 'Residual Choice pay' : key == 'superannuationAllowance' ? 'Superannuation Allowance' : key == 'otherAllowance' ? 'Other' : '') : '';
-        this.allowanceArr.push({name: valueOfincome, value});
+        this.allowanceArr.push({ name: valueOfincome, value });
       }
     });
     Object.entries(data.incomeReimbursement).forEach(([key, value]) => {
       if (value && key != 'id') {
         const valueOfincome = key ? (key == 'mobileOrTelephone' ? 'Mobile/telephone ' : key == 'carCharges' ? 'Car Charges' : key == 'fuelAndMaintenance' ? 'Fuel & Maintenance' : key == 'entertainmentExpense' ? 'Entertainment Expenses' : key == 'otherReimbursement' ? 'Other' : '') : '';
-        this.ReimbursementArr.push({name: valueOfincome, value});
+        this.ReimbursementArr.push({ name: valueOfincome, value });
       }
     });
     Object.entries(data.incomeRetirals).forEach(([key, value]) => {
       if (value && key != 'id') {
         const valueOfincome = key ? (key == 'gratuity' ? 'Gratuity' : key == 'superannuation' ? 'Superannuation\'s' : key == 'nps' ? 'NPS' : key == 'pf' ? 'PF' : '') : '';
-        this.RetiralsArr.push({name: valueOfincome, value});
+        this.RetiralsArr.push({ name: valueOfincome, value });
       }
     });
-    // Object.entries(data.incomeOthers).forEach(([key, value]) => {
-    //   if (value && key != 'id') {
-    //     let valueOfincome =key ? (key == 'bonus' ? 'Bonus' : key == 'performancePay' ? 'Performance Pay' : '') : '';
-    //     this.OthersArr.push({name:valueOfincome,value:value});
-    //   }
-    // });
+    if (data.incomeTax) {
+      this.incomeTaxArray.push({ name: 'Income Tax', value: data.incomeTax })
+    }
+    if (data.professionalTax) {
+      this.incomeTaxArray.push({ name: 'Professional tax', value: data.professionalTax })
+    }
     Object.entries(data.monthlyIncomeOptionList).forEach(([key, value]) => {
       if (value && key != 'id') {
         const valueOfincome = key ? (key == 'interestIncome' ? 'Interest Income' : key == 'dividendIncome' ? 'Dividend Income' : key == 'royaltyIncome' ? 'Royalty Income' : key == 'annuityIncome' ? 'Annuity Income' : key == 'pension' ? 'Pension' : key == 'incomeFromNonProfessional' ? 'Income From Non Professional' : key == 'incomeFromPartTimeJob' ? 'Income from part time job' : key == 'investIncome' ? 'Investment Income' : key == 'alimony' ? 'Alimony' : key == 'farmingOrFishingIncome' ? 'Farming /Fishing Income' : key == 'winningFromLottery' ? 'Winning from lottery ' : key == 'others' ? 'others' : '') : '';
-        this.monthlyIncomeArr.push({name: valueOfincome, value});
+        this.monthlyIncomeArr.push({ name: valueOfincome, value });
       }
     });
   }
@@ -129,7 +130,7 @@ export class IncomeDetailedViewComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
 }
