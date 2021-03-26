@@ -22,13 +22,13 @@
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
-                            <mat-option *ngFor="let f of arrayOfFamilyMemberOrClient" [disabled]="f.disable"
-                                [value]="f.name">
+                            <mat-option (onSelectionChange)="selectTeamMember(f)"
+                                *ngFor="let f of arrayOfFamilyMemberOrClient" [disabled]="f.disable" [value]="f.name">
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-error *ngIf="">
+                    <mat-error *ngIf="!showMap">
                         This field is required
                     </mat-error>
                     <br>
@@ -54,14 +54,8 @@
                 CANCEL
             </button>
 
-            <button mat-button class="text-primary f-14" *ngIf="data && data.type === 'backoffice'"
-                (click)="mapFolio()">
-                SAVE
-            </button>
-
-            <button mat-button class="text-primary f-14" (click)="dialogClose(false)"
-                *ngIf="data && data.type === 'casFileUpload'">
-                Save
+            <button mat-button class="text-primary f-14" *ngIf="showMap" (click)="mapclient()">
+                MAP
             </button>
         </div>
     </div>

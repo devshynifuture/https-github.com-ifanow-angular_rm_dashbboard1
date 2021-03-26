@@ -13,6 +13,8 @@ export class MapClientTeamMemberComponent implements OnInit {
   searchFamilyOrClientForm: any;
   arrayOfFamilyMemberOrClient: any;
   obj: any;
+  selected: any;
+  showMap: boolean;
 
   constructor(dialogRef: MatDialogRef<MapClientTeamMemberComponent>,
     private fb: FormBuilder,
@@ -44,6 +46,10 @@ export class MapClientTeamMemberComponent implements OnInit {
         console.log(this.arrayOfFamilyMemberOrClient)
       }
     );
+  }
+  selectTeamMember(data) {
+    this.selected = data
+    this.showMap = true
   }
   mapClient(value, event) {
     if (value == "All" && event.checked == true) {
