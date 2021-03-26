@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
@@ -22,6 +23,7 @@ export class ClientAssignmentComponent implements OnInit {
 
   ngOnInit() {
     this.getClientForAssignment()
+    this.obj = []
   }
   getClientForAssignment() {
     this.dataSource.data = [{}, {}, {}];
@@ -33,9 +35,9 @@ export class ClientAssignmentComponent implements OnInit {
       data => {
         this.isLoading = false
         console.log('getClientForAssignment ==', data)
-        //this.dataSource.data = data
+        this.dataSource.data = data
         if (data == null) {
-          // this.dataSource.data = []
+          this.dataSource.data = []
         }
         console.log(this.dataSource)
       }
@@ -47,7 +49,7 @@ export class ClientAssignmentComponent implements OnInit {
     if (event.checked) {
       this.showMappingBtn = true
     }
-    //this.mapClient(value)
+    this.mapClient(value, event)
   }
   openFolio(data) {
 
@@ -55,10 +57,8 @@ export class ClientAssignmentComponent implements OnInit {
   selectedClient() {
     const dialogRef = this.dialog.open(MapClientTeamMemberComponent, {
       width: '663px',
-
-      data: { selectedFolios: this.obj, type: 'backoffice' }
+      data: this.obj
     });
-
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -66,48 +66,25 @@ export class ClientAssignmentComponent implements OnInit {
       }
     });
   }
-  // searchClient(event) {
-  //   this.isLoading = true
-  //   if (event.length >= 3) {
-  //     const obj = {
-  //       advisorId: AuthService.getAdvisorId(),
-  //       search: true,
-  //       searchName: event
-  //     };
-  //     this.backOfficeService.searchByTeamMember(obj).subscribe(
-  //       data => {
-  //         this.isLoading = false
-  //         console.log('getClientForAssignment ==', data)
-  //         this.dataSource.data = data
-  //         if (data == null) {
-  //           this.dataSource.data = []
-  //         }
-  //         console.log(this.dataSource)
-  //       }
-  //     );
-  //   }
-  // }
-  // mapClient(value, event) {
-  //   if (value == "All" && event.checked == true) {
-  //     this.dataSource.data.forEach(element => {
-  //       this.obj = []
-  //       this.obj.push({ 'advisorId': AuthService.getAdvisorId(), 'clientId': element.clientId })
-  //     });
-  //   } else {
-  //     this.obj.push({ 'advisorId': AuthService.getAdvisorId(), 'clientId': value.clientId })
-  //   }
-  //   this.backOfficeService.mapClient(this.obj).subscribe(
-  //     data => {
-  //       this.isLoading = false
-  //       console.log('getClientForAssignment ==', data)
-  //       this.dataSource.data = data
-  //       if (data == null) {
-  //         this.dataSource.data = []
-  //       }
-  //       console.log(this.dataSource)
-  //     }
-  //   );
-  // }
+  mapClient(value, event) {
+    if (value == '') {
+      if (event.checked == true) {
+        this.obj = []
+        this.dataSource.data.forEach(element => {
+          element.checked = true
+          this.obj.push({ 'advisorId': AuthService.getAdvisorId(), 'clientId': element.clientId })
+        });
+      } else {
+        this.dataSource.data.forEach(element => {
+          this.obj = []
+          element.checked = false
+        });
+      }
+    } else {
+      this.obj.push({ 'advisorId': AuthService.getAdvisorId(), 'clientId': value.clientId })
+    }
+  }
+
 }
 export interface PeriodicElement {
   name: string;
