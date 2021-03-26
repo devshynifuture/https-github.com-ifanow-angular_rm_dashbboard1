@@ -24,9 +24,9 @@ export class SettingActivityTaskSettingComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   fruits: Fruit[] = [
-    { name: 'Lemon' },
-    { name: 'Lime' },
-    { name: 'Apple' },
+    { name: 'Stocks' },
+    { name: 'Gold' },
+
   ];
 
   add(event: MatChipInputEvent): void {

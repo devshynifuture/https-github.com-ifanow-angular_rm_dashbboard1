@@ -1,63 +1,80 @@
-<div class="row pt-20">
-    <div class="col-md-12">
-        <h5>Manage categories for Non linked task</h5>
+<div class="p-20">
+    <div class="row pb-20">
+        <div class="col-md-6 pl-0">
+            <h5 class="m-0 roboto f-400">Manage categories for Non linked task</h5>
+        </div>
+        <div class="col-md-6 pl-0">
+            <h5 class="m-0 roboto f-400">Task settings</h5>
+        </div>
     </div>
-</div>
-<div class="row" id="setting-activity-task-setting">
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-4">
-                <ul class="vertical-menu">
-                    <li (click)="viewMode ='tab1'" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}">New
-                        lead</li>
-                    <li (click)="viewMode ='tab2'" [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}">
-                        Miscellaneous</li>
-                    <li (click)="viewMode ='tab3'" [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}">
-                        Onboarding</li>
-                    <li (click)="viewMode ='tab4'" [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}">
-                        Documentation</li>
-                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}">
-                        Email client</li>
-                    <li (click)="viewMode ='tab6'" [ngClass]="{'b-outline':viewMode =='tab6','':viewMode =='tab6'}">+
-                        Add category</li>
-                </ul>
-            </div>
+    <div class="row" id="setting-activity-task-setting">
+        <div class="col-md-6 p-0">
+            <div class="row">
+                <div class="col-md-4 settingPreference p-0">
+                    <ul class="vertical-menu">
+                        <li class="c-p" (click)="viewMode ='tab1'"
+                            [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}">
+                            New
+                            lead</li>
+                        <li class="c-p" (click)="viewMode ='tab2'"
+                            [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}">
+                            Miscellaneous</li>
+                        <li class="c-p" (click)="viewMode ='tab3'"
+                            [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}">
+                            Onboarding</li>
+                        <li class="c-p" (click)="viewMode ='tab4'"
+                            [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}">
+                            Documentation</li>
+                        <li class="c-p" (click)="viewMode ='tab5'"
+                            [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}">
+                            Email client</li>
+                        <li class="text-primitive c-p" (click)="viewMode ='tab6'"
+                            [ngClass]="{'c-p':viewMode =='tab6','':viewMode =='tab6'}">
+                            +
+                            Add category</li>
+                    </ul>
+                </div>
 
 
-            <div [ngSwitch]="viewMode" class="col-md-8 p-0">
-                <div class="b-a">
-                    <div class="">
-                        <div>
-                            <div *ngSwitchCase="'tab1'" class="row">
-                                <div class="col-md-10 pr-0">
-                                    <h5 class="m-0 roboto f-400 pt-10">Category</h5>
-                                    <mat-form-field>
-                                        <input matInput class="form-control">
-                                    </mat-form-field>
-                                    <h5 class="m-0 roboto f-400 pt-28">Add sub category</h5>
-                                    <mat-form-field>
+                <div [ngSwitch]="viewMode" class="col-md-8 p-0 b-a mt--1">
 
-                                        <mat-chip-list #chipList aria-label="Fruit selection">
-                                            <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
-                                                [removable]="removable" (removed)="remove(fruit)">
-                                                {{fruit.name}}
-                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                                            </mat-chip>
-                                            <input [matChipInputFor]="chipList"
-                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                                [matChipInputAddOnBlur]="addOnBlur"
-                                                (matChipInputTokenEnd)="add($event)">
-                                        </mat-chip-list>
-                                    </mat-form-field>
-                                    <button mat-button>+ Add sub category</button>
-                                </div>
+                    <div *ngSwitchCase="'tab1'" class="row">
+
+                    </div>
+                    <div *ngSwitchCase="'tab2'" class="row">
+                        <div class="col-md-11 pr-0">
+                            <h5 class="m-0 roboto f-400 pt-10 pb-10">Category</h5>
+                            <mat-form-field>
+                                <input matInput class="form-control w-50">
+                            </mat-form-field>
+                            <h5 class="m-0 roboto f-400 pt-28 pb-10">Add sub category</h5>
+                            <div id="new-mail-chips">
+
+
+                                <mat-form-field class="h-auto form-control">
+
+                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                        <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
+                                            [removable]="removable" (removed)="remove(fruit)">
+                                            {{fruit.name}}
+                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                        </mat-chip>
+                                        <input [matChipInputFor]="chipList"
+                                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                    </mat-chip-list>
+                                </mat-form-field>
                             </div>
+                            <p class="pt-28 text-primitive f-14 roboto f-400 c-p">+ Add sub category</p>
+                        </div>
+                        <div class="col-md-1 pt-10 text-right pl-0">
+                            <img src="/assets/images/delete-black.png" class="c-p">
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-6"></div>
+                <div class="col-md-6 pr-0"></div>
+            </div>
         </div>
     </div>
 </div>
