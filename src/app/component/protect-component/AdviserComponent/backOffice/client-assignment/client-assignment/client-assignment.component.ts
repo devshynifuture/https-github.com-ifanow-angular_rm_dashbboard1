@@ -77,7 +77,7 @@ export class ClientAssignmentComponent implements OnInit {
       } else {
         this.dataSource.data.forEach(element => {
           this.obj = []
-          element.checked = true
+          element.checked = false
         });
       }
     } else {
