@@ -15,7 +15,8 @@ export class MapClientTeamMemberComponent implements OnInit {
   obj: any;
   selected: any;
   showMap: boolean;
-
+  errorMsg = '';
+  selectedFolioInvestorName = ''
   constructor(public dialogRef: MatDialogRef<MapClientTeamMemberComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
@@ -31,6 +32,15 @@ export class MapClientTeamMemberComponent implements OnInit {
     this.searchFamilyOrClientForm = this.fb.group({
       searchFamilyOrClient: [, Validators.required]
     });
+  }
+  doShowDetails;
+  arrayOfFamilyMemberOrClientError;
+  dialogClose(flag) {
+
+  }
+
+  mapclient() {
+
   }
   getTeamMember() {
     const obj = {

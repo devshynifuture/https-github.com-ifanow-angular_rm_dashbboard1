@@ -20,7 +20,7 @@
                  </mat-form-field> -->
 
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput class="form-control br-0">
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option (onSelectionChange)="selectTeamMember(f)"
                                 *ngFor="let f of arrayOfFamilyMemberOrClient" [disabled]="f.disable" [value]="f.name">
