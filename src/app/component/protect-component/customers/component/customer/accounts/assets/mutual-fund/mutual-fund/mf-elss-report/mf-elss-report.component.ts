@@ -110,7 +110,7 @@ export class MfElssReportComponent implements OnInit {
 
   mfData;
   mutualFundList: any[];
-  isLoading = false;
+  isLoading = true;
   dataSource = new MatTableDataSource([{}, {}, {}]);
   grandTotal: any = {};
   schemeWiseForFilter: any;
@@ -221,6 +221,11 @@ export class MfElssReportComponent implements OnInit {
   fromDate: any;
   adminAdvisorIds: any;
   parentId: any;
+
+
+
+
+
   loadingDone: boolean = false;
   isTableShow = true;
   isDisabledOpacity = true;
@@ -232,6 +237,12 @@ export class MfElssReportComponent implements OnInit {
   excelDownload: boolean = false;
   ninethArrayTran: any;
   ninethArrayTotalTran: any;
+  tenthArrayTran: any;
+  tenthArrayTotalTran: any;
+  eleventhArrayTran: any;
+  eleventhArrayTotalTran: any;
+  twelvthArrayTran: any;
+  twelvthArrayTotalTran: any;
   showSummaryTable: boolean = true;
   allData: any;
   mfList: any[];
@@ -288,7 +299,6 @@ export class MfElssReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewMode = 'All Transactions'
     this.getElssReport();
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
@@ -326,12 +336,12 @@ export class MfElssReportComponent implements OnInit {
   }
   getElssReport() {
     this.isLoading = true;
+   this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
       clientId: this.clientId,
     };
     this.custumService.getElssTransacitonReport(obj).subscribe(
       data => {
-        this.isLoading = false;
         if (data) {
           let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
           let array = [];
@@ -348,10 +358,12 @@ export class MfElssReportComponent implements OnInit {
           this.asyncFilter(filterData);
         } else {
           this.setUnrealizedDataSource([]);
+          this.customDataSource.data = [];
         }
         console.log(data);
       }, (error) => {
         this.setUnrealizedDataSource([]);
+        this.customDataSource.data = [];
         this.isLoading = false;
         this.eventService.showErrorMessage(error);
 
@@ -487,21 +499,7 @@ export class MfElssReportComponent implements OnInit {
     } else if (header == 'lockPeriod') {
       this.customDataSource.data.arrayTran.push({
         name: 'Lock free date', index: ind, isCheked: true, style: {
-          width: '13%',
-          'border-top': '1px solid #DADCE0',
-          'text-align': 'right',
-          'padding': '7px 8px',
-          'font-size': '13px !important',
-          'line-height': '16px !important',
-          'color': '#202020',
-          'border-right': '1px solid #DADCE0',
-        }
-      });
-      // Object.assign(this.customDataSource.data, { days: true });
-    } else if (header == 'lockPeriod') {
-      this.customDataSource.data.arrayTran.push({
-        name: 'Lock free date', index: ind, isCheked: true, style: {
-          width: '13%',
+          width: '15%',
           'border-top': '1px solid #DADCE0',
           'text-align': 'right',
           'padding': '7px 8px',
@@ -514,7 +512,7 @@ export class MfElssReportComponent implements OnInit {
       // Object.assign(this.customDataSource.data, { days: true });
     } else if (header == 'lockFreeUnits') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Lock free date', index: ind, isCheked: true, style: {
+        name: 'Lock free units', index: ind, isCheked: true, style: {
           width: '13%',
           'border-top': '1px solid #DADCE0',
           'text-align': 'right',
@@ -528,7 +526,7 @@ export class MfElssReportComponent implements OnInit {
       // Object.assign(this.customDataSource.data, { days: true });
     } else if (header == 'LockFreeStatus') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Lock free date', index: ind, isCheked: true, style: {
+        name: 'Lock free status', index: ind, isCheked: true, style: {
           width: '13%',
           'border-top': '1px solid #DADCE0',
           'text-align': 'right',
@@ -542,8 +540,8 @@ export class MfElssReportComponent implements OnInit {
       // Object.assign(this.customDataSource.data, { days: true });
     } else if (header == 'lockFreeDays') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Lock free date', index: ind, isCheked: true, style: {
-          width: '13%',
+        name: 'Lock free days', index: ind, isCheked: true, style: {
+          width: '15%',
           'border-top': '1px solid #DADCE0',
           'text-align': 'right',
           'padding': '7px 8px',
@@ -694,16 +692,17 @@ export class MfElssReportComponent implements OnInit {
         this.dataSource = new MatTableDataSource(data.dataSourceData);
         console.log('datdataSource', this.unrealisedData)
         console.log('datasource............', this.dataSource.data)
+        this.colspanValue = Math.round(this.displayedColumns.length / 2);
         console.log('endTime ', new Date());
-        this.mfService.setTransactionData(this.dataTransaction);
-        if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
+         this.ngZone.run(() => {
+         this.cd.detectChanges();
+         this.isLoading = false;
+        });
           this.displayedColumns.forEach((element, ind) => {
             this.styleObjectTransaction(element, ind);
           });
-        }
-        this.ngZone.run(() => {
-          this.isLoading = false;
-        });
+        
+       
         this.customDataSource.data.arrayTran.forEach(element => {
           switch (element.index) {
             case 0:
@@ -753,6 +752,24 @@ export class MfElssReportComponent implements OnInit {
 
 
               break;
+               case 9:
+              this.tenthArrayTran = this.filterHedaerWiseTran(element);
+              this.tenthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+
+              break;
+               case 10:
+              this.eleventhArrayTran = this.filterHedaerWiseTran(element);
+              this.eleventhArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+
+              break;
+               case 11:
+              this.twelvthArrayTran = this.filterHedaerWiseTran(element);
+              this.twelvthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+
+              break;
 
           }
         });
@@ -761,7 +778,7 @@ export class MfElssReportComponent implements OnInit {
         }
         this.changeInput.emit(false);
         console.log('dataSource', this.dataSource)
-
+        
         if (this.finPlanObj) {
           this.showDownload = true;
           this.cd.detectChanges();
@@ -854,77 +871,6 @@ export class MfElssReportComponent implements OnInit {
 
   }
 
-  deleteModal(value, element) {
-    this.mfData.mutualFundList.forEach(ele => {
-      ele.mutualFundTransactions.forEach(tran => {
-        if (tran.id == element.id) {
-          this.selectedLoadData = ele;
-        }
-      });
-    });
-    const dialogData = {
-      data: value,
-      header: 'DELETE',
-      body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone.',
-      btnYes: 'CANCEL',
-      btnNo: 'DELETE',
-      positiveMethod: () => {
-        let requestJsonObj;
-        const data = {
-          id: element.id,
-          unit: element.unit,
-          effect: element.effect,
-          mutualFundId: this.selectedLoadData.id
-        };
-        requestJsonObj = {
-          freezeDate: element.freezeDate ? element.freezeDate : null,
-          mutualFundTransactions: [data]
-        };
-        dialogRef.close();
-        this.custumService.postDeleteTransactionMutualFund(requestJsonObj)
-          .subscribe(res => {
-            if (res) {
-              this.customerOverview.portFolioData = null;
-              this.customerOverview.assetAllocationChart = null;
-              this.customerOverview.recentTransactionData = null;
-              this.customerOverview.summaryLeftsidebarData = null;
-              this.customerOverview.aumGraphdata = null;
-              this.customerOverview.assetAllocationChart = null;
-              this.customerOverview.summaryCashFlowData = null;
-              this.isLoading = true;
-              this.eventService.openSnackBar('Deleted Successfully', 'Dismiss');
-              if (res) {
-                this.addedData = true;
-                this.mfService.setDataForMfGet('');
-                this.mfService.setMfData('');
-                this.mfService.setTransactionType('');
-                this.ngOnInit();
-                // this.getMutualFund();
-                console.log('again re hitting mutual fund get:::', res);
-              }
-            }
-          });
-
-
-      },
-      negativeMethod: () => {
-        // console.log('2222222222222222222222222222222222222');
-      }
-    };
-    // console.log(dialogData + '11111111111111');
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
-  }
 
   getTransactionType(res) {
     const filterData = [];
@@ -947,17 +893,12 @@ export class MfElssReportComponent implements OnInit {
       state: 'open35',
       componentName: RightFilterDuplicateComponent
     };
-    this.mfObject = {
-      family_member_list: this.allData.family_member_list,
-      folioWise: this.mfList,
-      mutualFundCategoryMastersList: this.mutualFund.mutualFundCategoryMastersList,
-      mutualFundList: this.mfList,
-      schemeWise: this.allData.mutualFundSchemeMasterList,
-      subCategoryData: this.mutualFund.mutualFundCategoryMastersList,
+    let obj={
+      mutualFundList:this.mfList
     }
     fragmentData.data = {
       name: this.viewMode,
-      mfData: this.mfList,
+      mfData: obj,
       folioWise: this.setDefaultFilterData.folioWise,
       schemeWise: this.setDefaultFilterData.schemeWise,
       familyMember: this.setDefaultFilterData.familyMember,
@@ -976,14 +917,10 @@ export class MfElssReportComponent implements OnInit {
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
-        // console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          // console.log('this is sidebardata in subs subs 2: ', sideBarData);
           if (sideBarData.data && sideBarData.data != 'Close') {
             this.dataSource = new MatTableDataSource([{}, {}, {}]);
-            // this.customDataSource.data = ([{}, {}, {}]);
             this.customDataSource = [];
-            // this.unrealisedData = new TableVirtualScrollDataSource([]);
             this.isLoading = true;
             this.isTableShow = true;
             this.showSummaryTable = true
@@ -1004,18 +941,14 @@ export class MfElssReportComponent implements OnInit {
               };
               this.displayColArray.push(obj);
             });
-            this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
-            // this.asyncFilter(this.reponseData.mutualFundList);
-            this.mfService.setFilterValues(this.setDefaultFilterData);
-            this.mfService.setDataForMfGet(this.rightFilterData.mfData);
+            ////this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
+           // this.mfService.setFilterValues(this.setDefaultFilterData);
+            //this.mfService.setDataForMfGet(this.rightFilterData.mfData);
             this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.toDate), 'dd-MMM-yyyy');
             this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData;
             this.dataTransaction.rightFilterData = this.rightFilterData.mfData;
-            // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
-            // this.rightFilterData.reportType, this.mfService);
-            // this.customDataSource.data = this.subCatArray(this.rightFilterData.mutualFundList,
-            // this.rightFilterData.reportType, this.mfService);
-            // this.changeDetectorRef.detectChanges();
+            this.getElssReport();
+
           }
           rightSideDataSub.unsubscribe();
         }
@@ -1082,13 +1015,13 @@ export class MfElssReportComponent implements OnInit {
         obj = 'elssDate';
         break;
       case 'Lock free units':
-        obj = 'lockFreeUnits';
+        obj = 'unlockedUnits';
         break;
       case 'Lock free status':
-        obj = 'LockFreeStatus';
+        obj = 'status';
         break;
       case 'Lock free days':
-        obj = 'lockFreeDays';
+        obj = 'unLockDays';
         break;
     }
 

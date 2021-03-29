@@ -161,11 +161,10 @@
         </div>
     </div>
     <div class="row secoundTable">
-        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 pt-12">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 pt-12" *ngIf="!isLoading && this.unrealisedData.allData.length>0">
             <!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
 
-            <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport class="tran-height-2"
-                *ngIf="!isLoading && unrealisedArray.length > 0 && unrealisedData">
+            <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport class="tran-height-2"[hidden]="unrealisedArray.length>0==false">
                 <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
                 <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
                     class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort
@@ -449,7 +448,7 @@
                 </table>
                 <!-- </div>-->
             </cdk-virtual-scroll-viewport>
-            <div *ngIf="!isLoading && unrealisedArray?.length == 0 && !unrealisedData"
+            <div *ngIf="!isLoading && customDataSource.data?.length == 0"
                 class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12"> No data found</h4>
@@ -500,6 +499,18 @@
                 [ngStyle]="customDataSource.data?.arrayTran[8]?.style">
                 <b>{{customDataSource.data?.arrayTran[8]?.name}}</b>
             </td>
+             <td *ngIf="customDataSource.data?.arrayTran[9]?.isCheked == true"
+                [ngStyle]="customDataSource.data?.arrayTran[9]?.style">
+                <b>{{customDataSource.data?.arrayTran[9]?.name}}</b>
+            </td>
+             <td *ngIf="customDataSource.data?.arrayTran[10]?.isCheked == true"
+                [ngStyle]="customDataSource.data?.arrayTran[10]?.style">
+                <b>{{customDataSource.data?.arrayTran[10]?.name}}</b>
+            </td>
+             <td *ngIf="customDataSource.data?.arrayTran[11]?.isCheked == true"
+                [ngStyle]="customDataSource.data?.arrayTran[11]?.style">
+                <b>{{customDataSource.data?.arrayTran[11]?.name}}</b>
+            </td>
         </tr>
     </table>
 
@@ -529,7 +540,7 @@
                     <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
                 </div>
             </td>
-            <td style="text-align: right;" colspan="13">
+            <td style="text-align: right;" colspan="12">
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
                     {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
@@ -604,18 +615,30 @@
                 [ngStyle]="customDataSource.data?.arrayTran[8].style">
                 <b>{{customDataSource.data?.arrayTran[8]?.name}}</b>
             </td>
+            <td *ngIf="customDataSource.data?.arrayTran[9]?.isCheked == true"
+                [ngStyle]="customDataSource.data?.arrayTran[9].style">
+                <b>{{customDataSource.data?.arrayTran[9]?.name}}</b>
+            </td>
+            <td *ngIf="customDataSource.data?.arrayTran[10]?.isCheked == true"
+                [ngStyle]="customDataSource.data?.arrayTran[10].style">
+                <b>{{customDataSource.data?.arrayTran[10]?.name}}</b>
+            </td>
+            <td *ngIf="customDataSource.data?.arrayTran[11]?.isCheked == true"
+                [ngStyle]="customDataSource.data?.arrayTran[11].style">
+                <b>{{customDataSource.data?.arrayTran[11]?.name}}</b>
+            </td>
         </tr>
         <tbody *ngFor="let item of customDataSource.data ;index as i">
 
 
 
             <tr style="page-break-inside: avoid">
-                <td *ngIf="item.groupName" [attr.colspan]="9"
+                <td *ngIf="item.groupName" [attr.colspan]="12"
                     style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.groupName}}
                 </td>
             </tr>
-            <tr *ngIf="item.schemeName || item.nav" style="page-break-inside: avoid;">
+            <tr *ngIf="!item.groupName && item.schemeName || item.nav" style="page-break-inside: avoid;">
                 <td class="f-700" [attr.colspan]="colspanValue"
                     style="padding: 12px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-left: 1px solid #DADCE0;">
                     {{item.schemeName}}{{item.isin ? ' | '+item.isin : ''}}{{(setDefaultFilterData.reportType ==
@@ -629,12 +652,12 @@
                 </td>
             </tr>
             <tr style="page-break-inside: avoid" *ngIf="item.name || item.folio">
-                <td [attr.colspan]="9"
+                <td [attr.colspan]="12"
                     style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-top: 1px solid #DADCE0;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
                     {{item.name}}(PAN:{{item.pan}})|{{item.folio}}
                 </td>
             </tr>
-            <tr *ngIf="item.fwTransactionType"
+            <tr *ngIf="!item.groupName && !item.schemeName && item.fwTransactionType"
                 style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid; border-top: 1px solid #DADCE0;">
                 <td *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
                     [ngStyle]="customDataSource.data?.arrayTran[0].style">
@@ -644,7 +667,7 @@
                 </td>
                 <td *ngIf="customDataSource.data?.arrayTran[1]?.isCheked == true"
                     [ngStyle]="customDataSource.data?.arrayTran[1].style">
-                    <span *ngIf="item.fwTransactionType">
+                    <span>
                         <!-- {{(item.fwTransactionType) ? item.fwTransactionType : '-'}} -->
                         {{item[secondArrayTran]}}
 
@@ -698,58 +721,25 @@
                     {{item[ninethArrayTran]}}
 
                 </td>
-            </tr>
-            <tr style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[0].style">
-                    {{item[firstArrayTotalTran]}}
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[1]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[1].style">
-                    <!-- Total -->
-                    {{item[secondArrayTotalTran]}}
-
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[2]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[2].style">
-                    {{item[thirdArrayTotalTran]}}
-
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[3]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[3].style">
-                    <!-- {{item.totalTransactionAmt}} -->
-                    {{item[fourthArrayTotalTran]}}
-
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[4]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[4].style">
-                    {{item[fifthArrayTotalTran]}}
-
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[5]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[5].style">
-                    <!-- {{item.totalUnit}} -->
-                    {{item[SixthArrayTotalTran]}}
-
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[6]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[6].style">
-                    <!-- {{item.totalBalanceUnit}} -->
-                    {{item[seventhArrayTotalTran]}}
-
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[7]?.isCheked == true"
-                    [ngStyle]="customDataSource.data?.arrayTran[7].style">
-                    {{item[eighthArrayTotalTran]}}
-
-                </td>
-                <td class="f-700" *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
+                <td *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
                     [ngStyle]="customDataSource.data?.arrayTran[8].style">
-                    {{item[ninethArrayTotalTran]}}
+                    <!-- {{item.days}} -->
+                    {{item[tenthArrayTran]}}
+
+                </td>
+                <td *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
+                    [ngStyle]="customDataSource.data?.arrayTran[8].style">
+                    <!-- {{item.days}} -->
+                    {{item[eleventhArrayTran]}}
+
+                </td>
+                <td *ngIf="customDataSource.data?.arrayTran[8]?.isCheked == true"
+                    [ngStyle]="customDataSource.data?.arrayTran[8].style">
+                    <!-- {{item.days}} -->
+                    {{item[twelvthArrayTran]}}
 
                 </td>
             </tr>
-
 
 
 
