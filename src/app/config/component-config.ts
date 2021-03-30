@@ -819,6 +819,8 @@ export const appConfig = {
   DEACTIVATE_ACCOUNT: 'rmdashboard/activate-deactivate/advisor',
   REFRESH_MF_LIST: 'mutual-fund/mutualfund/list/refresh',
   CONVERT_TO_PAID_DATE: 'rmdashboard/advisor/paid-upto/update',
+  GET_ALL_RESTORE_TRANSACTION: 'backoffice/folio-query/mf-transaction/deleted-list/get',
+  RESTORE_MF_TRANSACTION: 'backoffice/folio-query/mf-transaction/restore',
   ///org setting ////
   GET_PORTFOLIO: 'setting/preferences/portfolio/get',
   GET_PLANS: 'setting/preferences/plan/get',

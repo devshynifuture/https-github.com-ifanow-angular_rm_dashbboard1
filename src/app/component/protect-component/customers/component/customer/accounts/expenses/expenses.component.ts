@@ -192,16 +192,16 @@ export class ExpensesComponent implements OnInit {
       })
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    if (Object.keys(this.data).length !== 0) {
-      this.dataSource4.data = [{}, {}, {}];
-      this.dataSource5.data = [{}, {}, {}];
-      this.isLoadingBudget = true;
-      if (this.data.name) {
-        this.tab = this.data.name;
-        this.viewMode = this.data.name;
+    if(this.data){
+      if (Object.keys(this.data).length !== 0) {
+        this.dataSource4.data = [{}, {}, {}];
+        this.dataSource5.data = [{}, {}, {}];
+        this.isLoadingBudget = true;
+        if (this.data.name) {
+          this.tab = this.data.name;
+          this.viewMode = this.data.name;
+        }
       }
-
-
     }
     this.selectedPeriod = '1'
     if (this.finPlanObj) {
@@ -1055,16 +1055,17 @@ export class ExpensesComponent implements OnInit {
   }
   getListFamilyMem() {
     // this.isLoading = true;
-    if (this.data.name == 'Transactions') {
-      this.dataSource.data = [{}, {}, {}];
-      this.dataSource1.data = [{}, {}, {}];
-      this.isLoading = true;
-    } else {
-      this.dataSource4.data = [{}, {}, {}];
-      this.dataSource5.data = [{}, {}, {}];
-      this.isLoadingBudget = true;
+    if(this.data){
+      if (this.data.name == 'Transactions') {
+        this.dataSource.data = [{}, {}, {}];
+        this.dataSource1.data = [{}, {}, {}];
+        this.isLoading = true;
+      } else {
+        this.dataSource4.data = [{}, {}, {}];
+        this.dataSource5.data = [{}, {}, {}];
+        this.isLoadingBudget = true;
+      }
     }
-
     const obj = {
       clientId: this.clientId
     };

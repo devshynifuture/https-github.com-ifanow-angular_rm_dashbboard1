@@ -17,6 +17,9 @@
             <mat-form-field appearance="standard">
                 <input placeholder="Enter template name" (change)="getNameValidation($event.target.value)"
                     formControlName="name" matInput class="form-control">
+                <mat-error>
+                    This field is required
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="col-md-10 full-end pt-8">
@@ -39,6 +42,9 @@
                         {{item.name}}
                     </mat-option>
                 </mat-select>
+                <mat-error>
+                    This field is required
+                </mat-error>
             </mat-form-field>
         </div>
     </div>

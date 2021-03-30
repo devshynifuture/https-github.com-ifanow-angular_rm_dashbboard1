@@ -80,7 +80,9 @@
 </div>
 
 <div class="row pt-32 pb-28">
-    <div class="col-md-6"></div>
+    <div class="col-md-5">
+    </div>
+
     <div class="col-md-6 pl-36 pr-0">
         <!--    // TODo [mat-dialog-close]="data"-->
         <button class="br-0 text-inherit f-14" mat-button (click)="Close(false)">
@@ -90,6 +92,9 @@
             cdkFocusInitial>UPLOAD
         </button>
 
+    </div>
+    <div class="col-md-1">
+        <mat-spinner *ngIf="uploadButton" [diameter]="30"></mat-spinner>
     </div>
 
 </div>
