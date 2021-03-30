@@ -33,6 +33,8 @@ export class OpenGalleryPlanComponent implements OnInit {
   goalIndividualData: any;
   choose: boolean;
   isLoading: boolean = false
+  uploadButton :boolean = false
+ 
   jsonDataObj: { advisorId: any; goalName: any; imageURL: any; goalTypeId: any; };
   constructor(public dialogRef: MatDialogRef<OpenGalleryPlanComponent>,
     @Inject(MAT_DIALOG_DATA) public dataGet: DialogData, private settingsService: SettingsService, private event: EventService,
@@ -67,6 +69,7 @@ export class OpenGalleryPlanComponent implements OnInit {
     this.choose = false
   }
   onNoClick() {
+    this.uploadButton = true
     if (this.showCropper) {
       this.showSpinner = true
       const tags = this.advisorId + ',advisor_profile_logo,';
@@ -88,9 +91,11 @@ export class OpenGalleryPlanComponent implements OnInit {
     }
   }
   uploadTemlate(responseObject) {
+    this.uploadButton = false
     this.dialogRef.close(responseObject);
   }
   uploadGoalIMG(responseObject) {
+    this.uploadButton = false
     this.jsonDataObj = {
       advisorId: this.advisorId,
       goalName: this.sendToCopy.name,

@@ -107,42 +107,44 @@ export class AddNewTemplateComponent implements OnInit {
     );
   }
   addTemplates() {
-    if (this.inputData.id) {
-      var obj = {
-        id: this.inputData.id,
-        advisorId: AuthService.getAdvisorId(),
-        name: this.addTemplate.get('name').value,
-        imageUrl: this.result.secure_url,
-        fpTemplateCategoryMasterId: this.addTemplate.get('category').value,
-      };
-      this.settingService.editTemplate(obj).subscribe(
-        res => {
-          this.eventService.openSnackBar("Template updated Successfully", 'Dismiss');
-          this.close(true)
-        },
-        err => {
-          this.eventService.openSnackBar(err, 'Dismiss');
-        }
-      );
-    } else {
-      var obj1 = {
-        advisorId: AuthService.getAdvisorId(),
-        name: this.addTemplate.get('name').value,
-        imageUrl: this.result.secure_url,
-        fpTemplateCategoryMasterId: this.addTemplate.get('category').value,
-      };
-      this.settingService.addNewTemplate(obj1).subscribe(
-        res => {
-          this.eventService.openSnackBar("Template added Successfully", 'Dismiss');
-          this.close(true)
-        },
-        err => {
-          this.eventService.openSnackBar(err, 'Dismiss');
-        }
-      );
+    if (this.addTemplate.invalid) {
+      this.addTemplate.markAllAsTouched();
+    }else{
+      if (this.inputData.id) {
+        var obj = {
+          id: this.inputData.id,
+          advisorId: AuthService.getAdvisorId(),
+          name: this.addTemplate.get('name').value,
+          imageUrl: this.result.secure_url,
+          fpTemplateCategoryMasterId: this.addTemplate.get('category').value,
+        };
+        this.settingService.editTemplate(obj).subscribe(
+          res => {
+            this.eventService.openSnackBar("Template updated Successfully", 'Dismiss');
+            this.close(true)
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+      } else {
+        var obj1 = {
+          advisorId: AuthService.getAdvisorId(),
+          name: this.addTemplate.get('name').value,
+          imageUrl: this.result.secure_url,
+          fpTemplateCategoryMasterId: this.addTemplate.get('category').value,
+        };
+        this.settingService.addNewTemplate(obj1).subscribe(
+          res => {
+            this.eventService.openSnackBar("Template added Successfully", 'Dismiss');
+            this.close(true)
+          },
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
+      }
     }
-
-
   }
 
   getFormControl(): any {
