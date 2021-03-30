@@ -197,7 +197,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.loadAllGoals(false);
       })
     );
-    this.loadAllAssets();
+    //this.loadAllAssets();
     this.loadAllGoals(false);
     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
   }
