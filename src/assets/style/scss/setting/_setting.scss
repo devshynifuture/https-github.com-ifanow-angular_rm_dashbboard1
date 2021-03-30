@@ -463,3 +463,27 @@
   border-right: 1px solid #DADCE0 !important;
   border-left: 1px solid #DADCE0 !important;
 }
+
+.settingPreference {
+  .vertical-menu {
+    li {
+      padding: 10px 12px !important;
+    }
+  }
+
+  .b-outline {
+    outline: 1px solid #dee5e7 !important;
+    position: relative;
+
+    &::before {
+      content: '';
+      width: 10px;
+      height: 40px;
+      z-index: 2;
+      background: #fff;
+      position: absolute;
+      right: -5px;
+      top: 0px;
+    }
+  }
+}

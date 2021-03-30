@@ -10,6 +10,7 @@ import { SubscriptionService } from '../../../Subscriptions/subscription.service
 import { OrgSettingServiceService } from '../../org-setting-service.service';
 import { AddTaskTemplateComponent } from '../add-task-template/add-task-template.component';
 import { TaskTemplateTypeComponent } from '../add-task-template/task-template-type/task-template-type.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-setting-activity-tabs',
@@ -31,8 +32,8 @@ export class SettingActivityTabsComponent implements OnInit {
     public subscription: SubscriptionService,
     public eventService: EventService,
     private orgSetting: OrgSettingServiceService,
-    public dialog: MatDialog
-  ) {
+    public dialog: MatDialog,
+    public enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId()
   }
 
