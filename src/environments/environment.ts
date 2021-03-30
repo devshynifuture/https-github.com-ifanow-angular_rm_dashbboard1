@@ -13,6 +13,7 @@ export const environment = {
   production: false,
   // Prod_local: 'http://localhost:8080/futurewise/api/v1/web/',
   APIEndpoint: 'https://dev.ifanow.in/futurewise/api/v1/web/',
+  mfProject: 'https://dev.ifanow.in/mutualfund/api/v1/web/',
   // APIEndpoint: 'http://localhost:8080/futurewise/api/v1/web/',
 
   GmailAPIEndpoint: 'https://dev.ifanow.in/email-server/api/v1/web/',

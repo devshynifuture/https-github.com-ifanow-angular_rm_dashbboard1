@@ -113,7 +113,7 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService, private datePipe: DatePipe, ) {
+    private mfService: MfServiceService, private datePipe: DatePipe,) {
   }
 
   @Input()
@@ -364,6 +364,8 @@ export class RightFilterDuplicateComponent implements OnInit {
   getReportType() {
     if (this._data.name == 'SUMMARY REPORT') {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
+    } else if (this._data.name == 'ELSS report') {
+      this.reportType = ['Investor wise', 'Scheme wise'];
     } else {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
     }
@@ -1765,16 +1767,19 @@ export class RightFilterDuplicateComponent implements OnInit {
       // setTrueKey : this.setAllTrue
     };
     console.log('dataToSend---------->', this.dataToSend);
-
-    this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
+    if (this._data.name == 'ELSS report') {
+      this.finalFilterData = this.mfService.filterElssData(this._data.mfData, this.dataToSend);
+    } else {
+      this.finalFilterData = this.mfService.filterFinalData(this._data.mfData, this.dataToSend);
+    }
     this.finalFilterData.transactionView = this.transactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
     console.log(this.finalFilterData);
 
     if (this._data.name != 'CAPITAL GAIN REPORT') {
       this.obj = {
-        parentId: this.parentId ? this.parentId : this.advisorId,
-        advisorId: this.adminAdvisorIds,
+        //  parentId: this.parentId ? this.parentId : this.advisorId,
+        //  advisorId: this.adminAdvisorIds,
         clientId: this.clientId,
         toDate: this._data.name == 'SUMMARY REPORT' || this._data.name == 'UNREALIZED TRANSACTION REPORT' ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList,
@@ -1783,19 +1788,35 @@ export class RightFilterDuplicateComponent implements OnInit {
       if (this._data.name == 'Overview Report') {
         this.obj.toDate = todayDate;
       }
-      this.custumService.getMutualFund(this.obj).subscribe(
-        data => {
-          console.log(data);
-          this.barButtonOptions.active = false;
-          this.finalFilterData.mfData = data;
-          this.Close(this.finalFilterData);
-        },
-        err => {
-          this.barButtonOptions.active = false;
-          this.finalFilterData.mfData = null;
-          this.Close(this.finalFilterData);
-        }
-      );
+      if (this._data.name != 'ELSS report') {
+        this.custumService.getMutualFund(this.obj).subscribe(
+          data => {
+            console.log(data);
+            this.barButtonOptions.active = false;
+            this.finalFilterData.mfData = data;
+            this.Close(this.finalFilterData);
+          },
+          err => {
+            this.barButtonOptions.active = false;
+            this.finalFilterData.mfData = null;
+            this.Close(this.finalFilterData);
+          }
+        );
+      } else {
+        this.custumService.getElssTransacitonReport(this.obj).subscribe(
+          data => {
+            console.log(data);
+            this.barButtonOptions.active = false;
+            this.finalFilterData.elssResponse = data;
+            this.Close(this.finalFilterData);
+          },
+          err => {
+            this.barButtonOptions.active = false;
+            this.finalFilterData.mfData = null;
+            this.Close(this.finalFilterData);
+          }
+        );
+      }
     } else {
       this.barButtonOptions.active = false;
       this.Close(this.finalFilterData);

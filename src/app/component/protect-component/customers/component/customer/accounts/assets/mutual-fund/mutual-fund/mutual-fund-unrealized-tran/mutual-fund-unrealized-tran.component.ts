@@ -528,7 +528,7 @@ export class MutualFundUnrealizedTranComponent {
           console.log('transactionview', transactionView)
           this.mfData = this.mfGetData;
           this.displayedColumns = this.displayedColumns.filter(d => d != 'showSummary');
-          this.displayedColumnsTotal = this.displayedColumns.filter(d => d != 'showSummary');
+          this.displayedColumnsTotal = this.displayedColumnsTotal.filter(d => d != 'showSummary');
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
             //  this.getUnrealizedData();
@@ -612,7 +612,7 @@ export class MutualFundUnrealizedTranComponent {
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
         this.displayedColumns = this.displayedColumns.filter(d => d != 'showSummary');
-        this.displayedColumnsTotal = this.displayedColumns.filter(d => d != 'showSummary');
+        this.displayedColumnsTotal = this.displayedColumnsTotal.filter(d => d != 'showSummary');
       }
     );
 
@@ -759,7 +759,7 @@ export class MutualFundUnrealizedTranComponent {
       // Object.assign(this.customDataSource.data, { days: true });
     } else if (header == 'lockPeriod') {
       this.customDataSource.data.arrayTran.push({
-        name: 'Unlock date', index: ind, isCheked: true, style: {
+        name: 'Lock free date', index: ind, isCheked: true, style: {
           width: '13%',
           'border-top': '1px solid #DADCE0',
           'text-align': 'right',
@@ -888,8 +888,8 @@ export class MutualFundUnrealizedTranComponent {
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
     const obj = {
-      parentId: this.parentId ? this.parentId : this.advisorId,
-      advisorId: this.adminAdvisorIds,
+      // parentId: this.parentId ? this.parentId : this.advisorId,
+      // advisorId: this.adminAdvisorIds,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -1030,8 +1030,8 @@ export class MutualFundUnrealizedTranComponent {
         categoryWiseMfList.push(element.id);
       });
       const obj = {
-        parentId: this.parentId,
-        advisorId: this.adminAdvisorIds,
+        // parentId: this.parentId,
+        // advisorId: this.adminAdvisorIds,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,
@@ -1850,7 +1850,7 @@ export class MutualFundUnrealizedTranComponent {
       case 'Days':
         obj = 'days';
         break;
-      case 'Unlock date':
+      case 'Lock free date':
         obj = 'elssDate';
         break;
     }
@@ -1885,7 +1885,7 @@ export class MutualFundUnrealizedTranComponent {
       case 'Days':
         obj = '';
         break;
-      case 'Unlock date':
+      case 'Lock free date':
         obj = '';
         break;
 

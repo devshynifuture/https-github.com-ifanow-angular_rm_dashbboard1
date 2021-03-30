@@ -30,7 +30,8 @@ export class MfServiceService {
   private sendDataCapitalDetailed = new BehaviorSubject('')
   private setCashFlow = new BehaviorSubject('')
   private advisorIdList = new BehaviorSubject('')
-  private loading = new BehaviorSubject(Boolean)
+  private loading = new BehaviorSubject(Boolean);
+  private elssData = new BehaviorSubject('')
   refreshMutualFundData = new BehaviorSubject(null);
   clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
 
@@ -447,6 +448,81 @@ export class MfServiceService {
     return sendData;
   }
 
+  filterElssData(mfData, dataForFilter) {
+    let mutualFundList;
+    const family_member_list = this.filterArray(mfData.family_member_list, 'id', dataForFilter.familyMember, 'familyMemberId');
+    const schemeWiseFilter = mfData.mutualFundSchemeMasterList;
+    const amcWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
+    const schemeWise = this.filterArray(amcWise, 'id', dataForFilter.scheme ? dataForFilter.scheme : dataForFilter.amc, 'id');
+    let mutualFundListFilter = this.filter(schemeWise, 'mutualFund');
+    mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
+    if (dataForFilter.showFolio == '2') {
+      mutualFundList = mutualFundList.filter((item: any) =>
+        (item.balanceUnit != 0 && item.balanceUnit > 0) || item.folioNumber != 0
+      );
+    }
+    let arry = [];
+    if (dataForFilter.reportAsOn && (dataForFilter.name != 'ALL TRANSACTION REPORT' || dataForFilter.name != 'UNREALIZED TRANSACTION REPORT')) {
+      mutualFundList.forEach(element => {
+        element.mutualFundTransactions.forEach(ele => {
+          if (this.datePipe.transform(ele.transactionDate, 'yyyy-MM-dd') <= dataForFilter.reportAsOn) {
+            arry.push(element);
+          }
+        });
+      });
+      arry = [...new Map(arry.map(item => [item.id, item])).values()];
+      mutualFundList = arry
+    }
+    if (dataForFilter.transactionPeriodCheck) {
+      if (dataForFilter.fromDate && dataForFilter.toDate) {
+
+        mutualFundList.forEach(element => {
+          element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') >= dataForFilter.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= dataForFilter.toDate);
+
+        });
+      }
+    }
+    let categoryWiseMfList = [];
+    mutualFundList.forEach(element => {
+      categoryWiseMfList.push(element.id)
+    });
+
+    let capitalGainArray = [];
+    if (dataForFilter.capitalGainData) {
+      dataForFilter.capitalGainData.responseData.forEach(element => {
+        const family_member_list = this.filterArray(element.mutualFund, 'familyMemberId', dataForFilter.familyMember, 'familyMemberId');
+        if (family_member_list.length > 0) {
+          capitalGainArray.push(element)
+        }
+      });
+      dataForFilter.capitalGainData.responseData = capitalGainArray;
+    }
+
+    const sendData = {
+      family_member_list,
+      schemeWise,
+      mutualFundList,
+      reportAsOn: dataForFilter.reportAsOn,
+      fromDate: dataForFilter.fromDate,
+      toDate: dataForFilter.toDate,
+      showFolio: dataForFilter.showFolio,
+      showSummary: dataForFilter.showSummary,
+      reportType: dataForFilter.reportType,
+      transactionView: dataForFilter.transactionView,
+      overviewFilter: dataForFilter.overviewFilter,
+      reportFormat: dataForFilter.reportFormat,
+      financialYear: dataForFilter.financialYear,
+      grandfathering: dataForFilter.grandfathering,
+      mfData,
+      capitalGainData: dataForFilter.capitalGainData,
+      categoryWiseMfList: categoryWiseMfList,
+      transactionPeriodCheck: dataForFilter.transactionPeriodCheck,
+      transactionPeriod: dataForFilter.transactionPeriod,
+      transactionType: dataForFilter.transactionType,
+      selectFilter: dataForFilter.selectFilter,
+    };
+    return sendData;
+  }
   filterArray(data, dataKey, filterData, filterDataKey) {
     const filter = [];
     filterData.forEach(ele => {
@@ -513,11 +589,11 @@ export class MfServiceService {
       scheme: scheme,
       transactionView: (rightSideData) ? rightSideData.transactionView : transactionView,
       reportType: (rightSideData) ? (rightSideData.reportType.length > 0 ? rightSideData.reportType[0].name : 'Sub Category wise') : 'Sub Category wise',
-      reportAsOn: (rightSideData) ? rightSideData.reportAsOn : new Date(),
+      reportAsOn: (rightSideData && rightSideData.reportAsOn) ? rightSideData.reportAsOn : new Date(),
       showFolio: (rightSideData) ? rightSideData.showFolio + '' : '2',
       showSummary: (rightSideData == undefined) ? true : rightSideData.showSummary,
       fromDate: (rightSideData) ? rightSideData.fromDate : new Date(date.setFullYear(date.getFullYear() - 1)),
-      toDate: (rightSideData) ? rightSideData.toDate : new Date(),
+      toDate: (rightSideData && rightSideData.toDate) ? rightSideData.toDate : new Date(),
       overviewFilter: overviewFilter,
       transactionPeriod: (rightSideData) ? rightSideData.transactionPeriod : false,
       transactionPeriodCheck: (rightSideData) ? rightSideData.transactionPeriodCheck : false,
@@ -766,6 +842,12 @@ export class MfServiceService {
   }
   getLoader() {
     return this.loading.asObservable();
+  }
+  setElssData(value) {
+    this.elssData.next(value);
+  }
+  getElssData() {
+    return this.elssData.asObservable();
   }
   refreshMutualFundDataThroughObs() {
     return this.refreshMutualFundData.asObservable();

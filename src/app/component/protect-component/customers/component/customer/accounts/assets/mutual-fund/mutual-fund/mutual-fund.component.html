@@ -20,6 +20,8 @@
           <button
             *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.enabled"
             mat-menu-item (click)="changeViewMode('Capital Gains')">Capital Gains</button>
+          <button mat-menu-item *ngIf="!enumDataService.PRODUCTION" (click)="changeViewMode('ELSS report')">ELSS
+            report</button>
 
         </mat-menu>
       </div>
@@ -49,6 +51,9 @@
     </div>
     <div *ngSwitchCase="'Capital Gains'">
       <app-mutual-funds-capital (changeInput)="changeInput($event)"></app-mutual-funds-capital>
+    </div>
+    <div *ngSwitchCase="'ELSS report'">
+      <app-mf-elss-report (changeInput)="changeInput($event)"></app-mf-elss-report>
     </div>
     <div *ngSwitchCase="'Goal Linkage'">
       <app-mutual-fund-goal-linkage (changeInput)="changeInput($event)"></app-mutual-fund-goal-linkage>

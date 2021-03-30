@@ -109,15 +109,16 @@ export const appConfig = {
   GET_MUTUAL_FUND_UNMAP_FOLIO_LIST: 'mutual-fund/unmap/folio/list/get',
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',
   PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE: 'mutual-fund/unmap/investor-detail/update',
-  GET_MUTUAL_FUND_SIP_CLEANUP_LIST: 'mutual-fund/sip-cleanup/list/get',
-  PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',
   GET_MUTUAL_FUND_NOMINEE_FOLIO_SCHEME_WISE_DATA: 'mutual-fund/nominee/folio-scheme-wise/get',
   GET_SIP_WIZARD_COUNT: 'backoffice/sip-wizard/total-sip-count/get',
   RUN_WIZARD: 'backoffice/sip-wizard/run',
   PREVIOUS_WIZARD_LOG: 'backoffice/sip-wizard/history/get',
   CURRENT_WIZARD_LOG: 'backoffice/sip-wizard/latest-log/get',
   REFRESH_WIZARD: 'backoffice/sip-wizard-log/refresh',
-
+  GET_MUTUAL_FUND_SIP_CLEANUP_LIST: 'mutual-fund/sip-cleanup/list/get',
+  // GET_MUTUAL_FUND_SIP_CLEANUP_LIST: 'backoffice/sip-cleanup/list/get',
+  PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',
+  // PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'backoffice/sip-cleanup/remove/status/update',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -320,6 +321,7 @@ export const appConfig = {
   GET_KYC_DETAILS_OF_CLIENT: 'user/investor-kyc-remaining/count/get',
   HIDE_KYC_POPUP: 'user/investor-kyc-remaining/hide',
   OTHER_FOLIO_DETAILS: 'user/client/contact-number-and-email/scheme-wise/get',
+  ELSS_TRANSACTIONS: 'mutual-fund/elss/transaction/list/get',
   ////////////////////////////////plan////////////////////////////
   ADD_MANUAL_RISK_PROFILE: 'plan/risk-assessment/manual/add',
   GET_RISK_PROFILE: 'plan/risk-assessment/get',

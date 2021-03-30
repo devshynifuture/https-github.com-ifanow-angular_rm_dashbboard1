@@ -49,7 +49,8 @@ export class OrgSettingServiceService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_VERIFICATION, data);
   }
   getEmailVerificationReports(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_VERIFICATION_REPORT, data);
+    // return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_VERIFICATION_REPORT, data);
+    return this.http.get(apiConfig.MF_URL + appConfig.GET_EMAIL_VERIFICATION_REPORT, data);
   }
   saveEmailIDReports(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PREF_EMAIL_TEMPLATE, data);
@@ -59,7 +60,8 @@ export class OrgSettingServiceService {
   }
 
   editPreEmailTemplate(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_EMAIL_ID_REPORT, data);
+    //return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_EMAIL_ID_REPORT, data);
+    return this.http.put(apiConfig.MF_URL + appConfig.SAVE_EMAIL_ID_REPORT, data);
   }
 
   addEmailVerfify(data) {

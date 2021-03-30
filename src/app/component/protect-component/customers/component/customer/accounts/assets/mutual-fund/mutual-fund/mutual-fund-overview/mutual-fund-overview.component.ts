@@ -287,9 +287,9 @@ export class MutualFundOverviewComponent implements OnInit {
     } else if (this.mutualFund && this.mfGetData == '') {
       this.getMutualFundResponse(this.mutualFund);
     } else {
-      this.teamMemberListGet();
+      //this.teamMemberListGet();
 
-      // this.getMutualFundData();
+      this.getMutualFundData();
     }
   }
 
@@ -502,9 +502,8 @@ export class MutualFundOverviewComponent implements OnInit {
 
   getMutualFundData() {
     const obj = {
-      // advisorId: 2753,
-      parentId: this.parentId ? this.parentId : this.advisorId,
-      advisorId: this.adminAdvisorIds,
+      //  parentId: this.parentId ? this.parentId : this.advisorId,
+      // advisorId: this.adminAdvisorIds,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       // clientId: this.clientId
@@ -1333,8 +1332,8 @@ export class MutualFundOverviewComponent implements OnInit {
     }
     this.isLoading = true;
     const obj = {
-      parentId: this.parentId,
-      advisorId: this.adminAdvisorIds,
+      //  parentId: this.parentId,
+      // advisorId: this.adminAdvisorIds,
       clientId: this.clientId,
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {

@@ -85,7 +85,7 @@ export class RightFilterComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService, private datePipe: DatePipe, ) {
+    private mfService: MfServiceService, private datePipe: DatePipe,) {
   }
 
   @Input()
@@ -1063,7 +1063,7 @@ export class RightFilterComponent implements OnInit {
 
     if (this._data.name != 'CAPITAL GAIN REPORT') {
       this.obj = {
-        advisorId: this.advisorId,
+        // advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: (this.finalFilterData.reportAsOn) ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList

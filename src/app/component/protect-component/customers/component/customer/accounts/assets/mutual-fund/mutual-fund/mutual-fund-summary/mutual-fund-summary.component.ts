@@ -1159,8 +1159,8 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data = [];
     this.summary.data = [{}, {}, {}];
     const obj = {
-      parentId: this.parentId ? this.parentId : this.advisorId,
-      advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+      // parentId: this.parentId ? this.parentId : this.advisorId,
+      // advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
       clientId: this.clientId,
       showFolio: (this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false : true) : (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
@@ -1253,8 +1253,8 @@ export class MutualFundSummaryComponent implements OnInit {
         categoryWiseMfList.push(element.id);
       });
       const obj = {
-        parentId: this.parentId ? this.parentId : this.advisorId,
-        advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
+        // parentId: this.parentId ? this.parentId : this.advisorId,
+        // advisorId: this.parentId != this.advisorId ? this.adminAdvisorIds : 0,
         clientId: this.clientId,
         toDate: this.toDate,
         id: categoryWiseMfList,

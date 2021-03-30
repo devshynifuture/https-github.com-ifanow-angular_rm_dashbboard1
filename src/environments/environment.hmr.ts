@@ -2,6 +2,7 @@
 export const environment = {
   production: false,
   APIEndpoint: 'https://dev.ifanow.in/futurewise/api/v1/web/',
+  mfProject: 'http://dev.ifanow.in/mutualfund/api/v1/web/',
   GmailAPIEndpoint: 'https://dev.ifanow.in/email-server/api/v1/web/',
   // TransactionPlatform: 'http://localhost/transaction-platform/api/v1/web/',
   TransactionPlatform:

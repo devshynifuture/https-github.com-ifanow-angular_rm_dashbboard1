@@ -47,7 +47,7 @@ export class MobileTransactionsComponent implements OnInit {
   getMutualFundData() {
     const obj = {
       // advisorId: 2753,
-      advisorId: this.advisorId,
+      //  advisorId: this.advisorId,
       clientId: this.clientId,
       // clientId: this.clientId
     };
@@ -128,7 +128,7 @@ export class MobileTransactionsComponent implements OnInit {
     });
     mfId = [...new Map(mfId.map(item => [item, item])).values()];;
     const obj = {
-      advisorId: this.advisorId,
+      // advisorId: this.advisorId,
       clientId: this.clientId,
       toDate: todayDate,
       id: mfId

@@ -1169,8 +1169,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      parentId: this.parentId ? this.parentId : this.advisorId,
-      advisorId: this.adminAdvisorIds,
+      // parentId: this.parentId ? this.parentId : this.advisorId,
+      // advisorId: this.adminAdvisorIds,
     };
 
     if (this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
