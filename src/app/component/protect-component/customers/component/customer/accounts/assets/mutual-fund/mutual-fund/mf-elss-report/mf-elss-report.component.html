@@ -8,7 +8,7 @@
             *ngIf="!isLoading && unrealisedData">
 
 
-            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="summarydownload" *ngIf="!fragmentData.isSpinner">
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="summarydownload" *ngIf="!fragmentData.isSpinner ">
                 <!-- && mfSummaryCapability.Download -->
                 <img src="assets/images/svg/download-bordered.svg">
             </a>
@@ -103,7 +103,7 @@
                     </ng-container>
                     <ng-container matColumnDef="lockFreeUnits">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Lock free date
+                            Lock free Units
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
@@ -133,7 +133,7 @@
                     </ng-container>
                     <ng-container matColumnDef="LockFreeStatus">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Days
+                            Lock free status
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
@@ -143,7 +143,7 @@
                     </ng-container>
                     <ng-container matColumnDef="lockFreeDays">
                         <th *matHeaderCellDef class="br text-right" mat-header-cell>
-                            Days
+                            Lock free days
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
                             <div class="bar">
@@ -161,10 +161,12 @@
         </div>
     </div>
     <div class="row secoundTable">
-        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 pt-12" *ngIf="!isLoading && this.unrealisedData.allData.length>0">
+        <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8 pt-12"
+            *ngIf="!isLoading && customDataSource.data?.length > 0">
             <!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
 
-            <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport class="tran-height-2"[hidden]="unrealisedArray.length>0==false">
+            <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport class="tran-height-2"
+                [hidden]="unrealisedArray.length>0==false">
                 <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
                 <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
                     class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort
@@ -448,8 +450,7 @@
                 </table>
                 <!-- </div>-->
             </cdk-virtual-scroll-viewport>
-            <div *ngIf="!isLoading && customDataSource.data?.length == 0"
-                class="d-flex flex-column align-items-center">
+            <div *ngIf="!isLoading && customDataSource.data?.length == 0" class="d-flex flex-column align-items-center">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12"> No data found</h4>
             </div>
@@ -499,15 +500,15 @@
                 [ngStyle]="customDataSource.data?.arrayTran[8]?.style">
                 <b>{{customDataSource.data?.arrayTran[8]?.name}}</b>
             </td>
-             <td *ngIf="customDataSource.data?.arrayTran[9]?.isCheked == true"
+            <td *ngIf="customDataSource.data?.arrayTran[9]?.isCheked == true"
                 [ngStyle]="customDataSource.data?.arrayTran[9]?.style">
                 <b>{{customDataSource.data?.arrayTran[9]?.name}}</b>
             </td>
-             <td *ngIf="customDataSource.data?.arrayTran[10]?.isCheked == true"
+            <td *ngIf="customDataSource.data?.arrayTran[10]?.isCheked == true"
                 [ngStyle]="customDataSource.data?.arrayTran[10]?.style">
                 <b>{{customDataSource.data?.arrayTran[10]?.name}}</b>
             </td>
-             <td *ngIf="customDataSource.data?.arrayTran[11]?.isCheked == true"
+            <td *ngIf="customDataSource.data?.arrayTran[11]?.isCheked == true"
                 [ngStyle]="customDataSource.data?.arrayTran[11]?.style">
                 <b>{{customDataSource.data?.arrayTran[11]?.name}}</b>
             </td>

@@ -247,6 +247,7 @@ export class MfElssReportComponent implements OnInit {
   allData: any;
   mfList: any[];
   mfObject: any;
+  elssData = '';
   // setTrueKey = false;
   constructor(private ngZone: NgZone, public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -299,6 +300,18 @@ export class MfElssReportComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mfService.getTransactionType()
+      .subscribe(res => {
+        if (res) {
+          this.getTransactionType(res);
+        }
+      });
+    this.mfService.getElssData()
+      .subscribe(res => {
+        if (res) {
+          this.elssData = res;
+        }
+      });
     this.getElssReport();
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
@@ -336,30 +349,13 @@ export class MfElssReportComponent implements OnInit {
   }
   getElssReport() {
     this.isLoading = true;
-   this.dataSource = new MatTableDataSource([{}, {}, {}]);
+    this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
       clientId: this.clientId,
     };
     this.custumService.getElssTransacitonReport(obj).subscribe(
       data => {
-        if (data) {
-          let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
-          let array = [];
-          Object.keys(data.familyMemberList).map(key => {
-            array.push(data.familyMemberList[key]);
-          });
-          data.family_member_list = array;
-          this.allData = data;
-          filterData.forEach(ele => {
-            ele.schemeId = ele.mutualFundSchemeMasterId
-          })
-          this.mfList = filterData;
-          this.getFilterObj();
-          this.asyncFilter(filterData);
-        } else {
-          this.setUnrealizedDataSource([]);
-          this.customDataSource.data = [];
-        }
+        this.elssReportResponse(data);
         console.log(data);
       }, (error) => {
         this.setUnrealizedDataSource([]);
@@ -370,6 +366,32 @@ export class MfElssReportComponent implements OnInit {
       }
     );
   }
+  elssReportResponse(data) {
+    if (data.mutualFundSchemeMasterList && data.mutualFundSchemeMasterList.length > 0) {
+      let filterData = this.mfService.filter(data['mutualFundSchemeMasterList'], 'mutualFund')
+      let array = [];
+      Object.keys(data.familyMemberList).map(key => {
+        array.push(data.familyMemberList[key]);
+      });
+      data.family_member_list = array;
+      this.allData = data;
+      filterData.forEach(ele => {
+        ele.schemeId = ele.mutualFundSchemeMasterId
+      })
+      if (this.fromDate && this.toDate) {
+        filterData.forEach(element => {
+          element.mutualFundTransactions = element.mutualFundTransactions.filter(item => this.datePipe.transform(item.transactionDate, 'yyyy/MM/dd') >= this.fromDate && this.datePipe.transform(item.transactionDate, 'yyyy-MM-dd') <= this.toDate);
+        });
+      }
+      this.mfList = filterData;
+      this.allData.mutualFundList = filterData;
+      this.getFilterObj();
+      this.asyncFilter(filterData);
+    } else {
+      this.setUnrealizedDataSource([]);
+      this.customDataSource.data = [];
+    }
+  }
   getFilterObj() {
     this.mfObject = {
       family_member_list: this.allData.family_member_list,
@@ -378,8 +400,12 @@ export class MfElssReportComponent implements OnInit {
       mutualFundList: this.mfList,
       schemeWise: this.allData.mutualFundSchemeMasterList,
       subCategoryData: this.mutualFund.mutualFundCategoryMastersList,
+      toDate: new Date()
     }
-    this.setDefaultFilterData = this.mfService.setFilterData(this.mfObject, this.rightFilterData, this.displayedColumns);
+    if (this.elssData == '') {
+      this.mfService.setElssData(this.mfObject);
+      this.setDefaultFilterData = this.mfService.setFilterData(this.mfObject, this.rightFilterData, this.displayedColumns);
+    }
     console.log(this.setDefaultFilterData);
   }
   styleObjectTransaction(header, ind) {
@@ -656,7 +682,7 @@ export class MfElssReportComponent implements OnInit {
       const input = {
         mutualFundList: mutualFund,
         type: this.rightFilterData.reportType,
-        mutualFund: this.allData,
+        mutualFund: this.elssData,
         transactionType: this.rightFilterData.transactionType,
         viewMode: 'All transactions',
         showFolio: false,
@@ -694,15 +720,15 @@ export class MfElssReportComponent implements OnInit {
         console.log('datasource............', this.dataSource.data)
         this.colspanValue = Math.round(this.displayedColumns.length / 2);
         console.log('endTime ', new Date());
-         this.ngZone.run(() => {
-         this.cd.detectChanges();
-         this.isLoading = false;
+        this.ngZone.run(() => {
+          this.cd.detectChanges();
+          this.isLoading = false;
         });
-          this.displayedColumns.forEach((element, ind) => {
-            this.styleObjectTransaction(element, ind);
-          });
-        
-       
+        this.displayedColumns.forEach((element, ind) => {
+          this.styleObjectTransaction(element, ind);
+        });
+
+
         this.customDataSource.data.arrayTran.forEach(element => {
           switch (element.index) {
             case 0:
@@ -752,19 +778,19 @@ export class MfElssReportComponent implements OnInit {
 
 
               break;
-               case 9:
+            case 9:
               this.tenthArrayTran = this.filterHedaerWiseTran(element);
               this.tenthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
 
 
               break;
-               case 10:
+            case 10:
               this.eleventhArrayTran = this.filterHedaerWiseTran(element);
               this.eleventhArrayTotalTran = this.filterHedaerWiseTotalTran(element);
 
 
               break;
-               case 11:
+            case 11:
               this.twelvthArrayTran = this.filterHedaerWiseTran(element);
               this.twelvthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
 
@@ -778,7 +804,7 @@ export class MfElssReportComponent implements OnInit {
         }
         this.changeInput.emit(false);
         console.log('dataSource', this.dataSource)
-        
+
         if (this.finPlanObj) {
           this.showDownload = true;
           this.cd.detectChanges();
@@ -893,8 +919,10 @@ export class MfElssReportComponent implements OnInit {
       state: 'open35',
       componentName: RightFilterDuplicateComponent
     };
-    let obj={
-      mutualFundList:this.mfList
+    let obj = {
+      family_member_list: this.allData.family_member_list,
+      mutualFundList: this.mfList,
+      mutualFundSchemeMasterList: this.allData.mutualFundSchemeMasterList
     }
     fragmentData.data = {
       name: this.viewMode,
@@ -919,6 +947,7 @@ export class MfElssReportComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data && sideBarData.data != 'Close') {
+            let filterData;
             this.dataSource = new MatTableDataSource([{}, {}, {}]);
             this.customDataSource = [];
             this.isLoading = true;
@@ -931,7 +960,6 @@ export class MfElssReportComponent implements OnInit {
             if (this.rightFilterData.mfData) {
               this.reponseData = this.doFiltering(this.rightFilterData.mfData);
             }
-
             this.mfData = this.reponseData;
             this.displayColArray = [];
             this.rightFilterData.transactionView.forEach(element => {
@@ -941,14 +969,31 @@ export class MfElssReportComponent implements OnInit {
               };
               this.displayColArray.push(obj);
             });
-            ////this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
-           // this.mfService.setFilterValues(this.setDefaultFilterData);
-            //this.mfService.setDataForMfGet(this.rightFilterData.mfData);
-            this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.toDate), 'dd-MMM-yyyy');
-            this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData;
-            this.dataTransaction.rightFilterData = this.rightFilterData.mfData;
-            this.getElssReport();
 
+
+            ////////////////////
+            if (this.rightFilterData.elssResponse && this.rightFilterData.elssResponse.mutualFundSchemeMasterList.length > 0) {
+              filterData = this.mfService.filter(this.rightFilterData.elssResponse['mutualFundSchemeMasterList'], 'mutualFund')
+              filterData.forEach(ele => {
+                ele.schemeId = ele.mutualFundSchemeMasterId
+              })
+            }
+            let mfObject = {
+              family_member_list: this.rightFilterData.family_member_list,
+              folioWise: filterData,
+              mutualFundCategoryMastersList: this.mutualFund.mutualFundCategoryMastersList,
+              mutualFundList: filterData,
+              schemeWise: this.rightFilterData.elssResponse && this.rightFilterData.elssResponse.mutualFundSchemeMasterList.length > 0 ? this.rightFilterData.elssResponse.mutualFundSchemeMasterList : [],
+              subCategoryData: this.mutualFund.mutualFundCategoryMastersList,
+              toDate: new Date()
+            }
+            this.rightFilterData.mfData = mfObject;
+            /////////////////////////////
+            this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.toDate), 'dd-MMM-yyyy');
+            this.fromDate = new Date(this.rightFilterData.toDate);
+            this.toDate = new Date(this.rightFilterData.fromDate);
+            this.setDefaultFilterData = this.mfService.setFilterData(this.elssData, this.rightFilterData, this.displayColArray);
+            this.elssReportResponse(this.rightFilterData.elssResponse);
           }
           rightSideDataSub.unsubscribe();
         }

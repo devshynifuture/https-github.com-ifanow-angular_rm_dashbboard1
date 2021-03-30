@@ -20,7 +20,8 @@
           <button
             *ngIf="roleService.portfolioPermission.subModule.assets.subModule.mutualFunds.subModule.capitalGains.enabled"
             mat-menu-item (click)="changeViewMode('Capital Gains')">Capital Gains</button>
-          <button mat-menu-item (click)="changeViewMode('ELSS report')">ELSS report</button>
+          <button mat-menu-item *ngIf="!enumDataService.PRODUCTION" (click)="changeViewMode('ELSS report')">ELSS
+            report</button>
 
         </mat-menu>
       </div>

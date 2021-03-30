@@ -80,28 +80,42 @@ export class TempserviceService {
     let array;
     let mainDataId;
     let obj;
+    let allId;
     if (reportType == 'subCategoryName') {
-      array = 'subCategoryData';
-      mainDataId = 'subCategoryId';
+      allId = 'id';
+      array = 'mutualFundList';
+      //   array = 'subCategoryData';
+      mainDataId = 'id';
     } else if (reportType == 'categoryName') {
-      array = 'mutualFundCategoryMastersList';
-      mainDataId = 'categoryId';
+      // array = 'mutualFundCategoryMastersList';
+      // mainDataId = 'categoryId';
+      allId = 'id';
+      array = 'mutualFundList';
+      mainDataId = 'id';
     } else if (reportType == 'ownerName') {
+      // allId = 'id';
+      // array = 'family_member_list';
+      // mainDataId = 'familyMemberId';
 
-      array = 'family_member_list';
-      mainDataId = 'familyMemberId';
+      allId = 'id';
+      array = 'mutualFundList';
+      mainDataId = 'id';
+    } else if (reportType = 'schemeName') {
       // array = 'schemeWise';
       // mainDataId = 'schemeId';
-    } else if (reportType = 'schemeName') {
-      array = 'schemeWise';
-      mainDataId = 'schemeId';
+      allId = 'id';
+      array = 'mutualFundList';
+      mainDataId = 'id';
     } else {
-      array = 'subCategoryData';
-      mainDataId = 'subCategoryId';
+      // array = 'subCategoryData';
+      // mainDataId = 'subCategoryId';
+      allId = 'id';
+      array = 'mutualFundList';
+      mainDataId = 'id';
     }
     allData[array].forEach(element => {
       if (folio == '1') {
-        if (element.id == mainData[mainDataId]) {
+        if (element[allId] == mainData[mainDataId]) {
           obj = {
             xirr: element.xirr,
             absoluteReturn: element.absoluteReturn
@@ -109,7 +123,7 @@ export class TempserviceService {
         }
       } else {
         let balanceUnit = element.balanceUnit ? element.balanceUnit : element.balanceUnits;
-        if (element.id == mainData[mainDataId] && balanceUnit > 0) {
+        if (element[allId] == mainData[mainDataId] && balanceUnit > 0) {
           obj = {
             xirr: element.xirr,
             absoluteReturn: element.absoluteReturn

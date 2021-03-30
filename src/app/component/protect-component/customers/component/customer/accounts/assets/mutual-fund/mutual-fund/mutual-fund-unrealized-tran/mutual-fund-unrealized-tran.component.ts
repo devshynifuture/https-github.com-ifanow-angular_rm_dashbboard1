@@ -528,7 +528,7 @@ export class MutualFundUnrealizedTranComponent {
           console.log('transactionview', transactionView)
           this.mfData = this.mfGetData;
           this.displayedColumns = this.displayedColumns.filter(d => d != 'showSummary');
-          this.displayedColumnsTotal = this.displayedColumns.filter(d => d != 'showSummary');
+          this.displayedColumnsTotal = this.displayedColumnsTotal.filter(d => d != 'showSummary');
           if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != '') {
             this.isLoading = true;
             //  this.getUnrealizedData();
@@ -612,7 +612,7 @@ export class MutualFundUnrealizedTranComponent {
         const type = (this.reponseData) ? (this.setDefaultFilterData.reportType) : ((this.saveFilterData) ? (this.saveFilterData.reportType) : this.setDefaultFilterData.reportType);
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
         this.displayedColumns = this.displayedColumns.filter(d => d != 'showSummary');
-        this.displayedColumnsTotal = this.displayedColumns.filter(d => d != 'showSummary');
+        this.displayedColumnsTotal = this.displayedColumnsTotal.filter(d => d != 'showSummary');
       }
     );
 
