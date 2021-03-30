@@ -37,7 +37,7 @@
 
     <div [hidden]="taskTemplate.get('templateType').value == 1" class="row">
       <div class="col-md-10 pl-0">
-        <h5 class="m-0 pb-8 pt-24">Template Name</h5>
+        <h5 class="m-0 pb-8">Add task template</h5>
         <div class="form-group matFormPadding">
           <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
             <input class="form-control br-0 rupess" formControlName="taskDescription" matInput maxlength="60"
@@ -190,10 +190,10 @@
 <div class="pt-90 pl-28 pr-28 col-md-12 d-flex justify-content-center align-items-center h-80vh" *ngIf="isLoading">
   Loading data...
 </div>
-<div class="bottom-fixed wrapper-12 w-50">
-  <div class="row">
+<div class="bottom-fixed wrapper-12 w-50 d-flex align-items-center">
+  <div class="row w-100 align-items-center">
     <div class="col-md-4">
-      <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+      <h5 (click)="Close(false)" class="mb-0 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
       <app-progress-button (btnClick)="save()" class="br-0 text-inherit  " [options]="barButtonOptions">
