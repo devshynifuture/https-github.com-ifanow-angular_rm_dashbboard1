@@ -517,6 +517,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   pdfFromImage(element, list, i) {
+    this.isLoading = true
+    this.moduleAddedLoader = [{}, {}, {}]
     if (list.name == "Miscellaneous" && element.manual == false) {
       this.uploadImageSetText(element)
     } else {
