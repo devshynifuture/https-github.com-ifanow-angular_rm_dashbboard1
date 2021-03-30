@@ -85,7 +85,7 @@ export class AddNewTemplateComponent implements OnInit {
     this.addTemplate = this.fb.group({
       name: [(!data) ? '' : (data.name), [Validators.required]],
       category: [(!data) ? '' : data.fpTemplateCategoryMasterId, [Validators.required]],
-      imgUrl: [(!data) ? '' : data.imageUrl, [Validators.required]],
+      imgUrl: [(!data) ? '' : data.imageUrl],
     });
     if (this.edit == true) {
       this.addTemplate.get('name').disable();

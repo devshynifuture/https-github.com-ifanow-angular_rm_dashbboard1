@@ -1179,8 +1179,8 @@
                                     <td style="border-bottom: 1px solid #dee5e7;padding: 14px;   text-align: lefts;">
                                         Planner notes
                                     </td>
-                                    <td style="padding: 14px; border-bottom: 1px solid #dee5e7; text-align: right;">
-                                        {{(insuranceDetails)? insuranceDetails?.needAnalysis?.plannerNotes:'-'}}
+                                    <td style="padding: 14px; border-bottom: 1px solid #dee5e7; text-align: right;"
+                                        [innerHtml]="(insuranceDetails)? insuranceDetails?.needAnalysis?.plannerNotes:'-' ">
                                     </td>
                                 </tr>
                             </table>
