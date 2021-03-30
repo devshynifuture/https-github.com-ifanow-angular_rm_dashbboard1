@@ -51,7 +51,7 @@
 
             <div class="plan-templates-img">
                 <img src="{{item.imageUrl}}" class="w-100">
-                <div class="middleOne" (click)="getPreview(item)">
+                <div [ngClass]="!isLoading ? 'middleOne': ''" (click)="getPreview(item)">
                     <p class="c-p"> Preview</p>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             <!-- (click)="getPreview(item)" -->
             <div class="plan-templates-img">
                 <img src="{{item.imageUrl}}" class="w-100">
-                <div class="middleOne" (click)="getPreview(item)">
+                <div [ngClass]="!isLoading ? 'middleOne': ''" (click)="getPreview(item)">
                     <p class="c-p"> Preview</p>
                 </div>
             </div>
