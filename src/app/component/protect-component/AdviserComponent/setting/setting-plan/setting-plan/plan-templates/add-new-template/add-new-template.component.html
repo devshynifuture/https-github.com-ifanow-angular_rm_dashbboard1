@@ -57,15 +57,13 @@
         <div class="col-md-5 p-0" *ngIf="edit">
             <div (click)="openGallery(imgUrl)">
                 <div class="plan-templates-img-right-side">
-                    <mat-form-field>
-                        <img src="{{imgUrl}}" class="b-a c-p plan-setting-img-hw">
-                        <div class="middleOne">
-                            <p class="c-p"> Edit</p>
-                        </div>
-                        <mat-error>
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
+                    <img src="{{imgUrl}}" class="b-a c-p plan-setting-img-hw">
+                    <div class="middleOne">
+                        <p class="c-p"> Edit</p>
+                    </div>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
                 </div>
             </div>
 
