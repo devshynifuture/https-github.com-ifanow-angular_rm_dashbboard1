@@ -364,6 +364,8 @@ export class RightFilterDuplicateComponent implements OnInit {
   getReportType() {
     if (this._data.name == 'SUMMARY REPORT') {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise'];
+    }else if(this._data.name == 'ELSS report'){
+      this.reportType = ['Investor wise', 'Scheme wise'];
     } else {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
     }
@@ -1783,6 +1785,7 @@ export class RightFilterDuplicateComponent implements OnInit {
       if (this._data.name == 'Overview Report') {
         this.obj.toDate = todayDate;
       }
+      if(this._data.name != 'ELSS report'){
       this.custumService.getMutualFund(this.obj).subscribe(
         data => {
           console.log(data);
@@ -1796,6 +1799,21 @@ export class RightFilterDuplicateComponent implements OnInit {
           this.Close(this.finalFilterData);
         }
       );
+      } else{
+       this.custumService.getElssTransacitonReport(this.obj).subscribe(
+        data => {
+          console.log(data);
+          this.barButtonOptions.active = false;
+          this.finalFilterData.mfData = data;
+          this.Close(this.finalFilterData);
+        },
+        err => {
+          this.barButtonOptions.active = false;
+          this.finalFilterData.mfData = null;
+          this.Close(this.finalFilterData);
+        }
+      );
+      }
     } else {
       this.barButtonOptions.active = false;
       this.Close(this.finalFilterData);
