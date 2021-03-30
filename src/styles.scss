@@ -270,7 +270,7 @@
 #ui-setting-supports,
 #ui-mareketplace-advisor,
 #ui-advisor-dashboard-header {
-  position: sticky;
+  position: fixed;
   top: 64px;
   // margin-top: 4px;
   // float: right;
@@ -1089,7 +1089,7 @@ mat-tab-group[vertical] {
   // }
   .mat-tab-body-wrapper {
     border: 1px solid #e9eaec;
-    margin-top: -11px;
+    margin-top: -1px;
   }
 
   .mat-tab-label-active {

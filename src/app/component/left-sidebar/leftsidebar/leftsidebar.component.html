@@ -220,7 +220,7 @@
         mat-icon-button type="button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button> -->
-      <div class="row align-items-center justify-content-center h-64 mob-no-wrap">
+      <div class="row align-items-center h-64 mob-no-wrap">
         <div class="col-md-5 col-11 p-0 d-flex">
           <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav mobileBTN"
             mat-icon-button type="button">
@@ -318,7 +318,7 @@
             </div>
           </mat-form-field>
         </div>
-        <div class="col-md-7 col-1 full-end mob-pr-0">
+        <div class="col-md-7 col-1 mob-pr-0 right-fixed full-end">
           <div class="menuMobile">
             <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
               <mat-icon>more_vert</mat-icon>
@@ -343,7 +343,7 @@
           </div>
 
 
-          <div class="hide-on-768 d-flex align-items-center justify-content-center tablate-none" id="right-sidemenu">
+          <div class="hide-on-768 d-flex align-items-center tablate-none" id="right-sidemenu">
             <!-- <a class="sidenav-link" mat-list-item>
               <img class="t-10" src="assets/images/svg/bell.svg">
             </a> -->
