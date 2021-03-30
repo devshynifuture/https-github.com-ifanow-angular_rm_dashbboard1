@@ -68,7 +68,6 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   freezeDate: any;
   isTransactionDeleted: boolean;
   refreshRequired = false;
-
   constructor(
     private eRef: ElementRef,
     private renderer2: Renderer2,
@@ -535,7 +534,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         this.shouldShowMultipleDelete = false;
 
         this.eventService.openSnackBar("Deleted Transaction Successfully", "DISMISS");
-
+        this.refreshRequired = true
         this.sendValueToParent();
         // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
         // this.dataSource.data['difference'] = this.dataSource.data['unitOne'] - this.dataSource.data['unitsRta'];
@@ -823,6 +822,92 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         this.shouldShowMultipleDelete = false;
 
       });
+  }
+
+  viewAllTransactions() {
+    const obj = {
+      mutualFundId: this.data.mutualFundId
+    }
+    this.isLoading = true;
+    this.dataSource1.data = ELEMENT_DATA1
+    this.supportService.getAllRestoreTransactions(obj).subscribe(
+      data => {
+        this.isLoading = false;
+        if (data) {
+          const arrayList = []
+          let canDeleteTransaction;
+          data.forEach(element => {
+            if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
+              let date1 = new Date(element.transactionDate);
+              let date2 = new Date(this.data.freezeDate);
+              if (date1.getTime() > date2.getTime()) {
+                canDeleteTransaction = true;
+              } else {
+                if (this.isUnfreezeClicked) {
+                  canDeleteTransaction = true
+                } else {
+                  if (element.rt === 6) {
+                    canDeleteTransaction = true;
+                  } else {
+                    canDeleteTransaction = false;
+                  }
+                }
+              }
+              this.disableDeletionForTable2 = true;
+            } else {
+              this.disableDeletionForTable2 = false;
+              canDeleteTransaction = true;
+            }
+            arrayList.push({
+              // srNo: index1 + 1,
+              id: element.id,
+              transactionType: element.fwTransactionType,
+              date: element.transactionDate,
+              amount: element.amount,
+              units: element.unit,
+              balanceUnits: element.balanceUnits,
+              actions: '',
+              keep: element.keep,
+              nav: element.purchasePrice ? element.purchasePrice : null,
+              canDeleteTransaction,
+              effect: element.effect,
+              rt: element.rt
+            })
+          });
+          this.dataSource1.data = arrayList;
+        } else {
+          this.dataSource.data = null;
+          this.isLoading = false;
+        }
+      }, err => {
+        this.dataSource.data = null;
+        this.isLoading = false;
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
+  }
+
+  restoreTransaction(data) {
+    const array = [
+      data.id
+    ]
+    this.mainLoader = true;
+    this.supportService.restoreMfTranasction(array).subscribe(
+      res => {
+        this.mainLoader = false;
+        if (res) {
+          let array = this.dataSource.data;
+          array[0].unitOne = res.units;
+          this.dataSource.data = array;
+          this.refreshRequired = true;
+          this.sendValueToParent();
+          this.viewAllTransactions();
+        }
+      }, err => {
+        this.mainLoader = false;
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
   }
 
   shouldKeepOrRemove(value, element, index) {

@@ -150,7 +150,8 @@
 <div class="row pb-100">
     <div class="col-lg-12 overflow-hidden back-office-table">
         <div *ngIf="tableEntriesType == 1">
-            <table mat-table [dataSource]="dataSource1" id="table-low" class=" mt-8">
+            <table appSkeletonLoading [appSkeletonLoading]="isLoading" mat-table [dataSource]="dataSource1"
+                id="table-low" class=" mt-8 skeletonAnimation">
                 <ng-container matColumnDef="checkbox">
                     <th class="br" mat-header-cell *matHeaderCellDef>
                         <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -218,12 +219,22 @@
                         [ngClass]="element.date >= data.aumDate ? 'text-danger': ''">
                         <div class="bar">
                             <!-- [matTooltipPosition]="below" -->
-                            <div matTooltip="Kindly unfreeze folio, to delete transaction"
+                            <div *ngIf="!isLoading && element.keep"
+                                matTooltip="Kindly unfreeze folio, to delete transaction"
                                 [matTooltipDisabled]="element.canDeleteTransaction">
                                 <button mat-stroked-button [disabled]="!element.canDeleteTransaction"
                                     class="bg-primary text-white mr-12 h-22 btn-xs"
                                     (click)="deleteSingleTransaction(element, i)">
                                     Delete
+                                </button>
+                            </div>
+                            <div *ngIf="!isLoading && element.keep==false"
+                                matTooltip="Kindly unfreeze folio, to restore transaction"
+                                [matTooltipDisabled]="element.canDeleteTransaction">
+                                <button mat-stroked-button [disabled]="!element.canDeleteTransaction"
+                                    class="bg-danger text-white mr-12 h-22 btn-xs"
+                                    (click)="restoreTransaction(element)">
+                                    Restore
                                 </button>
                             </div>
                         </div>
@@ -233,10 +244,18 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
             </table>
+            <button (click)="viewAllTransactions()" mat-stroked-button
+                class="bg-primary text-white mr-12 h-22 mt-10 btn-xs">
+                View all transactions
+            </button>
             <div class="col-md-12 b-a p-0" *ngIf="dataSource1.data === null">
                 <h5 class="p-44 text-center">
                     No Data Found
                 </h5>
+                <button (click)="viewAllTransactions()" mat-stroked-button
+                    class="bg-primary text-white mr-12 h-22 mt-10 btn-xs">
+                    View all transactions
+                </button>
             </div>
         </div>
         <div *ngIf="tableEntriesType == 2">
