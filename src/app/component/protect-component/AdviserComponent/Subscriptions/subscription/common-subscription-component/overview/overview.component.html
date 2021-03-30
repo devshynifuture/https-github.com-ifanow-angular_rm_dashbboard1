@@ -83,7 +83,18 @@
       </div>
       <h5 class="pt-8">Letter of engagement</h5>
     </div>
-    <div class="col-lg-2 col-md-3">
+    <div class="col-lg-2 col-md-3 c-p">
+      <div class="b-a boxes hoverable">
+        <div class="action-button">
+          <button (click)="openForm('5','quotations',scopeofService)" class="btn-sm btn-success br-0 f-14"
+            mat-stroked-button>USE
+          </button>
+        </div>
+        <div class="detailsFont" [innerHTML]="scopeofService"></div>
+      </div>
+      <h5 class="pt-8">Scope of service</h5>
+    </div>
+    <!-- <div class="col-lg-2 col-md-3">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <button (click)="openForm('2','addEditDocument',detailsOfClientTemplate)" class="btn-sm btn-success br-0 f-14"
@@ -93,8 +104,8 @@
         <div class="detailsFont" [innerHTML]="detailsOfClientTemplate"></div>
       </div>
       <h5 class="pt-8">Details of client</h5>
-    </div>
-    <div class="col-lg-2 col-md-3 c-p">
+    </div> -->
+    <!-- <div class="col-lg-2 col-md-3 c-p">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <button (click)="openForm('4','quotations',redressalofGrievance)" class="btn-sm btn-success br-0 f-14"
@@ -104,7 +115,7 @@
         <div class="detailsFont" [innerHTML]="quotationTemplate"></div>
       </div>
       <h5 class="pt-8">Redressal of grievance</h5>
-    </div>
+    </div> -->
     <div class="col-lg-2 col-md-3 c-p">
       <div class="b-a boxes hoverable">
         <div class="action-button">
@@ -121,9 +132,9 @@
 
   </div>
 
-  <div class="row text-center">
-    <div class="col-lg-1 col-md-1 d-none-992"></div>
-    <div class="col-lg-2 col-md-3 c-p">
+  <!-- <div class="row text-center">
+    <div class="col-lg-1 col-md-1 d-none-992"></div> -->
+  <!-- <div class="col-lg-2 col-md-3 c-p">
       <div class="b-a boxes hoverable">
         <div class="action-button">
           <button (click)="openForm('5','quotations',scopeofService)" class="btn-sm btn-success br-0 f-14"
@@ -133,14 +144,14 @@
         <div class="detailsFont" [innerHTML]="scopeofService"></div>
       </div>
       <h5 class="pt-8">Scope of service</h5>
-    </div>
-    <!-- <div class="col-md-2">
+    </div> -->
+  <!-- <div class="col-md-2">
         <div class="boxes hoverable">
 
         </div>
         <h5 class="pt-8">Blank</h5>
     </div> -->
-    <!-- <div class="col-md-2">
+  <!-- <div class="col-md-2">
         <div class="b-a hoverable">
             <div class="action-button">
                 <button mat-stroked-button class="btn-sm btn-success br-0 f-14"
@@ -164,7 +175,7 @@
         </div>
         <h5 class="pt-8">Scope of work</h5>
     </div> -->
-  </div>
+  <!-- </div> -->
 
   <!-- <div class="bottom-fixed wrapper-12 w-100">
       <div class="row">
