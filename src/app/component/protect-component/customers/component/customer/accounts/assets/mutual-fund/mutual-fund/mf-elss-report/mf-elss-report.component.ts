@@ -74,6 +74,10 @@ export class GridTableDataSource extends DataSource<any> {
   connect(collectionViewer: import('@angular/cdk/collections').CollectionViewer): Observable<any[] | ReadonlyArray<any>> {
     return this.visibleData;
   }
+  isLoadingUpload
+  deleteModal(flag, data) {
+
+  }
 
   disconnect(collectionViewer: import('@angular/cdk/collections').CollectionViewer): void {
   }
