@@ -203,4 +203,12 @@ export class SupportService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SCRIP_STOCK, data);
   }
 
+  getAllRestoreTransactions(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_RESTORE_TRANSACTION, data);
+  }
+
+  restoreMfTranasction(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RESTORE_MF_TRANSACTION, data);
+  }
+
 }

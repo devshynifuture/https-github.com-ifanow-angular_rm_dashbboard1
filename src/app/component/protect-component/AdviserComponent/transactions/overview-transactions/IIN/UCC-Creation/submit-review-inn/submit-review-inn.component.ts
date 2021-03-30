@@ -257,7 +257,7 @@ export class SubmitReviewInnComponent implements OnInit {
       svg: ''
     };
     let header = null
-    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, null);
+    this.returnValue = this.utilService.htmlToPdf(header, para.innerHTML, tableTitle, false, this.fragmentData, '', '', true, this.inputData.ownerName.displayName);
     console.log('return value ====', this.returnValue);
     return obj;
   }

@@ -517,6 +517,8 @@ export class FinacialPlanSectionComponent implements OnInit {
     );
   }
   pdfFromImage(element, list, i) {
+    this.isLoading = true
+    this.moduleAddedLoader = [{}, {}, {}]
     if (list.name == "Miscellaneous" && element.manual == false) {
       this.uploadImageSetText(element)
     } else {
@@ -525,7 +527,7 @@ export class FinacialPlanSectionComponent implements OnInit {
         element.add = false
         this.cd.detectChanges()
       } else {
-        if (element.name == 'Index') {
+        if (element.name == 'Index' && !element.imageUrl) {
           var el = document.getElementById("yabanner");
           el.innerHTML = this.emailBody;
           this.uploadFile(el, list.name, element.name, false, element)
